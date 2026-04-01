@@ -1,0 +1,46 @@
+[
+    {
+        "offer_id": "ag-cm-android-v50",
+        "offer_name": "Coin Master — Reach Village 50",
+        "offer_description": "Download Coin Master on Android and reach Village 50 to earn your reward.",
+        "payout": "1650",
+        "currency_label": "USD",
+        "device": "Android",
+        "categories": "Mobile Games",
+        "offer_url": "https://click.adgatemedia.com/v1/click?offer_id=ag-cm-android-v50&app_id=PLACEHOLDER",
+        "expiration_date": null
+    },
+    {
+        "offer_id": "ag-cm-ios-v50",
+        "offer_name": "Coin Master — Reach Village 50 (iOS)",
+        "offer_description": "Download Coin Master on iOS and reach Village 50.",
+        "payout": "1850",
+        "currency_label": "USD",
+        "device": "iOS",
+        "categories": "Mobile Games",
+        "offer_url": "https://click.adgatemedia.com/v1/click?offer_id=ag-cm-ios-v50&app_id=PLACEHOLDER",
+        "expiration_date": null
+    },
+    {
+        "offer_id": "ag-bb-level100",
+        "offer_name": "Bingo Blitz — Reach Level 100",
+        "offer_description": "Reach Level 100 in Bingo Blitz on Android or iOS.",
+        "payout": "1400",
+        "currency_label": "USD",
+        "device": "Android, iOS",
+        "categories": "Mobile Games",
+        "offer_url": "https://click.adgatemedia.com/v1/click?offer_id=ag-bb-level100&app_id=PLACEHOLDER",
+        "expiration_date": null
+    },
+    {
+        "offer_id": "ag-general-signup",
+        "offer_name": "Sign Up + Verify Email",
+        "offer_description": "Create a free account and confirm your email address.",
+        "payout": "200",
+        "currency_label": "USD",
+        "device": "Web",
+        "categories": "Sign Up",
+        "offer_url": "https://click.adgatemedia.com/v1/click?offer_id=ag-general-signup&app_id=PLACEHOLDER",
+        "expiration_date": null
+    }
+]

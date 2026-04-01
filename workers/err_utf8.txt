@@ -1,0 +1,73 @@
+﻿node.exe : C:\Users\kam
+ed\Dev\earn-terminal-v2
+\earngrind-v2\workers\s
+rc\client.ts:9
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (C:\Users\kame   
+ d\...src\client.ts    
+:9:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+if (!FUNCTION_URL) 
+throw new 
+Error("Missing env: SUP
+ABASE_FUNCTION_URL");
+                       
+  ^
+Error: Missing env: 
+SUPABASE_FUNCTION_URL
+    at 
+Object.<anonymous> (C:\
+Users\kamed\Dev\earn-te
+rminal-v2\earngrind-v2\
+workers\src\client.ts:9
+:26)
+    at Module._compile 
+(node:internal/modules/
+cjs/loader:1761:14)
+    at 
+Module.m._compile (C:\U
+sers\kamed\Dev\earn-ter
+minal-v2\earngrind-v2\w
+orkers\node_modules\ts-
+node\src\index.ts:1618:
+23)
+    at node:internal/mo
+dules/cjs/loader:1893:1
+0
+    at Object.require.e
+xtensions.<computed> 
+[as .ts] (C:\Users\kame
+d\Dev\earn-terminal-v2\
+earngrind-v2\workers\no
+de_modules\ts-node\src\
+index.ts:1621:12)
+    at Module.load (nod
+e:internal/modules/cjs/
+loader:1481:32)
+    at Module._load (no
+de:internal/modules/cjs
+/loader:1300:12)
+    at TracingChannel.t
+raceSync (node:diagnost
+ics_channel:328:14)
+    at wrapModuleLoad (
+node:internal/modules/c
+js/loader:245:24)
+    at Module.require (
+node:internal/modules/c
+js/loader:1504:12)

@@ -1,0 +1,20 @@
+{
+    "name": "earngrind-workers",
+    "version": "1.0.0",
+    "description": "EarnGrind ingestion workers — runs scrapers and posts normalized offers to the Edge Function.",
+    "private": true,
+    "scripts": {
+        "ingest": "ts-node src/index.ts",
+        "ingest:mock": "PROVIDER=mock ts-node src/index.ts",
+        "build": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.47.0",
+        "dotenv": "^16.4.5"
+    },
+    "devDependencies": {
+        "@types/node": "^20.14.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5"
+    }
+}

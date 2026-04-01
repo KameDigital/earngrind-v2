@@ -2,32 +2,211 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── EarnGrind Design Tokens ────────────────────────────────────────────────
+   One source of truth for the brand. All pages and components reference
+   these via Tailwind's arbitrary value syntax [var(--token)].
+   Brand palette: deep ink (#0d0d12) + electric lime (#bef264) accent
+   with warm-neutral surfaces. Clean, high-trust, energetic-but-credible.
+────────────────────────────────────────────────────────────────────────── */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* Brand colours */
+  --brand-ink: #0d0d12;
+  /* near-black — headlines, logo, CTAs */
+  --brand-lime: #bef264;
+  /* electric lime — primary accent */
+  --brand-lime-dark: #a3e635;
+  /* deeper lime for hover states */
+  --brand-mid: #1a1a2e;
+  /* deep navy for secondary surfaces */
+
+  /* Surfaces */
+  --surface-base: #ffffff;
+  --surface-muted: #f8f8fb;
+  /* very light cool-white for section alternation */
+  --surface-card: #ffffff;
+  --surface-dark: #0d0d12;
+
+  /* Borders */
+  --border-default: #e8e8f0;
+  --border-strong: #d0d0e0;
+
+  /* Text */
+  --text-primary: #0d0d12;
+  --text-secondary: #52525e;
+  --text-tertiary: #8b8b99;
+  --text-inverse: #ffffff;
+
+  /* Semantic */
+  --success: #22c55e;
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+  --warning: #f59e0b;
+  --warning-bg: #fffbeb;
+  --warning-border: #fde68a;
+  --danger: #ef4444;
+
+  /* Elevation shadows */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-float: 0 16px 48px rgba(0, 0, 0, 0.14);
+
+  /* Radius scale */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 200ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* ── Base layer ─────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased;
+    background-color: var(--surface-base);
+    color: var(--text-primary);
+  }
+
+  /* Better text selection */
+  ::selection {
+    background-color: var(--brand-lime);
+    color: var(--brand-ink);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* ── Component layer ────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Page section alternation ── */
+  .section-default {
+    background-color: var(--surface-base);
+  }
+
+  .section-muted {
+    background-color: var(--surface-muted);
+  }
+
+  .section-dark {
+    background-color: var(--surface-dark);
+    color: var(--text-inverse);
+  }
+
+  /* ── Accent pill / label used across pages ── */
+  .accent-pill {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
+    background-color: var(--brand-lime);
+    color: var(--brand-ink);
+  }
+
+  /* ── Section label above headings ── */
+  .section-label {
+    @apply text-xs font-bold tracking-widest uppercase;
+    color: var(--text-tertiary);
+  }
+
+  /* ── Universal card base ── */
+  .eg-card {
+    @apply relative overflow-hidden rounded-2xl bg-white;
+    border: 1px solid var(--border-default);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--duration) var(--ease-out),
+      transform var(--duration) var(--ease-out),
+      border-color var(--duration) var(--ease-out);
+  }
+
+  .eg-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+
+  /* ── Payout display ── */
+  .payout-value {
+    @apply text-xl font-bold tabular-nums;
+    color: var(--brand-ink);
+  }
+
+  .payout-label {
+    @apply text-xs font-medium;
+    color: var(--text-tertiary);
+  }
+
+  /* ── Hot badge ── */
+  .badge-hot {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold;
+    background: linear-gradient(135deg, #ff4500 0%, #ff8c00 100%);
+    color: #fff;
+  }
+
+  .badge-new {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold;
+    background-color: var(--brand-lime);
+    color: var(--brand-ink);
+  }
+
+  .badge-ath {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    color: #fff;
+  }
+
+  /* ── Dividers ── */
+  .divider {
+    @apply w-full;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-default), transparent);
+  }
+
+  /* ── Lime CTA bar accent ── */
+  .lime-bar {
+    @apply inline-block w-8 h-1 rounded-full;
+    background-color: var(--brand-lime);
+  }
 }
 
+/* ── Utility layer ──────────────────────────────────────────────────────── */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+
+  /* Scrollbar hiding */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Subtle dot-grid background */
+  .bg-dot-grid {
+    background-image: radial-gradient(circle, #0d0d1210 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Fine line grid scrim */
+  .bg-line-grid {
+    background-image:
+      linear-gradient(to right, #0d0d1208 1px, transparent 1px),
+      linear-gradient(to bottom, #0d0d1208 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Gradient overlays */
+  .lime-glow {
+    background: radial-gradient(ellipse 60% 40% at 50% -10%, #bef26430 0%, transparent 70%);
+  }
+
+  /* Text gradient */
+  .text-gradient-lime {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #84cc16 0%, #bef264 60%);
   }
 }

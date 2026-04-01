@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -25,12 +25,25 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
-.env*.local
+# env files — never commit secrets
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
 
-# typescript
+# typescript build cache
 *.tsbuildinfo
 next-env.d.ts
+
+# worker env
+workers/.env
+
+# build / lint artifacts — scratch files, never commit
+build-error.log
+build_error.txt
+raw_lint.txt
+raw_lint_output.txt
+lint-results.txt
+lint-results-ascii.txt

@@ -1,0 +1,151 @@
+[
+    {
+        "id": "og-cm-village50-us",
+        "name": "Coin Master - Reach Village 50",
+        "description": "Download Coin Master and reach Village 50 to unlock your reward.",
+        "payout": 19.50,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-cm-village50-us",
+        "os": "both",
+        "countries": [
+            "US",
+            "CA"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 0.92
+    },
+    {
+        "id": "og-bb-level100-us",
+        "name": "Bingo Blitz - Reach Level 100",
+        "description": "Play Bingo Blitz and complete Level 100 to earn rewards.",
+        "payout": 14.00,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-bb-level100-us",
+        "os": "both",
+        "countries": [
+            "US"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 0.68
+    },
+    {
+        "id": "og-rm-level80-us",
+        "name": "Royal Match - Complete Level 80",
+        "description": "Install Royal Match and complete Level 80.",
+        "payout": 10.50,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-rm-level80-us",
+        "os": "both",
+        "countries": [
+            "US",
+            "CA",
+            "GB"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 0.53
+    },
+    {
+        "id": "og-coc-th12-us",
+        "name": "Clash of Clans - Reach Town Hall 12",
+        "description": "Build your village and reach Town Hall 12 in Clash of Clans.",
+        "payout": 23.00,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-coc-th12-us",
+        "os": "both",
+        "countries": [
+            "US",
+            "CA"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 1.10
+    },
+    {
+        "id": "og-cr-arena8-us",
+        "name": "Clash Royale - Reach Arena 8",
+        "description": "Play Clash Royale and reach Arena 8 to unlock your reward.",
+        "payout": 11.75,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-cr-arena8-us",
+        "os": "both",
+        "countries": [
+            "US"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 0.59
+    },
+    {
+        "id": "og-gs-level50",
+        "name": "Gardenscapes - Reach Level 50",
+        "description": "Download Gardenscapes and reach Level 50.",
+        "payout": 8.25,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-gs-level50",
+        "os": "both",
+        "countries": [
+            "US",
+            "AU"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 0.41
+    },
+    {
+        "id": "og-lm-power200",
+        "name": "Lords Mobile - Reach Power 200k",
+        "description": "Build your kingdom in Lords Mobile and reach 200,000 Power.",
+        "payout": 25.00,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-lm-power200",
+        "os": "both",
+        "countries": [
+            "US",
+            "CA",
+            "GB",
+            "AU"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 1.25
+    },
+    {
+        "id": "og-survey-5min",
+        "name": "Quick Opinion Survey - 5 Minutes",
+        "description": "Share your opinion in a quick 5-minute consumer survey.",
+        "payout": 1.50,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-survey-5min",
+        "os": "web",
+        "countries": [
+            "US"
+        ],
+        "category": "surveys",
+        "expiration_date": null,
+        "epc": 0.18
+    },
+    {
+        "id": "og-signup-neobank",
+        "name": "Sign Up for Current - Get $50 Bonus",
+        "description": "Open a free Current account and get a $50 welcome bonus.",
+        "payout": 7.50,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-signup-neobank",
+        "os": "both",
+        "countries": [
+            "US"
+        ],
+        "category": "sign_ups",
+        "expiration_date": null,
+        "epc": 0.48
+    },
+    {
+        "id": "og-evony-t10",
+        "name": "Evony - Build a Tier 10 Troop",
+        "description": "Play Evony: The King's Return and build a Tier 10 troop.",
+        "payout": 30.00,
+        "link": "https://ogads.com/click/PLACEHOLDER/og-evony-t10",
+        "os": "both",
+        "countries": [
+            "US",
+            "CA"
+        ],
+        "category": "games",
+        "expiration_date": null,
+        "epc": 1.45
+    }
+]

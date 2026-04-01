@@ -1,0 +1,96 @@
+[
+    {
+        "oid": "ot-cm-village50-us",
+        "title": "Coin Master - Reach Village 50",
+        "description": "Download Coin Master and reach Village 50 to earn your reward.",
+        "payout": 17.50,
+        "anchor": "https://www.offertoro.com/click?appkey=PLACEHOLDER&oid=ot-cm-village50-us&pubid=PLACEHOLDER",
+        "picture": "https://cdn.offertoro.com/images/coin-master.jpg",
+        "countries": [
+            "US",
+            "CA"
+        ],
+        "device": 2,
+        "epc": 0.85,
+        "preview_url": null,
+        "expire_date": null
+    },
+    {
+        "oid": "ot-bb-level100-us",
+        "title": "Bingo Blitz - Reach Level 100",
+        "description": "Play Bingo Blitz and reach Level 100 for a reward.",
+        "payout": 15.00,
+        "anchor": "https://www.offertoro.com/click?appkey=PLACEHOLDER&oid=ot-bb-level100-us&pubid=PLACEHOLDER",
+        "picture": "https://cdn.offertoro.com/images/bingo-blitz.jpg",
+        "countries": [
+            "US"
+        ],
+        "device": 3,
+        "epc": 0.70,
+        "preview_url": null,
+        "expire_date": null
+    },
+    {
+        "oid": "ot-rm-level100",
+        "title": "Royal Match - Reach Level 100",
+        "description": "Install Royal Match and reach Level 100.",
+        "payout": 12.00,
+        "anchor": "https://www.offertoro.com/click?appkey=PLACEHOLDER&oid=ot-rm-level100&pubid=PLACEHOLDER",
+        "picture": "https://cdn.offertoro.com/images/royal-match.jpg",
+        "countries": [
+            "US",
+            "CA",
+            "GB"
+        ],
+        "device": 3,
+        "epc": 0.60,
+        "preview_url": null,
+        "expire_date": null
+    },
+    {
+        "oid": "ot-gs-level30",
+        "title": "Gardenscapes - Reach Level 30",
+        "description": "Play Gardenscapes and reach Level 30.",
+        "payout": 6.50,
+        "anchor": "https://www.offertoro.com/click?appkey=PLACEHOLDER&oid=ot-gs-level30&pubid=PLACEHOLDER",
+        "picture": "https://cdn.offertoro.com/images/gardenscapes.jpg",
+        "countries": [
+            "US",
+            "AU"
+        ],
+        "device": 3,
+        "epc": 0.40,
+        "preview_url": null,
+        "expire_date": null
+    },
+    {
+        "oid": "ot-survey-short",
+        "title": "Take a Short Survey - 5 Minutes",
+        "description": "Complete a 5-minute consumer survey.",
+        "payout": 1.25,
+        "anchor": "https://www.offertoro.com/click?appkey=PLACEHOLDER&oid=ot-survey-short&pubid=PLACEHOLDER",
+        "picture": null,
+        "countries": [
+            "US"
+        ],
+        "device": 1,
+        "epc": 0.20,
+        "preview_url": null,
+        "expire_date": null
+    },
+    {
+        "oid": "ot-signup-fintech",
+        "title": "Sign Up for CashApp",
+        "description": "Create a CashApp account and verify your identity.",
+        "payout": 8.00,
+        "anchor": "https://www.offertoro.com/click?appkey=PLACEHOLDER&oid=ot-signup-fintech&pubid=PLACEHOLDER",
+        "picture": null,
+        "countries": [
+            "US"
+        ],
+        "device": 1,
+        "epc": 0.55,
+        "preview_url": null,
+        "expire_date": null
+    }
+]

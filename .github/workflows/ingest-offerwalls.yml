@@ -1,0 +1,48 @@
+name: Ingest Offers
+
+on:
+  # Run every 4 hours automatically
+  schedule:
+    - cron: "0 */4 * * *"
+  # Allow manual trigger from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: "Provider to use (mock | adgate-media | offertoro | all)"
+        required: false
+        default: "all"
+
+jobs:
+  ingest:
+    name: Run offer ingestion
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: workers/package-lock.json
+
+      - name: Install worker dependencies
+        working-directory: workers
+        run: npm ci
+
+      - name: Run ingestion
+        working-directory: workers
+        env:
+          PROVIDER: ${{ github.event.inputs.provider || 'adgate-media' }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_FUNCTION_URL: ${{ secrets.SUPABASE_FUNCTION_URL }}
+          ADGATE_APP_ID: ${{ secrets.ADGATE_APP_ID }}
+          ADGATE_SECRET_KEY: ${{ secrets.ADGATE_SECRET_KEY }}
+          OFFERTORO_APP_KEY: ${{ secrets.OFFERTORO_APP_KEY }}
+          OFFERTORO_PUB_ID: ${{ secrets.OFFERTORO_PUB_ID }}
+
+        run: npm run ingest

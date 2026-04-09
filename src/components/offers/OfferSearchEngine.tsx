@@ -187,21 +187,25 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout }: OfferRowProps) {
 
     return (
         <div
+            className={`px-4 py-4 border-b border-[var(--border-default)] last:border-0 transition-colors group cursor-pointer ${
+                isBestPayout
+                    ? 'bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]'
+                    : 'hover:bg-[var(--surface-muted)]'
+            }`}
+            onClick={() => router.push(gameHref)}
             role="button"
             tabIndex={0}
-            onClick={() => router.push(gameHref)}
             onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     router.push(gameHref);
                 }
             }}
-            className={`flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4 border-b border-[var(--border-default)] last:border-0 transition-colors group cursor-pointer ${isBestPayout ? 'bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]' : 'hover:bg-[var(--surface-muted)]'
-                }`}
         >
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-                {/* Game thumbnail — row click handles navigation */}
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center group-hover:border-lime-300 transition-colors">
+            {/* Row 1: thumbnail + info + payout */}
+            <div className="flex items-center gap-3">
+                {/* Game thumbnail */}
+                <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center group-hover:border-lime-300 transition-colors">
                     {offer.game.thumbnail_url ? (
                         <Image src={offer.game.thumbnail_url} alt={offer.game.name} width={48} height={48} className="w-full h-full object-cover" />
                     ) : (
@@ -211,13 +215,13 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout }: OfferRowProps) {
 
                 {/* Game info */}
                 <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
                         <span className="font-bold text-[var(--brand-ink)] group-hover:text-lime-700 transition-colors truncate text-sm">
                             {offer.game.name}
                         </span>
                         {isBestPayout && <Badge label="BEST PAYOUT" variant="best" />}
                         {offer.source === "manual" && (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider leading-none bg-indigo-50 text-indigo-700 border border-indigo-200">
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider leading-none bg-indigo-50 text-indigo-700 border border-indigo-200">
                                 Curated
                             </span>
                         )}
@@ -225,89 +229,76 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout }: OfferRowProps) {
                         {offer.is_new && <Badge label="NEW" variant="new" />}
                         {offer.is_hot && <Badge label="HOT" variant="hot" />}
                         {offer.is_boosted && <Badge label="BOOSTED" variant="boosted" />}
-                        {offer.is_featured && <Badge label="Pick" variant="featured" />}
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-[var(--text-tertiary)]">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)]">
                         <span className="flex items-center gap-1 font-medium">
                             {offer.platform.logo_url && (
                                 <Image src={offer.platform.logo_url} alt={offer.platform.name} width={12} height={12} className="w-3 h-3 rounded-sm object-cover" />
                             )}
                             {offer.platform.name}
                         </span>
-                        {offer.source === "manual" && offer.provider_name && (
-                            <>
-                                <span className="text-[var(--border-strong)]">via</span>
-                                <span className="font-medium text-indigo-600">{offer.provider_name}</span>
-                            </>
-                        )}
                         <span className="text-[var(--border-strong)]">·</span>
                         <span className="flex items-center gap-0.5">
                             {offer.devices.map(d => <DeviceIcon key={d} device={d} />)}
                         </span>
                         {offer.heat_score > 50 && (
-                            <>
-                                <span className="text-[var(--border-strong)]">·</span>
-                                <span className="text-orange-500 font-semibold">🔥 {offer.heat_score}</span>
-                            </>
+                            <span className="text-orange-500 font-semibold">🔥</span>
                         )}
                     </div>
-                    {/* Goal text for manual offers */}
                     {offer.source === "manual" && offer.goal_text && (
-                        <p className="mt-1 text-xs text-[var(--text-tertiary)] italic line-clamp-1">{offer.goal_text}</p>
+                        <p className="mt-0.5 text-xs text-[var(--text-tertiary)] italic line-clamp-1">{offer.goal_text}</p>
                     )}
                 </div>
-            </div>
 
-            <div className="flex items-center justify-between sm:justify-end gap-3 sm:w-auto w-full border-t border-[var(--border-default)] sm:border-0 pt-3 sm:pt-0">
-                {/* Payout — prominent */}
-                <div className="flex-shrink-0 min-w-[72px] text-left sm:text-right">
+                {/* Payout — right aligned */}
+                <div className="flex-shrink-0 text-right ml-auto pl-2">
                     <div className="text-[10px] text-[var(--text-tertiary)] uppercase tracking-widest mb-0.5 font-semibold">Up to</div>
-                    <div className={`text-2xl font-extrabold leading-none ${isBestPayout ? 'text-[color:hsl(84,93%,25%)]' : 'text-[color:hsl(84,93%,30%)]'}`}>
+                    <div className={`text-xl sm:text-2xl font-extrabold leading-none ${isBestPayout ? 'text-[color:hsl(84,93%,25%)]' : 'text-[color:hsl(84,93%,30%)]'}`}>
                         ${offer.payout_usd.toFixed(2)}
                     </div>
                 </div>
+            </div>
 
-                {/* CTAs — stopPropagation so they don't trigger row click */}
-                <div className="flex-shrink-0 flex items-center gap-2">
-                    {/* Pin button */}
-                    <button
-                        onClick={(e) => { e.stopPropagation(); onPin(offer); }}
-                        title={isPinned ? "Remove from comparison" : "Add to comparison"}
-                        aria-label={isPinned ? "Remove from comparison" : "Add to comparison"}
-                        className={`w-9 h-9 flex items-center justify-center rounded-xl border text-sm font-bold transition-colors ${isPinned
-                            ? "bg-[var(--brand-lime)] border-lime-300 text-[var(--brand-ink)]"
-                            : "bg-white border-[var(--border-default)] text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700 hover:bg-[var(--brand-lime)]/10"
-                            }`}
-                    >
-                        {isPinned ? "✓" : "+"}
-                    </button>
+            {/* Row 2: action buttons — full width on mobile */}
+            <div className="flex items-center gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
+                {/* Pin button */}
+                <button
+                    onClick={(e) => { e.stopPropagation(); onPin(offer); }}
+                    title={isPinned ? "Remove from comparison" : "Add to comparison"}
+                    aria-label={isPinned ? "Remove from comparison" : "Add to comparison"}
+                    className={`flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-xl border text-sm font-bold transition-colors ${isPinned
+                        ? "bg-[var(--brand-lime)] border-lime-300 text-[var(--brand-ink)]"
+                        : "bg-white border-[var(--border-default)] text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700 hover:bg-[var(--brand-lime)]/10"
+                    }`}
+                >
+                    {isPinned ? "✓" : "+"}
+                </button>
 
-                    {/* View Details — internal comparison page (secondary CTA) */}
-                    <Link
-                        href={gameHref}
+                {/* View Details */}
+                <Link
+                    href={gameHref}
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-all whitespace-nowrap"
+                >
+                    View Details
+                </Link>
+
+                {/* Start Offer CTA */}
+                {offer.redirect_url ? (
+                    <a
+                        href={offer.redirect_url}
+                        target="_blank"
+                        rel="noopener noreferrer sponsored"
                         onClick={(e) => e.stopPropagation()}
-                        className="px-3.5 py-2 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-all whitespace-nowrap"
+                        className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all whitespace-nowrap shadow-sm"
                     >
-                        View Details
-                    </Link>
-
-                    {/* Start Offer CTA — disabled if no URL (some manual offers lack one) */}
-                    {offer.redirect_url ? (
-                        <a
-                            href={offer.redirect_url}
-                            target="_blank"
-                            rel="noopener noreferrer sponsored"
-                            onClick={(e) => e.stopPropagation()}
-                            className="px-4 py-2 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all hover:-translate-y-px active:translate-y-0 whitespace-nowrap shadow-sm"
-                        >
-                            {offer.source === "manual" ? "Go to Site" : "Start Offer"}
-                        </a>
-                    ) : (
-                        <span className="px-4 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-xl whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
-                            No Link
-                        </span>
-                    )}
-                </div>
+                        {offer.source === "manual" ? "Go to Site" : "Start Offer"}
+                    </a>
+                ) : (
+                    <span className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-xl whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
+                        No Link
+                    </span>
+                )}
             </div>
         </div>
     );
@@ -360,10 +351,10 @@ function FilterBar({ filters, dispatch }: FilterBarProps) {
     const selectClass = "px-3.5 py-2 rounded-xl border border-[var(--border-default)] text-sm font-semibold text-[var(--brand-ink)] bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30 focus:border-lime-400 hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)] cursor-pointer appearance-none pr-8";
 
     return (
-        <div className="flex flex-col gap-4">
-            {/* Row 1: dropdowns */}
-            <div className="flex flex-wrap gap-2 items-center">
-                <div className="relative">
+        <div className="flex flex-col gap-3">
+            {/* Row 1: horizontally scrollable dropdowns on mobile */}
+            <div className="flex gap-2 items-center overflow-x-auto pb-1 hide-scrollbar -mx-1 px-1">
+                <div className="relative flex-shrink-0">
                     <select value={filters.sort} onChange={e => set("sort", e.target.value as FilterState["sort"])} className={selectClass}>
                         <option value="payout_desc">Highest Payout</option>
                         <option value="payout_asc">Lowest Payout</option>
@@ -373,7 +364,7 @@ function FilterBar({ filters, dispatch }: FilterBarProps) {
                     <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </div>
 
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                     <select value={filters.source} onChange={e => set("source", e.target.value as FilterState["source"])} className={selectClass}>
                         <option value="">All Sources</option>
                         <option value="ingested">Automated</option>
@@ -382,7 +373,7 @@ function FilterBar({ filters, dispatch }: FilterBarProps) {
                     <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </div>
 
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                     <select value={filters.platform_kind} onChange={e => set("platform_kind", e.target.value)} className={selectClass}>
                         <option value="">All Platforms</option>
                         <option value="gpt_site">GPT Sites</option>
@@ -392,7 +383,7 @@ function FilterBar({ filters, dispatch }: FilterBarProps) {
                     <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </div>
 
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                     <select value={filters.device} onChange={e => set("device", e.target.value)} className={selectClass}>
                         <option value="">All Devices</option>
                         <option value="ios">🍏 iOS</option>
@@ -403,7 +394,7 @@ function FilterBar({ filters, dispatch }: FilterBarProps) {
                 </div>
 
                 {/* Country toggle */}
-                <div className="flex rounded-xl border border-[var(--border-default)] overflow-hidden text-sm shadow-[var(--shadow-card)] bg-[var(--surface-muted)] p-0.5 gap-0.5">
+                <div className="flex-shrink-0 flex rounded-xl border border-[var(--border-default)] overflow-hidden text-sm shadow-[var(--shadow-card)] bg-[var(--surface-muted)] p-0.5 gap-0.5">
                     {(["US", "UK", ""] as const).map(c => (
                         <button
                             key={c || "global"}
@@ -411,33 +402,32 @@ function FilterBar({ filters, dispatch }: FilterBarProps) {
                             className={`px-3 py-1.5 transition-all font-bold rounded-lg text-sm ${filters.country === c
                                 ? "bg-white text-[var(--brand-ink)] shadow-sm"
                                 : "text-[var(--text-secondary)] hover:text-[var(--brand-ink)] hover:bg-white/60"
-                                }`}
+                            }`}
                         >
                             {c || "Global"}
                         </button>
                     ))}
                 </div>
 
-                <div className="flex-1" />
                 <button
                     onClick={() => dispatch({ type: "RESET" })}
-                    className="px-3.5 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-xl bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
+                    className="flex-shrink-0 ml-auto px-3.5 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-xl bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
                 >
-                    Clear Filters
+                    Clear
                 </button>
             </div>
 
             {/* Row 2: badge filter pills */}
-            <div className="flex gap-2 flex-wrap items-center">
-                <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] mr-1">Filter by:</span>
+            <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar -mx-1 px-1">
+                <span className="flex-shrink-0 text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] flex items-center">Filter by:</span>
                 {badgeFilters.map(({ key, label, variant }) => (
                     <button
                         key={key}
                         onClick={() => set(key, !filters[key])}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-extrabold uppercase tracking-wide transition-all ${filters[key]
+                        className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-extrabold uppercase tracking-wide transition-all ${filters[key]
                             ? `${badgeStyles[variant]} border-transparent shadow-sm scale-[1.02]`
                             : "bg-white border-[var(--border-default)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--brand-ink)]"
-                            }`}
+                        }`}
                     >
                         {label}
                     </button>

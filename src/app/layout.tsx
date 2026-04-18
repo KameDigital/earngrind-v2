@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
@@ -56,6 +57,19 @@ export default function RootLayout({
   return (
         <html lang="en" className="scroll-smooth">
       <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-P1HPXTXTMW"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-P1HPXTXTMW');
+          `}
+        </Script>
         <div className="min-h-screen flex flex-col">
           <Header />
           <main id="main-content" className="flex-1 outline-none" tabIndex={-1}>

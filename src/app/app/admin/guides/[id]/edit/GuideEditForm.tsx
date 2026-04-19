@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import GameCombobox, { type GameOption } from "../../GameCombobox";
 
-interface Option { id: string; name: string; }
 interface Guide {
     id: string;
     title: string;
@@ -47,11 +47,18 @@ function Toggle({ checked, onChange, id }: { checked: boolean; onChange: (v: boo
     );
 }
 
-export default function GuideEditForm({ guide, games }: { guide: Guide; games: Option[] }) {
+export default function GuideEditForm({
+    guide,
+    initialGame,
+}: {
+    guide: Guide;
+    initialGame: GameOption | null;
+}) {
     const router = useRouter();
     const [title,          setTitle]          = useState(guide.title);
     const [slug,           setSlug]           = useState(guide.slug);
     const [gameId,         setGameId]         = useState(guide.game_id);
+    const [selectedGame,   setSelectedGame]   = useState<GameOption | null>(initialGame);
     const [excerpt,        setExcerpt]        = useState(guide.excerpt ?? "");
     const [bodyMd,         setBodyMd]         = useState(guide.body_md ?? "");
     const [difficulty,     setDifficulty]     = useState(guide.difficulty ?? "");
@@ -155,10 +162,21 @@ export default function GuideEditForm({ guide, games }: { guide: Guide; games: O
 
                 <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                        <label className={labelClass}>Game *</label>
-                        <select value={gameId} onChange={e => setGameId(e.target.value)} className={inputClass} required>
-                            {games.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
-                        </select>
+                        <GameCombobox
+                            value={gameId}
+                            onChange={(nextGameId, option) => {
+                                setGameId(nextGameId);
+                                setSelectedGame(option);
+                            }}
+                            labelClassName={labelClass}
+                            inputClassName={inputClass}
+                            hintClassName={hintClass}
+                            required
+                            initialOption={initialGame}
+                        />
+                        {selectedGame ? (
+                            <input type="hidden" name="game_id" value={selectedGame.id} />
+                        ) : null}
                     </div>
                     <div>
                         <label className={labelClass}>Status</label>

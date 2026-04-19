@@ -12,12 +12,15 @@ export default async function EditGuidePage({ params }: { params: { id: string }
     const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
     if (!profile || !["admin", "editor"].includes(profile.role)) redirect("/app/dashboard");
 
-    const [{ data: guide }, { data: games }] = await Promise.all([
-        supabase.from("guides").select("*").eq("id", params.id).single(),
-        supabase.from("games").select("id, name").order("name"),
-    ]);
+    const { data: guide } = await supabase.from("guides").select("*").eq("id", params.id).single();
 
     if (!guide) notFound();
+
+    const { data: game } = await supabase
+        .from("games")
+        .select("id, name, slug")
+        .eq("id", guide.game_id)
+        .maybeSingle();
 
     return (
         <div className="space-y-6">
@@ -37,7 +40,7 @@ export default async function EditGuidePage({ params }: { params: { id: string }
             </div>
             <GuideEditForm
                 guide={guide}
-                games={(games ?? []).map(g => ({ id: g.id, name: g.name }))}
+                initialGame={game ? { id: game.id, name: game.name, slug: game.slug } : null}
             />
         </div>
     );

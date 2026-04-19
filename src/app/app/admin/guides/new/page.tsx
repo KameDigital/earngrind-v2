@@ -12,8 +12,6 @@ export default async function NewGuidePage() {
     const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
     if (!profile || !["admin", "editor"].includes(profile.role)) redirect("/app/dashboard");
 
-    const { data: games } = await supabase.from("games").select("id, name").order("name");
-
     return (
         <div className="space-y-6">
             <div>
@@ -25,7 +23,7 @@ export default async function NewGuidePage() {
                 <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">New Guide</h1>
                 <p className="text-sm text-gray-500 mt-1">Create a step-by-step completion guide for a game.</p>
             </div>
-            <GuideCreateForm games={(games ?? []).map(g => ({ id: g.id, name: g.name }))} />
+            <GuideCreateForm />
         </div>
     );
 }

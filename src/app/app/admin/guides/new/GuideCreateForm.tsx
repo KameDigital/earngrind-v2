@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-interface Option { id: string; name: string; }
+import GameCombobox, { type GameOption } from "../GameCombobox";
 
 const inputClass = "w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-400 bg-white transition";
 const labelClass = "block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5";
@@ -26,12 +25,13 @@ function Toggle({ checked, onChange, id }: { checked: boolean; onChange: (v: boo
     );
 }
 
-export default function GuideCreateForm({ games }: { games: Option[] }) {
+export default function GuideCreateForm() {
     const router = useRouter();
     const [title,         setTitle]         = useState("");
     const [slug,          setSlug]          = useState("");
     const [slugManual,    setSlugManual]     = useState(false);
-    const [gameId,        setGameId]        = useState(games[0]?.id ?? "");
+    const [gameId,        setGameId]        = useState("");
+    const [selectedGame,  setSelectedGame]  = useState<GameOption | null>(null);
     const [excerpt,       setExcerpt]       = useState("");
     const [bodyMd,        setBodyMd]        = useState("");
     const [difficulty,    setDifficulty]    = useState("");
@@ -133,10 +133,20 @@ export default function GuideCreateForm({ games }: { games: Option[] }) {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                        <label className={labelClass}>Game *</label>
-                        <select value={gameId} onChange={e => setGameId(e.target.value)} className={inputClass} required>
-                            {games.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
-                        </select>
+                        <GameCombobox
+                            value={gameId}
+                            onChange={(nextGameId, option) => {
+                                setGameId(nextGameId);
+                                setSelectedGame(option);
+                            }}
+                            labelClassName={labelClass}
+                            inputClassName={inputClass}
+                            hintClassName={hintClass}
+                            required
+                        />
+                        {selectedGame ? (
+                            <input type="hidden" name="game_id" value={selectedGame.id} />
+                        ) : null}
                     </div>
                     <div>
                         <label className={labelClass}>Status</label>

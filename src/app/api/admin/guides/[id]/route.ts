@@ -9,6 +9,10 @@ async function checkAdmin(supabase: ReturnType<typeof createClient>) {
     return user;
 }
 
+function normalizeSlug(value: string): string {
+    return value.trim().toLowerCase().replace(/\s+/g, "-");
+}
+
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
     const supabase = createClient();
     const user = await checkAdmin(supabase);
@@ -22,6 +26,34 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
         seo_title, seo_description, status, platform_filter,
     } = body;
 
+    if (!title || !slug || !game_id) {
+        return NextResponse.json({ error: "title, slug, and game_id are required." }, { status: 400 });
+    }
+
+    const normalizedSlug = normalizeSlug(String(slug));
+    const gameId = String(game_id);
+
+    const { data: gameExists, error: gameError } = await supabase
+        .from("games")
+        .select("id")
+        .eq("id", gameId)
+        .maybeSingle();
+    if (gameError) return NextResponse.json({ error: gameError.message }, { status: 500 });
+    if (!gameExists) {
+        return NextResponse.json({ error: "Invalid game_id. No matching game row found." }, { status: 422 });
+    }
+
+    const { data: existingSlug, error: slugError } = await supabase
+        .from("guides")
+        .select("id")
+        .eq("slug", normalizedSlug)
+        .neq("id", params.id)
+        .maybeSingle();
+    if (slugError) return NextResponse.json({ error: slugError.message }, { status: 500 });
+    if (existingSlug) {
+        return NextResponse.json({ error: "Guide slug already exists." }, { status: 409 });
+    }
+
     // Set published_at on first publish
     let publishedAt: string | undefined;
     if (status === "published") {
@@ -33,8 +65,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
     const { data, error } = await supabase.from("guides").update({
         ...(title && { title }),
-        ...(slug && { slug: slug.trim().toLowerCase().replace(/\s+/g, "-") }),
-        ...(game_id && { game_id }),
+        ...(slug && { slug: normalizedSlug }),
+        ...(game_id && { game_id: gameId }),
         excerpt: excerpt ?? null,
         body_md: body_md ?? null,
         difficulty: difficulty || null,

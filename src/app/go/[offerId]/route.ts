@@ -106,9 +106,6 @@ export async function GET(
             game:games(
                 name
             ),
-            provider:providers(
-                name
-            ),
             platform:platforms(
                 id,
                 name,
@@ -127,7 +124,6 @@ export async function GET(
     if (offer) {
         const platform = Array.isArray(offer.platform) ? offer.platform[0] ?? null : offer.platform;
         const game = Array.isArray(offer.game) ? offer.game[0] ?? null : offer.game;
-        const provider = Array.isArray(offer.provider) ? offer.provider[0] ?? null : offer.provider;
         const outboundUrl = getPlatformAffiliateOverride(platform) ?? buildOutboundRedirectUrl({
             affiliateTemplate: platform?.affiliate_template,
             destinationUrl: offer.custom_param,
@@ -156,7 +152,7 @@ export async function GET(
                 offer_title: requestAttribution.offer_title ?? offer.title ?? undefined,
                 game_title: requestAttribution.game_title ?? game?.name ?? undefined,
                 platform_name: requestAttribution.platform_name ?? platform?.name ?? undefined,
-                provider_name: requestAttribution.provider_name ?? provider?.name ?? undefined,
+                provider_name: requestAttribution.provider_name,
                 payout_usd: requestAttribution.payout_usd ?? (typeof offer.payout_usd === "number" ? offer.payout_usd : undefined),
                 click_location: requestAttribution.click_location,
                 source_context: requestAttribution.source_context,

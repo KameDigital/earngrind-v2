@@ -6,6 +6,7 @@
     "scripts": {
         "ingest": "ts-node src/index.ts",
         "ingest:gpt": "ts-node src/jobs/runImport.ts",
+        "ingest:gpt:all": "ts-node src/jobs/runFullRefresh.ts",
         "ingest:gpt:adtowall": "ts-node src/jobs/runImport.ts gain-adtowall",
         "ingest:gpt:gemsloot": "ts-node src/jobs/runImport.ts gemsloot",
         "ingest:mock": "PROVIDER=mock ts-node src/index.ts",

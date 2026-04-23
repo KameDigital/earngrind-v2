@@ -6,7 +6,7 @@ import { SourceOffer } from "../types/offer";
 import { withRetry } from "../core/db";
 import { logger } from "../core/logger";
 
-const DEFAULT_ADTOWALL_URL = "https://adtowall.com";
+const DEFAULT_ADTOWALL_URL = "https://adtowall.com/5753/gainid-sync-sync";
 const DEFAULT_GAIN_SITE_URL = "https://gain.gg/earn";
 
 const MOCK_OFFERS: SourceOffer[] = [
@@ -95,7 +95,9 @@ async function loadAdToWallSource(): Promise<{
     const responseFile = process.env.GAIN_ADTOWALL_RESPONSE_FILE?.trim();
     const inlineJson = process.env.GAIN_ADTOWALL_RESPONSE_JSON?.trim();
     const inlineHtml = process.env.GAIN_ADTOWALL_HTML?.trim();
-    const requestUrl = process.env.GAIN_ADTOWALL_URL?.trim() || DEFAULT_ADTOWALL_URL;
+    const wallUserId = process.env.GAIN_ADTOWALL_USER_ID?.trim() || "gainid-sync-sync";
+    const requestUrl = (process.env.GAIN_ADTOWALL_URL?.trim() || DEFAULT_ADTOWALL_URL)
+        .replace(/gainid-sync-sync/g, wallUserId);
     const sourceUrl = process.env.GAIN_ADTOWALL_SOURCE_URL?.trim() || DEFAULT_GAIN_SITE_URL;
 
     if (harFile) {
@@ -395,32 +397,40 @@ async function fetchLiveModalTaskList(seed: LiveModalSeed, offerLinkId: string):
         ],
     };
 
-    const response = await withRetry(
-        () =>
-            axios.post(`${DEFAULT_ADTOWALL_URL}/livewire/message/livewire-ui-modal`, payload, {
-                timeout: 20000,
-                responseType: "text",
-                headers: {
-                    "User-Agent":
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
-                    "Accept": "text/html, application/xhtml+xml",
-                    "Accept-Language": "en-US,en;q=0.9",
-                    "Content-Type": "application/json",
-                    "Origin": DEFAULT_ADTOWALL_URL,
-                    "Referer": seed.referer,
-                    "X-Livewire": "true",
-                },
-            }),
-        `gain-adtowall-modal-${offerLinkId}`,
-    );
+    try {
+        const response = await withRetry(
+            () =>
+                axios.post("https://adtowall.com/livewire/message/livewire-ui-modal", payload, {
+                    timeout: 20000,
+                    responseType: "text",
+                    headers: {
+                        "User-Agent":
+                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+                        "Accept": "text/html, application/xhtml+xml",
+                        "Accept-Language": "en-US,en;q=0.9",
+                        "Content-Type": "application/json",
+                        "Origin": "https://adtowall.com",
+                        "Referer": seed.referer,
+                        "X-Livewire": "true",
+                    },
+                }),
+            `gain-adtowall-modal-${offerLinkId}`,
+        );
 
-    const responseBody = typeof response.data === "string" ? response.data : JSON.stringify(response.data);
-    const html = extractHtmlFragment(responseBody);
-    if (!html) {
+        const responseBody = typeof response.data === "string" ? response.data : JSON.stringify(response.data);
+        const html = extractHtmlFragment(responseBody);
+        if (!html) {
+            return [];
+        }
+
+        return parseModalTaskList(html);
+    } catch (error) {
+        logger.warn("Gain AdToWall modal enrichment skipped", {
+            offerLinkId,
+            error: error instanceof Error ? error.message : String(error),
+        });
         return [];
     }
-
-    return parseModalTaskList(html);
 }
 
 function extractLiveModalSeedFromPage(html: string, requestUrl: string): LiveModalSeed | undefined {

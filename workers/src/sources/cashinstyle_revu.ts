@@ -7,19 +7,19 @@ import { logger } from "../core/logger";
 
 const DEFAULT_REVU_API_URL = "https://api-wall.revenueuniverse.com/offers.php";
 const DEFAULT_REVU_PROFILE_URL = "https://api-wall.revenueuniverse.com/profile.php";
-const DEFAULT_GAIN_SITE_URL = "https://gain.gg/earn";
-const DEFAULT_GAIN_REVU_WALL_ID = "307";
-const DEFAULT_GAIN_REVU_UID = "gainid-sync-sync";
+const DEFAULT_REVU_TYPE = "desktop";
+const DEFAULT_REVU_OS = "web";
+const DEFAULT_CASHINSTYLE_REVU_WALL_ID = "981";
 
 const MOCK_OFFERS: SourceOffer[] = [
     {
-        external_id: "revu-raid-shadow-legends",
+        external_id: "cashinstyle-revu-raid-shadow-legends",
         title: "Raid: Shadow Legends",
         payout_raw: "85.00",
         currency: "USD",
         device_raw: "desktop",
         category_raw: "mobile_game",
-        url: DEFAULT_GAIN_SITE_URL,
+        url: "https://cashinstyle.com/walls/revu",
         expires_raw: null,
         game_slug: "raid-shadow-legends",
         countries_raw: ["US"],
@@ -27,32 +27,37 @@ const MOCK_OFFERS: SourceOffer[] = [
         provider_name: "Revenue Universe",
         image_url: null,
         total_payout_raw: "85.00",
+        best_payout_usd: 85,
         task_list: [],
     },
 ];
 
-export const gainRevuSource: SourceAdapter = {
-    key: "gain-revu",
-    name: "Gain.gg Revenue Universe",
+export const cashInStyleRevuSource: SourceAdapter = {
+    key: "cashinstyle-revu",
+    name: "CashInStyle RevU",
     type: "api",
     baseUrl: DEFAULT_REVU_API_URL,
     storage: "site_offers",
-    mockEnvVar: "GAIN_USE_MOCK",
+    mockEnvVar: "CASHINSTYLE_USE_MOCK",
     fetchOffers,
 };
 
 export async function fetchOffers(): Promise<SourceOffer[]> {
-    const useMock = (process.env.GAIN_USE_MOCK ?? "false").toLowerCase() === "true";
+    const useMock = (process.env.CASHINSTYLE_USE_MOCK ?? "false").toLowerCase() === "true";
     if (useMock) {
-        logger.info("Gain Revenue Universe source using mock offers", { count: MOCK_OFFERS.length });
+        logger.info("CashInStyle RevU source using mock offers", { count: MOCK_OFFERS.length });
         return [...MOCK_OFFERS];
     }
 
-    const apiKey = process.env.GAIN_REVU_API_KEY?.trim() || process.env.GAIN_REVU_WALL_ID?.trim() || DEFAULT_GAIN_REVU_WALL_ID;
-    const uid = process.env.GAIN_REVU_UID?.trim() || DEFAULT_GAIN_REVU_UID;
-    const profileUrl = process.env.GAIN_REVU_PROFILE_URL ?? DEFAULT_REVU_PROFILE_URL;
-    const type = process.env.GAIN_REVU_TYPE ?? "desktop";
-    const os = process.env.GAIN_REVU_OS ?? "web";
+    const apiKey = process.env.CASHINSTYLE_REVU_API_KEY?.trim() || DEFAULT_CASHINSTYLE_REVU_WALL_ID;
+    const uid = process.env.CASHINSTYLE_REVU_UID?.trim();
+    if (!uid) {
+        throw new Error("CashInStyle RevU requires CASHINSTYLE_REVU_UID.");
+    }
+
+    const profileUrl = process.env.CASHINSTYLE_REVU_PROFILE_URL ?? DEFAULT_REVU_PROFILE_URL;
+    const type = process.env.CASHINSTYLE_REVU_TYPE ?? DEFAULT_REVU_TYPE;
+    const os = process.env.CASHINSTYLE_REVU_OS ?? DEFAULT_REVU_OS;
 
     const profileResponse = await withRetry(
         () =>
@@ -64,11 +69,11 @@ export async function fetchOffers(): Promise<SourceOffer[]> {
                     uid,
                     type,
                     os,
-                    version: process.env.GAIN_REVU_VERSION ?? "",
+                    version: process.env.CASHINSTYLE_REVU_VERSION ?? "",
                 },
                 responseType: "json",
             }),
-        "gain-revu-profile",
+        "cashinstyle-revu-profile",
     );
 
     const offersUrl = firstString(
@@ -76,24 +81,31 @@ export async function fetchOffers(): Promise<SourceOffer[]> {
         (profileResponse.data as Record<string, unknown>)?.offersUrl,
     );
     if (!offersUrl) {
-        throw new Error("Gain Revenue Universe profile did not return offers_url.");
+        throw new Error("CashInStyle RevU profile did not return offers_url.");
     }
+
+    logger.info("CashInStyle RevU profile resolved", {
+        requestUrl: profileResponse.request?.res?.responseUrl ?? profileUrl,
+        status: profileResponse.status,
+        offersUrl,
+    });
 
     const response = await withRetry(
         () =>
-            axios.get(process.env.GAIN_REVU_API_URL ?? offersUrl ?? DEFAULT_REVU_API_URL, {
+            axios.get(process.env.CASHINSTYLE_REVU_API_URL ?? offersUrl ?? DEFAULT_REVU_API_URL, {
                 timeout: 20000,
                 headers: buildHeaders(),
                 responseType: "text",
             }),
-        "gain-revu-fetch",
+        "cashinstyle-revu-fetch",
     );
 
     const payload = parseResponseBody(response.data);
-    const offers = extractOfferNodes(payload).map(parseOffer).filter((offer): offer is SourceOffer => Boolean(offer));
-    const sample = extractOfferNodes(payload)[0];
+    const nodes = extractOfferNodes(payload);
+    const offers = nodes.map(parseOffer).filter((offer): offer is SourceOffer => Boolean(offer));
+    const sample = nodes[0];
 
-    logger.info("Gain Revenue Universe fetched", {
+    logger.info("CashInStyle RevU fetched", {
         requestUrl: response.request?.res?.responseUrl ?? offersUrl,
         status: response.status,
         topLevelKeys: isRecord(payload) ? Object.keys(payload) : [],
@@ -118,7 +130,7 @@ function parseOffer(node: unknown): SourceOffer | null {
     const cleanTitle = extractParentTitle(rawTitle);
 
     return {
-        external_id: `revu-${rawExternalId}`,
+        external_id: `cashinstyle-revu-${rawExternalId}`,
         title: cleanTitle,
         payout_raw: bestPayout.toFixed(2),
         currency: "USD",
@@ -132,6 +144,7 @@ function parseOffer(node: unknown): SourceOffer | null {
         provider_name: "Revenue Universe",
         image_url: firstString(node.image, node.icon, node.thumbnail, node.creative) || null,
         total_payout_raw: totalPayout.toFixed(2),
+        best_payout_usd: bestPayout,
         task_list: [],
     };
 }
@@ -153,7 +166,7 @@ function parseResponseBody(body: unknown): unknown {
 
 function parseXmlOffers(xml: string): unknown {
     const $ = cheerio.load(xml, { xmlMode: true });
-    const offers = $("offer").map((_, offer) => {
+    return $("offer").map((_, offer) => {
         const $offer = $(offer);
         return {
             id: textAt($offer, "id"),
@@ -166,21 +179,13 @@ function parseXmlOffers(xml: string): unknown {
             countries: textAt($offer, "countries"),
         };
     }).get();
-
-    return offers;
 }
 
 function extractOfferNodes(payload: unknown): unknown[] {
     if (Array.isArray(payload)) return payload;
     if (!isRecord(payload)) return [];
 
-    const candidates = [
-        payload.offers,
-        payload.data,
-        payload.response,
-        payload.results,
-    ];
-
+    const candidates = [payload.offers, payload.data, payload.response, payload.results];
     for (const candidate of candidates) {
         if (Array.isArray(candidate)) return candidate;
     }
@@ -194,12 +199,10 @@ function extractOfferNodes(payload: unknown): unknown[] {
 
 function extractPayout(payload: Record<string, any>): number {
     const candidates = [payload.payout, payload.amount, payload.reward, payload.usd, currencyToUsd(payload.currency)];
-
     for (const candidate of candidates) {
         const parsed = toNumber(candidate);
         if (parsed !== null && parsed > 0) return round(parsed);
     }
-
     return 0;
 }
 
@@ -228,15 +231,11 @@ function currencyToUsd(value: unknown): number | null {
 
 function normalizeCountries(payload: Record<string, any>): string[] | null {
     const candidates = [payload.countries, payload.country_codes, payload.countryCodes];
-
     for (const candidate of candidates) {
         if (Array.isArray(candidate)) {
-            const countries = candidate
-                .map((value) => firstString(value).toUpperCase())
-                .filter((value) => /^[A-Z]{2}$/.test(value));
+            const countries = candidate.map((value) => firstString(value).toUpperCase()).filter((value) => /^[A-Z]{2}$/.test(value));
             if (countries.length > 0) return Array.from(new Set(countries));
         }
-
         if (typeof candidate === "string" && candidate.trim()) {
             const countries = candidate
                 .split(/[\s,|]+/)
@@ -245,17 +244,16 @@ function normalizeCountries(payload: Record<string, any>): string[] | null {
             if (countries.length > 0) return Array.from(new Set(countries));
         }
     }
-
     return null;
 }
 
 function buildHeaders(): Record<string, string> {
     return {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "en-US,en;q=0.9",
-        "Origin": "https://gain.gg",
-        "Referer": "https://gain.gg/",
+        "Origin": "https://wall.revenueuniverse.com",
+        "Referer": "https://wall.revenueuniverse.com/",
         "Cache-Control": "no-cache",
         "Pragma": "no-cache",
     };
@@ -266,7 +264,7 @@ function textAt(root: cheerio.Cheerio<any>, tagName: string): string {
 }
 
 function normalizeUrl(url: string): string {
-    return /^https?:\/\//i.test(url) ? url : DEFAULT_GAIN_SITE_URL;
+    return /^https?:\/\//i.test(url) ? url : "https://cashinstyle.com/walls/revu";
 }
 
 function extractParentTitle(value: string): string {

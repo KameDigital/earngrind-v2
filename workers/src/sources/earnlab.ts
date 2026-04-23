@@ -7,6 +7,13 @@ import { SourceOffer } from "../types/offer";
 
 const DEFAULT_EARNLAB_SITE_URL = "https://earnlab.com/earn";
 const DEFAULT_EARNLAB_TASKS_URL = "https://earnlab.com/tasks";
+const DEFAULT_EARNLAB_API_BASE = "https://api.earnlab.com";
+const DEFAULT_EARNLAB_TASKS_API_URL = `${DEFAULT_EARNLAB_API_BASE}/tasks`;
+const DEFAULT_EARNLAB_BOOT_API_URL = `${DEFAULT_EARNLAB_API_BASE}/boot`;
+const DEFAULT_EARNLAB_COUNTRY = "US";
+const DEFAULT_EARNLAB_SORT = "POPULARITY";
+const DEFAULT_EARNLAB_LIMIT = 75;
+const MAX_EARNLAB_LIMIT = 75;
 const DEFAULT_EARNLAB_TOROX_BOOTSTRAP_URL = "https://api.earnlab.com/tasks/walls/torox";
 const DEFAULT_EARNLAB_TOROX_CAMPAIGNS_URL = "https://api.wall.torox.io/player/campaigns";
 const DEFAULT_EARNLAB_TOROX_SETTINGS_URL = "https://api.wall.torox.io/player/settings";
@@ -113,6 +120,36 @@ interface RequestTrace {
     headers: Record<string, unknown>;
 }
 
+interface EarnlabBootResponse {
+    success?: boolean;
+    data?: {
+        countryCode?: string | null;
+    } | null;
+}
+
+interface EarnlabTasksResponse {
+    success?: boolean;
+    data?: {
+        items?: EarnlabTaskSummary[];
+        totalItems?: number | null;
+        totalPages?: number | null;
+    } | null;
+}
+
+interface EarnlabTaskSummary {
+    id: string;
+    name: string;
+    provider?: string | null;
+    description?: string | null;
+    thumbnail?: string | null;
+    reward?: number | null;
+    category?: string | null;
+    customCategory?: string | null;
+    isDesktop?: boolean | null;
+    isAndroid?: boolean | null;
+    isIOS?: boolean | null;
+}
+
 interface EarnlabConfig {
     bootstrapUrl: string;
     frameUrl: string | null;
@@ -152,6 +189,15 @@ export async function fetchOffers(): Promise<SourceOffer[]> {
         return [...MOCK_EARNLAB_OFFERS];
     }
 
+    const apiOffers = await fetchEarnlabApiOffers();
+    if (apiOffers.length > 0) {
+        logger.info("EarnLab parsed offer count", {
+            parsedCount: apiOffers.length,
+            source: "public-api",
+        });
+        return apiOffers;
+    }
+
     const config = getConfig();
     const taskPageOffers = await fetchEarnlabTasksPageOffers(config.limit);
     if (taskPageOffers.length > 0) {
@@ -189,6 +235,204 @@ export const earnlabSource: SourceAdapter = {
     mockEnvVar: "EARNLAB_USE_MOCK",
     fetchOffers,
 };
+
+async function fetchEarnlabApiOffers(): Promise<SourceOffer[]> {
+    const apiBase = process.env.EARNLAB_API_BASE?.trim() || DEFAULT_EARNLAB_API_BASE;
+    const bootUrl = process.env.EARNLAB_BOOT_API_URL?.trim() || `${apiBase}/boot`;
+    const tasksUrl = process.env.EARNLAB_TASKS_API_URL?.trim() || `${apiBase}/tasks`;
+    const country = await resolveEarnlabCountryCode(bootUrl);
+    const limit = Math.min(parsePositiveInt(process.env.EARNLAB_API_LIMIT, DEFAULT_EARNLAB_LIMIT), MAX_EARNLAB_LIMIT);
+    const sort = process.env.EARNLAB_API_SORT?.trim() || DEFAULT_EARNLAB_SORT;
+
+    const offers: SourceOffer[] = [];
+    let totalPages = 1;
+
+    for (let page = 0; page < totalPages; page += 1) {
+        const response = await withRetry(
+            () =>
+                axios.get<EarnlabTasksResponse>(tasksUrl, {
+                    timeout: 20000,
+                    headers: buildEarnlabApiHeaders(),
+                    params: {
+                        country,
+                        sort,
+                        page,
+                        limit,
+                    },
+                }),
+            `earnlab-api-tasks-${page}`,
+        );
+
+        const items = response.data?.data?.items ?? [];
+        const responseTotalPages = response.data?.data?.totalPages;
+        if (Number.isFinite(responseTotalPages) && Number(responseTotalPages) > 0) {
+            totalPages = Number(responseTotalPages);
+        } else if (items.length < limit) {
+            totalPages = page + 1;
+        }
+
+        logger.info("EarnLab API page fetched", {
+            page,
+            totalPages,
+            count: items.length,
+            country,
+            sort,
+        });
+
+        for (const item of items) {
+            const normalized = normalizeEarnlabTaskSummary(item);
+            if (normalized) {
+                offers.push(normalized);
+            }
+        }
+
+        if (items.length === 0) {
+            break;
+        }
+    }
+
+    return offers;
+}
+
+async function resolveEarnlabCountryCode(bootUrl: string): Promise<string> {
+    const configured = process.env.EARNLAB_COUNTRY?.trim().toUpperCase();
+    if (configured) {
+        return configured;
+    }
+
+    try {
+        const response = await withRetry(
+            () =>
+                axios.get<EarnlabBootResponse>(bootUrl, {
+                    timeout: 15000,
+                    headers: buildEarnlabApiHeaders(),
+                }),
+            "earnlab-api-boot",
+        );
+
+        const countryCode = response.data?.data?.countryCode?.trim().toUpperCase();
+        if (countryCode && /^[A-Z]{2}$/.test(countryCode)) {
+            return countryCode;
+        }
+    } catch (error) {
+        logger.warn("EarnLab boot lookup failed; falling back to default country", {
+            error: error instanceof Error ? error.message : String(error),
+        });
+    }
+
+    return DEFAULT_EARNLAB_COUNTRY;
+}
+
+function normalizeEarnlabTaskSummary(task: EarnlabTaskSummary): SourceOffer | null {
+    const externalId = task.id?.trim();
+    const title = task.name?.trim();
+    const payoutUsd = toEarnlabUsd(task.reward);
+
+    if (!externalId || !title || payoutUsd <= 0) {
+        return null;
+    }
+
+    const devices = normalizeEarnlabDevices(task);
+    const category = normalizeEarnlabCategory(task.category, task.customCategory);
+    const providerName = normalizeEarnlabProviderName(task.provider);
+    const description = normalizeWhitespace(task.description ?? "");
+
+    return {
+        external_id: externalId,
+        title,
+        payout_raw: payoutUsd.toFixed(2),
+        total_payout_raw: payoutUsd.toFixed(2),
+        currency: "USD",
+        device_raw: devices,
+        category_raw: category,
+        url: DEFAULT_EARNLAB_TASKS_URL,
+        expires_raw: null,
+        game_slug: null,
+        countries_raw: [DEFAULT_EARNLAB_COUNTRY],
+        game_title: title,
+        provider_name: providerName,
+        image_url: task.thumbnail?.trim() || null,
+        best_payout_usd: payoutUsd,
+        task_list: description
+            ? [
+                {
+                    title,
+                    reward_amount_usd: payoutUsd,
+                    reward_display: `$${payoutUsd.toFixed(2)}`,
+                    task_type: "other",
+                    time_limit_text: null,
+                    notes: description,
+                    sort_order: 1,
+                },
+            ]
+            : [],
+    };
+}
+
+function buildEarnlabApiHeaders(): Record<string, string> {
+    return {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Origin": "https://earnlab.com",
+        "Referer": `${DEFAULT_EARNLAB_TASKS_URL}?country=${DEFAULT_EARNLAB_COUNTRY}`,
+    };
+}
+
+function toEarnlabUsd(reward: number | null | undefined): number {
+    if (!Number.isFinite(reward)) {
+        return 0;
+    }
+
+    return round(Number(reward) / 1000);
+}
+
+function normalizeEarnlabDevices(task: EarnlabTaskSummary): string {
+    const devices: string[] = [];
+
+    if (task.isDesktop) devices.push("pc");
+    if (task.isAndroid) devices.push("android");
+    if (task.isIOS) devices.push("ios");
+
+    return devices.length > 0 ? devices.join(",") : "web";
+}
+
+function normalizeEarnlabCategory(category?: string | null, customCategory?: string | null): string {
+    const raw = `${category ?? ""} ${customCategory ?? ""}`.trim().toLowerCase();
+    if (!raw) return "other";
+    if (raw.includes("game")) return "mobile_game";
+    if (raw.includes("survey")) return "survey";
+    if (raw.includes("shop")) return "shopping";
+    if (raw.includes("finance")) return "finance";
+    return raw.replace(/\s+/g, "_");
+}
+
+function normalizeEarnlabProviderName(provider?: string | null): string {
+    const value = (provider ?? "").trim();
+    if (!value) return "EarnLab";
+
+    const directMap: Record<string, string> = {
+        EARN_LAB: "EarnLab",
+        OFFERTORO: "OfferToro",
+        TOROX: "Torox",
+        MY_APP_FREE: "MyAppFree",
+        AYE_T: "ayeT-Studios",
+        REVENUE_UNIVERSE: "Revenue Universe",
+        REVU: "Revenue Universe",
+        ADGATE_MEDIA: "AdGate Media",
+    };
+
+    if (directMap[value]) {
+        return directMap[value];
+    }
+
+    return value
+        .toLowerCase()
+        .split(/[_\s-]+/)
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+}
 
 async function fetchEarnlabTasksPageOffers(limit: number): Promise<SourceOffer[]> {
     const trace = await fetchJson(DEFAULT_EARNLAB_TASKS_URL, {

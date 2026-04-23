@@ -4,8 +4,10 @@ import { SourceOffer } from "../types/offer";
 import { withRetry } from "../core/db";
 import { logger } from "../core/logger";
 
-const DEFAULT_MYCHIPS_API_URL = "https://api.mychips.io/v1.6/campaigns";
+const DEFAULT_MYCHIPS_API_URL = "https://api.mychips.io/v1.6/campaigns/users";
 const DEFAULT_GAIN_SITE_URL = "https://gain.gg/earn";
+const DEFAULT_GAIN_MYCHIPS_WALL_URL =
+    "https://trk301.com?cid=2597981&pid=2435&adunit_id=632c1881-80ec-4c17-9170-c6e4100fd3af&user_id=gainid-sync-sync";
 const DEFAULT_LIMIT = 10;
 const DEFAULT_LANGUAGE = "en";
 
@@ -75,12 +77,14 @@ export async function fetchOffers(): Promise<SourceOffer[]> {
         return [...MOCK_OFFERS];
     }
 
-    const contentId = requiredEnv("GAIN_MYCHIPS_CONTENT_ID");
-    const userId = requiredEnv("GAIN_MYCHIPS_USER_ID");
-    const clickId = requiredEnv("GAIN_MYCHIPS_CLICK_ID");
+    const bootstrap = await resolveLiveBootstrap();
     const apiUrl = process.env.GAIN_MYCHIPS_API_URL ?? DEFAULT_MYCHIPS_API_URL;
     const language = process.env.GAIN_MYCHIPS_LANGUAGE ?? DEFAULT_LANGUAGE;
     const limit = parsePositiveInt(process.env.GAIN_MYCHIPS_LIMIT, DEFAULT_LIMIT);
+    const country = process.env.GAIN_MYCHIPS_COUNTRY?.trim() || undefined;
+    const age = process.env.GAIN_MYCHIPS_AGE?.trim() || undefined;
+    const gender = process.env.GAIN_MYCHIPS_GENDER?.trim() || undefined;
+    const debugKey = process.env.GAIN_MYCHIPS_DEBUG_KEY?.trim() || undefined;
 
     const offers: SourceOffer[] = [];
     const seen = new Set<string>();
@@ -90,16 +94,20 @@ export async function fetchOffers(): Promise<SourceOffer[]> {
     for (let offset = 0; ; offset += limit) {
         const response = await withRetry(
             () =>
-                axios.get(apiUrl, {
+                axios.get(`${apiUrl.replace(/\/+$/, "")}/${encodeURIComponent(bootstrap.userId)}`, {
                     timeout: 20000,
                     headers: buildHeaders(),
                     params: {
-                        content_id: contentId,
-                        user_id: userId,
-                        click_id: clickId,
+                        content_id: bootstrap.contentId,
+                        user_id: bootstrap.userId,
+                        click_id: bootstrap.clickId,
                         language,
                         offset,
                         limit,
+                        ...(country ? { country } : {}),
+                        ...(age ? { age } : {}),
+                        ...(gender ? { gender } : {}),
+                        ...(debugKey ? { debug_key: debugKey } : {}),
                     },
                     responseType: "json",
                 }),
@@ -211,6 +219,65 @@ export async function fetchOffers(): Promise<SourceOffer[]> {
     }
 
     return offers;
+}
+
+async function resolveLiveBootstrap(): Promise<{
+    contentId: string;
+    userId: string;
+    clickId: string;
+}> {
+    const explicitContentId = process.env.GAIN_MYCHIPS_CONTENT_ID?.trim();
+    const explicitUserId = process.env.GAIN_MYCHIPS_USER_ID?.trim();
+    const explicitClickId = process.env.GAIN_MYCHIPS_CLICK_ID?.trim();
+
+    if (explicitContentId && explicitUserId && explicitClickId) {
+        return {
+            contentId: explicitContentId,
+            userId: explicitUserId,
+            clickId: explicitClickId,
+        };
+    }
+
+    const wallUserId = explicitUserId || process.env.GAIN_MYCHIPS_WALL_USER_ID?.trim() || "gainid-sync-sync";
+    const wallUrl = (process.env.GAIN_MYCHIPS_WALL_URL ?? DEFAULT_GAIN_MYCHIPS_WALL_URL)
+        .replace(/gainid-sync-sync/g, wallUserId);
+
+    const response = await withRetry(
+        () =>
+            axios.get(wallUrl, {
+                timeout: 20000,
+                headers: {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                    "Accept-Language": "en-US,en;q=0.9",
+                    "Cache-Control": "no-cache",
+                    "Pragma": "no-cache",
+                },
+                maxRedirects: 10,
+                responseType: "text",
+            }),
+        "gain-mychips-bootstrap",
+    );
+
+    const finalUrl = response.request?.res?.responseUrl ?? wallUrl;
+    const parsedUrl = new URL(finalUrl);
+    const contentId = explicitContentId || parsedUrl.searchParams.get("adunit_id")?.trim() || "";
+    const userId = explicitUserId || parsedUrl.searchParams.get("user_id")?.trim() || wallUserId;
+    const clickId = explicitClickId || parsedUrl.searchParams.get("click_id")?.trim() || "";
+
+    logger.info("Gain MyChips bootstrap resolved", {
+        wallUrl,
+        finalUrl,
+        contentId,
+        userId,
+        hasClickId: Boolean(clickId),
+    });
+
+    if (!contentId || !userId || !clickId) {
+        throw new Error("Gain MyChips bootstrap did not yield content_id, user_id, and click_id.");
+    }
+
+    return { contentId, userId, clickId };
 }
 
 function parseCampaign(node: unknown): SourceOffer | null {
@@ -603,10 +670,15 @@ function buildHeaders(): Record<string, string> {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "en-US,en;q=0.9",
-        "Origin": "https://gain.gg",
-        "Referer": "https://gain.gg/",
+        "Origin": "https://cdn.mychips.io",
+        "Referer": "https://cdn.mychips.io/",
         "Cache-Control": "no-cache",
         "Pragma": "no-cache",
+        "Expires": "0",
+        "If-Modified-Since": new Date(0).toUTCString(),
+        "X-Requested-With": "XMLHttpRequest",
+        "X-Cache-Buster": Date.now().toString(),
+        "User-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
 }
 
@@ -644,12 +716,6 @@ function extractSortOrder(payload: Record<string, any>, index: number): number {
 
 function normalizeUrl(url: string): string {
     return /^https?:\/\//i.test(url) ? url : DEFAULT_GAIN_SITE_URL;
-}
-
-function requiredEnv(name: string): string {
-    const value = process.env[name]?.trim();
-    if (!value) throw new Error(`Missing required env var ${name}`);
-    return value;
 }
 
 function parsePositiveInt(value: string | undefined, fallback: number): number {

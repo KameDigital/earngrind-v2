@@ -6,6 +6,10 @@ import { GameRecord, OfferRecord, PlatformRecord, ProviderRecord, SiteOfferRecor
 import { SourceAdapter, SourceRecord } from "../models/source";
 import { findMatchingGame } from "../services/matcher";
 import { normalizeGainOffer, titleToAliases, toSlug } from "../services/normalize";
+import { cashInStyleSource } from "../sources/cashinstyle";
+import { cashInStyleAyetSource } from "../sources/cashinstyle_ayet";
+import { cashInStyleMyChipsSource } from "../sources/cashinstyle_mychips";
+import { cashInStyleRevuSource } from "../sources/cashinstyle_revu";
 import { earnlabSource } from "../sources/earnlab";
 import { gainSource } from "../sources/gain";
 import { gainAdToWallSource } from "../sources/gain_adtowall";
@@ -14,7 +18,11 @@ import { gainRevuSource } from "../sources/gain_revu";
 import { gemslootSource } from "../sources/gemsloot";
 import { ImportStats, SourceOffer } from "../types/offer";
 
-const SOURCES: Record<string, SourceAdapter> = {
+export const SOURCES: Record<string, SourceAdapter> = {
+    [cashInStyleSource.key]: cashInStyleSource,
+    [cashInStyleAyetSource.key]: cashInStyleAyetSource,
+    [cashInStyleMyChipsSource.key]: cashInStyleMyChipsSource,
+    [cashInStyleRevuSource.key]: cashInStyleRevuSource,
     [gainSource.key]: gainSource,
     [gainAdToWallSource.key]: gainAdToWallSource,
     [gainMyChipsSource.key]: gainMyChipsSource,
@@ -23,7 +31,13 @@ const SOURCES: Record<string, SourceAdapter> = {
     [gemslootSource.key]: gemslootSource,
 };
 
-export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gainSource.key): Promise<void> {
+export interface ImportJobResult {
+    sourceKey: string;
+    sourceName: string;
+    stats: ImportStats;
+}
+
+export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gainSource.key): Promise<ImportJobResult> {
     const adapter = SOURCES[sourceKey];
     if (!adapter) {
         throw new Error(`Unknown source "${sourceKey}"`);
@@ -35,8 +49,11 @@ export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gain
     const runId = await startImportRun(db, source.id);
     const stats: ImportStats = {
         found: 0,
+        normalized: 0,
+        matched: 0,
         created: 0,
         updated: 0,
+        inactivated: 0,
         skipped: 0,
         failed: 0,
     };
@@ -67,8 +84,20 @@ export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gain
             await retireLegacyGainOffers(db, platform.id);
         }
 
+        const fetchedExternalIds = new Set<string>();
+        const fetchedSiteOfferKeys = new Set<string>();
+        const fetchedProviderIds = new Set<string>();
+        const scopedProviderName = getScopedProviderNameForSource(adapter);
+        let scopedProviderId: string | null = null;
+
+        if (adapter.storage === "site_offers" && scopedProviderName) {
+            scopedProviderId = (await upsertProvider(db, scopedProviderName)).id;
+            fetchedProviderIds.add(scopedProviderId);
+        }
+
         for (const rawOffer of fetchedOffers) {
             try {
+                stats.normalized += 1;
                 const game = await resolveGame(db, games, rawOffer);
 
                 if (adapter.storage === "site_offers") {
@@ -76,6 +105,8 @@ export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gain
                         db,
                         rawOffer.provider_name?.trim() || adapter.name,
                     );
+                    fetchedProviderIds.add(provider.id);
+                    fetchedSiteOfferKeys.add(buildSiteOfferKey(provider.id, rawOffer.external_id.trim()));
                     const changed = await upsertSiteParentOffer(
                         db,
                         platform.id,
@@ -85,13 +116,18 @@ export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gain
                     );
 
                     if (changed === "created") stats.created += 1;
-                    else if (changed === "updated") stats.updated += 1;
+                    else if (changed === "updated") {
+                        stats.updated += 1;
+                        stats.matched += 1;
+                    }
                     else stats.skipped += 1;
                 } else {
                     const normalized = normalizeGainOffer(rawOffer, platform.id, game?.id ?? null);
+                    fetchedExternalIds.add(normalized.external_id);
                     const existing = await loadOfferByExternalId(db, platform.id, normalized.external_id);
 
                     if (existing) {
+                        stats.matched += 1;
                         const changed = await updateExistingOffer(db, existing, normalized);
                         if (changed) stats.updated += 1;
                         else stats.skipped += 1;
@@ -111,18 +147,31 @@ export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gain
             }
         }
 
+        stats.inactivated = adapter.storage === "site_offers"
+            ? await inactivateMissingSiteOffers(db, platform.id, fetchedSiteOfferKeys, fetchedProviderIds)
+            : await inactivateMissingOffers(db, platform.id, fetchedExternalIds);
+
         await finishImportRun(db, runId, "completed", stats);
         await touchSource(db, source.id);
 
         logger.info("Source import summary", {
             source: adapter.key,
+            fetchedCount: stats.found,
+            normalizedCount: stats.normalized,
+            matchedCount: stats.matched,
             insertedCount: stats.created,
             updatedCount: stats.updated,
+            inactivatedCount: stats.inactivated,
             skippedCount: stats.skipped,
             failedRows: stats.failed,
         });
 
         printSummary(adapter.name, stats);
+        return {
+            sourceKey: adapter.key,
+            sourceName: adapter.name,
+            stats,
+        };
     } catch (error) {
         await finishImportRun(db, runId, "failed", stats);
         throw error;
@@ -131,8 +180,9 @@ export async function runImportJob(sourceKey = process.env.INGEST_SOURCE ?? gain
 
 async function upsertPlatform(db: SupabaseClient, adapter: SourceAdapter): Promise<PlatformRecord> {
     const isGainPlatform = adapter.key === "gain-gg" || adapter.key.startsWith("gain-");
-    const slug = isGainPlatform ? "gain-gg" : toSlug(adapter.name);
-    const platformName = isGainPlatform ? "Gain.gg" : adapter.name;
+    const isCashInStylePlatform = adapter.key === cashInStyleSource.key || adapter.key.startsWith("cashinstyle-");
+    const slug = isGainPlatform ? "gain-gg" : isCashInStylePlatform ? "cashinstyle" : toSlug(adapter.name);
+    const platformName = isGainPlatform ? "Gain.gg" : isCashInStylePlatform ? "CashInStyle" : adapter.name;
     const { data: existing } = await db
         .from("platforms")
         .select("id, name, slug, platform_kind, logo_url, affiliate_template, description, countries, is_active")
@@ -376,11 +426,15 @@ async function resolveGame(db: SupabaseClient, games: GameRecord[], rawOffer: So
 async function upsertProvider(db: SupabaseClient, name: string): Promise<ProviderRecord> {
     const slug = toSlug(name);
 
-    const { data: existing, error: selectError } = await db
-        .from("providers")
-        .select("id, name, slug, is_active")
-        .eq("slug", slug)
-        .maybeSingle();
+    const { data: existing, error: selectError } = await withRetry(
+        async () =>
+            await db
+                .from("providers")
+                .select("id, name, slug, is_active")
+                .eq("slug", slug)
+                .maybeSingle(),
+        `provider-select-${slug}`,
+    );
 
     if (selectError) {
         throw new Error(`Failed to load provider: ${selectError.message}`);
@@ -390,15 +444,19 @@ async function upsertProvider(db: SupabaseClient, name: string): Promise<Provide
         return existing as ProviderRecord;
     }
 
-    const { data, error } = await db
-        .from("providers")
-        .insert({
-            name,
-            slug,
-            is_active: true,
-        })
-        .select("id, name, slug, is_active")
-        .single();
+    const { data, error } = await withRetry(
+        async () =>
+            await db
+                .from("providers")
+                .insert({
+                    name,
+                    slug,
+                    is_active: true,
+                })
+                .select("id, name, slug, is_active")
+                .single(),
+        `provider-insert-${slug}`,
+    );
 
     if (error || !data) {
         throw new Error(`Failed to create provider: ${error?.message ?? "unknown error"}`);
@@ -527,15 +585,76 @@ async function loadSiteOfferByExternalId(
     return (data as SiteOfferRecord | null) ?? null;
 }
 
+async function inactivateMissingOffers(
+    db: SupabaseClient,
+    platformId: string,
+    fetchedExternalIds: Set<string>,
+): Promise<number> {
+    const data = await loadActiveOfferRowsForReconciliation(db, platformId);
+
+    const staleIds = data
+        .filter((row) => row.external_id && !fetchedExternalIds.has(String(row.external_id)))
+        .map((row) => String(row.id));
+
+    if (staleIds.length === 0) return 0;
+
+    const { error: updateError } = await db
+        .from("offers")
+        .update({
+            status: "expired",
+            updated_at: new Date().toISOString(),
+        })
+        .in("id", staleIds);
+
+    if (updateError) {
+        throw new Error(`Failed to inactivate stale offers: ${updateError.message}`);
+    }
+
+    return staleIds.length;
+}
+
+async function inactivateMissingSiteOffers(
+    db: SupabaseClient,
+    siteId: string,
+    fetchedKeys: Set<string>,
+    providerIds?: Set<string>,
+): Promise<number> {
+    const data = await loadActiveSiteOfferRowsForReconciliation(db, siteId, providerIds);
+
+    const staleIds = data
+        .filter((row) => !fetchedKeys.has(buildSiteOfferKey(String(row.provider_id), String(row.external_id))))
+        .map((row) => String(row.id));
+
+    if (staleIds.length === 0) return 0;
+
+    const { error: updateError } = await db
+        .from("site_offers")
+        .update({
+            status: "expired",
+            updated_at: new Date().toISOString(),
+        })
+        .in("id", staleIds);
+
+    if (updateError) {
+        throw new Error(`Failed to inactivate stale site offers: ${updateError.message}`);
+    }
+
+    return staleIds.length;
+}
+
 async function replaceSiteOfferTasks(
     db: SupabaseClient,
     siteOfferId: string,
     taskList: NonNullable<SourceOffer["task_list"]>,
 ): Promise<void> {
-    const { error: deleteError } = await db
-        .from("site_offer_tasks")
-        .delete()
-        .eq("site_offer_id", siteOfferId);
+    const { error: deleteError } = await withRetry(
+        async () =>
+            await db
+                .from("site_offer_tasks")
+                .delete()
+                .eq("site_offer_id", siteOfferId),
+        `site-offer-tasks-delete-${siteOfferId}`,
+    );
 
     if (deleteError) {
         throw new Error(`Failed to delete stale site offer tasks: ${deleteError.message}`);
@@ -546,22 +665,26 @@ async function replaceSiteOfferTasks(
     }
 
     const now = new Date().toISOString();
-    const { error: insertError } = await db
-        .from("site_offer_tasks")
-        .insert(
-            taskList.map((task) => ({
-                site_offer_id: siteOfferId,
-                sort_order: task.sort_order,
-                title: task.title,
-                reward_amount: task.reward_amount_usd,
-                reward_display: task.reward_display ?? `$${task.reward_amount_usd.toFixed(2)}`,
-                task_type: task.task_type ?? "other",
-                time_limit_text: task.time_limit_text ?? null,
-                notes: task.notes ?? null,
-                created_at: now,
-                updated_at: now,
-            })),
-        );
+    const { error: insertError } = await withRetry(
+        async () =>
+            await db
+                .from("site_offer_tasks")
+                .insert(
+                    taskList.map((task) => ({
+                        site_offer_id: siteOfferId,
+                        sort_order: task.sort_order,
+                        title: task.title,
+                        reward_amount: task.reward_amount_usd,
+                        reward_display: task.reward_display ?? `$${task.reward_amount_usd.toFixed(2)}`,
+                        task_type: task.task_type ?? "other",
+                        time_limit_text: task.time_limit_text ?? null,
+                        notes: task.notes ?? null,
+                        created_at: now,
+                        updated_at: now,
+                    })),
+                ),
+        `site-offer-tasks-insert-${siteOfferId}`,
+    );
 
     if (insertError) {
         throw new Error(`Failed to insert site offer tasks: ${insertError.message}`);
@@ -685,9 +808,103 @@ async function insertOfferHistory(db: SupabaseClient, offerId: string, payoutUsd
 function printSummary(sourceName: string, stats: ImportStats): void {
     console.log(`[${sourceName.toUpperCase()} IMPORT]`);
     console.log(`Found: ${stats.found} offers`);
+    console.log(`Normalized: ${stats.normalized}`);
+    console.log(`Matched: ${stats.matched}`);
     console.log(`New: ${stats.created}`);
     console.log(`Updated: ${stats.updated}`);
+    console.log(`Inactivated: ${stats.inactivated}`);
     console.log(`Skipped: ${stats.skipped}`);
+}
+
+function buildSiteOfferKey(providerId: string, externalId: string): string {
+    return `${providerId}::${externalId}`;
+}
+
+async function loadActiveOfferRowsForReconciliation(
+    db: SupabaseClient,
+    platformId: string,
+): Promise<Array<{ id: string; external_id: string | null }>> {
+    const pageSize = 1000;
+    const rows: Array<{ id: string; external_id: string | null }> = [];
+
+    for (let offset = 0; ; offset += pageSize) {
+        const { data, error } = await db
+            .from("offers")
+            .select("id, external_id")
+            .eq("platform_id", platformId)
+            .in("status", ["active", "boosted", "paused"])
+            .range(offset, offset + pageSize - 1);
+
+        if (error) {
+            throw new Error(`Failed to load offers for reconciliation: ${error.message}`);
+        }
+
+        const batch = (data ?? []) as Array<{ id: string; external_id: string | null }>;
+        rows.push(...batch);
+
+        if (batch.length < pageSize) {
+            break;
+        }
+    }
+
+    return rows;
+}
+
+async function loadActiveSiteOfferRowsForReconciliation(
+    db: SupabaseClient,
+    siteId: string,
+    providerIds?: Set<string>,
+): Promise<Array<{ id: string; provider_id: string | null; external_id: string | null }>> {
+    const pageSize = 1000;
+    const rows: Array<{ id: string; provider_id: string | null; external_id: string | null }> = [];
+    const scopedProviderIds = providerIds ? Array.from(providerIds).filter(Boolean) : [];
+
+    for (let offset = 0; ; offset += pageSize) {
+        let query = db
+            .from("site_offers")
+            .select("id, provider_id, external_id")
+            .eq("site_id", siteId)
+            .in("status", ["active", "boosted", "paused"])
+            .range(offset, offset + pageSize - 1);
+
+        if (scopedProviderIds.length > 0) {
+            query = query.in("provider_id", scopedProviderIds);
+        }
+
+        const { data, error } = await query;
+
+        if (error) {
+            throw new Error(`Failed to load site offers for reconciliation: ${error.message}`);
+        }
+
+        const batch = (data ?? []) as Array<{ id: string; provider_id: string | null; external_id: string | null }>;
+        rows.push(...batch);
+
+        if (batch.length < pageSize) {
+            break;
+        }
+    }
+
+    return rows;
+}
+
+function getScopedProviderNameForSource(adapter: SourceAdapter): string | null {
+    switch (adapter.key) {
+        case cashInStyleAyetSource.key:
+            return "Ayet Studios";
+        case cashInStyleMyChipsSource.key:
+            return "MyChips";
+        case cashInStyleRevuSource.key:
+            return "Revenue Universe";
+        case gainAdToWallSource.key:
+            return "AdToWall";
+        case gainMyChipsSource.key:
+            return "MyChips";
+        case gainRevuSource.key:
+            return "Revenue Universe";
+        default:
+            return null;
+    }
 }
 
 function normalizeDevicesForGame(rawDevice: string): string[] {

@@ -1,200 +1,503 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 
-// ── Types ───────────────────────────────────────────────────────────────────
 export interface SiteOfferTask {
-    id:              string;
-    sort_order:      number;
-    title:           string;
-    reward_amount:   number;
-    reward_display:  string | null;
-    task_type:       string;
-    time_limit_text: string | null;
+  id: string;
+  sort_order: number;
+  title: string;
+  reward_amount: number;
+  reward_display: string | null;
+  task_type: string;
+  time_limit_text: string | null;
 }
 
 export interface SiteOffer {
-    id:               string;
-    payout_usd:       number;
-    total_payout_usd: number;
-    goal_text:        string | null;
-    offer_url:        string | null;
-    status:           string;
-    site:             { name: string } | null;
-    provider:         { name: string } | null;
-    tasks:            SiteOfferTask[];
+  id: string;
+  payout_usd: number;
+  total_payout_usd: number;
+  goal_text: string | null;
+  offer_url: string | null;
+  status: string;
+  site: { name: string } | null;
+  provider: { name: string } | null;
+  tasks: SiteOfferTask[];
 }
 
-// ── Helpers ─────────────────────────────────────────────────────────────────
-const TYPE_COLORS: Record<string, string> = {
-    install:   "bg-blue-100 text-blue-700",
-    milestone: "bg-green-100 text-green-700",
-    purchase:  "bg-purple-100 text-purple-700",
-    signup:    "bg-yellow-100 text-yellow-700",
-    other:     "bg-gray-100 text-gray-500",
+type SortOption = "highest-payout" | "fastest-completion" | "most-popular";
+type TaskFilter = "all" | "multi-step" | "single-step";
+
+type ProviderGroup = {
+  providerName: string;
+  offers: SiteOffer[];
+  bestOffer: SiteOffer;
 };
 
-// ── Component ────────────────────────────────────────────────────────────────
-export default function SiteOffersComparison({ rows }: { rows: SiteOffer[] }) {
-    const [openGoals, setOpenGoals] = useState<Record<string, boolean>>({});
+const TYPE_COLORS: Record<string, string> = {
+  install: "bg-blue-100 text-blue-700",
+  milestone: "bg-green-100 text-green-700",
+  purchase: "bg-purple-100 text-purple-700",
+  signup: "bg-yellow-100 text-yellow-700",
+  other: "bg-gray-100 text-gray-500",
+};
 
-    if (rows.length === 0) return null;
+const DEFAULT_VISIBLE_COUNT = 3;
+const DEFAULT_EXPANDED_PROVIDERS = 2;
 
-    const best = rows[0];
+function formatUsd(value: number) {
+  return `$${Number(value || 0).toFixed(2)}`;
+}
 
-    function toggleGoals(id: string) {
-        setOpenGoals(prev => ({ ...prev, [id]: !prev[id] }));
+function getTaskMode(row: SiteOffer): TaskFilter {
+  return row.tasks.length > 1 ? "multi-step" : "single-step";
+}
+
+function getPopularityScore(row: SiteOffer, providerCounts: Map<string, number>) {
+  return (providerCounts.get(row.provider?.name ?? "Unknown Provider") ?? 0) * 1000 + row.total_payout_usd;
+}
+
+function sortOffers(rows: SiteOffer[], sortBy: SortOption, providerCounts: Map<string, number>) {
+  return [...rows].sort((a, b) => {
+    if (sortBy === "fastest-completion") {
+      const taskDelta = a.tasks.length - b.tasks.length;
+      if (taskDelta !== 0) return taskDelta;
+      return b.total_payout_usd - a.total_payout_usd;
     }
 
-    return (
-        <div>
-            <div className="flex items-center justify-between px-1 mb-3 gap-4">
-                <div>
-                    <h2 className="text-lg font-extrabold text-[var(--brand-ink)] tracking-tight">
-                        Compare GPT Sites
-                    </h2>
-                    <p className="mt-1 text-xs text-[var(--text-tertiary)]">
-                        Compare total payout against effort, then click into the strongest route with confidence.
-                    </p>
-                </div>
-                <div className="text-sm font-bold text-[var(--text-secondary)] bg-white border border-[var(--border-default)] px-2.5 py-1 rounded-lg shadow-[var(--shadow-card)] whitespace-nowrap">
-                    {rows.length} site{rows.length !== 1 ? "s" : ""}
-                </div>
-            </div>
+    if (sortBy === "most-popular") {
+      return getPopularityScore(b, providerCounts) - getPopularityScore(a, providerCounts);
+    }
 
-            <div className="bg-white rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] overflow-hidden">
-                {/* Header */}
-                <div className="hidden sm:grid grid-cols-[1fr_1fr_auto] gap-3 items-center px-5 py-2.5 bg-[var(--surface-muted)] border-b border-[var(--border-default)]">
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--text-tertiary)]">GPT Site · Offerwall</div>
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--text-tertiary)]">Goal</div>
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-[var(--text-tertiary)] text-right pr-2">Total / Best Step</div>
-                </div>
+    if (b.total_payout_usd !== a.total_payout_usd) return b.total_payout_usd - a.total_payout_usd;
+    return b.payout_usd - a.payout_usd;
+  });
+}
 
-                {rows.map((row, i) => {
-                    const isBest = row.id === best.id;
-                    const pct = Math.max(8, Math.min(100, (row.total_payout_usd / best.total_payout_usd) * 100));
-                    const hasTasks = row.tasks.length > 0;
-                    const goalsOpen = !!openGoals[row.id];
+function OfferCard({
+  row,
+  isBest,
+  isSelected,
+  expanded,
+  onToggleSelect,
+  onToggleExpand,
+}: {
+  row: SiteOffer;
+  isBest: boolean;
+  isSelected: boolean;
+  expanded: boolean;
+  onToggleSelect: () => void;
+  onToggleExpand: () => void;
+}) {
+  const milestoneCount = row.tasks.length;
+  const providerName = row.provider?.name ?? "Unknown Provider";
+  const platformName = row.site?.name ?? "Unknown Site";
+  const routeSummary =
+    row.goal_text ??
+    (milestoneCount > 1
+      ? `${milestoneCount} milestones available on this route.`
+      : "Single-step route.");
 
-                    return (
-                        <div key={row.id} className={`border-b border-[var(--border-default)] last:border-0 ${isBest ? "bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]" : ""}`}>
-                            <div className={`flex flex-col sm:flex-row sm:items-center gap-3 px-4 sm:px-5 py-4 ${!isBest ? "hover:bg-[var(--surface-muted)] transition-colors" : ""}`}>
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                                        <span className="font-bold text-[var(--brand-ink)] text-sm">{row.site?.name ?? "?"}</span>
-                                        <span className="text-[var(--text-tertiary)] text-xs">via</span>
-                                        <span className="text-xs font-semibold text-[var(--text-secondary)]">{row.provider?.name ?? "?"}</span>
-                                        {isBest && (
-                                            <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[var(--brand-lime)] text-[var(--brand-ink)]">
-                                                BEST ROUTE
-                                            </span>
-                                        )}
-                                    </div>
-                                    <div className="flex items-center gap-2 flex-wrap mt-1 text-xs text-[var(--text-tertiary)]">
-                                        <span>{row.tasks.length} task{row.tasks.length !== 1 ? "s" : ""}</span>
-                                        <span>?</span>
-                                        <span>{row.tasks.length <= 3 ? "Shorter route" : "More steps, bigger payout"}</span>
-                                    </div>
-                                    <div className="mt-2 flex items-center gap-2">
-                                        <div className="flex-1 h-1.5 bg-[var(--surface-muted)] rounded-full overflow-hidden max-w-[120px]">
-                                            <div
-                                                className={`h-full rounded-full ${isBest ? "bg-[var(--brand-lime)]" : "bg-[var(--border-default)]"}`}
-                                                style={{ width: `${pct}%` }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="flex-1 min-w-0 text-xs text-[var(--text-secondary)] leading-relaxed">
-                                    {row.goal_text ?? <span className="text-[var(--text-tertiary)]">No route summary available.</span>}
-                                </div>
-
-                                <div className="flex items-center gap-3 sm:justify-end border-t border-[var(--border-default)] sm:border-0 pt-3 sm:pt-0">
-                                    <div className="text-right">
-                                        <div className="text-[10px] font-bold text-[var(--text-tertiary)] uppercase tracking-wider">{isBest ? "Best total" : "Total payout"}</div>
-                                        <div className={`text-xl font-extrabold leading-tight ${isBest ? "text-[color:hsl(84,93%,25%)]" : "text-[var(--brand-ink)]"}`}>
-                                            ${Number(row.total_payout_usd).toFixed(2)}
-                                        </div>
-                                        <div className="text-xs text-[var(--text-tertiary)]">
-                                            Best step ${Number(row.payout_usd).toFixed(2)}
-                                        </div>
-                                    </div>
-                                    {row.offer_url ? (
-                                        <TrackedOutboundLink
-                                            href={`/go/${row.id}`}
-                                            eventLabel="site-offer-comparison-cta"
-                                            offerId={row.id}
-                                            offerTitle={row.goal_text ?? `${row.site?.name ?? "Site"} ${row.provider?.name ?? "offer"}`}
-                                            platformName={row.site?.name}
-                                            providerName={row.provider?.name}
-                                            payoutUsd={row.total_payout_usd}
-                                            location="site-offers-comparison"
-                                            sourceContext="offer-detail"
-                                            className={`px-4 py-2 text-sm font-extrabold rounded-xl transition-all hover:-translate-y-px whitespace-nowrap ${
-                                                isBest
-                                                    ? "bg-[var(--brand-ink)] text-[var(--brand-lime)] shadow-sm"
-                                                    : "bg-[var(--surface-muted)] text-[var(--brand-ink)] border border-[var(--border-default)] hover:border-lime-300"
-                                            }`}
-                                        >
-                                            {isBest ? "Start Best Route" : "Start Offer"}
-                                        </TrackedOutboundLink>
-                                    ) : (
-                                        <div className="w-[120px]" />
-                                    )}
-                                </div>
-                            </div>
-                            <div className="px-4 sm:px-5 pb-3 text-[11px] text-[var(--text-tertiary)]">
-                                Start Offer opens the tracked payout route for this site.
-                            </div>
-
-                            {/* ── Goals toggle ── */}
-                            {hasTasks && (
-                                <div className="px-4 sm:px-5 pb-3">
-                                    <button
-                                        onClick={() => toggleGoals(row.id)}
-                                        className="flex items-center gap-1.5 text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] transition-colors"
-                                    >
-                                        <span className={`transition-transform ${goalsOpen ? "rotate-90" : ""}`}>▶</span>
-                                        {goalsOpen ? "Hide" : "Show"} Goals ({row.tasks.length})
-                                    </button>
-
-                                    {goalsOpen && (
-                                        <div className="mt-3 space-y-1.5 pl-2">
-                                            {row.tasks.map((task, ti) => (
-                                                <div key={task.id} className="flex items-center gap-3 py-2 border-b border-[var(--border-default)] last:border-0">
-                                                    <span className="text-[10px] font-bold text-[var(--text-tertiary)] w-4 text-right flex-shrink-0">
-                                                        {ti + 1}
-                                                    </span>
-                                                    <div className="flex-1 min-w-0">
-                                                        <div className="flex items-center gap-1.5 flex-wrap">
-                                                            <span className="text-sm font-medium text-[var(--brand-ink)]">{task.title}</span>
-                                                            <span className={`text-[9px] font-bold uppercase px-1 py-0.5 rounded ${TYPE_COLORS[task.task_type] ?? "bg-gray-100 text-gray-500"}`}>
-                                                                {task.task_type}
-                                                            </span>
-                                                        </div>
-                                                        {task.time_limit_text && (
-                                                            <span className="text-xs text-[var(--text-tertiary)]">⏱ {task.time_limit_text}</span>
-                                                        )}
-                                                    </div>
-                                                    <div className="text-right flex-shrink-0">
-                                                        <div className="text-sm font-bold text-[var(--brand-ink)]">
-                                                            ${Number(task.reward_amount).toFixed(2)}
-                                                        </div>
-                                                        {task.reward_display && (
-                                                            <div className="text-xs text-[var(--text-tertiary)]">{task.reward_display}</div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    );
-                })}
-            </div>
+  return (
+    <article
+      className={`rounded-2xl border p-4 shadow-[var(--shadow-card)] transition-all ${
+        isBest ? "border-lime-400 bg-lime-50/60" : "border-[var(--border-default)] bg-white"
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-base font-extrabold text-[var(--brand-ink)]">{platformName}</h3>
+            <span className="text-xs text-[var(--text-tertiary)]">via {providerName}</span>
+            {isBest ? (
+              <span className="rounded-full bg-[var(--brand-lime)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-[var(--brand-ink)]">
+                Best route
+              </span>
+            ) : null}
+          </div>
+          <p className="mt-2 text-sm text-[var(--text-secondary)]">{routeSummary}</p>
         </div>
-    );
+        <div className="text-right">
+          <div className="text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Total payout</div>
+          <div className="text-2xl font-extrabold text-[var(--brand-ink)]">{formatUsd(row.total_payout_usd)}</div>
+          <div className="text-xs text-[var(--text-tertiary)]">Best step {formatUsd(row.payout_usd)}</div>
+        </div>
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-2 text-xs text-[var(--text-tertiary)]">
+        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1">
+          {milestoneCount} milestone{milestoneCount !== 1 ? "s" : ""}
+        </span>
+        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1">
+          {milestoneCount > 1 ? "Multi-step" : "Single-step"}
+        </span>
+        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1">
+          {milestoneCount <= 3 ? "Shorter route" : "More steps, bigger payout"}
+        </span>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <TrackedOutboundLink
+          href={`/go/${row.id}`}
+          eventLabel="site-offer-comparison-cta"
+          offerId={row.id}
+          offerTitle={row.goal_text ?? `${platformName} ${providerName} offer`}
+          platformName={platformName}
+          providerName={providerName}
+          payoutUsd={row.total_payout_usd}
+          location="site-offers-comparison"
+          sourceContext="offer-detail"
+          className={`inline-flex rounded-xl px-4 py-2 text-sm font-extrabold transition-all hover:-translate-y-px ${
+            isBest
+              ? "bg-[var(--brand-ink)] text-[var(--brand-lime)]"
+              : "border border-[var(--border-default)] bg-[var(--surface-muted)] text-[var(--brand-ink)] hover:border-lime-400"
+          }`}
+        >
+          {isBest ? "Start Best Offer" : "Start Offer"}
+        </TrackedOutboundLink>
+        <button
+          type="button"
+          onClick={onToggleExpand}
+          className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400"
+        >
+          {expanded ? "Hide milestones" : "Expand route"}
+        </button>
+        <button
+          type="button"
+          onClick={onToggleSelect}
+          className={`inline-flex rounded-xl border px-4 py-2 text-sm font-bold ${
+            isSelected
+              ? "border-[var(--brand-ink)] bg-[var(--brand-ink)] text-[var(--brand-lime)]"
+              : "border-[var(--border-default)] bg-white text-[var(--brand-ink)] hover:border-lime-400"
+          }`}
+        >
+          {isSelected ? "Selected" : "Compare"}
+        </button>
+      </div>
+
+      <div className="mt-3 text-[11px] text-[var(--text-tertiary)]">
+        Start Offer opens the tracked payout route for this site.
+      </div>
+
+      {expanded && milestoneCount > 0 ? (
+        <div className="mt-4 rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+          <div className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Milestone breakdown</div>
+          <ol className="mt-2 space-y-2">
+            {row.tasks.map((task) => (
+              <li key={task.id} className="flex items-start justify-between gap-3 border-t border-[var(--border-default)] pt-2 first:border-0 first:pt-0">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-sm font-semibold text-[var(--brand-ink)]">{task.title}</span>
+                    <span className={`rounded px-1.5 py-0.5 text-[9px] font-bold uppercase ${TYPE_COLORS[task.task_type] ?? TYPE_COLORS.other}`}>
+                      {task.task_type}
+                    </span>
+                  </div>
+                  <div className="text-xs text-[var(--text-tertiary)]">
+                    {task.time_limit_text ?? "No time limit listed"}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm font-bold text-[var(--brand-ink)]">{formatUsd(task.reward_amount)}</div>
+                  {task.reward_display ? <div className="text-xs text-[var(--text-tertiary)]">{task.reward_display}</div> : null}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ) : null}
+    </article>
+  );
+}
+
+export default function SiteOffersComparison({ rows }: { rows: SiteOffer[] }) {
+  const [sortBy, setSortBy] = useState<SortOption>("highest-payout");
+  const [taskFilter, setTaskFilter] = useState<TaskFilter>("all");
+  const [showLowValue, setShowLowValue] = useState(false);
+  const [expandedProviders, setExpandedProviders] = useState<Record<string, boolean>>({});
+  const [providerVisibleCounts, setProviderVisibleCounts] = useState<Record<string, number>>({});
+  const [expandedOffers, setExpandedOffers] = useState<Record<string, boolean>>({});
+  const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
+
+  if (rows.length === 0) return null;
+
+  const providerCounts = rows.reduce((acc, row) => {
+    const providerName = row.provider?.name ?? "Unknown Provider";
+    acc.set(providerName, (acc.get(providerName) ?? 0) + 1);
+    return acc;
+  }, new Map<string, number>());
+
+  const filteredRows = rows.filter((row) => {
+    if (taskFilter === "all") return true;
+    return getTaskMode(row) === taskFilter;
+  });
+
+  const sortedRows = sortOffers(filteredRows, sortBy, providerCounts);
+  const bestOverall = sortedRows[0] ?? null;
+  const lowValueThreshold = bestOverall ? Math.max(1, bestOverall.total_payout_usd * 0.15) : 0;
+  const visibleRows = showLowValue
+    ? sortedRows
+    : sortedRows.filter((row) => row.total_payout_usd >= lowValueThreshold);
+
+  const groupedProviders = useMemo(() => {
+    return visibleRows.reduce<ProviderGroup[]>((acc, row) => {
+      const providerName = row.provider?.name ?? "Unknown Provider";
+      const existing = acc.find((group) => group.providerName === providerName);
+      if (existing) {
+        existing.offers.push(row);
+        return acc;
+      }
+      acc.push({
+        providerName,
+        offers: [row],
+        bestOffer: row,
+      });
+      return acc;
+    }, []);
+  }, [visibleRows]);
+
+  const selectedRows = rows.filter((row) => selectedOffers.includes(row.id)).slice(0, 3);
+  const topGridRows = visibleRows.slice(0, 3);
+
+  useEffect(() => {
+    setExpandedProviders((current) => {
+      if (Object.keys(current).length > 0) return current;
+      const next: Record<string, boolean> = {};
+      groupedProviders.forEach((group, index) => {
+        next[group.providerName] = index < DEFAULT_EXPANDED_PROVIDERS;
+      });
+      return next;
+    });
+    setProviderVisibleCounts((current) => {
+      if (Object.keys(current).length > 0) return current;
+      const next: Record<string, number> = {};
+      groupedProviders.forEach((group) => {
+        next[group.providerName] = DEFAULT_VISIBLE_COUNT;
+      });
+      return next;
+    });
+  }, [groupedProviders]);
+
+  function toggleProvider(providerName: string) {
+    setExpandedProviders((current) => ({
+      ...current,
+      [providerName]: !current[providerName],
+    }));
+  }
+
+  function showMore(providerName: string, offerCount: number) {
+    setProviderVisibleCounts((current) => ({
+      ...current,
+      [providerName]: Math.min((current[providerName] ?? DEFAULT_VISIBLE_COUNT) + DEFAULT_VISIBLE_COUNT, offerCount),
+    }));
+  }
+
+  function toggleSelectedOffer(id: string) {
+    setSelectedOffers((current) => {
+      if (current.includes(id)) return current.filter((item) => item !== id);
+      return [...current, id].slice(-3);
+    });
+  }
+
+  function toggleExpandedOffer(id: string) {
+    setExpandedOffers((current) => ({
+      ...current,
+      [id]: !current[id],
+    }));
+  }
+
+  return (
+    <section className="space-y-4">
+      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="section-label">Best Offer</p>
+            <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
+              {bestOverall ? `${bestOverall.site?.name ?? "Unknown Site"} via ${bestOverall.provider?.name ?? "Unknown Provider"}` : "No active route"}
+            </h2>
+            <p className="mt-2 text-sm text-[var(--text-secondary)]">
+              {bestOverall
+                ? `${formatUsd(bestOverall.total_payout_usd)} is the strongest visible payout in this comparison. Start there first if you want the highest-value route.`
+                : "No offers match the current filters."}
+            </p>
+          </div>
+          {bestOverall ? (
+            <TrackedOutboundLink
+              href={`/go/${bestOverall.id}`}
+              eventLabel="site-offer-best-cta"
+              offerId={bestOverall.id}
+              offerTitle={bestOverall.goal_text ?? `${bestOverall.site?.name ?? "Site"} offer`}
+              platformName={bestOverall.site?.name}
+              providerName={bestOverall.provider?.name}
+              payoutUsd={bestOverall.total_payout_usd}
+              location="site-offers-best"
+              sourceContext="offer-detail"
+              className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+            >
+              Start Best Offer
+            </TrackedOutboundLink>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <h2 className="text-lg font-extrabold text-[var(--brand-ink)] tracking-tight">Compare GPT Sites</h2>
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">
+              Use provider groups to compare payouts first, then expand only the routes you actually want to inspect.
+            </p>
+          </div>
+          <div className="text-sm font-bold text-[var(--text-secondary)] rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2">
+            {visibleRows.length} visible route{visibleRows.length !== 1 ? "s" : ""} across {groupedProviders.length} provider{groupedProviders.length !== 1 ? "s" : ""}
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          <label className="text-sm font-semibold text-[var(--brand-ink)]">
+            <span className="mb-1 block text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Sort by</span>
+            <select
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value as SortOption)}
+              className="w-full rounded-xl border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
+            >
+              <option value="highest-payout">Highest payout</option>
+              <option value="fastest-completion">Fastest completion</option>
+              <option value="most-popular">Most popular</option>
+            </select>
+          </label>
+
+          <label className="text-sm font-semibold text-[var(--brand-ink)]">
+            <span className="mb-1 block text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Task type</span>
+            <select
+              value={taskFilter}
+              onChange={(event) => setTaskFilter(event.target.value as TaskFilter)}
+              className="w-full rounded-xl border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
+            >
+              <option value="all">All tasks</option>
+              <option value="multi-step">Multi-step</option>
+              <option value="single-step">Single-step</option>
+            </select>
+          </label>
+
+          <label className="inline-flex items-center gap-2 self-end text-sm font-semibold text-[var(--brand-ink)]">
+            <input
+              type="checkbox"
+              checked={showLowValue}
+              onChange={(event) => setShowLowValue(event.target.checked)}
+              className="h-4 w-4 rounded border-[var(--border-default)]"
+            />
+            Show all low payout offers
+          </label>
+        </div>
+      </div>
+
+      {topGridRows.length > 0 ? (
+        <div className="space-y-3">
+          <h3 className="text-xl font-extrabold text-[var(--brand-ink)]">Top Paying Offers</h3>
+          <div className="grid gap-4 xl:grid-cols-3 md:grid-cols-2">
+            {topGridRows.map((row, index) => (
+              <OfferCard
+                key={row.id}
+                row={row}
+                isBest={index === 0}
+                isSelected={selectedOffers.includes(row.id)}
+                expanded={!!expandedOffers[row.id]}
+                onToggleSelect={() => toggleSelectedOffer(row.id)}
+                onToggleExpand={() => toggleExpandedOffer(row.id)}
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      <div className="space-y-3">
+        <h3 className="text-xl font-extrabold text-[var(--brand-ink)]">All Providers</h3>
+        {groupedProviders.map((group, index) => {
+          const isOpen = expandedProviders[group.providerName] ?? index < DEFAULT_EXPANDED_PROVIDERS;
+          const visibleCount = providerVisibleCounts[group.providerName] ?? DEFAULT_VISIBLE_COUNT;
+          const providerOffers = group.offers.slice(0, isOpen ? visibleCount : 0);
+
+          return (
+            <section
+              key={group.providerName}
+              className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]"
+            >
+              <button
+                type="button"
+                onClick={() => toggleProvider(group.providerName)}
+                className="flex w-full items-start justify-between gap-4 text-left"
+              >
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="text-xl font-extrabold text-[var(--brand-ink)]">{group.providerName}</h4>
+                    {index < 2 ? (
+                      <span className="rounded-full border border-lime-300 bg-lime-50 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-lime-800">
+                        Top provider
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                    Best payout {formatUsd(group.bestOffer.total_payout_usd)} across {group.offers.length} route{group.offers.length !== 1 ? "s" : ""}.
+                  </p>
+                </div>
+                <span className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)]">
+                  {isOpen ? "Collapse" : "Expand"}
+                </span>
+              </button>
+
+              {isOpen ? (
+                <div className="mt-4 space-y-4">
+                  <div className="grid gap-4 xl:grid-cols-3 md:grid-cols-2">
+                    {providerOffers.map((row) => (
+                      <OfferCard
+                        key={row.id}
+                        row={row}
+                        isBest={row.id === group.bestOffer.id}
+                        isSelected={selectedOffers.includes(row.id)}
+                        expanded={!!expandedOffers[row.id]}
+                        onToggleSelect={() => toggleSelectedOffer(row.id)}
+                        onToggleExpand={() => toggleExpandedOffer(row.id)}
+                      />
+                    ))}
+                  </div>
+
+                  {group.offers.length > visibleCount ? (
+                    <button
+                      type="button"
+                      onClick={() => showMore(group.providerName, group.offers.length)}
+                      className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                    >
+                      Show more
+                    </button>
+                  ) : null}
+                </div>
+              ) : null}
+            </section>
+          );
+        })}
+      </div>
+
+      {selectedRows.length > 0 ? (
+        <aside className="fixed bottom-4 left-1/2 z-30 w-[min(1100px,calc(100%-1rem))] -translate-x-1/2 rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Selected offers</div>
+              <div className="mt-1 text-sm text-[var(--text-secondary)]">
+                Compare payouts side by side, then click into the route you want.
+              </div>
+            </div>
+            <div className="grid gap-2 md:grid-cols-3">
+              {selectedRows.map((row) => (
+                <div key={row.id} className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2">
+                  <div className="text-sm font-bold text-[var(--brand-ink)]">{row.site?.name ?? "Unknown Site"}</div>
+                  <div className="text-xs text-[var(--text-tertiary)]">{row.provider?.name ?? "Unknown Provider"}</div>
+                  <div className="mt-1 text-sm font-extrabold text-[var(--brand-ink)]">{formatUsd(row.total_payout_usd)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
+      ) : null}
+    </section>
+  );
 }

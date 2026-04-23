@@ -656,60 +656,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section
-        className="relative overflow-hidden pt-14 pb-14 sm:pt-16 sm:pb-16 px-4 sm:px-6 lg:px-8"
-        style={{
-          backgroundImage: `
-            linear-gradient(to bottom, rgba(10,12,10,0.88) 0%, rgba(10,12,10,0.65) 50%, rgba(10,12,10,0.85) 100%),
-            url("/Seaofconquestbanner.png")
-          `,
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-[var(--brand-lime)]/70 mb-3">
-              Internal Links
-            </p>
-            <h2 className="text-3xl font-extrabold text-white tracking-tight">
-              Best GPT Sites, highest paying games, and guide hubs
-            </h2>
-            <p className="mt-3 text-white/60 text-sm sm:text-base leading-relaxed">
-              These permanent crawlable links strengthen the homepage-to-SEO-page path and push authority into comparison pages and guides.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <HomepageLinkCard
-              href="/best-gpt-sites"
-              title="Best GPT Sites"
-              subtitle="Comparison page"
-              meta="Platform-level comparison page for users deciding where to start."
-            />
-            <HomepageLinkCard
-              href="/highest-paying-gpt-games"
-              title="Highest Paying GPT Games"
-              subtitle="SEO hub"
-              meta="Highest-value game comparison page across live offers."
-            />
-            <HomepageLinkCard
-              href="/guides"
-              title="All Game Guides"
-              subtitle="Guide index"
-              meta="Browse the full guide index with published walkthroughs."
-            />
-            <HomepageLinkCard
-              href="/offers"
-              title="All Offers"
-              subtitle="Offer index"
-              meta="Search and compare live offers with full filtering."
-            />
-          </div>
-        </div>
-      </section>
-
       <section className="bg-[var(--surface-muted)] py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-10">

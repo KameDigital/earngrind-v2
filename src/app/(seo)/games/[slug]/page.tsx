@@ -265,35 +265,6 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
           <ProviderComparison rows={providerRows} />
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-          <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Offers by Provider</h2>
-          <p className="text-sm text-[var(--text-secondary)]">
-            These grouped routes help you compare each provider’s best payout path for {data.game.name} without losing the task details.
-          </p>
-          {Array.from(providerGroups.entries()).map(([provider, providerOffers]) => (
-            <article key={provider} className="rounded-xl border border-[var(--border-default)] p-4">
-              <h3 className="text-lg font-bold text-[var(--brand-ink)]">{provider}</h3>
-              <p className="mt-1 text-sm text-[var(--text-secondary)]">
-                Top payout: {formatMoney(providerOffers[0]?.payoutUsd ?? 0)} across {providerOffers.length} offer{providerOffers.length !== 1 ? "s" : ""}.
-              </p>
-              <ul className="mt-2 space-y-2 text-sm">
-                {providerOffers.slice(0, 4).map((offer) => (
-                  <li key={offer.id} className="rounded-lg bg-[var(--surface-muted)] p-2">
-                    <div className="font-semibold text-[var(--brand-ink)]">{offer.platformName} - {formatMoney(offer.payoutUsd)}</div>
-                    {offer.tasks.length > 0 ? (
-                      <ol className="mt-1 list-decimal pl-5 text-xs text-[var(--text-secondary)]">
-                        {offer.tasks.slice(0, 3).map((task) => (
-                          <li key={task.id}>{task.title}</li>
-                        ))}
-                      </ol>
-                    ) : null}
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </section>
-
         <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
           <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Keep Exploring</h2>
           <p className="mt-2 text-sm text-[var(--text-secondary)]">

@@ -3,6 +3,7 @@ import Container from "./Container";
 
 const EXPLORE = [
     { href: "/offers", label: "All Offers" },
+    { href: "/games", label: "Games" },
     { href: "/guides", label: "Game Guides" },
     { href: "/reviews", label: "Platform Reviews" },
     { href: "/blog", label: "Blog" },

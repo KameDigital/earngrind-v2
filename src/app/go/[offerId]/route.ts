@@ -1,93 +1,266 @@
-import { createClient } from '@/lib/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
+import { createHash } from "crypto";
+import { NextRequest, NextResponse } from "next/server";
+import {
+    normalizeRedirectAttribution,
+    readRedirectAttributionFromSearchParams,
+    type RedirectAttribution,
+} from "@/lib/outbound-attribution";
+import { createClient } from "@/lib/supabase/server";
+import {
+    buildOutboundRedirectUrl,
+    getPlatformAffiliateOverride,
+    getPlatformFallbackUrl,
+} from "@/lib/outbound";
+import { buildCanonicalOutboundRecord } from "@/lib/outbound-reporting";
 
-export const runtime = 'edge';
+export const dynamic = "force-dynamic";
 
-async function sha256(message: string) {
-    const msgBuffer = new TextEncoder().encode(message);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+function isUuid(value: string): boolean {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
+
+function getIpHash(req: NextRequest): string | null {
+    const forwardedFor = req.headers.get("x-forwarded-for");
+    const ip = forwardedFor?.split(",")[0]?.trim() || req.headers.get("x-real-ip")?.trim() || "";
+    if (!ip) return null;
+    return createHash("sha256").update(ip).digest("hex");
+}
+
+function buildRequestAttribution(req: NextRequest): Partial<RedirectAttribution> {
+    return readRedirectAttributionFromSearchParams(req.nextUrl.searchParams);
+}
+
+function logRedirectAttribution(params: {
+    entityType: "offer" | "site_offer";
+    offerId: string;
+    platformId?: string | null;
+    req: NextRequest;
+    attribution: Partial<RedirectAttribution>;
+}) {
+    const { entityType, offerId, platformId, req, attribution } = params;
+    const record = buildCanonicalOutboundRecord({
+        outbound_type: entityType,
+        offer_id: offerId,
+        platform_id: platformId,
+        attribution,
+    });
+
+    console.info("[go] outbound redirect", {
+        ...record,
+        entity_type: entityType,
+        referrer: req.headers.get("referer"),
+        country: req.headers.get("x-vercel-ip-country"),
+        user_agent: req.headers.get("user-agent"),
+    });
+}
+
+async function logOfferClick(params: {
+    supabase: ReturnType<typeof createClient>;
+    table: "offer_clicks" | "site_offer_clicks";
+    column: "offer_id" | "site_offer_id";
+    offerId: string;
+    req: NextRequest;
+    userId: string | null;
+}) {
+    const { supabase, table, column, offerId, req, userId } = params;
+
+    const payload = {
+        [column]: offerId,
+        ip_hash: getIpHash(req),
+        referrer: req.headers.get("referer"),
+        country: req.headers.get("x-vercel-ip-country"),
+        user_agent: req.headers.get("user-agent"),
+        user_id: userId,
+    };
+
+    const { error } = await supabase.from(table).insert(payload);
+    if (error) {
+        console.error(`[go] failed to log ${table} click`, { offerId, message: error.message });
+    }
 }
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { offerId: string } }
+    { params }: { params: { offerId: string } },
 ) {
     const supabase = createClient();
-    const { offerId } = params;
+    const offerId = params.offerId;
+    const requestAttribution = buildRequestAttribution(req);
 
-    // Basic UUID validation
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-    if (!uuidRegex.test(offerId)) {
-        return NextResponse.redirect(new URL('/offers?error=invalid_id', req.url));
+    if (!isUuid(offerId)) {
+        return NextResponse.json({ error: "invalid_offer_id" }, { status: 400 });
     }
 
-    const ipString = req.ip ?? req.headers.get('x-forwarded-for') ?? 'unknown';
-    const ipHash = await sha256(ipString);
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
 
-    // Fetch offer details needed for redirect
-    const { data: offer, error } = await supabase
-        .from('offers')
-        .select('id, custom_param, status, platforms:platform_id(affiliate_template)')
-        .eq('id', offerId)
-        .single();
+    const { data: offer, error: offerError } = await supabase
+        .from("offers")
+        .select(`
+            id,
+            title,
+            custom_param,
+            payout_usd,
+            status,
+            game:games(
+                name
+            ),
+            provider:providers(
+                name
+            ),
+            platform:platforms(
+                id,
+                name,
+                slug,
+                affiliate_template
+            )
+        `)
+        .eq("id", offerId)
+        .maybeSingle();
 
-    if (error || !offer) {
-        return NextResponse.redirect(new URL('/offers?error=not_found', req.url));
+    if (offerError) {
+        console.error("[go] failed to load offer", offerError);
+        return NextResponse.json({ error: "internal" }, { status: 500 });
     }
 
-    if (offer.status !== 'active' && offer.status !== 'boosted') {
-        return NextResponse.redirect(new URL('/offers?error=expired', req.url));
-    }
+    if (offer) {
+        const platform = Array.isArray(offer.platform) ? offer.platform[0] ?? null : offer.platform;
+        const game = Array.isArray(offer.game) ? offer.game[0] ?? null : offer.game;
+        const provider = Array.isArray(offer.provider) ? offer.provider[0] ?? null : offer.provider;
+        const outboundUrl = getPlatformAffiliateOverride(platform) ?? buildOutboundRedirectUrl({
+            affiliateTemplate: platform?.affiliate_template,
+            destinationUrl: offer.custom_param,
+            fallbackUrl: getPlatformFallbackUrl(platform),
+        });
 
-    // Construct affiliate URL
-    // We use typing assertion because nested select typing can be tricky in generic supabase client
-    const platform = offer.platforms as any;
-    const template = platform?.affiliate_template;
-
-    if (!template) {
-        console.error(`Offer ${offerId} missing affiliate_template on platform.`);
-        return NextResponse.redirect(new URL('/offers?error=setup_issue', req.url));
-    }
-
-    const affiliateUrl = template.replace('{custom_param}', offer.custom_param ?? '');
-
-    // Log click (fire-and-forget logic using edge-compatible promise)
-    // We extract the user_id if they are logged in.
-    let userId = null;
-    const authHeader = req.headers.get('Authorization');
-    if (authHeader) {
-        // Very basic best-effort extraction if passing token. Proper auth requires full session fetch.
-        // For speed, this relies on client-side tracking if strictly needed, or wait for next.js server action.
-        // But for anon clicks, this is fine.
-    }
-
-    const clickData = {
-        offer_id: offer.id,
-        ip_hash: ipHash,
-        referrer: req.headers.get('referer') ?? null,
-        country: req.geo?.country ?? null, // Edge functions populated
-        user_agent: req.headers.get('user-agent') ?? null,
-        user_id: userId
-    };
-
-    // Edge-compatible fire-and-forget
-    const logClick = async () => {
-        try {
-            await supabase.from('offer_clicks').insert(clickData);
-        } catch (err) {
-            console.error("Failed to log click", err);
+        if (!outboundUrl) {
+            return NextResponse.json({ error: "missing_destination" }, { status: 404 });
         }
-    };
-    logClick();
 
-    // Redirect
-    return NextResponse.redirect(affiliateUrl, {
-        status: 302,
-        headers: {
-            'Cache-Control': 'no-store',
-            'X-Robots-Tag': 'nofollow',
-        },
+        await logOfferClick({
+            supabase,
+            table: "offer_clicks",
+            column: "offer_id",
+            offerId: offer.id,
+            req,
+            userId: user?.id ?? null,
+        });
+
+        logRedirectAttribution({
+            entityType: "offer",
+            offerId: offer.id,
+            platformId: platform?.id,
+            req,
+            attribution: normalizeRedirectAttribution({
+                offer_title: requestAttribution.offer_title ?? offer.title ?? undefined,
+                game_title: requestAttribution.game_title ?? game?.name ?? undefined,
+                platform_name: requestAttribution.platform_name ?? platform?.name ?? undefined,
+                provider_name: requestAttribution.provider_name ?? provider?.name ?? undefined,
+                payout_usd: requestAttribution.payout_usd ?? (typeof offer.payout_usd === "number" ? offer.payout_usd : undefined),
+                click_location: requestAttribution.click_location,
+                source_context: requestAttribution.source_context,
+                destination_url: outboundUrl,
+                affiliate_mode: getPlatformAffiliateOverride(platform)
+                    ? "platform-override"
+                    : platform?.affiliate_template?.includes("{destination}")
+                        ? "destination-placeholder"
+                        : platform?.affiliate_template
+                            ? "base-template"
+                            : "direct",
+            }),
+        });
+
+        return NextResponse.redirect(outboundUrl, { status: 302 });
+    }
+
+    const { data: siteOffer, error: siteOfferError } = await supabase
+        .from("site_offers")
+        .select(`
+            id,
+            offer_url,
+            payout_usd,
+            total_payout_usd,
+            goal_text,
+            status,
+            game:games(
+                name
+            ),
+            provider:providers(
+                name
+            ),
+            site:platforms(
+                id,
+                name,
+                slug,
+                affiliate_template
+            )
+        `)
+        .eq("id", offerId)
+        .maybeSingle();
+
+    if (siteOfferError) {
+        console.error("[go] failed to load site_offer", siteOfferError);
+        return NextResponse.json({ error: "internal" }, { status: 500 });
+    }
+
+    if (!siteOffer) {
+        return NextResponse.json({ error: "not_found" }, { status: 404 });
+    }
+
+    const site = Array.isArray(siteOffer.site) ? siteOffer.site[0] ?? null : siteOffer.site;
+    const game = Array.isArray(siteOffer.game) ? siteOffer.game[0] ?? null : siteOffer.game;
+    const provider = Array.isArray(siteOffer.provider) ? siteOffer.provider[0] ?? null : siteOffer.provider;
+    const outboundUrl = getPlatformAffiliateOverride(site) ?? buildOutboundRedirectUrl({
+        affiliateTemplate: site?.affiliate_template,
+        destinationUrl: siteOffer.offer_url,
+        fallbackUrl: getPlatformFallbackUrl(site),
     });
+
+    if (!outboundUrl) {
+        console.error("[go] missing outbound destination", {
+            siteOfferId: siteOffer.id,
+            siteSlug: site?.slug ?? null,
+        });
+        return NextResponse.json({ error: "missing_destination" }, { status: 404 });
+    }
+
+    await logOfferClick({
+        supabase,
+        table: "site_offer_clicks",
+        column: "site_offer_id",
+        offerId: siteOffer.id,
+        req,
+        userId: user?.id ?? null,
+    });
+
+    logRedirectAttribution({
+        entityType: "site_offer",
+        offerId: siteOffer.id,
+        platformId: site?.id,
+        req,
+        attribution: normalizeRedirectAttribution({
+            offer_title: requestAttribution.offer_title ?? siteOffer.goal_text ?? undefined,
+            game_title: requestAttribution.game_title ?? game?.name ?? undefined,
+            platform_name: requestAttribution.platform_name ?? site?.name ?? undefined,
+            provider_name: requestAttribution.provider_name ?? provider?.name ?? undefined,
+            payout_usd: requestAttribution.payout_usd ?? (typeof siteOffer.total_payout_usd === "number"
+                ? siteOffer.total_payout_usd
+                : typeof siteOffer.payout_usd === "number"
+                    ? siteOffer.payout_usd
+                    : undefined),
+            click_location: requestAttribution.click_location,
+            source_context: requestAttribution.source_context,
+            destination_url: outboundUrl,
+            affiliate_mode: getPlatformAffiliateOverride(site)
+                ? "platform-override"
+                : site?.affiliate_template?.includes("{destination}")
+                    ? "destination-placeholder"
+                    : site?.affiliate_template
+                        ? "base-template"
+                        : "direct",
+        }),
+    });
+
+    return NextResponse.redirect(outboundUrl, { status: 302 });
 }

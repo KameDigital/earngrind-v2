@@ -40,8 +40,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: baseUrl,                        lastModified: new Date(), changeFrequency: 'daily',   priority: 1.0 },
         { url: `${baseUrl}/offers`,            lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
         { url: `${baseUrl}/guides`,            lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
+        { url: `${baseUrl}/guides/how-to-earn`,lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
         { url: `${baseUrl}/blog`,              lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
         { url: `${baseUrl}/reviews`,           lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
+        { url: `${baseUrl}/best-gpt-sites`,            lastModified: new Date(), changeFrequency: 'daily',   priority: 0.85 },
+        { url: `${baseUrl}/highest-paying-gpt-games`,  lastModified: new Date(), changeFrequency: 'daily',   priority: 0.85 },
+        { url: `${baseUrl}/best-freecash-games`,       lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
+        { url: `${baseUrl}/best-gain-gg-offers`,       lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
+        { url: `${baseUrl}/best-money-making-games`,   lastModified: new Date(), changeFrequency: 'daily',   priority: 0.85 },
         { url: `${baseUrl}/about`,             lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
         { url: `${baseUrl}/how-it-works`,      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     ];
@@ -52,6 +58,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified:    new Date(g.updated_at),
         changeFrequency: 'daily' as const,
         priority:        0.85,
+    }));
+
+    const seoGameUrls: MetadataRoute.Sitemap = (games ?? []).map(g => ({
+        url:             `${baseUrl}/games/${g.slug}`,
+        lastModified:    new Date(g.updated_at),
+        changeFrequency: 'daily' as const,
+        priority:        0.85,
+    }));
+
+    const seoGuideUrls: MetadataRoute.Sitemap = (games ?? []).map(g => ({
+        url:             `${baseUrl}/guides/how-to-earn/${g.slug}`,
+        lastModified:    new Date(g.updated_at),
+        changeFrequency: 'weekly' as const,
+        priority:        0.78,
     }));
 
     // Guide pages — highest priority after homepage/offers (they target keywords)
@@ -81,6 +101,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
         ...staticPages,
         ...gameUrls,
+        ...seoGameUrls,
+        ...seoGuideUrls,
         ...guideUrls,
         ...postUrls,
         ...reviewUrls,

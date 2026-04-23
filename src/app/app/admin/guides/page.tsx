@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import GuideAdminActions from "./GuideAdminActions";
 
 export const metadata = { title: "Guides | Admin" };
 
@@ -66,7 +67,7 @@ export default async function AdminGuidesPage() {
                             <th className="px-4 py-3 text-left hidden lg:table-cell">Time</th>
                             <th className="px-4 py-3 text-center">Status</th>
                             <th className="px-4 py-3 text-right hidden md:table-cell">Updated</th>
-                            <th className="px-4 py-3 text-right">Action</th>
+                            <th className="px-4 py-3 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -103,12 +104,15 @@ export default async function AdminGuidesPage() {
                                         {updatedDate}
                                     </td>
                                     <td className="px-4 py-3 text-right">
-                                        <Link
-                                            href={`/app/admin/guides/${guide.id}/edit`}
-                                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-gray-100 hover:bg-gray-900 hover:text-white text-gray-700 text-xs font-semibold rounded-lg transition-all"
-                                        >
-                                            Edit
-                                        </Link>
+                                        <div className="flex flex-wrap items-center justify-end gap-2">
+                                            <Link
+                                                href={`/app/admin/guides/${guide.id}/edit`}
+                                                className="inline-flex items-center gap-1 px-2.5 py-1 bg-gray-100 hover:bg-gray-900 hover:text-white text-gray-700 text-xs font-semibold rounded-lg transition-all"
+                                            >
+                                                Edit
+                                            </Link>
+                                            <GuideAdminActions guideId={guide.id} />
+                                        </div>
                                     </td>
                                 </tr>
                             );

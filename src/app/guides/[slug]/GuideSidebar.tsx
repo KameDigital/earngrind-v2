@@ -44,7 +44,7 @@ export default function GuideSidebar({
     const tipCount = (guide.tips ?? []).length;
 
     return (
-        <aside className="space-y-4 lg:sticky lg:top-[72px] lg:self-start">
+        <aside className="space-y-4">
 
             {/* Box 1 — Quick Info + CTA */}
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">

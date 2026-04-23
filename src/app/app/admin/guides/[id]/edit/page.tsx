@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import GuideEditForm from "./GuideEditForm";
+import GuideAdminActions from "../../GuideAdminActions";
 
 export const metadata = { title: "Edit Guide | Admin" };
 
@@ -34,9 +35,12 @@ export default async function EditGuidePage({ params }: { params: { id: string }
                 <p className="text-sm text-gray-500 mt-1">
                     Status: <span className={`font-semibold ${guide.status === "published" ? "text-green-700" : "text-gray-500"}`}>{guide.status}</span>
                     {guide.published_at && (
-                        <> · Published {new Date(guide.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</>
+                        <> • Published {new Date(guide.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</>
                     )}
                 </p>
+                <div className="mt-3">
+                    <GuideAdminActions guideId={guide.id} />
+                </div>
             </div>
             <GuideEditForm
                 guide={guide}

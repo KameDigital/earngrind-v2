@@ -3,7 +3,8 @@
 import React, { useReducer, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 
 // ---------------------------------------------------------------
 // TYPES — mirrors /api/offers response exactly
@@ -27,6 +28,7 @@ export interface Offer {
     id: string;
     source: "ingested" | "manual";   // ← NEW
     title: string;
+    image_url: string | null;
     payout_usd: number;
     payout_type: "online_cashback" | "gift_card" | "points" | "crypto" | null;
     devices: ("ios" | "android" | "pc" | "web")[];
@@ -53,12 +55,46 @@ export interface OfferMeta {
     total_pages: number;
 }
 
+const isImageUrl = (url?: string | null) =>
+    typeof url === "string" &&
+    /\.(jpg|jpeg|png|webp|gif|avif|svg)(?:$|[?#])/i.test(url);
+
+function OfferThumbnail({
+    src,
+    alt,
+    fallbackText,
+    className,
+}: {
+    src: string | null;
+    alt: string;
+    fallbackText: string;
+    className: string;
+}) {
+    const [failed, setFailed] = React.useState(false);
+
+    if (!src || failed) {
+        return <div className="text-[var(--text-tertiary)] text-xs font-bold uppercase">{fallbackText}</div>;
+    }
+
+    return (
+        <img
+            src={src}
+            alt={alt}
+            className={className}
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            onError={() => setFailed(true)}
+        />
+    );
+}
+
 // ---------------------------------------------------------------
 // FILTER STATE — maps 1:1 to /api/offers query params
 // ---------------------------------------------------------------
 interface FilterState {
     q: string;
-    source: "" | "ingested" | "manual"; // ← NEW
+    source: "" | "ingested" | "manual";
+    platform_id: string; // ← NEW
     platform_kind: string;
     device: string;
     country: string;
@@ -75,6 +111,7 @@ interface FilterState {
 const defaultFilters: FilterState = {
     q: "",
     source: "",
+    platform_id: "",
     platform_kind: "",
     device: "",
     country: "US",
@@ -90,6 +127,7 @@ const defaultFilters: FilterState = {
 
 type FilterAction =
     | { type: "SET"; key: keyof FilterState; value: FilterState[keyof FilterState] }
+    | { type: "HYDRATE"; filters: FilterState }
     | { type: "RESET" }
     | { type: "SET_PAGE"; page: number };
 
@@ -99,6 +137,8 @@ function filterReducer(state: FilterState, action: FilterAction): FilterState {
             return { ...state, [action.key]: action.value, page: 1 };
         case "SET_PAGE":
             return { ...state, page: action.page };
+        case "HYDRATE":
+            return action.filters;
         case "RESET":
             return { ...defaultFilters };
         default:
@@ -118,10 +158,68 @@ function useDebounce<T>(value: T, delay: number): T {
     return debouncedValue;
 }
 
+type SearchParamsLike = {
+    get(name: string): string | null;
+};
+
+function buildFiltersFromSearchParams(searchParams: SearchParamsLike): FilterState {
+    const page = parseInt(searchParams.get("page") ?? "1", 10);
+    const sort = searchParams.get("sort");
+    const source = searchParams.get("source");
+
+    return {
+        q: searchParams.get("q") ?? "",
+        source: source === "ingested" || source === "manual" ? source : "",
+        platform_id: searchParams.get("platform_id") ?? "",
+        platform_kind: searchParams.get("platform_kind") ?? "",
+        device: searchParams.get("device") ?? "",
+        country: searchParams.get("country") ?? "US",
+        payout_type: searchParams.get("payout_type") ?? "",
+        is_new: searchParams.get("is_new") === "true",
+        is_hot: searchParams.get("is_hot") === "true",
+        is_ath: searchParams.get("is_ath") === "true",
+        is_boosted: searchParams.get("is_boosted") === "true",
+        min_payout: parseFloat(searchParams.get("min_payout") ?? "0") || 0,
+        sort: sort === "payout_asc" || sort === "heat_desc" || sort === "newest" ? sort : "payout_desc",
+        page: Number.isFinite(page) && page > 0 ? page : 1,
+    };
+}
+
+function serializeFilterState(filters: FilterState): string {
+    return JSON.stringify(filters);
+}
+
+function buildShareableSearchParams(
+    filters: FilterState,
+    context?: { platformName?: string; fromReview?: boolean }
+): URLSearchParams {
+    const params = new URLSearchParams();
+    if (filters.q.trim()) params.set("q", filters.q.trim());
+    if (filters.source) params.set("source", filters.source);
+    if (filters.platform_id) {
+        params.set("platform_id", filters.platform_id);
+        if (context?.platformName) params.set("platform_name", context.platformName);
+        if (context?.fromReview) params.set("from_review", "1");
+    }
+    if (filters.platform_kind) params.set("platform_kind", filters.platform_kind);
+    if (filters.device) params.set("device", filters.device);
+    if (filters.country && filters.country !== defaultFilters.country) params.set("country", filters.country);
+    if (filters.payout_type) params.set("payout_type", filters.payout_type);
+    if (filters.is_new) params.set("is_new", "true");
+    if (filters.is_hot) params.set("is_hot", "true");
+    if (filters.is_ath) params.set("is_ath", "true");
+    if (filters.is_boosted) params.set("is_boosted", "true");
+    if (filters.min_payout > 0) params.set("min_payout", String(filters.min_payout));
+    if (filters.sort !== defaultFilters.sort) params.set("sort", filters.sort);
+    if (filters.page > 1) params.set("page", String(filters.page));
+    return params;
+}
+
 function buildQueryString(filters: FilterState, debouncedQ: string): string {
     const params = new URLSearchParams();
     if (debouncedQ) params.set("q", debouncedQ);
     if (filters.source) params.set("source", filters.source);
+    if (filters.platform_id) params.set("platform_id", filters.platform_id);
     if (filters.platform_kind) params.set("platform_kind", filters.platform_kind);
     if (filters.device) params.set("device", filters.device);
     if (filters.country) params.set("country", filters.country);
@@ -179,47 +277,58 @@ interface OfferRowProps {
     onPin: (offer: Offer) => void;
     isPinned: boolean;
     isBestPayout: boolean;
+    ctaLocation: string;
+    ctaSourceContext: string;
 }
 
-function OfferRow({ offer, onPin, isPinned, isBestPayout }: OfferRowProps) {
-    const router = useRouter();
-    const gameHref = `/offers/${offer.game.slug}`;
+function OfferRow({ offer, onPin, isPinned, isBestPayout, ctaLocation, ctaSourceContext }: OfferRowProps) {
+    const gameName = offer.game?.name ?? offer.title ?? "Offer";
+    const gameSlug = offer.game?.slug ?? null;
+    const gameHref = gameSlug ? `/offers/${gameSlug}` : null;
+    const platformName = offer.platform?.name ?? "Unknown platform";
+    const providerName = offer.provider_name ?? platformName;
+    const thumbnailUrl =
+        offer.image_url ??
+        (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ??
+        offer.game?.thumbnail_url ??
+        null;
+    const routeSummary =
+        offer.goal_text ||
+        (gameHref
+            ? `Open the offer route to compare payouts and details for ${gameName}.`
+            : `Go directly to ${platformName} for this offer.`);
 
     return (
         <div
             className={`px-4 py-4 border-b border-[var(--border-default)] last:border-0 transition-colors group cursor-pointer ${
                 isBestPayout
-                    ? 'bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]'
-                    : 'hover:bg-[var(--surface-muted)]'
+                    ? "bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]"
+                    : "hover:bg-[var(--surface-muted)]"
             }`}
-            onClick={() => router.push(gameHref)}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    router.push(gameHref);
-                }
-            }}
         >
-            {/* Row 1: thumbnail + info + payout */}
             <div className="flex items-center gap-3">
-                {/* Game thumbnail */}
                 <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center group-hover:border-lime-300 transition-colors">
-                    {offer.game.thumbnail_url ? (
-                        <Image src={offer.game.thumbnail_url} alt={offer.game.name} width={48} height={48} className="w-full h-full object-cover" />
-                    ) : (
-                        <div className="text-[var(--text-tertiary)] text-xs font-bold uppercase">{offer.game.name.substring(0, 2)}</div>
-                    )}
+                    <OfferThumbnail
+                        src={thumbnailUrl}
+                        alt={gameName}
+                        fallbackText={gameName.substring(0, 2)}
+                        className="w-full h-full object-cover"
+                    />
                 </div>
 
-                {/* Game info */}
                 <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 flex-wrap mb-1">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
+                            {offer.source === "manual" ? "Curated route" : "Live offer"}
+                        </span>
+                    </div>
                     <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
                         <span className="font-bold text-[var(--brand-ink)] group-hover:text-lime-700 transition-colors truncate text-sm">
-                            {offer.game.name}
+                            {gameName}
                         </span>
-                        {isBestPayout && <Badge label="BEST PAYOUT" variant="best" />}
+                        {isBestPayout && <Badge label="TOP PAYOUT" variant="best" />}
                         {offer.source === "manual" && (
                             <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider leading-none bg-indigo-50 text-indigo-700 border border-indigo-200">
                                 Curated
@@ -230,38 +339,35 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout }: OfferRowProps) {
                         {offer.is_hot && <Badge label="HOT" variant="hot" />}
                         {offer.is_boosted && <Badge label="BOOSTED" variant="boosted" />}
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)]">
+                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)] flex-wrap">
                         <span className="flex items-center gap-1 font-medium">
                             {offer.platform.logo_url && (
-                                <Image src={offer.platform.logo_url} alt={offer.platform.name} width={12} height={12} className="w-3 h-3 rounded-sm object-cover" />
+                                <Image src={offer.platform.logo_url} alt={platformName} width={12} height={12} className="w-3 h-3 rounded-sm object-cover" />
                             )}
-                            {offer.platform.name}
+                            {providerName}
                         </span>
-                        <span className="text-[var(--border-strong)]">·</span>
+                        <span className="text-[var(--border-strong)]">?</span>
+                        <span>{platformName}</span>
+                        <span className="text-[var(--border-strong)]">?</span>
                         <span className="flex items-center gap-0.5">
-                            {offer.devices.map(d => <DeviceIcon key={d} device={d} />)}
+                            {offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}
                         </span>
-                        {offer.heat_score > 50 && (
-                            <span className="text-orange-500 font-semibold">🔥</span>
-                        )}
+                        {offer.heat_score > 50 && <span className="text-orange-500 font-semibold">??</span>}
                     </div>
-                    {offer.source === "manual" && offer.goal_text && (
-                        <p className="mt-0.5 text-xs text-[var(--text-tertiary)] italic line-clamp-1">{offer.goal_text}</p>
-                    )}
+                    <p className="mt-1 text-xs text-[var(--text-secondary)] line-clamp-2">{routeSummary}</p>
                 </div>
 
-                {/* Payout — right aligned */}
                 <div className="flex-shrink-0 text-right ml-auto pl-2">
-                    <div className="text-[10px] text-[var(--text-tertiary)] uppercase tracking-widest mb-0.5 font-semibold">Up to</div>
+                    <div className="text-[10px] text-[var(--text-tertiary)] uppercase tracking-widest mb-0.5 font-semibold">
+                        {isBestPayout ? "Best now" : "Up to"}
+                    </div>
                     <div className={`text-xl sm:text-2xl font-extrabold leading-none ${isBestPayout ? 'text-[color:hsl(84,93%,25%)]' : 'text-[color:hsl(84,93%,30%)]'}`}>
                         ${offer.payout_usd.toFixed(2)}
                     </div>
                 </div>
             </div>
 
-            {/* Row 2: action buttons — full width on mobile */}
             <div className="flex items-center gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
-                {/* Pin button */}
                 <button
                     onClick={(e) => { e.stopPropagation(); onPin(offer); }}
                     title={isPinned ? "Remove from comparison" : "Add to comparison"}
@@ -271,34 +377,50 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout }: OfferRowProps) {
                         : "bg-white border-[var(--border-default)] text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700 hover:bg-[var(--brand-lime)]/10"
                     }`}
                 >
-                    {isPinned ? "✓" : "+"}
+                    {isPinned ? "?" : "+"}
                 </button>
 
-                {/* View Details */}
-                <Link
-                    href={gameHref}
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-all whitespace-nowrap"
-                >
-                    View Details
-                </Link>
-
-                {/* Start Offer CTA */}
-                {offer.redirect_url ? (
-                    <a
-                        href={offer.redirect_url}
-                        target="_blank"
-                        rel="noopener noreferrer sponsored"
+                {gameHref ? (
+                    <Link
+                        href={gameHref}
                         onClick={(e) => e.stopPropagation()}
+                        className="flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-all whitespace-nowrap"
+                    >
+                        View Route
+                    </Link>
+                ) : (
+                    <span className="flex-1 sm:flex-none text-center px-3 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-xl whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
+                        No Details
+                    </span>
+                )}
+
+                {offer.redirect_url ? (
+                    <TrackedOutboundLink
+                        href={offer.redirect_url}
+                        onClick={(e) => e.stopPropagation()}
+                        eventLabel={offer.source === "manual" ? "manual-offer-cta" : "offer-search-cta"}
+                        offerId={offer.id}
+                        offerTitle={gameName}
+                        gameTitle={gameName}
+                        platformName={platformName}
+                        providerName={offer.provider_name}
+                        payoutUsd={offer.payout_usd}
+                        location={ctaLocation}
+                        sourceContext={ctaSourceContext}
                         className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all whitespace-nowrap shadow-sm"
                     >
                         {offer.source === "manual" ? "Go to Site" : "Start Offer"}
-                    </a>
+                    </TrackedOutboundLink>
                 ) : (
                     <span className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-xl whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
                         No Link
                     </span>
                 )}
+            </div>
+            <div className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+                {gameHref
+                    ? "View Route opens the detail path. Start Offer sends you to the payout platform."
+                    : "Start Offer sends you directly to the payout platform."}
             </div>
         </div>
     );
@@ -461,15 +583,16 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
                     {pinned.map(offer => (
                         <div key={offer.id} className="flex-shrink-0 flex items-center gap-3 bg-[var(--surface-muted)] rounded-xl px-3 py-2 border border-[var(--border-default)] min-w-[200px] relative">
                             <div className="w-8 h-8 flex-shrink-0 overflow-hidden rounded-lg border border-[var(--border-default)] flex items-center justify-center bg-white">
-                                {offer.game.thumbnail_url ? (
-                                    <Image src={offer.game.thumbnail_url} alt="" width={32} height={32} className="w-full h-full object-cover" />
-                                ) : (
-                                    <span className="text-[10px] text-[var(--text-tertiary)] font-bold">{offer.game.name.substring(0, 2)}</span>
-                                )}
+                                <OfferThumbnail
+                                    src={offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game.thumbnail_url}
+                                    alt={offer.game?.name ?? offer.title}
+                                    fallbackText={(offer.game?.name ?? offer.title).substring(0, 2)}
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                             <div className="flex-1 min-w-0 pr-6">
-                                <div className="text-xs font-bold text-[var(--brand-ink)] truncate">{offer.game.name}</div>
-                                <div className="text-[11px] text-[var(--text-secondary)] font-medium truncate">{offer.platform.name} · <span className="text-[color:hsl(84,93%,30%)] font-extrabold">${offer.payout_usd.toFixed(2)}</span></div>
+                                <div className="text-xs font-bold text-[var(--brand-ink)] truncate">{offer.game?.name ?? offer.title}</div>
+                                <div className="text-[11px] text-[var(--text-secondary)] font-medium truncate">{offer.platform?.name ?? "Unknown platform"} · <span className="text-[color:hsl(84,93%,30%)] font-extrabold">${offer.payout_usd.toFixed(2)}</span></div>
                             </div>
                             <button onClick={() => onRemove(offer.id)} className="absolute right-2 text-[var(--text-tertiary)] hover:text-red-500 text-lg leading-none p-1 transition-colors">×</button>
                         </div>
@@ -508,6 +631,8 @@ interface OfferTableProps {
 }
 
 function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }: OfferTableProps) {
+    const ctaLocation = meta ? "offers-search-list" : "game-offers-list";
+    const ctaSourceContext = meta ? "offers-search" : "game-offers";
     // Compute best payout per game in current result set (API already sorted desc,
     // so the first occurrence of each game.id is the highest-payout offer for that game)
     const bestPayoutByGame = new Map<string, string>(); // game.id -> offer.id
@@ -563,6 +688,8 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
                             onPin={onPin}
                             isPinned={pinned.some(p => p.id === offer.id)}
                             isBestPayout={isBestPayout}
+                            ctaLocation={ctaLocation}
+                            ctaSourceContext={ctaSourceContext}
                         />
                     );
                 })}
@@ -606,7 +733,10 @@ interface OfferSearchEngineProps {
 }
 
 export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngineProps) {
-    const [filters, dispatch] = useReducer(filterReducer, defaultFilters);
+    const pathname = usePathname();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const [filters, dispatch] = useReducer(filterReducer, searchParams, buildFiltersFromSearchParams);
     const [offers, setOffers] = React.useState<Offer[]>([]);
     const [meta, setMeta] = React.useState<OfferMeta | null>(null);
     const [loading, setLoading] = React.useState(true);
@@ -614,6 +744,10 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
     const abortRef = useRef<AbortController | null>(null);
 
     const debouncedQ = useDebounce(filters.q, 300);
+    const reviewPlatformName = searchParams.get("platform_name") ?? "";
+    const isReviewScoped = searchParams.get("from_review") === "1" && !!filters.platform_id;
+    const hasPlatformFilter = !!filters.platform_id;
+    const searchParamsString = searchParams.toString();
 
     const fetchOffers = useCallback(async () => {
         abortRef.current?.abort();
@@ -627,7 +761,8 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
             const res = await fetch(endpoint, { signal: abortRef.current.signal });
             if (!res.ok) throw new Error("Fetch failed");
             const json = await res.json();
-            setOffers(initialGameSlug ? json.offers : json.data);
+            const nextOffers = (initialGameSlug ? json.offers : json.data) ?? [];
+            setOffers(Array.isArray(nextOffers) ? nextOffers.filter((offer) => offer && typeof offer.id === "string") : []);
             setMeta(initialGameSlug ? null : json.meta);
         } catch (err: unknown) {
             if ((err as Error).name !== "AbortError") console.error(err);
@@ -637,6 +772,28 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
     }, [filters, debouncedQ, initialGameSlug]);
 
     useEffect(() => { fetchOffers(); }, [fetchOffers]);
+
+    useEffect(() => {
+        const nextFilters = buildFiltersFromSearchParams(searchParams);
+        if (serializeFilterState(nextFilters) !== serializeFilterState(filters)) {
+            dispatch({ type: "HYDRATE", filters: nextFilters });
+        }
+    }, [searchParamsString]);
+
+    useEffect(() => {
+        if (initialGameSlug) return;
+
+        const nextParams = buildShareableSearchParams(filters, {
+            platformName: filters.platform_id ? reviewPlatformName : undefined,
+            fromReview: filters.platform_id ? isReviewScoped : false,
+        });
+        const nextQuery = nextParams.toString();
+        const currentQuery = searchParams.toString();
+
+        if (nextQuery !== currentQuery) {
+            router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+        }
+    }, [filters, pathname, router, reviewPlatformName, isReviewScoped, initialGameSlug, searchParamsString]);
 
     const handlePin = (offer: Offer) => {
         setPinned(prev => {
@@ -649,18 +806,52 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
 
     return (
         <div className="space-y-5">
+            {hasPlatformFilter && !initialGameSlug && (
+                <div className="rounded-2xl border border-lime-200 bg-[var(--brand-lime)]/10 p-4 text-sm shadow-[var(--shadow-card)]">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <div className="font-extrabold text-[var(--brand-ink)]">
+                                {reviewPlatformName ? `Showing offers for ${reviewPlatformName}` : "Showing platform-specific offers"}
+                            </div>
+                            <p className="mt-1 text-[var(--text-secondary)]">
+                                {isReviewScoped
+                                    ? "You came from a platform review, so this list is filtered to offers available on that platform."
+                                    : "This list is filtered to one platform so you can compare a more relevant set of offers."}
+                            </p>
+                        </div>
+                        <Link
+                            href="/offers"
+                            className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
+                        >
+                            Clear Platform Filter
+                        </Link>
+                    </div>
+                </div>
+            )}
+
             <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] space-y-5">
                 <SearchBar value={filters.q} onChange={v => dispatch({ type: "SET", key: "q", value: v })} />
                 <div className="h-px bg-[var(--border-default)]" />
                 <FilterBar filters={filters} dispatch={dispatch} />
             </div>
 
-            <div className="flex items-center justify-between px-1">
-                <h2 className="text-xl font-extrabold text-[var(--brand-ink)] tracking-tight">
-                    {initialGameSlug ? "Available Offers" : "All Offers"}
-                </h2>
+            <div className="flex items-start justify-between gap-4 px-1">
+                <div>
+                    <h2 className="text-xl font-extrabold text-[var(--brand-ink)] tracking-tight">
+                        {initialGameSlug
+                            ? "Available Offers"
+                            : hasPlatformFilter && reviewPlatformName
+                                ? `${reviewPlatformName} Offers`
+                                : "All Offers"}
+                    </h2>
+                    <p className="mt-1 text-xs text-[var(--text-tertiary)]">
+                        {hasPlatformFilter && reviewPlatformName
+                            ? `These are offers currently filtered to ${reviewPlatformName}. Compare routes here after using the review to decide the platform is worth your time.`
+                            : "Offers are sorted to help you identify stronger payout opportunities quickly. Open a route for detail, or start the offer directly."}
+                    </p>
+                </div>
                 {meta && !loading && (
-                    <div className="text-sm font-bold text-[var(--text-secondary)] bg-[var(--surface-muted)] px-3 py-1 rounded-lg border border-[var(--border-default)]">
+                    <div className="text-sm font-bold text-[var(--text-secondary)] bg-[var(--surface-muted)] px-3 py-1 rounded-lg border border-[var(--border-default)] whitespace-nowrap">
                         {meta.total.toLocaleString()} results
                     </div>
                 )}
@@ -684,3 +875,4 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
         </div>
     );
 }
+

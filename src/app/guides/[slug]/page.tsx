@@ -62,9 +62,16 @@ export async function generateMetadata(
         `Complete guide for ${guide.title}. Earn up to $${guide.max_payout_usd?.toFixed(2) ?? "?"}.`;
 
     return {
-        title: `${title} | EarnGrind`,
+        title,
         description: desc,
-        openGraph: { title, description: desc },
+        alternates: {
+            canonical: `/guides/${params.slug}`,
+        },
+        openGraph: {
+            title,
+            description: desc,
+            url: `/guides/${params.slug}`,
+        },
     };
 }
 
@@ -222,7 +229,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                         )}
                     </main>
 
-                    <div className="mt-6 lg:mt-0">
+                    <div className={layoutStyle === "pro" ? "mt-6 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]" : "mt-6 lg:mt-0"}>
                         <GuideSidebar
                             guide={{
                                 id:                  guide.id,

@@ -32,6 +32,31 @@ export interface RawOffer {
      * Falls back to currency-based inference if absent.
      */
     countries_raw?: string[] | null;
+    /**
+     * Optional normalized game title when the provider title contains
+     * milestone text and should not be used as the parent offer title.
+     */
+    game_title?: string | null;
+    /** Optional provider / offerwall name attached to this offer. */
+    provider_name?: string | null;
+    /** Optional image URL for the parent offer. */
+    image_url?: string | null;
+    /** Optional aggregate payout across all tasks, if the provider exposes it. */
+    total_payout_raw?: string | null;
+    /** Optional computed best single milestone payout in USD. */
+    best_payout_usd?: number | null;
+    /** Child tasks or milestones tied to this parent offer. */
+    task_list?: RawOfferTask[] | null;
+}
+
+export interface RawOfferTask {
+    title: string;
+    reward_amount_usd: number;
+    reward_display?: string | null;
+    task_type?: "install" | "milestone" | "purchase" | "signup" | "other";
+    time_limit_text?: string | null;
+    notes?: string | null;
+    sort_order: number;
 }
 
 /**

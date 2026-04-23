@@ -5,11 +5,17 @@
     "private": true,
     "scripts": {
         "ingest": "ts-node src/index.ts",
+        "ingest:gpt": "ts-node src/jobs/runImport.ts",
+        "ingest:gpt:adtowall": "ts-node src/jobs/runImport.ts gain-adtowall",
+        "ingest:gpt:gemsloot": "ts-node src/jobs/runImport.ts gemsloot",
         "ingest:mock": "PROVIDER=mock ts-node src/index.ts",
+        "ingest:scheduler": "ts-node src/core/scheduler.ts",
         "build": "tsc --noEmit"
     },
     "dependencies": {
         "@supabase/supabase-js": "^2.47.0",
+        "axios": "^1.11.0",
+        "cheerio": "^1.1.2",
         "dotenv": "^16.4.5"
     },
     "devDependencies": {

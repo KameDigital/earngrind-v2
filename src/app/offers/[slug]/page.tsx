@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import type { Offer } from '@/components/offers/OfferSearchEngine';
+import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
 
 // ---------------------------------------------------------------
@@ -37,12 +38,60 @@ interface GuideTeaserData {
     body_md: string | null;
 }
 
+interface ComparisonTask {
+    id: string;
+    sort_order: number;
+    title: string;
+    reward_amount: number;
+    reward_display: string | null;
+    task_type: string;
+    time_limit_text: string | null;
+}
+
+interface ComparisonOfferRow {
+    id: string;
+    provider_name: string | null;
+    platform_name: string | null;
+    payout_usd: number;
+    total_payout_usd: number;
+    task_count: number;
+    image_url: string | null;
+    redirect_url: string;
+    offer_url: string | null;
+    status: string;
+    goal_text: string | null;
+    tasks: ComparisonTask[];
+}
+
+interface ComparisonSummary {
+    provider_count: number;
+    best_single_payout_usd: number;
+    best_total_payout_usd: number;
+}
+
 interface GamePageData {
     game: GameData;
     summary: PayoutSummary;
     offers: Offer[];
+    comparison: {
+        sort: string;
+        offers: ComparisonOfferRow[];
+        summary: ComparisonSummary;
+    };
     guides: GuideTeaserData[];
     guide: GuideTeaserData | null; // legacy compat
+}
+
+interface RelatedReview {
+    id: string;
+    slug: string;
+    title: string;
+    platform_id: string | null;
+    platforms: {
+        name: string;
+    } | {
+        name: string;
+    }[] | null;
 }
 
 // ---------------------------------------------------------------
@@ -84,6 +133,10 @@ export async function generateMetadata(
 const DEVICE_LABELS: Record<string, string> = {
     ios: '🍏 iOS', android: '🤖 Android', pc: '💻 PC', web: '🌐 Web',
 };
+
+const isImageUrl = (url?: string | null) =>
+    typeof url === "string" &&
+    /\.(jpg|jpeg|png|webp|gif|avif|svg)(?:$|[?#])/i.test(url);
 
 // ---------------------------------------------------------------
 // DIFFICULTY BADGE COLORS
@@ -299,10 +352,38 @@ function ComparisonSummaryCard({ offers }: { offers: Offer[] }) {
     );
 }
 
+function ComparisonStatsBar({
+    providerCount,
+    offerRowCount,
+    bestSinglePayoutUsd,
+    bestTotalPayoutUsd,
+}: {
+    providerCount: number;
+    offerRowCount: number;
+    bestSinglePayoutUsd: number;
+    bestTotalPayoutUsd: number;
+}) {
+    return (
+        <div className="border-t border-[var(--border-default)] px-5 sm:px-6 py-4 bg-[var(--surface-muted)]/50">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <StatCard label="Sites" value={String(providerCount)} />
+                <StatCard label="Best Single" value={bestSinglePayoutUsd > 0 ? `$${bestSinglePayoutUsd.toFixed(2)}` : '—'} />
+                <StatCard label="Best Total" value={bestTotalPayoutUsd > 0 ? `$${bestTotalPayoutUsd.toFixed(2)}` : '—'} accent />
+                <StatCard label="Offer Rows" value={String(offerRowCount)} />
+            </div>
+        </div>
+    );
+}
+
 // ---------------------------------------------------------------
 // COMPARISON TABLE ROW
 // ---------------------------------------------------------------
 function ComparisonRow({ offer, isBest, rank }: { offer: Offer; isBest: boolean; rank: number }) {
+    const providerLabel = offer.provider_name ?? offer.platform.name;
+    const routeSummary =
+        offer.goal_text ??
+        `Open ${offer.platform.name} to view the current payout route for ${offer.game?.name ?? offer.title}.`;
+
     return (
         <div className={`
             relative flex flex-col sm:flex-row sm:items-center gap-3 px-4 sm:px-5 py-4
@@ -345,7 +426,7 @@ function ComparisonRow({ offer, isBest, rank }: { offer: Offer; isBest: boolean;
                         <span className="font-bold text-[var(--brand-ink)] text-sm">{offer.platform.name}</span>
                         {isBest && (
                             <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[var(--brand-lime)] text-[var(--brand-ink)]">
-                                BEST PAYOUT
+                                BEST ROUTE
                             </span>
                         )}
                         {offer.is_ath && <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-[var(--brand-lime)]/30 text-[color:hsl(84,93%,25%)]">ATH</span>}
@@ -353,33 +434,50 @@ function ComparisonRow({ offer, isBest, rank }: { offer: Offer; isBest: boolean;
                         {offer.is_hot && <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-orange-50 text-orange-700 border border-orange-200">HOT</span>}
                         {offer.is_boosted && <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">BOOSTED</span>}
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-[var(--text-tertiary)]">
-                        {offer.devices.map(d => (
-                            <span key={d} title={d}>{DEVICE_LABELS[d]?.split(' ')[0] ?? '📱'}</span>
+                    <div className="flex items-center gap-1 flex-wrap text-xs text-[var(--text-tertiary)]">
+                        <span className="font-semibold">{providerLabel}</span>
+                        <span>?</span>
+                        {offer.devices.map((device) => (
+                            <span key={device} title={device}>{DEVICE_LABELS[device]?.split(' ')[0] ?? '??'}</span>
                         ))}
                     </div>
+                    <p className="mt-1 text-xs text-[var(--text-secondary)] line-clamp-2">
+                        {routeSummary}
+                    </p>
                 </div>
             </div>
 
             {/* Payout + CTA */}
             <div className="flex items-center justify-between sm:justify-end gap-4 border-t border-[var(--border-default)] sm:border-0 pt-3 sm:pt-0">
                 <div className="text-right">
-                    <div className="text-[10px] font-bold text-[var(--text-tertiary)] uppercase tracking-wider">Up to</div>
+                    <div className="text-[10px] font-bold text-[var(--text-tertiary)] uppercase tracking-wider">
+                        {isBest ? 'Best now' : 'Current payout'}
+                    </div>
                     <div className={`text-xl font-extrabold leading-tight ${isBest ? 'text-[color:hsl(84,93%,25%)]' : 'text-[var(--brand-ink)]'}`}>
                         ${offer.payout_usd.toFixed(2)}
                     </div>
                 </div>
-                <a
+                <TrackedOutboundLink
                     href={offer.redirect_url ?? "#"}
-                    target="_blank"
-                    rel="noopener noreferrer sponsored"
+                    eventLabel="platform-comparison-cta"
+                    offerId={offer.id}
+                    offerTitle={offer.game?.name ?? offer.title}
+                    gameTitle={offer.game?.name ?? undefined}
+                    platformName={offer.platform?.name}
+                    providerName={offer.provider_name}
+                    payoutUsd={offer.payout_usd}
+                    location="platform-comparison"
+                    sourceContext="offer-detail"
                     className={`px-4 py-2 text-sm font-extrabold rounded-xl transition-all hover:-translate-y-px active:translate-y-0 whitespace-nowrap ${isBest
                             ? 'bg-[var(--brand-ink)] text-[var(--brand-lime)] shadow-sm'
                             : 'bg-[var(--surface-muted)] text-[var(--brand-ink)] border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10'
                         }`}
                 >
-                    {isBest ? 'Start (Best)' : 'Start Offer'}
-                </a>
+                    {isBest ? 'Start Best Route' : 'Start Offer'}
+                </TrackedOutboundLink>
+            </div>
+            <div className="mt-2 text-[11px] text-[var(--text-tertiary)] sm:pl-9">
+                Start Offer opens the payout platform for this route.
             </div>
         </div>
     );
@@ -403,33 +501,6 @@ function StatCard({ label, value, accent }: { label: string; value: string; acce
 // ---------------------------------------------------------------
 // SITE OFFERS DATA FETCH (server-component)
 // ---------------------------------------------------------------
-async function getSiteOffers(gameId: string): Promise<SiteOffer[]> {
-    const supabase = createClient();
-    const { data } = await supabase
-        .from('site_offers')
-        .select(`
-            id, payout_usd, goal_text, offer_url, status,
-            site:platforms(name),
-            provider:providers(name),
-            tasks:site_offer_tasks(
-                id, sort_order, title, reward_amount, reward_display, task_type, time_limit_text
-            )
-        `)
-        .eq('game_id', gameId)
-        .eq('status', 'active')
-        .order('payout_usd', { ascending: false })
-        .limit(20);
-    if (!data) return [];
-    return data.map((r) => ({
-        ...r,
-        site:     Array.isArray(r.site)     ? r.site[0]     ?? null : r.site,
-        provider: Array.isArray(r.provider) ? r.provider[0] ?? null : r.provider,
-        tasks:    Array.isArray(r.tasks)
-                  ? [...r.tasks].sort((a, b) => a.sort_order - b.sort_order)
-                  : [],
-    })) as SiteOffer[];
-}
-
 // ---------------------------------------------------------------
 // PAGE
 // ---------------------------------------------------------------
@@ -438,14 +509,49 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
 
     if (!data) notFound();
 
-    const { game, summary, offers, guides } = data;
-
-    // Fetch site-specific offer comparison rows in parallel
-    const siteOfferRows = await getSiteOffers(game.id);
+    const { game, summary, offers, guides, comparison } = data;
+    const supabase = createClient();
+    const siteOfferRows: SiteOffer[] = comparison.offers.map((row) => ({
+        id: row.id,
+        payout_usd: row.payout_usd,
+        total_payout_usd: row.total_payout_usd,
+        goal_text: row.goal_text,
+        offer_url: row.offer_url,
+        status: row.status,
+        site: row.platform_name ? { name: row.platform_name } : null,
+        provider: row.provider_name ? { name: row.provider_name } : null,
+        tasks: row.tasks,
+    }));
 
     // Sort by payout desc (API should already do this, but ensure)
     const sortedOffers = [...offers].sort((a, b) => b.payout_usd - a.payout_usd);
     const bestOffer = sortedOffers[0] ?? null;
+    const primaryGuide = guides[0] ?? null;
+    const relatedPlatformIds = Array.from(new Set(sortedOffers.map((offer) => offer.platform?.id).filter(Boolean)));
+    const { data: rawReviews } = relatedPlatformIds.length > 0
+        ? await supabase
+            .from("reviews")
+            .select("id, slug, title, platform_id, platforms:platform_id(name)")
+            .eq("status", "published")
+            .in("platform_id", relatedPlatformIds)
+            .limit(4)
+        : { data: [] as RelatedReview[] };
+    const relatedReviews = ((rawReviews ?? []) as RelatedReview[]).map((review) => ({
+        ...review,
+        platforms: Array.isArray(review.platforms) ? review.platforms[0] ?? null : review.platforms,
+    }));
+    const bestReview =
+        (bestOffer ? relatedReviews.find((review) => review.platform_id === bestOffer.platform?.id) : null) ??
+        relatedReviews[0] ??
+        null;
+
+    const heroImageUrl =
+        game.thumbnail_url ??
+        sortedOffers.find((offer) => offer.image_url)?.image_url ??
+        sortedOffers.find((offer) => isImageUrl(offer.redirect_url))?.redirect_url ??
+        comparison.offers.find((offer) => offer.image_url)?.image_url ??
+        comparison.offers.find((offer) => isImageUrl(offer.offer_url))?.offer_url ??
+        null;
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
@@ -463,14 +569,13 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
                     <div className="flex flex-col sm:flex-row gap-5 p-5 sm:p-6">
                         {/* Thumbnail */}
                         <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center">
-                            {game.thumbnail_url ? (
-                                <Image
-                                    src={game.thumbnail_url}
+                            {heroImageUrl ? (
+                                <img
+                                    src={heroImageUrl}
                                     alt={game.name}
-                                    width={96}
-                                    height={96}
                                     className="w-full h-full object-cover"
-                                    priority
+                                    loading="eager"
+                                    referrerPolicy="no-referrer"
                                 />
                             ) : (
                                 <span className="text-2xl font-black text-[var(--text-tertiary)]">
@@ -507,16 +612,80 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
                                     ))}
                                 </div>
                             )}
+
+                            <div className="mt-4 flex flex-wrap gap-2">
+                                {bestOffer && (
+                                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 px-3 py-1.5 text-xs font-bold text-[color:hsl(84,93%,25%)]">
+                                        Best route now: {bestOffer.platform.name} at ${bestOffer.payout_usd.toFixed(2)}
+                                    </span>
+                                )}
+                                {primaryGuide && (
+                                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                        Guide available
+                                    </span>
+                                )}
+                                {bestReview && (
+                                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                        Reviewed platform
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="mt-4 flex flex-wrap gap-3">
+                                {bestOffer?.redirect_url && (
+                                    <TrackedOutboundLink
+                                        href={bestOffer.redirect_url}
+                                        eventLabel="offer-detail-best-route-cta"
+                                        offerId={bestOffer.id}
+                                        offerTitle={game.name}
+                                        gameTitle={game.name}
+                                        platformName={bestOffer.platform?.name}
+                                        providerName={bestOffer.provider_name}
+                                        payoutUsd={bestOffer.payout_usd}
+                                        location="offer-detail-hero"
+                                        sourceContext="offer-detail"
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all hover:-translate-y-px"
+                                    >
+                                        Start Best Offer
+                                    </TrackedOutboundLink>
+                                )}
+                                {primaryGuide && (
+                                    <Link
+                                        href={`/guides/${primaryGuide.slug}`}
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-[var(--brand-lime)]/10 border border-[var(--brand-lime)]/20 hover:bg-[var(--brand-lime)]/15 text-[color:hsl(84,93%,25%)] text-sm font-extrabold rounded-xl transition-colors"
+                                    >
+                                        Use Guide First
+                                    </Link>
+                                )}
+                                <Link
+                                    href={`/games/${game.slug}`}
+                                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-colors"
+                                >
+                                    View Game Page
+                                </Link>
+                                {bestReview && (
+                                    <Link
+                                        href={`/review/${bestReview.slug}`}
+                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-colors"
+                                    >
+                                        Read Platform Review
+                                    </Link>
+                                )}
+                            </div>
+
+                            <p className="mt-3 text-xs text-[var(--text-tertiary)] leading-relaxed max-w-2xl">
+                                Start Best Offer sends you to the payout platform. Use Guide First if you want milestone help before clicking out. Comparing routes below helps you judge whether the reward is worth the effort.
+                            </p>
                         </div>
                     </div>
 
                     {/* Stats bar */}
                     <div className="border-t border-[var(--border-default)] px-5 sm:px-6 py-4 bg-[var(--surface-muted)]/50">
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <StatCard label="Platforms" value={String(summary.offer_count)} />
-                            <StatCard label="Best Payout" value={`$${summary.max_payout_usd.toFixed(2)}`} accent />
-                            <StatCard label="Avg Payout" value={summary.avg_payout_usd > 0 ? `$${summary.avg_payout_usd.toFixed(2)}` : '—'} />
-                            <StatCard label="Min Payout" value={summary.min_payout_usd > 0 ? `$${summary.min_payout_usd.toFixed(2)}` : '—'} />
+                            <StatCard label="Routes" value={String(comparison.offers.length)} />
+                            <StatCard label="Best Route" value={comparison.summary.best_total_payout_usd > 0 ? `$${comparison.summary.best_total_payout_usd.toFixed(2)}` : "-"} accent />
+                            <StatCard label="Average" value={summary.avg_payout_usd > 0 ? `$${summary.avg_payout_usd.toFixed(2)}` : "-"} />
+                            <StatCard label="Guides" value={String(guides.length)} />
                         </div>
                     </div>
                 </div>
@@ -550,12 +719,17 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
 
                         {/* Comparison Table */}
                         <div>
-                            <div className="flex items-center justify-between px-1 mb-3">
-                                <h2 className="text-lg font-extrabold text-[var(--brand-ink)] tracking-tight">
-                                    Compare Platforms
-                                </h2>
-                                <div className="text-sm font-bold text-[var(--text-secondary)] bg-white border border-[var(--border-default)] px-2.5 py-1 rounded-lg shadow-[var(--shadow-card)]">
-                                    {sortedOffers.length} platform{sortedOffers.length !== 1 ? 's' : ''}
+                            <div className="flex items-center justify-between px-1 mb-3 gap-4">
+                                <div>
+                                    <h2 className="text-lg font-extrabold text-[var(--brand-ink)] tracking-tight">
+                                        Compare Platforms
+                                    </h2>
+                                    <p className="mt-1 text-xs text-[var(--text-tertiary)]">
+                                        Check the payout spread, choose the strongest route, then click outbound only after you know which platform gives you the best return.
+                                    </p>
+                                </div>
+                                <div className="text-sm font-bold text-[var(--text-secondary)] bg-white border border-[var(--border-default)] px-2.5 py-1 rounded-lg shadow-[var(--shadow-card)] whitespace-nowrap">
+                                    {sortedOffers.length} platform{sortedOffers.length !== 1 ? "s" : ""}
                                 </div>
                             </div>
 

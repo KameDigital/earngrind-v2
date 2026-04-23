@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { Wand2 } from "lucide-react";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -255,6 +256,11 @@ export default function SiteOfferCreateForm({ platforms: initPlatforms, provider
     const [saving, setSaving] = useState(false);
     const [error,  setError]  = useState<string | null>(null);
 
+    // Magic wand state
+    const [magicInput,  setMagicInput]  = useState("");
+    const [isParsing,   setIsParsing]   = useState(false);
+    const [magicError,  setMagicError]  = useState<string | null>(null);
+
     // ── Row helpers ──────────────────────────────────────────────────────────
 
     const updateRow = useCallback((id: string, field: keyof PlatformRow, value: string) => {
@@ -275,6 +281,32 @@ export default function SiteOfferCreateForm({ platforms: initPlatforms, provider
     const handleAddProvider = useCallback((opt: Option) => {
         setProviders(prev => [...prev, opt].sort((a, b) => a.name.localeCompare(b.name)));
     }, []);
+
+    // ── Magic Wand ───────────────────────────────────────────────────────────
+
+    async function handleMagicWand() {
+        if (!magicInput.trim()) return;
+        setIsParsing(true);
+        setMagicError(null);
+        try {
+            const res = await fetch("/api/admin/magic-parser", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ input: magicInput })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Parsing failed");
+            
+            if (data.title) setTitle(data.title);
+            if (data.payout) updateRow(rows[0].rowId, "payout", data.payout);
+            
+            setMagicInput("");
+        } catch (err: any) {
+            setMagicError(err.message);
+        } finally {
+            setIsParsing(false);
+        }
+    }
 
     // ── Game inline creation ─────────────────────────────────────────────────
 
@@ -341,6 +373,44 @@ export default function SiteOfferCreateForm({ platforms: initPlatforms, provider
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* ── Magic Wand 🪄 ─────────────────────────────────────────── */}
+            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-xl p-4 shadow-sm relative overflow-hidden">
+                {/* Decorative blob */}
+                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div className="flex items-start gap-4 relative z-10">
+                    <div className="p-2 bg-purple-100 text-purple-600 rounded-lg shrink-0 mt-0.5">
+                        <Wand2 className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 w-full">
+                        <label className="block text-xs font-bold text-purple-900 uppercase tracking-widest mb-1.5">
+                            Magic Wand Parser ✨
+                        </label>
+                        <p className="text-xs text-purple-700/80 mb-3">
+                            Paste an Offer URL or raw text block to automatically extract Title and Payout.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-2">
+                            <input
+                                type="text"
+                                value={magicInput}
+                                onChange={e => setMagicInput(e.target.value)}
+                                onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); handleMagicWand(); } }}
+                                placeholder="https://... or 'Reach level 10 $5.00'"
+                                className={`${inputCls} !border-purple-200 focus:!ring-purple-400 focus:!border-purple-400`}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleMagicWand}
+                                disabled={isParsing || !magicInput}
+                                className="px-5 py-2 bg-purple-600 text-white text-sm font-bold rounded-lg hover:bg-purple-700 disabled:opacity-50 transition shrink-0 shadow-sm"
+                            >
+                                {isParsing ? "Parsing…" : "✨ Auto-Fill"}
+                            </button>
+                        </div>
+                        {magicError && <p className="text-xs font-medium text-red-500 mt-2">{magicError}</p>}
+                    </div>
+                </div>
+            </div>
 
             {/* ── Section 1: Game ─────────────────────────────────────────── */}
             <fieldset className="space-y-3">

@@ -149,16 +149,9 @@ type HomepageData = {
   featuredGames: FeaturedGame[];
   highestPayingOffers: HomepageRailOffer[];
   popularGuides: GuideRow[];
-  latestGuides: GuideRow[];
-  trustedReviews: Array<
-    Omit<ReviewRow, "platforms"> & {
-      platforms: { name: string; slug: string } | null;
-    }
-  >;
   stats: {
     liveOfferCount: number;
     guideCount: number;
-    reviewedPlatformCount: number;
     topPayout: number | null;
   };
 };
@@ -173,7 +166,7 @@ async function getHomepageData(): Promise<HomepageData> {
   const guideSelect =
     "id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, games(id, name, slug, thumbnail_url)";
 
-  const [offersResult, popularGuidesResult, latestGuidesResult, trustedReviewsResult] = await Promise.all([
+  const [offersResult, popularGuidesResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
       .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
@@ -185,18 +178,6 @@ async function getHomepageData(): Promise<HomepageData> {
       .eq("status", "published")
       .order("max_payout_usd", { ascending: false })
       .limit(6),
-    supabase
-      .from("guides")
-      .select(guideSelect)
-      .eq("status", "published")
-      .order("published_at", { ascending: false })
-      .limit(6),
-    supabase
-      .from("reviews")
-      .select("id, slug, title, excerpt, rating_overall, platforms:platform_id(name, slug)")
-      .eq("status", "published")
-      .order("rating_overall", { ascending: false, nullsFirst: false })
-      .limit(3),
   ]);
 
   const offerRows = (offersResult.data ?? []) as OfferRow[];
@@ -283,15 +264,8 @@ async function getHomepageData(): Promise<HomepageData> {
       games: Array.isArray(row.games) ? row.games[0] ?? null : row.games,
     }));
 
-  const trustedReviews: HomepageData["trustedReviews"] = ((trustedReviewsResult.data ?? []) as ReviewRow[]).map(
-    (review) => ({
-      ...review,
-      platforms: Array.isArray(review.platforms) ? review.platforms[0] ?? null : review.platforms,
-    }),
-  );
-
   const uniqueGuideIds = new Set(
-    [...normalizeGuides((popularGuidesResult.data ?? []) as RawGuideRow[]), ...normalizeGuides((latestGuidesResult.data ?? []) as RawGuideRow[])]
+    normalizeGuides((popularGuidesResult.data ?? []) as RawGuideRow[])
       .map((guide) => guide.id),
   );
 
@@ -299,19 +273,16 @@ async function getHomepageData(): Promise<HomepageData> {
     featuredGames,
     highestPayingOffers,
     popularGuides: normalizeGuides((popularGuidesResult.data ?? []) as RawGuideRow[]),
-    latestGuides: normalizeGuides((latestGuidesResult.data ?? []) as RawGuideRow[]),
-    trustedReviews,
     stats: {
       liveOfferCount: offerRows.length,
       guideCount: uniqueGuideIds.size,
-      reviewedPlatformCount: trustedReviews.length,
       topPayout: offerRows[0]?.payout_usd ?? null,
     },
   };
 }
 
 export default async function HomePage() {
-  const { featuredGames, highestPayingOffers, popularGuides, latestGuides, trustedReviews, stats } =
+  const { featuredGames, highestPayingOffers, popularGuides, stats } =
     await getHomepageData();
   const compactOfferRail: FeaturedOfferRailItem[] = [
     ...featuredGames.map((game) => ({
@@ -384,8 +355,8 @@ export default async function HomePage() {
                 <div className="mt-1 text-xl font-extrabold text-white">{stats.guideCount}</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-left backdrop-blur-sm">
-                <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">Reviewed platforms</div>
-                <div className="mt-1 text-xl font-extrabold text-white">{stats.reviewedPlatformCount}</div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">Curated sections</div>
+                <div className="mt-1 text-xl font-extrabold text-white">2</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-left backdrop-blur-sm">
                 <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">Top payout now</div>
@@ -447,180 +418,54 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="rounded-[36px] border border-[var(--border-default)] bg-[linear-gradient(180deg,#ffffff_0%,#f8faf6_100%)] p-5 sm:p-7 lg:p-8 shadow-[0_24px_80px_-40px_rgba(15,23,15,0.24)]">
-            <div className="overflow-hidden rounded-[28px] border border-[var(--border-default)] bg-white/90">
-              <div className="grid gap-8 px-6 py-7 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10 lg:py-8">
-                <div className="min-w-0">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                    What Is EarnGrind?
-                  </div>
-                  <h2 className="mt-5 max-w-2xl text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-[2.8rem] sm:leading-[0.98]">
-                    Your shortcut to the{" "}
-                    <span className="text-[color:hsl(84,93%,36%)]">best-paying GPT offers</span>
-                  </h2>
-                  <div className="mt-5 max-w-2xl space-y-4 text-[15px] leading-relaxed text-[var(--text-secondary)]">
-                    <p>
-                      GPT sites pay real money for game installs, offer milestones, signups, and surveys. The problem is that payouts differ by platform and change constantly.
-                    </p>
-                    <p>
-                      EarnGrind compares those live offers, publishes game pages, and connects you to detailed guides so you can choose better routes before you start.
-                    </p>
-                    <p>
-                      The homepage now links directly into the highest-value games, latest guides, and core SEO hubs that support your next click.
-                    </p>
-                  </div>
+          <div className="mx-auto max-w-5xl">
+            <div className="grid items-start gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="min-w-0">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                  What Is EarnGrind?
                 </div>
-
-                <div className="grid gap-3 self-start sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                  <div className="rounded-2xl bg-lime-50 px-4 py-4 ring-1 ring-lime-200/80">
-                    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-lime-700">Live offers</div>
-                    <div className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">Best payout</div>
-                  </div>
-                  <div className="rounded-2xl bg-[var(--surface-muted)]/65 px-4 py-4 ring-1 ring-[var(--border-default)]">
-                    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Game pages</div>
-                    <div className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">Direct routes</div>
-                  </div>
-                  <div className="rounded-2xl bg-[var(--surface-muted)]/65 px-4 py-4 ring-1 ring-[var(--border-default)]">
-                    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Guides</div>
-                    <div className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">Faster clears</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-[var(--border-default)] px-6 py-5 sm:px-8">
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Core hubs</span>
-                  {["Best GPT Sites", "Highest Paying GPT Offers", "Game Guides"].map((name) => (
-                    <span
-                      key={name}
-                      className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]"
-                    >
-                      {name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-[var(--border-default)] px-6 py-7 sm:px-8">
-                <div className="mb-5 flex items-center justify-between gap-4">
-                  <div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                      How It Works
-                    </div>
-                    <div className="mt-3 rounded-2xl bg-lime-50 px-4 py-3 ring-1 ring-lime-200/80">
-                      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-lime-700">Simple workflow</p>
-                      <p className="mt-1 text-sm font-semibold text-[var(--brand-ink)]">
-                        Compare the route, complete the milestones, then cash out through the provider.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid gap-3 lg:grid-cols-3">
-                  {HOW_IT_WORKS_STEPS.map((s, index) => (
-                    <div
-                      key={s.step}
-                      className="relative rounded-2xl bg-[var(--surface-muted)]/55 px-4 py-4 ring-1 ring-[var(--border-default)]"
-                    >
-                      <div className="mb-4 flex items-center gap-3">
-                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--brand-lime)] text-sm font-extrabold text-[var(--brand-ink)] shadow-[0_12px_24px_-14px_rgba(132,204,22,0.7)]">
-                          {s.step}
-                        </div>
-                        <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                          Step {index + 1}
-                        </div>
-                      </div>
-                      <h3 className="text-base font-extrabold text-[var(--brand-ink)]">{s.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{s.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="border-t border-[var(--border-default)] px-6 py-7 sm:px-8">
-                <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-                  <div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-lime)]" />
-                      Start Here
-                    </div>
-                    <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
-                      Pick the right entry point
-                    </h2>
-                    <p className="mt-2 max-w-md text-sm leading-relaxed text-[var(--text-secondary)]">
-                      Choose the path that matches your goal first: verify the platform, find the best payout, or use a guide to finish with fewer mistakes.
-                    </p>
-
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]">
-                        Trust
-                        <span className="ml-2 text-[var(--brand-ink)]">Reviews</span>
-                      </span>
-                      <span className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]">
-                        Payouts
-                        <span className="ml-2 text-[var(--brand-ink)]">Offers</span>
-                      </span>
-                      <span className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]">
-                        Execution
-                        <span className="ml-2 text-[var(--brand-ink)]">Guides</span>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="overflow-hidden rounded-3xl ring-1 ring-[var(--border-default)]">
-                    <div className="hidden grid-cols-[72px_180px_minmax(0,1fr)_32px] gap-4 bg-[var(--surface-muted)]/7 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)] md:grid">
-                      <div>Number</div>
-                      <div>Label</div>
-                      <div>Path</div>
-                      <div />
-                    </div>
-
-                    <div className="divide-y divide-[var(--border-default)]">
-                      {START_HERE_ITEMS.map((item, index) => (
-                        <Link
-                          key={item.name}
-                          href={item.href}
-                          className="group block bg-white px-5 py-4 transition-colors hover:bg-[var(--surface-muted)]/55"
-                        >
-                          <div className="grid gap-3 md:grid-cols-[72px_180px_minmax(0,1fr)_32px] md:items-center">
-                            <div className="flex items-center gap-3">
-                              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--surface-muted)] text-sm font-black text-[var(--brand-ink)] ring-1 ring-[var(--border-default)]">
-                                0{index + 1}
-                              </div>
-                            </div>
-
-                            <div>
-                              <div className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)] ring-1 ring-[var(--border-default)]">
-                                {item.badge}
-                              </div>
-                            </div>
-
-                            <div className="min-w-0">
-                              <div className="text-lg font-extrabold text-[var(--brand-ink)]">{item.name}</div>
-                              <p className="mt-1 max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
-                                {item.desc}
-                              </p>
-                            </div>
-
-                            <div className="flex items-center justify-end text-[var(--brand-ink)] transition-transform duration-200 group-hover:translate-x-1">
-                              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-2xl bg-[var(--surface-muted)]/45 px-4 py-4 ring-1 ring-[var(--border-default)]">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
-                  <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                    New visitors should start with <span className="font-bold text-[var(--brand-ink)]">Best GPT Sites</span>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
+                <h2 className="mt-5 max-w-2xl text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-[2.9rem] sm:leading-[0.96]">
+                  Your shortcut to the{" "}
+                  <span className="text-[color:hsl(84,93%,36%)]">best-paying GPT offers</span>
+                </h2>
+                <div className="mt-5 max-w-xl space-y-4 text-[14px] leading-relaxed text-[var(--text-secondary)]">
+                  <p>
+                    GPT sites pay real money for game installs, offer milestones, signups, and surveys. The problem is that payouts differ by platform and change constantly.
+                  </p>
+                  <p>
+                    EarnGrind compares those live offers, publishes game pages, and connects you to detailed guides so you can choose better routes before you start.
+                  </p>
+                  <p>
+                    The homepage now links directly into the highest-value games, latest guides, and core SEO hubs that support your next click.
                   </p>
                 </div>
               </div>
+
+              <div className="min-w-0">
+                <div className="mb-4 flex justify-end lg:mb-5">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                    How It Works
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {HOW_IT_WORKS_STEPS.map((s, index) => (
+                    <div key={s.step} className="grid gap-2 border-b border-[var(--border-default)] pb-4 last:border-b-0 last:pb-0">
+                      <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                        Step {index + 1}
+                      </div>
+                      <h3 className="text-base font-extrabold text-[var(--brand-ink)]">{s.title}</h3>
+                      <p className="max-w-sm text-sm leading-relaxed text-[var(--text-secondary)]">{s.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-[var(--border-default)] bg-white px-4 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
+              <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                New visitors should start with <span className="font-bold text-[var(--brand-ink)]">Best GPT Sites</span>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
+              </p>
             </div>
           </div>
         </div>
@@ -644,75 +489,30 @@ export default async function HomePage() {
       </section>
 
       <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto space-y-12">
+        <div className="max-w-5xl mx-auto">
+          <HomepageSectionHeader
+            eyebrow="Guides"
+            title="Game Guides and Latest Guides"
+            description="Browse established high-value guides first, then review the newest published walkthroughs feeding internal links into games and offers."
+          />
           <div>
-            <HomepageSectionHeader
-              eyebrow="Trusted Platforms"
-              title="Preview the platform reviews before you commit"
-              description="Use review pages to sanity-check trust, payout quality, and platform UX before you spend hours on the wrong site. The best route usually combines platform trust, live payouts, and a guide."
-            />
-            <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              {trustedReviews.map((review) => (
+            <div className="mb-4">
+              <h3 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">Game Guides</h3>
+              <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed max-w-3xl">
+                Published walkthroughs that support milestone completion, payout optimization, and better internal linking into games and offers.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {popularGuides.slice(0, 2).map((guide) => (
                 <HomepageLinkCard
-                  key={review.id}
-                  href={`/review/${review.slug}`}
-                  title={review.title}
-                  subtitle={review.platforms?.name ? `${review.platforms.name} review` : "Platform review"}
-                  meta={review.excerpt || "Read the full platform review before choosing where to run offers."}
-                  value={review.rating_overall ? `${review.rating_overall.toFixed(1)}/5` : null}
+                  key={guide.id}
+                  href={`/guides/${guide.slug}`}
+                  title={guide.title}
+                  subtitle={guide.games?.name ? `${guide.games.name} guide` : "Guide"}
+                  meta={guide.excerpt || guide.estimated_time || "Step-by-step guide for a high-value game offer."}
+                  value={formatMoney(guide.max_payout_usd)}
                 />
               ))}
-            </div>
-          </div>
-
-          <div>
-            <HomepageSectionHeader
-              eyebrow="Guides"
-              title="Game Guides and Latest Guides"
-              description="Browse established high-value guides first, then review the newest published walkthroughs feeding internal links into games and offers."
-            />
-            <div className="space-y-10">
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">Game Guides</h3>
-                  <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed max-w-3xl">
-                    Published walkthroughs that support milestone completion, payout optimization, and better internal linking into games and offers.
-                  </p>
-                </div>
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {popularGuides.map((guide) => (
-                    <HomepageLinkCard
-                      key={guide.id}
-                      href={`/guides/${guide.slug}`}
-                      title={guide.title}
-                      subtitle={guide.games?.name ? `${guide.games.name} guide` : "Guide"}
-                      meta={guide.excerpt || guide.estimated_time || "Step-by-step guide for a high-value game offer."}
-                      value={formatMoney(guide.max_payout_usd)}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">Latest Guides</h3>
-                  <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed max-w-3xl">
-                    Recently published guides that add fresh internal links into game pages and active offer routes.
-                  </p>
-                </div>
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {latestGuides.map((guide) => (
-                    <HomepageLinkCard
-                      key={guide.id}
-                      href={`/guides/${guide.slug}`}
-                      title={guide.title}
-                      subtitle={guide.games?.name ? `${guide.games.name} guide` : "Guide"}
-                      meta={guide.excerpt || `Latest published guide for ${guide.games?.name ?? "a tracked game"}.`}
-                      value={guide.published_at ? new Date(guide.published_at).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : null}
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </div>

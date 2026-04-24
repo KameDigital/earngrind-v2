@@ -329,7 +329,7 @@ export default async function HomePage() {
         />
 
         <div className="relative max-w-7xl mx-auto">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-3xl text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-lime)] animate-pulse" />
               <span className="text-[var(--brand-lime)] text-[11px] font-bold uppercase tracking-wider">
@@ -341,7 +341,7 @@ export default async function HomePage() {
               Find the <span className="text-[var(--brand-lime)]">highest-paying GPT offers</span> and finish them faster
             </h1>
 
-            <p className="text-base sm:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl">
               EarnGrind helps you compare real payouts, choose trustworthy GPT sites, and use game guides to reach milestones faster. Start with the best current route instead of guessing.
             </p>
 
@@ -364,7 +364,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="mb-8 flex flex-wrap items-center justify-center gap-2.5">
+            <div className="mb-8 flex flex-wrap items-center justify-start gap-2.5">
               {["Compare live payouts", "Choose trusted platforms", "Complete milestones faster"].map((item) => (
                 <span
                   key={item}
@@ -375,7 +375,7 @@ export default async function HomePage() {
               ))}
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="flex flex-wrap items-center justify-start gap-3">
               <Link
                 href="/offers"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--brand-lime)] text-[var(--brand-ink)] font-extrabold text-sm rounded-xl hover:bg-[color:hsl(84,93%,72%)] transition-all hover:-translate-y-px active:translate-y-0 shadow-lg shadow-[var(--brand-lime)]/20"
@@ -418,7 +418,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="mx-auto max-w-5xl">
+          <div className="max-w-5xl">
             <div className="grid items-start gap-12 lg:grid-cols-[1.2fr_0.8fr]">
               <div className="min-w-0">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
@@ -489,7 +489,7 @@ export default async function HomePage() {
       </section>
 
       <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl">
           <HomepageSectionHeader
             eyebrow="Guides"
             title="Game Guides and Latest Guides"

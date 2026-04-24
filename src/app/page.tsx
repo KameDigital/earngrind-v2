@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
+import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 
 export const metadata: Metadata = {
   title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
@@ -83,6 +84,10 @@ type OfferRow = {
   game_name: string | null;
   game_slug: string | null;
   game_thumbnail: string | null;
+  image_url?: string | null;
+  offer_image_url?: string | null;
+  game_image?: string | null;
+  thumbnail?: string | null;
   provider_name: string | null;
   platform_name: string | null;
   payout_usd: number | null;
@@ -136,9 +141,14 @@ type FeaturedGame = {
   provider: string;
 };
 
+type HomepageRailOffer = OfferRow & {
+  badge: string;
+  image_url: string | null;
+};
+
 type HomepageData = {
   featuredGames: FeaturedGame[];
-  highestPayingOffers: OfferRow[];
+  highestPayingOffers: HomepageRailOffer[];
   popularGuides: GuideRow[];
   latestGuides: GuideRow[];
   trustedReviews: Array<
@@ -167,7 +177,7 @@ async function getHomepageData(): Promise<HomepageData> {
   const [offersResult, popularGuidesResult, latestGuidesResult, trustedReviewsResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
-      .select("id, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, payout_usd, goal_text")
+      .select("id, title, game_id, game_name, game_slug, game_thumbnail, image_url, offer_image_url, game_image, thumbnail, provider_name, platform_name, payout_usd, goal_text")
       .order("payout_usd", { ascending: false })
       .limit(24),
     supabase
@@ -208,13 +218,23 @@ async function getHomepageData(): Promise<HomepageData> {
     ).values(),
   ).slice(0, 6);
 
-  const highestPayingOffers = Array.from(
+  const highestPayingOffers: HomepageData["highestPayingOffers"] = Array.from(
     new Map(
       offerRows
         .filter((row) => row.game_slug || row.game_name)
         .map((row) => [
           row.game_slug ?? row.game_name ?? row.id,
-          row,
+          {
+            ...row,
+            badge: "Live offer",
+            image_url:
+              row.image_url ??
+              row.offer_image_url ??
+              row.game_thumbnail ??
+              row.game_image ??
+              row.thumbnail ??
+              null,
+          },
         ]),
     ).values(),
   ).slice(0, 6);
@@ -255,6 +275,28 @@ async function getHomepageData(): Promise<HomepageData> {
 export default async function HomePage() {
   const { featuredGames, highestPayingOffers, popularGuides, latestGuides, trustedReviews, stats } =
     await getHomepageData();
+  const compactOfferRail: FeaturedOfferRailItem[] = [
+    ...featuredGames.map((game) => ({
+      id: `game-${game.slug}`,
+      href: `/games/${game.slug}`,
+      title: game.name,
+      badge: "Game page",
+      provider: game.provider,
+      payout: formatMoney(game.topPayout) ?? null,
+      imageUrl: game.thumbnail,
+    })),
+    ...highestPayingOffers.map((offer) => ({
+      id: `offer-${offer.id}`,
+      href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
+      title: offer.title?.trim() || offer.game_name || "Offer",
+      badge: offer.badge,
+      provider: offer.platform_name,
+      platform: offer.provider_name,
+      payout: formatMoney(offer.payout_usd) ?? null,
+      secondaryValue: offer.goal_text ? offer.goal_text : null,
+      imageUrl: offer.image_url,
+    })),
+  ];
 
   return (
     <main className="min-h-screen">
@@ -541,53 +583,11 @@ export default async function HomePage() {
               title="Featured Games and Highest Paying GPT Offers"
               description="Jump into top game pages first, then compare the highest-value live offers feeding those routes."
             />
-            <div className="space-y-10">
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">Featured Games</h3>
-                  <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed max-w-3xl">
-                    These game pages have strong current payouts and give users a direct path into offer comparisons and milestones.
-                  </p>
-                </div>
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {featuredGames.map((game) => (
-                    <HomepageLinkCard
-                      key={game.slug}
-                      href={`/games/${game.slug}`}
-                      title={game.name}
-                      subtitle="Game page"
-                      meta={`Current top payout via ${game.provider}`}
-                      value={formatMoney(game.topPayout)}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">Highest Paying GPT Offers</h3>
-                  <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed max-w-3xl">
-                    Direct links into the highest-value live offers across providers and platforms, with the current top payout surfaced first.
-                  </p>
-                </div>
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {highestPayingOffers.map((offer, index) => (
-                    <HomepageLinkCard
-                      key={offer.id}
-                      href={offer.game_slug ? `/games/${offer.game_slug}` : "/offers"}
-                      title={offer.title?.trim() || offer.game_name || "Offer"}
-                      subtitle={index === 0 ? `Top payout right now • ${offer.provider_name ?? "Provider"}` : `${offer.provider_name ?? "Provider"} • ${offer.platform_name ?? "Platform"}`}
-                      meta={
-                        offer.goal_text
-                          ? `Goal: ${offer.goal_text}`
-                          : `View current payout options for ${offer.game_name ?? "this game"}.`
-                      }
-                      value={formatMoney(offer.payout_usd)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+              <FeaturedOfferRail
+                items={compactOfferRail}
+                title="Top Offers"
+                description="Compact live routes and game pages in one rail so users can scan images, payout, and click into the strongest path faster."
+              />
           </div>
         </div>
       </section>

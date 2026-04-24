@@ -457,9 +457,11 @@ function SearchBar({ value, onChange }: SearchBarProps) {
 interface FilterBarProps {
     filters: FilterState;
     dispatch: React.Dispatch<FilterAction>;
+    platforms: OfferPlatform[];
+    selectedPlatformName?: string;
 }
 
-function FilterBar({ filters, dispatch }: FilterBarProps) {
+function FilterBar({ filters, dispatch, platforms, selectedPlatformName }: FilterBarProps) {
     const set = (key: keyof FilterState, value: FilterState[keyof FilterState]) =>
         dispatch({ type: "SET", key, value });
 
@@ -496,11 +498,25 @@ function FilterBar({ filters, dispatch }: FilterBarProps) {
                 </div>
 
                 <div className="relative flex-shrink-0">
-                    <select value={filters.platform_kind} onChange={e => set("platform_kind", e.target.value)} className={selectClass}>
-                        <option value="">All Platforms</option>
-                        <option value="gpt_site">GPT Sites</option>
-                        <option value="offerwall">Offerwalls</option>
-                        <option value="cashback">Cashback</option>
+                    <select
+                        value={filters.platform_id}
+                        onChange={e => {
+                            set("platform_id", e.target.value);
+                            if (e.target.value) {
+                                set("platform_kind", "");
+                            }
+                        }}
+                        className={selectClass}
+                    >
+                        <option value="">All Sites</option>
+                        {selectedPlatformName && !platforms.find((platform) => platform.id === filters.platform_id) && filters.platform_id ? (
+                            <option value={filters.platform_id}>{selectedPlatformName}</option>
+                        ) : null}
+                        {platforms.map((platform) => (
+                            <option key={platform.id} value={platform.id}>
+                                {platform.name}
+                            </option>
+                        ))}
                     </select>
                     <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </div>
@@ -738,6 +754,7 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
     const searchParams = useSearchParams();
     const [filters, dispatch] = useReducer(filterReducer, searchParams, buildFiltersFromSearchParams);
     const [offers, setOffers] = React.useState<Offer[]>([]);
+    const [platforms, setPlatforms] = React.useState<OfferPlatform[]>([]);
     const [meta, setMeta] = React.useState<OfferMeta | null>(null);
     const [loading, setLoading] = React.useState(true);
     const [pinned, setPinned] = React.useState<Offer[]>([]);
@@ -748,6 +765,27 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
     const isReviewScoped = searchParams.get("from_review") === "1" && !!filters.platform_id;
     const hasPlatformFilter = !!filters.platform_id;
     const searchParamsString = searchParams.toString();
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        async function fetchPlatforms() {
+            try {
+                const params = new URLSearchParams();
+                if (filters.country) params.set("country", filters.country);
+                const res = await fetch(`/api/platforms?${params.toString()}`, { signal: controller.signal });
+                if (!res.ok) throw new Error("Failed to fetch platforms");
+                const json = await res.json();
+                const nextPlatforms = (Array.isArray(json.data) ? json.data : []) as OfferPlatform[];
+                setPlatforms(nextPlatforms.filter((platform: OfferPlatform) => platform && typeof platform.id === "string"));
+            } catch (err: unknown) {
+                if ((err as Error).name !== "AbortError") console.error(err);
+            }
+        }
+
+        fetchPlatforms();
+        return () => controller.abort();
+    }, [filters.country]);
 
     const fetchOffers = useCallback(async () => {
         abortRef.current?.abort();
@@ -832,7 +870,12 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
             <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] space-y-5">
                 <SearchBar value={filters.q} onChange={v => dispatch({ type: "SET", key: "q", value: v })} />
                 <div className="h-px bg-[var(--border-default)]" />
-                <FilterBar filters={filters} dispatch={dispatch} />
+                <FilterBar
+                    filters={filters}
+                    dispatch={dispatch}
+                    platforms={platforms}
+                    selectedPlatformName={reviewPlatformName || undefined}
+                />
             </div>
 
             <div className="flex items-start justify-between gap-4 px-1">

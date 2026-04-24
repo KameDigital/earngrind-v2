@@ -208,6 +208,17 @@ async function getHomepageData(): Promise<HomepageData> {
     ).values(),
   ).slice(0, 6);
 
+  const highestPayingOffers = Array.from(
+    new Map(
+      offerRows
+        .filter((row) => row.game_slug || row.game_name)
+        .map((row) => [
+          row.game_slug ?? row.game_name ?? row.id,
+          row,
+        ]),
+    ).values(),
+  ).slice(0, 6);
+
   const normalizeGuides = (rows: RawGuideRow[] | null | undefined): GuideRow[] =>
     (rows ?? []).map((row) => ({
       ...row,
@@ -228,7 +239,7 @@ async function getHomepageData(): Promise<HomepageData> {
 
   return {
     featuredGames,
-    highestPayingOffers: offerRows.slice(0, 6),
+    highestPayingOffers,
     popularGuides: normalizeGuides((popularGuidesResult.data ?? []) as RawGuideRow[]),
     latestGuides: normalizeGuides((latestGuidesResult.data ?? []) as RawGuideRow[]),
     trustedReviews,

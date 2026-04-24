@@ -203,12 +203,56 @@ function safeSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function getFeaturedGameAliases(name: string) {
+  const aliases: Record<string, string[]> = {
+    "Sea of Conquest: Pirate": ["Sea of Conquest", "Sea of Conquest Pirate"],
+    "Raid: Shadow Legends": ["Raid Shadow Legends"],
+    "Game of Thrones": ["Game of Thrones"],
+    "Frost & Flame: King": ["Frost & Flame", "Frost and Flame", "Frost Flame"],
+    "Zombie Waves": ["Zombie Waves"],
+    "World of Warships": ["World of Warships"],
+    "The Grand Mafia": ["Grand Mafia"],
+    "Lords Mobile": ["Lords Mobile"],
+    "Rise of Kingdoms": ["Rise of Kingdoms"],
+    "Infinite Lagrange": ["Infinite Lagrange"],
+    "Wood Block Challenge": ["Wood Block Challenge"],
+    "2248 â€“ Merge Tile": ["2248", "2248 Merge Tile"],
+    "Hexa Merge: Tile Sort": ["Hexa Merge", "Tile Sort"],
+    "Palmon: Survival": ["Palmon", "Palmon Survival"],
+    "MU: Dark Epoch": ["MU Dark Epoch", "Dark Epoch"],
+    "Woodoku Blast": ["Woodoku Blast", "Woodoku"],
+    "Merge Paradise: Match": ["Merge Paradise"],
+    "Hero Wars: Alliance": ["Hero Wars", "Hero Wars Alliance"],
+  };
+
+  return [name, ...(aliases[name] ?? [])];
+}
+
+function matchesFeaturedName(candidate: string | null | undefined, targetName: string) {
+  const normalizedCandidate = normalizeName(candidate);
+  if (!normalizedCandidate) return false;
+
+  return getFeaturedGameAliases(targetName).some((alias) => {
+    const normalizedAlias = normalizeName(alias);
+    return (
+      normalizedCandidate.includes(normalizedAlias) ||
+      normalizedAlias.includes(normalizedCandidate)
+    );
+  });
+}
+
 async function getHomepageData(): Promise<HomepageData> {
   const supabase = createClient();
   const guideSelect =
     "id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, games(id, name, slug, thumbnail_url)";
+  const featuredOfferFilters = FEATURED_GAME_NAMES.flatMap((name) =>
+    getFeaturedGameAliases(name).flatMap((alias) => [
+      `game_name.ilike.%${alias}%`,
+      `title.ilike.%${alias}%`,
+    ]),
+  ).join(",");
 
-  const [offersResult, popularGuidesResult, featuredGamesResult] = await Promise.all([
+  const [offersResult, popularGuidesResult, featuredGamesResult, featuredGameOffersResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
       .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
@@ -224,10 +268,20 @@ async function getHomepageData(): Promise<HomepageData> {
       .from("games")
       .select("name, slug, thumbnail_url")
       .in("name", [...FEATURED_GAME_NAMES]),
+    supabase
+      .from("unified_offers_view")
+      .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
+      .or(featuredOfferFilters)
+      .order("payout_usd", { ascending: false })
+      .limit(200),
   ]);
 
   const offerRows = (offersResult.data ?? []) as OfferRow[];
-  const manualOfferIds = offerRows
+  const featuredGameOfferRows = (featuredGameOffersResult.data ?? []) as OfferRow[];
+  const allOfferRows = Array.from(
+    new Map([...offerRows, ...featuredGameOfferRows].map((row) => [row.id, row])).values(),
+  );
+  const manualOfferIds = allOfferRows
     .filter((row) => row.source === "manual")
     .map((row) => row.id);
 
@@ -242,16 +296,22 @@ async function getHomepageData(): Promise<HomepageData> {
     (manualOfferImages ?? []).map((row) => [row.id, row.image_url ?? null]),
   );
 
-  const enrichedOfferRows = offerRows.map((row) => ({
+  const enrichedAllOfferRows = allOfferRows.map((row) => ({
     ...row,
     image_url:
       row.source === "manual"
         ? manualOfferImageMap.get(row.id) ?? null
         : null,
   }));
+  const enrichedOfferRows = offerRows.map(
+    (row) => enrichedAllOfferRows.find((candidate) => candidate.id === row.id) ?? row,
+  );
+  const enrichedFeaturedGameOfferRows = featuredGameOfferRows.map(
+    (row) => enrichedAllOfferRows.find((candidate) => candidate.id === row.id) ?? row,
+  );
 
   const bestImageByGameSlug = new Map(
-    enrichedOfferRows
+    enrichedAllOfferRows
       .filter((row) => row.game_slug)
       .map((row) => [
         row.game_slug!,
@@ -259,25 +319,17 @@ async function getHomepageData(): Promise<HomepageData> {
       ]),
   );
 
-  const gamesByName = new Map(
-    ((featuredGamesResult.data ?? []) as GameRow[]).map((game) => [
-      normalizeName(game.name),
-      game,
-    ]),
-  );
-  const bestOfferByGameName = new Map<string, (typeof enrichedOfferRows)[number]>();
-  for (const row of enrichedOfferRows) {
-    if (!row.game_name) continue;
-    const key = normalizeName(row.game_name);
-    if (!bestOfferByGameName.has(key)) {
-      bestOfferByGameName.set(key, row);
-    }
-  }
+  const featuredGameRows = (featuredGamesResult.data ?? []) as GameRow[];
 
   const featuredGames: FeaturedGame[] = FEATURED_GAME_NAMES.map((gameName) => {
-    const normalizedName = normalizeName(gameName);
-    const matchingGame = gamesByName.get(normalizedName) ?? null;
-    const matchingOffer = bestOfferByGameName.get(normalizedName) ?? null;
+    const matchingGame =
+      featuredGameRows.find((game) => matchesFeaturedName(game.name, gameName)) ?? null;
+    const matchingOffer =
+      enrichedFeaturedGameOfferRows.find(
+        (row) =>
+          matchesFeaturedName(row.game_name, gameName) ||
+          matchesFeaturedName(row.title, gameName),
+      ) ?? null;
     const derivedSlug =
       matchingGame?.slug ??
       matchingOffer?.game_slug ??

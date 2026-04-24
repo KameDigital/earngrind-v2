@@ -821,7 +821,6 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
     const searchParams = useSearchParams();
     const [filters, dispatch] = useReducer(filterReducer, searchParams, buildFiltersFromSearchParams);
     const [offers, setOffers] = React.useState<Offer[]>([]);
-    const [platforms, setPlatforms] = React.useState<OfferPlatform[]>([]);
     const [meta, setMeta] = React.useState<OfferMeta | null>(null);
     const [loading, setLoading] = React.useState(true);
     const [pinned, setPinned] = React.useState<Offer[]>([]);
@@ -832,27 +831,15 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
     const isReviewScoped = searchParams.get("from_review") === "1" && !!filters.platform_id;
     const hasPlatformFilter = !!filters.platform_id;
     const searchParamsString = searchParams.toString();
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        async function fetchPlatforms() {
-            try {
-                const params = new URLSearchParams();
-                if (filters.country) params.set("country", filters.country);
-                const res = await fetch(`/api/platforms?${params.toString()}`, { signal: controller.signal });
-                if (!res.ok) throw new Error("Failed to fetch platforms");
-                const json = await res.json();
-                const nextPlatforms = (Array.isArray(json.data) ? json.data : []) as OfferPlatform[];
-                setPlatforms(nextPlatforms.filter((platform: OfferPlatform) => platform && typeof platform.id === "string"));
-            } catch (err: unknown) {
-                if ((err as Error).name !== "AbortError") console.error(err);
+    const visiblePlatforms = React.useMemo(() => {
+        const byId = new Map<string, OfferPlatform>();
+        for (const offer of offers) {
+            if (offer.platform?.id && !byId.has(offer.platform.id)) {
+                byId.set(offer.platform.id, offer.platform);
             }
         }
-
-        fetchPlatforms();
-        return () => controller.abort();
-    }, [filters.country]);
+        return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
+    }, [offers]);
 
     const fetchOffers = useCallback(async () => {
         abortRef.current?.abort();
@@ -940,7 +927,7 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
                 <FilterBar
                     filters={filters}
                     dispatch={dispatch}
-                    platforms={platforms}
+                    platforms={visiblePlatforms}
                     selectedPlatformName={reviewPlatformName || undefined}
                 />
             </div>

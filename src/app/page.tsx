@@ -489,7 +489,8 @@ export default async function HomePage() {
       </section>
 
       <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-5xl">
           <HomepageSectionHeader
             eyebrow="Guides"
             title="Game Guides and Latest Guides"
@@ -514,6 +515,7 @@ export default async function HomePage() {
                 />
               ))}
             </div>
+          </div>
           </div>
         </div>
       </section>

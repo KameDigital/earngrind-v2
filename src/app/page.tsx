@@ -84,12 +84,9 @@ type OfferRow = {
   game_name: string | null;
   game_slug: string | null;
   game_thumbnail: string | null;
-  image_url?: string | null;
-  offer_image_url?: string | null;
-  game_image?: string | null;
-  thumbnail?: string | null;
   provider_name: string | null;
   platform_name: string | null;
+  platform_logo?: string | null;
   payout_usd: number | null;
   goal_text: string | null;
 };
@@ -177,7 +174,7 @@ async function getHomepageData(): Promise<HomepageData> {
   const [offersResult, popularGuidesResult, latestGuidesResult, trustedReviewsResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
-      .select("id, title, game_id, game_name, game_slug, game_thumbnail, image_url, offer_image_url, game_image, thumbnail, provider_name, platform_name, payout_usd, goal_text")
+      .select("id, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
       .order("payout_usd", { ascending: false })
       .limit(24),
     supabase
@@ -228,11 +225,8 @@ async function getHomepageData(): Promise<HomepageData> {
             ...row,
             badge: "Live offer",
             image_url:
-              row.image_url ??
-              row.offer_image_url ??
               row.game_thumbnail ??
-              row.game_image ??
-              row.thumbnail ??
+              row.platform_logo ??
               null,
           },
         ]),

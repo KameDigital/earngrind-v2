@@ -79,11 +79,13 @@ const HOW_IT_WORKS_STEPS = [
 
 type OfferRow = {
   id: string;
+  source: string | null;
   title: string | null;
   game_id: string | null;
   game_name: string | null;
   game_slug: string | null;
   game_thumbnail: string | null;
+  image_url?: string | null;
   provider_name: string | null;
   platform_name: string | null;
   platform_logo?: string | null;
@@ -174,7 +176,7 @@ async function getHomepageData(): Promise<HomepageData> {
   const [offersResult, popularGuidesResult, latestGuidesResult, trustedReviewsResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
-      .select("id, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
+      .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
       .order("payout_usd", { ascending: false })
       .limit(24),
     supabase
@@ -198,16 +200,50 @@ async function getHomepageData(): Promise<HomepageData> {
   ]);
 
   const offerRows = (offersResult.data ?? []) as OfferRow[];
+  const manualOfferIds = offerRows
+    .filter((row) => row.source === "manual")
+    .map((row) => row.id);
+
+  const { data: manualOfferImages } = manualOfferIds.length
+    ? await supabase
+        .from("site_offers")
+        .select("id, image_url")
+        .in("id", manualOfferIds)
+    : { data: [] as Array<{ id: string; image_url: string | null }> };
+
+  const manualOfferImageMap = new Map(
+    (manualOfferImages ?? []).map((row) => [row.id, row.image_url ?? null]),
+  );
+
+  const enrichedOfferRows = offerRows.map((row) => ({
+    ...row,
+    image_url:
+      row.source === "manual"
+        ? manualOfferImageMap.get(row.id) ?? null
+        : null,
+  }));
+
+  const bestImageByGameSlug = new Map(
+    enrichedOfferRows
+      .filter((row) => row.game_slug)
+      .map((row) => [
+        row.game_slug!,
+        row.image_url ?? row.game_thumbnail ?? row.platform_logo ?? null,
+      ]),
+  );
+
   const featuredGames: FeaturedGame[] = Array.from(
     new Map(
-      offerRows
+      enrichedOfferRows
         .filter((row) => row.game_slug)
         .map((row) => [
           row.game_slug!,
           {
             slug: row.game_slug!,
             name: row.game_name ?? "Unknown Game",
-            thumbnail: row.game_thumbnail,
+            thumbnail:
+              bestImageByGameSlug.get(row.game_slug!) ??
+              row.game_thumbnail,
             topPayout: row.payout_usd ?? 0,
             provider: row.provider_name ?? "Unknown Provider",
           },
@@ -217,7 +253,15 @@ async function getHomepageData(): Promise<HomepageData> {
 
   const highestPayingOffers: HomepageData["highestPayingOffers"] = Array.from(
     new Map(
-      offerRows
+      enrichedOfferRows
+        .map((row) => ({
+          ...row,
+          image_url:
+            row.image_url ??
+            row.game_thumbnail ??
+            row.platform_logo ??
+            null,
+        }))
         .filter((row) => row.game_slug || row.game_name)
         .map((row) => [
           row.game_slug ?? row.game_name ?? row.id,

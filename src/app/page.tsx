@@ -77,6 +77,27 @@ const HOW_IT_WORKS_STEPS = [
   },
 ] as const;
 
+const FEATURED_GAME_NAMES = [
+  "Sea of Conquest: Pirate",
+  "Raid: Shadow Legends",
+  "Game of Thrones",
+  "Frost & Flame: King",
+  "Zombie Waves",
+  "World of Warships",
+  "The Grand Mafia",
+  "Lords Mobile",
+  "Rise of Kingdoms",
+  "Infinite Lagrange",
+  "Wood Block Challenge",
+  "2248 – Merge Tile",
+  "Hexa Merge: Tile Sort",
+  "Palmon: Survival",
+  "MU: Dark Epoch",
+  "Woodoku Blast",
+  "Merge Paradise: Match",
+  "Hero Wars: Alliance",
+] as const;
+
 type OfferRow = {
   id: string;
   source: string | null;
@@ -136,8 +157,13 @@ type FeaturedGame = {
   slug: string;
   name: string;
   thumbnail: string | null;
-  topPayout: number;
-  provider: string;
+  provider: string | null;
+};
+
+type GameRow = {
+  name: string;
+  slug: string | null;
+  thumbnail_url: string | null;
 };
 
 type HomepageRailOffer = OfferRow & {
@@ -161,12 +187,28 @@ function formatMoney(value: number | null | undefined) {
   return `$${value.toFixed(2)}`;
 }
 
+function normalizeName(value: string | null | undefined) {
+  return (value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function safeSlug(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 async function getHomepageData(): Promise<HomepageData> {
   const supabase = createClient();
   const guideSelect =
     "id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, games(id, name, slug, thumbnail_url)";
 
-  const [offersResult, popularGuidesResult] = await Promise.all([
+  const [offersResult, popularGuidesResult, featuredGamesResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
       .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
@@ -178,6 +220,10 @@ async function getHomepageData(): Promise<HomepageData> {
       .eq("status", "published")
       .order("max_payout_usd", { ascending: false })
       .limit(6),
+    supabase
+      .from("games")
+      .select("name, slug, thumbnail_url")
+      .in("name", [...FEATURED_GAME_NAMES]),
   ]);
 
   const offerRows = (offersResult.data ?? []) as OfferRow[];
@@ -213,24 +259,47 @@ async function getHomepageData(): Promise<HomepageData> {
       ]),
   );
 
-  const featuredGames: FeaturedGame[] = Array.from(
-    new Map(
-      enrichedOfferRows
-        .filter((row) => row.game_slug)
-        .map((row) => [
-          row.game_slug!,
-          {
-            slug: row.game_slug!,
-            name: row.game_name ?? "Unknown Game",
-            thumbnail:
-              bestImageByGameSlug.get(row.game_slug!) ??
-              row.game_thumbnail,
-            topPayout: row.payout_usd ?? 0,
-            provider: row.provider_name ?? "Unknown Provider",
-          },
-        ]),
-    ).values(),
-  ).slice(0, 6);
+  const gamesByName = new Map(
+    ((featuredGamesResult.data ?? []) as GameRow[]).map((game) => [
+      normalizeName(game.name),
+      game,
+    ]),
+  );
+  const bestOfferByGameName = new Map<string, (typeof enrichedOfferRows)[number]>();
+  for (const row of enrichedOfferRows) {
+    if (!row.game_name) continue;
+    const key = normalizeName(row.game_name);
+    if (!bestOfferByGameName.has(key)) {
+      bestOfferByGameName.set(key, row);
+    }
+  }
+
+  const featuredGames: FeaturedGame[] = FEATURED_GAME_NAMES.map((gameName) => {
+    const normalizedName = normalizeName(gameName);
+    const matchingGame = gamesByName.get(normalizedName) ?? null;
+    const matchingOffer = bestOfferByGameName.get(normalizedName) ?? null;
+    const derivedSlug =
+      matchingGame?.slug ??
+      matchingOffer?.game_slug ??
+      safeSlug(gameName);
+
+    return {
+      slug: derivedSlug,
+      name: matchingGame?.name ?? matchingOffer?.game_name ?? gameName,
+      thumbnail:
+        matchingGame?.thumbnail_url ??
+        (matchingOffer?.game_slug
+          ? bestImageByGameSlug.get(matchingOffer.game_slug) ?? null
+          : null) ??
+        matchingOffer?.image_url ??
+        matchingOffer?.game_thumbnail ??
+        null,
+      provider:
+        matchingOffer?.platform_name ??
+        matchingOffer?.provider_name ??
+        "Game Page",
+    };
+  });
 
   const highestPayingOffers: HomepageData["highestPayingOffers"] = Array.from(
     new Map(
@@ -250,6 +319,7 @@ async function getHomepageData(): Promise<HomepageData> {
             ...row,
             badge: "Live offer",
             image_url:
+              row.image_url ??
               row.game_thumbnail ??
               row.platform_logo ??
               null,
@@ -284,17 +354,7 @@ async function getHomepageData(): Promise<HomepageData> {
 export default async function HomePage() {
   const { featuredGames, highestPayingOffers, popularGuides, stats } =
     await getHomepageData();
-  const compactOfferRail: FeaturedOfferRailItem[] = [
-    ...featuredGames.map((game) => ({
-      id: `game-${game.slug}`,
-      href: `/games/${game.slug}`,
-      title: game.name,
-      badge: "Game page",
-      provider: game.provider,
-      payout: formatMoney(game.topPayout) ?? null,
-      imageUrl: game.thumbnail,
-    })),
-    ...highestPayingOffers.map((offer) => ({
+  const compactOfferRail: FeaturedOfferRailItem[] = highestPayingOffers.map((offer) => ({
       id: `offer-${offer.id}`,
       href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
       title: offer.title?.trim() || offer.game_name || "Offer",
@@ -304,8 +364,15 @@ export default async function HomePage() {
       payout: formatMoney(offer.payout_usd) ?? null,
       secondaryValue: offer.goal_text ? offer.goal_text : null,
       imageUrl: offer.image_url,
-    })),
-  ];
+    }));
+  const featuredGameRail: FeaturedOfferRailItem[] = featuredGames.map((game) => ({
+    id: `game-${game.slug}`,
+    href: `/games/${game.slug}`,
+    title: game.name,
+    badge: "Game page",
+    provider: game.provider ?? "Game Page",
+    imageUrl: game.thumbnail,
+  }));
 
   return (
     <main className="min-h-screen">
@@ -484,6 +551,13 @@ export default async function HomePage() {
                 title="Top Offers"
                 description="Compact live routes and game pages in one rail so users can scan images, payout, and click into the strongest path faster."
               />
+              <div className="mt-10">
+                <FeaturedOfferRail
+                  items={featuredGameRail}
+                  title="Featured Games"
+                  description={undefined}
+                />
+              </div>
           </div>
         </div>
       </section>

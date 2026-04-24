@@ -86,7 +86,7 @@ export default function FeaturedOfferRail({
             type="button"
             onClick={() => scrollRail("left")}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-default)] bg-white text-[var(--brand-ink)] transition-colors hover:border-[var(--brand-lime)]/45 hover:bg-[var(--surface-muted)]"
-            aria-label="Scroll top offers left"
+            aria-label={`Scroll ${title} left`}
           >
             <svg
               className="h-4 w-4"
@@ -106,7 +106,7 @@ export default function FeaturedOfferRail({
             type="button"
             onClick={() => scrollRail("right")}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-default)] bg-white text-[var(--brand-ink)] transition-colors hover:border-[var(--brand-lime)]/45 hover:bg-[var(--surface-muted)]"
-            aria-label="Scroll top offers right"
+            aria-label={`Scroll ${title} right`}
           >
             <svg
               className="h-4 w-4"

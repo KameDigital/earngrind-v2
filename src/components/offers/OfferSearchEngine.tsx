@@ -279,9 +279,26 @@ interface OfferRowProps {
     isBestPayout: boolean;
     ctaLocation: string;
     ctaSourceContext: string;
+    extraRoutesCount?: number;
+    extraSitesLabel?: string;
+    onToggleExtraRoutes?: () => void;
+    extraRoutesOpen?: boolean;
+    compactVariant?: boolean;
 }
 
-function OfferRow({ offer, onPin, isPinned, isBestPayout, ctaLocation, ctaSourceContext }: OfferRowProps) {
+function OfferRow({
+    offer,
+    onPin,
+    isPinned,
+    isBestPayout,
+    ctaLocation,
+    ctaSourceContext,
+    extraRoutesCount = 0,
+    extraSitesLabel,
+    onToggleExtraRoutes,
+    extraRoutesOpen = false,
+    compactVariant = false,
+}: OfferRowProps) {
     const gameName = offer.game?.name ?? offer.title ?? "Offer";
     const gameSlug = offer.game?.slug ?? null;
     const gameHref = gameSlug ? `/offers/${gameSlug}` : null;
@@ -304,7 +321,7 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout, ctaLocation, ctaSource
                 isBestPayout
                     ? "bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]"
                     : "hover:bg-[var(--surface-muted)]"
-            }`}
+            } ${compactVariant ? "bg-[var(--surface-muted)]/45" : ""}`}
             role="button"
             tabIndex={0}
         >
@@ -340,14 +357,14 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout, ctaLocation, ctaSource
                         {offer.is_boosted && <Badge label="BOOSTED" variant="boosted" />}
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)] flex-wrap">
-                        <span className="flex items-center gap-1 font-medium">
+                        <span className="flex items-center gap-1 font-semibold text-[var(--brand-ink)]">
                             {offer.platform.logo_url && (
                                 <Image src={offer.platform.logo_url} alt={platformName} width={12} height={12} className="w-3 h-3 rounded-sm object-cover" />
                             )}
-                            {providerName}
+                            {platformName}
                         </span>
                         <span className="text-[var(--border-strong)]">?</span>
-                        <span>{platformName}</span>
+                        <span>{providerName}</span>
                         <span className="text-[var(--border-strong)]">?</span>
                         <span className="flex items-center gap-0.5">
                             {offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}
@@ -422,6 +439,24 @@ function OfferRow({ offer, onPin, isPinned, isBestPayout, ctaLocation, ctaSource
                     ? "View Route opens the detail path. Start Offer sends you to the payout platform."
                     : "Start Offer sends you directly to the payout platform."}
             </div>
+            {extraRoutesCount > 0 && onToggleExtraRoutes ? (
+                <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-[var(--border-default)] bg-white px-3 py-2">
+                    <div className="min-w-0 text-xs text-[var(--text-secondary)]">
+                        <span className="font-bold text-[var(--brand-ink)]">{extraRoutesCount} more site{extraRoutesCount !== 1 ? "s" : ""}</span>
+                        {extraSitesLabel ? ` available: ${extraSitesLabel}` : "."}
+                    </div>
+                    <button
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onToggleExtraRoutes();
+                        }}
+                        className="flex-shrink-0 rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                    >
+                        {extraRoutesOpen ? "Hide sites" : "Show sites"}
+                    </button>
+                </div>
+            ) : null}
         </div>
     );
 }
@@ -649,14 +684,21 @@ interface OfferTableProps {
 function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }: OfferTableProps) {
     const ctaLocation = meta ? "offers-search-list" : "game-offers-list";
     const ctaSourceContext = meta ? "offers-search" : "game-offers";
-    // Compute best payout per game in current result set (API already sorted desc,
-    // so the first occurrence of each game.id is the highest-payout offer for that game)
-    const bestPayoutByGame = new Map<string, string>(); // game.id -> offer.id
-    for (const offer of offers) {
-        if (!bestPayoutByGame.has(offer.game.id)) {
-            bestPayoutByGame.set(offer.game.id, offer.id);
+    const [openGroups, setOpenGroups] = React.useState<Record<string, boolean>>({});
+    const groupedOffers = React.useMemo(() => {
+        const groups = new Map<string, Offer[]>();
+        for (const offer of offers) {
+            const key = offer.game?.id ?? offer.game?.slug ?? offer.title;
+            const current = groups.get(key) ?? [];
+            current.push(offer);
+            groups.set(key, current);
         }
-    }
+        return Array.from(groups.entries()).map(([key, rows]) => ({
+            key,
+            primary: rows[0],
+            alternatives: rows.slice(1),
+        }));
+    }, [offers]);
     if (loading) {
         return (
             <div className="bg-white rounded-2xl border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
@@ -694,19 +736,44 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
     return (
         <div>
             <div className="bg-white rounded-2xl border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
-                {offers.map(offer => {
-                    // Best payout per game in current result set (API sorted desc, so first per game.id is best)
-                    const isBestPayout = bestPayoutByGame.get(offer.game.id) === offer.id;
+                {groupedOffers.map(({ key, primary, alternatives }) => {
+                    const extraSitesLabel = Array.from(
+                        new Set(alternatives.map((offer) => offer.platform?.name).filter(Boolean)),
+                    ).slice(0, 3).join(", ");
+                    const isOpen = !!openGroups[key];
                     return (
-                        <OfferRow
-                            key={offer.id}
-                            offer={offer}
-                            onPin={onPin}
-                            isPinned={pinned.some(p => p.id === offer.id)}
-                            isBestPayout={isBestPayout}
-                            ctaLocation={ctaLocation}
-                            ctaSourceContext={ctaSourceContext}
-                        />
+                        <div key={key} className="border-b border-[var(--border-default)] last:border-0">
+                            <OfferRow
+                                offer={primary}
+                                onPin={onPin}
+                                isPinned={pinned.some(p => p.id === primary.id)}
+                                isBestPayout={true}
+                                ctaLocation={ctaLocation}
+                                ctaSourceContext={ctaSourceContext}
+                                extraRoutesCount={alternatives.length}
+                                extraSitesLabel={extraSitesLabel}
+                                extraRoutesOpen={isOpen}
+                                onToggleExtraRoutes={() =>
+                                    setOpenGroups((current) => ({ ...current, [key]: !current[key] }))
+                                }
+                            />
+                            {isOpen && alternatives.length > 0 ? (
+                                <div className="border-t border-[var(--border-default)] bg-[var(--surface-muted)]/35">
+                                    {alternatives.map((offer) => (
+                                        <OfferRow
+                                            key={offer.id}
+                                            offer={offer}
+                                            onPin={onPin}
+                                            isPinned={pinned.some(p => p.id === offer.id)}
+                                            isBestPayout={false}
+                                            ctaLocation={ctaLocation}
+                                            ctaSourceContext={ctaSourceContext}
+                                            compactVariant
+                                        />
+                                    ))}
+                                </div>
+                            ) : null}
+                        </div>
                     );
                 })}
             </div>

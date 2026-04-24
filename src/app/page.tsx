@@ -447,163 +447,176 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="rounded-[36px] border border-[var(--border-default)] bg-[linear-gradient(180deg,#ffffff_0%,#f8faf6_100%)] p-4 sm:p-6 lg:p-7 shadow-[0_24px_80px_-40px_rgba(15,23,15,0.24)]">
-            <div className="grid lg:grid-cols-[1.08fr_0.92fr_1fr] gap-4 xl:gap-5 items-stretch">
-              <div className="relative overflow-hidden rounded-[28px] border border-[var(--border-default)] bg-[linear-gradient(165deg,rgba(255,255,255,0.98)_0%,rgba(247,249,243,0.98)_100%)] px-6 py-6 sm:px-7 shadow-[0_18px_50px_-26px_rgba(15,23,15,0.16)]">
-                <div
-                  className="absolute -top-12 -right-12 w-40 h-40 rounded-full pointer-events-none"
-                  style={{ background: "radial-gradient(circle, rgba(190,242,100,0.14) 0%, rgba(190,242,100,0) 72%)" }}
-                />
-                <div className="relative inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border-default)] bg-white/85 mb-5">
-                  <span className="text-[var(--text-tertiary)] text-[10px] font-bold uppercase tracking-widest">
+          <div className="rounded-[36px] border border-[var(--border-default)] bg-[linear-gradient(180deg,#ffffff_0%,#f8faf6_100%)] p-5 sm:p-7 lg:p-8 shadow-[0_24px_80px_-40px_rgba(15,23,15,0.24)]">
+            <div className="overflow-hidden rounded-[28px] border border-[var(--border-default)] bg-white/90">
+              <div className="grid gap-8 px-6 py-7 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10 lg:py-8">
+                <div className="min-w-0">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     What Is EarnGrind?
-                  </span>
-                </div>
-                <h2 className="relative text-3xl sm:text-[2.75rem] font-extrabold text-[var(--brand-ink)] tracking-tight leading-[0.98] mb-5 max-w-md">
-                  Your shortcut to the{" "}
-                  <span className="text-[color:hsl(84,93%,36%)]">best-paying GPT offers</span>
-                </h2>
-                <div className="space-y-4 text-[var(--text-secondary)] text-[15px] leading-relaxed max-w-md">
-                  <p>
-                    GPT sites pay real money for game installs, offer milestones, signups, and surveys. The problem is that payouts differ by platform and change constantly.
-                  </p>
-                  <p>
-                    EarnGrind compares those live offers, publishes game pages, and connects you to detailed guides so you can choose better routes before you start.
-                  </p>
-                  <p>
-                    The homepage now links directly into the highest-value games, latest guides, and core SEO hubs that support your next click.
-                  </p>
+                  </div>
+                  <h2 className="mt-5 max-w-2xl text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-[2.8rem] sm:leading-[0.98]">
+                    Your shortcut to the{" "}
+                    <span className="text-[color:hsl(84,93%,36%)]">best-paying GPT offers</span>
+                  </h2>
+                  <div className="mt-5 max-w-2xl space-y-4 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                    <p>
+                      GPT sites pay real money for game installs, offer milestones, signups, and surveys. The problem is that payouts differ by platform and change constantly.
+                    </p>
+                    <p>
+                      EarnGrind compares those live offers, publishes game pages, and connects you to detailed guides so you can choose better routes before you start.
+                    </p>
+                    <p>
+                      The homepage now links directly into the highest-value games, latest guides, and core SEO hubs that support your next click.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="mt-8 grid grid-cols-3 gap-2.5">
-                  <div className="rounded-2xl border border-lime-200 bg-lime-50/80 px-3 py-3">
+                <div className="grid gap-3 self-start sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+                  <div className="rounded-2xl bg-lime-50 px-4 py-4 ring-1 ring-lime-200/80">
                     <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-lime-700">Live offers</div>
-                    <div className="mt-1 text-lg font-extrabold text-[var(--brand-ink)]">Best payout</div>
+                    <div className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">Best payout</div>
                   </div>
-                  <div className="rounded-2xl border border-[var(--border-default)] bg-white/85 px-3 py-3">
+                  <div className="rounded-2xl bg-[var(--surface-muted)]/65 px-4 py-4 ring-1 ring-[var(--border-default)]">
                     <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Game pages</div>
-                    <div className="mt-1 text-lg font-extrabold text-[var(--brand-ink)]">Direct routes</div>
+                    <div className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">Direct routes</div>
                   </div>
-                  <div className="rounded-2xl border border-[var(--border-default)] bg-white/85 px-3 py-3">
+                  <div className="rounded-2xl bg-[var(--surface-muted)]/65 px-4 py-4 ring-1 ring-[var(--border-default)]">
                     <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Guides</div>
-                    <div className="mt-1 text-lg font-extrabold text-[var(--brand-ink)]">Faster clears</div>
+                    <div className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">Faster clears</div>
                   </div>
                 </div>
+              </div>
 
-                <div className="mt-6 flex flex-wrap items-center gap-2.5 border-t border-[var(--border-default)] pt-5">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-tertiary)]">Core hubs</span>
+              <div className="border-t border-[var(--border-default)] px-6 py-5 sm:px-8">
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Core hubs</span>
                   {["Best GPT Sites", "Highest Paying GPT Offers", "Game Guides"].map((name) => (
-                    <span key={name} className="text-xs font-bold text-[var(--text-tertiary)] bg-white border border-[var(--border-default)] rounded-full px-3 py-1.5">
+                    <span
+                      key={name}
+                      className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]"
+                    >
                       {name}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-[28px] border border-[var(--border-default)] bg-white px-6 py-6 sm:px-7 shadow-[0_18px_50px_-26px_rgba(15,23,15,0.16)]">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] mb-6">
-                  <span className="text-[var(--text-tertiary)] text-[10px] font-bold uppercase tracking-widest">
-                    How It Works
-                  </span>
+              <div className="border-t border-[var(--border-default)] px-6 py-7 sm:px-8">
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <div>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                      How It Works
+                    </div>
+                    <div className="mt-3 rounded-2xl bg-lime-50 px-4 py-3 ring-1 ring-lime-200/80">
+                      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-lime-700">Simple workflow</p>
+                      <p className="mt-1 text-sm font-semibold text-[var(--brand-ink)]">
+                        Compare the route, complete the milestones, then cash out through the provider.
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mb-5 rounded-2xl border border-lime-200/70 bg-lime-50/70 px-4 py-3">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-lime-700">Simple workflow</p>
-                  <p className="mt-1 text-sm font-semibold text-[var(--brand-ink)]">
-                    Compare the route, complete the milestones, then cash out through the provider.
-                  </p>
-                </div>
-
-                <div className="relative space-y-4">
-                  <div className="absolute left-[22px] top-[28px] bottom-[28px] w-px bg-gradient-to-b from-lime-200 via-[var(--border-default)] to-transparent" />
-                  {HOW_IT_WORKS_STEPS.map((s) => (
-                    <div key={s.step} className="relative flex gap-4 rounded-2xl border border-[var(--border-default)]/70 bg-[var(--surface-muted)]/45 px-3 py-4">
-                      <div className="relative z-10 flex-shrink-0 w-[44px] h-[44px] rounded-2xl bg-[var(--brand-lime)] text-[var(--brand-ink)] font-extrabold text-base flex items-center justify-center shadow-[0_12px_24px_-14px_rgba(132,204,22,0.7)]">
-                        {s.step}
+                <div className="grid gap-3 lg:grid-cols-3">
+                  {HOW_IT_WORKS_STEPS.map((s, index) => (
+                    <div
+                      key={s.step}
+                      className="relative rounded-2xl bg-[var(--surface-muted)]/55 px-4 py-4 ring-1 ring-[var(--border-default)]"
+                    >
+                      <div className="mb-4 flex items-center gap-3">
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--brand-lime)] text-sm font-extrabold text-[var(--brand-ink)] shadow-[0_12px_24px_-14px_rgba(132,204,22,0.7)]">
+                          {s.step}
+                        </div>
+                        <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                          Step {index + 1}
+                        </div>
                       </div>
-                      <div className="pt-0.5">
-                        <h3 className="font-bold text-[var(--brand-ink)] text-base mb-1.5">{s.title}</h3>
-                        <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-sm">{s.desc}</p>
-                      </div>
+                      <h3 className="text-base font-extrabold text-[var(--brand-ink)]">{s.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{s.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-[28px] border border-[var(--border-default)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(247,249,243,0.98)_100%)] p-5 sm:p-6 shadow-[0_18px_50px_-24px_rgba(15,23,15,0.22)]">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border-default)] bg-white mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-lime)]" />
-                  <span className="text-[var(--text-tertiary)] text-[10px] font-bold uppercase tracking-[0.18em]">
-                    Start Here
-                  </span>
-                </div>
+              <div className="border-t border-[var(--border-default)] px-6 py-7 sm:px-8">
+                <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+                  <div>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-lime)]" />
+                      Start Here
+                    </div>
+                    <h2 className="mt-4 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+                      Pick the right entry point
+                    </h2>
+                    <p className="mt-2 max-w-md text-sm leading-relaxed text-[var(--text-secondary)]">
+                      Choose the path that matches your goal first: verify the platform, find the best payout, or use a guide to finish with fewer mistakes.
+                    </p>
 
-                <div className="mb-5">
-                  <h2 className="text-[var(--brand-ink)] text-2xl font-extrabold tracking-tight leading-tight">
-                    Pick the right entry point
-                  </h2>
-                  <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed max-w-md">
-                    Choose the path that matches your goal first: verify the platform, find the best payout, or use a guide to finish with fewer mistakes.
-                  </p>
-                </div>
-
-                <div className="mb-4 grid grid-cols-3 gap-2">
-                  <div className="rounded-2xl bg-white/90 border border-[var(--border-default)] px-3 py-2.5">
-                    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Trust</div>
-                    <div className="mt-1 text-sm font-extrabold text-[var(--brand-ink)]">Reviews</div>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      <span className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]">
+                        Trust
+                        <span className="ml-2 text-[var(--brand-ink)]">Reviews</span>
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]">
+                        Payouts
+                        <span className="ml-2 text-[var(--brand-ink)]">Offers</span>
+                      </span>
+                      <span className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] ring-1 ring-[var(--border-default)]">
+                        Execution
+                        <span className="ml-2 text-[var(--brand-ink)]">Guides</span>
+                      </span>
+                    </div>
                   </div>
-                  <div className="rounded-2xl bg-white/90 border border-[var(--border-default)] px-3 py-2.5">
-                    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Payouts</div>
-                    <div className="mt-1 text-sm font-extrabold text-[var(--brand-ink)]">Offers</div>
-                  </div>
-                  <div className="rounded-2xl bg-white/90 border border-[var(--border-default)] px-3 py-2.5">
-                    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Execution</div>
-                    <div className="mt-1 text-sm font-extrabold text-[var(--brand-ink)]">Guides</div>
-                  </div>
-                </div>
 
-                <div className="space-y-3">
-                  {START_HERE_ITEMS.map((item, index) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="group block rounded-2xl border border-[var(--border-default)] bg-white px-4 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brand-lime)]/40 hover:shadow-[0_14px_34px_-20px_rgba(132,204,22,0.45)]"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-[linear-gradient(180deg,#ffffff_0%,#f3f7eb_100%)] text-[var(--brand-ink)] flex items-center justify-center font-black text-sm shadow-inner border border-[var(--border-default)]">
-                          0{index + 1}
-                        </div>
+                  <div className="overflow-hidden rounded-3xl ring-1 ring-[var(--border-default)]">
+                    <div className="hidden grid-cols-[72px_180px_minmax(0,1fr)_32px] gap-4 bg-[var(--surface-muted)]/7 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)] md:grid">
+                      <div>Number</div>
+                      <div>Label</div>
+                      <div>Path</div>
+                      <div />
+                    </div>
 
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-start justify-between gap-3">
-                            <div>
-                              <div className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
-                                {item.badge}
-                              </div>
-                              <div className="mt-2 text-[var(--brand-ink)] text-lg font-extrabold leading-tight">
-                                {item.name}
+                    <div className="divide-y divide-[var(--border-default)]">
+                      {START_HERE_ITEMS.map((item, index) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className="group block bg-white px-5 py-4 transition-colors hover:bg-[var(--surface-muted)]/55"
+                        >
+                          <div className="grid gap-3 md:grid-cols-[72px_180px_minmax(0,1fr)_32px] md:items-center">
+                            <div className="flex items-center gap-3">
+                              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--surface-muted)] text-sm font-black text-[var(--brand-ink)] ring-1 ring-[var(--border-default)]">
+                                0{index + 1}
                               </div>
                             </div>
 
-                            <div className="flex-shrink-0 mt-1 text-[var(--brand-ink)] transition-transform duration-200 group-hover:translate-x-1">
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div>
+                              <div className="inline-flex items-center rounded-full bg-[var(--surface-muted)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)] ring-1 ring-[var(--border-default)]">
+                                {item.badge}
+                              </div>
+                            </div>
+
+                            <div className="min-w-0">
+                              <div className="text-lg font-extrabold text-[var(--brand-ink)]">{item.name}</div>
+                              <p className="mt-1 max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
+                                {item.desc}
+                              </p>
+                            </div>
+
+                            <div className="flex items-center justify-end text-[var(--brand-ink)] transition-transform duration-200 group-hover:translate-x-1">
+                              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                               </svg>
                             </div>
                           </div>
-
-                          <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed pr-2">
-                            {item.desc}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-4 rounded-2xl border border-dashed border-[var(--border-default)] px-4 py-3">
+                <div className="mt-6 rounded-2xl bg-[var(--surface-muted)]/45 px-4 py-4 ring-1 ring-[var(--border-default)]">
                   <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
-                  <p className="mt-1 text-sm text-[var(--text-secondary)] leading-relaxed">
+                  <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
                     New visitors should start with <span className="font-bold text-[var(--brand-ink)]">Best GPT Sites</span>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
                   </p>
                 </div>

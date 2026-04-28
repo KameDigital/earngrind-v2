@@ -316,6 +316,7 @@ async function getHomepageData(): Promise<HomepageData> {
   const allOfferRows = Array.from(
     new Map([...offerRows, ...featuredGameOfferRows].map((row) => [row.id, row])).values(),
   );
+  const allOfferIds = allOfferRows.map((row) => row.id);
   const manualOfferIds = allOfferRows
     .filter((row) => row.source === "manual")
     .map((row) => row.id);
@@ -329,11 +330,11 @@ async function getHomepageData(): Promise<HomepageData> {
           .select("id, image_url")
           .in("id", manualOfferIds)
       : Promise.resolve({ data: [] as Array<{ id: string; image_url: string | null }> }),
-    manualOfferIds.length
+    allOfferIds.length
       ? supabase
           .from("site_offer_tasks")
           .select("site_offer_id, title, reward_amount, reward_display, time_limit_text, sort_order")
-          .in("site_offer_id", manualOfferIds)
+          .in("site_offer_id", allOfferIds)
           .order("sort_order", { ascending: true })
       : Promise.resolve({ data: [] as SiteOfferTaskRow[] }),
     gameIds.length
@@ -480,6 +481,32 @@ async function getHomepageData(): Promise<HomepageData> {
     return acc;
   }, {});
 
+  featuredGames.forEach((game) => {
+    const matchingRouteRows = enrichedAllOfferRows.filter(
+      (row) =>
+        row.game_slug === game.slug ||
+        matchesFeaturedName(row.game_name, game.name) ||
+        matchesFeaturedName(row.title, game.name),
+    );
+
+    if (matchingRouteRows.length === 0) return;
+
+    const routesById = new Map<string, RailPreviewRoute>();
+    for (const existingRoute of modalRoutesByGameKey[game.slug] ?? []) {
+      routesById.set(existingRoute.offerId, existingRoute);
+    }
+    for (const row of matchingRouteRows) {
+      const rowKey = gameKeyFromParts(row.game_slug, row.game_name);
+      for (const route of modalRoutesByGameKey[rowKey] ?? []) {
+        routesById.set(route.offerId, route);
+      }
+    }
+
+    modalRoutesByGameKey[game.slug] = Array.from(routesById.values()).sort(
+      (a, b) => (b.payoutValue ?? 0) - (a.payoutValue ?? 0),
+    );
+  });
+
   const guideHrefByGameKey = enrichedAllOfferRows.reduce<Record<string, string>>((acc, row) => {
     const key = gameKeyFromParts(row.game_slug, row.game_name);
     const guideHref = row.game_id ? guideHrefByGameId.get(row.game_id) : null;
@@ -487,8 +514,23 @@ async function getHomepageData(): Promise<HomepageData> {
     return acc;
   }, {});
   featuredGames.forEach((game) => {
-    const guideHref = game.id ? guideHrefByGameId.get(game.id) : null;
-    if (guideHref && !guideHrefByGameKey[game.slug]) guideHrefByGameKey[game.slug] = guideHref;
+    const directGuideHref = game.id ? guideHrefByGameId.get(game.id) : null;
+    if (directGuideHref && !guideHrefByGameKey[game.slug]) {
+      guideHrefByGameKey[game.slug] = directGuideHref;
+      return;
+    }
+
+    const matchingOfferWithGuide = enrichedAllOfferRows.find(
+      (row) =>
+        row.game_id &&
+        guideHrefByGameId.has(row.game_id) &&
+        (row.game_slug === game.slug ||
+          matchesFeaturedName(row.game_name, game.name) ||
+          matchesFeaturedName(row.title, game.name)),
+    );
+    if (matchingOfferWithGuide?.game_id && !guideHrefByGameKey[game.slug]) {
+      guideHrefByGameKey[game.slug] = guideHrefByGameId.get(matchingOfferWithGuide.game_id) ?? "";
+    }
   });
 
   const normalizeGuides = (rows: RawGuideRow[] | null | undefined): GuideRow[] =>

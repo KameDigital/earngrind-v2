@@ -126,10 +126,19 @@ export default function GamePreviewModal({
     () => [...preview.routes].sort((a, b) => (b.payoutValue ?? 0) - (a.payoutValue ?? 0)),
     [preview.routes],
   );
-  const [selectedRouteId, setSelectedRouteId] = useState(sortedRoutes[0]?.offerId ?? null);
+  const defaultTaskRoute = useMemo(
+    () => sortedRoutes.find((route) => route.tasks.length > 1) ?? sortedRoutes[0] ?? null,
+    [sortedRoutes],
+  );
+  const [selectedRouteId, setSelectedRouteId] = useState(defaultTaskRoute?.offerId ?? null);
   const [step, setStep] = useState<"overview" | "platforms">("overview");
   const selectedRoute = sortedRoutes.find((route) => route.offerId === selectedRouteId) ?? sortedRoutes[0] ?? null;
   const primaryRoute = sortedRoutes[0] ?? null;
+
+  useEffect(() => {
+    setSelectedRouteId(defaultTaskRoute?.offerId ?? null);
+    setStep("overview");
+  }, [defaultTaskRoute?.offerId]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;

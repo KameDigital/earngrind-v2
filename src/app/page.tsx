@@ -561,6 +561,10 @@ async function getHomepageData(): Promise<HomepageData> {
 export default async function HomePage() {
   const { featuredGames, highestPayingOffers, modalRoutesByGameKey, guideHrefByGameKey, popularGuides, stats } =
     await getHomepageData();
+  const guideHrefForGame = (slug: string | null | undefined, fallbackKey?: string) => {
+    if (!slug) return fallbackKey ? guideHrefByGameKey[fallbackKey] ?? null : null;
+    return guideHrefByGameKey[slug] ?? (modalRoutesByGameKey[slug]?.length ? `/guides/how-to-earn/${slug}` : null);
+  };
   const compactOfferRail: FeaturedOfferRailItem[] = highestPayingOffers.map((offer) => ({
       id: `offer-${offer.id}`,
       href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
@@ -576,7 +580,7 @@ export default async function HomePage() {
         description: `Compare available routes for ${offer.game_name ?? offer.title ?? "this offer"} before choosing where to start.`,
         imageUrl: offer.image_url,
         gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-        guideHref: guideHrefByGameKey[gameKeyFromParts(offer.game_slug, offer.game_name)] ?? null,
+        guideHref: guideHrefForGame(offer.game_slug, gameKeyFromParts(offer.game_slug, offer.game_name)),
         routes: modalRoutesByGameKey[gameKeyFromParts(offer.game_slug, offer.game_name)] ?? [
           {
             offerId: offer.id,
@@ -603,7 +607,7 @@ export default async function HomePage() {
       description: `Preview available ${game.name} routes, milestones, and payout options before opening the full comparison page.`,
       imageUrl: game.thumbnail,
       gameHref: `/games/${game.slug}`,
-      guideHref: guideHrefByGameKey[game.slug] ?? null,
+      guideHref: guideHrefForGame(game.slug),
       routes: modalRoutesByGameKey[game.slug] ?? [],
     },
   }));

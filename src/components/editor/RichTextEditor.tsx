@@ -153,8 +153,8 @@ export default function RichTextEditor({
     }
 
     return (
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-            <div className="sticky top-4 z-20 border-b border-gray-200 bg-white/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+        <div className="sticky top-4 rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div className="sticky top-0 z-20 border-b border-gray-200 bg-white/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/85">
                 <div className="flex flex-wrap gap-2">
                     <ToolbarButton
                         active={editor.isActive("heading", { level: 2 })}
@@ -240,7 +240,12 @@ export default function RichTextEditor({
                     ))}
                 </div>
             </div>
-            <EditorContent editor={editor} className="min-h-[320px] [&_.ProseMirror]:pt-2" />
+            <div className="max-h-[calc(100vh-12rem)] overflow-y-auto">
+                <EditorContent
+                    editor={editor}
+                    className="min-h-[420px] [&_.ProseMirror]:min-h-[420px] [&_.ProseMirror]:pt-2"
+                />
+            </div>
         </div>
     );
 }

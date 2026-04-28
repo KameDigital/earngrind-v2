@@ -1,17 +1,104 @@
-// Minimal server-side markdown → HTML renderer.
-// No heavy runtime deps — uses regex transforms that cover the patterns
-// we use in guide body_md fields (headings, bold, italic, lists, code, links, hr, blockquotes).
+import sanitizeHtml from "sanitize-html";
 
-export function renderMarkdown(md: string): string {
+function isHtmlContent(value: string) {
+    return /<\/?[a-z][\s\S]*>/i.test(value);
+}
+
+function slugifyHeading(value: string) {
+    return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
+function addHeadingIds(html: string) {
+    return html.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h\1>/gi, (_match, level, attrs, inner) => {
+        const hasId = /\sid=/.test(attrs);
+        const plain = inner.replace(/<[^>]+>/g, "").trim();
+        const id = slugifyHeading(plain);
+        const nextAttrs = hasId || !id ? attrs : `${attrs} id="${id}"`;
+        return `<h${level}${nextAttrs}>${inner}</h${level}>`;
+    });
+}
+
+export function sanitizeGuideHtml(html: string): string {
+    const sanitized = sanitizeHtml(html, {
+        allowedTags: [
+            "h2",
+            "h3",
+            "p",
+            "strong",
+            "em",
+            "ul",
+            "ol",
+            "li",
+            "a",
+            "img",
+            "table",
+            "thead",
+            "tbody",
+            "tr",
+            "th",
+            "td",
+            "blockquote",
+            "br",
+            "hr",
+        ],
+        allowedAttributes: {
+            a: ["href", "target", "rel"],
+            img: ["src", "alt", "title", "width", "height"],
+            th: ["colspan", "rowspan"],
+            td: ["colspan", "rowspan"],
+            h2: ["id"],
+            h3: ["id"],
+        },
+        allowedSchemes: ["http", "https", "mailto"],
+        transformTags: {
+            a: (_tagName, attribs) => ({
+                tagName: "a",
+                attribs: {
+                    href: attribs.href ?? "#",
+                    target: "_blank",
+                    rel: "noopener noreferrer nofollow",
+                },
+            }),
+            img: (_tagName, attribs) => ({
+                tagName: "img",
+                attribs: {
+                    src: attribs.src ?? "",
+                    alt: attribs.alt ?? "",
+                    title: attribs.title ?? undefined,
+                    width: attribs.width ?? undefined,
+                    height: attribs.height ?? undefined,
+                },
+            }),
+        },
+    });
+
+    return addHeadingIds(sanitized);
+}
+
+function inlineMarkdown(text: string): string {
+    return text
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+        .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.+?)\*/g, "<em>$1</em>")
+        .replace(
+            /\[([^\]]+)\]\(([^)]+)\)/g,
+            '<a href="$2" target="_blank" rel="noopener noreferrer nofollow">$1</a>',
+        );
+}
+
+function markdownToHtml(md: string): string {
     if (!md) return "";
 
     let html = md
-        // Escape bare HTML entities first to avoid XSS via body_md
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
 
-    // Process block elements line by line
     const lines = html.split("\n");
     const out: string[] = [];
     let inList = false;
@@ -21,35 +108,31 @@ export function renderMarkdown(md: string): string {
         const line = lines[i];
         const trimmed = line.trim();
 
-        // HR
         if (/^[-*_]{3,}$/.test(trimmed)) {
-            if (inList)  { out.push("</ul>"); inList = false; }
+            if (inList) { out.push("</ul>"); inList = false; }
             if (inOList) { out.push("</ol>"); inOList = false; }
             out.push("<hr />");
             continue;
         }
 
-        // Headings
         const hMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
         if (hMatch) {
-            if (inList)  { out.push("</ul>"); inList = false; }
+            if (inList) { out.push("</ul>"); inList = false; }
             if (inOList) { out.push("</ol>"); inOList = false; }
             const level = hMatch[1].length;
-            const text  = inlineMarkdown(hMatch[2]);
-            const id    = hMatch[2].toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            const text = inlineMarkdown(hMatch[2]);
+            const id = slugifyHeading(hMatch[2]);
             out.push(`<h${level} id="${id}">${text}</h${level}>`);
             continue;
         }
 
-        // Blockquote
         if (trimmed.startsWith("&gt; ")) {
-            if (inList)  { out.push("</ul>"); inList = false; }
+            if (inList) { out.push("</ul>"); inList = false; }
             if (inOList) { out.push("</ol>"); inOList = false; }
             out.push(`<blockquote>${inlineMarkdown(trimmed.slice(5))}</blockquote>`);
             continue;
         }
 
-        // Unordered list
         const ulMatch = trimmed.match(/^[-*+]\s+(.+)$/);
         if (ulMatch) {
             if (inOList) { out.push("</ol>"); inOList = false; }
@@ -58,7 +141,6 @@ export function renderMarkdown(md: string): string {
             continue;
         }
 
-        // Ordered list
         const olMatch = trimmed.match(/^\d+\.\s+(.+)$/);
         if (olMatch) {
             if (inList) { out.push("</ul>"); inList = false; }
@@ -67,64 +149,62 @@ export function renderMarkdown(md: string): string {
             continue;
         }
 
-        // Close open lists on blank line or non-list content
         if (trimmed === "") {
-            if (inList)  { out.push("</ul>"); inList = false; }
+            if (inList) { out.push("</ul>"); inList = false; }
             if (inOList) { out.push("</ol>"); inOList = false; }
             out.push("");
             continue;
         }
 
-        // Close lists before paragraph
-        if (inList)  { out.push("</ul>"); inList = false; }
+        if (inList) { out.push("</ul>"); inList = false; }
         if (inOList) { out.push("</ol>"); inOList = false; }
-
         out.push(`<p>${inlineMarkdown(trimmed)}</p>`);
     }
 
-    if (inList)  out.push("</ul>");
+    if (inList) out.push("</ul>");
     if (inOList) out.push("</ol>");
 
     return out.join("\n");
 }
 
-function inlineMarkdown(text: string): string {
-    return text
-        // Inline code
-        .replace(/`([^`]+)`/g, "<code>$1</code>")
-        // Bold+italic
-        .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
-        // Bold
-        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-        // Italic
-        .replace(/\*(.+?)\*/g, "<em>$1</em>")
-        // Links
-        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-lime-700 underline" target="_blank" rel="noopener">$1</a>');
+export function renderMarkdown(content: string): string {
+    if (!content) return "";
+    return sanitizeGuideHtml(isHtmlContent(content) ? content : markdownToHtml(content));
 }
 
-// Extract sections based on ## headings — used by Steps and Pro layouts
 export interface Section {
-    id:   string;
+    id: string;
     heading: string;
-    body: string; // raw markdown between this heading and the next
+    body: string;
 }
 
-export function extractSections(md: string): Section[] {
-    if (!md) return [];
-    const parts = md.split(/^##\s+/m);
+export function extractPreamble(content: string): string {
+    const html = renderMarkdown(content);
+    const firstH2 = html.search(/<h2\b[^>]*>/i);
+    if (firstH2 === -1) return html.trim();
+    return html.slice(0, firstH2).trim();
+}
+
+export function extractSections(content: string): Section[] {
+    const html = renderMarkdown(content);
+    if (!html) return [];
+
     const sections: Section[] = [];
-    for (const part of parts) {
-        if (!part.trim()) continue;
-        const newline = part.indexOf("\n");
-        if (newline === -1) {
-            // heading with no body
-            const heading = part.trim();
-            sections.push({ id: heading.toLowerCase().replace(/[^a-z0-9]+/g, "-"), heading, body: "" });
-        } else {
-            const heading = part.slice(0, newline).trim();
-            const body    = part.slice(newline + 1).trim();
-            sections.push({ id: heading.toLowerCase().replace(/[^a-z0-9]+/g, "-"), heading, body });
-        }
+    const regex = /<h2\b([^>]*)>([\s\S]*?)<\/h2>([\s\S]*?)(?=<h2\b[^>]*>|$)/gi;
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(html)) !== null) {
+        const attrs = match[1] ?? "";
+        const headingHtml = match[2] ?? "";
+        const body = (match[3] ?? "").trim();
+        const heading = headingHtml.replace(/<[^>]+>/g, "").trim();
+        const idMatch = attrs.match(/\sid="([^"]+)"/i);
+        sections.push({
+            id: idMatch?.[1] ?? slugifyHeading(heading),
+            heading,
+            body,
+        });
     }
+
     return sections;
 }

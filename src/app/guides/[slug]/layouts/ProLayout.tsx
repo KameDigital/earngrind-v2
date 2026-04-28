@@ -1,4 +1,4 @@
-import { renderMarkdown, extractSections } from "../markdownRenderer";
+import { renderMarkdown, extractPreamble, extractSections } from "../markdownRenderer";
 import ProChecklist from "../ProChecklist";
 import Link from "next/link";
 
@@ -26,13 +26,7 @@ export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps)
         .map(l => l.replace(/^[-•*]\s*/, "").trim())
         .filter(Boolean);
 
-    const preamble = (() => {
-        const md = guide.body_md ?? "";
-        const idx = md.indexOf("\n## ");
-        if (idx === -1 && !md.startsWith("## ")) return md.trim();
-        if (md.startsWith("## ")) return "";
-        return md.slice(0, idx).trim();
-    })();
+    const preamble = extractPreamble(guide.body_md ?? "");
 
     return (
         <div className="space-y-5">
@@ -83,7 +77,7 @@ export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps)
             {preamble && (
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
                     <div className="text-xs font-extrabold uppercase tracking-widest text-gray-400 mb-3">Overview</div>
-                    <div className="prose-guide" dangerouslySetInnerHTML={{ __html: renderMarkdown(preamble) }} />
+                    <div className="prose prose-slate max-w-none prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100" dangerouslySetInnerHTML={{ __html: preamble }} />
                 </div>
             )}
 
@@ -114,7 +108,7 @@ export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps)
                         </div>
                         {section.body && (
                             <div className="px-5 py-4">
-                                <div className="prose-guide" dangerouslySetInnerHTML={{ __html: renderMarkdown(section.body) }} />
+                                <div className="prose prose-slate max-w-none prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100" dangerouslySetInnerHTML={{ __html: section.body }} />
                             </div>
                         )}
                     </div>

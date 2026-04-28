@@ -26,7 +26,7 @@ export default function ClassicLayout({ guide, gameSlug, gameName }: ClassicLayo
             {html && (
                 <div id="steps">
                     <div
-                        className="prose-guide"
+                        className="prose prose-slate max-w-none prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100"
                         dangerouslySetInnerHTML={{ __html: html }}
                     />
                 </div>

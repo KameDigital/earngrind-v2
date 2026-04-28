@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { renderMarkdown } from "@/app/guides/[slug]/markdownRenderer";
 
 async function checkAdmin(supabase: ReturnType<typeof createClient>) {
     const { data: { user } } = await supabase.auth.getUser();
@@ -68,7 +69,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
         ...(slug && { slug: normalizedSlug }),
         ...(game_id && { game_id: gameId }),
         excerpt: excerpt ?? null,
-        body_md: body_md ?? null,
+        body_md: body_md ? renderMarkdown(body_md) : null,
         difficulty: difficulty || null,
         estimated_time: estimated_time || null,
         max_payout_usd: max_payout_usd ? parseFloat(max_payout_usd) : null,

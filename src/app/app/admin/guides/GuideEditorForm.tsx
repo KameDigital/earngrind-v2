@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { renderMarkdown } from "@/app/guides/[slug]/markdownRenderer";
 import GameCombobox, { type GameOption } from "./GameCombobox";
+import RichTextEditor from "@/components/editor/RichTextEditor";
 
 const inputClass = "w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-400 bg-white transition";
 const labelClass = "block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5";
@@ -166,13 +167,52 @@ function buildOfferSeedBody(gameName: string, offer: SeedOffer, focus: GuideFocu
     ].join("\n");
 }
 
+function stripHtmlTags(value: string) {
+    return value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
 function replaceSection(body: string, nextSectionBlock: string, headings: string[]) {
     const normalizedBody = body.trim();
-    const headingPattern = headings.map((heading) => heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
-    const regex = new RegExp(`## (?:${headingPattern})[\\s\\S]*?(?=\\n## |$)`, "i");
-    if (!normalizedBody) return nextSectionBlock;
-    if (regex.test(normalizedBody)) return normalizedBody.replace(regex, nextSectionBlock.trim());
-    return `${normalizedBody}\n\n${nextSectionBlock.trim()}`;
+    const normalizedHeadings = headings.map((heading) => heading.toLowerCase().trim());
+
+    if (!normalizedBody) return nextSectionBlock.trim();
+
+    const parser = new DOMParser();
+    const currentDoc = parser.parseFromString(`<div>${normalizedBody}</div>`, "text/html");
+    const nextDoc = parser.parseFromString(`<div>${nextSectionBlock.trim()}</div>`, "text/html");
+    const container = currentDoc.body.firstElementChild as HTMLElement | null;
+    const nextContainer = nextDoc.body.firstElementChild as HTMLElement | null;
+
+    if (!container || !nextContainer) return `${normalizedBody}\n${nextSectionBlock.trim()}`;
+
+    const children = Array.from(container.children);
+    let startIndex = -1;
+    let endIndex = children.length;
+
+    for (let i = 0; i < children.length; i++) {
+        const element = children[i];
+        if (element.tagName.toLowerCase() !== "h2") continue;
+        const headingText = stripHtmlTags(element.innerHTML).toLowerCase();
+        if (!normalizedHeadings.includes(headingText)) continue;
+        startIndex = i;
+        for (let j = i + 1; j < children.length; j++) {
+            if (children[j].tagName.toLowerCase() === "h2") {
+                endIndex = j;
+                break;
+            }
+        }
+        break;
+    }
+
+    if (startIndex >= 0) {
+        children.slice(startIndex, endIndex).forEach((node) => node.remove());
+    }
+
+    Array.from(nextContainer.children).forEach((node) => {
+        container.appendChild(currentDoc.importNode(node, true));
+    });
+
+    return container.innerHTML.trim();
 }
 
 function buildMarkdownLinkBlock(links: InternalLinkSuggestion[]) {
@@ -191,8 +231,8 @@ function buildValidationWarnings(args: {
 }) {
     const warnings: string[] = [];
     if (!args.excerpt.trim()) warnings.push("Missing excerpt.");
-    if (args.bodyMd.trim().length < 700) warnings.push("Body is short. Aim for a fuller walkthrough before publishing.");
-    if (!/##\s+faq|###\s+/i.test(args.bodyMd)) warnings.push("FAQ-like content is missing.");
+    if (stripHtmlTags(args.bodyMd).length < 700) warnings.push("Body is short. Aim for a fuller walkthrough before publishing.");
+    if (!/(<h2[^>]*>\s*faq\s*<\/h2>)|(<h3[^>]*>)/i.test(args.bodyMd)) warnings.push("FAQ-like content is missing.");
     if (!args.checklistItems.trim()) warnings.push("Checklist items are missing.");
     if (!args.seoTitle.trim()) warnings.push("SEO title is missing.");
     if (!args.seoDescription.trim()) warnings.push("SEO description is missing.");
@@ -231,7 +271,7 @@ export default function GuideEditorForm({
     const [guideFocus, setGuideFocus] = useState<GuideFocus>("highest payout");
     const [guideTemplate, setGuideTemplate] = useState<GuideTemplate>("milestone guide");
     const [excerpt, setExcerpt] = useState(guide?.excerpt ?? sourceGuide?.excerpt ?? "");
-    const [bodyMd, setBodyMd] = useState(guide?.body_md ?? sourceGuide?.body_md ?? "");
+    const [bodyMd, setBodyMd] = useState(() => renderMarkdown(guide?.body_md ?? sourceGuide?.body_md ?? ""));
     const [difficulty, setDifficulty] = useState(guide?.difficulty ?? sourceGuide?.difficulty ?? "");
     const [estimatedTime, setEstimatedTime] = useState(guide?.estimated_time ?? sourceGuide?.estimated_time ?? "");
     const [maxPayout, setMaxPayout] = useState(guide?.max_payout_usd?.toString() ?? sourceGuide?.max_payout_usd?.toString() ?? "");
@@ -334,7 +374,7 @@ export default function GuideEditorForm({
             if (!options?.preserveSeo || !seoTitle.trim()) setSeoTitle(autofill.seo_title ?? "");
             if (!options?.preserveSeo || !seoDesc.trim()) setSeoDesc(autofill.seo_description ?? "");
             if (options?.overwriteDraft) {
-                setBodyMd(json.draft?.body_md ?? "");
+                setBodyMd(renderMarkdown(json.draft?.body_md ?? ""));
                 setTips(Array.isArray(json.draft?.tips) ? json.draft.tips.join("\n") : "");
             }
         } catch (seedError) {
@@ -381,7 +421,7 @@ export default function GuideEditorForm({
                 step_by_step: ["Step-by-Step Section", "Fastest Route", "Beginner Walkthrough"],
                 faq: ["FAQ"],
             };
-            setBodyMd((current) => replaceSection(current, nextBlock, headingMap[section]));
+            setBodyMd((current) => replaceSection(current, renderMarkdown(nextBlock), headingMap[section]));
         } catch (sectionError) {
             setError(sectionError instanceof Error ? sectionError.message : "Failed to regenerate section.");
         } finally {
@@ -401,13 +441,13 @@ export default function GuideEditorForm({
             `This route pays up to $${offer.total_payout_usd.toFixed(2)} across ${offer.milestone_count} milestones.`,
             ...offer.tasks.slice(0, 3).map((task) => `Prioritize milestone: ${task.title}`),
         ].join("\n"));
-        setBodyMd(buildOfferSeedBody(selectedGame?.name ?? "This game", offer, guideFocus));
+        setBodyMd(renderMarkdown(buildOfferSeedBody(selectedGame?.name ?? "This game", offer, guideFocus)));
     }
 
     function addInternalLinksToBody() {
         if (internalLinks.length === 0) return;
         const block = `## Related Links\n${buildMarkdownLinkBlock(internalLinks)}`;
-        setBodyMd((current) => replaceSection(current, block, ["Related Links"]));
+        setBodyMd((current) => replaceSection(current, renderMarkdown(block), ["Related Links"]));
     }
 
     async function handleSubmit(e: React.FormEvent) {
@@ -736,7 +776,7 @@ export default function GuideEditorForm({
 
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <div className="flex items-center justify-between gap-4">
-                    <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Content (Markdown)</h2>
+                    <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Content (Rich Text)</h2>
                     <div className="flex flex-wrap gap-2">
                         <button type="button" onClick={() => handleRegenerateSection("intro")} disabled={!selectedGame || regeneratingSection !== null} className="px-3 py-2 text-xs font-bold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50">
                             {regeneratingSection === "intro" ? "Regenerating..." : "Regenerate intro"}
@@ -755,7 +795,7 @@ export default function GuideEditorForm({
 
                 <div>
                     <label className={labelClass}>Body</label>
-                    <textarea value={bodyMd} onChange={(e) => setBodyMd(e.target.value)} rows={18} className={`${inputClass} font-mono text-xs resize-y`} />
+                    <RichTextEditor value={bodyMd} onChange={setBodyMd} />
                 </div>
 
                 <div>
@@ -795,7 +835,10 @@ export default function GuideEditorForm({
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                     <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Rendered Guide Preview</h2>
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
-                        <div className="prose-guide text-sm" dangerouslySetInnerHTML={{ __html: renderedPreview }} />
+                        <div
+                            className="prose prose-slate max-w-none text-sm prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100"
+                            dangerouslySetInnerHTML={{ __html: renderedPreview }}
+                        />
                     </div>
                 </div>
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">

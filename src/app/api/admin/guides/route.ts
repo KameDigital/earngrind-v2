@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { renderMarkdown } from "@/app/guides/[slug]/markdownRenderer";
 
 function normalizeSlug(value: string): string {
     return value.trim().toLowerCase().replace(/\s+/g, "-");
@@ -56,7 +57,7 @@ export async function POST(req: NextRequest) {
         slug: normalizedSlug,
         game_id: gameId,
         excerpt: excerpt || null,
-        body_md: body_md || null,
+        body_md: body_md ? renderMarkdown(body_md) : null,
         difficulty: difficulty || null,
         estimated_time: estimated_time || null,
         max_payout_usd: max_payout_usd ? parseFloat(max_payout_usd) : null,

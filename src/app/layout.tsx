@@ -15,6 +15,14 @@ export const metadata: Metadata = {
   },
   description: "EarnGrind tracks hundreds of mobile game offers across every major GPT site. Find and compare the highest payouts on Swagbucks, Freecash, InboxDollars, and more.",
   keywords: ["offerwall", "GPT sites", "earn money online", "mobile game offers", "Swagbucks offers", "Freecash offers", "game guides"],
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/favicon-earngrind.png",
+  },
   openGraph: {
     title: "EarnGrind — Find the Highest-Paying Offerwall Game Offers",
     description: "Track hundreds of mobile game offers across every major GPT site. Find & compare the highest payouts — updated daily.",

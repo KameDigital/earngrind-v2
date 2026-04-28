@@ -12,7 +12,7 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableCell from "@tiptap/extension-table-cell";
 
 const toolbarButtonClass =
-    "inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 hover:border-gray-300";
+    "inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 hover:border-gray-300 [&_*]:text-inherit";
 const activeToolbarButtonClass =
     "border-gray-900 bg-gray-900 text-white hover:bg-gray-800 hover:border-gray-800";
 
@@ -154,7 +154,7 @@ export default function RichTextEditor({
 
     return (
         <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-            <div className="border-b border-gray-200 px-4 py-3">
+            <div className="sticky top-4 z-20 border-b border-gray-200 bg-white/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/85">
                 <div className="flex flex-wrap gap-2">
                     <ToolbarButton
                         active={editor.isActive("heading", { level: 2 })}
@@ -177,14 +177,16 @@ export default function RichTextEditor({
                     <ToolbarButton
                         active={editor.isActive("bold")}
                         onClick={() => editor.chain().focus().toggleBold().run()}
+                        title="Bold"
                     >
-                        Bold
+                        <span className="font-extrabold text-inherit">B</span>
                     </ToolbarButton>
                     <ToolbarButton
                         active={editor.isActive("italic")}
                         onClick={() => editor.chain().focus().toggleItalic().run()}
+                        title="Italic"
                     >
-                        Italic
+                        <span className="italic text-inherit">I</span>
                     </ToolbarButton>
                     <ToolbarButton
                         active={editor.isActive("bulletList")}
@@ -229,7 +231,7 @@ export default function RichTextEditor({
                     ))}
                 </div>
             </div>
-            <EditorContent editor={editor} className="min-h-[320px]" />
+            <EditorContent editor={editor} className="min-h-[320px] [&_.ProseMirror]:pt-2" />
         </div>
     );
 }

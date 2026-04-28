@@ -6,6 +6,7 @@ import "./globals.css";
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+const defaultSocialImage = "/og-earngrind.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -24,16 +25,16 @@ export const metadata: Metadata = {
     apple: "/favicon-earngrind.png?v=2",
   },
   openGraph: {
-    title: "EarnGrind — Find the Highest-Paying Offerwall Game Offers",
-    description: "Track hundreds of mobile game offers across every major GPT site. Find & compare the highest payouts — updated daily.",
+    title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+    description: "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
     url: baseUrl,
     siteName: "EarnGrind",
     images: [
       {
-        url: "/og-default.jpg",
+        url: defaultSocialImage,
         width: 1200,
         height: 630,
-        alt: "EarnGrind — Find the Highest-Paying Offerwall Game Offers",
+        alt: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
       }
     ],
     locale: "en_US",
@@ -41,9 +42,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "EarnGrind — Find the Highest-Paying Offerwall Game Offers",
-    description: "Highest-paying mobile game offers tracked across all major GPT sites.",
-    images: ["/og-default.jpg"],
+    title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+    description: "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
+    images: [defaultSocialImage],
     creator: "@earngrind",
   },
   robots: {

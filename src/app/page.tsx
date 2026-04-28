@@ -17,7 +17,24 @@ export const metadata: Metadata = {
     title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
     description:
       "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
-    url: "/",
+    url: "https://earngrind.com",
+    siteName: "EarnGrind",
+    images: [
+      {
+        url: "/og-earngrind.png",
+        width: 1200,
+        height: 630,
+        alt: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+    description:
+      "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
+    images: ["/og-earngrind.png"],
   },
 };
 

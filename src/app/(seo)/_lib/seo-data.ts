@@ -229,7 +229,7 @@ export function buildSeoMetadata(input: {
   path: string;
   imagePath?: string;
 }): Metadata {
-  const image = input.imagePath ?? "/og-default.jpg";
+  const image = input.imagePath ?? "/og-earngrind.png";
   return {
     title: input.title,
     description: input.description,

@@ -17,11 +17,11 @@ export const metadata: Metadata = {
   keywords: ["offerwall", "GPT sites", "earn money online", "mobile game offers", "Swagbucks offers", "Freecash offers", "game guides"],
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon-earngrind.png?v=2", type: "image/png" },
+      { url: "/icon.png?v=2", type: "image/png" },
     ],
-    shortcut: "/favicon.ico",
-    apple: "/favicon-earngrind.png",
+    shortcut: "/favicon-earngrind.png?v=2",
+    apple: "/favicon-earngrind.png?v=2",
   },
   openGraph: {
     title: "EarnGrind — Find the Highest-Paying Offerwall Game Offers",

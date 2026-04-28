@@ -101,7 +101,7 @@ export default function RichTextEditor({
                 },
             }),
             Placeholder.configure({
-                placeholder: "Write your guide content…",
+                placeholder: "Write your guide content...",
             }),
             Table.configure({
                 resizable: true,
@@ -159,20 +159,23 @@ export default function RichTextEditor({
                     <ToolbarButton
                         active={editor.isActive("heading", { level: 2 })}
                         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                        title="Heading 2"
                     >
-                        H2
+                        <span className="text-inherit">H2</span>
                     </ToolbarButton>
                     <ToolbarButton
                         active={editor.isActive("heading", { level: 3 })}
                         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                        title="Heading 3"
                     >
-                        H3
+                        <span className="text-inherit">H3</span>
                     </ToolbarButton>
                     <ToolbarButton
                         active={editor.isActive("paragraph")}
                         onClick={() => editor.chain().focus().setParagraph().run()}
+                        title="Paragraph"
                     >
-                        Paragraph
+                        <span className="text-inherit">Paragraph</span>
                     </ToolbarButton>
                     <ToolbarButton
                         active={editor.isActive("bold")}
@@ -192,30 +195,36 @@ export default function RichTextEditor({
                         active={editor.isActive("bulletList")}
                         onClick={() => editor.chain().focus().toggleBulletList().run()}
                     >
-                        Bullet List
+                        <span className="text-inherit">Bullet List</span>
                     </ToolbarButton>
                     <ToolbarButton
                         active={editor.isActive("orderedList")}
                         onClick={() => editor.chain().focus().toggleOrderedList().run()}
                     >
-                        Numbered List
+                        <span className="text-inherit">Numbered List</span>
                     </ToolbarButton>
                     <ToolbarButton active={editor.isActive("link")} onClick={setLink}>
-                        Link
+                        <span className="text-inherit">Link</span>
                     </ToolbarButton>
-                    <ToolbarButton onClick={insertImage}>Image</ToolbarButton>
+                    <ToolbarButton onClick={insertImage}>
+                        <span className="text-inherit">Image</span>
+                    </ToolbarButton>
                     <ToolbarButton
                         active={editor.isActive("table")}
                         onClick={() =>
                             editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
                         }
                     >
-                        Table
+                        <span className="text-inherit">Table</span>
                     </ToolbarButton>
-                    <ToolbarButton onClick={() => editor.chain().focus().undo().run()}>Undo</ToolbarButton>
-                    <ToolbarButton onClick={() => editor.chain().focus().redo().run()}>Redo</ToolbarButton>
+                    <ToolbarButton onClick={() => editor.chain().focus().undo().run()}>
+                        <span className="text-inherit">Undo</span>
+                    </ToolbarButton>
+                    <ToolbarButton onClick={() => editor.chain().focus().redo().run()}>
+                        <span className="text-inherit">Redo</span>
+                    </ToolbarButton>
                     <ToolbarButton onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}>
-                        Clear
+                        <span className="text-inherit">Clear</span>
                     </ToolbarButton>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">

@@ -44,10 +44,12 @@ export function sanitizeGuideHtml(html: string): string {
             "blockquote",
             "br",
             "hr",
+            "div",
         ],
         allowedAttributes: {
             a: ["href", "target", "rel"],
             img: ["src", "alt", "title", "width", "height"],
+            div: ["class"],
             th: ["colspan", "rowspan"],
             td: ["colspan", "rowspan"],
             h2: ["id"],

@@ -3,6 +3,7 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import GuideEditForm from "./GuideEditForm";
 import GuideAdminActions from "../../GuideAdminActions";
+import { detectCannibalization } from "@/lib/keyword-cannibalization";
 
 export const metadata = { title: "Edit Guide | Admin" };
 
@@ -22,6 +23,21 @@ export default async function EditGuidePage({ params }: { params: { id: string }
         .select("id, name, slug")
         .eq("id", guide.game_id)
         .maybeSingle();
+    const { data: relatedGuides } = await supabase
+        .from("guides")
+        .select("id, title, keyword_target, keyword_cluster_id, keyword_intent")
+        .neq("id", guide.id)
+        .limit(200);
+    const cannibalization = detectCannibalization([
+        {
+            id: guide.id,
+            title: guide.title,
+            keyword_target: guide.keyword_target,
+            keyword_cluster_id: guide.keyword_cluster_id,
+            keyword_intent: guide.keyword_intent,
+        },
+        ...(relatedGuides ?? []),
+    ]).filter((issue) => issue.guideIds.includes(guide.id));
 
     return (
         <div className="space-y-6">
@@ -39,9 +55,25 @@ export default async function EditGuidePage({ params }: { params: { id: string }
                     )}
                 </p>
                 <div className="mt-3">
-                    <GuideAdminActions guideId={guide.id} />
+                    <GuideAdminActions guideId={guide.id} status={guide.status} />
                 </div>
             </div>
+            {cannibalization.length > 0 ? (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                    <div className="font-extrabold">Keyword cannibalization warning</div>
+                    <p className="mt-1">This guide overlaps with {cannibalization.length} existing keyword/cluster signals. Consider merging, changing focus, or converting a weak draft into a subsection.</p>
+                    <ul className="mt-2 list-disc pl-5">
+                        {cannibalization.map((issue, index) => (
+                            <li key={`${issue.type}-${index}`}>
+                                <span className={issue.severity === "block" ? "font-bold text-red-700" : "font-bold text-amber-800"}>
+                                    {issue.severity === "block" ? "Duplicate keyword" : issue.type === "similar_keyword" ? "Similar keyword" : "Same cluster overlap"}:
+                                </span>{" "}
+                                {issue.message}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : null}
             <GuideEditForm
                 guide={guide}
                 initialGame={game ? { id: game.id, name: game.name, slug: game.slug } : null}

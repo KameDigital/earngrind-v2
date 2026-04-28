@@ -8,7 +8,7 @@ export interface Review {
     pros: string[];
     cons: string[];
     affiliate_url: string | null;
-    status: "draft" | "published";
+    status: "draft" | "needs_review" | "published";
     published_at: string | null;
     updated_at: string;
 }
@@ -19,7 +19,7 @@ export interface BlogPost {
     title: string;
     excerpt: string | null;
     body_md: string;
-    status: "draft" | "published";
+    status: "draft" | "needs_review" | "published";
     published_at: string | null;
     updated_at: string;
 }

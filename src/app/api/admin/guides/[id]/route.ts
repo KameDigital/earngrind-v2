@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import { renderMarkdown } from "@/app/guides/[slug]/markdownRenderer";
+import { analyzeGuideQuality } from "@/lib/guide-quality";
 
 async function checkAdmin(supabase: ReturnType<typeof createClient>) {
     const { data: { user } } = await supabase.auth.getUser();
@@ -58,7 +59,16 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     // Set published_at on first publish
     let publishedAt: string | undefined;
     if (status === "published") {
-        const { data: existing } = await supabase.from("guides").select("published_at, status").eq("id", params.id).single();
+        const { data: existing } = await supabase.from("guides").select("published_at, status, keyword_target").eq("id", params.id).single();
+        const quality = analyzeGuideQuality({
+            bodyHtml: body_md ? renderMarkdown(body_md) : "",
+            seoTitle: seo_title,
+            seoDescription: seo_description,
+            keywordTarget: body.keyword_target ?? existing?.keyword_target,
+        });
+        if (quality.requiredErrors.length > 0) {
+            return NextResponse.json({ error: "Publish blocked by checklist.", quality }, { status: 422 });
+        }
         if (existing && existing.status !== "published" && !existing.published_at) {
             publishedAt = new Date().toISOString();
         }

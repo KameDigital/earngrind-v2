@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
+import { analyzeGuideQuality } from '@/lib/guide-quality';
+import { getGuideSitemapPriority } from '@/lib/indexing-readiness';
 
 export const revalidate = 3600; // regenerate every hour
 
@@ -16,7 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ] = await Promise.all([
         supabase
             .from('guides')
-            .select('slug, updated_at')
+            .select('slug, updated_at, body_md, seo_title, seo_description, keyword_target')
             .eq('status', 'published')
             .order('updated_at', { ascending: false }),
         supabase
@@ -75,12 +77,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     // Guide pages — highest priority after homepage/offers (they target keywords)
-    const guideUrls: MetadataRoute.Sitemap = (guides ?? []).map(g => ({
-        url:             `${baseUrl}/guides/${g.slug}`,
-        lastModified:    new Date(g.updated_at),
-        changeFrequency: 'weekly' as const,
-        priority:        0.8,
-    }));
+    const guideUrls: MetadataRoute.Sitemap = (guides ?? []).map(g => {
+        const quality = analyzeGuideQuality({
+            bodyHtml: g.body_md,
+            seoTitle: g.seo_title,
+            seoDescription: g.seo_description,
+            keywordTarget: g.keyword_target,
+        });
+
+        return {
+            url:             `${baseUrl}/guides/${g.slug}`,
+            lastModified:    new Date(g.updated_at),
+            changeFrequency: 'weekly' as const,
+            priority:        getGuideSitemapPriority(quality.score),
+        };
+    });
 
     // Blog posts
     const postUrls: MetadataRoute.Sitemap = (posts ?? []).map(p => ({

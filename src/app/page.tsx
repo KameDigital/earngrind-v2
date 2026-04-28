@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
 import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
+import type { RailPreviewRoute, RailPreviewTask } from "@/components/home/GamePreviewModal";
 
 export const metadata: Metadata = {
   title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
@@ -154,6 +155,7 @@ type ReviewRow = {
 };
 
 type FeaturedGame = {
+  id: string | null;
   slug: string;
   name: string;
   thumbnail: string | null;
@@ -161,9 +163,24 @@ type FeaturedGame = {
 };
 
 type GameRow = {
+  id: string;
   name: string;
   slug: string | null;
   thumbnail_url: string | null;
+};
+
+type SiteOfferTaskRow = {
+  site_offer_id: string;
+  title: string | null;
+  reward_amount: number | null;
+  reward_display: string | null;
+  time_limit_text: string | null;
+  sort_order: number | null;
+};
+
+type RelatedGuideRow = {
+  slug: string;
+  game_id: string | null;
 };
 
 type HomepageRailOffer = OfferRow & {
@@ -174,6 +191,8 @@ type HomepageRailOffer = OfferRow & {
 type HomepageData = {
   featuredGames: FeaturedGame[];
   highestPayingOffers: HomepageRailOffer[];
+  modalRoutesByGameKey: Record<string, RailPreviewRoute[]>;
+  guideHrefByGameKey: Record<string, string>;
   popularGuides: GuideRow[];
   stats: {
     liveOfferCount: number;
@@ -185,6 +204,22 @@ type HomepageData = {
 function formatMoney(value: number | null | undefined) {
   if (typeof value !== "number" || Number.isNaN(value)) return null;
   return `$${value.toFixed(2)}`;
+}
+
+function gameKeyFromParts(slug: string | null | undefined, name: string | null | undefined) {
+  return slug || (name ? safeSlug(name) : "");
+}
+
+function buildGoHref(row: OfferRow, clickLocation: string) {
+  const params = new URLSearchParams();
+  params.set("click_location", clickLocation);
+  params.set("source_context", "homepage_rail_modal");
+  if (row.title) params.set("offer_title", row.title);
+  if (row.game_name) params.set("game_title", row.game_name);
+  if (row.platform_name) params.set("platform_name", row.platform_name);
+  if (row.provider_name) params.set("provider_name", row.provider_name);
+  if (typeof row.payout_usd === "number") params.set("payout_usd", String(row.payout_usd));
+  return `/go/${row.id}?${params.toString()}`;
 }
 
 function normalizeName(value: string | null | undefined) {
@@ -266,7 +301,7 @@ async function getHomepageData(): Promise<HomepageData> {
       .limit(6),
     supabase
       .from("games")
-      .select("name, slug, thumbnail_url")
+      .select("id, name, slug, thumbnail_url")
       .in("name", [...FEATURED_GAME_NAMES]),
     supabase
       .from("unified_offers_view")
@@ -285,16 +320,52 @@ async function getHomepageData(): Promise<HomepageData> {
     .filter((row) => row.source === "manual")
     .map((row) => row.id);
 
-  const { data: manualOfferImages } = manualOfferIds.length
-    ? await supabase
-        .from("site_offers")
-        .select("id, image_url")
-        .in("id", manualOfferIds)
-    : { data: [] as Array<{ id: string; image_url: string | null }> };
+  const gameIds = Array.from(new Set(allOfferRows.map((row) => row.game_id).filter(Boolean))) as string[];
+
+  const [manualOfferImagesResult, manualOfferTasksResult, relatedGuidesResult] = await Promise.all([
+    manualOfferIds.length
+      ? supabase
+          .from("site_offers")
+          .select("id, image_url")
+          .in("id", manualOfferIds)
+      : Promise.resolve({ data: [] as Array<{ id: string; image_url: string | null }> }),
+    manualOfferIds.length
+      ? supabase
+          .from("site_offer_tasks")
+          .select("site_offer_id, title, reward_amount, reward_display, time_limit_text, sort_order")
+          .in("site_offer_id", manualOfferIds)
+          .order("sort_order", { ascending: true })
+      : Promise.resolve({ data: [] as SiteOfferTaskRow[] }),
+    gameIds.length
+      ? supabase
+          .from("guides")
+          .select("slug, game_id")
+          .eq("status", "published")
+          .in("game_id", gameIds)
+          .order("updated_at", { ascending: false })
+      : Promise.resolve({ data: [] as RelatedGuideRow[] }),
+  ]);
 
   const manualOfferImageMap = new Map(
-    (manualOfferImages ?? []).map((row) => [row.id, row.image_url ?? null]),
+    (manualOfferImagesResult.data ?? []).map((row) => [row.id, row.image_url ?? null]),
   );
+  const manualTaskMap = new Map<string, RailPreviewTask[]>();
+  ((manualOfferTasksResult.data ?? []) as SiteOfferTaskRow[]).forEach((task) => {
+    const existing = manualTaskMap.get(task.site_offer_id) ?? [];
+    existing.push({
+      title: task.title ?? "Offer milestone",
+      rewardDisplay: task.reward_display ?? formatMoney(task.reward_amount),
+      timeLimitText: task.time_limit_text,
+      sortOrder: task.sort_order,
+    });
+    manualTaskMap.set(task.site_offer_id, existing);
+  });
+  const guideHrefByGameId = new Map<string, string>();
+  ((relatedGuidesResult.data ?? []) as RelatedGuideRow[]).forEach((guide) => {
+    if (guide.game_id && !guideHrefByGameId.has(guide.game_id)) {
+      guideHrefByGameId.set(guide.game_id, `/guides/${guide.slug}`);
+    }
+  });
 
   const enrichedAllOfferRows = allOfferRows.map((row) => ({
     ...row,
@@ -336,6 +407,7 @@ async function getHomepageData(): Promise<HomepageData> {
       safeSlug(gameName);
 
     return {
+      id: matchingGame?.id ?? matchingOffer?.game_id ?? null,
       slug: derivedSlug,
       name: matchingGame?.name ?? matchingOffer?.game_name ?? gameName,
       thumbnail:
@@ -380,6 +452,45 @@ async function getHomepageData(): Promise<HomepageData> {
     ).values(),
   ).slice(0, 6);
 
+  function tasksForOffer(row: OfferRow): RailPreviewTask[] {
+    const manualTasks = manualTaskMap.get(row.id);
+    if (manualTasks?.length) return manualTasks;
+    if (row.goal_text) {
+      return [{ title: row.goal_text, rewardDisplay: formatMoney(row.payout_usd) }];
+    }
+    return [{ title: "Review the live offer requirements on the provider before starting.", rewardDisplay: formatMoney(row.payout_usd) }];
+  }
+
+  const modalRoutesByGameKey = enrichedAllOfferRows.reduce<Record<string, RailPreviewRoute[]>>((acc, row) => {
+    const key = gameKeyFromParts(row.game_slug, row.game_name);
+    if (!key) return acc;
+    const tasks = tasksForOffer(row);
+    acc[key] = acc[key] ?? [];
+    acc[key].push({
+      offerId: row.id,
+      href: buildGoHref(row, "homepage_modal_platform_choice"),
+      providerName: row.provider_name,
+      platformName: row.platform_name,
+      payout: formatMoney(row.payout_usd),
+      payoutValue: row.payout_usd,
+      taskCount: tasks.length,
+      tasks,
+    });
+    acc[key].sort((a, b) => (b.payoutValue ?? 0) - (a.payoutValue ?? 0));
+    return acc;
+  }, {});
+
+  const guideHrefByGameKey = enrichedAllOfferRows.reduce<Record<string, string>>((acc, row) => {
+    const key = gameKeyFromParts(row.game_slug, row.game_name);
+    const guideHref = row.game_id ? guideHrefByGameId.get(row.game_id) : null;
+    if (key && guideHref && !acc[key]) acc[key] = guideHref;
+    return acc;
+  }, {});
+  featuredGames.forEach((game) => {
+    const guideHref = game.id ? guideHrefByGameId.get(game.id) : null;
+    if (guideHref && !guideHrefByGameKey[game.slug]) guideHrefByGameKey[game.slug] = guideHref;
+  });
+
   const normalizeGuides = (rows: RawGuideRow[] | null | undefined): GuideRow[] =>
     (rows ?? []).map((row) => ({
       ...row,
@@ -394,6 +505,8 @@ async function getHomepageData(): Promise<HomepageData> {
   return {
     featuredGames,
     highestPayingOffers,
+    modalRoutesByGameKey,
+    guideHrefByGameKey,
     popularGuides: normalizeGuides((popularGuidesResult.data ?? []) as RawGuideRow[]),
     stats: {
       liveOfferCount: offerRows.length,
@@ -404,7 +517,7 @@ async function getHomepageData(): Promise<HomepageData> {
 }
 
 export default async function HomePage() {
-  const { featuredGames, highestPayingOffers, popularGuides, stats } =
+  const { featuredGames, highestPayingOffers, modalRoutesByGameKey, guideHrefByGameKey, popularGuides, stats } =
     await getHomepageData();
   const compactOfferRail: FeaturedOfferRailItem[] = highestPayingOffers.map((offer) => ({
       id: `offer-${offer.id}`,
@@ -416,6 +529,25 @@ export default async function HomePage() {
       payout: formatMoney(offer.payout_usd) ?? null,
       secondaryValue: offer.goal_text ? offer.goal_text : null,
       imageUrl: offer.image_url,
+      preview: {
+        title: offer.title?.trim() || offer.game_name || "Offer",
+        description: `Compare available routes for ${offer.game_name ?? offer.title ?? "this offer"} before choosing where to start.`,
+        imageUrl: offer.image_url,
+        gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
+        guideHref: guideHrefByGameKey[gameKeyFromParts(offer.game_slug, offer.game_name)] ?? null,
+        routes: modalRoutesByGameKey[gameKeyFromParts(offer.game_slug, offer.game_name)] ?? [
+          {
+            offerId: offer.id,
+            href: buildGoHref(offer, "homepage_modal_single_route"),
+            providerName: offer.provider_name,
+            platformName: offer.platform_name,
+            payout: formatMoney(offer.payout_usd),
+            payoutValue: offer.payout_usd,
+            taskCount: offer.goal_text ? 1 : 0,
+            tasks: offer.goal_text ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.payout_usd) }] : [],
+          },
+        ],
+      },
     }));
   const featuredGameRail: FeaturedOfferRailItem[] = featuredGames.map((game) => ({
     id: `game-${game.slug}`,
@@ -424,6 +556,14 @@ export default async function HomePage() {
     badge: "Game page",
     provider: game.provider ?? "Game Page",
     imageUrl: game.thumbnail,
+    preview: {
+      title: game.name,
+      description: `Preview available ${game.name} routes, milestones, and payout options before opening the full comparison page.`,
+      imageUrl: game.thumbnail,
+      gameHref: `/games/${game.slug}`,
+      guideHref: guideHrefByGameKey[game.slug] ?? null,
+      routes: modalRoutesByGameKey[game.slug] ?? [],
+    },
   }));
 
   return (

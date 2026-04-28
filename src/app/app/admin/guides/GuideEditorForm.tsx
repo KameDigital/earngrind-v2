@@ -571,6 +571,7 @@ export default function GuideEditorForm({
                         <label className={labelClass}>Status</label>
                         <select value={status} onChange={(e) => setStatus(e.target.value)} className={inputClass}>
                             <option value="draft">Draft</option>
+                            <option value="needs_review">Needs Review</option>
                             <option value="published">Published</option>
                         </select>
                     </div>

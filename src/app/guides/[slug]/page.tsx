@@ -198,6 +198,13 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             .prose-guide blockquote{border-left:3px solid #bef264;padding-left:1rem;color:#6b7280;font-style:italic;margin:1em 0}
                             .prose-guide hr{border:0;border-top:1px solid #e5e7eb;margin:1.5em 0}
                             .prose-guide a{color:#65a30d;text-decoration:underline}
+                            .prose-guide table{width:100%;border-collapse:collapse;margin:1rem 0;overflow:hidden;border:1px solid #e5e7eb;border-radius:.75rem}
+                            .prose-guide th,.prose-guide td{border:1px solid #e5e7eb;padding:.6rem;text-align:left;vertical-align:top}
+                            .prose-guide th{background:#f9fafb;color:#111827;font-weight:800}
+                            .prose-guide img{max-width:100%;height:auto;border-radius:.75rem;margin:1.25rem 0}
+                            .prose-guide .guide-summary-box{margin:1rem 0;border:1px solid #d9f99d;border-radius:1rem;background:#f7fee7;padding:1rem}
+                            .prose-guide .guide-summary-box ul{margin:0;padding-left:1.25rem}
+                            .prose-guide .guide-summary-box li:last-child{margin-bottom:0}
                         `}</style>
 
                         {layoutStyle === "steps" ? (

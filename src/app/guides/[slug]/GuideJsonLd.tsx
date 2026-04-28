@@ -1,6 +1,3 @@
-// Server component — renders JSON-LD HowTo + BreadcrumbList schema for a guide page.
-// No client JS needed; injected as a <script> tag in the <head>.
-
 interface GuideJsonLdProps {
     guide: {
         title: string;
@@ -20,78 +17,97 @@ interface GuideJsonLdProps {
 
 export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJsonLdProps) {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://earngrind.com";
-    const url     = `${baseUrl}/guides/${guide.slug}`;
+    const url = `${baseUrl}/guides/${guide.slug}`;
+    const description = guide.excerpt ?? `Completion guide for ${guide.title}. Verify live offer terms before starting.`;
 
-    // HowTo schema — rich result in Google for step-by-step guides
+    const article = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: guide.title,
+        description,
+        url,
+        datePublished: guide.published_at ?? guide.updated_at,
+        dateModified: guide.updated_at,
+        mainEntityOfPage: url,
+        author: { "@type": "Organization", name: "EarnGrind" },
+        publisher: { "@type": "Organization", name: "EarnGrind" },
+    };
+
     const howTo = {
-        "@context":   "https://schema.org",
-        "@type":      "HowTo",
-        "name":       guide.title,
-        "description": guide.excerpt ?? `Complete guide to ${guide.title} and earn up to $${guide.max_payout_usd?.toFixed(2) ?? "?"}.`,
-        "url":        url,
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: guide.title,
+        description,
+        url,
         ...(guide.max_payout_usd != null && {
-            "estimatedCost": {
-                "@type":    "MonetaryAmount",
-                "currency": "USD",
-                "value":    "0",
+            estimatedCost: {
+                "@type": "MonetaryAmount",
+                currency: "USD",
+                value: "0",
             },
-            "yield": `Up to $${guide.max_payout_usd.toFixed(2)} in earnings`,
+            yield: `Listed payout may be up to $${guide.max_payout_usd.toFixed(2)}, subject to live offer terms`,
         }),
         ...(guide.estimated_time && {
-            "totalTime": formatDuration(guide.estimated_time),
+            totalTime: formatDuration(guide.estimated_time),
         }),
-        "datePublished": guide.published_at ?? guide.updated_at,
-        "dateModified":  guide.updated_at,
-        "step": steps.length > 0
-            ? steps.map((s, i) => ({
-                "@type":    "HowToStep",
-                "position": i + 1,
-                "name":     s.heading,
-                "text":     s.body.replace(/<[^>]+>/g, "").slice(0, 300),
+        datePublished: guide.published_at ?? guide.updated_at,
+        dateModified: guide.updated_at,
+        step: steps.length > 0
+            ? steps.map((section, index) => ({
+                "@type": "HowToStep",
+                position: index + 1,
+                name: section.heading,
+                text: section.body.replace(/<[^>]+>/g, "").slice(0, 300),
             }))
-            : guide.tips.map((tip, i) => ({
-                "@type":    "HowToStep",
-                "position": i + 1,
-                "name":     `Tip ${i + 1}`,
-                "text":     tip,
+            : guide.tips.map((tip, index) => ({
+                "@type": "HowToStep",
+                position: index + 1,
+                name: `Tip ${index + 1}`,
+                text: tip,
             })),
-        "tool": [
-            { "@type": "HowToTool", "name": `${gameName} (mobile game)` },
-        ],
+        tool: [{ "@type": "HowToTool", name: `${gameName} guide` }],
     };
 
-    // BreadcrumbList — improves SERP display
     const breadcrumb = {
         "@context": "https://schema.org",
-        "@type":    "BreadcrumbList",
-        "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home",    "item": baseUrl },
-            { "@type": "ListItem", "position": 2, "name": "Guides",  "item": `${baseUrl}/guides` },
-            { "@type": "ListItem", "position": 3, "name": gameName,  "item": `${baseUrl}/offers/${gameSlug}` },
-            { "@type": "ListItem", "position": 4, "name": guide.title },
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: baseUrl },
+            { "@type": "ListItem", position: 2, name: "Guides", item: `${baseUrl}/guides` },
+            { "@type": "ListItem", position: 3, name: gameName, item: `${baseUrl}/games/${gameSlug}` },
+            { "@type": "ListItem", position: 4, name: guide.title },
         ],
     };
 
-    // FAQPage for tips — can unlock FAQ rich results
-    const faq = guide.tips.length > 0
+    const faqItems = steps
+        .filter((section) => /faq/i.test(section.heading))
+        .flatMap((section) =>
+            Array.from(section.body.matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>\s*<p\b[^>]*>([\s\S]*?)<\/p>/gi)).map((match) => ({
+                question: (match[1] ?? "").replace(/<[^>]+>/g, "").trim(),
+                answer: (match[2] ?? "").replace(/<[^>]+>/g, "").trim(),
+            })),
+        )
+        .filter((item) => item.question && item.answer);
+
+    const faq = faqItems.length > 0
         ? {
             "@context": "https://schema.org",
-            "@type":    "FAQPage",
-            "mainEntity": guide.tips.map(tip => ({
-                "@type":          "Question",
-                "name":           tip.length > 80 ? tip.slice(0, 80) + "…" : tip,
-                "acceptedAnswer": { "@type": "Answer", "text": tip },
+            "@type": "FAQPage",
+            mainEntity: faqItems.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: { "@type": "Answer", text: item.answer },
             })),
         }
         : null;
 
-    const schemas = [howTo, breadcrumb, ...(faq ? [faq] : [])];
+    const schemas = [article, howTo, breadcrumb, ...(faq ? [faq] : [])];
 
     return (
         <>
-            {schemas.map((schema, i) => (
+            {schemas.map((schema, index) => (
                 <script
-                    key={i}
+                    key={index}
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
                 />
@@ -100,12 +116,11 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
     );
 }
 
-// Parse "7-10 days", "3 weeks", "2 hours" → ISO 8601 Duration
 function formatDuration(time: string): string {
-    const t = time.toLowerCase();
-    if (t.includes("hour"))  return `PT${t.match(/\d+/)?.[0] ?? 1}H`;
-    if (t.includes("day"))   return `P${t.match(/\d+/)?.[0] ?? 7}D`;
-    if (t.includes("week"))  return `P${(parseInt(t.match(/\d+/)?.[0] ?? "1")) * 7}D`;
-    if (t.includes("month")) return `P${(parseInt(t.match(/\d+/)?.[0] ?? "1")) * 30}D`;
-    return "P7D"; // fallback
+    const normalized = time.toLowerCase();
+    if (normalized.includes("hour")) return `PT${normalized.match(/\d+/)?.[0] ?? 1}H`;
+    if (normalized.includes("day")) return `P${normalized.match(/\d+/)?.[0] ?? 7}D`;
+    if (normalized.includes("week")) return `P${(parseInt(normalized.match(/\d+/)?.[0] ?? "1")) * 7}D`;
+    if (normalized.includes("month")) return `P${(parseInt(normalized.match(/\d+/)?.[0] ?? "1")) * 30}D`;
+    return "P7D";
 }

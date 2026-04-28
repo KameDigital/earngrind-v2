@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import GamePreviewModal, { type RailPreviewData } from "@/components/home/GamePreviewModal";
 
 export interface FeaturedOfferRailItem {
   id: string;
@@ -14,6 +15,7 @@ export interface FeaturedOfferRailItem {
   payout?: string | null;
   secondaryValue?: string | null;
   imageUrl?: string | null;
+  preview?: RailPreviewData | null;
 }
 
 function OfferImage({
@@ -44,6 +46,66 @@ function OfferImage({
   );
 }
 
+function RailCardContent({ item }: { item: FeaturedOfferRailItem }) {
+  return (
+    <>
+      <div className="relative aspect-[1.1/1] overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)]">
+        <OfferImage
+          src={item.imageUrl}
+          alt={item.title}
+          fallback={item.title.slice(0, 2)}
+        />
+        {item.badge ? (
+          <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-[rgba(15,23,15,0.78)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--brand-lime)] backdrop-blur-sm">
+            {item.badge}
+          </div>
+        ) : null}
+      </div>
+
+      <div className="flex flex-1 flex-col gap-2 px-3.5 py-3.5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            {item.provider || item.platform ? (
+              <div className="mb-1 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
+                {[item.provider, item.platform].filter(Boolean).join(" • ")}
+              </div>
+            ) : null}
+            <h4 className="truncate text-sm font-extrabold leading-tight text-[var(--brand-ink)] transition-colors group-hover:text-[color:hsl(84,93%,32%)]">
+              {item.title}
+            </h4>
+          </div>
+          <svg
+            className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--brand-ink)] transition-transform duration-200 group-hover:translate-x-0.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </div>
+
+        <div className="mt-auto">
+          {item.secondaryValue ? (
+            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
+              {item.secondaryValue}
+            </div>
+          ) : null}
+          {item.payout ? (
+            <div className="text-lg font-extrabold text-[color:hsl(84,93%,30%)]">
+              {item.payout}
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default function FeaturedOfferRail({
   items,
   title = "Top Offers",
@@ -54,6 +116,7 @@ export default function FeaturedOfferRail({
   description?: string;
 }) {
   const railRef = useRef<HTMLDivElement | null>(null);
+  const [activePreview, setActivePreview] = useState<RailPreviewData | null>(null);
 
   if (items.length === 0) return null;
 
@@ -67,6 +130,8 @@ export default function FeaturedOfferRail({
       behavior: "smooth",
     });
   }
+
+  const cardClassName = "group flex w-[172px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white text-left shadow-[var(--shadow-card)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brand-lime)]/40 hover:shadow-[0_16px_36px_-20px_rgba(132,204,22,0.35)] sm:w-[196px] lg:w-[212px]";
 
   return (
     <div className="space-y-4">
@@ -88,18 +153,8 @@ export default function FeaturedOfferRail({
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-default)] bg-white text-[var(--brand-ink)] transition-colors hover:border-[var(--brand-lime)]/45 hover:bg-[var(--surface-muted)]"
             aria-label={`Scroll ${title} left`}
           >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M15 19l-7-7 7-7"
-              />
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button
@@ -108,91 +163,30 @@ export default function FeaturedOfferRail({
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-default)] bg-white text-[var(--brand-ink)] transition-colors hover:border-[var(--brand-lime)]/45 hover:bg-[var(--surface-muted)]"
             aria-label={`Scroll ${title} right`}
           >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M9 5l7 7-7 7"
-              />
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
       </div>
 
-      <div
-        ref={railRef}
-        className="-mx-4 overflow-x-auto px-4 pb-2 hide-scrollbar scroll-smooth sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
-      >
+      <div ref={railRef} className="-mx-4 overflow-x-auto px-4 pb-2 hide-scrollbar scroll-smooth sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div className="flex snap-x snap-mandatory gap-4">
-          {items.map((item) => (
-            <Link
-              key={item.id}
-              href={item.href}
-              className="group flex w-[172px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brand-lime)]/40 hover:shadow-[0_16px_36px_-20px_rgba(132,204,22,0.35)] sm:w-[196px] lg:w-[212px]"
-            >
-              <div className="relative aspect-[1.1/1] overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)]">
-                <OfferImage
-                  src={item.imageUrl}
-                  alt={item.title}
-                  fallback={item.title.slice(0, 2)}
-                />
-                {item.badge ? (
-                  <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-[rgba(15,23,15,0.78)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--brand-lime)] backdrop-blur-sm">
-                    {item.badge}
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="flex flex-1 flex-col gap-2 px-3.5 py-3.5">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    {item.provider || item.platform ? (
-                      <div className="mb-1 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
-                        {[item.provider, item.platform].filter(Boolean).join(" • ")}
-                      </div>
-                    ) : null}
-                    <h4 className="truncate text-sm font-extrabold leading-tight text-[var(--brand-ink)] transition-colors group-hover:text-[color:hsl(84,93%,32%)]">
-                      {item.title}
-                    </h4>
-                  </div>
-                  <svg
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--brand-ink)] transition-transform duration-200 group-hover:translate-x-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </div>
-
-                <div className="mt-auto">
-                  {item.secondaryValue ? (
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--text-tertiary)] line-through">
-                      {item.secondaryValue}
-                    </div>
-                  ) : null}
-                  {item.payout ? (
-                    <div className="text-lg font-extrabold text-[color:hsl(84,93%,30%)]">
-                      {item.payout}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            </Link>
-          ))}
+          {items.map((item) =>
+            item.preview ? (
+              <button key={item.id} type="button" onClick={() => setActivePreview(item.preview ?? null)} className={cardClassName}>
+                <RailCardContent item={item} />
+              </button>
+            ) : (
+              <Link key={item.id} href={item.href} className={cardClassName}>
+                <RailCardContent item={item} />
+              </Link>
+            ),
+          )}
         </div>
       </div>
+
+      {activePreview ? <GamePreviewModal preview={activePreview} onClose={() => setActivePreview(null)} /> : null}
     </div>
   );
 }

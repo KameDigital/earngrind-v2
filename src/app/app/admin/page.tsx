@@ -145,7 +145,7 @@ export default async function AdminHomePage() {
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                         <QuickLink href="/app/admin/site-offers/new" label="New manual offer" emphasis />
                         <QuickLink href="/app/admin/games/new" label="New game" />
-                        <QuickLink href="/app/admin/guides/new" label="New guide" />
+                        <QuickLink href="/app/admin/guides/batch-generate" label="Generate guides" />
                         <QuickLink href="/app/admin/blog-posts/new" label="New post" />
                     </div>
                 </div>

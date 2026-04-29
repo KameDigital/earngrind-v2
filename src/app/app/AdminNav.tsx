@@ -27,7 +27,7 @@ export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
 
     return (
         <div className="min-w-0">
-            <nav className="hidden sm:flex items-center gap-1 min-w-0">
+            <nav className="hidden min-w-0 items-center gap-1 overflow-x-auto whitespace-nowrap sm:flex">
                 <NavLink href="/app/dashboard" active={pathname === "/app/dashboard"}>
                     Dashboard
                 </NavLink>

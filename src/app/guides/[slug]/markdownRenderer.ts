@@ -196,33 +196,39 @@ export interface Section {
     id: string;
     heading: string;
     body: string;
+    level?: number;
 }
 
-export function extractPreamble(content: string): string {
+export function extractPreamble(content: string, headingLevels: Array<2 | 3> = [2]): string {
     const html = renderMarkdown(content);
-    const firstH2 = html.search(/<h2\b[^>]*>/i);
-    if (firstH2 === -1) return html.trim();
-    return html.slice(0, firstH2).trim();
+    const headingPattern = headingLevels.includes(3) ? /<h[23]\b[^>]*>/i : /<h2\b[^>]*>/i;
+    const firstHeading = html.search(headingPattern);
+    if (firstHeading === -1) return html.trim();
+    return html.slice(0, firstHeading).trim();
 }
 
-export function extractSections(content: string): Section[] {
+export function extractSections(content: string, headingLevels: Array<2 | 3> = [2]): Section[] {
     const html = renderMarkdown(content);
     if (!html) return [];
 
     const sections: Section[] = [];
-    const regex = /<h2\b([^>]*)>([\s\S]*?)<\/h2>([\s\S]*?)(?=<h2\b[^>]*>|$)/gi;
+    const regex = headingLevels.includes(3)
+        ? /<h([23])\b([^>]*)>([\s\S]*?)<\/h\1>([\s\S]*?)(?=<h[23]\b[^>]*>|$)/gi
+        : /<h(2)\b([^>]*)>([\s\S]*?)<\/h\1>([\s\S]*?)(?=<h2\b[^>]*>|$)/gi;
     let match: RegExpExecArray | null;
 
     while ((match = regex.exec(html)) !== null) {
-        const attrs = match[1] ?? "";
-        const headingHtml = match[2] ?? "";
-        const body = (match[3] ?? "").trim();
+        const level = Number(match[1] ?? 2);
+        const attrs = match[2] ?? "";
+        const headingHtml = match[3] ?? "";
+        const body = (match[4] ?? "").trim();
         const heading = headingHtml.replace(/<[^>]+>/g, "").trim();
         const idMatch = attrs.match(/\sid="([^"]+)"/i);
         sections.push({
             id: idMatch?.[1] ?? slugifyHeading(heading),
             heading,
             body,
+            level,
         });
     }
 

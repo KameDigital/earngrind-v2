@@ -19,7 +19,7 @@ interface ProLayoutProps {
 }
 
 export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = true }: ProLayoutProps) {
-    const sections       = extractSections(guide.body_md ?? "");
+    const sections       = extractSections(guide.body_md ?? "", [2, 3]);
     const tips           = guide.tips ?? [];
     const checklist      = guide.checklist_items ?? [];
     const takeaways      = (guide.key_takeaways ?? "")
@@ -27,7 +27,7 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
         .map(l => l.replace(/^[-•*]\s*/, "").trim())
         .filter(Boolean);
 
-    const preamble = extractPreamble(guide.body_md ?? "");
+    const preamble = extractPreamble(guide.body_md ?? "", [2, 3]);
 
     return (
         <div className="space-y-5">
@@ -99,21 +99,29 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
 
             {/* Step sections */}
             <div id="steps" className="space-y-4">
-                {sections.map((section, i) => (
-                    <div key={section.id} id={section.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                        <div className="flex items-center gap-4 px-5 py-3 border-b border-gray-100">
-                            <div className="flex-shrink-0 w-7 h-7 rounded-full bg-lime-400 text-gray-900 flex items-center justify-center text-xs font-extrabold">
-                                {i + 1}
+                {sections.length > 0 ? (
+                    sections.map((section, i) => (
+                        <div key={`${section.id}-${i}`} id={section.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                            <div className={`flex items-center gap-4 px-5 py-3 border-b border-gray-100 ${section.level === 3 ? "bg-gray-50" : ""}`}>
+                                <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-extrabold ${
+                                    section.level === 3 ? "bg-gray-900 text-white" : "bg-lime-400 text-gray-900"
+                                }`}>
+                                    {i + 1}
+                                </div>
+                                <h2 className="font-extrabold text-gray-900 leading-snug">{section.heading}</h2>
                             </div>
-                            <h2 className="font-extrabold text-gray-900 leading-snug">{section.heading}</h2>
+                            {section.body && (
+                                <div className="px-5 py-4">
+                                    <div className="prose prose-slate max-w-none prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100" dangerouslySetInnerHTML={{ __html: section.body }} />
+                                </div>
+                            )}
                         </div>
-                        {section.body && (
-                            <div className="px-5 py-4">
-                                <div className="prose prose-slate max-w-none prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100" dangerouslySetInnerHTML={{ __html: section.body }} />
-                            </div>
-                        )}
+                    ))
+                ) : (
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                        <div className="prose prose-slate max-w-none prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100" dangerouslySetInnerHTML={{ __html: renderMarkdown(guide.body_md ?? "") }} />
                     </div>
-                ))}
+                )}
             </div>
 
             {/* Premium Tips */}

@@ -27,7 +27,9 @@ function OfferImage({
   alt: string;
   fallback: string;
 }) {
-  if (!src) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  if (!src || imageFailed) {
     return (
       <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(190,242,100,0.18),_rgba(17,24,39,0.95))] text-lg font-extrabold uppercase tracking-[0.18em] text-white/80">
         {fallback}
@@ -42,6 +44,7 @@ function OfferImage({
       fill
       className="object-cover"
       sizes="(max-width: 640px) 160px, 220px"
+      onError={() => setImageFailed(true)}
     />
   );
 }

@@ -117,7 +117,7 @@ function markdownToHtml(md: string): string {
             continue;
         }
 
-        const hMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
+        const hMatch = trimmed.match(/^(#{1,6})\s*(.+)$/);
         if (hMatch) {
             if (inList) { out.push("</ul>"); inList = false; }
             if (inOList) { out.push("</ol>"); inOList = false; }

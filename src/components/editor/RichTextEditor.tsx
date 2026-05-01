@@ -10,11 +10,31 @@ import { Table } from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableHeader from "@tiptap/extension-table-header";
 import TableCell from "@tiptap/extension-table-cell";
+import {
+    Bold,
+    Eraser,
+    Heading2,
+    Heading3,
+    ImageIcon,
+    Italic,
+    LinkIcon,
+    List,
+    ListOrdered,
+    Pilcrow,
+    Quote,
+    Redo2,
+    Rows3,
+    TableIcon,
+    Trash2,
+    Undo2,
+} from "lucide-react";
 
 const toolbarButtonClass =
-    "inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 hover:border-gray-300 [&_*]:text-inherit";
+    "inline-flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-md border border-transparent bg-white px-2.5 text-xs font-semibold text-gray-700 transition hover:border-gray-200 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-35 [&_*]:text-inherit";
 const activeToolbarButtonClass =
     "border-gray-900 bg-gray-900 text-white hover:bg-gray-800 hover:border-gray-800";
+const toolbarGroupClass = "flex flex-wrap items-center gap-1 rounded-lg border border-gray-200 bg-white p-1 shadow-sm";
+const iconClass = "h-4 w-4";
 
 const SECTION_TEMPLATES = [
     {
@@ -49,11 +69,13 @@ const SECTION_TEMPLATES = [
 
 function ToolbarButton({
     active = false,
+    disabled = false,
     onClick,
     children,
     title,
 }: {
     active?: boolean;
+    disabled?: boolean;
     onClick: () => void;
     children: React.ReactNode;
     title?: string;
@@ -63,11 +85,27 @@ function ToolbarButton({
             type="button"
             onClick={onClick}
             title={title}
+            disabled={disabled}
             className={`${toolbarButtonClass} ${active ? activeToolbarButtonClass : ""}`}
         >
             {children}
         </button>
     );
+}
+
+function normalizeLinkUrl(value: string) {
+    const trimmed = value.trim();
+    if (!trimmed) return "";
+    if (trimmed.startsWith("/") || trimmed.startsWith("#") || /^[a-z][a-z0-9+.-]*:/i.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+}
+
+function cleanPastedHtml(html: string) {
+    return html
+        .replace(/<!--[\s\S]*?-->/g, "")
+        .replace(/\sclass="Mso[^"]*"/gi, "")
+        .replace(/\sstyle="[^"]*mso-[^"]*"/gi, "")
+        .replace(/<\/?o:p[^>]*>/gi, "");
 }
 
 export default function RichTextEditor({
@@ -114,8 +152,9 @@ export default function RichTextEditor({
         editorProps: {
             attributes: {
                 class:
-                    "prose prose-slate max-w-none min-h-[320px] px-4 py-4 focus:outline-none prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-th:bg-gray-100 prose-td:border",
+                    "prose prose-slate max-w-none min-h-[420px] px-5 py-5 focus:outline-none prose-headings:scroll-mt-24 prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-th:bg-gray-100 prose-td:border",
             },
+            transformPastedHTML: cleanPastedHtml,
         },
         onUpdate({ editor: nextEditor }) {
             onChange(nextEditor.getHTML());
@@ -137,11 +176,12 @@ export default function RichTextEditor({
         const previousUrl = editor.getAttributes("link").href || "";
         const url = window.prompt("Enter link URL", previousUrl);
         if (url === null) return;
-        if (url === "") {
+        const normalizedUrl = normalizeLinkUrl(url);
+        if (normalizedUrl === "") {
             editor.chain().focus().unsetLink().run();
             return;
         }
-        editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+        editor.chain().focus().extendMarkRange("link").setLink({ href: normalizedUrl }).run();
     }
 
     function insertImage() {
@@ -152,82 +192,155 @@ export default function RichTextEditor({
         editor.chain().focus().setImage({ src, alt, title: alt || undefined }).run();
     }
 
+    function changeBlock(value: string) {
+        if (!editor) return;
+        if (value === "paragraph") editor.chain().focus().setParagraph().run();
+        if (value === "heading-2") editor.chain().focus().toggleHeading({ level: 2 }).run();
+        if (value === "heading-3") editor.chain().focus().toggleHeading({ level: 3 }).run();
+        if (value === "blockquote") editor.chain().focus().toggleBlockquote().run();
+    }
+
+    const currentBlock = editor.isActive("heading", { level: 2 })
+        ? "heading-2"
+        : editor.isActive("heading", { level: 3 })
+            ? "heading-3"
+            : editor.isActive("blockquote")
+                ? "blockquote"
+                : "paragraph";
+
     return (
-        <div className="sticky top-4 rounded-xl border border-gray-200 bg-white shadow-sm">
-            <div className="sticky top-0 z-20 border-b border-gray-200 bg-white/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/85">
-                <div className="flex flex-wrap gap-2">
-                    <ToolbarButton
-                        active={editor.isActive("heading", { level: 2 })}
-                        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-                        title="Heading 2"
-                    >
-                        <span className="text-inherit">H2</span>
-                    </ToolbarButton>
-                    <ToolbarButton
-                        active={editor.isActive("heading", { level: 3 })}
-                        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-                        title="Heading 3"
-                    >
-                        <span className="text-inherit">H3</span>
-                    </ToolbarButton>
-                    <ToolbarButton
-                        active={editor.isActive("paragraph")}
-                        onClick={() => editor.chain().focus().setParagraph().run()}
-                        title="Paragraph"
-                    >
-                        <span className="text-inherit">Paragraph</span>
-                    </ToolbarButton>
-                    <ToolbarButton
-                        active={editor.isActive("bold")}
-                        onClick={() => editor.chain().focus().toggleBold().run()}
-                        title="Bold"
-                    >
-                        <span className="font-extrabold text-inherit">B</span>
-                    </ToolbarButton>
-                    <ToolbarButton
-                        active={editor.isActive("italic")}
-                        onClick={() => editor.chain().focus().toggleItalic().run()}
-                        title="Italic"
-                    >
-                        <span className="italic text-inherit">I</span>
-                    </ToolbarButton>
-                    <ToolbarButton
-                        active={editor.isActive("bulletList")}
-                        onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    >
-                        <span className="text-inherit">Bullet List</span>
-                    </ToolbarButton>
-                    <ToolbarButton
-                        active={editor.isActive("orderedList")}
-                        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                    >
-                        <span className="text-inherit">Numbered List</span>
-                    </ToolbarButton>
-                    <ToolbarButton active={editor.isActive("link")} onClick={setLink}>
-                        <span className="text-inherit">Link</span>
-                    </ToolbarButton>
-                    <ToolbarButton onClick={insertImage}>
-                        <span className="text-inherit">Image</span>
-                    </ToolbarButton>
-                    <ToolbarButton
-                        active={editor.isActive("table")}
-                        onClick={() =>
-                            editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
-                        }
-                    >
-                        <span className="text-inherit">Table</span>
-                    </ToolbarButton>
-                    <ToolbarButton onClick={() => editor.chain().focus().undo().run()}>
-                        <span className="text-inherit">Undo</span>
-                    </ToolbarButton>
-                    <ToolbarButton onClick={() => editor.chain().focus().redo().run()}>
-                        <span className="text-inherit">Redo</span>
-                    </ToolbarButton>
-                    <ToolbarButton onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()}>
-                        <span className="text-inherit">Clear</span>
-                    </ToolbarButton>
+        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div className="sticky top-0 z-20 space-y-2 border-b border-gray-200 bg-white/95 px-3 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+                <div className="flex flex-wrap items-center gap-2">
+                    <div className={toolbarGroupClass}>
+                        <select
+                            aria-label="Text style"
+                            value={currentBlock}
+                            onChange={(event) => changeBlock(event.target.value)}
+                            className="h-9 rounded-md border border-gray-200 bg-white px-2 text-xs font-semibold text-gray-700 outline-none hover:border-gray-300"
+                        >
+                            <option value="paragraph">Normal text</option>
+                            <option value="heading-2">Heading 2</option>
+                            <option value="heading-3">Heading 3</option>
+                            <option value="blockquote">Quote</option>
+                        </select>
+                        <ToolbarButton
+                            active={editor.isActive("heading", { level: 2 })}
+                            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                            title="Heading 2"
+                        >
+                            <Heading2 className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            active={editor.isActive("heading", { level: 3 })}
+                            onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                            title="Heading 3"
+                        >
+                            <Heading3 className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            active={editor.isActive("paragraph")}
+                            onClick={() => editor.chain().focus().setParagraph().run()}
+                            title="Paragraph"
+                        >
+                            <Pilcrow className={iconClass} />
+                        </ToolbarButton>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
+                        <ToolbarButton
+                            active={editor.isActive("bold")}
+                            onClick={() => editor.chain().focus().toggleBold().run()}
+                            disabled={!editor.can().chain().focus().toggleBold().run()}
+                            title="Bold"
+                        >
+                            <Bold className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            active={editor.isActive("italic")}
+                            onClick={() => editor.chain().focus().toggleItalic().run()}
+                            disabled={!editor.can().chain().focus().toggleItalic().run()}
+                            title="Italic"
+                        >
+                            <Italic className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            active={editor.isActive("blockquote")}
+                            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                            title="Quote"
+                        >
+                            <Quote className={iconClass} />
+                        </ToolbarButton>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
+                        <ToolbarButton
+                            active={editor.isActive("bulletList")}
+                            onClick={() => editor.chain().focus().toggleBulletList().run()}
+                            title="Bullet list"
+                        >
+                            <List className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            active={editor.isActive("orderedList")}
+                            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                            title="Numbered list"
+                        >
+                            <ListOrdered className={iconClass} />
+                        </ToolbarButton>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
+                        <ToolbarButton active={editor.isActive("link")} onClick={setLink} title="Insert link">
+                            <LinkIcon className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton onClick={() => editor.chain().focus().unsetLink().run()} disabled={!editor.isActive("link")} title="Remove link">
+                            <Eraser className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton onClick={insertImage} title="Insert image">
+                            <ImageIcon className={iconClass} />
+                        </ToolbarButton>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
+                        <ToolbarButton
+                            active={editor.isActive("table")}
+                            onClick={() =>
+                                editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()
+                            }
+                            title="Insert table"
+                        >
+                            <TableIcon className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            onClick={() => editor.chain().focus().addRowAfter().run()}
+                            disabled={!editor.isActive("table")}
+                            title="Add row"
+                        >
+                            <Rows3 className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            onClick={() => editor.chain().focus().deleteTable().run()}
+                            disabled={!editor.isActive("table")}
+                            title="Delete table"
+                        >
+                            <Trash2 className={iconClass} />
+                        </ToolbarButton>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
+                        <ToolbarButton onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()} title="Undo">
+                            <Undo2 className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()} title="Redo">
+                            <Redo2 className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton onClick={() => editor.chain().focus().unsetAllMarks().clearNodes().run()} title="Clear formatting">
+                            <Eraser className={iconClass} />
+                        </ToolbarButton>
+                    </div>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 border-t border-gray-100 pt-2">
                     {SECTION_TEMPLATES.map((template) => (
                         <button
                             key={template.label}

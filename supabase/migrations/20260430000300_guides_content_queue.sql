@@ -6,5 +6,5 @@ alter table public.guides
   add column if not exists editor_notes text;
 
 update public.guides
-set content_status = coalesce(content_status, status, 'draft')
+set content_status = coalesce(content_status, status::text, 'draft')
 where content_status is null;

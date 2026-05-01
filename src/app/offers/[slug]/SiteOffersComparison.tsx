@@ -153,7 +153,7 @@ function OfferCard({
               : "border border-[var(--border-default)] bg-[var(--surface-muted)] text-[var(--brand-ink)] hover:border-lime-400"
           }`}
         >
-          {isBest ? "Start Best Offer" : "Start Offer"}
+          {isBest ? "Start Best Payout" : "Start Offer"}
         </TrackedOutboundLink>
         <button
           type="button"
@@ -176,7 +176,7 @@ function OfferCard({
       </div>
 
       <div className="mt-3 text-[11px] text-[var(--text-tertiary)]">
-        Start Offer opens the tracked payout route for this site.
+        Payouts can change by device, country, and provider rules. Some outbound links may be affiliate links.
       </div>
 
       {expanded && milestoneCount > 0 ? (
@@ -217,8 +217,6 @@ export default function SiteOffersComparison({ rows }: { rows: SiteOffer[] }) {
   const [providerVisibleCounts, setProviderVisibleCounts] = useState<Record<string, number>>({});
   const [expandedOffers, setExpandedOffers] = useState<Record<string, boolean>>({});
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
-
-  if (rows.length === 0) return null;
 
   const providerCounts = rows.reduce((acc, row) => {
     const providerName = row.provider?.name ?? "Unknown Provider";
@@ -304,6 +302,8 @@ export default function SiteOffersComparison({ rows }: { rows: SiteOffer[] }) {
       [id]: !current[id],
     }));
   }
+
+  if (rows.length === 0) return null;
 
   return (
     <section className="space-y-4">

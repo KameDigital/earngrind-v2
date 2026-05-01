@@ -30,6 +30,7 @@ export interface Offer {
     title: string;
     image_url: string | null;
     payout_usd: number;
+    total_payout_usd: number;
     payout_type: "online_cashback" | "gift_card" | "points" | "crypto" | null;
     devices: ("ios" | "android" | "pc" | "web")[];
     countries: string[];
@@ -363,13 +364,13 @@ function OfferRow({
                             )}
                             {platformName}
                         </span>
-                        <span className="text-[var(--border-strong)]">?</span>
+                        <span className="text-[var(--border-strong)]">/</span>
                         <span>{providerName}</span>
-                        <span className="text-[var(--border-strong)]">?</span>
+                        <span className="text-[var(--border-strong)]">/</span>
                         <span className="flex items-center gap-0.5">
                             {offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}
                         </span>
-                        {offer.heat_score > 50 && <span className="text-orange-500 font-semibold">??</span>}
+                        {offer.heat_score > 50 && <span className="text-orange-500 font-semibold">Hot</span>}
                     </div>
                     <p className="mt-1 text-xs text-[var(--text-secondary)] line-clamp-2">{routeSummary}</p>
                 </div>
@@ -384,7 +385,7 @@ function OfferRow({
                 </div>
             </div>
 
-            <div className="flex items-center gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
+            <div className="flex flex-wrap items-center gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
                 <button
                     onClick={(e) => { e.stopPropagation(); onPin(offer); }}
                     title={isPinned ? "Remove from comparison" : "Add to comparison"}
@@ -394,14 +395,14 @@ function OfferRow({
                         : "bg-white border-[var(--border-default)] text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700 hover:bg-[var(--brand-lime)]/10"
                     }`}
                 >
-                    {isPinned ? "?" : "+"}
+                    {isPinned ? "-" : "+"}
                 </button>
 
                 {gameHref ? (
                     <Link
                         href={gameHref}
                         onClick={(e) => e.stopPropagation()}
-                        className="flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-all whitespace-nowrap"
+                        className="min-w-[7rem] flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-all whitespace-nowrap"
                     >
                         View Route
                     </Link>
@@ -424,9 +425,9 @@ function OfferRow({
                         payoutUsd={offer.payout_usd}
                         location={ctaLocation}
                         sourceContext={ctaSourceContext}
-                        className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all whitespace-nowrap shadow-sm"
+                        className="min-w-[9rem] flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all whitespace-nowrap shadow-sm"
                     >
-                        {offer.source === "manual" ? "Go to Site" : "Start Offer"}
+                        {offer.source === "manual" ? "Open Payout Site" : isBestPayout ? "Start Best Payout" : "Start Offer"}
                     </TrackedOutboundLink>
                 ) : (
                     <span className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-xl whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
@@ -436,8 +437,8 @@ function OfferRow({
             </div>
             <div className="mt-2 text-[11px] text-[var(--text-tertiary)]">
                 {gameHref
-                    ? "View Route opens the detail path. Start Offer sends you to the payout platform."
-                    : "Start Offer sends you directly to the payout platform."}
+                    ? "Check route details first. Start buttons go through EarnGrind tracking, and some links may be affiliate links."
+                    : "Start buttons go through EarnGrind tracking, and some links may be affiliate links."}
             </div>
             {extraRoutesCount > 0 && onToggleExtraRoutes ? (
                 <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-[var(--border-default)] bg-white px-3 py-2">

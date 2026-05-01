@@ -26,6 +26,29 @@ function getIpHash(req: NextRequest): string | null {
     return createHash("sha256").update(ip).digest("hex");
 }
 
+function getClientHints(req: NextRequest): Record<string, string> {
+    return Object.fromEntries(
+        [
+            "sec-ch-ua",
+            "sec-ch-ua-mobile",
+            "sec-ch-ua-platform",
+            "sec-ch-ua-platform-version",
+            "sec-ch-ua-model",
+        ]
+            .map((header) => [header, req.headers.get(header)] as const)
+            .filter(([, value]) => Boolean(value)),
+    ) as Record<string, string>;
+}
+
+function toOptionalNumber(value: unknown): number | undefined {
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    if (typeof value === "string") {
+        const parsed = Number(value);
+        if (Number.isFinite(parsed)) return parsed;
+    }
+    return undefined;
+}
+
 function buildRequestAttribution(req: NextRequest): Partial<RedirectAttribution> {
     return readRedirectAttributionFromSearchParams(req.nextUrl.searchParams);
 }
@@ -59,17 +82,32 @@ async function logOfferClick(params: {
     table: "offer_clicks" | "site_offer_clicks";
     column: "offer_id" | "site_offer_id";
     offerId: string;
+    platformId: string | null;
     req: NextRequest;
     userId: string | null;
+    attribution: Partial<RedirectAttribution>;
 }) {
-    const { supabase, table, column, offerId, req, userId } = params;
+    const { supabase, table, column, offerId, platformId, req, userId, attribution } = params;
+    const normalized = normalizeRedirectAttribution(attribution);
 
     const payload = {
         [column]: offerId,
+        platform_id: platformId,
+        offer_title: normalized.offer_title ?? null,
+        game_title: normalized.game_title ?? null,
+        platform_name: normalized.platform_name ?? null,
+        provider_name: normalized.provider_name ?? null,
+        payout_usd: normalized.payout_usd ?? null,
+        total_payout_usd: normalized.total_payout_usd ?? normalized.payout_usd ?? null,
+        click_location: normalized.click_location ?? null,
+        source_context: normalized.source_context ?? null,
+        destination_url: normalized.destination_url ?? null,
+        affiliate_mode: normalized.affiliate_mode ?? null,
         ip_hash: getIpHash(req),
         referrer: req.headers.get("referer"),
         country: req.headers.get("x-vercel-ip-country"),
         user_agent: req.headers.get("user-agent"),
+        client_hints: getClientHints(req),
         user_id: userId,
     };
 
@@ -134,37 +172,42 @@ export async function GET(
             return NextResponse.json({ error: "missing_destination" }, { status: 404 });
         }
 
+        const attribution = normalizeRedirectAttribution({
+            offer_title: requestAttribution.offer_title ?? offer.title ?? undefined,
+            game_title: requestAttribution.game_title ?? game?.name ?? undefined,
+            platform_name: requestAttribution.platform_name ?? platform?.name ?? undefined,
+            provider_name: requestAttribution.provider_name,
+            payout_usd: requestAttribution.payout_usd ?? toOptionalNumber(offer.payout_usd),
+            total_payout_usd: requestAttribution.total_payout_usd ?? toOptionalNumber(offer.payout_usd),
+            click_location: requestAttribution.click_location,
+            source_context: requestAttribution.source_context,
+            destination_url: outboundUrl,
+            affiliate_mode: getPlatformAffiliateOverride(platform)
+                ? "platform-override"
+                : platform?.affiliate_template?.includes("{destination}")
+                    ? "destination-placeholder"
+                    : platform?.affiliate_template
+                        ? "base-template"
+                        : "direct",
+        });
+
         await logOfferClick({
             supabase,
             table: "offer_clicks",
             column: "offer_id",
             offerId: offer.id,
+            platformId: platform?.id ?? null,
             req,
             userId: user?.id ?? null,
+            attribution,
         });
 
         logRedirectAttribution({
             entityType: "offer",
             offerId: offer.id,
-            platformId: platform?.id,
+        platformId: platform?.id,
             req,
-            attribution: normalizeRedirectAttribution({
-                offer_title: requestAttribution.offer_title ?? offer.title ?? undefined,
-                game_title: requestAttribution.game_title ?? game?.name ?? undefined,
-                platform_name: requestAttribution.platform_name ?? platform?.name ?? undefined,
-                provider_name: requestAttribution.provider_name,
-                payout_usd: requestAttribution.payout_usd ?? (typeof offer.payout_usd === "number" ? offer.payout_usd : undefined),
-                click_location: requestAttribution.click_location,
-                source_context: requestAttribution.source_context,
-                destination_url: outboundUrl,
-                affiliate_mode: getPlatformAffiliateOverride(platform)
-                    ? "platform-override"
-                    : platform?.affiliate_template?.includes("{destination}")
-                        ? "destination-placeholder"
-                        : platform?.affiliate_template
-                            ? "base-template"
-                            : "direct",
-            }),
+            attribution,
         });
 
         return NextResponse.redirect(outboundUrl, { status: 302 });
@@ -221,13 +264,36 @@ export async function GET(
         return NextResponse.json({ error: "missing_destination" }, { status: 404 });
     }
 
+    const attribution = normalizeRedirectAttribution({
+        offer_title: requestAttribution.offer_title ?? siteOffer.goal_text ?? undefined,
+        game_title: requestAttribution.game_title ?? game?.name ?? undefined,
+        platform_name: requestAttribution.platform_name ?? site?.name ?? undefined,
+        provider_name: requestAttribution.provider_name ?? provider?.name ?? undefined,
+        payout_usd: requestAttribution.payout_usd ?? toOptionalNumber(siteOffer.payout_usd),
+        total_payout_usd: requestAttribution.total_payout_usd ??
+            toOptionalNumber(siteOffer.total_payout_usd) ??
+            toOptionalNumber(siteOffer.payout_usd),
+        click_location: requestAttribution.click_location,
+        source_context: requestAttribution.source_context,
+        destination_url: outboundUrl,
+        affiliate_mode: getPlatformAffiliateOverride(site)
+            ? "platform-override"
+            : site?.affiliate_template?.includes("{destination}")
+                ? "destination-placeholder"
+                : site?.affiliate_template
+                    ? "base-template"
+                    : "direct",
+    });
+
     await logOfferClick({
         supabase,
         table: "site_offer_clicks",
         column: "site_offer_id",
         offerId: siteOffer.id,
+        platformId: site?.id ?? null,
         req,
         userId: user?.id ?? null,
+        attribution,
     });
 
     logRedirectAttribution({
@@ -235,27 +301,7 @@ export async function GET(
         offerId: siteOffer.id,
         platformId: site?.id,
         req,
-        attribution: normalizeRedirectAttribution({
-            offer_title: requestAttribution.offer_title ?? siteOffer.goal_text ?? undefined,
-            game_title: requestAttribution.game_title ?? game?.name ?? undefined,
-            platform_name: requestAttribution.platform_name ?? site?.name ?? undefined,
-            provider_name: requestAttribution.provider_name ?? provider?.name ?? undefined,
-            payout_usd: requestAttribution.payout_usd ?? (typeof siteOffer.total_payout_usd === "number"
-                ? siteOffer.total_payout_usd
-                : typeof siteOffer.payout_usd === "number"
-                    ? siteOffer.payout_usd
-                    : undefined),
-            click_location: requestAttribution.click_location,
-            source_context: requestAttribution.source_context,
-            destination_url: outboundUrl,
-            affiliate_mode: getPlatformAffiliateOverride(site)
-                ? "platform-override"
-                : site?.affiliate_template?.includes("{destination}")
-                    ? "destination-placeholder"
-                    : site?.affiliate_template
-                        ? "base-template"
-                        : "direct",
-        }),
+        attribution,
     });
 
     return NextResponse.redirect(outboundUrl, { status: 302 });

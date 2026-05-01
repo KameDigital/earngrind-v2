@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
+import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "../../../components/FAQSection";
 import OfferTable from "../../../components/OfferTable";
 import ProviderComparison from "../../../components/ProviderComparison";
@@ -73,9 +74,25 @@ export default async function GameGuidePage({ params }: { params: { slug: string
       answer: "Use the provider comparison table below and cross-check payout values before clicking through.",
     },
   ];
+  const schemas = [
+    buildBreadcrumbList([
+      { name: "Home", path: "/" },
+      { name: "Guides", path: "/guides" },
+      { name: "How to Earn", path: "/guides/how-to-earn" },
+      { name: data.game.name, path: `/guides/how-to-earn/${data.game.slug}` },
+    ]),
+    buildItemList(
+      rows.slice(0, 20).map((row) => ({
+        name: `${row.providerName} on ${row.platformName}`,
+        path: `/offers/${data.game.slug}`,
+        description: `${formatMoney(row.totalPayoutUsd)} total payout for ${data.game.name}.`,
+      })),
+    ),
+  ];
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+      <JsonLd data={schemas} />
       <Container className="space-y-6">
         <header className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
           <p className="section-label">Guide</p>

@@ -15,9 +15,10 @@ interface ProLayoutProps {
     };
     gameSlug: string;
     gameName: string;
+    showStaticCta?: boolean;
 }
 
-export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps) {
+export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = true }: ProLayoutProps) {
     const sections       = extractSections(guide.body_md ?? "");
     const tips           = guide.tips ?? [];
     const checklist      = guide.checklist_items ?? [];
@@ -82,7 +83,7 @@ export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps)
             )}
 
             {/* Mid-page CTA */}
-            <Link
+            {showStaticCta ? <Link
                 href={`/offers/${gameSlug}`}
                 className="flex items-center justify-between bg-lime-400 rounded-2xl px-5 py-4 hover:bg-lime-300 transition group"
             >
@@ -94,7 +95,7 @@ export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps)
                     </div>
                 </div>
                 <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
+            </Link> : null}
 
             {/* Step sections */}
             <div id="steps" className="space-y-4">
@@ -131,7 +132,7 @@ export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps)
             )}
 
             {/* Final CTA */}
-            <div className="bg-gray-900 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {showStaticCta ? <div className="bg-gray-900 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="flex-1">
                     <div className="text-xs font-extrabold uppercase tracking-widest text-lime-400 mb-1">Ready to earn?</div>
                     <div className="text-white font-bold text-lg">
@@ -148,7 +149,7 @@ export default function ProLayout({ guide, gameSlug, gameName }: ProLayoutProps)
                 >
                     View Offer →
                 </Link>
-            </div>
+            </div> : null}
         </div>
     );
 }

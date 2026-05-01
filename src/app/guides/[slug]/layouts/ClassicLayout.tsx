@@ -10,9 +10,10 @@ interface ClassicLayoutProps {
     };
     gameSlug: string;
     gameName: string;
+    showStaticCta?: boolean;
 }
 
-export default function ClassicLayout({ guide, gameSlug, gameName }: ClassicLayoutProps) {
+export default function ClassicLayout({ guide, gameSlug, gameName, showStaticCta = true }: ClassicLayoutProps) {
     const html = renderMarkdown(guide.body_md ?? "");
     const tips = guide.tips ?? [];
 
@@ -52,7 +53,7 @@ export default function ClassicLayout({ guide, gameSlug, gameName }: ClassicLayo
             )}
 
             {/* Bottom CTA */}
-            <div className="bg-gray-900 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {showStaticCta ? <div className="bg-gray-900 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="flex-1">
                     <div className="text-xs font-extrabold uppercase tracking-widest text-lime-400 mb-1">Ready?</div>
                     <div className="text-white font-bold">
@@ -66,7 +67,7 @@ export default function ClassicLayout({ guide, gameSlug, gameName }: ClassicLayo
                 >
                     View Offer →
                 </Link>
-            </div>
+            </div> : null}
 
         </div>
     );

@@ -67,7 +67,7 @@ function RailCardContent({ item }: { item: FeaturedOfferRailItem }) {
           <div className="min-w-0">
             {item.provider || item.platform ? (
               <div className="mb-1 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
-                {[item.provider, item.platform].filter(Boolean).join(" • ")}
+                {[item.provider, item.platform].filter(Boolean).join(" / ")}
               </div>
             ) : null}
             <h4 className="truncate text-sm font-extrabold leading-tight text-[var(--brand-ink)] transition-colors group-hover:text-[color:hsl(84,93%,32%)]">

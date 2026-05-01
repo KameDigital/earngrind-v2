@@ -1,34 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
+import { shapePublicOffer } from "@/lib/public-offers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-function firstNonEmpty(...values: Array<unknown>): string | null {
-    for (const value of values) {
-        if (typeof value !== "string") continue;
-        const trimmed = value.trim();
-        if (trimmed) return trimmed;
-    }
-    return null;
-}
-
-const isImageUrl = (url?: string | null) =>
-    typeof url === "string" &&
-    /\.(jpg|jpeg|png|webp)$/i.test(url);
-
-function getOfferImageUrl(row: Record<string, unknown>): string | null {
-    return firstNonEmpty(
-        row.image_url,
-        row.offer_image_url,
-        row.raw_image_url,
-    ) ?? (isImageUrl(firstNonEmpty(row.offer_url)) ? firstNonEmpty(row.offer_url) : null);
-}
-
-function getOfferRedirectUrl(row: Record<string, unknown>): string | null {
-    const id = firstNonEmpty(row.id);
-    return id ? `/go/${id}` : null;
-}
 
 function escapeLikeTerm(value: string): string {
     return value.replace(/[%_,]/g, (match) => `\\${match}`);
@@ -122,48 +97,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "internal", message: error.message }, { status: 500 });
     }
 
-    const shaped = (data ?? []).map((row) => {
-        const image_url = getOfferImageUrl(row);
-        const redirect_url = getOfferRedirectUrl(row);
-
-        return {
-            id: row.id,
-            source: row.source,
-            title: row.title,
-            image_url,
-            payout_usd: row.payout_usd,
-            payout_type: row.payout_type,
-            devices: row.devices,
-            countries: row.countries,
-            category: row.category,
-            status: row.status,
-            is_featured: row.is_featured,
-            is_ath: row.is_ath,
-            is_new: row.is_new,
-            is_hot: row.is_hot,
-            is_boosted: row.is_boosted,
-            heat_score: row.heat_score,
-            offer_expires_at: row.offer_expires_at,
-            updated_at: row.updated_at,
-            goal_text: row.goal_text,
-            provider_name: row.provider_name,
-            redirect_url,
-            game: {
-                id: row.game_id,
-                name: row.game_name,
-                slug: row.game_slug,
-                thumbnail_url: row.game_thumbnail,
-                devices: row.game_devices,
-            },
-            platform: {
-                id: row.platform_id,
-                name: row.platform_name,
-                slug: row.platform_slug,
-                logo_url: row.platform_logo,
-                platform_kind: row.platform_kind,
-            },
-        };
-    });
+    const shaped = (data ?? []).map((row) => shapePublicOffer(row));
 
     if (data?.[0]) {
         console.log("[/api/offers] debug row", {

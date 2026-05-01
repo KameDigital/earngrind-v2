@@ -1,3 +1,5 @@
+import { buildFAQPage, JsonLd } from "@/lib/seo-schema";
+
 type FAQItem = {
   question: string;
   answer: string;
@@ -5,8 +7,11 @@ type FAQItem = {
 
 export default function FAQSection({ items }: { items: FAQItem[] }) {
   if (items.length === 0) return null;
+  const faqSchema = buildFAQPage(items);
+
   return (
     <section className="space-y-3">
+      {faqSchema ? <JsonLd data={faqSchema} /> : null}
       <h2 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">FAQ</h2>
       <div className="space-y-3">
         {items.map((item) => (

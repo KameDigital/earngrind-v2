@@ -6,6 +6,7 @@ export type OutboundType = "offer" | "site_offer" | "platform";
 
 export type CanonicalOutboundRecord = {
     outbound_type: OutboundType;
+    source_table?: "offer_clicks" | "site_offer_clicks" | "platform_clicks";
     offer_id?: string;
     platform_id?: string;
     offer_title?: string;
@@ -13,6 +14,7 @@ export type CanonicalOutboundRecord = {
     platform_name?: string;
     provider_name?: string;
     payout_usd?: number;
+    total_payout_usd?: number;
     click_location?: string;
     source_context?: string;
     affiliate_mode?: string;
@@ -20,53 +22,36 @@ export type CanonicalOutboundRecord = {
     created_at?: string;
 };
 
-type NestedName = { name: string | null } | Array<{ name: string | null }> | null;
-type NestedPlatform = { id: string; name: string | null } | Array<{ id: string; name: string | null }> | null;
-
 type OfferClickQueryRow = {
     clicked_at: string;
-    offer:
-        | {
-            id: string;
-            title: string | null;
-            payout_usd: number | null;
-            game: NestedName;
-            provider: NestedName;
-            platform: NestedPlatform;
-        }
-        | Array<{
-            id: string;
-            title: string | null;
-            payout_usd: number | null;
-            game: NestedName;
-            provider: NestedName;
-            platform: NestedPlatform;
-        }>
-        | null;
+    offer_id: string;
+    platform_id: string | null;
+    offer_title: string | null;
+    game_title: string | null;
+    platform_name: string | null;
+    provider_name: string | null;
+    payout_usd: number | null;
+    total_payout_usd: number | null;
+    click_location: string | null;
+    source_context: string | null;
+    destination_url: string | null;
+    affiliate_mode: string | null;
 };
 
 type SiteOfferClickQueryRow = {
     clicked_at: string;
-    site_offer:
-        | {
-            id: string;
-            goal_text: string | null;
-            payout_usd: number | null;
-            total_payout_usd: number | null;
-            game: NestedName;
-            provider: NestedName;
-            site: NestedPlatform;
-        }
-        | Array<{
-            id: string;
-            goal_text: string | null;
-            payout_usd: number | null;
-            total_payout_usd: number | null;
-            game: NestedName;
-            provider: NestedName;
-            site: NestedPlatform;
-        }>
-        | null;
+    site_offer_id: string;
+    platform_id: string | null;
+    offer_title: string | null;
+    game_title: string | null;
+    platform_name: string | null;
+    provider_name: string | null;
+    payout_usd: number | null;
+    total_payout_usd: number | null;
+    click_location: string | null;
+    source_context: string | null;
+    destination_url: string | null;
+    affiliate_mode: string | null;
 };
 
 type PlatformClickQueryRow = {
@@ -77,6 +62,7 @@ type PlatformClickQueryRow = {
     game_title: string | null;
     provider_name: string | null;
     payout_usd: number | null;
+    total_payout_usd: number | null;
     click_location: string | null;
     source_context: string | null;
     destination_url: string | null;
@@ -94,25 +80,9 @@ function normalizeTimestamp(value: string | null | undefined): string | undefine
     return normalized ?? undefined;
 }
 
-function first<T>(value: T | T[] | null | undefined): T | null {
-    if (Array.isArray(value)) return value[0] ?? null;
-    return value ?? null;
-}
-
-function nestedName(value: NestedName): string | undefined {
-    return normalizeString(first(value)?.name ?? undefined);
-}
-
-function nestedPlatform(value: NestedPlatform): { id?: string; name?: string } {
-    const platform = first(value);
-    return {
-        id: normalizeString(platform?.id ?? undefined),
-        name: normalizeString(platform?.name ?? undefined),
-    };
-}
-
 export function buildCanonicalOutboundRecord(input: {
     outbound_type: OutboundType;
+    source_table?: CanonicalOutboundRecord["source_table"];
     offer_id?: string | null;
     platform_id?: string | null;
     created_at?: string | null;
@@ -123,6 +93,7 @@ export function buildCanonicalOutboundRecord(input: {
     return Object.fromEntries(
         Object.entries({
             outbound_type: input.outbound_type,
+            source_table: input.source_table,
             offer_id: normalizeString(input.offer_id),
             platform_id: normalizeString(input.platform_id),
             offer_title: attribution.offer_title,
@@ -130,6 +101,7 @@ export function buildCanonicalOutboundRecord(input: {
             platform_name: attribution.platform_name,
             provider_name: attribution.provider_name,
             payout_usd: attribution.payout_usd,
+            total_payout_usd: attribution.total_payout_usd,
             click_location: attribution.click_location,
             source_context: attribution.source_context,
             affiliate_mode: attribution.affiliate_mode,
@@ -151,14 +123,18 @@ export async function getRecentOutboundRecords(options?: {
             .from("offer_clicks")
             .select(`
                 clicked_at,
-                offer:offer_id (
-                    id,
-                    title,
-                    payout_usd,
-                    game:games ( name ),
-                    provider:providers ( name ),
-                    platform:platforms ( id, name )
-                )
+                offer_id,
+                platform_id,
+                offer_title,
+                game_title,
+                platform_name,
+                provider_name,
+                payout_usd,
+                total_payout_usd,
+                click_location,
+                source_context,
+                destination_url,
+                affiliate_mode
             `)
             .order("clicked_at", { ascending: false })
             .limit(limit),
@@ -166,15 +142,18 @@ export async function getRecentOutboundRecords(options?: {
             .from("site_offer_clicks")
             .select(`
                 clicked_at,
-                site_offer:site_offer_id (
-                    id,
-                    goal_text,
-                    payout_usd,
-                    total_payout_usd,
-                    game:games ( name ),
-                    provider:providers ( name ),
-                    site:platforms ( id, name )
-                )
+                site_offer_id,
+                platform_id,
+                offer_title,
+                game_title,
+                platform_name,
+                provider_name,
+                payout_usd,
+                total_payout_usd,
+                click_location,
+                source_context,
+                destination_url,
+                affiliate_mode
             `)
             .order("clicked_at", { ascending: false })
             .limit(limit),
@@ -188,6 +167,7 @@ export async function getRecentOutboundRecords(options?: {
                 game_title,
                 provider_name,
                 payout_usd,
+                total_payout_usd,
                 click_location,
                 source_context,
                 destination_url,
@@ -210,48 +190,51 @@ export async function getRecentOutboundRecords(options?: {
     }
 
     const offerRecords = ((offerClicksResult.data ?? []) as OfferClickQueryRow[])
-        .map((row) => {
-            const offer = first(row.offer);
-            const platform = nestedPlatform(offer?.platform ?? null);
-
-            return buildCanonicalOutboundRecord({
-                outbound_type: "offer",
-                offer_id: offer?.id,
-                platform_id: platform.id,
-                created_at: row.clicked_at,
-                attribution: {
-                    offer_title: offer?.title,
-                    game_title: nestedName(offer?.game ?? null),
-                    platform_name: platform.name,
-                    provider_name: nestedName(offer?.provider ?? null),
-                    payout_usd: offer?.payout_usd,
-                },
-            });
-        });
+        .map((row) => buildCanonicalOutboundRecord({
+            outbound_type: "offer",
+            source_table: "offer_clicks",
+            offer_id: row.offer_id,
+            platform_id: row.platform_id,
+            created_at: row.clicked_at,
+            attribution: {
+                offer_title: row.offer_title,
+                game_title: row.game_title,
+                platform_name: row.platform_name,
+                provider_name: row.provider_name,
+                payout_usd: row.payout_usd,
+                total_payout_usd: row.total_payout_usd,
+                click_location: row.click_location,
+                source_context: row.source_context,
+                destination_url: row.destination_url,
+                affiliate_mode: row.affiliate_mode,
+            },
+        }));
 
     const siteOfferRecords = ((siteOfferClicksResult.data ?? []) as SiteOfferClickQueryRow[])
-        .map((row) => {
-            const siteOffer = first(row.site_offer);
-            const platform = nestedPlatform(siteOffer?.site ?? null);
-
-            return buildCanonicalOutboundRecord({
-                outbound_type: "site_offer",
-                offer_id: siteOffer?.id,
-                platform_id: platform.id,
-                created_at: row.clicked_at,
-                attribution: {
-                    offer_title: siteOffer?.goal_text,
-                    game_title: nestedName(siteOffer?.game ?? null),
-                    platform_name: platform.name,
-                    provider_name: nestedName(siteOffer?.provider ?? null),
-                    payout_usd: siteOffer?.total_payout_usd ?? siteOffer?.payout_usd,
-                },
-            });
-        });
+        .map((row) => buildCanonicalOutboundRecord({
+            outbound_type: "site_offer",
+            source_table: "site_offer_clicks",
+            offer_id: row.site_offer_id,
+            platform_id: row.platform_id,
+            created_at: row.clicked_at,
+            attribution: {
+                offer_title: row.offer_title,
+                game_title: row.game_title,
+                platform_name: row.platform_name,
+                provider_name: row.provider_name,
+                payout_usd: row.payout_usd,
+                total_payout_usd: row.total_payout_usd,
+                click_location: row.click_location,
+                source_context: row.source_context,
+                destination_url: row.destination_url,
+                affiliate_mode: row.affiliate_mode,
+            },
+        }));
 
     const platformRecords = ((platformClicksResult.data ?? []) as PlatformClickQueryRow[])
         .map((row) => buildCanonicalOutboundRecord({
             outbound_type: "platform",
+            source_table: "platform_clicks",
             platform_id: row.platform_id,
             created_at: row.clicked_at,
             attribution: {
@@ -260,6 +243,7 @@ export async function getRecentOutboundRecords(options?: {
                 game_title: row.game_title,
                 provider_name: row.provider_name,
                 payout_usd: row.payout_usd,
+                total_payout_usd: row.total_payout_usd,
                 click_location: row.click_location,
                 source_context: row.source_context,
                 destination_url: row.destination_url,

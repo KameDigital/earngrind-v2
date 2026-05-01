@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Manual Offers | Admin" };
+export const metadata = { title: "Site Offers | Admin" };
 
 const STATUS_STYLES: Record<string, string> = {
     active:  "bg-green-100 text-green-800",
@@ -40,9 +40,9 @@ export default async function AdminSiteOffersPage() {
             {/* ── Page header ── */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Manual Offers</h1>
+                    <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Site Offers</h1>
                     <p className="text-sm text-gray-500 mt-1">
-                        Hand-curated offers that power the{" "}
+                        Source table: site_offers. Hand-curated offers that power the{" "}
                         <span className="font-medium text-gray-700">&ldquo;Compare GPT Sites&rdquo;</span>{" "}
                         section on game pages. You create and manage these directly.
                     </p>
@@ -121,7 +121,7 @@ export default async function AdminSiteOffersPage() {
                 {rows.length === 0 && (
                     <div className="py-16 text-center">
                         <div className="text-3xl mb-3">✏️</div>
-                        <div className="text-sm font-semibold text-gray-600 mb-1">No manual offers yet</div>
+                        <div className="text-sm font-semibold text-gray-600 mb-1">No site offers yet</div>
                         <p className="text-xs text-gray-400 mb-3">
                             Create curated offers that appear in the &ldquo;Compare GPT Sites&rdquo; section.
                         </p>

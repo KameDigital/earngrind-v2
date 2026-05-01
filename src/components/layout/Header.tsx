@@ -73,18 +73,19 @@ export default function Header() {
 
                     {/* Right side */}
                     <div className="hidden md:flex items-center gap-2">
-                        <button
-                            aria-label="Search"
+                        <Link
+                            href="/offers"
+                            aria-label="Search offers"
                             className="w-9 h-9 flex items-center justify-center rounded-lg text-[var(--text-tertiary)] hover:text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
                         >
                             <Search size={17} />
-                        </button>
+                        </Link>
                         <Link
                             href="/offers"
                             className="flex items-center gap-1.5 px-4 py-2 bg-[var(--brand-ink)] text-white text-sm font-bold rounded-xl hover:bg-[var(--brand-ink)]/90 transition-all hover:-translate-y-px active:translate-y-0 shadow-sm"
                         >
                             Find Offers
-                            <span aria-hidden="true" className="text-[var(--brand-lime)]">→</span>
+                            <span aria-hidden="true" className="text-[var(--brand-lime)]">-&gt;</span>
                         </Link>
                     </div>
 

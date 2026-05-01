@@ -14,7 +14,7 @@ type TrackerPayload = {
     guideSlug: string;
     eventType: GuideEventType;
     targetUrl?: string | null;
-    metadata?: Record<string, string | number | boolean>;
+    metadata?: Record<string, string | number | boolean | null>;
 };
 
 function postGuideEvent(payload: TrackerPayload) {
@@ -67,6 +67,26 @@ function classifyClick(anchor: HTMLAnchorElement): GuideEventType | null {
     return null;
 }
 
+function ctaMetadata(anchor: HTMLAnchorElement) {
+    const dataset = anchor.dataset;
+    const placement = dataset.ctaPlacement ?? dataset.placement ?? null;
+    const variantId = dataset.ctaVariantId ?? null;
+    const variantLabel = dataset.ctaVariantLabel ?? null;
+    return {
+        source: "guide_page",
+        link_text: (anchor.textContent ?? "").trim().slice(0, 120),
+        cta_variant_id: variantId,
+        cta_variant_label: variantLabel,
+        cta_variant: variantId ?? dataset.ctaVariant ?? (dataset.guideCta ? "guide_offer_matcher" : null),
+        offer_id: dataset.offerId || null,
+        platform_id: dataset.platformId || null,
+        match_reason: dataset.matchReason || null,
+        placement: placement === "top" || placement === "mid" || placement === "bottom" || placement === "fallback"
+            ? placement
+            : null,
+    };
+}
+
 export default function GuidePerformanceTracker({
     guideId,
     guideSlug,
@@ -95,10 +115,7 @@ export default function GuidePerformanceTracker({
                 guideSlug,
                 eventType,
                 targetUrl: normalizeHref(anchor),
-                metadata: {
-                    source: "guide_page",
-                    link_text: (anchor.textContent ?? "").trim().slice(0, 120),
-                },
+                metadata: ctaMetadata(anchor),
             });
         };
 

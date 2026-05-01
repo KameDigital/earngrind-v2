@@ -66,14 +66,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url:             `${baseUrl}/games/${g.slug}`,
         lastModified:    new Date(g.updated_at),
         changeFrequency: 'daily' as const,
-        priority:        0.85,
+        priority:        0.75,
     }));
 
     const seoGuideUrls: MetadataRoute.Sitemap = (games ?? []).map(g => ({
         url:             `${baseUrl}/guides/how-to-earn/${g.slug}`,
         lastModified:    new Date(g.updated_at),
         changeFrequency: 'weekly' as const,
-        priority:        0.78,
+        priority:        0.62,
     }));
 
     // Guide pages — highest priority after homepage/offers (they target keywords)

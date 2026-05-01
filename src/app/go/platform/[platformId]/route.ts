@@ -29,6 +29,20 @@ function getIpHash(req: NextRequest): string | null {
     return createHash("sha256").update(ip).digest("hex");
 }
 
+function getClientHints(req: NextRequest): Record<string, string> {
+    return Object.fromEntries(
+        [
+            "sec-ch-ua",
+            "sec-ch-ua-mobile",
+            "sec-ch-ua-platform",
+            "sec-ch-ua-platform-version",
+            "sec-ch-ua-model",
+        ]
+            .map((header) => [header, req.headers.get(header)] as const)
+            .filter(([, value]) => Boolean(value)),
+    ) as Record<string, string>;
+}
+
 async function logPlatformClick(params: {
     supabase: ReturnType<typeof createClient>;
     platformId: string;
@@ -46,6 +60,7 @@ async function logPlatformClick(params: {
         game_title: normalized.game_title ?? null,
         provider_name: normalized.provider_name ?? null,
         payout_usd: normalized.payout_usd ?? null,
+        total_payout_usd: normalized.total_payout_usd ?? normalized.payout_usd ?? null,
         click_location: normalized.click_location ?? null,
         source_context: normalized.source_context ?? null,
         destination_url: normalized.destination_url ?? null,
@@ -54,6 +69,7 @@ async function logPlatformClick(params: {
         referrer: req.headers.get("referer"),
         country: req.headers.get("x-vercel-ip-country"),
         user_agent: req.headers.get("user-agent"),
+        client_hints: getClientHints(req),
         user_id: userId,
     };
 
@@ -124,6 +140,11 @@ export async function GET(
 
     const attribution = normalizeRedirectAttribution({
         platform_name: requestAttribution.platform_name ?? platform.name ?? undefined,
+        offer_title: requestAttribution.offer_title,
+        game_title: requestAttribution.game_title,
+        provider_name: requestAttribution.provider_name,
+        payout_usd: requestAttribution.payout_usd,
+        total_payout_usd: requestAttribution.total_payout_usd,
         click_location: requestAttribution.click_location,
         source_context: requestAttribution.source_context,
         destination_url: outboundUrl,

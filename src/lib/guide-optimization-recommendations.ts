@@ -14,7 +14,13 @@ export type GuideOptimizationRecommendationType =
     | "striking_distance"
     | "query_mismatch"
     | "update_opportunity"
-    | "republish_candidate";
+    | "republish_candidate"
+    | "cta_clicks_no_offer_clicks"
+    | "no_relevant_offer_match"
+    | "lower_payout_offer_winning"
+    | "weak_cta_variant"
+    | "placement_underperforming"
+    | "fallback_cta_high";
 
 export type GuideOptimizationRecommendation = {
     type: GuideOptimizationRecommendationType;
@@ -45,6 +51,8 @@ export type GuideOptimizationInput = {
     } | null;
     quality: GuideQualityResult;
     stats: GuideEventSummary;
+    autoMatchedOfferCount?: number | null;
+    lowerPayoutOfferGettingMoreClicks?: boolean | null;
 };
 
 function isOlderThan(dateValue: string | null | undefined, days: number) {
@@ -84,6 +92,71 @@ export function getGuideOptimizationRecommendations(input: GuideOptimizationInpu
             title: "Views but no outbound offer clicks",
             description: "Users are reading this guide, but they are not moving into tracked offer or platform routes.",
             suggestedAction: "Add or improve an offer comparison CTA and make the safest next click obvious.",
+        });
+    }
+
+    if (input.stats.ctaClicks >= 3 && input.stats.offerClicks + input.stats.platformClicks === 0) {
+        recommendations.push({
+            type: "cta_clicks_no_offer_clicks",
+            priority: "high",
+            title: "CTA clicks but no offer clicks",
+            description: "Users are interacting with CTAs, but those clicks are not turning into tracked offer or platform starts.",
+            suggestedAction: "Check CTA targets, dynamic offer matching, and whether the best payout route is surfaced before the user leaves.",
+        });
+    }
+
+    if (input.autoMatchedOfferCount === 0) {
+        recommendations.push({
+            type: "no_relevant_offer_match",
+            priority: "medium",
+            title: "No relevant matched offer",
+            description: "The guide offer matcher did not find a relevant active offer, so public CTAs will fall back to the offers page.",
+            suggestedAction: "Select a manual primary offer, add offer data for this game, or disable auto matching intentionally.",
+        });
+    }
+
+    if (input.lowerPayoutOfferGettingMoreClicks) {
+        recommendations.push({
+            type: "lower_payout_offer_winning",
+            priority: "medium",
+            title: "Lower payout offer is getting more clicks",
+            description: "CTA click data suggests users are choosing a lower-payout route more often than the highest-payout match.",
+            suggestedAction: "Review platform trust, button copy, and payout freshness before deciding whether to promote the higher payout route.",
+        });
+    }
+
+    const weakVariant = input.stats.ctaVariantPerformance.find((variant) => variant.views >= 100 && variant.ctaCtr < 0.02);
+    if (weakVariant) {
+        recommendations.push({
+            type: "weak_cta_variant",
+            priority: "medium",
+            title: "Weak CTA variant",
+            description: `${weakVariant.label} has 100+ views and a CTA CTR below 2%.`,
+            suggestedAction: "Test a stronger CTA, tighten the benefit language, or pair the variant with a clearer payout note.",
+        });
+    }
+
+    const topPlacement = input.stats.ctaPlacementPerformance.find((placement) => placement.id === "top");
+    const bottomPlacement = input.stats.ctaPlacementPerformance.find((placement) => placement.id === "bottom");
+    if (topPlacement && bottomPlacement && topPlacement.views >= 100 && bottomPlacement.ctaCtr >= topPlacement.ctaCtr * 1.5 && bottomPlacement.ctaClicks >= topPlacement.ctaClicks + 2) {
+        recommendations.push({
+            type: "placement_underperforming",
+            priority: "medium",
+            title: "Top CTA underperforming",
+            description: "The bottom CTA is outperforming the top CTA by a meaningful margin.",
+            suggestedAction: "Move CTA placement, simplify the top offer block, or test a stronger top CTA variant.",
+        });
+    }
+
+    const fallbackPlacement = input.stats.ctaPlacementPerformance.find((placement) => placement.id === "fallback");
+    const variantClickTotal = input.stats.ctaPlacementPerformance.reduce((sum, placement) => sum + placement.ctaClicks, 0);
+    if (fallbackPlacement && fallbackPlacement.ctaClicks >= 5 && fallbackPlacement.ctaClicks / Math.max(variantClickTotal, 1) >= 0.3) {
+        recommendations.push({
+            type: "fallback_cta_high",
+            priority: "medium",
+            title: "Fallback CTA used often",
+            description: "A large share of CTA clicks are coming from fallback blocks, which means offer matching may not be finding enough relevant routes.",
+            suggestedAction: "Improve offer matching, add missing offer data, or set a manual primary offer for this guide.",
         });
     }
 

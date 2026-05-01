@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { analyzeGuideQuality } from "@/lib/guide-quality";
-import { formatPercent, summarizeEventsByGuide, type GuideEventRow } from "@/lib/guide-event-stats";
+import { emptyGuideEventSummary, formatPercent, summarizeEventsByGuide, type GuideEventRow } from "@/lib/guide-event-stats";
 import {
     getGuideOptimizationRecommendations,
     type GuideOptimizationRecommendation,
@@ -11,6 +11,7 @@ import {
 import FixGuideButton, { type GuideFixType } from "../FixGuideButton";
 import { analyzeSeoDescription, analyzeSeoTitle } from "@/lib/seo-metadata-tools";
 import { summarizeSearchConsoleMetrics, type GuideSearchConsoleMetric } from "@/lib/search-console-import";
+import { matchOffersToGuide } from "@/lib/guide-offer-matcher";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Guide Optimization | Admin" };
@@ -26,6 +27,12 @@ type GuideRow = {
     batch_name: string | null;
     keyword_target: string | null;
     keyword_cluster_id: string | null;
+    game_id: string | null;
+    platform_id: string | null;
+    platform_filter: string | null;
+    guide_type: string | null;
+    primary_offer_id: string | null;
+    disable_auto_offer_matching: boolean | null;
     body_md: string | null;
     seo_title: string | null;
     seo_description: string | null;
@@ -90,7 +97,7 @@ function fixTypesForRecommendations(recommendations: GuideOptimizationRecommenda
     const fixes = new Set<GuideFixType>();
     for (const recommendation of recommendations) {
         if (recommendation.type === "needs_internal_links") fixes.add("add_internal_links");
-        if (recommendation.type === "needs_cta" || recommendation.type === "low_ctr" || recommendation.type === "high_views_no_clicks") fixes.add("add_cta_section");
+        if (recommendation.type === "needs_cta" || recommendation.type === "low_ctr" || recommendation.type === "high_views_no_clicks" || recommendation.type === "cta_clicks_no_offer_clicks") fixes.add("add_cta_section");
         if (recommendation.type === "missing_faq") fixes.add("add_faq_section");
         if (recommendation.type === "thin_content") fixes.add("expand_thin_content");
         if (recommendation.type === "needs_variation") fixes.add("regenerate_variation");
@@ -115,7 +122,7 @@ export default async function GuideOptimizationPage({ searchParams }: { searchPa
 
     let guidesQuery = supabase
         .from("guides")
-        .select("id, title, slug, status, content_status, batch_name, keyword_target, keyword_cluster_id, body_md, seo_title, seo_description, needs_variation, published_at, updated_at")
+        .select("id, title, slug, status, content_status, batch_name, keyword_target, keyword_cluster_id, game_id, platform_id, platform_filter, guide_type, primary_offer_id, disable_auto_offer_matching, body_md, seo_title, seo_description, needs_variation, published_at, updated_at")
         .order("updated_at", { ascending: false })
         .limit(1000);
 
@@ -129,7 +136,7 @@ export default async function GuideOptimizationPage({ searchParams }: { searchPa
     const { data: events } = guideIds.length > 0
         ? await supabase
             .from("guide_events")
-            .select("guide_id, guide_slug, event_type, target_url, created_at")
+            .select("guide_id, guide_slug, event_type, target_url, metadata, created_at")
             .in("guide_id", guideIds)
             .gte("created_at", daysAgo(30))
             .limit(20000)
@@ -141,6 +148,11 @@ export default async function GuideOptimizationPage({ searchParams }: { searchPa
             .in("guide_id", guideIds)
             .limit(20000)
         : { data: [] };
+    const { data: allOffers } = await supabase
+        .from("unified_offers_view")
+        .select("id, source, title, payout_usd, total_payout_usd, status, devices, countries, category, offer_expires_at, updated_at, game_id, game_name, game_slug, platform_id, platform_name, platform_slug, provider_id, provider_name, goal_text, game_devices")
+        .order("total_payout_usd", { ascending: false })
+        .limit(500);
 
     const statsByGuide = summarizeEventsByGuide((events ?? []) as GuideEventRow[]);
     const gscByGuide = new Map<string, GuideSearchConsoleMetric[]>();
@@ -162,20 +174,27 @@ export default async function GuideOptimizationPage({ searchParams }: { searchPa
             seoDescription: guide.seo_description,
             keywordTarget: guide.keyword_target,
         });
-        const stats = statsByGuide.get(guide.id) ?? statsByGuide.get(guide.slug) ?? {
-            views: 0,
-            ctaClicks: 0,
-            offerClicks: 0,
-            platformClicks: 0,
-            internalLinkClicks: 0,
-            clickCount: 0,
-            ctaCtr: 0,
-            actionCtr: 0,
-            topLinks: [],
-        };
+        const stats = statsByGuide.get(guide.id) ?? statsByGuide.get(guide.slug) ?? emptyGuideEventSummary();
         const titleAnalysis = analyzeSeoTitle(guide.seo_title ?? guide.title, guide.keyword_target);
         const descriptionAnalysis = analyzeSeoDescription(guide.seo_description ?? "", guide.keyword_target);
         const searchConsole = summarizeSearchConsoleMetrics(gscByGuide.get(guide.id) ?? [], guide.keyword_target);
+        const matchedOffers = matchOffersToGuide({
+            guide,
+            offers: allOffers ?? [],
+            guideEventStats: stats,
+        });
+        const topOfferClicks = stats.topLinks.reduce<Record<string, number>>((acc, link) => {
+            const match = matchedOffers.find((offer) => link.targetUrl.includes(offer.id));
+            if (!match) return acc;
+            acc[match.id] = (acc[match.id] ?? 0) + link.clicks;
+            return acc;
+        }, {});
+        const highestPayoutOffer = [...matchedOffers].sort((a, b) => (b.payout ?? 0) - (a.payout ?? 0))[0] ?? null;
+        const lowerPayoutOfferGettingMoreClicks = Boolean(highestPayoutOffer && Object.entries(topOfferClicks).some(([offerId, clicks]) => {
+            const offer = matchedOffers.find((item) => item.id === offerId);
+            if (!offer || offer.id === highestPayoutOffer.id) return false;
+            return (offer.payout ?? 0) < (highestPayoutOffer.payout ?? 0) && clicks > (topOfferClicks[highestPayoutOffer.id] ?? 0);
+        }));
         const recommendations = getGuideOptimizationRecommendations({
             status: guide.status,
             contentStatus: guide.content_status,
@@ -188,6 +207,8 @@ export default async function GuideOptimizationPage({ searchParams }: { searchPa
             searchConsole,
             quality,
             stats,
+            autoMatchedOfferCount: matchedOffers.length,
+            lowerPayoutOfferGettingMoreClicks,
         });
         const topPriority = recommendations[0]?.priority ?? "low";
         return { guide, quality, stats, recommendations, topPriority, searchConsole };
@@ -238,6 +259,12 @@ export default async function GuideOptimizationPage({ searchParams }: { searchPa
                             <option value="high_views_no_clicks">Views, no clicks</option>
                             <option value="needs_internal_links">Needs internal links</option>
                             <option value="needs_cta">Needs CTA</option>
+                            <option value="cta_clicks_no_offer_clicks">CTA clicks, no offer clicks</option>
+                            <option value="no_relevant_offer_match">No relevant offer match</option>
+                            <option value="lower_payout_offer_winning">Lower payout winning</option>
+                            <option value="weak_cta_variant">Weak CTA variant</option>
+                            <option value="placement_underperforming">Placement underperforming</option>
+                            <option value="fallback_cta_high">Fallback CTA high</option>
                             <option value="needs_variation">Needs variation</option>
                             <option value="thin_content">Thin content</option>
                             <option value="missing_faq">Missing FAQ</option>

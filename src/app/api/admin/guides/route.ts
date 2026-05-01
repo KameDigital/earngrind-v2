@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
         max_payout_usd, tips, key_takeaways, checklist_items, video_url,
         layout_style, show_related_offers, show_related_guides,
         seo_title, seo_description, status, platform_filter,
+        primary_offer_id, disable_auto_offer_matching,
     } = body;
 
     if (!title || !slug || !game_id) {
@@ -74,6 +75,8 @@ export async function POST(req: NextRequest) {
         seo_description: seo_description || null,
         status: status || "draft",
         platform_filter: platform_filter || "android",
+        primary_offer_id: primary_offer_id || null,
+        disable_auto_offer_matching: disable_auto_offer_matching === true,
         author_id: user.id,
     }).select().single();
 

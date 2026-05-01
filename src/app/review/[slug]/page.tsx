@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import { buildPlatformAffiliateUrl } from "@/lib/outbound";
+import { buildBreadcrumbList, buildOrganization, buildReviewSchema, JsonLd } from "@/lib/seo-schema";
 import Card from "@/components/ui/Card";
 import RatingPill from "@/components/ui/RatingPill";
 import ProConList from "@/components/ui/ProConList";
@@ -68,6 +69,18 @@ export async function generateMetadata(
             review.seo_description ??
             review.excerpt ??
             `Read our in-depth review of ${platformName} to compare trust, payout quality, and user experience before you start offers.`,
+        alternates: {
+            canonical: `/review/${params.slug}`,
+        },
+        openGraph: {
+            title: review.seo_title ?? `${review.title} | EarnGrind`,
+            description:
+                review.seo_description ??
+                review.excerpt ??
+                `Read our in-depth review of ${platformName} before starting offers.`,
+            url: `/review/${params.slug}`,
+            type: "article",
+        },
     };
 }
 
@@ -151,9 +164,28 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
     const trustTakeaway = buildTrustTakeaway(review);
     const bestFor = buildBestFor(review);
     const nextStep = buildNextStep(review);
+    const platformSchema = buildOrganization(platformName, platform ? `/review/${review.slug}` : undefined, platform?.logo_url);
+    const schemas = [
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Reviews", path: "/reviews" },
+            { name: platformName, path: `/review/${review.slug}` },
+        ]),
+        platformSchema,
+        buildReviewSchema({
+            title: review.title,
+            path: `/review/${review.slug}`,
+            excerpt: review.excerpt ?? review.verdict,
+            rating: review.rating_overall,
+            datePublished: review.published_at,
+            dateModified: review.updated_at,
+            itemReviewed: platformSchema,
+        }),
+    ];
 
     return (
         <article className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+            <JsonLd data={schemas} />
             <Container>
                 <nav className="mb-8 flex items-center gap-2 text-sm font-medium text-[var(--text-tertiary)]" aria-label="Breadcrumb">
                     <Link href="/" className="transition-colors hover:text-lime-700">Home</Link>

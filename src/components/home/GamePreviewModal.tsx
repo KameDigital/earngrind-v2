@@ -173,7 +173,7 @@ export default function GamePreviewModal({
             <h2 className="text-xl font-extrabold leading-tight text-[var(--brand-ink)]">{preview.title}</h2>
           </div>
           <button type="button" onClick={onClose} className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-default)] bg-white text-lg font-bold text-[var(--brand-ink)] hover:border-lime-300" aria-label="Close preview">
-            ×
+            X
           </button>
         </div>
 
@@ -214,7 +214,7 @@ export default function GamePreviewModal({
 
             <div className="grid gap-2 sm:grid-cols-3">
               <button type="button" onClick={startNow} disabled={!primaryRoute} className="rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-50">
-                Start Now
+                Start Best Route
               </button>
               <Link href={preview.gameHref} className="rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-center text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-300">
                 View Game Page
@@ -225,6 +225,9 @@ export default function GamePreviewModal({
                 </Link>
               ) : null}
             </div>
+            <p className="text-xs leading-relaxed text-[var(--text-tertiary)]">
+              Payouts can change by device, country, and provider rules. Some outbound links may be affiliate links.
+            </p>
           </div>
         </div>
       </div>

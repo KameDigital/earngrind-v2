@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-export const metadata = { title: "Ingested Offers | Admin" };
+export const metadata = { title: "Legacy Offers | Admin" };
 
 const STATUS_STYLES: Record<string, string> = {
     active:  "bg-green-100 text-green-800",
@@ -38,9 +38,9 @@ export default async function AdminOffersPage() {
             {/* ── Page header ── */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Ingested Offers</h1>
+                    <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Legacy Offers</h1>
                     <p className="text-sm text-gray-500 mt-1">
-                        Offers automatically ingested from external platforms via the pipeline.
+                        Source table: offers. Pipeline-managed legacy rows used for redirect resolution and unified_offers_view.
                         You can edit payout, status, and flags — but not create new rows.
                     </p>
                 </div>
@@ -119,7 +119,7 @@ export default async function AdminOffersPage() {
                 {rows.length === 0 && (
                     <div className="py-16 text-center">
                         <div className="text-3xl mb-3">📥</div>
-                        <div className="text-sm font-semibold text-gray-600 mb-1">No offers ingested yet</div>
+                        <div className="text-sm font-semibold text-gray-600 mb-1">No legacy offers found</div>
                         <p className="text-xs text-gray-400">Offers will appear here once the ingestion pipeline runs.</p>
                     </div>
                 )}

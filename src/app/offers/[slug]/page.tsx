@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
+import { buildBreadcrumbList, buildItemList, JsonLd } from '@/lib/seo-schema';
 import type { Offer } from '@/components/offers/OfferSearchEngine';
 import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
@@ -124,6 +125,14 @@ export async function generateMetadata(
     return {
         title: `${game.name} Offers — Earn up to $${summary.max_payout_usd.toFixed(2)} | EarnGrind`,
         description: `Compare ${summary.offer_count} ${game.name} offer${summary.offer_count !== 1 ? 's' : ''} across platforms. Max payout: $${summary.max_payout_usd.toFixed(2)}. ${game.description ?? ''}`.trim(),
+        alternates: {
+            canonical: `/offers/${params.slug}`,
+        },
+        openGraph: {
+            title: `${game.name} Offers | EarnGrind`,
+            description: `Compare current ${game.name} payouts and routes across GPT platforms before clicking out.`,
+            url: `/offers/${params.slug}`,
+        },
     };
 }
 
@@ -473,11 +482,11 @@ function ComparisonRow({ offer, isBest, rank }: { offer: Offer; isBest: boolean;
                             : 'bg-[var(--surface-muted)] text-[var(--brand-ink)] border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10'
                         }`}
                 >
-                    {isBest ? 'Start Best Route' : 'Start Offer'}
+                    {isBest ? 'Start Best Payout' : 'Start Offer'}
                 </TrackedOutboundLink>
             </div>
             <div className="mt-2 text-[11px] text-[var(--text-tertiary)] sm:pl-9">
-                Start Offer opens the payout platform for this route.
+                Payouts can change by device, country, and provider rules. Some outbound links may be affiliate links.
             </div>
         </div>
     );
@@ -552,9 +561,24 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
         comparison.offers.find((offer) => offer.image_url)?.image_url ??
         comparison.offers.find((offer) => isImageUrl(offer.offer_url))?.offer_url ??
         null;
+    const schemas = [
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Offers", path: "/offers" },
+            { name: game.name, path: `/offers/${game.slug}` },
+        ]),
+        buildItemList(
+            comparison.offers.slice(0, 20).map((offer) => ({
+                name: `${offer.provider_name ?? "Provider"} on ${offer.platform_name ?? "Platform"}`,
+                path: `/offers/${game.slug}`,
+                description: `${offer.total_payout_usd > 0 ? `$${offer.total_payout_usd.toFixed(2)}` : `$${offer.payout_usd.toFixed(2)}`} total payout for ${game.name}.`,
+            })),
+        ),
+    ];
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+            <JsonLd data={schemas} />
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
                 {/* ── Breadcrumb ── */}
@@ -646,7 +670,7 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
                                         sourceContext="offer-detail"
                                         className="inline-flex items-center gap-2 px-4 py-2.5 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all hover:-translate-y-px"
                                     >
-                                        Start Best Offer
+                                        Start Best Payout
                                     </TrackedOutboundLink>
                                 )}
                                 {primaryGuide && (
@@ -674,7 +698,7 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
                             </div>
 
                             <p className="mt-3 text-xs text-[var(--text-tertiary)] leading-relaxed max-w-2xl">
-                                Start Best Offer sends you to the payout platform. Use Guide First if you want milestone help before clicking out. Comparing routes below helps you judge whether the reward is worth the effort.
+                                Start Best Payout sends you through EarnGrind tracking to the payout platform. Payouts can vary by device, country, and provider rules.
                             </p>
                         </div>
                     </div>

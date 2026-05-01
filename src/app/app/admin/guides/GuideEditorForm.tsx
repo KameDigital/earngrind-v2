@@ -41,6 +41,16 @@ type InternalLinkSuggestion = {
     reason: string;
 };
 
+type GuideOfferOption = {
+    id: string;
+    title: string;
+    platform: string | null;
+    provider: string | null;
+    payout: number | null;
+    matchReason?: string;
+    score?: number;
+};
+
 type SeedResponse = {
     autofill?: {
         title?: string;
@@ -80,6 +90,8 @@ type GuideRecord = {
     layout_style: string;
     show_related_offers: boolean;
     show_related_guides: boolean;
+    primary_offer_id?: string | null;
+    disable_auto_offer_matching?: boolean | null;
     seo_title: string | null;
     seo_description: string | null;
     status: string;
@@ -256,11 +268,15 @@ export default function GuideEditorForm({
     guide,
     initialGame,
     sourceGuide,
+    availableOffers = [],
+    matchedOffers = [],
 }: {
     mode: "create" | "edit";
     guide?: GuideRecord | null;
     initialGame?: GameOption | null;
     sourceGuide?: SourceGuide | null;
+    availableOffers?: GuideOfferOption[];
+    matchedOffers?: GuideOfferOption[];
 }) {
     const router = useRouter();
     const [title, setTitle] = useState(guide?.title ?? sourceGuide?.title ?? "");
@@ -282,6 +298,8 @@ export default function GuideEditorForm({
     const [layoutStyle, setLayoutStyle] = useState(guide?.layout_style ?? sourceGuide?.layout_style ?? "classic");
     const [showOffers, setShowOffers] = useState(guide?.show_related_offers ?? sourceGuide?.show_related_offers ?? true);
     const [showGuides, setShowGuides] = useState(guide?.show_related_guides ?? sourceGuide?.show_related_guides ?? true);
+    const [primaryOfferId, setPrimaryOfferId] = useState(guide?.primary_offer_id ?? "");
+    const [disableAutoOfferMatching, setDisableAutoOfferMatching] = useState(Boolean(guide?.disable_auto_offer_matching));
     const [seoTitle, setSeoTitle] = useState(guide?.seo_title ?? sourceGuide?.seo_title ?? "");
     const [seoDesc, setSeoDesc] = useState(guide?.seo_description ?? sourceGuide?.seo_description ?? "");
     const [status, setStatus] = useState(guide?.status ?? "draft");
@@ -434,7 +452,7 @@ export default function GuideEditorForm({
         if (!slugManual) setSlug(slugify(value));
     }
 
-    function useOfferMilestones(offer: SeedOffer) {
+    function applyOfferMilestones(offer: SeedOffer) {
         setChecklistItems(offer.tasks.map((task) => task.title).join("\n"));
         setKeyTakeaways([
             `Use ${offer.provider_name} on ${offer.platform_name} for the current ${guideFocus} route.`,
@@ -478,6 +496,8 @@ export default function GuideEditorForm({
             layout_style: layoutStyle,
             show_related_offers: showOffers,
             show_related_guides: showGuides,
+            primary_offer_id: primaryOfferId || null,
+            disable_auto_offer_matching: disableAutoOfferMatching,
             seo_title: finalSeoTitle || null,
             seo_description: finalSeoDescription || null,
             guide_focus: guideFocus,
@@ -708,7 +728,7 @@ export default function GuideEditorForm({
                                     </div>
                                     <button
                                         type="button"
-                                        onClick={() => useOfferMilestones(offer)}
+                                        onClick={() => applyOfferMilestones(offer)}
                                         className="px-3 py-2 text-xs font-bold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50"
                                     >
                                         Use this offer seed
@@ -772,6 +792,51 @@ export default function GuideEditorForm({
                         <div className="text-xs text-gray-400 mt-0.5">Display other guides for this game in the sidebar</div>
                     </div>
                     <Toggle id="showGuides" checked={showGuides} onChange={setShowGuides} />
+                </div>
+            </div>
+
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+                <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Guide Offer Matching</h2>
+                <div className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
+                    <div>
+                        <label className={labelClass}>Manual Primary Offer</label>
+                        <select value={primaryOfferId} onChange={(e) => setPrimaryOfferId(e.target.value)} className={inputClass}>
+                            <option value="">Use auto-matched highest scoring offer</option>
+                            {availableOffers.map((offer) => (
+                                <option key={offer.id} value={offer.id}>
+                                    {offer.title} {offer.platform ? `- ${offer.platform}` : ""} {typeof offer.payout === "number" ? `- $${offer.payout.toFixed(2)}` : ""}
+                                </option>
+                            ))}
+                        </select>
+                        <p className={hintClass}>Manual primary offers are shown first, with auto-matched alternatives below them.</p>
+                    </div>
+                    <div className="flex items-center justify-between rounded-xl border border-gray-200 px-4 py-3">
+                        <div>
+                            <div className="text-sm font-semibold text-gray-700">Disable Auto Matching</div>
+                            <div className="text-xs text-gray-400 mt-0.5">Use fallback CTA unless a manual primary offer is selected.</div>
+                        </div>
+                        <Toggle id="disableAutoOfferMatching" checked={disableAutoOfferMatching} onChange={setDisableAutoOfferMatching} />
+                    </div>
+                </div>
+                <div>
+                    <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400">Current auto matches</div>
+                    {matchedOffers.length > 0 ? (
+                        <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                            {matchedOffers.slice(0, 4).map((offer) => (
+                                <div key={offer.id} className="rounded-xl border border-gray-200 px-3 py-2 text-sm">
+                                    <div className="font-bold text-gray-900">{offer.title}</div>
+                                    <div className="mt-0.5 text-xs text-gray-500">
+                                        {offer.platform ?? "Unknown platform"} {typeof offer.payout === "number" ? `- $${offer.payout.toFixed(2)}` : ""}
+                                    </div>
+                                    <div className="mt-1 text-[11px] font-semibold text-lime-700">
+                                        {offer.matchReason ?? "Matched offer"} {typeof offer.score === "number" ? `- score ${offer.score}` : ""}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className={hintClass}>No auto-matched offers found. Public guide CTAs will fall back to the offers page.</p>
+                    )}
                 </div>
             </div>
 

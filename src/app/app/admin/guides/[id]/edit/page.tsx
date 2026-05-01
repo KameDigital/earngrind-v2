@@ -14,6 +14,7 @@ import FixGuideButton from "../../FixGuideButton";
 import SeoMetadataTestingPanel from "../../SeoMetadataTestingPanel";
 import { analyzeSeoDescription, analyzeSeoTitle } from "@/lib/seo-metadata-tools";
 import { summarizeSearchConsoleMetrics, type GuideSearchConsoleMetric } from "@/lib/search-console-import";
+import { matchOffersToGuide } from "@/lib/guide-offer-matcher";
 
 export const metadata = { title: "Edit Guide | Admin" };
 
@@ -30,6 +31,11 @@ function AnalyticsStat({ label, value }: { label: string; value: string | number
             <div className="mt-1 text-lg font-extrabold text-gray-900">{value}</div>
         </div>
     );
+}
+
+function metadataValue(event: GuideEventRow, key: string) {
+    const value = event.metadata?.[key];
+    return typeof value === "string" ? value : null;
 }
 
 const RECOMMENDATION_STYLES: Record<GuideOptimizationRecommendation["priority"], string> = {
@@ -72,7 +78,7 @@ export default async function EditGuidePage({ params }: { params: { id: string }
 
     const { data: recentEvents } = await supabase
         .from("guide_events")
-        .select("guide_id, guide_slug, event_type, target_url, created_at")
+        .select("guide_id, guide_slug, event_type, target_url, metadata, created_at")
         .eq("guide_id", guide.id)
         .gte("created_at", daysAgo(30))
         .order("created_at", { ascending: false })
@@ -105,6 +111,53 @@ export default async function EditGuidePage({ params }: { params: { id: string }
         position: Number(metric.position ?? 0),
     }));
     const searchConsole = summarizeSearchConsoleMetrics(searchConsoleMetrics, guide.keyword_target);
+    const allOffersResult = await supabase
+        .from("unified_offers_view")
+        .select("id, source, title, payout_usd, total_payout_usd, status, devices, countries, category, offer_expires_at, updated_at, game_id, game_name, game_slug, platform_id, platform_name, platform_slug, provider_id, provider_name, goal_text, game_devices")
+        .order("total_payout_usd", { ascending: false })
+        .limit(500);
+    const matchedOffers = allOffersResult.error
+        ? []
+        : matchOffersToGuide({
+            guide: { ...guide, game },
+            offers: allOffersResult.data ?? [],
+            guideEventStats: stats30,
+        });
+    const availableOffers = (allOffersResult.data ?? []).map((offer) => ({
+        id: String(offer.id),
+        title: String(offer.title ?? offer.goal_text ?? offer.game_name ?? "Offer"),
+        platform: typeof offer.platform_name === "string" ? offer.platform_name : null,
+        provider: typeof offer.provider_name === "string" ? offer.provider_name : null,
+        payout: Number.isFinite(Number(offer.total_payout_usd ?? offer.payout_usd))
+            ? Number(offer.total_payout_usd ?? offer.payout_usd)
+            : null,
+    }));
+    const ctaEvents = events30.filter((event) => event.event_type === "cta_click" || event.event_type === "offer_click" || event.event_type === "platform_click");
+    const placementCounts = ctaEvents.reduce<Record<string, number>>((acc, event) => {
+        const placement = metadataValue(event, "placement") ?? "unknown";
+        acc[placement] = (acc[placement] ?? 0) + 1;
+        return acc;
+    }, {});
+    const topOfferClicks = ctaEvents.reduce<Record<string, number>>((acc, event) => {
+        const offerId = metadataValue(event, "offer_id");
+        if (!offerId) return acc;
+        acc[offerId] = (acc[offerId] ?? 0) + 1;
+        return acc;
+    }, {});
+    const topClickedOfferId = Object.entries(topOfferClicks).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+    const fallbackClicks = ctaEvents.filter((event) => metadataValue(event, "placement") === "fallback").length;
+    const matchedOfferCtr = stats30.views > 0
+        ? ctaEvents.filter((event) => metadataValue(event, "cta_variant_id") || metadataValue(event, "cta_variant")?.startsWith("guide_offer_matcher")).length / stats30.views
+        : 0;
+    const bestCtaVariant = [...stats30.ctaVariantPerformance].sort((a, b) => b.ctaCtr - a.ctaCtr || b.ctaClicks - a.ctaClicks)[0] ?? null;
+    const worstCtaVariant = [...stats30.ctaVariantPerformance].filter((variant) => variant.ctaClicks > 0).sort((a, b) => a.ctaCtr - b.ctaCtr || b.ctaClicks - a.ctaClicks)[0] ?? null;
+    const sortedMatchedByPayout = [...matchedOffers].sort((a, b) => (b.payout ?? 0) - (a.payout ?? 0));
+    const highestPayoutOffer = sortedMatchedByPayout[0] ?? null;
+    const lowerPayoutOfferGettingMoreClicks = Boolean(highestPayoutOffer && Object.entries(topOfferClicks).some(([offerId, clicks]) => {
+        const offer = matchedOffers.find((item) => item.id === offerId);
+        if (!offer || offer.id === highestPayoutOffer.id) return false;
+        return (offer.payout ?? 0) < (highestPayoutOffer.payout ?? 0) && clicks > (topOfferClicks[highestPayoutOffer.id] ?? 0);
+    }));
     const optimizationRecommendations = getGuideOptimizationRecommendations({
         status: guide.status,
         contentStatus: guide.content_status,
@@ -117,6 +170,8 @@ export default async function EditGuidePage({ params }: { params: { id: string }
         searchConsole,
         quality: guideQuality,
         stats: stats30,
+        autoMatchedOfferCount: matchedOffers.length,
+        lowerPayoutOfferGettingMoreClicks,
     });
 
     return (
@@ -176,6 +231,53 @@ export default async function EditGuidePage({ params }: { params: { id: string }
                     <AnalyticsStat label="CTA Clicks" value={stats30.ctaClicks} />
                     <AnalyticsStat label="Offer Clicks" value={stats30.offerClicks + stats30.platformClicks} />
                     <AnalyticsStat label="CTR" value={formatPercent(stats30.actionCtr)} />
+                </div>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                    <AnalyticsStat label="Matched Offer CTR" value={formatPercent(matchedOfferCtr)} />
+                    <AnalyticsStat label="Top CTA Placement" value={Object.entries(placementCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "n/a"} />
+                    <AnalyticsStat label="Top Clicked Offer" value={matchedOffers.find((offer) => offer.id === topClickedOfferId)?.platform ?? topClickedOfferId ?? "n/a"} />
+                    <AnalyticsStat label="Fallback CTA Clicks" value={fallbackClicks} />
+                    <AnalyticsStat label="Matched Offers" value={matchedOffers.length} />
+                </div>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <AnalyticsStat label="Best CTA Variant" value={bestCtaVariant ? `${bestCtaVariant.label} (${formatPercent(bestCtaVariant.ctaCtr)})` : "n/a"} />
+                    <AnalyticsStat label="Worst CTA Variant" value={worstCtaVariant ? `${worstCtaVariant.label} (${formatPercent(worstCtaVariant.ctaCtr)})` : "n/a"} />
+                    <AnalyticsStat label="Top Placement CTR" value={stats30.ctaPlacementPerformance[0] ? `${stats30.ctaPlacementPerformance[0].label} ${formatPercent(stats30.ctaPlacementPerformance[0].ctaCtr)}` : "n/a"} />
+                    <AnalyticsStat label="CTA Offer Routes" value={stats30.ctaOfferPerformance.length} />
+                </div>
+                <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                    <div>
+                        <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400">CTA variant performance</div>
+                        {stats30.ctaVariantPerformance.length > 0 ? (
+                            <div className="mt-2 divide-y divide-gray-100 rounded-xl border border-gray-200">
+                                {stats30.ctaVariantPerformance.slice(0, 6).map((variant) => (
+                                    <div key={variant.id} className="grid grid-cols-[1fr_auto_auto] gap-3 px-3 py-2 text-sm">
+                                        <span className="min-w-0 truncate font-semibold text-gray-800">{variant.label}</span>
+                                        <span className="font-bold text-gray-900">{formatPercent(variant.ctaCtr)}</span>
+                                        <span className="text-xs font-semibold text-gray-500">{variant.ctaClicks} clicks</span>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="mt-2 text-sm text-gray-500">No CTA variant clicks recorded yet.</p>
+                        )}
+                    </div>
+                    <div>
+                        <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400">Placement performance</div>
+                        {stats30.ctaPlacementPerformance.length > 0 ? (
+                            <div className="mt-2 divide-y divide-gray-100 rounded-xl border border-gray-200">
+                                {stats30.ctaPlacementPerformance.slice(0, 6).map((placement) => (
+                                    <div key={placement.id} className="grid grid-cols-[1fr_auto_auto] gap-3 px-3 py-2 text-sm">
+                                        <span className="min-w-0 truncate font-semibold text-gray-800">{placement.label}</span>
+                                        <span className="font-bold text-gray-900">{formatPercent(placement.ctaCtr)}</span>
+                                        <span className="text-xs font-semibold text-gray-500">{placement.offerClicks} offer clicks</span>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="mt-2 text-sm text-gray-500">No placement clicks recorded yet.</p>
+                        )}
+                    </div>
                 </div>
                 <div className="mt-4">
                     <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400">Top clicked links</div>
@@ -336,6 +438,16 @@ export default async function EditGuidePage({ params }: { params: { id: string }
             <GuideEditForm
                 guide={guide}
                 initialGame={game ? { id: game.id, name: game.name, slug: game.slug } : null}
+                availableOffers={availableOffers}
+                matchedOffers={matchedOffers.map((offer) => ({
+                    id: offer.id,
+                    title: offer.title,
+                    platform: offer.platform,
+                    provider: offer.provider,
+                    payout: offer.payout,
+                    matchReason: offer.matchReason,
+                    score: offer.score,
+                }))}
             />
         </div>
     );

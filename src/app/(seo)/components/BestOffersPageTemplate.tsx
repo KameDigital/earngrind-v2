@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "./FAQSection";
 import OfferTable from "./OfferTable";
 import ProviderComparison from "./ProviderComparison";
@@ -7,6 +8,7 @@ import { formatMoney, type SeoOfferRow } from "../_lib/seo-data";
 
 type BestOffersPageTemplateProps = {
   label: string;
+  pathname: string;
   title: string;
   intro: string;
   rows: SeoOfferRow[];
@@ -21,6 +23,7 @@ type BestOffersPageTemplateProps = {
 
 export default function BestOffersPageTemplate({
   label,
+  pathname,
   title,
   intro,
   rows,
@@ -41,9 +44,23 @@ export default function BestOffersPageTemplate({
       answer: "Yes. Final payouts can vary based on geo, platform, and eligibility rules on each provider.",
     },
   ];
+  const schemas = [
+    buildBreadcrumbList([
+      { name: "Home", path: "/" },
+      { name: title, path: pathname },
+    ]),
+    buildItemList(
+      rows.slice(0, 20).map((row) => ({
+        name: `${row.gameName} on ${row.platformName}`,
+        path: `/offers/${row.gameSlug}`,
+        description: `${row.providerName} route with ${formatMoney(row.totalPayoutUsd)} total payout.`,
+      })),
+    ),
+  ];
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+      <JsonLd data={schemas} />
       <Container className="space-y-6">
         <header className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
           <p className="section-label">{label}</p>

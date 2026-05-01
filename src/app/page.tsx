@@ -129,6 +129,7 @@ type OfferRow = {
   platform_name: string | null;
   platform_logo?: string | null;
   payout_usd: number | null;
+  total_payout_usd?: number | null;
   goal_text: string | null;
 };
 
@@ -235,7 +236,8 @@ function buildGoHref(row: OfferRow, clickLocation: string) {
   if (row.game_name) params.set("game_title", row.game_name);
   if (row.platform_name) params.set("platform_name", row.platform_name);
   if (row.provider_name) params.set("provider_name", row.provider_name);
-  if (typeof row.payout_usd === "number") params.set("payout_usd", String(row.payout_usd));
+  const payoutValue = row.total_payout_usd ?? row.payout_usd;
+  if (typeof payoutValue === "number") params.set("payout_usd", String(payoutValue));
   return `/go/${row.id}?${params.toString()}`;
 }
 
@@ -268,7 +270,7 @@ function getFeaturedGameAliases(name: string) {
     "Rise of Kingdoms": ["Rise of Kingdoms"],
     "Infinite Lagrange": ["Infinite Lagrange"],
     "Wood Block Challenge": ["Wood Block Challenge"],
-    "2248 â€“ Merge Tile": ["2248", "2248 Merge Tile"],
+    "2248 - Merge Tile": ["2248", "2248 Merge Tile"],
     "Hexa Merge: Tile Sort": ["Hexa Merge", "Tile Sort"],
     "Palmon: Survival": ["Palmon", "Palmon Survival"],
     "MU: Dark Epoch": ["MU Dark Epoch", "Dark Epoch"],
@@ -307,8 +309,8 @@ async function getHomepageData(): Promise<HomepageData> {
   const [offersResult, popularGuidesResult, featuredGamesResult, featuredGameOffersResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
-      .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
-      .order("payout_usd", { ascending: false })
+      .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text")
+      .order("total_payout_usd", { ascending: false })
       .limit(24),
     supabase
       .from("guides")
@@ -322,9 +324,9 @@ async function getHomepageData(): Promise<HomepageData> {
       .in("name", [...FEATURED_GAME_NAMES]),
     supabase
       .from("unified_offers_view")
-      .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, provider_name, platform_name, platform_logo, payout_usd, goal_text")
+      .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text")
       .or(featuredOfferFilters)
-      .order("payout_usd", { ascending: false })
+      .order("total_payout_usd", { ascending: false })
       .limit(200),
   ]);
 
@@ -334,19 +336,9 @@ async function getHomepageData(): Promise<HomepageData> {
     new Map([...offerRows, ...featuredGameOfferRows].map((row) => [row.id, row])).values(),
   );
   const allOfferIds = allOfferRows.map((row) => row.id);
-  const manualOfferIds = allOfferRows
-    .filter((row) => row.source === "manual")
-    .map((row) => row.id);
-
   const gameIds = Array.from(new Set(allOfferRows.map((row) => row.game_id).filter(Boolean))) as string[];
 
-  const [manualOfferImagesResult, manualOfferTasksResult, relatedGuidesResult] = await Promise.all([
-    manualOfferIds.length
-      ? supabase
-          .from("site_offers")
-          .select("id, image_url")
-          .in("id", manualOfferIds)
-      : Promise.resolve({ data: [] as Array<{ id: string; image_url: string | null }> }),
+  const [manualOfferTasksResult, relatedGuidesResult] = await Promise.all([
     allOfferIds.length
       ? supabase
           .from("site_offer_tasks")
@@ -364,9 +356,6 @@ async function getHomepageData(): Promise<HomepageData> {
       : Promise.resolve({ data: [] as RelatedGuideRow[] }),
   ]);
 
-  const manualOfferImageMap = new Map(
-    (manualOfferImagesResult.data ?? []).map((row) => [row.id, row.image_url ?? null]),
-  );
   const manualTaskMap = new Map<string, RailPreviewTask[]>();
   ((manualOfferTasksResult.data ?? []) as SiteOfferTaskRow[]).forEach((task) => {
     const existing = manualTaskMap.get(task.site_offer_id) ?? [];
@@ -385,13 +374,7 @@ async function getHomepageData(): Promise<HomepageData> {
     }
   });
 
-  const enrichedAllOfferRows = allOfferRows.map((row) => ({
-    ...row,
-    image_url:
-      row.source === "manual"
-        ? manualOfferImageMap.get(row.id) ?? null
-        : null,
-  }));
+  const enrichedAllOfferRows = allOfferRows;
   const enrichedOfferRows = offerRows.map(
     (row) => enrichedAllOfferRows.find((candidate) => candidate.id === row.id) ?? row,
   );
@@ -474,9 +457,9 @@ async function getHomepageData(): Promise<HomepageData> {
     const manualTasks = manualTaskMap.get(row.id);
     if (manualTasks?.length) return manualTasks;
     if (row.goal_text) {
-      return [{ title: row.goal_text, rewardDisplay: formatMoney(row.payout_usd) }];
+      return [{ title: row.goal_text, rewardDisplay: formatMoney(row.total_payout_usd ?? row.payout_usd) }];
     }
-    return [{ title: "Review the live offer requirements on the provider before starting.", rewardDisplay: formatMoney(row.payout_usd) }];
+    return [{ title: "Review the live offer requirements on the provider before starting.", rewardDisplay: formatMoney(row.total_payout_usd ?? row.payout_usd) }];
   }
 
   const modalRoutesByGameKey = enrichedAllOfferRows.reduce<Record<string, RailPreviewRoute[]>>((acc, row) => {
@@ -489,8 +472,8 @@ async function getHomepageData(): Promise<HomepageData> {
       href: buildGoHref(row, "homepage_modal_platform_choice"),
       providerName: row.provider_name,
       platformName: row.platform_name,
-      payout: formatMoney(row.payout_usd),
-      payoutValue: row.payout_usd,
+      payout: formatMoney(row.total_payout_usd ?? row.payout_usd),
+      payoutValue: row.total_payout_usd ?? row.payout_usd,
       taskCount: tasks.length,
       tasks,
     });
@@ -570,7 +553,7 @@ async function getHomepageData(): Promise<HomepageData> {
     stats: {
       liveOfferCount: offerRows.length,
       guideCount: uniqueGuideIds.size,
-      topPayout: offerRows[0]?.payout_usd ?? null,
+      topPayout: offerRows[0]?.total_payout_usd ?? offerRows[0]?.payout_usd ?? null,
     },
   };
 }
@@ -589,7 +572,7 @@ export default async function HomePage() {
       badge: offer.badge,
       provider: offer.platform_name,
       platform: offer.provider_name,
-      payout: formatMoney(offer.payout_usd) ?? null,
+      payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
       secondaryValue: offer.goal_text ? offer.goal_text : null,
       imageUrl: offer.image_url,
       preview: {
@@ -604,10 +587,10 @@ export default async function HomePage() {
             href: buildGoHref(offer, "homepage_modal_single_route"),
             providerName: offer.provider_name,
             platformName: offer.platform_name,
-            payout: formatMoney(offer.payout_usd),
-            payoutValue: offer.payout_usd,
+            payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
+            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
             taskCount: offer.goal_text ? 1 : 0,
-            tasks: offer.goal_text ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.payout_usd) }] : [],
+            tasks: offer.goal_text ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.total_payout_usd ?? offer.payout_usd) }] : [],
           },
         ],
       },
@@ -639,7 +622,7 @@ export default async function HomePage() {
             url("/hero-home.png")
           `,
           backgroundSize: "cover",
-          backgroundPosition: "center half",
+          backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
         }}
       >
@@ -655,16 +638,16 @@ export default async function HomePage() {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 mb-5">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-lime)] animate-pulse" />
               <span className="text-[var(--brand-lime)] text-[11px] font-bold uppercase tracking-wider">
-                Updated Daily
+                Live payout discovery
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold text-white leading-[1.05] tracking-tight mb-4">
-              Find the <span className="text-[var(--brand-lime)]">highest-paying GPT offers</span> and finish them faster
+              Compare GPT offers before you start
             </h1>
 
             <p className="text-base sm:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl">
-              EarnGrind helps you compare real payouts, choose trustworthy GPT sites, and use game guides to reach milestones faster. Start with the best current route instead of guessing.
+              Find current game and survey payouts, check platform trust, and use guides before you click out to a GPT site.
             </p>
 
             <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -677,8 +660,8 @@ export default async function HomePage() {
                 <div className="mt-1 text-xl font-extrabold text-white">{stats.guideCount}</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-left backdrop-blur-sm">
-                <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">Curated sections</div>
-                <div className="mt-1 text-xl font-extrabold text-white">2</div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">Trust hubs</div>
+                <div className="mt-1 text-xl font-extrabold text-white">Reviews</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/8 px-4 py-3 text-left backdrop-blur-sm">
                 <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">Top payout now</div>
@@ -702,7 +685,7 @@ export default async function HomePage() {
                 href="/offers"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--brand-lime)] text-[var(--brand-ink)] font-extrabold text-sm rounded-xl hover:bg-[color:hsl(84,93%,72%)] transition-all hover:-translate-y-px active:translate-y-0 shadow-lg shadow-[var(--brand-lime)]/20"
               >
-                Find High-Paying Offers
+                Compare Offers
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                 </svg>
@@ -711,7 +694,7 @@ export default async function HomePage() {
                 href="/guides"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
               >
-                Use Guides to Finish Faster
+                Browse Guides
               </Link>
             </div>
           </div>
@@ -733,10 +716,10 @@ export default async function HomePage() {
               Start Smart
             </p>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--brand-ink)] leading-tight">
-              Learn the system, then take the highest-signal path into offers and guides
+              Start with the path that matches what you need
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)] max-w-2xl">
-              If you are new, start with trust and payout discovery. If you already know the platform, jump straight into live offers or a guide built to get you through milestones faster.
+              New users should check platform trust first. Returning users can jump straight into live offer comparisons or game guides.
             </p>
           </div>
 
@@ -744,11 +727,11 @@ export default async function HomePage() {
             <div className="grid items-start gap-12 lg:grid-cols-[1.2fr_0.8fr]">
               <div className="min-w-0">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                  What Is EarnGrind?
+                  What EarnGrind does
                 </div>
                 <h2 className="mt-5 max-w-2xl text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-[2.9rem] sm:leading-[0.96]">
-                  Your shortcut to the{" "}
-                  <span className="text-[color:hsl(84,93%,36%)]">best-paying GPT offers</span>
+                  A cleaner way to compare{" "}
+                  <span className="text-[color:hsl(84,93%,36%)]">GPT payouts and platforms</span>
                 </h2>
                 <div className="mt-5 max-w-xl space-y-4 text-[14px] leading-relaxed text-[var(--text-secondary)]">
                   <p>
@@ -758,7 +741,7 @@ export default async function HomePage() {
                     EarnGrind compares those live offers, publishes game pages, and connects you to detailed guides so you can choose better routes before you start.
                   </p>
                   <p>
-                    The homepage now links directly into the highest-value games, latest guides, and core SEO hubs that support your next click.
+                    Use the homepage to move from platform trust to live payouts to guide support without guessing which page matters.
                   </p>
                 </div>
               </div>
@@ -798,13 +781,13 @@ export default async function HomePage() {
           <div>
             <HomepageSectionHeader
               eyebrow="Games & Offers"
-              title="Featured Games and Highest Paying GPT Offers"
-              description="Jump into top game pages first, then compare the highest-value live offers feeding those routes."
+              title="Live Offers and Featured Games"
+              description="Use this section to scan strong payouts, preview routes, and open a game page before starting."
             />
               <FeaturedOfferRail
                 items={compactOfferRail}
                 title="Top Offers"
-                description="Compact live routes and game pages in one rail so users can scan images, payout, and click into the strongest path faster."
+                description="Current high-value routes from the offer feed. Open a preview to compare milestones before clicking out."
               />
               <div className="mt-10">
                 <FeaturedOfferRail
@@ -822,8 +805,8 @@ export default async function HomePage() {
           <div className="max-w-5xl">
           <HomepageSectionHeader
             eyebrow="Guides"
-            title="Game Guides and Latest Guides"
-            description="Browse established high-value guides first, then review the newest published walkthroughs feeding internal links into games and offers."
+            title="Guides for completing offers"
+            description="Use walkthroughs to understand milestones, time commitment, and payout checkpoints before starting."
           />
           <div>
             <div className="mb-4">

@@ -14,10 +14,13 @@ const ADMIN_LINKS = [
     { href: "/app/admin/content-queue", label: "Content Queue" },
     { href: "/app/admin/research", label: "Research" },
     { href: "/app/admin/research/opportunities", label: "Research Opportunities" },
+    { href: "/app/admin/seo/action-plan", label: "SEO Action Plan" },
     { href: "/app/admin/seo/search-console", label: "Search Console" },
     { href: "/app/admin/seo/query-opportunities", label: "Query Opportunities" },
+    { href: "/app/admin/seo/serp-refresh", label: "SERP Refresh" },
+    { href: "/app/admin/seo/content-decay", label: "Content Decay" },
     { href: "/app/admin/blog-posts", label: "Blog Posts" },
-    { href: "/app/admin/outbound", label: "Outbound" },
+    { href: "/app/admin/outbound", label: "Outbound Analytics" },
 ] as const;
 
 export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {

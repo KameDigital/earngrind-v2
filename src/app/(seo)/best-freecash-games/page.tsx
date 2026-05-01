@@ -20,6 +20,7 @@ export default async function BestFreecashGamesPage() {
   return (
     <BestOffersPageTemplate
       label="Freecash Focus"
+      pathname={config.pathname}
       title="Best Freecash Games"
       intro={config.intro}
       rows={rows}

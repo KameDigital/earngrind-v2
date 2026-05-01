@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { createClient } from "@/lib/supabase/server";
+import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "../components/FAQSection";
 import OfferTable from "../components/OfferTable";
 import ProviderComparison from "../components/ProviderComparison";
@@ -108,9 +109,23 @@ export default async function BestGptSitesPage() {
       answer: "No. Offer values move, so the best route can change. Use this page to compare current payout strength before you choose where to start.",
     },
   ];
+  const schemas = [
+    buildBreadcrumbList([
+      { name: "Home", path: "/" },
+      { name: "Best GPT Sites", path: config.pathname },
+    ]),
+    buildItemList(
+      rows.slice(0, 20).map((row) => ({
+        name: `${row.platformName} via ${row.providerName}`,
+        path: `/offers/${row.gameSlug}`,
+        description: `${formatMoney(row.totalPayoutUsd)} total payout route for ${row.gameName}.`,
+      })),
+    ),
+  ];
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+      <JsonLd data={schemas} />
       <Container className="space-y-6">
         <header className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
           <p className="section-label">Best GPT Sites</p>

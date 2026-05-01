@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "../../components/FAQSection";
 import GameHeader from "../../components/GameHeader";
 import OfferTable from "../../components/OfferTable";
@@ -95,9 +96,24 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
   ];
 
   const intro = `Use this page to compare ${data.game.name} payouts across ${providerGroups.size} providers, spot the best current route, and decide whether to use a guide before you click out.`;
+  const schemas = [
+    buildBreadcrumbList([
+      { name: "Home", path: "/" },
+      { name: "Games", path: "/games" },
+      { name: data.game.name, path: `/games/${data.game.slug}` },
+    ]),
+    buildItemList(
+      rows.slice(0, 20).map((row) => ({
+        name: `${row.providerName} on ${row.platformName}`,
+        path: `/offers/${data.game.slug}`,
+        description: `${formatMoney(row.totalPayoutUsd)} total payout for ${data.game.name}.`,
+      })),
+    ),
+  ];
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+      <JsonLd data={schemas} />
       <Container className="space-y-6">
         <GameHeader
           gameName={data.game.name}
@@ -149,21 +165,26 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
                   : "Check back later for tracked routes."}
               </p>
               {bestOffer ? (
-                <TrackedOutboundLink
-                  href={bestOffer.redirectUrl}
-                  eventLabel="game-page-best-route"
-                  offerId={bestOffer.id}
-                  offerTitle={bestOffer.title}
-                  gameTitle={data.game.name}
-                  platformName={bestOffer.platformName}
-                  providerName={bestOffer.providerName}
-                  payoutUsd={bestOffer.payoutUsd}
-                  location="game-page-best-route"
-                  sourceContext="game-page"
-                  className="mt-4 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
-                >
-                  Start Best Route
-                </TrackedOutboundLink>
+                <>
+                  <TrackedOutboundLink
+                    href={bestOffer.redirectUrl}
+                    eventLabel="game-page-best-route"
+                    offerId={bestOffer.id}
+                    offerTitle={bestOffer.title}
+                    gameTitle={data.game.name}
+                    platformName={bestOffer.platformName}
+                    providerName={bestOffer.providerName}
+                    payoutUsd={bestOffer.payoutUsd}
+                    location="game-page-best-route"
+                    sourceContext="game-page"
+                    className="mt-4 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                  >
+                    Start Best Payout
+                  </TrackedOutboundLink>
+                  <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+                    Payouts can change by provider, country, and device. Some outbound links may be affiliate links.
+                  </p>
+                </>
               ) : null}
             </article>
 

@@ -9,9 +9,10 @@ interface StepsLayoutProps {
     };
     gameSlug: string;
     gameName: string;
+    showStaticCta?: boolean;
 }
 
-export default function StepsLayout({ guide, gameSlug, gameName }: StepsLayoutProps) {
+export default function StepsLayout({ guide, gameSlug, gameName, showStaticCta = true }: StepsLayoutProps) {
     const sections = extractSections(guide.body_md ?? "");
     const tips     = guide.tips ?? [];
 
@@ -112,7 +113,7 @@ export default function StepsLayout({ guide, gameSlug, gameName }: StepsLayoutPr
             )}
 
             {/* CTA */}
-            <div className="bg-gray-900 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {showStaticCta ? <div className="bg-gray-900 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="flex-1">
                     <div className="text-xs font-extrabold uppercase tracking-widest text-lime-400 mb-1">All steps done?</div>
                     <div className="text-white font-bold">
@@ -126,7 +127,7 @@ export default function StepsLayout({ guide, gameSlug, gameName }: StepsLayoutPr
                 >
                     View Offer →
                 </Link>
-            </div>
+            </div> : null}
         </div>
     );
 }

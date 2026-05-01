@@ -20,6 +20,7 @@ export default async function HighestPayingGptGamesPage() {
   return (
     <BestOffersPageTemplate
       label="Highest Paying Games"
+      pathname={config.pathname}
       title="Highest Paying GPT Games"
       intro={config.intro}
       rows={rows}

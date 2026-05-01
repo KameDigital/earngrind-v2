@@ -9,6 +9,9 @@ import ClassicLayout from "./layouts/ClassicLayout";
 import StepsLayout  from "./layouts/StepsLayout";
 import ProLayout    from "./layouts/ProLayout";
 import GuidePerformanceTracker from "./GuidePerformanceTracker";
+import GuideOfferCtaBlock from "./GuideOfferCtaBlock";
+import { matchOffersToGuide, type GuideOfferMatch } from "@/lib/guide-offer-matcher";
+import { summarizeGuideEvents, type GuideEventRow } from "@/lib/guide-event-stats";
 
 // ---------------------------------------------------------------
 // TYPES
@@ -34,6 +37,12 @@ interface Guide {
     published_at: string | null;
     updated_at: string;
     game_id: string;
+    platform_id: string | null;
+    platform_filter: string | null;
+    keyword_target: string | null;
+    guide_type: string | null;
+    primary_offer_id: string | null;
+    disable_auto_offer_matching: boolean | null;
 }
 
 interface Game {
@@ -89,6 +98,8 @@ async function fetchGuideData(slug: string) {
             max_payout_usd, tips, video_url, key_takeaways, checklist_items,
             layout_style, show_related_offers, show_related_guides,
             seo_title, seo_description, published_at, updated_at, game_id,
+            platform_id, platform_filter, keyword_target, guide_type,
+            primary_offer_id, disable_auto_offer_matching,
             game:games(id, name, slug)
         `)
         .eq("slug", slug)
@@ -111,12 +122,34 @@ async function fetchGuideData(slug: string) {
         .order("updated_at", { ascending: false })
         .limit(4);
 
-    const { data: topOffers } = await supabase
-        .from("unified_offers_view")
-        .select("id, game_name, game_slug, platform_name, payout_usd")
-        .eq("game_id", game.id)
-        .order("payout_usd", { ascending: false })
-        .limit(4);
+    const [{ data: topOffers }, allOffersResult, { data: recentEvents }] = await Promise.all([
+        supabase
+            .from("unified_offers_view")
+            .select("id, game_name, game_slug, platform_name, payout_usd")
+            .eq("game_id", game.id)
+            .order("payout_usd", { ascending: false })
+            .limit(4),
+        supabase
+            .from("unified_offers_view")
+            .select("id, source, title, payout_usd, total_payout_usd, status, devices, countries, category, offer_expires_at, updated_at, game_id, game_name, game_slug, platform_id, platform_name, platform_slug, provider_id, provider_name, goal_text, game_devices")
+            .order("total_payout_usd", { ascending: false })
+            .limit(250),
+        supabase
+            .from("guide_events")
+            .select("guide_id, guide_slug, event_type, target_url, created_at")
+            .eq("guide_id", guide.id)
+            .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+            .limit(5000),
+    ]);
+
+    const guideEventStats = summarizeGuideEvents((recentEvents ?? []) as GuideEventRow[]);
+    const matchedOffers: GuideOfferMatch[] = allOffersResult.error
+        ? []
+        : matchOffersToGuide({
+            guide: { ...guide, game },
+            offers: allOffersResult.data ?? [],
+            guideEventStats,
+        });
 
     return {
         guide,
@@ -129,6 +162,7 @@ async function fetchGuideData(slug: string) {
             platform_name: o.platform_name as string,
             payout_usd:    o.payout_usd as number,
         })),
+        matchedOffers,
     };
 }
 
@@ -139,8 +173,9 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     const data = await fetchGuideData(params.slug);
     if (!data) notFound();
 
-    const { guide, game, relatedGuides, relatedOffers } = data;
+    const { guide, game, relatedGuides, relatedOffers, matchedOffers } = data;
     const layoutStyle = guide.layout_style ?? "classic";
+    const hasMatchedOfferCtas = matchedOffers.length > 0;
 
     return (
         <div className="min-h-screen bg-[#f5f5f0]">
@@ -209,11 +244,21 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             .prose-guide .guide-summary-box li:last-child{margin-bottom:0}
                         `}</style>
 
+                        <div className="mb-6">
+                            <GuideOfferCtaBlock
+                                guideId={guide.id}
+                                guideSlug={guide.slug}
+                                offers={matchedOffers}
+                                placement={hasMatchedOfferCtas ? "top" : "fallback"}
+                            />
+                        </div>
+
                         {layoutStyle === "steps" ? (
                             <StepsLayout
                                 guide={{ body_md: guide.body_md, tips: guide.tips ?? [], max_payout_usd: guide.max_payout_usd }}
                                 gameSlug={game.slug}
                                 gameName={game.name}
+                                showStaticCta={false}
                             />
                         ) : layoutStyle === "pro" ? (
                             <ProLayout
@@ -228,14 +273,24 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                 }}
                                 gameSlug={game.slug}
                                 gameName={game.name}
+                                showStaticCta={false}
                             />
                         ) : (
                             <ClassicLayout
                                 guide={{ body_md: guide.body_md, tips: guide.tips ?? [], game_id: guide.game_id, max_payout_usd: guide.max_payout_usd }}
                                 gameSlug={game.slug}
                                 gameName={game.name}
+                                showStaticCta={false}
                             />
                         )}
+                        <div className="mt-6">
+                            <GuideOfferCtaBlock
+                                guideId={guide.id}
+                                guideSlug={guide.slug}
+                                offers={matchedOffers}
+                                placement={hasMatchedOfferCtas ? "bottom" : "fallback"}
+                            />
+                        </div>
                     </main>
 
                     <div className={layoutStyle === "pro" ? "mt-6 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]" : "mt-6 lg:mt-0"}>

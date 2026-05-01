@@ -15,16 +15,16 @@ export function buildOutboundRedirectUrl({
         if (template.includes("{destination}")) {
             const resolvedDestination = destination || fallback;
             if (!resolvedDestination) return null;
-            return template.replaceAll("{destination}", encodeURIComponent(resolvedDestination));
+            return sanitizeRedirectTarget(template.replaceAll("{destination}", encodeURIComponent(resolvedDestination)));
         }
 
         if (template.includes("{custom_param}")) {
             const resolvedDestination = destination || fallback;
             if (!resolvedDestination) return null;
-            return template.replaceAll("{custom_param}", resolvedDestination);
+            return sanitizeRedirectTarget(template.replaceAll("{custom_param}", resolvedDestination));
         }
 
-        return template;
+        return sanitizeRedirectTarget(template);
     }
 
     return destination || fallback || null;
@@ -94,7 +94,7 @@ export function buildPlatformAffiliateUrl({
 
     const template = platform?.affiliate_template?.trim() ?? "";
     if (template.includes("{custom_param}")) {
-        return template.replaceAll("{custom_param}", customParam);
+        return sanitizeRedirectTarget(template.replaceAll("{custom_param}", customParam));
     }
 
     return buildOutboundRedirectUrl({
@@ -108,7 +108,17 @@ function sanitizeRedirectTarget(value: string | null | undefined): string | null
     const trimmed = value?.trim() ?? "";
     if (!trimmed) return null;
     if (isImageUrl(trimmed)) return null;
+    if (!isSafeHttpUrl(trimmed)) return null;
     return trimmed;
+}
+
+function isSafeHttpUrl(value: string): boolean {
+    try {
+        const url = new URL(value);
+        return url.protocol === "https:" || url.protocol === "http:";
+    } catch {
+        return false;
+    }
 }
 
 function isImageUrl(url: string): boolean {

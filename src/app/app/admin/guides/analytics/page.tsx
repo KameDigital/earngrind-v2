@@ -2,7 +2,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
+    emptyGuideEventSummary,
     formatPercent,
+    summarizeGuideEvents,
     summarizeEventsByGuide,
     type GuideEventRow,
     type GuideEventSummary,
@@ -134,27 +136,19 @@ export default async function GuideAnalyticsPage({ searchParams }: { searchParam
     const { data: events } = guideIds.length > 0
         ? await supabase
             .from("guide_events")
-            .select("guide_id, guide_slug, event_type, target_url, created_at")
+            .select("guide_id, guide_slug, event_type, target_url, metadata, created_at")
             .in("guide_id", guideIds)
             .gte("created_at", `${fromDate}T00:00:00.000Z`)
             .lte("created_at", `${toDate}T23:59:59.999Z`)
             .limit(20000)
         : { data: [] };
 
-    const statsByGuide = summarizeEventsByGuide((events ?? []) as GuideEventRow[]);
+    const eventRows = (events ?? []) as GuideEventRow[];
+    const statsByGuide = summarizeEventsByGuide(eventRows);
+    const overallStats = summarizeGuideEvents(eventRows);
     const rows = guideRows.map((guide) => ({
         guide,
-        stats: statsByGuide.get(guide.id) ?? statsByGuide.get(guide.slug) ?? {
-            views: 0,
-            ctaClicks: 0,
-            offerClicks: 0,
-            platformClicks: 0,
-            internalLinkClicks: 0,
-            clickCount: 0,
-            ctaCtr: 0,
-            actionCtr: 0,
-            topLinks: [],
-        },
+        stats: statsByGuide.get(guide.id) ?? statsByGuide.get(guide.slug) ?? emptyGuideEventSummary(),
     }));
 
     const totals = rows.reduce((acc, row) => ({
@@ -171,6 +165,24 @@ export default async function GuideAnalyticsPage({ searchParams }: { searchParam
     const topByOffer = [...rows].sort((a, b) => (b.stats.offerClicks + b.stats.platformClicks) - (a.stats.offerClicks + a.stats.platformClicks)).filter((row) => row.stats.offerClicks + row.stats.platformClicks > 0).slice(0, 8);
     const underperforming = rows.filter((row) => row.stats.views >= 100 && row.stats.ctaCtr < 0.02).sort((a, b) => b.stats.views - a.stats.views);
     const viewsNoClicks = rows.filter((row) => row.stats.views > 0 && row.stats.clickCount === 0).sort((a, b) => b.stats.views - a.stats.views).slice(0, 20);
+    const bottomBeatsTop = rows.filter((row) => {
+        const top = row.stats.ctaPlacementPerformance.find((placement) => placement.id === "top");
+        const bottom = row.stats.ctaPlacementPerformance.find((placement) => placement.id === "bottom");
+        return top && bottom && bottom.ctaCtr > top.ctaCtr && bottom.ctaClicks >= top.ctaClicks + 1;
+    }).sort((a, b) => {
+        const aBottom = a.stats.ctaPlacementPerformance.find((placement) => placement.id === "bottom")?.ctaCtr ?? 0;
+        const bBottom = b.stats.ctaPlacementPerformance.find((placement) => placement.id === "bottom")?.ctaCtr ?? 0;
+        return bBottom - aBottom;
+    }).slice(0, 10);
+    const fallbackOften = rows.filter((row) => {
+        const fallback = row.stats.ctaPlacementPerformance.find((placement) => placement.id === "fallback");
+        const total = row.stats.ctaPlacementPerformance.reduce((sum, placement) => sum + placement.ctaClicks, 0);
+        return fallback && fallback.ctaClicks >= 3 && fallback.ctaClicks / Math.max(total, 1) >= 0.25;
+    }).sort((a, b) => {
+        const aFallback = a.stats.ctaPlacementPerformance.find((placement) => placement.id === "fallback")?.ctaClicks ?? 0;
+        const bFallback = b.stats.ctaPlacementPerformance.find((placement) => placement.id === "fallback")?.ctaClicks ?? 0;
+        return bFallback - aFallback;
+    }).slice(0, 10);
 
     return (
         <div className="space-y-6">
@@ -231,8 +243,55 @@ export default async function GuideAnalyticsPage({ searchParams }: { searchParam
             </div>
 
             <div className="grid gap-4 xl:grid-cols-2">
+                <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
+                    <div className="border-b border-gray-100 px-4 py-3">
+                        <h2 className="text-sm font-extrabold text-gray-900">Top CTA Variants Overall</h2>
+                    </div>
+                    <div className="divide-y divide-gray-100">
+                        {overallStats.ctaVariantPerformance.length > 0 ? overallStats.ctaVariantPerformance.slice(0, 8).map((variant) => (
+                            <div key={variant.id} className="grid grid-cols-[1fr_auto_auto] gap-3 px-4 py-3 text-sm">
+                                <span className="min-w-0 truncate font-bold text-gray-900">{variant.label}</span>
+                                <span className="font-extrabold text-gray-900">{formatPercent(variant.ctaCtr)}</span>
+                                <span className="text-xs font-semibold text-gray-500">{variant.ctaClicks} clicks</span>
+                            </div>
+                        )) : (
+                            <div className="px-4 py-8 text-center text-sm font-semibold text-gray-500">No CTA variant data yet.</div>
+                        )}
+                    </div>
+                </div>
+                <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
+                    <div className="border-b border-gray-100 px-4 py-3">
+                        <h2 className="text-sm font-extrabold text-gray-900">Top Placements Overall</h2>
+                    </div>
+                    <div className="divide-y divide-gray-100">
+                        {overallStats.ctaPlacementPerformance.length > 0 ? overallStats.ctaPlacementPerformance.slice(0, 8).map((placement) => (
+                            <div key={placement.id} className="grid grid-cols-[1fr_auto_auto] gap-3 px-4 py-3 text-sm">
+                                <span className="min-w-0 truncate font-bold text-gray-900">{placement.label}</span>
+                                <span className="font-extrabold text-gray-900">{formatPercent(placement.ctaCtr)}</span>
+                                <span className="text-xs font-semibold text-gray-500">{placement.offerClicks} offer clicks</span>
+                            </div>
+                        )) : (
+                            <div className="px-4 py-8 text-center text-sm font-semibold text-gray-500">No placement data yet.</div>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid gap-4 xl:grid-cols-2">
                 <GuideList title="Underperforming Guides" rows={underperforming} metric={(stats) => formatPercent(stats.ctaCtr)} />
                 <GuideList title="Views But No Clicks" rows={viewsNoClicks} metric={(stats) => stats.views} />
+            </div>
+
+            <div className="grid gap-4 xl:grid-cols-2">
+                <GuideList title="Bottom CTA Beats Top CTA" rows={bottomBeatsTop} metric={(stats) => {
+                    const top = stats.ctaPlacementPerformance.find((placement) => placement.id === "top")?.ctaCtr ?? 0;
+                    const bottom = stats.ctaPlacementPerformance.find((placement) => placement.id === "bottom")?.ctaCtr ?? 0;
+                    return `${formatPercent(bottom)} vs ${formatPercent(top)}`;
+                }} />
+                <GuideList title="Fallback CTA Used Often" rows={fallbackOften} metric={(stats) => {
+                    const fallback = stats.ctaPlacementPerformance.find((placement) => placement.id === "fallback")?.ctaClicks ?? 0;
+                    return fallback;
+                }} />
             </div>
         </div>
     );

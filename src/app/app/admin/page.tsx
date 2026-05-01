@@ -69,16 +69,16 @@ export default async function AdminHomePage() {
             description: "Base records used by offers and guides.",
         },
         {
-            label: "Ingested Offers",
+            label: "Legacy Offers",
             value: offersCountRes.count ?? 0,
             href: "/app/admin/offers",
-            description: "Pipeline-managed offers you can review and tune.",
+            description: "offers rows that feed redirects and unified_offers_view.",
         },
         {
-            label: "Manual Offers",
+            label: "Site Offers",
             value: siteOffersCountRes.count ?? 0,
             href: "/app/admin/site-offers",
-            description: "Hand-built compare-site offers for game pages.",
+            description: "site_offers rows for curated comparison routes.",
         },
         {
             label: "Guides",
@@ -143,7 +143,7 @@ export default async function AdminHomePage() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        <QuickLink href="/app/admin/site-offers/new" label="New manual offer" emphasis />
+                        <QuickLink href="/app/admin/site-offers/new" label="New site offer" emphasis />
                         <QuickLink href="/app/admin/games/new" label="New game" />
                         <QuickLink href="/app/admin/guides/batch-generate" label="Generate guides" />
                         <QuickLink href="/app/admin/blog-posts/new" label="New post" />
@@ -167,10 +167,10 @@ export default async function AdminHomePage() {
 
             <section className="grid gap-4 xl:grid-cols-2">
                 <RecentList
-                    title="Recent Manual Offers"
+                    title="Recent Site Offers"
                     description="Resume the records you were likely just touching."
                     items={recentSiteOffers}
-                    emptyLabel="Manual offers will show up here after they are created."
+                    emptyLabel="Site offers will show up here after they are created."
                     viewAllHref="/app/admin/site-offers"
                 />
                 <RecentList

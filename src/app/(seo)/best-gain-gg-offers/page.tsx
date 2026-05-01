@@ -20,6 +20,7 @@ export default async function BestGainOffersPage() {
   return (
     <BestOffersPageTemplate
       label="Gain.gg Focus"
+      pathname={config.pathname}
       title="Best Gain.gg Offers"
       intro={config.intro}
       rows={rows}

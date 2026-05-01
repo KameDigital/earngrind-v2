@@ -5,6 +5,7 @@ export type RedirectAttribution = {
     platform_name?: string;
     provider_name?: string;
     payout_usd?: number;
+    total_payout_usd?: number;
     click_location?: string;
     source_context?: string;
     destination_url?: string;
@@ -18,6 +19,7 @@ export type RedirectAttributionInput = {
     platform_name?: string | null;
     provider_name?: string | null;
     payout_usd?: number | string | null;
+    total_payout_usd?: number | string | null;
     click_location?: string | null;
     source_context?: string | null;
     destination_url?: string | null;
@@ -55,6 +57,7 @@ export function normalizeRedirectAttribution(
         platform_name: normalizeString(attribution.platform_name),
         provider_name: normalizeString(attribution.provider_name),
         payout_usd: normalizeNumber(attribution.payout_usd),
+        total_payout_usd: normalizeNumber(attribution.total_payout_usd),
         click_location: normalizeString(attribution.click_location),
         source_context: normalizeString(attribution.source_context),
         destination_url: normalizeString(attribution.destination_url),
@@ -77,6 +80,7 @@ export function buildRedirectAttributionSearchParams(
     if (normalized.platform_name) searchParams.set("platform_name", normalized.platform_name);
     if (normalized.provider_name) searchParams.set("provider_name", normalized.provider_name);
     if (normalized.payout_usd !== undefined) searchParams.set("payout_usd", String(normalized.payout_usd));
+    if (normalized.total_payout_usd !== undefined) searchParams.set("total_payout_usd", String(normalized.total_payout_usd));
     if (normalized.click_location) searchParams.set("click_location", normalized.click_location);
     if (normalized.source_context) searchParams.set("source_context", normalized.source_context);
     if (normalized.destination_url) searchParams.set("destination_url", normalized.destination_url);
@@ -94,6 +98,7 @@ export function readRedirectAttributionFromSearchParams(
         platform_name: searchParams.get("platform_name"),
         provider_name: searchParams.get("provider_name"),
         payout_usd: searchParams.get("payout_usd"),
+        total_payout_usd: searchParams.get("total_payout_usd"),
         click_location: searchParams.get("click_location") ?? searchParams.get("location"),
         source_context: searchParams.get("source_context"),
         destination_url: searchParams.get("destination_url"),

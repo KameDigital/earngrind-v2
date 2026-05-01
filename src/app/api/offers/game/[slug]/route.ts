@@ -1,29 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
+import { firstNonEmpty, shapePublicOffer } from "@/lib/public-offers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
-
-function firstNonEmpty(...values: Array<unknown>): string | null {
-    for (const value of values) {
-        if (typeof value !== "string") continue;
-        const trimmed = value.trim();
-        if (trimmed) return trimmed;
-    }
-    return null;
-}
-
-const isImageUrl = (url?: string | null) =>
-    typeof url === "string" &&
-    /\.(jpg|jpeg|png|webp)$/i.test(url);
-
-function getOfferImageUrl(row: Record<string, unknown>): string | null {
-    return firstNonEmpty(
-        row.image_url,
-        row.offer_image_url,
-        row.raw_image_url,
-    ) ?? (isImageUrl(firstNonEmpty(row.offer_url)) ? firstNonEmpty(row.offer_url) : null);
-}
 
 export async function GET(
     req: NextRequest,
@@ -48,17 +28,16 @@ export async function GET(
         );
     }
 
-    const { data: offers } = await supabase
-        .from("active_offers_view")
+    const { data: offerRows, error: offersError } = await supabase
+        .from("unified_offers_view")
         .select("*")
         .eq("game_slug", slug)
-        .order("payout_usd", { ascending: false });
+        .order("total_payout_usd", { ascending: false });
 
-    const { data: summary } = await supabase
-        .from("payout_max_by_game")
-        .select("offer_count, max_payout_usd, avg_payout_usd, min_payout_usd")
-        .eq("game_id", game.id)
-        .single();
+    if (offersError) {
+        console.error("[GET /api/offers/game/[slug]] offers failed", offersError);
+        return NextResponse.json({ error: "internal", message: offersError.message }, { status: 500 });
+    }
 
     const { data: guides } = await supabase
         .from("guides")
@@ -67,77 +46,59 @@ export async function GET(
         .eq("status", "published")
         .order("updated_at", { ascending: false });
 
-    const { data: comparisonRows } = await supabase
-        .from("site_offers")
-        .select(`
-            id,
-            payout_usd,
-            total_payout_usd,
-            goal_text,
-            offer_url,
-            image_url,
-            status,
-            site:platforms(name, slug),
-            provider:providers(name, slug),
-            tasks:site_offer_tasks(
-                id, sort_order, title, reward_amount, reward_display, task_type, time_limit_text
-            )
-        `)
-        .eq("game_id", game.id)
-        .eq("status", "active");
+    const shapedOffers = (offerRows ?? []).map((row) => shapePublicOffer(row));
+    const manualOfferIds = shapedOffers
+        .filter((row) => row.source === "manual")
+        .map((row) => row.id);
 
-    const shapedOffers = (offers ?? []).map((row) => ({
-        id: row.id,
-        title: row.title,
-        image_url: getOfferImageUrl(row),
-        payout_usd: row.payout_usd,
-        payout_type: row.payout_type,
-        devices: row.devices,
-        countries: row.countries,
-        is_featured: row.is_featured,
-        is_ath: row.is_ath,
-        is_new: row.is_new,
-        is_hot: row.is_hot,
-        is_boosted: row.is_boosted,
-        heat_score: row.heat_score,
-        offer_expires_at: row.offer_expires_at,
-        updated_at: row.updated_at,
-        redirect_url: `/go/${row.id}`,
-        game: {
-            id: row.game_id,
-            name: row.game_name,
-            slug: row.game_slug,
-            thumbnail_url: row.game_thumbnail,
-        },
-        platform: {
-            id: row.platform_id,
-            name: row.platform_name,
-            slug: row.platform_slug,
-            logo_url: row.platform_logo,
-            platform_kind: row.platform_kind,
-        },
-    }));
+    const { data: taskRows } = manualOfferIds.length
+        ? await supabase
+            .from("site_offer_tasks")
+            .select("site_offer_id, id, sort_order, title, reward_amount, reward_display, task_type, time_limit_text")
+            .in("site_offer_id", manualOfferIds)
+            .order("sort_order", { ascending: true })
+        : { data: [] };
 
-    const shapedComparisonOffers = (comparisonRows ?? [])
+    const taskMap = new Map<string, Array<{
+        id: string;
+        sort_order: number;
+        title: string;
+        reward_amount: number;
+        reward_display: string | null;
+        task_type: string;
+        time_limit_text: string | null;
+    }>>();
+
+    (taskRows ?? []).forEach((task) => {
+        const siteOfferId = String(task.site_offer_id);
+        const existing = taskMap.get(siteOfferId) ?? [];
+        existing.push({
+            id: String(task.id),
+            sort_order: Number(task.sort_order ?? 0),
+            title: String(task.title ?? "Offer milestone"),
+            reward_amount: Number(task.reward_amount ?? 0),
+            reward_display: firstNonEmpty(task.reward_display),
+            task_type: String(task.task_type ?? "other"),
+            time_limit_text: firstNonEmpty(task.time_limit_text),
+        });
+        taskMap.set(siteOfferId, existing);
+    });
+
+    const shapedComparisonOffers = shapedOffers
+        .filter((row) => row.source === "manual")
         .map((row) => {
-            const tasks = Array.isArray(row.tasks)
-                ? [...row.tasks].sort((a, b) => a.sort_order - b.sort_order)
-                : [];
-            const site = Array.isArray(row.site) ? row.site[0] ?? null : row.site;
-            const provider = Array.isArray(row.provider) ? row.provider[0] ?? null : row.provider;
-            const bestSinglePayout = Number(row.payout_usd ?? 0);
-            const totalPayout = Number(row.total_payout_usd ?? row.payout_usd ?? 0);
+            const tasks = taskMap.get(row.id) ?? [];
 
             return {
                 id: row.id,
-                provider_name: provider?.name ?? null,
-                platform_name: site?.name ?? null,
-                payout_usd: bestSinglePayout,
-                total_payout_usd: totalPayout,
+                provider_name: row.provider_name,
+                platform_name: row.platform.name,
+                payout_usd: row.payout_usd,
+                total_payout_usd: row.total_payout_usd,
                 task_count: tasks.length,
-                image_url: firstNonEmpty(row.image_url),
+                image_url: row.image_url,
                 redirect_url: `/go/${row.id}`,
-                offer_url: firstNonEmpty(row.offer_url),
+                offer_url: row.offer_url,
                 status: row.status,
                 goal_text: row.goal_text,
                 tasks,
@@ -163,10 +124,20 @@ export async function GET(
         ),
     };
 
-    if (offers?.[0]) {
+    const payoutValues = shapedOffers.map((row) => row.total_payout_usd).filter((value) => Number.isFinite(value));
+    const summary = {
+        offer_count: shapedOffers.length,
+        max_payout_usd: payoutValues.length ? Math.max(...payoutValues) : 0,
+        avg_payout_usd: payoutValues.length
+            ? payoutValues.reduce((sum, value) => sum + value, 0) / payoutValues.length
+            : 0,
+        min_payout_usd: payoutValues.length ? Math.min(...payoutValues) : 0,
+    };
+
+    if (offerRows?.[0]) {
         console.log("[/api/offers/game/[slug]] debug row", {
-            id: offers[0].id,
-            offer_url: typeof offers[0].offer_url === "string" ? offers[0].offer_url : null,
+            id: offerRows[0].id,
+            offer_url: typeof offerRows[0].offer_url === "string" ? offerRows[0].offer_url : null,
             image_url: shapedOffers[0]?.image_url ?? null,
             redirect_url: shapedOffers[0]?.redirect_url ?? null,
         });
@@ -184,12 +155,7 @@ export async function GET(
 
     return NextResponse.json({
         game,
-        summary: summary ?? {
-            offer_count: shapedOffers.length,
-            max_payout_usd: shapedOffers[0]?.payout_usd ?? 0,
-            avg_payout_usd: 0,
-            min_payout_usd: 0,
-        },
+        summary,
         offers: shapedOffers,
         comparison: {
             sort: comparisonSort,

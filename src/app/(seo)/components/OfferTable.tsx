@@ -226,14 +226,6 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
   const [expandedOffers, setExpandedOffers] = useState<Record<string, boolean>>({});
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
 
-  if (rows.length === 0) {
-    return (
-      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 text-sm text-[var(--text-secondary)]">
-        No offers found for this section.
-      </div>
-    );
-  }
-
   const providerOfferCounts = rows.reduce((acc, row) => {
     acc.set(row.providerName, (acc.get(row.providerName) ?? 0) + 1);
     return acc;
@@ -316,6 +308,14 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
       ...current,
       [id]: !current[id],
     }));
+  }
+
+  if (rows.length === 0) {
+    return (
+      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 text-sm text-[var(--text-secondary)]">
+        No offers found for this section.
+      </div>
+    );
   }
 
   return (

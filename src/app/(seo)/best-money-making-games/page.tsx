@@ -20,6 +20,7 @@ export default async function BestMoneyMakingGamesPage() {
   return (
     <BestOffersPageTemplate
       label="Earning Potential"
+      pathname={config.pathname}
       title="Best Money-Making Games"
       intro={config.intro}
       rows={rows}

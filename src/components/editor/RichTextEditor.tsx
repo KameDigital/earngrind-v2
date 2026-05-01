@@ -2,16 +2,26 @@
 
 import { useEffect } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
+import { Extension } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
+import UnderlineExtension from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import { TextStyle } from "@tiptap/extension-text-style";
+import Color from "@tiptap/extension-color";
+import FontFamily from "@tiptap/extension-font-family";
 import { Table } from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableHeader from "@tiptap/extension-table-header";
 import TableCell from "@tiptap/extension-table-cell";
 import {
+    AlignCenter,
+    AlignLeft,
+    AlignRight,
     Bold,
+    Columns3,
     Eraser,
     Heading2,
     Heading3,
@@ -21,11 +31,14 @@ import {
     List,
     ListOrdered,
     Pilcrow,
+    Palette,
     Quote,
     Redo2,
     Rows3,
     TableIcon,
     Trash2,
+    Type,
+    Underline as UnderlineIcon,
     Undo2,
 } from "lucide-react";
 
@@ -33,8 +46,71 @@ const toolbarButtonClass =
     "inline-flex h-9 min-w-9 items-center justify-center gap-1.5 rounded-md border border-transparent bg-white px-2.5 text-xs font-semibold text-gray-700 transition hover:border-gray-200 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-35 [&_*]:text-inherit";
 const activeToolbarButtonClass =
     "border-gray-900 bg-gray-900 text-white hover:bg-gray-800 hover:border-gray-800";
-const toolbarGroupClass = "flex flex-wrap items-center gap-1 rounded-lg border border-gray-200 bg-white p-1 shadow-sm";
+const toolbarGroupClass = "flex min-w-0 flex-wrap items-center gap-1 rounded-lg border border-gray-200 bg-white p-1 shadow-sm";
+const toolbarSelectClass =
+    "h-9 max-w-full rounded-md border border-gray-200 bg-white px-2 text-xs font-semibold text-gray-700 outline-none hover:border-gray-300";
 const iconClass = "h-4 w-4";
+
+const FONT_SIZES = ["12px", "14px", "16px", "18px", "20px", "24px", "28px", "32px"];
+const FONT_FAMILIES = [
+    { label: "Default", value: "" },
+    { label: "Arial", value: "Arial, sans-serif" },
+    { label: "Georgia", value: "Georgia, serif" },
+    { label: "Times", value: "Times New Roman, serif" },
+    { label: "Verdana", value: "Verdana, sans-serif" },
+    { label: "Mono", value: "ui-monospace, SFMono-Regular, Menlo, monospace" },
+];
+const TEXT_COLORS = ["#111827", "#374151", "#dc2626", "#d97706", "#65a30d", "#0284c7", "#7c3aed"];
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        fontSize: {
+            setFontSize: (fontSize: string) => ReturnType;
+            unsetFontSize: () => ReturnType;
+        };
+    }
+}
+
+const FontSize = Extension.create({
+    name: "fontSize",
+
+    addOptions() {
+        return {
+            types: ["textStyle"],
+        };
+    },
+
+    addGlobalAttributes() {
+        return [
+            {
+                types: this.options.types,
+                attributes: {
+                    fontSize: {
+                        default: null,
+                        parseHTML: (element) => element.style.fontSize?.replace(/['"]+/g, "") || null,
+                        renderHTML: (attributes) => {
+                            if (!attributes.fontSize) return {};
+                            return { style: `font-size: ${attributes.fontSize}` };
+                        },
+                    },
+                },
+            },
+        ];
+    },
+
+    addCommands() {
+        return {
+            setFontSize:
+                (fontSize: string) =>
+                    ({ chain }) =>
+                        chain().setMark("textStyle", { fontSize }).run(),
+            unsetFontSize:
+                () =>
+                    ({ chain }) =>
+                        chain().setMark("textStyle", { fontSize: null }).removeEmptyTextStyle().run(),
+        };
+    },
+});
 
 const SECTION_TEMPLATES = [
     {
@@ -123,6 +199,19 @@ export default function RichTextEditor({
                     levels: [2, 3],
                 },
             }),
+            TextStyle,
+            Color.configure({
+                types: ["textStyle"],
+            }),
+            FontFamily.configure({
+                types: ["textStyle"],
+            }),
+            FontSize,
+            UnderlineExtension,
+            TextAlign.configure({
+                types: ["heading", "paragraph"],
+                alignments: ["left", "center", "right"],
+            }),
             Link.configure({
                 openOnClick: false,
                 autolink: true,
@@ -152,7 +241,7 @@ export default function RichTextEditor({
         editorProps: {
             attributes: {
                 class:
-                    "prose prose-slate max-w-none min-h-[420px] px-5 py-5 focus:outline-none prose-headings:scroll-mt-24 prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-th:bg-gray-100 prose-td:border",
+                    "prose prose-slate max-w-none min-h-[420px] px-5 py-5 focus:outline-none prose-headings:scroll-mt-24 prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-th:bg-gray-100 prose-td:border prose-td:px-3 prose-th:px-3",
             },
             transformPastedHTML: cleanPastedHtml,
         },
@@ -200,6 +289,24 @@ export default function RichTextEditor({
         if (value === "blockquote") editor.chain().focus().toggleBlockquote().run();
     }
 
+    function changeFontSize(value: string) {
+        if (!editor) return;
+        if (!value) {
+            editor.chain().focus().unsetFontSize().run();
+            return;
+        }
+        editor.chain().focus().setFontSize(value).run();
+    }
+
+    function changeFontFamily(value: string) {
+        if (!editor) return;
+        if (!value) {
+            editor.chain().focus().unsetFontFamily().run();
+            return;
+        }
+        editor.chain().focus().setFontFamily(value).run();
+    }
+
     const currentBlock = editor.isActive("heading", { level: 2 })
         ? "heading-2"
         : editor.isActive("heading", { level: 3 })
@@ -207,17 +314,20 @@ export default function RichTextEditor({
             : editor.isActive("blockquote")
                 ? "blockquote"
                 : "paragraph";
+    const currentFontSize = editor.getAttributes("textStyle").fontSize || "";
+    const currentFontFamily = editor.getAttributes("textStyle").fontFamily || "";
+    const currentColor = editor.getAttributes("textStyle").color || "#111827";
 
     return (
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-            <div className="sticky top-0 z-20 space-y-2 border-b border-gray-200 bg-white/95 px-3 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+        <div className="max-w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div className="sticky top-0 z-20 max-w-full space-y-2 border-b border-gray-200 bg-white/95 px-3 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/85">
                 <div className="flex flex-wrap items-center gap-2">
                     <div className={toolbarGroupClass}>
                         <select
                             aria-label="Text style"
                             value={currentBlock}
                             onChange={(event) => changeBlock(event.target.value)}
-                            className="h-9 rounded-md border border-gray-200 bg-white px-2 text-xs font-semibold text-gray-700 outline-none hover:border-gray-300"
+                            className={toolbarSelectClass}
                         >
                             <option value="paragraph">Normal text</option>
                             <option value="heading-2">Heading 2</option>
@@ -248,6 +358,35 @@ export default function RichTextEditor({
                     </div>
 
                     <div className={toolbarGroupClass}>
+                        <Type className="ml-1 h-4 w-4 text-gray-400" />
+                        <select
+                            aria-label="Font family"
+                            value={currentFontFamily}
+                            onChange={(event) => changeFontFamily(event.target.value)}
+                            className={`${toolbarSelectClass} w-28 sm:w-36`}
+                        >
+                            {FONT_FAMILIES.map((font) => (
+                                <option key={font.label} value={font.value}>
+                                    {font.label}
+                                </option>
+                            ))}
+                        </select>
+                        <select
+                            aria-label="Font size"
+                            value={currentFontSize}
+                            onChange={(event) => changeFontSize(event.target.value)}
+                            className={`${toolbarSelectClass} w-20`}
+                        >
+                            <option value="">Size</option>
+                            {FONT_SIZES.map((size) => (
+                                <option key={size} value={size}>
+                                    {size.replace("px", "")}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
                         <ToolbarButton
                             active={editor.isActive("bold")}
                             onClick={() => editor.chain().focus().toggleBold().run()}
@@ -265,12 +404,64 @@ export default function RichTextEditor({
                             <Italic className={iconClass} />
                         </ToolbarButton>
                         <ToolbarButton
+                            active={editor.isActive("underline")}
+                            onClick={() => editor.chain().focus().toggleUnderline().run()}
+                            disabled={!editor.can().chain().focus().toggleUnderline().run()}
+                            title="Underline"
+                        >
+                            <UnderlineIcon className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
                             active={editor.isActive("blockquote")}
                             onClick={() => editor.chain().focus().toggleBlockquote().run()}
                             title="Quote"
                         >
                             <Quote className={iconClass} />
                         </ToolbarButton>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
+                        <ToolbarButton
+                            active={editor.isActive({ textAlign: "left" })}
+                            onClick={() => editor.chain().focus().setTextAlign("left").run()}
+                            title="Align left"
+                        >
+                            <AlignLeft className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            active={editor.isActive({ textAlign: "center" })}
+                            onClick={() => editor.chain().focus().setTextAlign("center").run()}
+                            title="Align center"
+                        >
+                            <AlignCenter className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            active={editor.isActive({ textAlign: "right" })}
+                            onClick={() => editor.chain().focus().setTextAlign("right").run()}
+                            title="Align right"
+                        >
+                            <AlignRight className={iconClass} />
+                        </ToolbarButton>
+                    </div>
+
+                    <div className={toolbarGroupClass}>
+                        <Palette className="ml-1 h-4 w-4 text-gray-400" />
+                        <div className="flex items-center gap-1">
+                            {TEXT_COLORS.map((color) => (
+                                <button
+                                    key={color}
+                                    type="button"
+                                    title={`Text color ${color}`}
+                                    aria-label={`Text color ${color}`}
+                                    onClick={() => editor.chain().focus().setColor(color).run()}
+                                    className={`h-7 w-7 rounded-md border transition hover:scale-105 ${currentColor === color ? "border-gray-900 ring-2 ring-gray-200" : "border-gray-200"}`}
+                                    style={{ backgroundColor: color }}
+                                />
+                            ))}
+                            <ToolbarButton onClick={() => editor.chain().focus().unsetColor().run()} title="Clear text color">
+                                <Eraser className={iconClass} />
+                            </ToolbarButton>
+                        </div>
                     </div>
 
                     <div className={toolbarGroupClass}>
@@ -318,6 +509,27 @@ export default function RichTextEditor({
                             title="Add row"
                         >
                             <Rows3 className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            onClick={() => editor.chain().focus().addColumnAfter().run()}
+                            disabled={!editor.isActive("table")}
+                            title="Add column"
+                        >
+                            <Columns3 className={iconClass} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            onClick={() => editor.chain().focus().deleteRow().run()}
+                            disabled={!editor.isActive("table")}
+                            title="Delete row"
+                        >
+                            <Rows3 className={`${iconClass} rotate-90`} />
+                        </ToolbarButton>
+                        <ToolbarButton
+                            onClick={() => editor.chain().focus().deleteColumn().run()}
+                            disabled={!editor.isActive("table")}
+                            title="Delete column"
+                        >
+                            <Columns3 className={`${iconClass} rotate-90`} />
                         </ToolbarButton>
                         <ToolbarButton
                             onClick={() => editor.chain().focus().deleteTable().run()}

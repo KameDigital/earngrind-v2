@@ -30,6 +30,8 @@ export function sanitizeGuideHtml(html: string): string {
             "p",
             "strong",
             "em",
+            "u",
+            "span",
             "ul",
             "ol",
             "li",
@@ -49,11 +51,27 @@ export function sanitizeGuideHtml(html: string): string {
         allowedAttributes: {
             a: ["href", "target", "rel"],
             img: ["src", "alt", "title", "width", "height"],
+            p: ["style"],
+            span: ["style"],
             div: ["class"],
             th: ["colspan", "rowspan"],
             td: ["colspan", "rowspan"],
-            h2: ["id"],
-            h3: ["id"],
+            h2: ["id", "style"],
+            h3: ["id", "style"],
+        },
+        allowedStyles: {
+            "*": {
+                color: [/^#[0-9a-f]{3,6}$/i, /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/i],
+                "font-size": [/^(12|14|16|18|20|24|28|32)px$/],
+                "font-family": [
+                    /^Arial,\s*sans-serif$/,
+                    /^Georgia,\s*serif$/,
+                    /^Times New Roman,\s*serif$/,
+                    /^Verdana,\s*sans-serif$/,
+                    /^ui-monospace,\s*SFMono-Regular,\s*Menlo,\s*monospace$/,
+                ],
+                "text-align": [/^(left|center|right)$/],
+            },
         },
         allowedSchemes: ["http", "https", "mailto"],
         transformTags: {

@@ -9,22 +9,45 @@ import {
 import { generateSeoKeywords } from "@/lib/seo-keyword-map";
 import { analyzeGuideQuality } from "@/lib/guide-quality";
 import { detectCannibalization } from "@/lib/keyword-cannibalization";
+import {
+  buildResearchReviewDraft,
+  type ResearchReviewType,
+} from "@/lib/research-review-generator";
+import { calculateResearchConfidenceScore } from "@/lib/research-extractor";
 
 const MAX_GUIDES = 100;
 
 type BatchGenerateRequest = {
   action?: "preview" | "save";
+  generatorMode?: "guide" | "research_review";
+  targets?: ResearchBatchTarget[];
   batchName?: string;
   guideType?: GuideType;
+  reviewType?: ResearchReviewType;
+  targetName?: string;
   gameName?: string;
   platform?: string;
+  platformName?: string;
   maxPayout?: string | number | null;
   numberOfGuides?: string | number | null;
   taskListRaw?: string;
+  sourceUrls?: string[] | string;
+  researchNotes?: string;
+  useStoredResearch?: boolean;
   generateFromTaskList?: boolean;
   createMultipleLongTail?: boolean;
   aggressiveMode?: boolean;
   drafts?: SaveGuideDraft[];
+};
+
+type ResearchBatchTarget = {
+  targetName: string;
+  type?: "platform" | "game" | "offer" | "general" | "comparison";
+  reviewType?: ResearchReviewType;
+  opportunityScore?: number | null;
+  opportunityLabel?: string | null;
+  researchSourceCount?: number | null;
+  highestPayout?: number | null;
 };
 
 type SaveGuideDraft = {
@@ -54,6 +77,20 @@ type SaveGuideDraft = {
   keywordIntent?: string | null;
   contentSimilarityScore?: number | null;
   needsVariation?: boolean | null;
+  reviewType?: ResearchReviewType | string | null;
+  researchSummary?: string | null;
+  researchConfidenceScore?: number | null;
+  sourceUrls?: string[] | null;
+  claimsNeedingVerification?: string[] | null;
+  pros?: string[] | null;
+  cons?: string[] | null;
+  reviewRating?: number | null;
+  targetName?: string | null;
+  opportunityScore?: number | null;
+  opportunityLabel?: string | null;
+  researchSourceCount?: number | null;
+  highestPayout?: number | null;
+  targetWarnings?: string[] | null;
 };
 
 function slugify(value: string) {
@@ -74,6 +111,24 @@ function clampGuideCount(value: string | number | null | undefined) {
   const parsed = parseOptionalNumber(value);
   if (!parsed) return 50;
   return Math.max(1, Math.min(MAX_GUIDES, Math.floor(parsed)));
+}
+
+function parseSourceUrls(value: string[] | string | undefined) {
+  if (Array.isArray(value)) return value.map((url) => url.trim()).filter(Boolean);
+  return (value ?? "").split(/\r?\n/).map((url) => url.trim()).filter(Boolean);
+}
+
+function mapReviewTypeToGuideType(reviewType: ResearchReviewType): GuideType {
+  if (reviewType === "platform" || reviewType === "offerwall") return "platform_review";
+  if (reviewType === "comparison") return "offer_comparison";
+  return "game_offer";
+}
+
+function reviewTypeFromTarget(target: ResearchBatchTarget | undefined, fallback: ResearchReviewType): ResearchReviewType {
+  if (target?.reviewType) return target.reviewType;
+  if (target?.type === "platform") return "platform";
+  if (target?.type === "comparison") return "comparison";
+  return fallback;
 }
 
 async function checkAdmin(supabase: ReturnType<typeof createClient>) {
@@ -332,6 +387,225 @@ async function buildPreviewDrafts(supabase: ReturnType<typeof createClient>, bod
   };
 }
 
+async function buildResearchPreviewDrafts(supabase: ReturnType<typeof createClient>, body: BatchGenerateRequest, batchTarget?: ResearchBatchTarget) {
+  const reviewType = reviewTypeFromTarget(batchTarget, body.reviewType ?? "platform");
+  const guideType = mapReviewTypeToGuideType(reviewType);
+  const batchName = body.batchName?.trim() || `Research review batch ${new Date().toISOString().slice(0, 10)}`;
+  const targetName = batchTarget?.targetName?.trim() || body.targetName?.trim() || body.gameName?.trim() || body.platformName?.trim() || body.platform?.trim() || "Research Review";
+  const gameNameInput = body.gameName?.trim() || (reviewType === "game_offer" ? targetName : "");
+  const platformName = body.platformName?.trim() || body.platform?.trim() || (reviewType !== "game_offer" ? targetName : "");
+  const taskListRaw = body.taskListRaw?.trim() ?? "";
+  const sourceUrls = parseSourceUrls(body.sourceUrls);
+  const game = await findGameId(supabase, gameNameInput);
+
+  if (!game?.id) {
+    throw new Error("At least one game row is required before research reviews can be generated.");
+  }
+
+  const offerFilters = [
+    targetName ? `title.ilike.%${targetName}%` : null,
+    targetName ? `game_name.ilike.%${targetName}%` : null,
+    platformName ? `platform_name.ilike.%${platformName}%` : null,
+    platformName ? `provider_name.ilike.%${platformName}%` : null,
+  ].filter(Boolean).join(",");
+
+  const { data: offerRows } = offerFilters
+    ? await supabase
+      .from("unified_offers_view")
+      .select("title, game_name, platform_name, provider_name, payout_usd, goal_text")
+      .or(offerFilters)
+      .order("payout_usd", { ascending: false })
+      .limit(8)
+    : { data: [] };
+
+  const internalResearchNotes = (offerRows ?? []).map((offer) => {
+    const payout = typeof offer.payout_usd === "number" ? `$${offer.payout_usd.toFixed(2)}` : "payout needs verification";
+    return `EarnGrind data: ${offer.title ?? offer.game_name ?? targetName} on ${offer.platform_name ?? "unknown platform"} via ${offer.provider_name ?? "unknown provider"} shows ${payout}. ${offer.goal_text ?? ""}`.trim();
+  }).join("\n");
+
+  const researchTargets = Array.from(new Set([targetName, gameNameInput, platformName].map((value) => value.trim()).filter(Boolean)));
+  const storedResearchFilter = researchTargets.map((value) => `target_name.ilike.%${value}%`).join(",");
+  const { data: storedResearch } = body.useStoredResearch && storedResearchFilter
+    ? await supabase
+      .from("research_entries")
+      .select("target_name, source_url, raw_text, extracted_data, tags")
+      .or(storedResearchFilter)
+      .order("updated_at", { ascending: false })
+      .limit(20)
+    : { data: [] };
+
+  const storedResearchNotes = (storedResearch ?? []).map((entry) => {
+    const extracted = entry.extracted_data as Record<string, unknown> | null;
+    const complaints = Array.isArray(extracted?.complaints) ? extracted.complaints.slice(0, 3).join("; ") : "";
+    const payouts = Array.isArray(extracted?.payoutMentions) ? extracted.payoutMentions.slice(0, 5).join(", ") : "";
+    const requirements = Array.isArray(extracted?.requirements) ? extracted.requirements.slice(0, 3).join("; ") : "";
+    return [
+      `Stored research for ${entry.target_name}: ${entry.raw_text}`,
+      payouts ? `Payout reality mentions: ${payouts}` : "",
+      complaints ? `Common complaints: ${complaints}` : "",
+      requirements ? `Requirements mentioned: ${requirements}` : "",
+    ].filter(Boolean).join("\n");
+  }).join("\n\n");
+
+  const inferredMaxPayout = Math.max(0, ...(offerRows ?? []).map((offer) => typeof offer.payout_usd === "number" ? offer.payout_usd : 0));
+  const maxPayout = parseOptionalNumber(body.maxPayout) ?? (inferredMaxPayout > 0 ? inferredMaxPayout : null);
+
+  const draft = buildResearchReviewDraft({
+    reviewType,
+    targetName,
+    platformName,
+    gameName: gameNameInput || game.name || undefined,
+    sourceUrls: Array.from(new Set([...sourceUrls, ...(storedResearch ?? []).map((entry) => entry.source_url).filter(Boolean) as string[]])),
+    researchNotes: [body.researchNotes?.trim(), storedResearchNotes, internalResearchNotes].filter(Boolean).join("\n\n"),
+    taskListRaw,
+    maxPayout,
+  });
+  const storedResearchConfidence = calculateResearchConfidenceScore((storedResearch ?? []).map((entry) => ({ extracted_data: entry.extracted_data as never })));
+  const researchConfidenceScore = Math.max(draft.researchConfidenceScore, storedResearchConfidence);
+
+  const reservedSlugs = new Set<string>();
+  const slug = await makeUniqueSlug(supabase, draft.slugBase, reservedSlugs);
+  const bodyHtml = renderMarkdown(draft.bodyHtml);
+  const quality = analyzeGuideQuality({
+    bodyHtml,
+    seoTitle: draft.seoTitle,
+    seoDescription: draft.seoDescription,
+    keywordTarget: draft.keywordTarget,
+  });
+
+  const { data: recentGuides } = await supabase
+    .from("guides")
+    .select("id, title, body_md, keyword_target, keyword_cluster_id, keyword_intent")
+    .order("updated_at", { ascending: false })
+    .limit(20);
+  const { data: targetGuides } = await supabase
+    .from("guides")
+    .select("id, status")
+    .or(`title.ilike.%${targetName}%,keyword_target.ilike.%${targetName}%,platform_name.ilike.%${targetName}%`)
+    .limit(20);
+  const publishedCount = (targetGuides ?? []).filter((guide) => guide.status === "published").length;
+  const draftCount = (targetGuides ?? []).filter((guide) => guide.status === "draft" || guide.status === "needs_review").length;
+  const targetWarnings = [
+    ...(publishedCount > 0 ? [`${publishedCount} published guide/review already exists for this target.`] : []),
+    ...(draftCount > 0 ? [`${draftCount} draft or needs-review guide already exists for this target.`] : []),
+  ];
+
+  const preview = {
+    previewId: `research-${slug}`,
+    selected: true,
+    variant: "research_review",
+    title: draft.title,
+    slug,
+    keywordTarget: draft.keywordTarget,
+    seoTitle: draft.seoTitle,
+    seoDescription: draft.seoDescription,
+    excerpt: draft.excerpt,
+    bodyHtml,
+    difficulty: "Needs editor review",
+    estimatedCompletionTime: "Needs editor review",
+    maxRewardAmount: maxPayout,
+    targetName,
+    opportunityScore: batchTarget?.opportunityScore ?? null,
+    opportunityLabel: batchTarget?.opportunityLabel ?? null,
+    researchSourceCount: batchTarget?.researchSourceCount ?? storedResearch?.length ?? 0,
+    highestPayout: batchTarget?.highestPayout ?? maxPayout,
+    targetWarnings,
+    tips: [],
+    checklistItems: [],
+    internalLinkSuggestions: [
+      { label: "Compare highest-paying GPT offers", href: "/offers", type: "offers" },
+      { label: "Browse game offer guides", href: "/guides", type: "guides" },
+      ...(game?.slug ? [{ label: `${game.name} game page`, href: `/games/${game.slug}`, type: "game" }] : []),
+      ...(platformName ? [{ label: `${platformName} review`, href: `/review/${slugify(platformName)}`, type: "review" }] : []),
+    ],
+    parsedTasks: [],
+    guideType,
+    batchName,
+    taskListRaw,
+    gameId: game.id,
+    gameName: gameNameInput || game.name || targetName,
+    platformName,
+    quality,
+    angleType: "warning-focused",
+    keywordClusterId: slugify(targetName),
+    keywordIntent: reviewType === "comparison" ? "comparison" : "roi",
+    contentSimilarityScore: null,
+    needsVariation: false,
+    reviewType,
+    researchSummary: `${draft.researchSummary}${storedResearch?.length ? ` Used ${storedResearch.length} stored research entries.` : ""}`,
+    researchConfidenceScore,
+    sourceUrls: draft.sourceUrls,
+    claimsNeedingVerification: draft.claimsNeedingVerification,
+    pros: draft.pros,
+    cons: draft.cons,
+    reviewRating: draft.rating,
+  };
+
+  const cannibalizationIssues = detectCannibalization([
+    ...(recentGuides ?? []).map((guide) => ({
+      id: guide.id,
+      title: guide.title,
+      keyword_target: guide.keyword_target,
+      keyword_cluster_id: guide.keyword_cluster_id,
+      keyword_intent: guide.keyword_intent,
+    })),
+    {
+      id: preview.previewId,
+      title: preview.title,
+      keywordTarget: preview.keywordTarget,
+      keywordClusterId: preview.keywordClusterId,
+      keywordIntent: preview.keywordIntent,
+    },
+  ]);
+
+  return {
+    batchName,
+    count: 1,
+    game: { id: game.id, name: game.name, slug: game.slug },
+    drafts: [{
+      ...preview,
+      cannibalizationIssues: cannibalizationIssues.filter((issue) => issue.guideIds.includes(preview.previewId)),
+    }],
+    cannibalizationIssues,
+  };
+}
+
+async function buildResearchBatchPreviewDrafts(
+  supabase: ReturnType<typeof createClient>,
+  body: BatchGenerateRequest,
+  targets: ResearchBatchTarget[],
+) {
+  const batchName = body.batchName?.trim() || `Research Batch - ${new Date().toISOString().slice(0, 10)}`;
+  const groups = [];
+  const drafts = [];
+  const cannibalizationIssues = [];
+
+  for (const target of targets) {
+    const preview = await buildResearchPreviewDrafts(supabase, { ...body, batchName }, target);
+    const groupDrafts = preview.drafts ?? [];
+    drafts.push(...groupDrafts);
+    cannibalizationIssues.push(...(preview.cannibalizationIssues ?? []));
+    groups.push({
+      targetName: target.targetName,
+      type: target.type ?? "general",
+      opportunityScore: target.opportunityScore ?? null,
+      opportunityLabel: target.opportunityLabel ?? null,
+      researchSourceCount: target.researchSourceCount ?? null,
+      highestPayout: target.highestPayout ?? null,
+      draftIds: groupDrafts.map((draft) => draft.previewId),
+      warnings: Array.from(new Set(groupDrafts.flatMap((draft) => draft.targetWarnings ?? []))),
+    });
+  }
+
+  return {
+    batchName,
+    count: drafts.length,
+    groups,
+    drafts,
+    cannibalizationIssues,
+  };
+}
+
 export async function POST(req: NextRequest) {
   const supabase = createClient();
   const user = await checkAdmin(supabase);
@@ -342,7 +616,12 @@ export async function POST(req: NextRequest) {
 
   if (action === "preview") {
     try {
-      const preview = await buildPreviewDrafts(supabase, body);
+      const validTargets = (body.targets ?? []).filter((target) => target.targetName?.trim()).slice(0, MAX_GUIDES);
+      const preview = body.generatorMode === "research_review" && validTargets.length > 0
+        ? await buildResearchBatchPreviewDrafts(supabase, body, validTargets)
+        : body.generatorMode === "research_review"
+          ? await buildResearchPreviewDrafts(supabase, body)
+          : await buildPreviewDrafts(supabase, body);
       return NextResponse.json(preview);
     } catch (error) {
       return NextResponse.json({ error: error instanceof Error ? error.message : "Preview generation failed." }, { status: 422 });
@@ -368,14 +647,19 @@ export async function POST(req: NextRequest) {
       estimated_time: draft.estimatedCompletionTime,
       max_payout_usd: draft.maxRewardAmount,
       tips: Array.isArray(draft.tips) ? draft.tips : [],
-      key_takeaways: `Keyword target: ${draft.keywordTarget}`,
+      key_takeaways: [
+        `Keyword target: ${draft.keywordTarget}`,
+        draft.targetName ? `Research target: ${draft.targetName}` : null,
+        typeof draft.opportunityScore === "number" ? `Opportunity score: ${draft.opportunityScore}` : null,
+        draft.opportunityLabel ? `Opportunity label: ${draft.opportunityLabel}` : null,
+      ].filter(Boolean).join("\n"),
       checklist_items: Array.isArray(draft.checklistItems) ? draft.checklistItems : [],
       layout_style: "classic",
       show_related_offers: true,
       show_related_guides: true,
       seo_title: draft.seoTitle,
       seo_description: draft.seoDescription,
-      status: "draft",
+      status: typeof draft.researchConfidenceScore === "number" && draft.researchConfidenceScore < 50 ? "needs_review" : "draft",
       platform_filter: "android",
       author_id: user.id,
       keyword_target: draft.keywordTarget,
@@ -390,6 +674,14 @@ export async function POST(req: NextRequest) {
       keyword_intent: draft.keywordIntent || null,
       content_uniqueness_score: draft.contentSimilarityScore ?? null,
       needs_variation: Boolean(draft.needsVariation),
+      review_type: draft.reviewType || null,
+      research_summary: draft.researchSummary || null,
+      research_confidence_score: draft.researchConfidenceScore ?? null,
+      source_urls: Array.isArray(draft.sourceUrls) ? draft.sourceUrls : [],
+      claims_needing_verification: Array.isArray(draft.claimsNeedingVerification) ? draft.claimsNeedingVerification : [],
+      pros: Array.isArray(draft.pros) ? draft.pros : [],
+      cons: Array.isArray(draft.cons) ? draft.cons : [],
+      review_rating: draft.reviewRating ?? null,
     });
   }
 

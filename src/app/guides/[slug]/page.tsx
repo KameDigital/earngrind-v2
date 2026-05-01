@@ -8,6 +8,7 @@ import GuideJsonLd from "./GuideJsonLd";
 import ClassicLayout from "./layouts/ClassicLayout";
 import StepsLayout  from "./layouts/StepsLayout";
 import ProLayout    from "./layouts/ProLayout";
+import GuidePerformanceTracker from "./GuidePerformanceTracker";
 
 // ---------------------------------------------------------------
 // TYPES
@@ -143,6 +144,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
 
     return (
         <div className="min-h-screen bg-[#f5f5f0]">
+            <GuidePerformanceTracker guideId={guide.id} guideSlug={guide.slug} />
 
             {/* JSON-LD structured data */}
             <GuideJsonLd

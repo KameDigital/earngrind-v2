@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { GUIDE_TYPE_LABELS, type GuideType } from "@/lib/seo-guide-templates";
 
 type Quality = {
@@ -43,6 +44,20 @@ type PreviewGuideDraft = {
   keywordIntent?: string | null;
   contentSimilarityScore?: number | null;
   needsVariation?: boolean | null;
+  reviewType?: ResearchReviewType | string | null;
+  researchSummary?: string | null;
+  researchConfidenceScore?: number | null;
+  sourceUrls?: string[] | null;
+  claimsNeedingVerification?: string[] | null;
+  pros?: string[] | null;
+  cons?: string[] | null;
+  reviewRating?: number | null;
+  targetName?: string | null;
+  opportunityScore?: number | null;
+  opportunityLabel?: string | null;
+  researchSourceCount?: number | null;
+  highestPayout?: number | null;
+  targetWarnings?: string[] | null;
   cannibalizationIssues?: Array<{ severity: "block" | "warning"; message: string; type: string }>;
 };
 
@@ -55,6 +70,28 @@ type SavedGuideRow = {
   guide_type: string | null;
 };
 
+type GeneratorMode = "guide" | "research_review";
+type ResearchReviewType = "platform" | "game_offer" | "offerwall" | "comparison";
+type ResearchBatchTarget = {
+  targetName: string;
+  type?: "platform" | "game" | "offer" | "general" | "comparison";
+  reviewType?: ResearchReviewType;
+  opportunityScore?: number | null;
+  opportunityLabel?: string | null;
+  researchSourceCount?: number | null;
+  highestPayout?: number | null;
+};
+type PreviewGroup = {
+  targetName: string;
+  type?: string;
+  opportunityScore?: number | null;
+  opportunityLabel?: string | null;
+  researchSourceCount?: number | null;
+  highestPayout?: number | null;
+  draftIds: string[];
+  warnings?: string[];
+};
+
 const inputClass = "w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm focus:border-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200";
 const labelClass = "mb-1.5 block text-xs font-bold uppercase tracking-widest text-gray-500";
 
@@ -64,6 +101,14 @@ const VARIANT_LABELS: Record<string, string> = {
   highest_payout: "Highest Payout",
   purchase: "Purchase Strategy",
   worth_it: "Worth-It / ROI",
+  research_review: "Research Review",
+};
+
+const REVIEW_TYPE_LABELS: Record<ResearchReviewType, string> = {
+  platform: "Platform Review",
+  game_offer: "Game Offer Review",
+  offerwall: "Offerwall Review",
+  comparison: "Comparison Review",
 };
 
 function Toggle({
@@ -99,21 +144,67 @@ function updateDraftField<K extends keyof PreviewGuideDraft>(
   return drafts.map((draft) => draft.previewId === previewId ? { ...draft, [key]: value } : draft);
 }
 
+function researchConfidenceLabel(score: number | null | undefined) {
+  if (typeof score !== "number") return null;
+  if (score >= 90) return "Strong research";
+  if (score >= 70) return "Good research";
+  if (score >= 50) return "Needs editor review";
+  return "Thin research";
+}
+
+function reviewTypeFromQuery(value: string | null): ResearchReviewType {
+  if (value === "platform") return "platform";
+  if (value === "offer" || value === "game") return "game_offer";
+  if (value === "comparison") return "comparison";
+  return "platform";
+}
+
+function decodeTargets(value: string | null): ResearchBatchTarget[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(decodeURIComponent(value));
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .map((target) => ({
+        targetName: String(target.targetName ?? "").trim(),
+        type: target.type,
+        reviewType: target.reviewType,
+        opportunityScore: typeof target.opportunityScore === "number" ? target.opportunityScore : null,
+        opportunityLabel: target.opportunityLabel ? String(target.opportunityLabel) : null,
+        researchSourceCount: typeof target.researchSourceCount === "number" ? target.researchSourceCount : null,
+        highestPayout: typeof target.highestPayout === "number" ? target.highestPayout : null,
+      }))
+      .filter((target) => target.targetName);
+  } catch {
+    return [];
+  }
+}
+
 export default function BatchGuideGenerator() {
-  const [batchName, setBatchName] = useState("");
+  const searchParams = useSearchParams();
+  const initialTargets = decodeTargets(searchParams.get("targets"));
+  const [generatorMode, setGeneratorMode] = useState<GeneratorMode>(searchParams.get("mode") === "research_review" ? "research_review" : "guide");
+  const [batchName, setBatchName] = useState(searchParams.get("batchName") ?? "");
   const [guideType, setGuideType] = useState<GuideType>("game_offer");
+  const [reviewType, setReviewType] = useState<ResearchReviewType>(reviewTypeFromQuery(searchParams.get("type")));
+  const [targetName, setTargetName] = useState(searchParams.get("target") ?? initialTargets[0]?.targetName ?? "");
   const [gameName, setGameName] = useState("");
   const [platform, setPlatform] = useState("");
   const [maxPayout, setMaxPayout] = useState("");
   const [numberOfGuides, setNumberOfGuides] = useState("50");
   const [taskListRaw, setTaskListRaw] = useState("");
+  const [researchNotes, setResearchNotes] = useState("");
+  const [sourceUrlsRaw, setSourceUrlsRaw] = useState("");
+  const [useStoredResearch, setUseStoredResearch] = useState(searchParams.get("useStoredResearch") !== "0");
   const [generateFromTaskList, setGenerateFromTaskList] = useState(true);
-  const [createMultipleLongTail, setCreateMultipleLongTail] = useState(true);
-  const [aggressiveMode, setAggressiveMode] = useState(true);
+  const [createMultipleLongTail, setCreateMultipleLongTail] = useState(searchParams.get("createMultipleLongTail") !== "0");
+  const [aggressiveMode, setAggressiveMode] = useState(searchParams.get("aggressiveMode") !== "0");
   const [previewing, setPreviewing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [previewDrafts, setPreviewDrafts] = useState<PreviewGuideDraft[]>([]);
+  const [selectedTargets, setSelectedTargets] = useState<ResearchBatchTarget[]>(initialTargets);
+  const [previewGroups, setPreviewGroups] = useState<PreviewGroup[]>([]);
   const [savedGuides, setSavedGuides] = useState<SavedGuideRow[]>([]);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
@@ -135,13 +226,20 @@ export default function BatchGuideGenerator() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "preview",
+          generatorMode,
           batchName,
           guideType,
+          reviewType,
+          targetName,
+          targets: selectedTargets,
           gameName,
           platform,
           maxPayout,
           numberOfGuides,
           taskListRaw,
+          researchNotes,
+          sourceUrls: sourceUrlsRaw,
+          useStoredResearch,
           generateFromTaskList,
           createMultipleLongTail,
           aggressiveMode,
@@ -151,6 +249,7 @@ export default function BatchGuideGenerator() {
       const json = await response.json();
       if (!response.ok) throw new Error(json.error ?? "Preview generation failed.");
       setPreviewDrafts(Array.isArray(json.drafts) ? json.drafts : []);
+      setPreviewGroups(Array.isArray(json.groups) ? json.groups : []);
     } catch (previewError) {
       setError(previewError instanceof Error ? previewError.message : "Preview generation failed.");
     } finally {
@@ -169,6 +268,7 @@ export default function BatchGuideGenerator() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "save",
+          generatorMode,
           batchName,
           guideType,
           platform,
@@ -180,11 +280,16 @@ export default function BatchGuideGenerator() {
       if (!response.ok) throw new Error(json.error ?? "Save failed.");
       setSavedGuides(Array.isArray(json.guides) ? json.guides : []);
       setPreviewDrafts([]);
+      setPreviewGroups([]);
     } catch (saveError) {
       setError(saveError instanceof Error ? saveError.message : "Save failed.");
     } finally {
       setSaving(false);
     }
+  }
+
+  function removeTarget(targetNameToRemove: string) {
+    setSelectedTargets((targets) => targets.filter((target) => target.targetName !== targetNameToRemove));
   }
 
   function selectAll(selected: boolean) {
@@ -223,19 +328,63 @@ export default function BatchGuideGenerator() {
         <div className="space-y-6">
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <h2 className="text-sm font-extrabold text-gray-900">Batch settings</h2>
+            {generatorMode === "research_review" && selectedTargets.length > 0 ? (
+              <div className="mt-4 rounded-2xl border border-lime-200 bg-lime-50 p-4">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <div className="text-sm font-extrabold text-gray-900">Selected batch targets</div>
+                    <div className="mt-1 text-xs text-gray-600">Previews will be generated once for each target below.</div>
+                  </div>
+                  <button type="button" onClick={() => setSelectedTargets([])} className="rounded-lg border border-lime-200 bg-white px-3 py-2 text-xs font-bold text-gray-700">Clear targets</button>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {selectedTargets.map((target) => (
+                    <span key={target.targetName} className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-gray-800 shadow-sm">
+                      {target.targetName}
+                      {typeof target.opportunityScore === "number" ? <span className="text-lime-700">{target.opportunityScore}</span> : null}
+                      <button type="button" onClick={() => removeTarget(target.targetName)} className="text-gray-400 hover:text-red-600">x</button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
             <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="md:col-span-2">
+                <label className={labelClass}>Generator Mode</label>
+                <select value={generatorMode} onChange={(event) => setGeneratorMode(event.target.value as GeneratorMode)} className={inputClass}>
+                  <option value="guide">Task/List SEO Guides</option>
+                  <option value="research_review">Research-Based Review</option>
+                </select>
+              </div>
               <div>
                 <label className={labelClass}>Batch Name</label>
                 <input value={batchName} onChange={(event) => setBatchName(event.target.value)} className={inputClass} placeholder="April guide expansion" />
               </div>
-              <div>
-                <label className={labelClass}>Guide Type</label>
-                <select value={guideType} onChange={(event) => setGuideType(event.target.value as GuideType)} className={inputClass}>
-                  {Object.entries(GUIDE_TYPE_LABELS).map(([value, label]) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
-              </div>
+              {generatorMode === "research_review" ? (
+                <>
+                  <div>
+                    <label className={labelClass}>Review Type</label>
+                    <select value={reviewType} onChange={(event) => setReviewType(event.target.value as ResearchReviewType)} className={inputClass}>
+                      {Object.entries(REVIEW_TYPE_LABELS).map(([value, label]) => (
+                        <option key={value} value={value}>{label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className={labelClass}>Target Name</label>
+                    <input value={targetName} onChange={(event) => setTargetName(event.target.value)} className={inputClass} placeholder="GAIN.GG, Raid: Shadow Legends, Torox, Freecash vs EarnLab" />
+                  </div>
+                </>
+              ) : (
+                <div>
+                  <label className={labelClass}>Guide Type</label>
+                  <select value={guideType} onChange={(event) => setGuideType(event.target.value as GuideType)} className={inputClass}>
+                    {Object.entries(GUIDE_TYPE_LABELS).map(([value, label]) => (
+                      <option key={value} value={value}>{label}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div>
                 <label className={labelClass}>Game Name (optional)</label>
                 <input value={gameName} onChange={(event) => setGameName(event.target.value)} className={inputClass} placeholder="Raid: Shadow Legends" />
@@ -257,15 +406,35 @@ export default function BatchGuideGenerator() {
           </div>
 
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div className="grid gap-4 md:grid-cols-3">
-              <Toggle checked={generateFromTaskList} onChange={setGenerateFromTaskList} label="Generate From Task List" description="Use pasted milestones to shape tables, FAQ, stopping points, and strategy sections." />
-              <Toggle checked={createMultipleLongTail} onChange={setCreateMultipleLongTail} label="Create Multiple Long-Tail Guides" description="Create main, hardest task, payout task, purchase strategy, and worth-it draft angles." />
-              <Toggle checked={aggressiveMode} onChange={setAggressiveMode} label="Aggressive SEO Mode" description="Uses stronger guide language, better conversion CTAs, ROI callouts, and clearer what-to-do-first strategy while still avoiding guaranteed payout claims." />
-            </div>
-            <div className="mt-4">
-              <label className={labelClass}>Task List Input</label>
-              <textarea value={taskListRaw} onChange={(event) => setTaskListRaw(event.target.value)} rows={12} className={`${inputClass} font-mono leading-relaxed`} placeholder={"Register and start playing the game\n370\nComplete the tutorial\n37\nReach level 50 within 20 days\n28,120"} />
-            </div>
+            {generatorMode === "research_review" ? (
+              <div className="space-y-4">
+                <Toggle checked={useStoredResearch} onChange={setUseStoredResearch} label="Use Stored Research" description="Pull matching Research Locker entries for this target, platform, or game and inject them into the review draft." />
+                <div>
+                  <label className={labelClass}>Research Notes</label>
+                  <textarea value={researchNotes} onChange={(event) => setResearchNotes(event.target.value)} rows={8} className={`${inputClass} leading-relaxed`} placeholder={"Paste payout notes, trust signals, complaints, support issues, payment methods, competitors, VPN/tracking warnings, and editor observations."} />
+                </div>
+                <div>
+                  <label className={labelClass}>Source URLs</label>
+                  <textarea value={sourceUrlsRaw} onChange={(event) => setSourceUrlsRaw(event.target.value)} rows={4} className={`${inputClass} font-mono leading-relaxed`} placeholder={"https://example.com/review\nhttps://example.com/terms"} />
+                </div>
+                <div>
+                  <label className={labelClass}>Payout / Task List Input</label>
+                  <textarea value={taskListRaw} onChange={(event) => setTaskListRaw(event.target.value)} rows={10} className={`${inputClass} font-mono leading-relaxed`} placeholder={"Register and start playing the game\n370\nComplete the tutorial\n37\nReach level 50 within 20 days\n28,120"} />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <Toggle checked={generateFromTaskList} onChange={setGenerateFromTaskList} label="Generate From Task List" description="Use pasted milestones to shape tables, FAQ, stopping points, and strategy sections." />
+                  <Toggle checked={createMultipleLongTail} onChange={setCreateMultipleLongTail} label="Create Multiple Long-Tail Guides" description="Create main, hardest task, payout task, purchase strategy, and worth-it draft angles." />
+                  <Toggle checked={aggressiveMode} onChange={setAggressiveMode} label="Aggressive SEO Mode" description="Uses stronger guide language, better conversion CTAs, ROI callouts, and clearer what-to-do-first strategy while still avoiding guaranteed payout claims." />
+                </div>
+                <div className="mt-4">
+                  <label className={labelClass}>Task List Input</label>
+                  <textarea value={taskListRaw} onChange={(event) => setTaskListRaw(event.target.value)} rows={12} className={`${inputClass} font-mono leading-relaxed`} placeholder={"Register and start playing the game\n370\nComplete the tutorial\n37\nReach level 50 within 20 days\n28,120"} />
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -281,7 +450,7 @@ export default function BatchGuideGenerator() {
           </div>
 
           <button type="button" onClick={handlePreview} disabled={previewing || saving} className="w-full rounded-2xl bg-gray-900 px-5 py-4 text-sm font-extrabold text-white shadow-sm transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60">
-            {previewing ? "Generating preview..." : "Generate Preview"}
+            {previewing ? "Generating preview..." : generatorMode === "research_review" ? "Research + Generate Review" : "Generate Preview"}
           </button>
 
           {previewDrafts.length > 0 ? (
@@ -312,8 +481,32 @@ export default function BatchGuideGenerator() {
             {previewDrafts.map((draft) => {
               const isExpanded = Boolean(expanded[draft.previewId]);
               const hasDuplicateKeyword = duplicateKeywords.has(draft.keywordTarget);
+              const confidenceLabel = researchConfidenceLabel(draft.researchConfidenceScore);
+              const group = previewGroups.find((item) => item.draftIds.includes(draft.previewId));
+              const isFirstInGroup = Boolean(group && group.draftIds[0] === draft.previewId);
               return (
-                <article key={draft.previewId} className={`p-5 ${draft.selected ? "bg-white" : "bg-gray-50 opacity-70"}`}>
+                <div key={draft.previewId}>
+                {isFirstInGroup && group ? (
+                  <div className="border-b border-gray-100 bg-gray-50 p-5">
+                    <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+                      <div>
+                        <h3 className="text-base font-extrabold text-gray-900">{group.targetName}</h3>
+                        <p className="mt-1 text-xs capitalize text-gray-500">
+                          {group.type ?? "target"} | {group.researchSourceCount ?? 0} research sources | {group.highestPayout ? `$${group.highestPayout.toFixed(2)} highest payout` : "no payout attached"}
+                        </p>
+                      </div>
+                      {typeof group.opportunityScore === "number" ? (
+                        <span className="rounded-full bg-lime-100 px-3 py-1.5 text-xs font-extrabold text-lime-900">{group.opportunityScore} | {group.opportunityLabel ?? "Opportunity"}</span>
+                      ) : null}
+                    </div>
+                    {group.warnings?.length ? (
+                      <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs font-semibold text-amber-800">
+                        {group.warnings.join(" ")}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
+                <article className={`p-5 ${draft.selected ? "bg-white" : "bg-gray-50 opacity-70"}`}>
                   <div className="flex flex-col gap-4 xl:flex-row xl:items-start">
                     <label className="flex items-center gap-2 text-sm font-bold text-gray-700">
                       <input type="checkbox" checked={draft.selected} onChange={(event) => setPreviewDrafts((drafts) => updateDraftField(drafts, draft.previewId, "selected", event.target.checked))} />
@@ -344,6 +537,10 @@ export default function BatchGuideGenerator() {
                     <div className="min-w-[180px] space-y-2 text-xs text-gray-500">
                       <span className="inline-flex rounded-full bg-lime-100 px-2 py-1 font-bold text-lime-900">{VARIANT_LABELS[draft.variant] ?? draft.variant}</span>
                       <div>Score: <span className="font-bold text-gray-900">{draft.quality.score}</span>/100</div>
+                      {confidenceLabel ? <div>Research: <span className="font-bold text-gray-900">{draft.researchConfidenceScore}</span>/100 {confidenceLabel}</div> : null}
+                      {draft.reviewType ? <div>{REVIEW_TYPE_LABELS[draft.reviewType as ResearchReviewType] ?? draft.reviewType}</div> : null}
+                      {draft.sourceUrls ? <div>{draft.sourceUrls.length} source URLs</div> : null}
+                      {draft.pros || draft.cons ? <div>{draft.pros?.length ?? 0} pros | {draft.cons?.length ?? 0} cons</div> : null}
                       <div>{draft.keywordClusterId ?? "No cluster"} | {draft.keywordIntent ?? "no intent"}</div>
                       <div>{draft.angleType ?? "no angle"} angle</div>
                       <div>{draft.difficulty} | {draft.estimatedCompletionTime}</div>
@@ -373,12 +570,27 @@ export default function BatchGuideGenerator() {
                     </div>
                   ) : null}
 
+                  {draft.researchSummary || (draft.claimsNeedingVerification && draft.claimsNeedingVerification.length > 0) ? (
+                    <div className="mt-3 rounded-xl border border-blue-100 bg-blue-50 p-3 text-xs text-blue-950">
+                      <div className="font-extrabold">Research preview</div>
+                      {draft.researchSummary ? <p className="mt-1 leading-relaxed">{draft.researchSummary}</p> : null}
+                      {draft.claimsNeedingVerification && draft.claimsNeedingVerification.length > 0 ? (
+                        <ul className="mt-2 list-disc pl-4">
+                          {draft.claimsNeedingVerification.slice(0, 5).map((claim, index) => (
+                            <li key={`${draft.previewId}-claim-${index}`}>{claim}</li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  ) : null}
+
                   {isExpanded ? (
                     <div className="mt-4 rounded-2xl border border-gray-200 bg-gray-50 p-4">
                       <div className="prose prose-slate max-w-none prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100 prose-img:max-w-full prose-img:rounded-xl" dangerouslySetInnerHTML={{ __html: draft.bodyHtml }} />
                     </div>
                   ) : null}
                 </article>
+                </div>
               );
             })}
           </div>

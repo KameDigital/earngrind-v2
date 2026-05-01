@@ -9,6 +9,13 @@ const ADMIN_LINKS = [
     { href: "/app/admin/site-offers", label: "Manual Offers" },
     { href: "/app/admin/games", label: "Games" },
     { href: "/app/admin/guides", label: "Guides" },
+    { href: "/app/admin/guides/analytics", label: "Guide Analytics" },
+    { href: "/app/admin/guides/optimization", label: "Guide Optimization" },
+    { href: "/app/admin/content-queue", label: "Content Queue" },
+    { href: "/app/admin/research", label: "Research" },
+    { href: "/app/admin/research/opportunities", label: "Research Opportunities" },
+    { href: "/app/admin/seo/search-console", label: "Search Console" },
+    { href: "/app/admin/seo/query-opportunities", label: "Query Opportunities" },
     { href: "/app/admin/blog-posts", label: "Blog Posts" },
     { href: "/app/admin/outbound", label: "Outbound" },
 ] as const;
@@ -20,6 +27,13 @@ export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
     function isActive(href: string) {
         if (href === "/app/admin") {
             return pathname === href;
+        }
+        if (href === "/app/admin/guides") {
+            return pathname === href || (
+                pathname.startsWith("/app/admin/guides/")
+                && !pathname.startsWith("/app/admin/guides/analytics")
+                && !pathname.startsWith("/app/admin/guides/optimization")
+            );
         }
 
         return pathname.startsWith(href);

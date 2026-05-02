@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import { renderMarkdown } from "@/app/guides/[slug]/markdownRenderer";
 import { analyzeGuideQuality } from "@/lib/guide-quality";
+import { analyzeGuideBodyHealth } from "@/lib/guide-body-health";
 
 async function checkAdmin(supabase: ReturnType<typeof createClient>) {
     const { data: { user } } = await supabase.auth.getUser();
@@ -31,6 +32,14 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
     if (!title || !slug || !game_id) {
         return NextResponse.json({ error: "title, slug, and game_id are required." }, { status: 400 });
+    }
+
+    const bodyHealth = analyzeGuideBodyHealth(body_md);
+    if (bodyHealth.hasMixedMarkdownHtml) {
+        return NextResponse.json({
+            error: "Guide body mixes Markdown headings with raw HTML. Convert the HTML to Markdown or use the rich text editor before saving.",
+            bodyHealth,
+        }, { status: 422 });
     }
 
     const normalizedSlug = normalizeSlug(String(slug));

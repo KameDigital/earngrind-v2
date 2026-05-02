@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { renderMarkdown } from "@/app/guides/[slug]/markdownRenderer";
 import GameCombobox, { type GameOption } from "./GameCombobox";
 import RichTextEditor from "@/components/editor/RichTextEditor";
+import { analyzeGuideBodyHealth } from "@/lib/guide-body-health";
 
 const inputClass = "w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-gray-400 bg-white transition";
 const labelClass = "block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5";
@@ -315,8 +316,10 @@ export default function GuideEditorForm({
     const [error, setError] = useState<string | null>(null);
 
     const renderedPreview = useMemo(() => renderMarkdown(bodyMd), [bodyMd]);
+    const bodyHealth = useMemo(() => analyzeGuideBodyHealth(bodyMd), [bodyMd]);
     const effectiveSeoTitle = seoTitle.trim() || buildSeoTitle(title, maxPayout);
     const effectiveSeoDescription = seoDesc.trim() || buildSeoDescription(excerpt, estimatedTime, guideFocus);
+    const internalLinkCount = (bodyMd.match(/href=["']\//g) ?? []).length;
     const validationWarnings = useMemo(
         () => buildValidationWarnings({
             excerpt,
@@ -329,6 +332,14 @@ export default function GuideEditorForm({
         }),
         [excerpt, bodyMd, checklistItems, effectiveSeoTitle, effectiveSeoDescription, internalLinks, duplicateSlug],
     );
+    const guideHealthItems = [
+        { label: "Body sections", value: String(bodyHealth.headingCount), ok: bodyHealth.headingCount >= 3 },
+        { label: "SEO title", value: effectiveSeoTitle ? "Set" : "Missing", ok: Boolean(effectiveSeoTitle) },
+        { label: "SEO description", value: effectiveSeoDescription ? "Set" : "Missing", ok: Boolean(effectiveSeoDescription) },
+        { label: "Internal links", value: String(internalLinkCount), ok: internalLinkCount >= 2 },
+        { label: "Offer matching", value: disableAutoOfferMatching ? "Disabled" : matchedOffers.length > 0 ? `${matchedOffers.length} match` : "Fallback", ok: disableAutoOfferMatching || matchedOffers.length > 0 },
+        { label: "Body format", value: bodyHealth.hasMixedMarkdownHtml ? "Mixed" : bodyHealth.hasHtmlTags ? "HTML" : "Markdown", ok: !bodyHealth.hasMixedMarkdownHtml },
+    ];
 
     const layoutHints: Record<string, string> = {
         classic: "Clean single-column editorial article. Best for SEO.",
@@ -585,6 +596,43 @@ export default function GuideEditorForm({
                     )}
                 </div>
             ) : null}
+
+            <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
+                <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                    <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Editor Map</div>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                        {editorSections.map((section) => (
+                            <a key={section.id} href={`#${section.id}`} className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:border-gray-300 hover:bg-gray-50">
+                                {section.label}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+                <aside className={`rounded-xl border p-5 shadow-sm ${bodyHealth.hasMixedMarkdownHtml ? "border-red-200 bg-red-50" : "border-gray-200 bg-white"}`}>
+                    <div className="flex items-center justify-between gap-3">
+                        <div>
+                            <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Guide Health</div>
+                            <div className="mt-1 text-sm font-bold text-gray-950">{bodyHealth.issues.length === 0 ? "Ready for normal editing" : `${bodyHealth.issues.length} issue(s)`}</div>
+                        </div>
+                        <span className={`rounded-full px-2 py-1 text-[11px] font-bold ${bodyHealth.issues.length === 0 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+                            {bodyHealth.issues.length === 0 ? "OK" : "Fix"}
+                        </span>
+                    </div>
+                    <div className="mt-4 grid gap-2">
+                        {guideHealthItems.map((item) => (
+                            <div key={item.label} className="flex items-center justify-between gap-3 rounded-lg bg-white/70 px-3 py-2 text-xs">
+                                <span className="font-semibold text-gray-500">{item.label}</span>
+                                <span className={`font-bold ${item.ok ? "text-green-700" : "text-amber-700"}`}>{item.value}</span>
+                            </div>
+                        ))}
+                    </div>
+                    {bodyHealth.issues.length > 0 ? (
+                        <ul className="mt-3 list-disc space-y-1 pl-4 text-xs font-semibold text-red-700">
+                            {bodyHealth.issues.map((issue) => <li key={issue}>{issue}</li>)}
+                        </ul>
+                    ) : null}
+                </aside>
+            </div>
 
             <div id="basic-info" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Basic Info</h2>

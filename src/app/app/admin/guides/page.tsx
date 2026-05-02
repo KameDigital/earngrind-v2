@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import GuideAdminActions from "./GuideAdminActions";
 import { analyzeGuideQuality } from "@/lib/guide-quality";
+import { analyzeGuideBodyHealth, type GuideBodyHealth } from "@/lib/guide-body-health";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Guides | Admin" };
@@ -37,8 +38,10 @@ function statusHref(status?: string) {
     return status ? `/app/admin/guides?status=${encodeURIComponent(status)}` : "/app/admin/guides";
 }
 
-function HealthBadges({ quality, guide }: { quality: ReturnType<typeof analyzeGuideQuality>; guide: { needs_variation: boolean | null; seo_title: string | null; seo_description: string | null } }) {
+function HealthBadges({ quality, bodyHealth, guide }: { quality: ReturnType<typeof analyzeGuideQuality>; bodyHealth: GuideBodyHealth; guide: { needs_variation: boolean | null; seo_title: string | null; seo_description: string | null } }) {
     const badges: Array<{ label: string; className: string }> = [];
+    if (bodyHealth.hasMixedMarkdownHtml) badges.push({ label: "Mixed body", className: "bg-red-50 text-red-700 ring-red-100" });
+    if (bodyHealth.hasBody && bodyHealth.headingCount === 0) badges.push({ label: "No sections", className: "bg-red-50 text-red-700 ring-red-100" });
     if (quality.score < 60) badges.push({ label: "Low SEO", className: "bg-red-50 text-red-700 ring-red-100" });
     if (quality.internalLinkCount < 2) badges.push({ label: "Needs links", className: "bg-amber-50 text-amber-800 ring-amber-100" });
     if (!guide.seo_title || !guide.seo_description) badges.push({ label: "Missing meta", className: "bg-blue-50 text-blue-700 ring-blue-100" });
@@ -187,6 +190,7 @@ export default async function AdminGuidesPage({
                             seoDescription: guide.seo_description,
                             keywordTarget: guide.keyword_target,
                         });
+                        const bodyHealth = analyzeGuideBodyHealth(guide.body_md);
                         return (
                             <div key={guide.id} className="rounded-xl border border-gray-200 bg-white p-4">
                                 <div className="flex items-start justify-between gap-3">
@@ -197,7 +201,7 @@ export default async function AdminGuidesPage({
                                     </div>
                                     <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLES[guide.status] ?? "bg-gray-100 text-gray-500"}`}>{guide.status}</span>
                                 </div>
-                                <HealthBadges quality={quality} guide={guide} />
+                                <HealthBadges quality={quality} bodyHealth={bodyHealth} guide={guide} />
                                 <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-gray-600">
                                     <div><span className="font-bold text-gray-400">Keyword:</span> {guide.keyword_target ?? "n/a"}</div>
                                     <div><span className="font-bold text-gray-400">SEO:</span> {quality.score}</div>
@@ -239,6 +243,7 @@ export default async function AdminGuidesPage({
                                     seoDescription: guide.seo_description,
                                     keywordTarget: guide.keyword_target,
                                 });
+                                const bodyHealth = analyzeGuideBodyHealth(guide.body_md);
                                 const updatedDate = guide.updated_at ? new Date(guide.updated_at).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "n/a";
                                 return (
                                     <tr key={guide.id} className="hover:bg-gray-50 transition-colors">
@@ -246,7 +251,7 @@ export default async function AdminGuidesPage({
                                             <div className="font-semibold text-gray-900 leading-snug">{guide.title}</div>
                                             <div className="text-xs text-gray-400 font-mono mt-0.5">{guide.slug}</div>
                                             {game?.name ? <div className="mt-1 text-xs text-gray-500">{game.name}</div> : null}
-                                            <HealthBadges quality={quality} guide={guide} />
+                                            <HealthBadges quality={quality} bodyHealth={bodyHealth} guide={guide} />
                                         </td>
                                         <td className="px-4 py-3 text-gray-600 min-w-[180px]">{guide.keyword_target ?? "n/a"}</td>
                                         <td className="px-4 py-3 text-gray-500">{GUIDE_TYPE_LABELS[guide.guide_type ?? ""] ?? guide.guide_type ?? "n/a"}</td>

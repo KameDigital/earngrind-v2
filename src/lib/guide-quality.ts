@@ -31,7 +31,10 @@ function countMatches(value: string, pattern: RegExp) {
 
 export function countInternalLinks(bodyHtml?: string | null) {
   const html = bodyHtml ?? "";
-  const hrefs = Array.from(html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)).map((match) => match[1] ?? "");
+  const hrefs = [
+    ...Array.from(html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)).map((match) => match[1] ?? ""),
+    ...Array.from(html.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)).map((match) => match[1] ?? ""),
+  ];
   return hrefs.filter((href) => href.startsWith("/") || href.includes("earngrind.com")).length;
 }
 
@@ -40,9 +43,11 @@ export function analyzeGuideQuality(input: GuideQualityInput): GuideQualityResul
   const plainText = stripTags(bodyHtml);
   const words = plainText ? plainText.split(/\s+/).filter(Boolean) : [];
   const wordCount = words.length;
-  const h2Count = countMatches(bodyHtml, /<h2\b/gi);
+  const htmlH2Count = countMatches(bodyHtml, /<h2\b/gi);
+  const markdownH2Count = countMatches(bodyHtml, /^##\s+\S.*$/gm);
+  const h2Count = htmlH2Count || markdownH2Count;
   const internalLinkCount = countInternalLinks(bodyHtml);
-  const hasFaq = /<h2\b[^>]*>\s*faq\s*<\/h2>|<h[23]\b[^>]*>\s*faq\b/i.test(bodyHtml);
+  const hasFaq = /<h2\b[^>]*>\s*faq\s*<\/h2>|<h[23]\b[^>]*>\s*faq\b|^#{2,3}\s*faq\b/im.test(bodyHtml);
   const hasCta = /start this offer|compare more offers|offers page/i.test(plainText);
   const hasProsCons = /pros\s*&\s*cons|pros and cons/i.test(plainText);
   const hasTaskTable = /<table\b/i.test(bodyHtml);

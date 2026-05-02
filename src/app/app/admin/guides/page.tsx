@@ -33,6 +33,29 @@ function FilterInput({ name, label, defaultValue }: { name: string; label: strin
     );
 }
 
+function statusHref(status?: string) {
+    return status ? `/app/admin/guides?status=${encodeURIComponent(status)}` : "/app/admin/guides";
+}
+
+function HealthBadges({ quality, guide }: { quality: ReturnType<typeof analyzeGuideQuality>; guide: { needs_variation: boolean | null; seo_title: string | null; seo_description: string | null } }) {
+    const badges: Array<{ label: string; className: string }> = [];
+    if (quality.score < 60) badges.push({ label: "Low SEO", className: "bg-red-50 text-red-700 ring-red-100" });
+    if (quality.internalLinkCount < 2) badges.push({ label: "Needs links", className: "bg-amber-50 text-amber-800 ring-amber-100" });
+    if (!guide.seo_title || !guide.seo_description) badges.push({ label: "Missing meta", className: "bg-blue-50 text-blue-700 ring-blue-100" });
+    if (guide.needs_variation) badges.push({ label: "Needs variation", className: "bg-orange-50 text-orange-700 ring-orange-100" });
+    if (badges.length === 0) badges.push({ label: "Healthy", className: "bg-green-50 text-green-700 ring-green-100" });
+
+    return (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+            {badges.slice(0, 3).map((badge) => (
+                <span key={badge.label} className={`rounded-full px-2 py-0.5 text-[11px] font-bold ring-1 ${badge.className}`}>
+                    {badge.label}
+                </span>
+            ))}
+        </div>
+    );
+}
+
 export default async function AdminGuidesPage({
     searchParams,
 }: {
@@ -134,10 +157,65 @@ export default async function AdminGuidesPage({
                 <span className="px-2.5 py-1 rounded-full font-semibold bg-gray-100 text-gray-500">{rows.filter(g => g.status === "draft").length} draft</span>
             </div>
 
+            <div className="flex flex-wrap gap-2">
+                {[
+                    { label: "All", value: "" },
+                    { label: "Drafts", value: "draft" },
+                    { label: "Needs Review", value: "needs_review" },
+                    { label: "Published", value: "published" },
+                ].map((tab) => {
+                    const active = (statusFilter ?? "") === tab.value;
+                    return (
+                        <Link
+                            key={tab.label}
+                            href={statusHref(tab.value || undefined)}
+                            className={`rounded-xl px-3 py-2 text-sm font-bold transition ${active ? "bg-gray-950 text-white" : "border border-gray-200 bg-white text-gray-700 hover:border-gray-300"}`}
+                        >
+                            {tab.label}
+                        </Link>
+                    );
+                })}
+            </div>
+
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                <div className="overflow-x-auto">
+                <div className="grid gap-3 p-3 lg:hidden">
+                    {rows.map((guide) => {
+                        const game = Array.isArray(guide.game) ? guide.game[0] : guide.game;
+                        const quality = analyzeGuideQuality({
+                            bodyHtml: guide.body_md,
+                            seoTitle: guide.seo_title,
+                            seoDescription: guide.seo_description,
+                            keywordTarget: guide.keyword_target,
+                        });
+                        return (
+                            <div key={guide.id} className="rounded-xl border border-gray-200 bg-white p-4">
+                                <div className="flex items-start justify-between gap-3">
+                                    <div className="min-w-0">
+                                        <div className="font-bold text-gray-950">{guide.title}</div>
+                                        <div className="mt-1 truncate font-mono text-xs text-gray-400">{guide.slug}</div>
+                                        {game?.name ? <div className="mt-1 text-xs text-gray-500">{game.name}</div> : null}
+                                    </div>
+                                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLES[guide.status] ?? "bg-gray-100 text-gray-500"}`}>{guide.status}</span>
+                                </div>
+                                <HealthBadges quality={quality} guide={guide} />
+                                <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-gray-600">
+                                    <div><span className="font-bold text-gray-400">Keyword:</span> {guide.keyword_target ?? "n/a"}</div>
+                                    <div><span className="font-bold text-gray-400">SEO:</span> {quality.score}</div>
+                                    <div><span className="font-bold text-gray-400">Links:</span> {quality.internalLinkCount}</div>
+                                    <div><span className="font-bold text-gray-400">Type:</span> {GUIDE_TYPE_LABELS[guide.guide_type ?? ""] ?? guide.guide_type ?? "n/a"}</div>
+                                </div>
+                                <div className="mt-3 flex flex-wrap gap-2">
+                                    <Link href={`/app/admin/guides/${guide.id}/edit`} className="rounded-lg bg-gray-950 px-3 py-2 text-xs font-bold text-white">Edit</Link>
+                                    <Link href={`/guides/${guide.slug}`} target="_blank" className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700">Preview</Link>
+                                    <GuideAdminActions guideId={guide.id} status={guide.status} />
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+                <div className="hidden overflow-x-auto lg:block">
                     <table className="w-full text-sm">
-                        <thead className="bg-gray-50 border-b border-gray-100 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                        <thead className="sticky top-14 z-10 bg-gray-50 border-b border-gray-100 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
                             <tr>
                                 <th className="px-4 py-3 text-left">Title</th>
                                 <th className="px-4 py-3 text-left">Keyword</th>
@@ -168,6 +246,7 @@ export default async function AdminGuidesPage({
                                             <div className="font-semibold text-gray-900 leading-snug">{guide.title}</div>
                                             <div className="text-xs text-gray-400 font-mono mt-0.5">{guide.slug}</div>
                                             {game?.name ? <div className="mt-1 text-xs text-gray-500">{game.name}</div> : null}
+                                            <HealthBadges quality={quality} guide={guide} />
                                         </td>
                                         <td className="px-4 py-3 text-gray-600 min-w-[180px]">{guide.keyword_target ?? "n/a"}</td>
                                         <td className="px-4 py-3 text-gray-500">{GUIDE_TYPE_LABELS[guide.guide_type ?? ""] ?? guide.guide_type ?? "n/a"}</td>

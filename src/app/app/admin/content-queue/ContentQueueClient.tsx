@@ -58,6 +58,7 @@ export default function ContentQueueClient({ initialRows }: { initialRows: Conte
   const [contentStatus, setContentStatus] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
   const [editorNotes, setEditorNotes] = useState("");
+  const [activeStatus, setActiveStatus] = useState("all");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const selectedRows = useMemo(() => rows.filter((row) => selectedIds.has(row.id)), [rows, selectedIds]);
@@ -117,6 +118,7 @@ export default function ContentQueueClient({ initialRows }: { initialRows: Conte
     status,
     rows: rows.filter((row) => row.contentStatus === status),
   }));
+  const visibleGroups = activeStatus === "all" ? grouped : grouped.filter((group) => group.status === activeStatus);
   const calendar = {
     thisWeek: rows.filter((row) => inRange(row.plannedPublishDate, thisWeek.start, thisWeek.end)),
     nextWeek: rows.filter((row) => inRange(row.plannedPublishDate, nextWeek.start, nextWeek.end)),
@@ -164,14 +166,56 @@ export default function ContentQueueClient({ initialRows }: { initialRows: Conte
         <CalendarCard title="Unscheduled" rows={calendar.unscheduled.slice(0, 12)} />
       </section>
 
-      {grouped.map((group) => (
+      <div className="flex flex-wrap gap-2">
+        {[{ status: "all", label: "All", count: rows.length }, ...grouped.map((group) => ({ status: group.status, label: STATUS_LABELS[group.status], count: group.rows.length }))].map((tab) => (
+          <button
+            key={tab.status}
+            type="button"
+            onClick={() => setActiveStatus(tab.status)}
+            className={`rounded-xl px-3 py-2 text-sm font-bold transition ${activeStatus === tab.status ? "bg-gray-950 text-white" : "border border-gray-200 bg-white text-gray-700 hover:border-gray-300"}`}
+          >
+            {tab.label} <span className="opacity-70">({tab.count})</span>
+          </button>
+        ))}
+      </div>
+
+      {visibleGroups.map((group) => (
         <section key={group.status} className="rounded-2xl border border-gray-200 bg-white shadow-sm">
           <div className="border-b border-gray-100 p-5">
             <h2 className="text-sm font-extrabold text-gray-900">{STATUS_LABELS[group.status]} <span className="text-gray-400">({group.rows.length})</span></h2>
           </div>
-          <div className="overflow-x-auto">
+          <div className="grid gap-3 p-3 lg:hidden">
+            {group.rows.map((row) => (
+              <div key={row.id} className="rounded-xl border border-gray-200 bg-white p-4">
+                <div className="flex items-start gap-3">
+                  <input className="mt-1" type="checkbox" checked={selectedIds.has(row.id)} onChange={(event) => toggle(row.id, event.target.checked)} />
+                  <div className="min-w-0 flex-1">
+                    <div className="font-bold text-gray-950">{row.title}</div>
+                    <div className="mt-1 truncate font-mono text-xs text-gray-400">{row.slug}</div>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-bold text-gray-600">{STATUS_LABELS[row.contentStatus] ?? row.contentStatus}</span>
+                      {row.needsVariation ? <span className="rounded-full bg-orange-50 px-2 py-0.5 text-[11px] font-bold text-orange-700">Needs variation</span> : null}
+                      {row.internalLinkCount < 2 ? <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-800">Needs links</span> : null}
+                    </div>
+                    <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-gray-600">
+                      <div><span className="font-bold text-gray-400">SEO:</span> {row.seoScore}</div>
+                      <div><span className="font-bold text-gray-400">Priority:</span> {row.publishPriority ?? "-"}</div>
+                      <div><span className="font-bold text-gray-400">Planned:</span> {row.plannedPublishDate ?? "Unscheduled"}</div>
+                      <div><span className="font-bold text-gray-400">Batch:</span> {row.batchName ?? "n/a"}</div>
+                    </div>
+                    <div className="mt-3 flex gap-2">
+                      <Link href={`/app/admin/guides/${row.id}/edit`} className="rounded-lg bg-gray-950 px-3 py-2 text-xs font-bold text-white">Edit</Link>
+                      <Link href={`/guides/${row.slug}`} target="_blank" className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700">Preview</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {group.rows.length === 0 ? <div className="p-8 text-center text-sm font-semibold text-gray-500">No items in this status.</div> : null}
+          </div>
+          <div className="hidden overflow-x-auto lg:block">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-left text-[11px] font-bold uppercase tracking-widest text-gray-500">
+              <thead className="sticky top-14 z-10 bg-gray-50 text-left text-[11px] font-bold uppercase tracking-widest text-gray-500">
                 <tr>
                   <th className="px-4 py-3">Select</th>
                   <th className="px-4 py-3">Title</th>

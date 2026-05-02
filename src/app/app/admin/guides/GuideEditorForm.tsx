@@ -335,6 +335,17 @@ export default function GuideEditorForm({
         steps: "Numbered step cards based on ## headings. Best for walkthroughs.",
         pro: "Most polished layout with checklist and key takeaways.",
     };
+    const editorSections = [
+        { id: "basic-info", label: "Basics" },
+        { id: "offer-data", label: "Offer Data" },
+        { id: "related-offers", label: "Related Offers" },
+        { id: "internal-links", label: "Internal Links" },
+        { id: "layout-display", label: "Layout" },
+        { id: "offer-matching", label: "Offer Matching" },
+        { id: "content-editor", label: "Content" },
+        { id: "seo-settings", label: "SEO" },
+        { id: "preview", label: "Preview" },
+    ];
 
     useEffect(() => {
         const normalizedSlug = slug.trim();
@@ -539,7 +550,19 @@ export default function GuideEditorForm({
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 pb-24">
+            <nav className="fixed right-4 top-24 z-30 hidden w-40 rounded-2xl border border-gray-200 bg-white/95 p-2 shadow-lg backdrop-blur 2xl:block">
+                <div className="px-2 py-1 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">Editor</div>
+                {editorSections.map((section) => (
+                    <a
+                        key={section.id}
+                        href={`#${section.id}`}
+                        className="block rounded-lg px-2 py-1.5 text-xs font-bold text-gray-600 hover:bg-gray-50 hover:text-gray-950"
+                    >
+                        {section.label}
+                    </a>
+                ))}
+            </nav>
             {sourceGuide && mode === "create" ? (
                 <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-xl text-sm">
                     Creating a similar guide from <span className="font-semibold">{sourceGuide.title}</span>. Pick a game, then reseed the draft and sections.
@@ -563,7 +586,7 @@ export default function GuideEditorForm({
                 </div>
             ) : null}
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="basic-info" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Basic Info</h2>
 
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -673,7 +696,7 @@ export default function GuideEditorForm({
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="offer-data" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Offer Data</h2>
                 <div className="grid sm:grid-cols-3 gap-4">
                     <div>
@@ -700,7 +723,7 @@ export default function GuideEditorForm({
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="related-offers" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <div className="flex items-center justify-between gap-4">
                     <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Top Related Offers</h2>
                     {internalLinks.length > 0 ? (
@@ -747,7 +770,7 @@ export default function GuideEditorForm({
                 )}
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="internal-links" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Internal Link Suggestions</h2>
                 {internalLinks.length === 0 ? (
                     <p className={hintClass}>Link suggestions load after you select a game.</p>
@@ -766,7 +789,7 @@ export default function GuideEditorForm({
                 )}
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="layout-display" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Layout & Display</h2>
 
                 <div>
@@ -795,7 +818,7 @@ export default function GuideEditorForm({
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="offer-matching" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Guide Offer Matching</h2>
                 <div className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
                     <div>
@@ -840,7 +863,7 @@ export default function GuideEditorForm({
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="content-editor" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <div className="flex items-center justify-between gap-4">
                     <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Content (Rich Text)</h2>
                     <div className="flex flex-wrap gap-2">
@@ -880,7 +903,7 @@ export default function GuideEditorForm({
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+            <div id="seo-settings" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <div className="flex items-center justify-between gap-4">
                     <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">SEO</h2>
                     <button type="button" onClick={() => handleRegenerateSection("seo")} disabled={!selectedGame || regeneratingSection !== null} className="px-3 py-2 text-xs font-bold text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50">
@@ -897,7 +920,7 @@ export default function GuideEditorForm({
                 </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div id="preview" className="scroll-mt-24 grid gap-6 lg:grid-cols-2">
                 <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                     <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Rendered Guide Preview</h2>
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
@@ -941,6 +964,24 @@ export default function GuideEditorForm({
                     <button type="submit" disabled={saving || deleting} className="px-6 py-2.5 bg-gray-900 text-white text-sm font-extrabold rounded-xl hover:bg-gray-800 transition disabled:opacity-60 disabled:cursor-not-allowed shadow-sm">
                         {saving ? "Saving..." : mode === "create" ? "Create Guide" : "Save Changes"}
                     </button>
+                </div>
+            </div>
+            <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)] backdrop-blur">
+                <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="min-w-0">
+                        <div className="truncate text-sm font-extrabold text-gray-950">{title || "Untitled guide"}</div>
+                        <div className="text-xs text-gray-500">
+                            {mode === "create" ? "New guide" : "Editing guide"} - {status}
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                        <button type="button" onClick={() => router.back()} className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:border-gray-300">
+                            Cancel
+                        </button>
+                        <button type="submit" disabled={saving || deleting} className="rounded-xl bg-gray-950 px-5 py-2 text-sm font-extrabold text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60">
+                            {saving ? "Saving..." : mode === "create" ? "Create Guide" : "Save Changes"}
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>

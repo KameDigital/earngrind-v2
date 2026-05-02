@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import AdminNav from "./AdminNav";
+import AdminSearch from "./AdminSearch";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
     const supabase = createClient();
@@ -34,6 +35,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                     <div className="min-w-0 flex-1 lg:hidden">
                         <AdminNav isAdmin={isAdmin} />
                     </div>
+
+                    {isAdmin ? <AdminSearch /> : null}
 
                     <div className="ml-auto flex min-w-0 shrink-0 items-center justify-end gap-2">
                         <span className="hidden max-w-[120px] truncate text-xs text-gray-400 lg:block xl:max-w-[220px]" title={user.email ?? ""}>

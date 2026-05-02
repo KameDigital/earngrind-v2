@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Container from "@/components/layout/Container";
 import { createClient } from "@/lib/supabase/server";
+import GamesIndexClient, { type GamesIndexItem } from "./GamesIndexClient";
 
 export const metadata: Metadata = {
   title: "Games",
@@ -24,6 +24,10 @@ type GameRow = {
   game_slug: string | null;
   game_thumbnail: string | null;
   payout_usd: number | null;
+  total_payout_usd: number | null;
+  provider_name: string | null;
+  platform_name: string | null;
+  category: string | null;
 };
 
 async function getGamesIndexData() {
@@ -32,8 +36,8 @@ async function getGamesIndexData() {
   const [{ data: offerRows }, { data: guideRows }] = await Promise.all([
     supabase
       .from("unified_offers_view")
-      .select("game_id, game_name, game_slug, game_thumbnail, payout_usd")
-      .order("payout_usd", { ascending: false })
+      .select("game_id, game_name, game_slug, game_thumbnail, payout_usd, total_payout_usd, provider_name, platform_name, category")
+      .order("total_payout_usd", { ascending: false })
       .limit(250),
     supabase
       .from("guides")
@@ -48,84 +52,83 @@ async function getGamesIndexData() {
     guideCounts.set(gameId, (guideCounts.get(gameId) ?? 0) + 1);
   }
 
-  const games = Array.from(
-    new Map(
-      ((offerRows ?? []) as GameRow[])
-        .filter((row) => row.game_id && row.game_slug)
-        .map((row) => [
-          row.game_id!,
-          {
-            id: row.game_id!,
-            slug: row.game_slug!,
-            name: row.game_name ?? "Unknown Game",
-            topPayout: Number(row.payout_usd ?? 0),
-            guideCount: guideCounts.get(row.game_id!) ?? 0,
-          },
-        ]),
-    ).values(),
-  )
+  const gamesById = new Map<string, GamesIndexItem & { providerSet: Set<string>; platformSet: Set<string> }>();
+
+  for (const row of ((offerRows ?? []) as GameRow[]).filter((item) => item.game_id && item.game_slug)) {
+    const id = row.game_id!;
+    const payout = Number(row.total_payout_usd ?? row.payout_usd ?? 0);
+    const current = gamesById.get(id);
+
+    if (!current) {
+      gamesById.set(id, {
+        id,
+        slug: row.game_slug!,
+        name: row.game_name ?? "Unknown Game",
+        thumbnailUrl: row.game_thumbnail,
+        topPayout: payout,
+        guideCount: guideCounts.get(id) ?? 0,
+        offerCount: 1,
+        bestProvider: row.provider_name ?? "Unknown Provider",
+        bestPlatform: row.platform_name ?? "Unknown Platform",
+        category: row.category ?? "General",
+        providerCount: row.provider_name ? 1 : 0,
+        platformCount: row.platform_name ? 1 : 0,
+        providerSet: new Set(row.provider_name ? [row.provider_name] : []),
+        platformSet: new Set(row.platform_name ? [row.platform_name] : []),
+      });
+      continue;
+    }
+
+    current.offerCount += 1;
+    if (row.provider_name) current.providerSet.add(row.provider_name);
+    if (row.platform_name) current.platformSet.add(row.platform_name);
+    current.providerCount = current.providerSet.size;
+    current.platformCount = current.platformSet.size;
+    if (payout > current.topPayout) {
+      current.topPayout = payout;
+      current.bestProvider = row.provider_name ?? current.bestProvider;
+      current.bestPlatform = row.platform_name ?? current.bestPlatform;
+      current.thumbnailUrl = row.game_thumbnail ?? current.thumbnailUrl;
+      current.category = row.category ?? current.category;
+    }
+  }
+
+  const games = Array.from(gamesById.values())
+    .map((game) => ({
+      id: game.id,
+      slug: game.slug,
+      name: game.name,
+      thumbnailUrl: game.thumbnailUrl,
+      topPayout: game.topPayout,
+      guideCount: game.guideCount,
+      offerCount: game.offerCount,
+      bestProvider: game.bestProvider,
+      bestPlatform: game.bestPlatform,
+      category: game.category,
+      providerCount: game.providerCount,
+      platformCount: game.platformCount,
+    }))
     .sort((a, b) => b.topPayout - a.topPayout || b.guideCount - a.guideCount || a.name.localeCompare(b.name))
     .slice(0, 60);
 
-  return games;
+  return {
+    games,
+    summary: {
+      totalGames: games.length,
+      highestPayout: games[0]?.topPayout ?? 0,
+      guidesAvailable: games.filter((game) => game.guideCount > 0).length,
+      trackedOffers: games.reduce((sum, game) => sum + game.offerCount, 0),
+    },
+  };
 }
 
 export default async function GamesIndexPage() {
-  const games = await getGamesIndexData();
+  const { games, summary } = await getGamesIndexData();
 
   return (
-    <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+    <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-8 sm:pt-10">
       <Container>
-        <div className="mb-10">
-          <p className="section-label mb-3">Games</p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--brand-ink)] tracking-tight mb-3">
-            Offerwall Games
-          </h1>
-          <p className="text-lg text-[var(--text-secondary)] max-w-3xl leading-relaxed">
-            Browse tracked games, compare the highest current payouts, and open each game page for provider comparisons, offer ladders, and guide links.
-          </p>
-        </div>
-
-        {games.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--border-default)] bg-white p-12 text-center shadow-[var(--shadow-card)]">
-            <h2 className="text-xl font-bold text-[var(--brand-ink)]">No games available</h2>
-            <p className="mt-2 text-sm text-[var(--text-secondary)]">
-              No tracked games are available yet.
-            </p>
-          </div>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {games.map((game) => (
-              <Link
-                key={game.id}
-                href={`/games/${game.slug}`}
-                className="group rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-[var(--brand-lime)]/40"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
-                      Game Page
-                    </div>
-                    <h2 className="mt-2 text-lg font-extrabold text-[var(--brand-ink)] group-hover:text-[color:hsl(84,93%,36%)] transition-colors">
-                      {game.name}
-                    </h2>
-                    <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                      Top payout: <span className="font-bold text-[var(--brand-ink)]">${game.topPayout.toFixed(2)}</span>
-                    </p>
-                    <p className="mt-1 text-xs text-[var(--text-tertiary)]">
-                      {game.guideCount} published guide{game.guideCount !== 1 ? "s" : ""}
-                    </p>
-                  </div>
-                  <div className="flex-shrink-0 text-[var(--brand-ink)] transition-transform group-hover:translate-x-1">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
+        <GamesIndexClient games={games} summary={summary} />
       </Container>
     </main>
   );

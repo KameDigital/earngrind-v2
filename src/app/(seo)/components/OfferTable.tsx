@@ -11,6 +11,7 @@ type OfferTableProps = {
   title?: string;
   showTasks?: boolean;
   compact?: boolean;
+  showBestSummary?: boolean;
 };
 
 type SortOption = "highest-payout" | "fastest-completion" | "most-popular";
@@ -216,7 +217,7 @@ function OfferCard({
   );
 }
 
-export default function OfferTable({ rows, title, showTasks = false, compact = false }: OfferTableProps) {
+export default function OfferTable({ rows, title, showTasks = false, compact = false, showBestSummary = true }: OfferTableProps) {
   const [sortBy, setSortBy] = useState<SortOption>("highest-payout");
   const [deviceFilter, setDeviceFilter] = useState<DeviceFilter>("all");
   const [taskFilter, setTaskFilter] = useState<TaskFilter>("all");
@@ -336,6 +337,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
         </div>
       ) : null}
 
+      {showBestSummary ? (
       <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -368,6 +370,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
           ) : null}
         </div>
       </div>
+      ) : null}
 
       <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

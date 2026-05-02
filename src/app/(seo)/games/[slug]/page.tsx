@@ -122,158 +122,121 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
           offerCount={rows.length}
           providerCount={providerGroups.size}
           category={data.game.category}
+          bestOffer={bestOffer ?? null}
         />
 
-        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-2xl">
-              <p className="section-label">Next Step</p>
-              <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">Use this page as your route hub</h2>
-              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                Check the strongest payout first, compare the rest of the route table, then use a guide if you want a faster completion path before starting the tracked offer.
-              </p>
-            </div>
-            <div className="grid gap-2 text-xs text-[var(--text-tertiary)] sm:grid-cols-3 lg:w-[34rem]">
-              <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
-                <div className="font-bold uppercase tracking-wide text-[var(--brand-ink)]">Best route</div>
-                <div className="mt-1 text-[var(--text-secondary)]">
-                  {bestOffer ? `${bestOffer.providerName} on ${bestOffer.platformName}` : "No active route available"}
+        <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+          <div className="space-y-6">
+            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+              <div className="grid gap-4 md:grid-cols-3">
+                <div>
+                  <p className="section-label">Best route</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
+                    {bestOffer ? `${bestOffer.platformName} via ${bestOffer.providerName}` : "No active route"}
+                  </h2>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                    {bestOffer
+                      ? `${formatMoney(bestOffer.totalPayoutUsd)} is the strongest visible route for ${data.game.name}.`
+                      : "Check back later for tracked routes."}
+                  </p>
+                </div>
+                <div>
+                  <p className="section-label">Guide support</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
+                    {primaryGuide ? "Guide available" : "Guide coming soon"}
+                  </h2>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                    {primaryGuide
+                      ? "Open the guide before starting if you want milestone order and completion tips."
+                      : "Use the comparison table until a full guide is published."}
+                  </p>
+                </div>
+                <div>
+                  <p className="section-label">Compare first</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
+                    {rows.length} tracked route{rows.length !== 1 ? "s" : ""}
+                  </h2>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                    Sort by payout, route length, and provider before clicking out.
+                  </p>
                 </div>
               </div>
-              <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
-                <div className="font-bold uppercase tracking-wide text-[var(--brand-ink)]">Guide support</div>
-                <div className="mt-1 text-[var(--text-secondary)]">
-                  {primaryGuide ? "Guide available before you start" : "No published guide yet"}
-                </div>
+            </section>
+
+            <section id="all-provider-offers" className="space-y-3">
+              <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+                <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Compare all available routes</h2>
+                <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                  Use this table to check payout spread, provider context, and task ladders before choosing a route.
+                </p>
               </div>
-              <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
-                <div className="font-bold uppercase tracking-wide text-[var(--brand-ink)]">Compare next</div>
-                <div className="mt-1 text-[var(--text-secondary)]">Review every route before clicking out</div>
-              </div>
-            </div>
+              <OfferTable rows={rows} showTasks compact showBestSummary={false} />
+            </section>
           </div>
 
-          <div className="mt-5 grid gap-4 lg:grid-cols-3">
-            <article className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
-              <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Best current route</p>
-              <h3 className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">
-                {bestOffer ? `${formatMoney(bestOffer.payoutUsd)} via ${bestOffer.providerName}` : "No active route"}
-              </h3>
+          <aside className="space-y-4 lg:sticky lg:top-20">
+            <section className="rounded-2xl border border-lime-300 bg-lime-50 p-4 shadow-[var(--shadow-card)]">
+              <p className="text-xs font-extrabold uppercase tracking-wide text-lime-800">Recommended action</p>
+              <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
+                {bestOffer ? "Start the highest payout" : "Compare latest payouts"}
+              </h2>
               <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                {bestOffer
-                  ? `${bestOffer.platformName} is the strongest tracked route right now. Start there if you want the highest visible payout first.`
-                  : "Check back later for tracked routes."}
+                {bestOffer ? `${formatMoney(bestOffer.totalPayoutUsd)} on ${bestOffer.platformName}.` : "No tracked offer is available right now."}
               </p>
               {bestOffer ? (
-                <>
-                  <TrackedOutboundLink
-                    href={bestOffer.redirectUrl}
-                    eventLabel="game-page-best-route"
-                    offerId={bestOffer.id}
-                    offerTitle={bestOffer.title}
-                    gameTitle={data.game.name}
-                    platformName={bestOffer.platformName}
-                    providerName={bestOffer.providerName}
-                    payoutUsd={bestOffer.payoutUsd}
-                    location="game-page-best-route"
-                    sourceContext="game-page"
-                    className="mt-4 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
-                  >
-                    Start Best Payout
-                  </TrackedOutboundLink>
-                  <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-                    Payouts can change by provider, country, and device. Some outbound links may be affiliate links.
-                  </p>
-                </>
-              ) : null}
-            </article>
+                <TrackedOutboundLink
+                  href={bestOffer.redirectUrl}
+                  eventLabel="game-page-sticky-best-route"
+                  offerId={bestOffer.id}
+                  offerTitle={bestOffer.title}
+                  gameTitle={data.game.name}
+                  platformName={bestOffer.platformName}
+                  providerName={bestOffer.providerName}
+                  payoutUsd={bestOffer.totalPayoutUsd}
+                  location="game-page-sticky-best-route"
+                  sourceContext="game-page"
+                  className="mt-4 inline-flex w-full justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                >
+                  Start Highest Payout
+                </TrackedOutboundLink>
+              ) : (
+                <Link
+                  href="/offers"
+                  className="mt-4 inline-flex w-full justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                >
+                  Browse Offers
+                </Link>
+              )}
+              <div className="mt-3 space-y-1 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+                <p>Payouts can change by provider, country, and device.</p>
+                <p>Some outbound links may be affiliate links.</p>
+              </div>
+            </section>
 
-            <article className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
-              <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Guide first</p>
-              <h3 className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">
-                {primaryGuide ? primaryGuide.title : `No ${data.game.name} guide yet`}
-              </h3>
-              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                {primaryGuide
-                  ? "Use the guide if you want milestone order, timing help, and fewer wasted clicks before you start an offer."
-                  : "When a guide is available, it will show the fastest completion path and milestone order here."}
-              </p>
-              <Link
-                href={primaryGuide ? `/guides/${primaryGuide.slug}` : "/guides"}
-                className="mt-4 inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
-              >
-                {primaryGuide ? "Use Guide First" : "Check Guide Hub"}
-              </Link>
-            </article>
-
-            <article className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
-              <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Compare routes</p>
-              <h3 className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">See every payout before you click out</h3>
-              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                Review provider spreads, top payouts, and task ladders first if you want the strongest value instead of the first route you find.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
+            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+              <p className="section-label">Next links</p>
+              <div className="mt-3 grid gap-2">
                 <Link
                   href="#all-provider-offers"
-                  className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
+                  className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
-                  Compare All Routes
+                  Compare all routes
+                </Link>
+                <Link
+                  href={primaryGuide ? `/guides/${primaryGuide.slug}` : "/guides"}
+                  className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                >
+                  {primaryGuide ? "Open guide" : "Browse guides"}
                 </Link>
                 <Link
                   href={`/best-gpt-sites${bestOffer ? `?provider=${encodeURIComponent(bestOffer.providerName)}` : ""}`}
-                  className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
+                  className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
-                  Check Provider Trust
+                  Check provider trust
                 </Link>
               </div>
-            </article>
-          </div>
-        </section>
-
-        {bestOffer ? (
-          <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-            <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Best Offer Right Now</h2>
-            <p className="mt-2 text-sm text-[var(--text-secondary)]">
-              {bestOffer.providerName} on {bestOffer.platformName} is currently leading with{" "}
-              <span className="font-extrabold text-[var(--brand-ink)]">{formatMoney(bestOffer.payoutUsd)}</span>.
-            </p>
-            {bestOffer.tasks.length > 0 ? (
-              <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-[var(--text-secondary)]">
-                {bestOffer.tasks.slice(0, 5).map((task) => (
-                  <li key={task.id}>
-                    {task.title}
-                    {task.reward_amount > 0 ? ` (${formatMoney(task.reward_amount)})` : ""}
-                  </li>
-                ))}
-              </ol>
-            ) : null}
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Link
-                href="#all-provider-offers"
-                className="inline-flex rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
-              >
-                Compare Routes First
-              </Link>
-              {primaryGuide ? (
-                <Link
-                  href={`/guides/${primaryGuide.slug}`}
-                  className="inline-flex rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
-                >
-                  Open Guide
-                </Link>
-              ) : null}
-            </div>
-          </section>
-        ) : null}
-
-        <section id="all-provider-offers" className="space-y-3">
-          <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-            <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Compare All Available Routes</h2>
-            <p className="mt-2 text-sm text-[var(--text-secondary)]">
-              This is the main comparison table for {data.game.name}. Use it to check payout spread, provider context, and task ladders before you pick the route worth starting.
-            </p>
-          </div>
-          <OfferTable rows={rows} showTasks compact />
+            </section>
+          </aside>
         </section>
 
         <section className="space-y-3">

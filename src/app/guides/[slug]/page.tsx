@@ -264,6 +264,9 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             .prose-guide .guide-summary-box{margin:1rem 0;border:1px solid #d9f99d;border-radius:1rem;background:#f7fee7;padding:1rem}
                             .prose-guide .guide-summary-box ul{margin:0;padding-left:1.25rem}
                             .prose-guide .guide-summary-box li:last-child{margin-bottom:0}
+                            .guide-image{margin:1.5rem 0}
+                            .guide-image img{width:100%;height:auto;border-radius:.75rem;border:1px solid rgba(148,163,184,.25);margin:0}
+                            .guide-image figcaption{margin-top:.5rem;font-size:.875rem;line-height:1.45;color:#64748b;text-align:center}
                         `}</style>
 
                         <div className="mb-6">

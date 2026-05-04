@@ -19,6 +19,11 @@ set
   body_md = $guide$
 <p><strong>Last checked: May 4, 2026.</strong> Offers and payouts can change. Verify live terms before starting.</p>
 
+<figure class="guide-image">
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-hero-image.png" alt="Sea of Conquest Flagship Level 30 offer guide showing ship progression and milestones" loading="eager" />
+  <figcaption>Sea of Conquest is a high-deadline game offer where Flagship milestones, tracking proof, and purchase decisions matter.</figcaption>
+</figure>
+
 <div class="guide-summary-box">
   <strong>Sea of Conquest decision box:</strong>
   <ul>
@@ -71,6 +76,10 @@ set
 
 <h2>Sea of Conquest Offer Milestones</h2>
 <p>This table uses the provided task list. Point values and deadlines can vary by offerwall, country, device, and account history, so use it as a planning guide and compare it against your live offer page before installing.</p>
+<figure class="guide-image">
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-offerwall-screenshot.png" alt="Sea of Conquest offerwall task list with Flagship level milestones and purchase tasks" loading="lazy" />
+  <figcaption>Screenshot the live offerwall before installing so you have proof of the task list, deadlines, and point values.</figcaption>
+</figure>
 <table>
   <thead>
     <tr><th>Task</th><th>Deadline</th><th>Points</th><th>Difficulty</th><th>Notes</th></tr>
@@ -95,6 +104,10 @@ set
 <h2>Milestone Value Breakdown</h2>
 <p>The total possible points in this task list are <strong>341,393 points</strong>. Early Flagship progress through level 15 totals 9,041 level-task points before purchase tasks, while progress through level 21 reaches 23,131 level-task points. The late-game jump is where the offer becomes much more aggressive: level 28 adds 82,052 points, and level 30 adds another 169,076 points.</p>
 <p>The three purchase tasks total <strong>67,134 points</strong>: 10,775 from the $9.99 task, 19,063 from the $19.99 task, and 37,296 from the $49.99 task. Those purchase points can materially change the task economics, but only if the purchases track and the spending still makes sense against the remaining possible payout. Do not buy only because the task exists.</p>
+<figure class="guide-image">
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-milestone-value-breakdown.png" alt="Sea of Conquest cumulative points chart showing level 21, level 28, and level 30 reward jumps" loading="lazy" />
+  <figcaption>Most of the total point value comes from the late-game level 28 and level 30 milestones, which also carry the highest risk.</figcaption>
+</figure>
 <table>
   <thead>
     <tr><th>Completed through</th><th>Cumulative points</th><th>What this means</th></tr>
@@ -180,6 +193,10 @@ set
 
 <h2>What to Upgrade First</h2>
 <p>The in-game Flagship upgrade screen is the authority. Exact room requirements can change by version, event, and server state. Do not rely on a fixed late-game room checklist unless it matches what the game shows on your account.</p>
+<figure class="guide-image">
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-flagship-upgrade-screen.png" alt="Sea of Conquest Flagship upgrade screen showing required rooms and resources" loading="lazy" />
+  <figcaption>Use the in-game Flagship upgrade screen as the final source for required rooms, resources, and upgrade timers.</figcaption>
+</figure>
 <ul>
   <li>Follow the Flagship upgrade requirements first.</li>
   <li>Upgrade only the rooms needed to unlock the next Flagship level.</li>
@@ -193,6 +210,10 @@ set
 <div class="guide-summary-box">
   <strong>Purchase caution:</strong> Offers, payouts, deadlines, and tasks can change by provider, device, region, and account history. Verify the live offer terms before starting. Do not spend more than the remaining payout is worth, and keep screenshots of important milestones.
 </div>
+<figure class="guide-image">
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-purchase-confirmation.png" alt="Sea of Conquest purchase package screen for offer tracking verification" loading="lazy" />
+  <figcaption>Before buying, confirm the package amount matches the offer terms and save a receipt screenshot.</figcaption>
+</figure>
 <table>
   <thead>
     <tr><th>Purchase task</th><th>Points</th><th>Deadline</th><th>When to consider it</th><th>Risk note</th></tr>
@@ -217,6 +238,10 @@ set
 <p>Do not present a package name to support as proof unless it exactly matches your receipt and the offer terms.</p>
 
 <h2>Tracking Checklist Before You Start</h2>
+<figure class="guide-image">
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-player-id-screenshot.png" alt="Sea of Conquest player ID screen for offerwall tracking proof" loading="lazy" />
+  <figcaption>Save your player ID before progressing so support can match your account if tracking fails.</figcaption>
+</figure>
 <ul>
   <li>Start from the offer wall link only.</li>
   <li>Disable VPN or ad blockers if the offerwall requires it.</li>
@@ -230,6 +255,10 @@ set
 </ul>
 
 <h2>Screenshot Proof Checklist</h2>
+<figure class="guide-image">
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-milestone-completion.png" alt="Sea of Conquest Flagship level completion screenshot for offerwall proof" loading="lazy" />
+  <figcaption>Take a screenshot each time your Flagship level changes, especially for level 6, 9, 11, 13, 15, 21, 28, and 30.</figcaption>
+</figure>
 <ul>
   <li>[ ] Offerwall task list before installing</li>
   <li>[ ] Install/start confirmation</li>
@@ -380,15 +409,19 @@ $guide$,
   content_status = 'ready_to_publish',
   editor_notes = concat_ws(
     E'\n\n',
-    nullif(trim(replace(replace(
+    nullif(trim(replace(replace(replace(
       coalesce(editor_notes, ''),
       'Updated May 4, 2026 with Flagship level 30 SEO guide, full milestone table, cumulative points, purchase risk warnings, tracking checklist, screenshot checklist, and FAQ.',
       ''
     ),
       'Late-game Flagship level 28 and 30 requirements should be verified in-game before publishing future exact room/resource requirements. Package names and benefits may change by region, store, offerwall, and account.',
       ''
+    ),
+      'Images added as guide visuals for the Sea of Conquest Flagship Level 30 guide. Offerwall values, package names, and in-game requirements should still be verified against the live offer and current game screen before future updates.',
+      ''
     )), ''),
     'Updated May 4, 2026 with Flagship level 30 SEO guide, full milestone table, cumulative points, purchase risk warnings, tracking checklist, screenshot checklist, and FAQ.',
-    'Late-game Flagship level 28 and 30 requirements should be verified in-game before publishing future exact room/resource requirements. Package names and benefits may change by region, store, offerwall, and account.'
+    'Late-game Flagship level 28 and 30 requirements should be verified in-game before publishing future exact room/resource requirements. Package names and benefits may change by region, store, offerwall, and account.',
+    'Images added as guide visuals for the Sea of Conquest Flagship Level 30 guide. Offerwall values, package names, and in-game requirements should still be verified against the live offer and current game screen before future updates.'
   )
 where public.guides.id = (select id from target_guide);

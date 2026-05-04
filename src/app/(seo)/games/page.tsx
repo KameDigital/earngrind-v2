@@ -23,6 +23,8 @@ type GameRow = {
   game_name: string | null;
   game_slug: string | null;
   game_thumbnail: string | null;
+  image_url: string | null;
+  platform_logo: string | null;
   payout_usd: number | null;
   total_payout_usd: number | null;
   provider_name: string | null;
@@ -31,21 +33,48 @@ type GameRow = {
   updated_at: string | null;
 };
 
+type ProviderRow = {
+  name: string | null;
+  logo_url: string | null;
+};
+
+type AggregatedGame = GamesIndexItem & {
+  providerSet: Set<string>;
+  platformSet: Set<string>;
+  bestImagePayout: number;
+};
+
+function cleanImageUrl(value?: string | null) {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "null" || trimmed === "undefined") return null;
+  if (trimmed.startsWith("/") || /^https?:\/\//i.test(trimmed)) return trimmed;
+  return null;
+}
+
 async function getGamesIndexData() {
   const supabase = createClient();
 
-  const [{ data: offerRows }, { data: guideRows }] = await Promise.all([
+  const [{ data: offerRows }, { data: guideRows }, { data: providerRows }] = await Promise.all([
     supabase
       .from("unified_offers_view")
-      .select("game_id, game_name, game_slug, game_thumbnail, payout_usd, total_payout_usd, provider_name, platform_name, category, updated_at")
+      .select("game_id, game_name, game_slug, game_thumbnail, image_url, platform_logo, payout_usd, total_payout_usd, provider_name, platform_name, category, updated_at")
       .order("total_payout_usd", { ascending: false })
       .limit(250),
     supabase
       .from("guides")
       .select("game_id, slug")
       .eq("status", "published"),
+    supabase
+      .from("providers")
+      .select("name, logo_url")
+      .eq("is_active", true),
   ]);
 
+  const providerLogos = new Map(
+    ((providerRows ?? []) as ProviderRow[])
+      .map((row) => [row.name, cleanImageUrl(row.logo_url)] as const)
+      .filter((entry): entry is [string, string] => Boolean(entry[0] && entry[1])),
+  );
   const guideCounts = new Map<string, number>();
   const guideSlugs = new Map<string, string>();
   for (const row of guideRows ?? []) {
@@ -55,13 +84,18 @@ async function getGamesIndexData() {
     if (!guideSlugs.has(gameId) && row.slug) guideSlugs.set(gameId, row.slug as string);
   }
 
-  const gamesById = new Map<string, GamesIndexItem & { providerSet: Set<string>; platformSet: Set<string> }>();
+  const gamesById = new Map<string, AggregatedGame>();
   const allProviders = new Set<string>();
 
   for (const row of ((offerRows ?? []) as GameRow[]).filter((item) => item.game_id && item.game_slug)) {
     const id = row.game_id!;
     const payout = Number(row.total_payout_usd ?? row.payout_usd ?? 0);
     const current = gamesById.get(id);
+    const gameThumbnailUrl = cleanImageUrl(row.game_thumbnail);
+    const offerImageUrl = cleanImageUrl(row.image_url);
+    const platformLogoUrl = cleanImageUrl(row.platform_logo);
+    const providerLogoUrl = row.provider_name ? providerLogos.get(row.provider_name) ?? null : null;
+    const resolvedThumbnailUrl = gameThumbnailUrl ?? offerImageUrl ?? platformLogoUrl ?? providerLogoUrl ?? null;
     if (row.provider_name) allProviders.add(row.provider_name);
 
     if (!current) {
@@ -69,7 +103,11 @@ async function getGamesIndexData() {
         id,
         slug: row.game_slug!,
         name: row.game_name ?? "Unknown Game",
-        thumbnailUrl: row.game_thumbnail,
+        thumbnailUrl: resolvedThumbnailUrl,
+        gameThumbnailUrl,
+        offerImageUrl,
+        platformLogoUrl,
+        providerLogoUrl,
         topPayout: payout,
         guideCount: guideCounts.get(id) ?? 0,
         guideSlug: guideSlugs.get(id) ?? null,
@@ -82,6 +120,7 @@ async function getGamesIndexData() {
         platformCount: row.platform_name ? 1 : 0,
         providerSet: new Set(row.provider_name ? [row.provider_name] : []),
         platformSet: new Set(row.platform_name ? [row.platform_name] : []),
+        bestImagePayout: resolvedThumbnailUrl ? payout : 0,
       });
       continue;
     }
@@ -91,11 +130,21 @@ async function getGamesIndexData() {
     if (row.platform_name) current.platformSet.add(row.platform_name);
     current.providerCount = current.providerSet.size;
     current.platformCount = current.platformSet.size;
+    if (!current.gameThumbnailUrl && gameThumbnailUrl) current.gameThumbnailUrl = gameThumbnailUrl;
+    if ((!current.offerImageUrl || payout > current.bestImagePayout) && offerImageUrl) current.offerImageUrl = offerImageUrl;
+    if (!current.platformLogoUrl && platformLogoUrl) current.platformLogoUrl = platformLogoUrl;
+    if (!current.providerLogoUrl && providerLogoUrl) current.providerLogoUrl = providerLogoUrl;
+    current.thumbnailUrl =
+      current.gameThumbnailUrl ??
+      current.offerImageUrl ??
+      current.platformLogoUrl ??
+      current.providerLogoUrl ??
+      current.thumbnailUrl;
+    if (offerImageUrl && payout >= current.bestImagePayout) current.bestImagePayout = payout;
     if (payout > current.topPayout) {
       current.topPayout = payout;
       current.bestProvider = row.provider_name ?? current.bestProvider;
       current.bestPlatform = row.platform_name ?? current.bestPlatform;
-      current.thumbnailUrl = row.game_thumbnail ?? current.thumbnailUrl;
       current.category = row.category ?? current.category;
       current.updatedAt = row.updated_at ?? current.updatedAt;
     }
@@ -107,6 +156,10 @@ async function getGamesIndexData() {
       slug: game.slug,
       name: game.name,
       thumbnailUrl: game.thumbnailUrl,
+      gameThumbnailUrl: game.gameThumbnailUrl,
+      offerImageUrl: game.offerImageUrl,
+      platformLogoUrl: game.platformLogoUrl,
+      providerLogoUrl: game.providerLogoUrl,
       topPayout: game.topPayout,
       guideCount: game.guideCount,
       guideSlug: game.guideSlug,

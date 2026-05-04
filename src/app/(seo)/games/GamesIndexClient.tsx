@@ -28,6 +28,10 @@ export type GamesIndexItem = {
   slug: string;
   name: string;
   thumbnailUrl: string | null;
+  gameThumbnailUrl?: string | null;
+  offerImageUrl?: string | null;
+  platformLogoUrl?: string | null;
+  providerLogoUrl?: string | null;
   topPayout: number;
   guideCount: number;
   guideSlug?: string | null;
@@ -59,6 +63,7 @@ type QuickFilter =
   | "ios"
   | "desktop";
 type ThumbnailVariant = "card" | "featured" | "hero";
+type BadgeTone = "lime" | "amber" | "blue" | "purple" | "orange" | "slate";
 
 const SEA_OF_CONQUEST_GUIDE_MAP: Record<string, string> = {
   "sea-of-conquest-pirate-war": "sea-of-conquest-flagship-level-30-guide",
@@ -94,6 +99,17 @@ function getGuideSlug(game: GamesIndexItem) {
   return game.guideSlug ?? SEA_OF_CONQUEST_GUIDE_MAP[game.slug] ?? null;
 }
 
+function getGameImageUrl(game: GamesIndexItem) {
+  return (
+    game.gameThumbnailUrl ??
+    game.thumbnailUrl ??
+    game.offerImageUrl ??
+    game.platformLogoUrl ??
+    game.providerLogoUrl ??
+    null
+  );
+}
+
 function getDifficulty(game: GamesIndexItem) {
   const text = `${game.name} ${game.category}`.toLowerCase();
   if (game.topPayout >= 250 || /casino|slots|strategy|conquest|survival|rpg|city|kingdom|empire/.test(text)) return "High effort";
@@ -115,7 +131,7 @@ function supportsPlatform(game: GamesIndexItem, platform: "android" | "ios" | "d
   return text.includes(platform);
 }
 
-function badgeClass(tone: "lime" | "amber" | "blue" | "purple" | "orange" | "slate") {
+function badgeClass(tone: BadgeTone) {
   const tones = {
     lime: "border-lime-200 bg-lime-100 text-lime-800",
     amber: "border-amber-200 bg-amber-100 text-amber-800",
@@ -147,9 +163,9 @@ function GameThumbnail({
     variant === "hero"
       ? "h-16 w-16 rounded-2xl"
       : variant === "featured"
-        ? "h-24 w-full rounded-2xl"
+        ? "h-36 w-full rounded-[1.35rem]"
         : "h-14 w-14 rounded-2xl";
-  const textClass = variant === "featured" ? "text-2xl" : "text-base";
+  const textClass = variant === "featured" ? "text-3xl" : "text-base";
   const fallbackLabel = category || platform || "Game offer";
 
   if (!imageUrl || hasError) {
@@ -179,13 +195,14 @@ function GameThumbnail({
         sizes={variant === "featured" ? "(min-width: 1024px) 280px, 100vw" : "64px"}
         className="object-cover"
         priority={priority}
+        unoptimized={imageUrl.endsWith(".svg")}
         onError={() => setHasError(true)}
       />
     </div>
   );
 }
 
-function Badge({ icon: Icon, label, tone }: { icon: LucideIcon; label: string; tone: "lime" | "amber" | "blue" | "purple" | "orange" | "slate" }) {
+function Badge({ icon: Icon, label, tone }: { icon: LucideIcon; label: string; tone: BadgeTone }) {
   return (
     <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide ${badgeClass(tone)}`}>
       <Icon className="h-3 w-3" aria-hidden="true" />
@@ -210,7 +227,7 @@ function GameBadges({ game, compact = false }: { game: GamesIndexItem; compact?:
       : difficulty === "Moderate"
         ? { icon: Target, label: "Moderate", tone: "slate" as const }
         : { icon: Clock3, label: "High effort", tone: "orange" as const },
-  ].filter(Boolean) as Array<{ icon: LucideIcon; label: string; tone: "lime" | "amber" | "blue" | "purple" | "orange" | "slate" }>;
+  ].filter(Boolean) as Array<{ icon: LucideIcon; label: string; tone: BadgeTone }>;
 
   return (
     <div className="flex flex-wrap gap-1.5">
@@ -219,6 +236,22 @@ function GameBadges({ game, compact = false }: { game: GamesIndexItem; compact?:
       ))}
     </div>
   );
+}
+
+function DifficultyBadge({ game }: { game: GamesIndexItem }) {
+  const difficulty = getDifficulty(game);
+  const tone: BadgeTone = difficulty === "Beginner friendly" ? "lime" : difficulty === "Moderate" ? "slate" : "orange";
+  const icon = difficulty === "Beginner friendly" ? ShieldCheck : difficulty === "Moderate" ? Target : Clock3;
+  return <Badge icon={icon} label={difficulty} tone={tone} />;
+}
+
+function getGridHighlightBadges(game: GamesIndexItem) {
+  return [
+    game.topPayout >= 100 ? { icon: TrendingUp, label: game.topPayout >= 250 ? "Top payout" : "High payout", tone: "amber" as const } : null,
+    game.providerCount >= 3 ? { icon: Users, label: "Compare routes", tone: "blue" as const } : null,
+    getGuideSlug(game) ? { icon: BadgeCheck, label: "Guide available", tone: "purple" as const } : null,
+    isBeginnerFriendly(game) ? { icon: ShieldCheck, label: "Beginner pick", tone: "lime" as const } : null,
+  ].filter(Boolean) as Array<{ icon: LucideIcon; label: string; tone: BadgeTone }>;
 }
 
 function AdvancedLink({
@@ -233,7 +266,7 @@ function AdvancedLink({
   className?: string;
 }) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500";
+    "group/cta inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500";
   const styles = {
     primary: "bg-slate-950 text-lime-300 shadow-lg shadow-lime-900/10 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-lime-900/15",
     secondary: "border border-lime-300 bg-lime-50 text-slate-950 hover:-translate-y-0.5 hover:bg-lime-100 hover:shadow-md",
@@ -256,10 +289,10 @@ function pickFeaturedGames(games: GamesIndexItem[]) {
   addPick("highest", "Highest payout", "Highest tracked payout in this view.", Trophy, games[0]);
   addPick(
     "overall",
-    "Best overall",
-    "Strong payout-to-provider mix.",
+    "Best beginner pick",
+    "Strong payout-to-provider mix with a lower-friction difficulty signal.",
     Star,
-    [...games].sort((a, b) => b.topPayout + b.providerCount * 25 + b.guideCount * 20 - (a.topPayout + a.providerCount * 25 + a.guideCount * 20))[0],
+    [...games].filter(isBeginnerFriendly).sort((a, b) => b.topPayout + b.providerCount * 25 + b.guideCount * 20 - (a.topPayout + a.providerCount * 25 + a.guideCount * 20))[0],
   );
   addPick(
     "beginner",
@@ -414,7 +447,7 @@ export default function GamesIndexClient({
                   href={`/games/${game.slug}`}
                   className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/8 p-3 transition-all hover:-translate-y-0.5 hover:border-lime-300/70 hover:bg-white/12"
                 >
-                  <GameThumbnail title={game.name} imageUrl={game.thumbnailUrl} category={game.category} platform={game.bestPlatform} variant="hero" priority={index === 0} />
+                  <GameThumbnail title={game.name} imageUrl={getGameImageUrl(game)} category={game.category} platform={game.bestPlatform} variant="hero" priority={index === 0} />
                   <div className="min-w-0 flex-1">
                     <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400">Featured route</p>
                     <p className="truncate font-black text-white">{game.name}</p>
@@ -439,42 +472,55 @@ export default function GamesIndexClient({
             Browse games <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </AdvancedLink>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {featuredPicks.map((pick, index) => {
             const guideSlug = getGuideSlug(pick.game);
             const Icon = pick.icon;
             return (
               <article
                 key={`${pick.key}-${pick.game.id}`}
-                className="group flex flex-col rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_22px_70px_rgba(15,23,42,0.1)]"
+                className="group relative flex min-h-[28rem] flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_20px_60px_rgba(15,23,42,0.08)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_26px_80px_rgba(15,23,42,0.13)] focus-within:border-lime-400"
               >
-                <Link href={`/games/${pick.game.slug}`} className="block">
-                  <GameThumbnail title={pick.game.name} imageUrl={pick.game.thumbnailUrl} category={pick.game.category} platform={pick.game.bestPlatform} variant="featured" priority={index < 2} />
+                <Link href={`/games/${pick.game.slug}`} className="absolute inset-0 rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500" aria-label={`Compare ${pick.game.name} offers`} />
+                <Link href={`/games/${pick.game.slug}`} className="relative z-10 block">
+                  <GameThumbnail title={pick.game.name} imageUrl={getGameImageUrl(pick.game)} category={pick.game.category} platform={pick.game.bestPlatform} variant="featured" priority={index < 2} />
                 </Link>
-                <div className="mt-4 flex items-start justify-between gap-3">
+                <div className="relative z-10 mt-4 flex items-start justify-between gap-3">
                   <div>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-lime-100 px-2.5 py-1 text-[11px] font-black uppercase tracking-wide text-lime-800">
+                    <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-black uppercase tracking-wide ${badgeClass(pick.key === "highest" ? "amber" : pick.key === "providers" ? "blue" : pick.key === "guide" ? "purple" : "lime")}`}>
                       <Icon className="h-3 w-3" aria-hidden="true" />
                       {pick.label}
                     </span>
                     <h3 className="mt-3 line-clamp-2 text-lg font-black leading-tight text-slate-950">
-                      <Link href={`/games/${pick.game.slug}`} className="hover:text-lime-700">
+                      <Link href={`/games/${pick.game.slug}`} className="relative z-10 hover:text-lime-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">
                         {pick.game.name}
                       </Link>
                     </h3>
                   </div>
-                  <p className="text-xl font-black text-slate-950">{money(pick.game.topPayout)}</p>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{pick.reason}</p>
-                <div className="mt-3">
-                  <GameBadges game={pick.game} compact />
+                <div className="relative z-10 mt-4 grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3">
+                    <p className="text-xs font-bold uppercase tracking-wide text-amber-800">Max payout</p>
+                    <p className="mt-1 text-3xl font-black text-slate-950">{money(pick.game.topPayout)}</p>
+                  </div>
+                  <div className="rounded-2xl border border-sky-200 bg-sky-50 p-3">
+                    <p className="text-xs font-bold uppercase tracking-wide text-sky-800">Providers</p>
+                    <p className="mt-1 text-3xl font-black text-slate-950">{pick.game.providerCount || 1}</p>
+                  </div>
                 </div>
-                <div className="mt-auto flex flex-wrap gap-2 pt-5">
-                  <AdvancedLink href={`/games/${pick.game.slug}`} className="flex-1">
-                    Compare offers
+                <p className="relative z-10 mt-3 text-sm leading-relaxed text-slate-600">
+                  {pick.reason} {pick.game.bestProvider ? `Top route currently appears via ${pick.game.bestProvider}.` : ""}
+                </p>
+                <div className="relative z-10 mt-3 flex flex-wrap gap-1.5">
+                  <DifficultyBadge game={pick.game} />
+                  {guideSlug ? <Badge icon={BadgeCheck} label="Guide available" tone="purple" /> : null}
+                </div>
+                <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-5">
+                  <AdvancedLink href={`/games/${pick.game.slug}`} className="flex-1 min-w-[8.5rem]">
+                    Compare offers <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-0.5" aria-hidden="true" />
                   </AdvancedLink>
                   {guideSlug ? (
-                    <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="flex-1">
+                    <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="flex-1 min-w-[7.5rem]">
                       View guide
                     </AdvancedLink>
                   ) : null}
@@ -548,6 +594,9 @@ export default function GamesIndexClient({
               </select>
             </label>
           </div>
+          <p className="mt-3 text-xs font-semibold leading-relaxed text-slate-500">
+            Rankings use tracked max payout, provider count, difficulty, and guide coverage where available. Always verify live offer terms before starting.
+          </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {filterLabels.map((filter) => {
               const Icon = filter.icon;
@@ -574,13 +623,15 @@ export default function GamesIndexClient({
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {visibleGames.map((game) => {
             const guideSlug = getGuideSlug(game);
+            const highlightBadges = getGridHighlightBadges(game);
             return (
               <article
                 key={game.id}
-                className="group flex min-h-[18rem] flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.06)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_22px_60px_rgba(15,23,42,0.1)]"
+                className="group relative flex min-h-[18rem] flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.06)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_22px_60px_rgba(15,23,42,0.1)] focus-within:border-lime-400"
               >
-                <Link href={`/games/${game.slug}`} className="flex items-start gap-3">
-                  <GameThumbnail title={game.name} imageUrl={game.thumbnailUrl} category={game.category} platform={game.bestPlatform} />
+                <Link href={`/games/${game.slug}`} className="absolute inset-0 rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500" aria-label={`Compare ${game.name} offers`} />
+                <Link href={`/games/${game.slug}`} className="relative z-10 flex items-start gap-3">
+                  <GameThumbnail title={game.name} imageUrl={getGameImageUrl(game)} category={game.category} platform={game.bestPlatform} />
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-bold uppercase tracking-wide text-slate-500">{game.category || "Game offer"}</p>
                     <h2 className="mt-1 line-clamp-2 text-lg font-black leading-tight text-slate-950 group-hover:text-lime-700">{game.name}</h2>
@@ -588,11 +639,15 @@ export default function GamesIndexClient({
                   <ArrowRight className="mt-1 h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-lime-700" aria-hidden="true" />
                 </Link>
 
-                <div className="mt-4">
-                  <GameBadges game={game} />
+                <div className="relative z-10 mt-4 flex flex-wrap gap-1.5">
+                  {highlightBadges.length > 0 ? (
+                    highlightBadges.slice(0, 3).map((badge) => <Badge key={badge.label} {...badge} />)
+                  ) : (
+                    <GameBadges game={game} compact />
+                  )}
                 </div>
 
-                <div className="mt-5 grid grid-cols-2 gap-3">
+                <div className="relative z-10 mt-5 grid grid-cols-2 gap-3">
                   <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3">
                     <p className="text-xs font-bold uppercase tracking-wide text-amber-800">Max payout</p>
                     <p className="mt-1 text-2xl font-black text-slate-950">{money(game.topPayout)}</p>
@@ -603,7 +658,7 @@ export default function GamesIndexClient({
                   </div>
                 </div>
 
-                <div className="mt-4 space-y-1 text-sm text-slate-600">
+                <div className="relative z-10 mt-4 space-y-1 text-sm text-slate-600">
                   <p>
                     Best provider: <span className="font-bold text-slate-950">{game.bestProvider}</span>
                   </p>
@@ -613,12 +668,12 @@ export default function GamesIndexClient({
                   <p className="text-xs font-semibold text-slate-500">{formatPayoutFreshness(game.updatedAt)}</p>
                 </div>
 
-                <div className="mt-auto flex flex-wrap gap-2 pt-5">
-                  <AdvancedLink href={`/games/${game.slug}`} className="flex-1">
-                    Compare offers
+                <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-5">
+                  <AdvancedLink href={`/games/${game.slug}`} className="flex-1 min-w-[8.5rem]">
+                    Compare offers <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-0.5" aria-hidden="true" />
                   </AdvancedLink>
                   {guideSlug ? (
-                    <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="flex-1">
+                    <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="flex-1 min-w-[7.5rem]">
                       View guide
                     </AdvancedLink>
                   ) : null}

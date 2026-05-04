@@ -13,6 +13,8 @@ interface ProLayoutProps {
         difficulty: string | null;
         estimated_time: string | null;
         video_url?: string | null;
+        video_summary?: string | null;
+        video_transcript?: string | null;
     };
     gameSlug: string;
     gameName: string;
@@ -70,20 +72,19 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
                         </video>
                     </div>
                     <div className="mt-4 rounded-xl border border-lime-200 bg-lime-50 p-4">
-                        <div className="text-sm font-extrabold text-gray-900 mb-2">Sea of Conquest Offerwall Strategy in 60 Seconds</div>
-                        <ul className="space-y-1.5 text-sm text-gray-700 list-disc pl-5">
-                            <li>Your payout is tied to Flagship level, not overall ship power.</li>
-                            <li>By Day 4, stop casual exploration and build a gold engine.</li>
-                            <li>Use treasure maps, Golden Compass, auto-trade, and gang-owned ports.</li>
-                            <li>Sell at gang-owned ports for the 20% trade/profit bonus.</li>
-                            <li>Use Ghost Mode before going AFK to reduce losses from attacks.</li>
-                            <li>Buy the $9.99 Artisan Pack early only if tracking is confirmed and you are pushing Level 21+.</li>
-                            <li>Gold Blessing is useful for offline auto-trade, especially overnight.</li>
-                            <li>Save speedups for Level 20+ prerequisite cabins.</li>
-                            <li>Level 21 is usually the best realistic ROI target.</li>
-                            <li>Level 28/30 are high-risk stretch goals and should not be chased from behind.</li>
-                        </ul>
+                        <div className="text-sm font-extrabold text-gray-900 mb-2">Video summary</div>
+                        <p className="text-sm leading-6 text-gray-700">
+                            {guide.video_summary ?? "The video explains why Sea of Conquest offerwall runs should be managed as a Flagship milestone economy: build gold income by Day 4, protect auto-trade with Ghost Mode, buy only when tracking and ROI make sense, and treat Level 21 as the usual practical stopping point."}
+                        </p>
                     </div>
+                    {guide.video_transcript && (
+                        <details className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                            <summary className="cursor-pointer text-sm font-extrabold text-gray-900">Video transcript</summary>
+                            <p className="mt-3 whitespace-pre-line text-sm leading-6 text-gray-700">
+                                {guide.video_transcript}
+                            </p>
+                        </details>
+                    )}
                 </section>
             )}
 

@@ -11,6 +11,11 @@ interface GuideJsonLdProps {
         updated_at: string;
         guide_type: string | null;
         keyword_intent: string | null;
+        video_url?: string | null;
+        video_summary?: string | null;
+        video_transcript?: string | null;
+        video_thumbnail_url?: string | null;
+        video_upload_date?: string | null;
     };
     gameName: string;
     gameSlug: string;
@@ -87,6 +92,20 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
         ],
     };
 
+    const video = guide.video_url
+        ? {
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            name: "Watch First: Sea of Conquest Offerwall ROI Breakdown",
+            description: guide.video_summary ?? description,
+            thumbnailUrl: guide.video_thumbnail_url ? [`${baseUrl}${guide.video_thumbnail_url}`] : undefined,
+            uploadDate: guide.video_upload_date ?? guide.updated_at,
+            contentUrl: `${baseUrl}${guide.video_url}`,
+            embedUrl: `${baseUrl}${guide.video_url}`,
+            transcript: guide.video_transcript,
+        }
+        : null;
+
     const faqItems = steps
         .filter((section) => /faq/i.test(section.heading))
         .flatMap((section) =>
@@ -109,7 +128,7 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
         }
         : null;
 
-    const schemas = [article, ...(howTo ? [howTo] : []), breadcrumb, ...(faq ? [faq] : [])];
+    const schemas = [article, ...(howTo ? [howTo] : []), breadcrumb, ...(video ? [video] : []), ...(faq ? [faq] : [])];
 
     return (
         <>

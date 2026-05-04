@@ -33,6 +33,10 @@ interface Guide {
     max_payout_usd: number | null;
     tips: string[];
     video_url: string | null;
+    video_summary?: string | null;
+    video_transcript?: string | null;
+    video_thumbnail_url?: string | null;
+    video_upload_date?: string | null;
     key_takeaways: string | null;
     checklist_items: string[];
     layout_style: string;
@@ -226,6 +230,11 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                     updated_at:     guide.updated_at,
                     guide_type:     guide.guide_type,
                     keyword_intent: guide.keyword_intent,
+                    video_url:      guide.video_url,
+                    video_summary:  guide.video_summary,
+                    video_transcript: guide.video_transcript,
+                    video_thumbnail_url: guide.video_thumbnail_url,
+                    video_upload_date: guide.video_upload_date,
                 }}
                 gameName={game.name}
                 gameSlug={game.slug}
@@ -273,9 +282,13 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             .prose-guide th{background:#f9fafb;color:#111827;font-weight:800}
                             .prose-guide img{max-width:100%;height:auto;border-radius:.75rem;margin:1.25rem 0}
                             .prose-guide video{max-width:100%;height:auto;border-radius:.75rem;margin:0}
+                            .prose-guide details{margin:1rem 0;border:1px solid #e5e7eb;border-radius:.75rem;background:#f9fafb;padding:.875rem}
+                            .prose-guide summary{cursor:pointer;font-weight:800;color:#111827}
                             .prose-guide .guide-summary-box{margin:1rem 0;border:1px solid #d9f99d;border-radius:1rem;background:#f7fee7;padding:1rem}
                             .prose-guide .guide-summary-box ul{margin:0;padding-left:1.25rem}
                             .prose-guide .guide-summary-box li:last-child{margin-bottom:0}
+                            .guide-table-wrap{width:100%;overflow-x:auto;margin:1rem 0}
+                            .guide-table-wrap table{min-width:760px;margin:0}
                             .guide-video{margin:1.5rem 0}
                             .guide-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#111827;border-radius:.75rem;border:1px solid rgba(148,163,184,.25)}
                             .guide-image{margin:1.5rem 0}
@@ -313,6 +326,8 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                     difficulty:      guide.difficulty,
                                     estimated_time:  guide.estimated_time,
                                     video_url:       guide.video_url,
+                                    video_summary:   guide.video_summary,
+                                    video_transcript: guide.video_transcript,
                                 }}
                                 gameSlug={game.slug}
                                 gameName={game.name}

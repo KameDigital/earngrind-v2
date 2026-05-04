@@ -43,6 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: baseUrl,                        lastModified: new Date(), changeFrequency: 'daily',   priority: 1.0 },
         { url: `${baseUrl}/offers`,            lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
         { url: `${baseUrl}/guides`,            lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
+        { url: `${baseUrl}/guides/fanduel-casino-review-bonus`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.82 },
         { url: `${baseUrl}/guides/how-to-earn`,lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
         { url: `${baseUrl}/blog`,              lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
         { url: `${baseUrl}/reviews`,           lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },

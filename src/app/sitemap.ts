@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { analyzeGuideQuality } from '@/lib/guide-quality';
 import { getGuideSitemapPriority } from '@/lib/indexing-readiness';
 import { getSiteUrl } from '@/lib/site-url';
+import { STATIC_GUIDES } from '@/lib/static-guides';
 
 export const revalidate = 3600; // regenerate every hour
 
@@ -43,7 +44,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { url: baseUrl,                        lastModified: new Date(), changeFrequency: 'daily',   priority: 1.0 },
         { url: `${baseUrl}/offers`,            lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
         { url: `${baseUrl}/guides`,            lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
-        { url: `${baseUrl}/guides/fanduel-casino-review-bonus`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.82 },
         { url: `${baseUrl}/guides/how-to-earn`,lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
         { url: `${baseUrl}/blog`,              lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
         { url: `${baseUrl}/reviews`,           lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
@@ -76,6 +76,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified:    new Date(g.updated_at),
         changeFrequency: 'weekly' as const,
         priority:        0.62,
+    }));
+
+    const staticGuideUrls: MetadataRoute.Sitemap = STATIC_GUIDES.map(guide => ({
+        url:             `${baseUrl}${guide.href}`,
+        lastModified:    new Date(guide.lastModified),
+        changeFrequency: 'weekly' as const,
+        priority:        guide.sitemapPriority,
     }));
 
     // Guide pages — highest priority after homepage/offers (they target keywords)
@@ -116,6 +123,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...gameUrls,
         ...seoGameUrls,
         ...seoGuideUrls,
+        ...staticGuideUrls,
         ...guideUrls,
         ...postUrls,
         ...reviewUrls,

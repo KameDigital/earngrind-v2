@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/layout/Container";
+import { STATIC_GUIDES } from "@/lib/static-guides";
 
 export const metadata: Metadata = {
     title: "Game Guides — Maximize Your Offerwall Earnings | EarnGrind",
@@ -201,20 +202,22 @@ export default async function GuidesPage({
                             </Link>
                         </div>
                     </div>
-                    <div className="mt-4 rounded-2xl border border-sky-200 bg-sky-50 p-4">
-                        <p className="text-xs font-bold uppercase tracking-wide text-sky-700">New casino app guide</p>
-                        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                            <p className="max-w-2xl text-sm text-[var(--text-secondary)]">
-                                Review FanDuel Casino games, app features, live dealer tables, bonuses, promo code searches, and signup steps.
-                            </p>
-                            <Link
-                                href="/guides/fanduel-casino-review-bonus"
-                                className="inline-flex rounded-xl bg-[#1493ff] px-4 py-2 text-sm font-extrabold text-white"
-                            >
-                                Read FanDuel Casino Review
-                            </Link>
+                    {STATIC_GUIDES.map((guide) => (
+                        <div key={guide.slug} className={`mt-4 rounded-2xl border p-4 ${guide.accentClassName}`}>
+                            <p className="text-xs font-bold uppercase tracking-wide">{guide.eyebrow}</p>
+                            <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                <p className="max-w-2xl text-sm text-[var(--text-secondary)]">
+                                    {guide.description}
+                                </p>
+                                <Link
+                                    href={guide.href}
+                                    className={`inline-flex rounded-xl px-4 py-2 text-sm font-extrabold ${guide.buttonClassName}`}
+                                >
+                                    {guide.ctaLabel}
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
 
                 {(guides ?? []).length === 0 ? (

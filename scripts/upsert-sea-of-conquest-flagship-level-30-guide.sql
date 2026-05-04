@@ -20,12 +20,23 @@ set
 <p><strong>Last checked: May 4, 2026.</strong> Offers and payouts can change. Verify live terms before starting.</p>
 
 <div class="guide-summary-box">
-  <strong>Quick answer:</strong>
+  <strong>Sea of Conquest decision box:</strong>
   <ul>
-    <li>Flagship levels 6, 9, 11, 13, and 15 are the most realistic early targets for active beginners.</li>
-    <li>Flagship level 21 is possible for some players with consistent daily play, careful resources, active builders, and clean tracking.</li>
-    <li>Flagship levels 28 and 30 are high-risk stretch goals. Do not assume they are realistic just because they carry the largest point values.</li>
-    <li>Purchase tasks can add a large number of points, but they only make sense after you verify the live offer terms, purchase eligibility, and tracking rules.</li>
+    <li><strong>Best target for most users:</strong> Flagship 15 or Flagship 21.</li>
+    <li><strong>High-risk target:</strong> Flagship 28.</li>
+    <li><strong>Extreme target:</strong> Flagship 30.</li>
+    <li><strong>Purchase rule:</strong> Do not buy packages until tracking is confirmed and the live offer terms match what you plan to do.</li>
+  </ul>
+</div>
+
+<div class="guide-summary-box">
+  <strong>Run stats:</strong>
+  <ul>
+    <li><strong>Total possible points:</strong> 341,393.</li>
+    <li><strong>Purchase task points:</strong> 67,134.</li>
+    <li><strong>Best realistic target:</strong> Flagship 21.</li>
+    <li><strong>Level 30 risk:</strong> Extreme.</li>
+    <li><strong>Last checked:</strong> May 4, 2026.</li>
   </ul>
 </div>
 
@@ -43,6 +54,20 @@ set
 <p>If you are new to Sea of Conquest, the safer target is usually Flagship level 13 or 15. Those milestones still require active play, but they are much more forgiving than the late-game sprint. Flagship level 21 is the balanced target for players who can check in daily, manage build queues, avoid resource waste, and keep proof of progress.</p>
 <p>Flagship level 28 and Flagship level 30 are different. They carry the biggest upside in the task list, but they also carry the biggest failure risk. If you are behind by the level 15 or level 21 checkpoints, do not chase the final milestones just because they are listed. Stop, compare the remaining possible points, and decide whether the time or spend still makes sense.</p>
 <p>Purchase tasks may help progression if the package gives useful resources, speedups, extra builder support, or other account acceleration. They should never be treated as automatic progress. Verify the offerwall rules, the in-game package, tax/discount handling, currency conversion, and expected tracking window before buying.</p>
+
+<h2>Best Target by Player Type</h2>
+<p>Use this table before committing to the full level 30 route. The right target depends on available time, willingness to spend, and whether early tracking is clean.</p>
+<table>
+  <thead>
+    <tr><th>Player type</th><th>Recommended target</th><th>Purchase approach</th><th>Risk level</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Casual beginner</td><td>Flagship 13-15</td><td>Skip purchases unless the live offer terms are clear and tracking is already confirmed.</td><td>Low-medium</td><td>Best for users who can check in but do not want a stressful 28-day sprint.</td></tr>
+    <tr><td>Active free-to-play player</td><td>Flagship 15-21</td><td>Usually no purchase needed unless the remaining value and support proof justify it.</td><td>Medium-hard</td><td>Requires daily construction, resource discipline, and strong screenshots.</td></tr>
+    <tr><td>Active spender</td><td>Flagship 21-28</td><td>Only consider purchases that qualify, track, and help progression.</td><td>High</td><td>Stop if purchases do not pend or if level 21 pacing falls behind.</td></tr>
+    <tr><td>Advanced spender/grinder</td><td>Flagship 30 only if ahead of schedule</td><td>Late push only after tracking is verified and the account is already near level 28.</td><td>Extreme</td><td>Do not chase level 30 from behind or without enough resources and speedups.</td></tr>
+  </tbody>
+</table>
 
 <h2>Sea of Conquest Offer Milestones</h2>
 <p>This table uses the provided task list. Point values and deadlines can vary by offerwall, country, device, and account history, so use it as a planning guide and compare it against your live offer page before installing.</p>
@@ -91,13 +116,56 @@ set
 </table>
 
 <h2>Best Route at a Glance</h2>
-<p><strong>Day 0 / first session:</strong> Confirm tracking, screenshot the offer terms, finish the tutorial, use any official starter code only if it is currently valid, push toward Flagship 6, join an active group or alliance if available, and keep builders active. The first 12 hours are not the time to explore randomly.</p>
-<p><strong>Day 1:</strong> Push Flagship 9, start building resource habits, avoid wasting premium currency, and confirm whether purchase tasks are worth doing before the deadline. If a purchase is being considered, verify the exact task wording first.</p>
-<p><strong>Days 2-4:</strong> Push Flagship 11 and 13. Focus on the required cabins or rooms shown by the in-game Flagship upgrade screen. Start managing gold and resource bottlenecks. Use speedups only where they help unlock the next Flagship milestone.</p>
-<p><strong>Days 5-10:</strong> Push Flagship 15. Keep construction queues running, use daily events and repeatable resource activities, and avoid PvP or resource losses where possible. If you cannot check in daily during this window, the level 21 route becomes harder.</p>
-<p><strong>Days 11-20:</strong> Push Flagship 21. This is where casual players may slow down. Prioritize gold, building timers, and required prerequisite rooms. If you are behind schedule, reconsider chasing 28 or 30.</p>
-<p><strong>Days 21-25:</strong> Push Flagship 28 only if already on pace. Do not burn money or premium currency blindly. Re-check offer terms, tasks, and tracking before making any late spend decision.</p>
-<p><strong>Days 26-28:</strong> Attempt Flagship 30 only if the account is already close. Treat this as an advanced and high-risk milestone. Screenshot the final level confirmation immediately.</p>
+<h3>Day 0 / first session</h3>
+<ul>
+  <li>Confirm tracking and screenshot the offer terms.</li>
+  <li>Finish the tutorial and push toward Flagship 6.</li>
+  <li>Use any official starter code only if it is currently valid.</li>
+  <li>Join an active group or alliance if available.</li>
+  <li>Keep builders active; the first 12 hours are not the time to explore randomly.</li>
+</ul>
+<h3>Day 1</h3>
+<ul>
+  <li>Push Flagship 9.</li>
+  <li>Start building resource habits.</li>
+  <li>Avoid wasting premium currency.</li>
+  <li>Confirm whether purchase tasks are worth doing before the deadline.</li>
+  <li>If a purchase is being considered, verify the exact task wording first.</li>
+</ul>
+<h3>Days 2-4</h3>
+<ul>
+  <li>Push Flagship 11 and 13.</li>
+  <li>Focus on the required cabins or rooms shown by the in-game Flagship upgrade screen.</li>
+  <li>Start managing gold and resource bottlenecks.</li>
+  <li>Use speedups only where they help unlock the next Flagship milestone.</li>
+</ul>
+<h3>Days 5-10</h3>
+<ul>
+  <li>Push Flagship 15.</li>
+  <li>Keep construction queues running.</li>
+  <li>Use daily events and repeatable resource activities.</li>
+  <li>Avoid PvP or resource losses where possible.</li>
+  <li>If you cannot check in daily during this window, the level 21 route becomes harder.</li>
+</ul>
+<h3>Days 11-20</h3>
+<ul>
+  <li>Push Flagship 21.</li>
+  <li>Prioritize gold, building timers, and required prerequisite rooms.</li>
+  <li>This is where casual players may slow down.</li>
+  <li>If you are behind schedule, reconsider chasing 28 or 30.</li>
+</ul>
+<h3>Days 21-25</h3>
+<ul>
+  <li>Push Flagship 28 only if already on pace.</li>
+  <li>Do not burn money or premium currency blindly.</li>
+  <li>Re-check offer terms, tasks, and tracking before making any late spend decision.</li>
+</ul>
+<h3>Days 26-28</h3>
+<ul>
+  <li>Attempt Flagship 30 only if the account is already close.</li>
+  <li>Treat this as an advanced and high-risk milestone.</li>
+  <li>Screenshot the final level confirmation immediately.</li>
+</ul>
 
 <h2>Go / No-Go Checkpoints</h2>
 <div class="guide-summary-box">
@@ -137,8 +205,16 @@ set
 </table>
 
 <h2>Purchase ROI and Risk</h2>
-<p>Purchase tasks can add a large number of points, but they only make sense if the purchase is explicitly allowed by the offer terms, the purchase amount qualifies before taxes or discounts, the offerwall tracks purchases reliably, the purchased item helps progression, and you are not spending more than the remaining possible payout is worth.</p>
-<p>Examples may include premium currency bundles, builder-related packs, subscriptions, or growth-style packs, but package names and benefits can change. Verify the live in-game shop and offerwall terms before buying. Do not present a package name to support as proof unless it exactly matches your receipt and the offer terms.</p>
+<p>Purchase tasks can add a large number of points, but they should pass five checks first:</p>
+<ul>
+  <li>The purchase is explicitly allowed by the offer terms.</li>
+  <li>The purchase amount qualifies before taxes, discounts, or currency conversion issues.</li>
+  <li>The offerwall has tracked earlier tasks reliably.</li>
+  <li>The purchased item helps progression instead of only satisfying a receipt task.</li>
+  <li>You are not spending more than the remaining possible payout is worth.</li>
+</ul>
+<p>Examples may include premium currency bundles, builder-related packs, subscriptions, or growth-style packs, but package names and benefits can change. Verify the live in-game shop and offerwall terms before buying.</p>
+<p>Do not present a package name to support as proof unless it exactly matches your receipt and the offer terms.</p>
 
 <h2>Tracking Checklist Before You Start</h2>
 <ul>
@@ -173,6 +249,7 @@ set
 </ul>
 
 <h2>Common Mistakes That Can Ruin the Offer</h2>
+<p>Most failed runs do not fail because one upgrade was wrong. They fail because early pacing, proof, or purchase decisions were handled loosely.</p>
 <ul>
   <li>Starting before reading the deadline.</li>
   <li>Missing the 12-hour and 1-day early milestones.</li>
@@ -201,8 +278,11 @@ set
 </table>
 
 <h2>Should You Attempt Level 30?</h2>
-<p>Casual players should usually aim for level 13 or 15. Active free-to-play players may treat level 15 or 21 as the realistic target. Spenders should only pursue 28 or 30 if purchase tasks, speedups, resources, and tracking put the account ahead of schedule. Stop if the remaining possible payout is not worth the time or spend required.</p>
-<p>The level 30 task should be a decision made late in the run, not on day 0. If your account is already close to level 28 before the final stretch and every earlier milestone has tracked cleanly, then the final push may be worth evaluating. If not, forcing the run can turn a good level 15 or 21 outcome into a bad spend decision.</p>
+<p>Most users should not make level 30 the day-0 plan.</p>
+<p>Casual players should usually aim for level 13 or 15. Active free-to-play players may treat level 15 or 21 as the realistic target. Spenders should only pursue 28 or 30 if purchase tasks, speedups, resources, and tracking put the account ahead of schedule.</p>
+<p>Stop if the remaining possible payout is not worth the time or spend required.</p>
+<p>The level 30 task should be a decision made late in the run. If your account is already close to level 28 before the final stretch and every earlier milestone has tracked cleanly, then the final push may be worth evaluating.</p>
+<p>If not, forcing the run can turn a good level 15 or 21 outcome into a bad spend decision.</p>
 
 <h2>Best Stopping Points</h2>
 <ul>

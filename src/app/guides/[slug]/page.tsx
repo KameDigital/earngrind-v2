@@ -13,6 +13,7 @@ import GuideOfferCtaBlock from "./GuideOfferCtaBlock";
 import { matchOffersToGuide, type GuideOfferMatch } from "@/lib/guide-offer-matcher";
 import { summarizeGuideEvents, type GuideEventRow } from "@/lib/guide-event-stats";
 import { absoluteUrl } from "@/lib/site-url";
+import { seaOfConquestRoiGuideOverride } from "./seaOfConquestRoiGuide";
 
 const GUIDE_SLUG_REDIRECTS: Record<string, string> = {
     "sea-of-conquest-offer-guide-best-path-flagship-level-30": "sea-of-conquest-flagship-level-30-guide",
@@ -78,8 +79,11 @@ export async function generateMetadata(
 
     if (!guide) return { title: "Guide Not Found | EarnGrind" };
 
-    const title = guide.seo_title ?? guide.title;
-    const desc  = guide.seo_description ?? guide.excerpt ??
+    const guideForMetadata = metadataSlug === "sea-of-conquest-flagship-level-30-guide"
+        ? { ...guide, ...seaOfConquestRoiGuideOverride }
+        : guide;
+    const title = guideForMetadata.seo_title ?? guideForMetadata.title;
+    const desc  = guideForMetadata.seo_description ?? guideForMetadata.excerpt ??
         `Compare ${guide.title} requirements, payout milestones, and completion tips before starting. Verify live terms because payouts and tasks can change.`;
     const canonical = absoluteUrl(`/guides/${metadataSlug}`);
 
@@ -189,7 +193,14 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     const data = await fetchGuideData(params.slug);
     if (!data) notFound();
 
-    const { guide, game, relatedGuides, relatedOffers, matchedOffers } = data;
+    let { guide } = data;
+    const { game, relatedGuides, relatedOffers, matchedOffers } = data;
+    if (guide.slug === "sea-of-conquest-flagship-level-30-guide") {
+        guide = {
+            ...guide,
+            ...seaOfConquestRoiGuideOverride,
+        };
+    }
     const layoutStyle = guide.layout_style ?? "classic";
     const hasMatchedOfferCtas = matchedOffers.length > 0;
     const lastCheckedSource = guide.last_offer_check_at ?? guide.payout_verified_at ?? guide.tasks_verified_at ?? guide.provider_terms_verified_at;
@@ -261,9 +272,12 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             .prose-guide th,.prose-guide td{border:1px solid #e5e7eb;padding:.6rem;text-align:left;vertical-align:top}
                             .prose-guide th{background:#f9fafb;color:#111827;font-weight:800}
                             .prose-guide img{max-width:100%;height:auto;border-radius:.75rem;margin:1.25rem 0}
+                            .prose-guide video{max-width:100%;height:auto;border-radius:.75rem;margin:0}
                             .prose-guide .guide-summary-box{margin:1rem 0;border:1px solid #d9f99d;border-radius:1rem;background:#f7fee7;padding:1rem}
                             .prose-guide .guide-summary-box ul{margin:0;padding-left:1.25rem}
                             .prose-guide .guide-summary-box li:last-child{margin-bottom:0}
+                            .guide-video{margin:1.5rem 0}
+                            .guide-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#111827;border-radius:.75rem;border:1px solid rgba(148,163,184,.25)}
                             .guide-image{margin:1.5rem 0}
                             .guide-image img{width:100%;height:auto;border-radius:.75rem;border:1px solid rgba(148,163,184,.25);margin:0}
                             .guide-image figcaption{margin-top:.5rem;font-size:.875rem;line-height:1.45;color:#64748b;text-align:center}
@@ -298,6 +312,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                     max_payout_usd:  guide.max_payout_usd,
                                     difficulty:      guide.difficulty,
                                     estimated_time:  guide.estimated_time,
+                                    video_url:       guide.video_url,
                                 }}
                                 gameSlug={game.slug}
                                 gameName={game.name}

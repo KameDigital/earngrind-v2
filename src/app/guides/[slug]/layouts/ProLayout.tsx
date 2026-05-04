@@ -12,6 +12,7 @@ interface ProLayoutProps {
         max_payout_usd: number | null;
         difficulty: string | null;
         estimated_time: string | null;
+        video_url?: string | null;
     };
     gameSlug: string;
     gameName: string;
@@ -28,6 +29,7 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
         .filter(Boolean);
 
     const preamble = extractPreamble(guide.body_md ?? "", [2, 3]);
+    const showSeaOfConquestVideo = Boolean(guide.video_url && gameName.toLowerCase().includes("sea of conquest"));
 
     return (
         <div className="space-y-5">
@@ -47,6 +49,42 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
                         ))}
                     </ul>
                 </div>
+            )}
+
+            {showSeaOfConquestVideo && (
+                <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+                    <h2 className="text-lg font-extrabold text-gray-900 mb-3">
+                        Watch First: Sea of Conquest Offerwall ROI Breakdown
+                    </h2>
+                    <p className="text-sm leading-6 text-gray-700 mb-4">
+                        This video explains the core strategy before you start: Sea of Conquest offerwall rewards are tied to Flagship milestones, not overall ship power. The goal is to build a gold engine, avoid wasted upgrades, protect auto-trade with Ghost Mode, and know when to stop instead of chasing Level 30.
+                    </p>
+                    <div className="guide-video">
+                        <video
+                            controls
+                            preload="metadata"
+                            className="w-full rounded-xl border border-gray-200 bg-gray-950"
+                            title="Sea of Conquest offerwall ROI breakdown"
+                        >
+                            <source src={guide.video_url ?? ""} type="video/mp4" />
+                        </video>
+                    </div>
+                    <div className="mt-4 rounded-xl border border-lime-200 bg-lime-50 p-4">
+                        <div className="text-sm font-extrabold text-gray-900 mb-2">Sea of Conquest Offerwall Strategy in 60 Seconds</div>
+                        <ul className="space-y-1.5 text-sm text-gray-700 list-disc pl-5">
+                            <li>Your payout is tied to Flagship level, not overall ship power.</li>
+                            <li>By Day 4, stop casual exploration and build a gold engine.</li>
+                            <li>Use treasure maps, Golden Compass, auto-trade, and gang-owned ports.</li>
+                            <li>Sell at gang-owned ports for the 20% trade/profit bonus.</li>
+                            <li>Use Ghost Mode before going AFK to reduce losses from attacks.</li>
+                            <li>Buy the $9.99 Artisan Pack early only if tracking is confirmed and you are pushing Level 21+.</li>
+                            <li>Gold Blessing is useful for offline auto-trade, especially overnight.</li>
+                            <li>Save speedups for Level 20+ prerequisite cabins.</li>
+                            <li>Level 21 is usually the best realistic ROI target.</li>
+                            <li>Level 28/30 are high-risk stretch goals and should not be chased from behind.</li>
+                        </ul>
+                    </div>
+                </section>
             )}
 
             {/* Summary stats strip */}

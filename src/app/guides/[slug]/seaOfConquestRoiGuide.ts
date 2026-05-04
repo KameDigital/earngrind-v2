@@ -130,7 +130,7 @@ export const seaOfConquestRoiGuideOverride = {
   <li>Keep builders on required cabins and avoid side projects that consume days.</li>
 </ul>
 <figure class="guide-image">
-  <img src="/images/guides/sea-of-conquest/sea-of-conquest-overview.webp" alt="Sea of Conquest ships sailing toward a fortress" width="493" height="311" loading="lazy" />
+  <img src="/images/guides/sea-of-conquest/sea-of-conquest-overview.webp" alt="Sea of Conquest ships sailing toward a fortress" width="1579" height="996" loading="lazy" />
   <figcaption>Your goal is not to build the strongest fleet. Your goal is to hit the right Flagship milestone before the timer ends.</figcaption>
 </figure>
 

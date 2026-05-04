@@ -42,23 +42,27 @@ async function getGamesIndexData() {
       .limit(250),
     supabase
       .from("guides")
-      .select("game_id")
+      .select("game_id, slug")
       .eq("status", "published"),
   ]);
 
   const guideCounts = new Map<string, number>();
+  const guideSlugs = new Map<string, string>();
   for (const row of guideRows ?? []) {
     const gameId = row.game_id as string | null;
     if (!gameId) continue;
     guideCounts.set(gameId, (guideCounts.get(gameId) ?? 0) + 1);
+    if (!guideSlugs.has(gameId) && row.slug) guideSlugs.set(gameId, row.slug as string);
   }
 
   const gamesById = new Map<string, GamesIndexItem & { providerSet: Set<string>; platformSet: Set<string> }>();
+  const allProviders = new Set<string>();
 
   for (const row of ((offerRows ?? []) as GameRow[]).filter((item) => item.game_id && item.game_slug)) {
     const id = row.game_id!;
     const payout = Number(row.total_payout_usd ?? row.payout_usd ?? 0);
     const current = gamesById.get(id);
+    if (row.provider_name) allProviders.add(row.provider_name);
 
     if (!current) {
       gamesById.set(id, {
@@ -68,6 +72,7 @@ async function getGamesIndexData() {
         thumbnailUrl: row.game_thumbnail,
         topPayout: payout,
         guideCount: guideCounts.get(id) ?? 0,
+        guideSlug: guideSlugs.get(id) ?? null,
         offerCount: 1,
         bestProvider: row.provider_name ?? "Unknown Provider",
         bestPlatform: row.platform_name ?? "Unknown Platform",
@@ -104,6 +109,7 @@ async function getGamesIndexData() {
       thumbnailUrl: game.thumbnailUrl,
       topPayout: game.topPayout,
       guideCount: game.guideCount,
+      guideSlug: game.guideSlug,
       offerCount: game.offerCount,
       bestProvider: game.bestProvider,
       bestPlatform: game.bestPlatform,
@@ -122,6 +128,7 @@ async function getGamesIndexData() {
       highestPayout: games[0]?.topPayout ?? 0,
       guidesAvailable: games.filter((game) => game.guideCount > 0).length,
       trackedOffers: games.reduce((sum, game) => sum + game.offerCount, 0),
+      providersTracked: allProviders.size,
     },
   };
 }

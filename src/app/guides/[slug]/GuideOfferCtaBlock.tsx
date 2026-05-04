@@ -74,7 +74,7 @@ export default function GuideOfferCtaBlock({
                     </p>
                     <p className="mt-2 text-xs font-semibold text-lime-800">{variant.subtext}</p>
                 </div>
-                <Link
+                <a
                     href={best.targetUrl}
                     data-guide-cta="true"
                     data-cta-variant="guide_offer_matcher_primary"
@@ -90,7 +90,7 @@ export default function GuideOfferCtaBlock({
                     className="inline-flex shrink-0 items-center justify-center rounded-xl bg-gray-900 px-5 py-3 text-sm font-extrabold text-lime-300 shadow-sm hover:bg-gray-800"
                 >
                     {variant.buttonText}
-                </Link>
+                </a>
             </div>
 
             {alternatives.length > 0 ? (
@@ -98,7 +98,7 @@ export default function GuideOfferCtaBlock({
                     <div className="mb-2 text-[11px] font-extrabold uppercase tracking-widest text-lime-700">Other available routes</div>
                     <div className="grid gap-2 sm:grid-cols-3">
                         {alternatives.map((offer) => (
-                            <Link
+                            <a
                                 key={`${placement}-${offer.id}`}
                                 href={offer.targetUrl}
                                 data-guide-cta="true"
@@ -116,7 +116,7 @@ export default function GuideOfferCtaBlock({
                             >
                                 <div className="truncate font-bold text-gray-900">{offer.platform ?? offer.provider ?? "Offer route"}</div>
                                 <div className="mt-0.5 text-xs font-semibold text-lime-700">{formatMoney(offer.payout)}</div>
-                            </Link>
+                            </a>
                         ))}
                     </div>
                 </div>

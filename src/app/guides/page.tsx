@@ -69,6 +69,7 @@ function GuideCard({ guide }: { guide: Guide }) {
                                 alt={guide.games.name}
                                 width={40}
                                 height={40}
+                                unoptimized={guide.games.thumbnail_url.endsWith(".svg")}
                                 className="w-full h-full object-cover"
                             />
                         ) : (

@@ -22,6 +22,13 @@ function addHeadingIds(html: string) {
     });
 }
 
+function definedAttributes(attributes: Record<string, string | undefined>) {
+    return Object.entries(attributes).reduce<Record<string, string>>((nextAttributes, [key, value]) => {
+        if (typeof value === "string") nextAttributes[key] = value;
+        return nextAttributes;
+    }, {});
+}
+
 export function sanitizeGuideHtml(html: string): string {
     const sanitized = sanitizeHtml(html, {
         allowedTags: [
@@ -88,15 +95,15 @@ export function sanitizeGuideHtml(html: string): string {
             }),
             img: (_tagName, attribs) => ({
                 tagName: "img",
-                attribs: {
+                attribs: definedAttributes({
                     src: attribs.src ?? "",
                     alt: attribs.alt ?? "",
-                    title: attribs.title ?? undefined,
-                    width: attribs.width ?? undefined,
-                    height: attribs.height ?? undefined,
+                    title: attribs.title,
+                    width: attribs.width,
+                    height: attribs.height,
                     loading: attribs.loading === "eager" ? "eager" : "lazy",
                     class: attribs.class,
-                },
+                }),
             }),
         },
     });

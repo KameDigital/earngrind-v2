@@ -101,6 +101,7 @@ export async function GET(
                 offer_url: row.offer_url,
                 status: row.status,
                 goal_text: row.goal_text,
+                updated_at: row.updated_at,
                 tasks,
             };
         })

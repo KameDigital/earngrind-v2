@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 
 type Focus = "fastest completion" | "highest payout" | "beginner friendly" | "no-spend" | "platform comparison";
 type Template = "milestone guide" | "speed guide" | "comparison guide" | "beginner guide";
+type KeywordIntent = "informational" | "commercial_investigation" | "comparison" | "review" | "how_to" | "worth_it" | "task_specific" | "payout_specific";
 
 type OfferTask = {
     id: string;
@@ -33,6 +34,11 @@ function normalizeFocus(value: string | null): Focus {
 function normalizeTemplate(value: string | null): Template {
     const valid: Template[] = ["milestone guide", "speed guide", "comparison guide", "beginner guide"];
     return valid.includes(value as Template) ? (value as Template) : "milestone guide";
+}
+
+function normalizeKeywordIntent(value: string | null): KeywordIntent {
+    const valid: KeywordIntent[] = ["informational", "commercial_investigation", "comparison", "review", "how_to", "worth_it", "task_specific", "payout_specific"];
+    return valid.includes(value as KeywordIntent) ? (value as KeywordIntent) : "commercial_investigation";
 }
 
 function slugify(str: string) {
@@ -91,11 +97,15 @@ function buildExcerpt(gameName: string, maxPayoutUsd: number, providerCount: num
 }
 
 function buildSeoTitle(gameName: string, maxPayoutUsd: number, focus: Focus) {
-    return `${gameName} ${focus === "highest payout" ? "Offer Guide" : focus.replace(/\b\w/g, (m) => m.toUpperCase()) + " Guide"} - Earn Up To $${maxPayoutUsd.toFixed(2)}`;
+    const year = new Date().getFullYear();
+    return `${gameName} Offer Guide: Payouts, Tasks, and Tips (${year})`;
 }
 
 function buildSeoDescription(gameName: string, maxPayoutUsd: number, estimatedTime: string, focus: Focus) {
-    return `SEO guide for ${gameName}: ${focus}, payout breakdown, milestone checklist, and provider notes. Current max payout is $${maxPayoutUsd.toFixed(2)} with an estimated completion time of ${estimatedTime}.`;
+    if (maxPayoutUsd > 0) {
+        return `Compare ${gameName} offer requirements, payout milestones, provider routes, and completion tips before starting. Current tracked payouts reach up to $${maxPayoutUsd.toFixed(2)}, but live terms can change.`;
+    }
+    return `Compare ${gameName} offer requirements, payout milestones, provider routes, and completion tips before starting. Verify live terms because payouts and tasks can change.`;
 }
 
 function buildSections(
@@ -105,6 +115,7 @@ function buildSections(
     focus: Focus,
     template: Template,
     sourceBody: string | null,
+    keywordIntent: KeywordIntent,
 ) {
     const offer = topOffer;
     const milestoneLines = offer?.tasks?.length
@@ -122,6 +133,34 @@ function buildSections(
         "no-spend": "Skip any spend-gated branches unless a task explicitly confirms free alternatives are allowed.",
         "platform comparison": "Compare payout totals, milestone counts, and any spend requirements before choosing a provider.",
     };
+
+    const intentAdvice: Record<KeywordIntent, string[]> = {
+        how_to: ["Requirements Before Starting", "Step-by-Step Route", "Mistakes to Avoid", "FAQ"],
+        worth_it: ["Quick Verdict", "Time Estimate", "Payout Risk", "Who Should Skip", "Alternatives"],
+        comparison: ["Provider Comparison Table", "Pros and Cons", "Best Option", "FAQ"],
+        review: ["Trust Signals", "Payout Proof Notes", "Support Quality", "Complaints", "Verdict"],
+        task_specific: ["Exact Milestone Route", "Deadlines", "Difficulty", "Screenshot Reminders"],
+        payout_specific: ["Payout Tiers", "Cashout Considerations", "Tracking Risk", "Verification Date"],
+        commercial_investigation: ["Best Provider", "Bonus Availability", "Risks", "Alternatives"],
+        informational: ["Overview", "How It Works", "Common Questions", "Next Steps"],
+    };
+
+    const cautionBlock = [
+        "## Offer Safety Notes",
+        "Offers, payouts, deadlines, and tasks can change by provider, device, region, and account history. Verify the live offer terms before starting. Do not spend more than the remaining payout is worth, and keep screenshots of important milestones.",
+    ].join("\n");
+
+    const verdictBlock = [
+        "## Quick Verdict",
+        `${game.name} is worth considering only if the current provider terms fit your device, region, available time, and tolerance for tracking risk. Use the payout total as a comparison point, not a promise. The best route is usually the one with clear early milestones, reasonable deadlines, and a provider you can verify before installing.`,
+        "",
+        "This draft should be reviewed against the latest live offer page before publishing. Add provider-specific proof notes, screenshots, or milestone details only when the source data is available.",
+    ].join("\n");
+
+    const intentBlock = [
+        `## ${keywordIntent.replace(/_/g, " ").replace(/\b\w/g, (match) => match.toUpperCase())} Search Intent`,
+        `Structure this guide around: ${intentAdvice[keywordIntent].join(", ")}. Keep claims factual and avoid promising earnings. Where details are unknown, leave placeholders for editor research instead of inventing requirements.`,
+    ].join("\n");
 
     const templateHeading = template === "comparison guide"
         ? "## Platform Notes"
@@ -153,6 +192,13 @@ function buildSections(
             "## Platform Notes",
             comparisonNotes || "- No active provider comparison data found.",
         ].join("\n"),
+        verdict: verdictBlock,
+        intent: intentBlock,
+        safety: cautionBlock,
+        alternatives: [
+            "## Alternatives",
+            `If ${game.name} does not fit your device, region, or available time, compare other game offers before starting. Look for lower milestone counts, clearer deadlines, and payout routes that do not require spending more than the remaining reward is worth.`,
+        ].join("\n"),
         expert_tips: [
             "## Expert Tips",
             "- Track every milestone manually and take screenshots of completion points.",
@@ -177,13 +223,21 @@ function buildBody(sections: Record<string, string>) {
     return [
         sections.intro,
         "",
+        sections.verdict,
+        "",
         sections.overview,
+        "",
+        sections.intent,
         "",
         sections.step_by_step,
         "",
         sections.platform_notes,
         "",
         sections.expert_tips,
+        "",
+        sections.safety,
+        "",
+        sections.alternatives,
         "",
         sections.faq,
     ].join("\n");
@@ -210,6 +264,7 @@ export async function GET(req: NextRequest) {
     const gameId = req.nextUrl.searchParams.get("game_id");
     const focus = normalizeFocus(req.nextUrl.searchParams.get("focus"));
     const template = normalizeTemplate(req.nextUrl.searchParams.get("template"));
+    const keywordIntent = normalizeKeywordIntent(req.nextUrl.searchParams.get("keyword_intent"));
     const sourceGuideId = req.nextUrl.searchParams.get("source_guide_id");
 
     if (!gameId) return NextResponse.json({ error: "game_id is required." }, { status: 400 });
@@ -280,7 +335,7 @@ export async function GET(req: NextRequest) {
     const excerpt = buildExcerpt(game.name, maxPayoutUsd, offers.length, focus);
     const seoTitle = buildSeoTitle(game.name, maxPayoutUsd, focus);
     const seoDescription = buildSeoDescription(game.name, maxPayoutUsd, estimatedTime, focus);
-    const sections = buildSections(game, topOffer, offers, focus, template, sourceGuide?.body_md ?? null);
+    const sections = buildSections(game, topOffer, offers, focus, template, sourceGuide?.body_md ?? null, keywordIntent);
     const bodyMd = buildBody(sections);
 
     const { data: relatedGuides } = await supabase

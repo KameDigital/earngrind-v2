@@ -1,5 +1,6 @@
 import { formatMoney } from "../_lib/seo-data";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import { formatPayoutFreshness, payoutFreshnessIsStale } from "@/lib/payout-freshness";
 
 type GameHeaderProps = {
   gameName: string;
@@ -16,6 +17,7 @@ type GameHeaderProps = {
     payoutUsd: number;
     totalPayoutUsd: number;
     redirectUrl: string;
+    updatedAt: string | null;
   } | null;
 };
 
@@ -45,6 +47,15 @@ export default function GameHeader({
           <p className="mt-2 text-sm text-[var(--text-secondary)]">
             {bestOffer ? `${bestOffer.platformName} via ${bestOffer.providerName}` : "No active route available"}
           </p>
+          {bestOffer ? (
+            <div className={`mt-3 rounded-xl border px-3 py-2 text-xs font-bold ${
+              payoutFreshnessIsStale(bestOffer.updatedAt)
+                ? "border-amber-200 bg-amber-50 text-amber-700"
+                : "border-lime-200 bg-white/70 text-lime-800"
+            }`}>
+              {formatPayoutFreshness(bestOffer.updatedAt)}
+            </div>
+          ) : null}
           {bestOffer ? (
             <TrackedOutboundLink
               href={bestOffer.redirectUrl}

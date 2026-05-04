@@ -8,6 +8,7 @@ import OfferTable from "../components/OfferTable";
 import ProviderComparison from "../components/ProviderComparison";
 import { formatMoney } from "../_lib/seo-data";
 import { getBestPageData, getBestPageMetadata } from "../_lib/best-pages";
+import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
 
 export const revalidate = 3600;
 
@@ -91,6 +92,8 @@ export default async function BestGptSitesPage() {
   const best = rows[0] ?? null;
   const reviews = await getRelevantReviews(Array.from(new Set(rows.map((row) => row.platformName).filter(Boolean))));
   const featuredReviews = reviews.slice(0, 3);
+  const primaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "primary");
+  const secondaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "secondary");
   const bestReview = best
     ? reviews.find((review) => review.platforms?.name?.toLowerCase() === best.platformName.toLowerCase()) ?? null
     : null;
@@ -168,6 +171,9 @@ export default async function BestGptSitesPage() {
                 <Link href="#best-site-offers" className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px">
                   Compare Live Offers
                 </Link>
+                <Link href="/guides/best-gpt-sites-to-make-money" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
+                  Read Full GPT Guide
+                </Link>
                 {bestReview ? (
                   <Link href={`/review/${bestReview.slug}`} className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
                     Read {best.platformName} Review
@@ -209,6 +215,55 @@ export default async function BestGptSitesPage() {
             </article>
           </div>
         </header>
+
+        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="section-label">Start here</p>
+              <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">Recommended GPT sites</h2>
+              <p className="mt-2 max-w-3xl text-sm text-[var(--text-secondary)]">
+                These buttons use EarnGrind tracked outbound routes. We may earn a commission, but you should still verify payout freshness, device fit, and country eligibility before starting.
+              </p>
+            </div>
+            <Link href="/guides/best-gpt-sites-to-make-money" className="inline-flex rounded-xl border border-[var(--border-default)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400">
+              Read comparison guide
+            </Link>
+          </div>
+
+          <div className="mt-4 grid gap-3 lg:grid-cols-3">
+            {primaryPlatforms.map((platform) => (
+              <article key={platform.id} className="rounded-xl border border-lime-200 bg-lime-50/60 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-lime-700">{platform.bestFor}</p>
+                <h3 className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">{platform.name}</h3>
+                <p className="mt-2 text-sm text-[var(--text-secondary)]">{platform.rewardNote}</p>
+                <p className="mt-2 text-xs font-semibold text-[var(--text-tertiary)]">{platform.trustNote}</p>
+                <Link
+                  href={buildTrackedPlatformHref(platform, "best_gpt_sites_primary_card")}
+                  className="mt-4 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                >
+                  {platform.cta}
+                </Link>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+            {secondaryPlatforms.map((platform) => (
+              <article key={platform.id} className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">{platform.bestFor}</p>
+                <h3 className="mt-2 font-extrabold text-[var(--brand-ink)]">{platform.name}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">{platform.rewardNote}</p>
+                {platform.disclosure ? <p className="mt-2 text-xs font-bold text-lime-700">{platform.disclosure}</p> : null}
+                <Link
+                  href={buildTrackedPlatformHref(platform, "best_gpt_sites_secondary_card")}
+                  className="mt-3 inline-flex rounded-lg border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                >
+                  {platform.cta}
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
 
         {featuredReviews.length > 0 ? (
           <section className="space-y-3 rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">

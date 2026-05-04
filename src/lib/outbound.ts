@@ -38,8 +38,14 @@ type PlatformRedirectTarget = {
 
 const GAIN_AFFILIATE_URL = "https://gain.gg/r/macko";
 const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev";
+const SWAGBUCKS_AFFILIATE_URL = "https://www.swagbucks.com/profile/r_158565078?rp=1";
+const KASHKICK_AFFILIATE_URL = "https://app.kashkick.com?ref=MEF2ucEjcbtH";
+const INBOXDOLLARS_AFFILIATE_URL = "https://www.inboxdollars.com?rb=193664312";
+const MYPOINTS_AFFILIATE_URL = "https://www.mypoints.com?rb=233983902";
+const PRIZEREBEL_AFFILIATE_URL = "https://www.prizerebel.com/index.php?r=16580973";
+const SCRAMBLY_URL = "https://scrambly.io/";
 const PLATFORM_FALLBACK_URLS: Record<string, string> = {
-    earnlab: "https://earnlab.com",
+    earnlab: GAIN_AFFILIATE_URL,
     gaingg: "https://gain.gg",
     gain: "https://gain.gg",
     gemsloot: "https://gemsloot.com",
@@ -72,11 +78,32 @@ export function getPlatformFallbackUrl(platform: PlatformRedirectTarget | null |
 
 export function getPlatformAffiliateOverride(platform: PlatformRedirectTarget | null | undefined): string | null {
     const candidates = getPlatformKeys(platform);
+    if (candidates.some((candidate) => candidate === "earnlab" || candidate.includes("earnlab"))) {
+        return GAIN_AFFILIATE_URL;
+    }
     if (candidates.some((candidate) => candidate === "gaingg" || candidate === "gain" || candidate.includes("gaingg"))) {
         return GAIN_AFFILIATE_URL;
     }
     if (candidates.some((candidate) => candidate === "gemsloot" || candidate.includes("gemsloot"))) {
         return GEMSLOOT_AFFILIATE_URL;
+    }
+    if (candidates.some((candidate) => candidate === "swagbucks" || candidate.includes("swagbucks"))) {
+        return SWAGBUCKS_AFFILIATE_URL;
+    }
+    if (candidates.some((candidate) => candidate === "kashkick" || candidate.includes("kashkick"))) {
+        return KASHKICK_AFFILIATE_URL;
+    }
+    if (candidates.some((candidate) => candidate === "inboxdollars" || candidate.includes("inboxdollars"))) {
+        return INBOXDOLLARS_AFFILIATE_URL;
+    }
+    if (candidates.some((candidate) => candidate === "mypoints" || candidate.includes("mypoints"))) {
+        return MYPOINTS_AFFILIATE_URL;
+    }
+    if (candidates.some((candidate) => candidate === "prizerebel" || candidate.includes("prizerebel"))) {
+        return PRIZEREBEL_AFFILIATE_URL;
+    }
+    if (candidates.some((candidate) => candidate === "scrambly" || candidate.includes("scrambly"))) {
+        return SCRAMBLY_URL;
     }
 
     return null;

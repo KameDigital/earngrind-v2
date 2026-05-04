@@ -161,24 +161,23 @@ export function analyzeSeoDescription(description: string, keywordTarget?: strin
 export function generateSeoTitleVariants(input: SeoVariantInput) {
     const year = input.year ?? new Date().getFullYear();
     const keyword = input.keywordTarget?.trim() || input.guideTitle.trim();
-    const payout = input.maxPayoutUsd ? ` Up to $${input.maxPayoutUsd.toFixed(2)}` : "";
 
     return unique([
         `${keyword}: Fastest Completion Strategy (${year})`,
         `${keyword} Guide: Requirements, Payouts, and Tips (${year})`,
         `${keyword}: Best Route Before You Start (${year})`,
-        `${keyword} Offer Guide${payout ? `:${payout}` : ""} (${year})`,
+        `${keyword} Offer Guide: Payouts, Tasks, and Tips (${year})`,
         `Is ${keyword} Worth It? Payout and Strategy Guide (${year})`,
-        `${keyword}: Compare Payouts and Avoid Common Mistakes`,
+        `${keyword}: Compare Payouts and Avoid Common Mistakes (${year})`,
     ]).slice(0, 6);
 }
 
 export function generateSeoDescriptionVariants(input: SeoVariantInput) {
     const keyword = input.keywordTarget?.trim() || input.guideTitle.trim();
-    const payout = input.maxPayoutUsd ? `, including routes up to $${input.maxPayoutUsd.toFixed(2)}` : "";
+    const verifiedPayout = input.maxPayoutUsd ? ` Current tracked payouts reach up to $${input.maxPayoutUsd.toFixed(2)}, but live terms can change.` : " Verify live terms because payouts and tasks can change.";
 
     return unique([
-        `Compare ${keyword} requirements, payouts${payout}, and completion tips before starting. Learn the fastest milestones, common mistakes, and ROI warnings.`,
+        `Compare ${keyword} requirements, payout milestones, provider routes, and completion tips before starting.${verifiedPayout}`,
         `Use this ${keyword} guide to review payout value, task difficulty, tracking risks, and the best route to check before starting the offer.`,
         `See what ${keyword} requires, where users may get stuck, and how to compare live payouts before committing time or money.`,
         `Review ${keyword} milestones, strategy notes, and payout considerations so you can decide whether the live offer is worth starting.`,

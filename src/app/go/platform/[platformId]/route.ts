@@ -108,7 +108,7 @@ export async function GET(
     { params }: { params: { platformId: string } },
 ) {
     const platformId = params.platformId;
-    if (!isUuid(platformId)) {
+    if (!isUuid(platformId) && !/^[a-z0-9-]{2,80}$/i.test(platformId)) {
         return NextResponse.json({ error: "invalid_platform_id" }, { status: 400 });
     }
 
@@ -121,7 +121,7 @@ export async function GET(
     const { data: platform, error } = await supabase
         .from("platforms")
         .select("id, name, slug, affiliate_template")
-        .eq("id", platformId)
+        .eq(isUuid(platformId) ? "id" : "slug", platformId)
         .maybeSingle();
 
     if (error) {

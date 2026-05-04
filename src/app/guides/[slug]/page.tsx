@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { extractSections } from "./markdownRenderer";
 import GuideHeader from "./GuideHeader";
@@ -12,6 +12,11 @@ import GuidePerformanceTracker from "./GuidePerformanceTracker";
 import GuideOfferCtaBlock from "./GuideOfferCtaBlock";
 import { matchOffersToGuide, type GuideOfferMatch } from "@/lib/guide-offer-matcher";
 import { summarizeGuideEvents, type GuideEventRow } from "@/lib/guide-event-stats";
+import { absoluteUrl } from "@/lib/site-url";
+
+const GUIDE_SLUG_REDIRECTS: Record<string, string> = {
+    "sea-of-conquest-offer-guide-best-path-flagship-level-30": "sea-of-conquest-flagship-level-30-guide",
+};
 
 // ---------------------------------------------------------------
 // TYPES
@@ -40,7 +45,12 @@ interface Guide {
     platform_id: string | null;
     platform_filter: string | null;
     keyword_target: string | null;
+    keyword_intent: string | null;
     guide_type: string | null;
+    payout_verified_at: string | null;
+    tasks_verified_at: string | null;
+    provider_terms_verified_at: string | null;
+    last_offer_check_at: string | null;
     primary_offer_id: string | null;
     disable_auto_offer_matching: boolean | null;
 }
@@ -57,11 +67,12 @@ interface Game {
 export async function generateMetadata(
     { params }: { params: { slug: string } }
 ): Promise<Metadata> {
+    const metadataSlug = GUIDE_SLUG_REDIRECTS[params.slug] ?? params.slug;
     const supabase = createClient();
     const { data: guide } = await supabase
         .from("guides")
         .select("title, seo_title, seo_description, excerpt, max_payout_usd")
-        .eq("slug", params.slug)
+        .eq("slug", metadataSlug)
         .eq("status", "published")
         .maybeSingle();
 
@@ -69,18 +80,19 @@ export async function generateMetadata(
 
     const title = guide.seo_title ?? guide.title;
     const desc  = guide.seo_description ?? guide.excerpt ??
-        `Complete guide for ${guide.title}. Earn up to $${guide.max_payout_usd?.toFixed(2) ?? "?"}.`;
+        `Compare ${guide.title} requirements, payout milestones, and completion tips before starting. Verify live terms because payouts and tasks can change.`;
+    const canonical = absoluteUrl(`/guides/${metadataSlug}`);
 
     return {
         title,
         description: desc,
         alternates: {
-            canonical: `/guides/${params.slug}`,
+            canonical,
         },
         openGraph: {
             title,
             description: desc,
-            url: `/guides/${params.slug}`,
+            url: canonical,
         },
     };
 }
@@ -98,7 +110,8 @@ async function fetchGuideData(slug: string) {
             max_payout_usd, tips, video_url, key_takeaways, checklist_items,
             layout_style, show_related_offers, show_related_guides,
             seo_title, seo_description, published_at, updated_at, game_id,
-            platform_id, platform_filter, keyword_target, guide_type,
+            platform_id, platform_filter, keyword_target, keyword_intent, guide_type,
+            payout_verified_at, tasks_verified_at, provider_terms_verified_at, last_offer_check_at,
             primary_offer_id, disable_auto_offer_matching,
             game:games(id, name, slug)
         `)
@@ -170,12 +183,19 @@ async function fetchGuideData(slug: string) {
 // PAGE
 // ---------------------------------------------------------------
 export default async function GuidePage({ params }: { params: { slug: string } }) {
+    const redirectedSlug = GUIDE_SLUG_REDIRECTS[params.slug];
+    if (redirectedSlug) redirect(`/guides/${redirectedSlug}`);
+
     const data = await fetchGuideData(params.slug);
     if (!data) notFound();
 
     const { guide, game, relatedGuides, relatedOffers, matchedOffers } = data;
     const layoutStyle = guide.layout_style ?? "classic";
     const hasMatchedOfferCtas = matchedOffers.length > 0;
+    const lastCheckedSource = guide.last_offer_check_at ?? guide.payout_verified_at ?? guide.tasks_verified_at ?? guide.provider_terms_verified_at;
+    const lastCheckedText = lastCheckedSource
+        ? `Last checked: ${new Date(lastCheckedSource).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. Offers and payouts can change. Verify live terms before starting.`
+        : "Offers, payouts, deadlines, and tasks can change by provider, device, region, and account history. Verify live terms before starting.";
 
     return (
         <div className="min-h-screen bg-[#f5f5f0]">
@@ -193,6 +213,8 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                     tips:           guide.tips ?? [],
                     published_at:   guide.published_at,
                     updated_at:     guide.updated_at,
+                    guide_type:     guide.guide_type,
+                    keyword_intent: guide.keyword_intent,
                 }}
                 gameName={game.name}
                 gameSlug={game.slug}
@@ -245,6 +267,9 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                         `}</style>
 
                         <div className="mb-6">
+                            <div className="mb-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-gray-600">
+                                {lastCheckedText}
+                            </div>
                             <GuideOfferCtaBlock
                                 guideId={guide.id}
                                 guideSlug={guide.slug}

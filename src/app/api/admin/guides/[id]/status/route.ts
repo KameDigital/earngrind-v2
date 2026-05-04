@@ -20,7 +20,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
 
   const { data: guide, error } = await supabase
     .from("guides")
-    .select("id, body_md, seo_title, seo_description, keyword_target")
+    .select("id, body_md, seo_title, seo_description, keyword_target, payout_verified_at, tasks_verified_at, provider_terms_verified_at, last_offer_check_at")
     .eq("id", params.id)
     .maybeSingle();
 
@@ -32,6 +32,10 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
     seoTitle: guide.seo_title,
     seoDescription: guide.seo_description,
     keywordTarget: guide.keyword_target,
+    payoutVerifiedAt: guide.payout_verified_at,
+    tasksVerifiedAt: guide.tasks_verified_at,
+    providerTermsVerifiedAt: guide.provider_terms_verified_at,
+    lastOfferCheckAt: guide.last_offer_check_at,
   }));
 }
 
@@ -48,7 +52,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
   const { data: guide, error: fetchError } = await supabase
     .from("guides")
-    .select("id, status, published_at, body_md, seo_title, seo_description, keyword_target")
+    .select("id, status, published_at, body_md, seo_title, seo_description, keyword_target, payout_verified_at, tasks_verified_at, provider_terms_verified_at, last_offer_check_at")
     .eq("id", params.id)
     .maybeSingle();
 
@@ -60,6 +64,10 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     seoTitle: guide.seo_title,
     seoDescription: guide.seo_description,
     keywordTarget: guide.keyword_target,
+    payoutVerifiedAt: guide.payout_verified_at,
+    tasksVerifiedAt: guide.tasks_verified_at,
+    providerTermsVerifiedAt: guide.provider_terms_verified_at,
+    lastOfferCheckAt: guide.last_offer_check_at,
   });
   const { data: relatedGuides } = await supabase
     .from("guides")

@@ -186,6 +186,20 @@ export default async function GuidesPage({
                             {totalCount} guide{totalCount !== 1 ? "s" : ""} available
                         </p>
                     )}
+                    <div className="mt-5 rounded-2xl border border-lime-200 bg-lime-50 p-4">
+                        <p className="text-xs font-bold uppercase tracking-wide text-lime-700">New monetization guide</p>
+                        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="max-w-2xl text-sm text-[var(--text-secondary)]">
+                                Compare top GPT sites, referral routes, payout methods, and safety checks before choosing where to start.
+                            </p>
+                            <Link
+                                href="/guides/best-gpt-sites-to-make-money"
+                                className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)]"
+                            >
+                                Read GPT Site Guide
+                            </Link>
+                        </div>
+                    </div>
                 </div>
 
                 {(guides ?? []).length === 0 ? (

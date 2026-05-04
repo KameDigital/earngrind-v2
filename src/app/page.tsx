@@ -769,7 +769,7 @@ export default async function HomePage() {
             <div className="mt-8 rounded-2xl border border-[var(--border-default)] bg-white px-4 py-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
               <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                New visitors should start with <span className="font-bold text-[var(--brand-ink)]">Best GPT Sites</span>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
+                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
               </p>
             </div>
           </div>

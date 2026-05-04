@@ -2,11 +2,12 @@ import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
 import { analyzeGuideQuality } from '@/lib/guide-quality';
 import { getGuideSitemapPriority } from '@/lib/indexing-readiness';
+import { getSiteUrl } from '@/lib/site-url';
 
 export const revalidate = 3600; // regenerate every hour
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    const baseUrl = getSiteUrl();
     const supabase = createClient();
 
     // Fetch all published content in parallel

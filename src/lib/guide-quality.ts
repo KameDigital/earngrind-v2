@@ -3,6 +3,10 @@ export type GuideQualityInput = {
   seoTitle?: string | null;
   seoDescription?: string | null;
   keywordTarget?: string | null;
+  payoutVerifiedAt?: string | null;
+  tasksVerifiedAt?: string | null;
+  providerTermsVerifiedAt?: string | null;
+  lastOfferCheckAt?: string | null;
 };
 
 export type GuideQualityResult = {
@@ -15,10 +19,25 @@ export type GuideQualityResult = {
 };
 
 const UNSAFE_PHRASES = [
-  "guaranteed payout",
-  "you will get paid",
-  "always credits",
   "guaranteed earnings",
+  "guaranteed payout",
+  "you will earn",
+  "you will get paid",
+  "easy money",
+  "risk-free",
+  "instant guaranteed cash",
+  "always credits",
+];
+
+const CAUTION_PHRASES = [
+  "verify live terms",
+  "payouts can change",
+  "offers can change",
+  "tasks can change",
+  "provider terms",
+  "screenshots",
+  "device",
+  "region",
 ];
 
 function stripTags(value: string) {
@@ -27,6 +46,13 @@ function stripTags(value: string) {
 
 function countMatches(value: string, pattern: RegExp) {
   return value.match(pattern)?.length ?? 0;
+}
+
+function daysSince(value?: string | null) {
+  if (!value) return null;
+  const time = new Date(value).getTime();
+  if (!Number.isFinite(time)) return null;
+  return Math.floor((Date.now() - time) / 86_400_000);
 }
 
 export function countInternalLinks(bodyHtml?: string | null) {
@@ -66,6 +92,18 @@ export function analyzeGuideQuality(input: GuideQualityInput): GuideQualityResul
   if (unsafe.length > 0) requiredErrors.push(`Unsafe guarantee language found: ${unsafe.join(", ")}.`);
 
   const optionalWarnings: string[] = [];
+  if (!CAUTION_PHRASES.some((phrase) => lower.includes(phrase))) {
+    optionalWarnings.push("Missing caution/freshness language about changing payouts, terms, device/region fit, or screenshots.");
+  }
+  const payoutAge = daysSince(input.payoutVerifiedAt ?? input.lastOfferCheckAt);
+  const tasksAge = daysSince(input.tasksVerifiedAt);
+  const providerTermsAge = daysSince(input.providerTermsVerifiedAt);
+  if (payoutAge == null) optionalWarnings.push("Payout freshness date is missing.");
+  else if (payoutAge > 30) optionalWarnings.push("Payout data is older than 30 days.");
+  if (tasksAge == null) optionalWarnings.push("Task freshness date is missing.");
+  else if (tasksAge > 45) optionalWarnings.push("Task data is older than 45 days.");
+  if (providerTermsAge == null) optionalWarnings.push("Provider terms freshness date is missing.");
+  else if (providerTermsAge > 45) optionalWarnings.push("Provider terms data is older than 45 days.");
   if (!hasImage) optionalWarnings.push("No image included.");
   if (!hasCta) optionalWarnings.push("No CTA section detected.");
   if (!hasTaskTable) optionalWarnings.push("No task table detected.");

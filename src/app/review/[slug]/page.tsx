@@ -9,6 +9,7 @@ import { buildBreadcrumbList, buildOrganization, buildReviewSchema, JsonLd } fro
 import Card from "@/components/ui/Card";
 import RatingPill from "@/components/ui/RatingPill";
 import ProConList from "@/components/ui/ProConList";
+import { absoluteUrl, getSiteUrl } from "@/lib/site-url";
 
 interface ReviewPlatform {
     id: string;
@@ -40,7 +41,7 @@ interface ReviewDetail {
     platforms: ReviewPlatform | null;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const BASE_URL = getSiteUrl();
 
 async function getReview(slug: string): Promise<ReviewDetail | null> {
     try {
@@ -63,6 +64,7 @@ export async function generateMetadata(
     if (!review) return { title: "Review Not Found | EarnGrind" };
 
     const platformName = review.platforms?.name ?? "this platform";
+    const canonical = absoluteUrl(`/review/${params.slug}`);
     return {
         title: review.seo_title ?? `${review.title} | EarnGrind`,
         description:
@@ -70,7 +72,7 @@ export async function generateMetadata(
             review.excerpt ??
             `Read our in-depth review of ${platformName} to compare trust, payout quality, and user experience before you start offers.`,
         alternates: {
-            canonical: `/review/${params.slug}`,
+            canonical,
         },
         openGraph: {
             title: review.seo_title ?? `${review.title} | EarnGrind`,
@@ -78,7 +80,7 @@ export async function generateMetadata(
                 review.seo_description ??
                 review.excerpt ??
                 `Read our in-depth review of ${platformName} before starting offers.`,
-            url: `/review/${params.slug}`,
+            url: canonical,
             type: "article",
         },
     };

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
+import { getSiteUrl } from "@/lib/site-url";
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+const SITE_URL = getSiteUrl();
 
 export type OfferApiRow = {
   id: string;
@@ -13,6 +12,7 @@ export type OfferApiRow = {
   provider_name: string | null;
   redirect_url: string | null;
   goal_text: string | null;
+  updated_at?: string | null;
   game: {
     id: string;
     name: string;
@@ -60,6 +60,7 @@ export type GameComparisonOffer = {
   offer_url: string | null;
   status: string;
   goal_text: string | null;
+  updated_at: string | null;
   tasks: ComparisonTask[];
 };
 
@@ -111,6 +112,7 @@ export type SeoOfferRow = {
   totalPayoutUsd: number;
   redirectUrl: string;
   goalText: string | null;
+  updatedAt: string | null;
   tasks: ComparisonTask[];
 };
 
@@ -167,6 +169,7 @@ export function toSeoOfferRows(rows: OfferApiRow[]): SeoOfferRow[] {
       totalPayoutUsd: Number(row.payout_usd ?? 0),
       redirectUrl: row.redirect_url ?? "#",
       goalText: row.goal_text ?? null,
+      updatedAt: row.updated_at ?? null,
       tasks: [],
     }));
 }
@@ -183,6 +186,7 @@ export function mapComparisonToSeoRows(rows: GameComparisonOffer[], fallbackGame
     totalPayoutUsd: Number(row.total_payout_usd ?? row.payout_usd ?? 0),
     redirectUrl: row.redirect_url ?? "#",
     goalText: row.goal_text ?? null,
+    updatedAt: row.updated_at ?? null,
     tasks: Array.isArray(row.tasks) ? [...row.tasks].sort((a, b) => a.sort_order - b.sort_order) : [],
   }));
 }

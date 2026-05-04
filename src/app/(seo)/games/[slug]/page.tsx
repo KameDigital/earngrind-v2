@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
   const maxPayout = data.comparison.summary.best_total_payout_usd || data.summary.max_payout_usd || 0;
   return buildSeoMetadata({
-    title: `Best ${data.game.name} Offers - Earn Up To ${formatMoney(maxPayout)}`,
+    title: `Best ${data.game.name} Offers: Payouts and Routes (${new Date().getFullYear()})`,
     description: `Compare ${data.game.name} offers by provider, payout, and task milestones. Track top payout opportunities in one place.`,
     path: `/games/${params.slug}`,
   });

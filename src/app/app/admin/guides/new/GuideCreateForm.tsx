@@ -20,6 +20,15 @@ type SourceGuide = {
     show_related_guides: boolean | null;
     seo_title: string | null;
     seo_description: string | null;
+    keyword_target?: string | null;
+    keyword_cluster_id?: string | null;
+    keyword_intent?: string | null;
+    guide_type?: string | null;
+    needs_variation?: boolean | null;
+    payout_verified_at?: string | null;
+    tasks_verified_at?: string | null;
+    provider_terms_verified_at?: string | null;
+    last_offer_check_at?: string | null;
 };
 
 export default function GuideCreateForm({ sourceGuide }: { sourceGuide?: SourceGuide | null }) {

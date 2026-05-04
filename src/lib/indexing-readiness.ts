@@ -1,6 +1,7 @@
 import { analyzeGuideQuality } from "@/lib/guide-quality";
 import { detectCannibalization } from "@/lib/keyword-cannibalization";
 import { checkStructuredData } from "@/lib/structured-data-check";
+import { getSiteUrl } from "@/lib/site-url";
 
 export type IndexableGuide = {
   id?: string | null;
@@ -37,7 +38,7 @@ export function evaluateIndexingReadiness({
   guide,
   allGuides = [],
   includedInSitemap = false,
-  baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  baseUrl = getSiteUrl(),
 }: {
   guide: IndexableGuide;
   allGuides?: IndexableGuide[];

@@ -7,6 +7,8 @@ import { buildBreadcrumbList, buildItemList, JsonLd } from '@/lib/seo-schema';
 import type { Offer } from '@/components/offers/OfferSearchEngine';
 import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
+import { formatPayoutFreshness } from '@/lib/payout-freshness';
+import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
 
 // ---------------------------------------------------------------
 // TYPES — mirrors /api/offers/game/[slug] response
@@ -61,6 +63,7 @@ interface ComparisonOfferRow {
     offer_url: string | null;
     status: string;
     goal_text: string | null;
+    updated_at: string | null;
     tasks: ComparisonTask[];
 }
 
@@ -98,7 +101,7 @@ interface RelatedReview {
 // ---------------------------------------------------------------
 // DATA FETCHER (Server Component)
 // ---------------------------------------------------------------
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+const BASE_URL = getSiteUrl();
 
 async function getGameData(slug: string): Promise<GamePageData | null> {
     try {
@@ -122,16 +125,17 @@ export async function generateMetadata(
     const data = await getGameData(params.slug);
     if (!data) return { title: 'Game Not Found | EarnGrind' };
     const { game, summary } = data;
+    const canonical = absoluteUrl(`/offers/${params.slug}`);
     return {
-        title: `${game.name} Offers — Earn up to $${summary.max_payout_usd.toFixed(2)} | EarnGrind`,
+        title: `${game.name} Offers: Payouts and Provider Routes | EarnGrind`,
         description: `Compare ${summary.offer_count} ${game.name} offer${summary.offer_count !== 1 ? 's' : ''} across platforms. Max payout: $${summary.max_payout_usd.toFixed(2)}. ${game.description ?? ''}`.trim(),
         alternates: {
-            canonical: `/offers/${params.slug}`,
+            canonical,
         },
         openGraph: {
             title: `${game.name} Offers | EarnGrind`,
             description: `Compare current ${game.name} payouts and routes across GPT platforms before clicking out.`,
-            url: `/offers/${params.slug}`,
+            url: canonical,
         },
     };
 }
@@ -527,6 +531,7 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
         goal_text: row.goal_text,
         offer_url: row.offer_url,
         status: row.status,
+        updated_at: row.updated_at,
         site: row.platform_name ? { name: row.platform_name } : null,
         provider: row.provider_name ? { name: row.provider_name } : null,
         tasks: row.tasks,
@@ -698,7 +703,7 @@ export default async function GameOffersPage({ params }: { params: { slug: strin
                             </div>
 
                             <p className="mt-3 text-xs text-[var(--text-tertiary)] leading-relaxed max-w-2xl">
-                                Start Best Payout sends you through EarnGrind tracking to the payout platform. Payouts can vary by device, country, and provider rules.
+                                {bestOffer ? `${formatPayoutFreshness(bestOffer.updated_at)}. ` : ""}Start Best Payout sends you through EarnGrind tracking to the payout platform. Payouts can vary by device, country, and provider rules. Some links may be affiliate links.
                             </p>
                         </div>
                     </div>

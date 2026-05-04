@@ -28,6 +28,7 @@ type GameRow = {
   provider_name: string | null;
   platform_name: string | null;
   category: string | null;
+  updated_at: string | null;
 };
 
 async function getGamesIndexData() {
@@ -36,7 +37,7 @@ async function getGamesIndexData() {
   const [{ data: offerRows }, { data: guideRows }] = await Promise.all([
     supabase
       .from("unified_offers_view")
-      .select("game_id, game_name, game_slug, game_thumbnail, payout_usd, total_payout_usd, provider_name, platform_name, category")
+      .select("game_id, game_name, game_slug, game_thumbnail, payout_usd, total_payout_usd, provider_name, platform_name, category, updated_at")
       .order("total_payout_usd", { ascending: false })
       .limit(250),
     supabase
@@ -71,6 +72,7 @@ async function getGamesIndexData() {
         bestProvider: row.provider_name ?? "Unknown Provider",
         bestPlatform: row.platform_name ?? "Unknown Platform",
         category: row.category ?? "General",
+        updatedAt: row.updated_at,
         providerCount: row.provider_name ? 1 : 0,
         platformCount: row.platform_name ? 1 : 0,
         providerSet: new Set(row.provider_name ? [row.provider_name] : []),
@@ -90,6 +92,7 @@ async function getGamesIndexData() {
       current.bestPlatform = row.platform_name ?? current.bestPlatform;
       current.thumbnailUrl = row.game_thumbnail ?? current.thumbnailUrl;
       current.category = row.category ?? current.category;
+      current.updatedAt = row.updated_at ?? current.updatedAt;
     }
   }
 
@@ -105,6 +108,7 @@ async function getGamesIndexData() {
       bestProvider: game.bestProvider,
       bestPlatform: game.bestPlatform,
       category: game.category,
+      updatedAt: game.updatedAt,
       providerCount: game.providerCount,
       platformCount: game.platformCount,
     }))

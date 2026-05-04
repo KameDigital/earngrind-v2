@@ -68,6 +68,63 @@ function valueList(values: string[] | undefined) {
   return values && values.length ? values.join(", ") : "None detected";
 }
 
+function countExtractedItems(entry: ResearchEntry) {
+  const data = entry.extracted_data ?? {};
+  return Object.values(data).reduce<number>((sum, value) => {
+    if (Array.isArray(value)) return sum + value.length;
+    return sum;
+  }, 0);
+}
+
+function extractedCount(entry: ResearchEntry, key: string) {
+  const value = entry.extracted_data?.[key];
+  return Array.isArray(value) ? value.length : 0;
+}
+
+function sourceLabel(value: string) {
+  if (value === "trustpilot") return "Trustpilot";
+  if (value === "reddit") return "Reddit";
+  if (value === "screenshot") return "Screenshot";
+  if (value === "url") return "URL";
+  return "Manual note";
+}
+
+function typeLabel(value: string) {
+  if (value === "platform") return "Platform";
+  if (value === "game") return "Game";
+  if (value === "offer") return "Offer";
+  return "General";
+}
+
+function daysSince(value: string) {
+  const timestamp = new Date(value).getTime();
+  if (!Number.isFinite(timestamp)) return "Unknown";
+  const days = Math.max(0, Math.floor((Date.now() - timestamp) / 86_400_000));
+  if (days === 0) return "Today";
+  if (days === 1) return "Yesterday";
+  return `${days} days ago`;
+}
+
+function WorkflowStep({ step, title, text }: { step: string; title: string; text: string }) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-950 text-xs font-extrabold text-white">{step}</div>
+      <h3 className="mt-3 text-sm font-extrabold text-gray-900">{title}</h3>
+      <p className="mt-1 text-xs leading-relaxed text-gray-500">{text}</p>
+    </div>
+  );
+}
+
+function MetricCard({ label, value, helper }: { label: string; value: string | number; helper?: string }) {
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400">{label}</div>
+      <div className="mt-2 text-2xl font-extrabold text-gray-900">{value}</div>
+      {helper ? <div className="mt-1 text-xs text-gray-500">{helper}</div> : null}
+    </div>
+  );
+}
+
 export default function ResearchLockerClient({ initialEntries }: { initialEntries: ResearchEntry[] }) {
   const [entries, setEntries] = useState(initialEntries);
   const [form, setForm] = useState(emptyForm());
@@ -88,7 +145,32 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
     return true;
   }), [entries, targetFilter, typeFilter, sourceTypeFilter]);
 
+  const summary = useMemo(() => {
+    const withSourceUrl = entries.filter((entry) => entry.source_url).length;
+    const withExtractedEvidence = entries.filter((entry) => countExtractedItems(entry) > 0).length;
+    const recentEntries = entries.filter((entry) => {
+      const timestamp = new Date(entry.updated_at).getTime();
+      return Number.isFinite(timestamp) && Date.now() - timestamp <= 14 * 86_400_000;
+    }).length;
+    return {
+      total: entries.length,
+      platforms: entries.filter((entry) => entry.type === "platform").length,
+      games: entries.filter((entry) => entry.type === "game").length,
+      sourceCoverage: entries.length ? Math.round((withSourceUrl / entries.length) * 100) : 0,
+      evidenceCoverage: entries.length ? Math.round((withExtractedEvidence / entries.length) * 100) : 0,
+      recentEntries,
+    };
+  }, [entries]);
+
   async function saveEntry() {
+    if (!form.targetName.trim()) {
+      setError("Target name is required.");
+      return;
+    }
+    if (!form.rawText.trim() && !form.imageUrl.trim()) {
+      setError("Paste research notes or add a screenshot image URL.");
+      return;
+    }
     setSaving(true);
     setError(null);
     try {
@@ -111,6 +193,14 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
   }
 
   async function ingestUrl() {
+    if (!urlImportForm.targetName.trim()) {
+      setError("Target name is required before importing a URL.");
+      return;
+    }
+    if (!urlImportForm.sourceUrl.trim()) {
+      setError("Source URL is required.");
+      return;
+    }
     setIngesting(true);
     setError(null);
     setDuplicateEntry(null);
@@ -171,14 +261,36 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-gray-400">Research Locker</p>
-            <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900">Structured research</h1>
+            <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900">Research Locker</h1>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-              Store reusable platform, game, offer, and general research so generated reviews can cite real patterns without inventing claims.
+              Store source-backed notes for platforms, games, offers, complaints, payouts, requirements, and trust signals. Use this before generating reviews or refreshing money pages.
             </p>
           </div>
-          <Link href="/app/admin/guides/batch-generate" className="rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-bold text-white hover:bg-gray-800">
-            Generate Review
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/app/admin/research/opportunities" className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-gray-300">
+              Opportunities
+            </Link>
+            <Link href="/app/admin/guides/batch-generate" className="rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-bold text-white hover:bg-gray-800">
+              Generate Review
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
+        <MetricCard label="Total Research" value={summary.total} helper="Saved entries" />
+        <MetricCard label="Platforms" value={summary.platforms} />
+        <MetricCard label="Games" value={summary.games} />
+        <MetricCard label="Source Coverage" value={`${summary.sourceCoverage}%`} helper="Has source URL" />
+        <MetricCard label="Evidence Coverage" value={`${summary.evidenceCoverage}%`} helper="Has extracted signals" />
+        <MetricCard label="Recent Updates" value={summary.recentEntries} helper="Last 14 days" />
+      </section>
+
+      <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div className="grid gap-3 md:grid-cols-3">
+          <WorkflowStep step="1" title="Capture Source" text="Import a URL or paste notes from Reddit, reviews, offer pages, screenshots, or payout terms." />
+          <WorkflowStep step="2" title="Check Evidence" text="Look for payout mentions, requirements, trust signals, complaints, risks, and payment methods." />
+          <WorkflowStep step="3" title="Use In Content" text="Open the entry and generate a review or use it to refresh guides without inventing facts." />
         </div>
       </section>
 
@@ -186,7 +298,10 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Import From URL</p>
-            <h2 className="mt-1 text-sm font-extrabold text-gray-900">Fetch & Extract Research</h2>
+            <h2 className="mt-1 text-lg font-extrabold text-gray-900">Fetch and extract research</h2>
+            <p className="mt-1 text-sm text-gray-500">
+              Best for review pages, offer terms, public discussions, and competitor pages. If extraction fails, paste the text manually below.
+            </p>
           </div>
           {duplicateEntry ? (
             <button type="button" onClick={() => setUrlImportForm((current) => ({ ...current, updateExisting: true }))} className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-bold text-amber-800">
@@ -264,7 +379,12 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
       </section>
 
       <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-        <h2 className="text-sm font-extrabold text-gray-900">{form.id ? "Edit Research" : "Add Research"}</h2>
+        <div className="flex flex-col gap-1">
+          <h2 className="text-lg font-extrabold text-gray-900">{form.id ? "Edit manual research" : "Add manual research"}</h2>
+          <p className="text-sm text-gray-500">
+            Use this for screenshots, copied review snippets, payout requirements, or notes that URL import cannot fetch.
+          </p>
+        </div>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <div>
             <label className={labelClass}>Target Name</label>
@@ -317,7 +437,19 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
 
       <section className="rounded-2xl border border-gray-200 bg-white shadow-sm">
         <div className="border-b border-gray-100 p-5">
-          <h2 className="text-sm font-extrabold text-gray-900">Research List</h2>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-lg font-extrabold text-gray-900">Research library</h2>
+              <p className="mt-1 text-sm text-gray-500">
+                Showing {rows.length} of {entries.length} entries. Evidence counts come from the structured extractor.
+              </p>
+            </div>
+            {(targetFilter || typeFilter || sourceTypeFilter) ? (
+              <button type="button" onClick={() => { setTargetFilter(""); setTypeFilter(""); setSourceTypeFilter(""); }} className="rounded-xl border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:bg-gray-50">
+                Clear filters
+              </button>
+            ) : null}
+          </div>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
             <input className={inputClass} value={targetFilter} onChange={(event) => setTargetFilter(event.target.value)} placeholder="Filter by target name" />
             <select className={inputClass} value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}>
@@ -345,6 +477,7 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
                 <th className="px-4 py-3">Target</th>
                 <th className="px-4 py-3">Type</th>
                 <th className="px-4 py-3">Source</th>
+                <th className="px-4 py-3">Evidence</th>
                 <th className="px-4 py-3">Tags</th>
                 <th className="px-4 py-3">Date</th>
                 <th className="px-4 py-3 text-right">Actions</th>
@@ -357,14 +490,26 @@ export default function ResearchLockerClient({ initialEntries }: { initialEntrie
                     <div className="font-bold text-gray-900">{entry.target_name}</div>
                     <div className="max-w-md truncate text-xs text-gray-400">{entry.raw_text}</div>
                   </td>
-                  <td className="px-4 py-3 capitalize text-gray-600">{entry.type}</td>
-                  <td className="px-4 py-3 capitalize text-gray-600">{entry.source_type}</td>
+                  <td className="px-4 py-3">
+                    <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-bold text-gray-700">{typeLabel(entry.type)}</span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="font-semibold text-gray-700">{sourceLabel(entry.source_type)}</div>
+                    {entry.source_url ? <div className="mt-0.5 max-w-[180px] truncate text-xs text-gray-400">{entry.source_url}</div> : <div className="mt-0.5 text-xs text-gray-400">No URL</div>}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-wrap gap-1">
+                      <span className="rounded-full bg-lime-50 px-2 py-0.5 text-xs font-bold text-lime-700">{countExtractedItems(entry)} signals</span>
+                      {extractedCount(entry, "complaints") > 0 ? <span className="rounded-full bg-red-50 px-2 py-0.5 text-xs font-bold text-red-700">{extractedCount(entry, "complaints")} complaints</span> : null}
+                      {extractedCount(entry, "payoutMentions") > 0 ? <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700">{extractedCount(entry, "payoutMentions")} payouts</span> : null}
+                    </div>
+                  </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">
                       {entry.tags.length ? entry.tags.map((tag) => <span key={tag} className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-600">{tag}</span>) : <span className="text-gray-300">none</span>}
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-xs text-gray-400">{new Date(entry.updated_at).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-xs text-gray-400">{daysSince(entry.updated_at)}</td>
                   <td className="px-4 py-3 text-right">
                     <div className="flex justify-end gap-2">
                       <Link href={`/app/admin/research/${entry.id}`} className="rounded-lg border border-gray-200 px-2.5 py-1 text-xs font-bold text-gray-700 hover:bg-gray-50">View</Link>

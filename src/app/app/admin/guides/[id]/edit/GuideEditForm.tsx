@@ -22,6 +22,15 @@ type Guide = {
     show_related_guides: boolean;
     primary_offer_id?: string | null;
     disable_auto_offer_matching?: boolean | null;
+    keyword_target?: string | null;
+    keyword_cluster_id?: string | null;
+    keyword_intent?: string | null;
+    guide_type?: string | null;
+    needs_variation?: boolean | null;
+    payout_verified_at?: string | null;
+    tasks_verified_at?: string | null;
+    provider_terms_verified_at?: string | null;
+    last_offer_check_at?: string | null;
     seo_title: string | null;
     seo_description: string | null;
     status: string;

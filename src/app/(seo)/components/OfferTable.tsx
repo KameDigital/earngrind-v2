@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import type { SeoOfferRow } from "../_lib/seo-data";
 import { formatMoney } from "../_lib/seo-data";
+import { formatPayoutFreshness } from "@/lib/payout-freshness";
 
 type OfferTableProps = {
   rows: SeoOfferRow[];
@@ -186,6 +187,10 @@ function OfferCard({
           {isSelected ? "Selected" : "Compare"}
         </button>
       </div>
+
+      <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
+        {formatPayoutFreshness(row.updatedAt)}. Payouts can change by device, country, and provider rules. Some outbound links may be affiliate links.
+      </p>
 
       {expanded && showTasks && milestoneCount > 0 ? (
         <div className="mt-4 rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">

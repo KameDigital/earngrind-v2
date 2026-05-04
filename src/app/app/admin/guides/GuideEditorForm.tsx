@@ -14,6 +14,28 @@ const hintClass = "text-xs text-gray-400 mt-1";
 type GuideFocus = "fastest completion" | "highest payout" | "beginner friendly" | "no-spend" | "platform comparison";
 type GuideTemplate = "milestone guide" | "speed guide" | "comparison guide" | "beginner guide";
 type RegeneratableSection = "intro" | "overview" | "step_by_step" | "faq" | "seo";
+type KeywordIntent = "informational" | "commercial_investigation" | "comparison" | "review" | "how_to" | "worth_it" | "task_specific" | "payout_specific";
+type GuideType = "game_offer" | "app_review" | "offer_comparison" | "how_to_earn" | "payout_guide" | "beginner_guide";
+
+const KEYWORD_INTENT_OPTIONS: KeywordIntent[] = [
+    "informational",
+    "commercial_investigation",
+    "comparison",
+    "review",
+    "how_to",
+    "worth_it",
+    "task_specific",
+    "payout_specific",
+];
+
+const GUIDE_TYPE_OPTIONS: GuideType[] = [
+    "game_offer",
+    "app_review",
+    "offer_comparison",
+    "how_to_earn",
+    "payout_guide",
+    "beginner_guide",
+];
 
 type SeedOfferTask = {
     id: string;
@@ -50,6 +72,16 @@ type GuideOfferOption = {
     payout: number | null;
     matchReason?: string;
     score?: number;
+};
+
+type ServerQuality = {
+    score: number;
+    wordCount: number;
+    h2Count: number;
+    internalLinkCount: number;
+    requiredErrors: string[];
+    optionalWarnings: string[];
+    warnings?: string[];
 };
 
 type SeedResponse = {
@@ -93,6 +125,15 @@ type GuideRecord = {
     show_related_guides: boolean;
     primary_offer_id?: string | null;
     disable_auto_offer_matching?: boolean | null;
+    keyword_target?: string | null;
+    keyword_cluster_id?: string | null;
+    keyword_intent?: KeywordIntent | string | null;
+    guide_type?: GuideType | string | null;
+    needs_variation?: boolean | null;
+    payout_verified_at?: string | null;
+    tasks_verified_at?: string | null;
+    provider_terms_verified_at?: string | null;
+    last_offer_check_at?: string | null;
     seo_title: string | null;
     seo_description: string | null;
     status: string;
@@ -116,6 +157,15 @@ type SourceGuide = {
     show_related_guides: boolean | null;
     seo_title: string | null;
     seo_description: string | null;
+    keyword_target?: string | null;
+    keyword_cluster_id?: string | null;
+    keyword_intent?: KeywordIntent | string | null;
+    guide_type?: GuideType | string | null;
+    needs_variation?: boolean | null;
+    payout_verified_at?: string | null;
+    tasks_verified_at?: string | null;
+    provider_terms_verified_at?: string | null;
+    last_offer_check_at?: string | null;
 };
 
 function slugify(str: string) {
@@ -135,17 +185,17 @@ function Toggle({ checked, onChange, id }: { checked: boolean; onChange: (v: boo
     );
 }
 
-function buildSeoTitle(title: string, maxPayout: string) {
+function buildSeoTitle(title: string, _maxPayout: string) {
     if (!title.trim()) return "";
-    const payoutNumber = Number(maxPayout);
-    const amount = Number.isFinite(payoutNumber) && maxPayout ? ` - Earn Up To $${payoutNumber.toFixed(2)}` : "";
-    return `${title}${amount}`;
+    const year = new Date().getFullYear();
+    const cleanTitle = title.replace(/\s+\(\d{4}\)$/i, "").trim();
+    return `${cleanTitle}: Payouts, Tasks, and Tips (${year})`;
 }
 
-function buildSeoDescription(excerpt: string, estimatedTime: string, focus: GuideFocus) {
-    const summary = excerpt.trim() || "Guide with payout breakdown, milestones, and provider notes.";
-    const suffix = [focus, estimatedTime].filter(Boolean).join(" | ");
-    return suffix ? `${summary} ${suffix}` : summary;
+function buildSeoDescription(excerpt: string, estimatedTime: string, focus: GuideFocus, title = "this offer") {
+    if (excerpt.trim().length >= 120) return excerpt.trim().slice(0, 165);
+    const context = estimatedTime ? ` Estimated time: ${estimatedTime}.` : "";
+    return `Compare ${title} requirements, payout milestones, provider routes, and completion tips before starting.${context} Verify live terms because payouts and tasks can change.`;
 }
 
 function buildOfferSeedBody(gameName: string, offer: SeedOffer, focus: GuideFocus) {
@@ -182,6 +232,16 @@ function buildOfferSeedBody(gameName: string, offer: SeedOffer, focus: GuideFocu
 
 function stripHtmlTags(value: string) {
     return value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function toDateInputValue(value?: string | null) {
+    if (!value) return "";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "" : date.toISOString().slice(0, 10);
+}
+
+function dateInputToIso(value: string) {
+    return value ? new Date(`${value}T12:00:00.000Z`).toISOString() : null;
 }
 
 function replaceSection(body: string, nextSectionBlock: string, headings: string[]) {
@@ -239,6 +299,7 @@ function buildValidationWarnings(args: {
     checklistItems: string;
     seoTitle: string;
     seoDescription: string;
+    keywordTarget: string;
     internalLinks: InternalLinkSuggestion[];
     duplicateSlug: boolean;
 }) {
@@ -249,6 +310,7 @@ function buildValidationWarnings(args: {
     if (!args.checklistItems.trim()) warnings.push("Checklist items are missing.");
     if (!args.seoTitle.trim()) warnings.push("SEO title is missing.");
     if (!args.seoDescription.trim()) warnings.push("SEO description is missing.");
+    if (!args.keywordTarget.trim()) warnings.push("Keyword target is missing.");
     if (args.duplicateSlug) warnings.push("Slug already exists on another guide.");
     const hasInternalLink = args.internalLinks.some((link) => args.bodyMd.includes(link.href));
     if (!hasInternalLink) warnings.push("Body is missing internal links from the current suggestions.");
@@ -301,6 +363,16 @@ export default function GuideEditorForm({
     const [showGuides, setShowGuides] = useState(guide?.show_related_guides ?? sourceGuide?.show_related_guides ?? true);
     const [primaryOfferId, setPrimaryOfferId] = useState(guide?.primary_offer_id ?? "");
     const [disableAutoOfferMatching, setDisableAutoOfferMatching] = useState(Boolean(guide?.disable_auto_offer_matching));
+    const [keywordTarget, setKeywordTarget] = useState(guide?.keyword_target ?? sourceGuide?.keyword_target ?? "");
+    const [keywordClusterId, setKeywordClusterId] = useState(guide?.keyword_cluster_id ?? sourceGuide?.keyword_cluster_id ?? "");
+    const [keywordIntent, setKeywordIntent] = useState<string>(guide?.keyword_intent ?? sourceGuide?.keyword_intent ?? "");
+    const [guideType, setGuideType] = useState<string>(guide?.guide_type ?? sourceGuide?.guide_type ?? "game_offer");
+    const [needsVariation, setNeedsVariation] = useState(Boolean(guide?.needs_variation ?? sourceGuide?.needs_variation ?? false));
+    const [payoutVerifiedAt, setPayoutVerifiedAt] = useState(toDateInputValue(guide?.payout_verified_at ?? sourceGuide?.payout_verified_at));
+    const [tasksVerifiedAt, setTasksVerifiedAt] = useState(toDateInputValue(guide?.tasks_verified_at ?? sourceGuide?.tasks_verified_at));
+    const [providerTermsVerifiedAt, setProviderTermsVerifiedAt] = useState(toDateInputValue(guide?.provider_terms_verified_at ?? sourceGuide?.provider_terms_verified_at));
+    const [lastOfferCheckAt, setLastOfferCheckAt] = useState(toDateInputValue(guide?.last_offer_check_at ?? sourceGuide?.last_offer_check_at));
+    const [autoInsertInternalLinks, setAutoInsertInternalLinks] = useState(false);
     const [seoTitle, setSeoTitle] = useState(guide?.seo_title ?? sourceGuide?.seo_title ?? "");
     const [seoDesc, setSeoDesc] = useState(guide?.seo_description ?? sourceGuide?.seo_description ?? "");
     const [status, setStatus] = useState(guide?.status ?? "draft");
@@ -314,12 +386,14 @@ export default function GuideEditorForm({
     const [duplicateSlug, setDuplicateSlug] = useState(false);
     const [slugChecking, setSlugChecking] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [serverQuality, setServerQuality] = useState<ServerQuality | null>(null);
+    const [qualityChecking, setQualityChecking] = useState(false);
 
     const renderedPreview = useMemo(() => renderMarkdown(bodyMd), [bodyMd]);
     const bodyHealth = useMemo(() => analyzeGuideBodyHealth(bodyMd), [bodyMd]);
     const effectiveSeoTitle = seoTitle.trim() || buildSeoTitle(title, maxPayout);
-    const effectiveSeoDescription = seoDesc.trim() || buildSeoDescription(excerpt, estimatedTime, guideFocus);
-    const internalLinkCount = (bodyMd.match(/href=["']\//g) ?? []).length;
+    const effectiveSeoDescription = seoDesc.trim() || buildSeoDescription(excerpt, estimatedTime, guideFocus, title);
+    const internalLinkCount = (bodyMd.match(/href=["']\//g) ?? []).length + (bodyMd.match(/\[[^\]]+\]\(\//g) ?? []).length;
     const validationWarnings = useMemo(
         () => buildValidationWarnings({
             excerpt,
@@ -327,10 +401,11 @@ export default function GuideEditorForm({
             checklistItems,
             seoTitle: effectiveSeoTitle,
             seoDescription: effectiveSeoDescription,
+            keywordTarget,
             internalLinks,
             duplicateSlug,
         }),
-        [excerpt, bodyMd, checklistItems, effectiveSeoTitle, effectiveSeoDescription, internalLinks, duplicateSlug],
+        [excerpt, bodyMd, checklistItems, effectiveSeoTitle, effectiveSeoDescription, keywordTarget, internalLinks, duplicateSlug],
     );
     const guideHealthItems = [
         { label: "Body sections", value: String(bodyHealth.headingCount), ok: bodyHealth.headingCount >= 3 },
@@ -385,6 +460,8 @@ export default function GuideEditorForm({
             focus: guideFocus,
             template: guideTemplate,
         });
+        if (keywordIntent) params.set("keyword_intent", keywordIntent);
+        if (guideType) params.set("guide_type", guideType);
         if (sourceGuide?.id) params.set("source_guide_id", sourceGuide.id);
         return fetchJson<SeedResponse>(`/api/admin/guides/seed?${params.toString()}`);
     }
@@ -490,6 +567,40 @@ export default function GuideEditorForm({
         setBodyMd((current) => replaceSection(current, renderMarkdown(block), ["Related Links"]));
     }
 
+    function buildBodyForSave() {
+        if (!autoInsertInternalLinks || internalLinks.length === 0) return bodyMd;
+        const block = `## Related Links\n${buildMarkdownLinkBlock(internalLinks)}`;
+        return replaceSection(bodyMd, renderMarkdown(block), ["Related Links"]);
+    }
+
+    async function runQualityCheck(bodyForCheck = buildBodyForSave()) {
+        setQualityChecking(true);
+        try {
+            const res = await fetch("/api/admin/guides/quality-check", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title,
+                    slug,
+                    body_md: bodyForCheck || "",
+                    seo_title: seoTitle.trim() || buildSeoTitle(title, maxPayout),
+                    seo_description: seoDesc.trim() || buildSeoDescription(excerpt, estimatedTime, guideFocus, title),
+                    keyword_target: keywordTarget.trim() || null,
+                    payout_verified_at: dateInputToIso(payoutVerifiedAt),
+                    tasks_verified_at: dateInputToIso(tasksVerifiedAt),
+                    provider_terms_verified_at: dateInputToIso(providerTermsVerifiedAt),
+                    last_offer_check_at: dateInputToIso(lastOfferCheckAt),
+                }),
+            });
+            const json = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(json.error ?? "Quality check failed.");
+            setServerQuality(json.quality ?? null);
+            return json.quality as ServerQuality;
+        } finally {
+            setQualityChecking(false);
+        }
+    }
+
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setError(null);
@@ -501,13 +612,28 @@ export default function GuideEditorForm({
 
         setSaving(true);
         const finalSeoTitle = seoTitle.trim() || buildSeoTitle(title, maxPayout);
-        const finalSeoDescription = seoDesc.trim() || buildSeoDescription(excerpt, estimatedTime, guideFocus);
+        const bodyForSave = buildBodyForSave();
+        const finalSeoDescription = seoDesc.trim() || buildSeoDescription(excerpt, estimatedTime, guideFocus, title);
+        if (status === "published") {
+            try {
+                const quality = await runQualityCheck(bodyForSave);
+                if (quality.requiredErrors.length > 0) {
+                    setError("Publish blocked by checklist. Fix the required SEO issues before publishing.");
+                    setSaving(false);
+                    return;
+                }
+            } catch (qualityError) {
+                setError(qualityError instanceof Error ? qualityError.message : "Quality check failed.");
+                setSaving(false);
+                return;
+            }
+        }
         const payload = {
             title,
             slug,
             game_id: gameId,
             excerpt: excerpt || null,
-            body_md: bodyMd || null,
+            body_md: bodyForSave || null,
             difficulty: difficulty || null,
             estimated_time: estimatedTime || null,
             max_payout_usd: maxPayout || null,
@@ -522,6 +648,15 @@ export default function GuideEditorForm({
             disable_auto_offer_matching: disableAutoOfferMatching,
             seo_title: finalSeoTitle || null,
             seo_description: finalSeoDescription || null,
+            keyword_target: keywordTarget || null,
+            keyword_cluster_id: keywordClusterId || null,
+            keyword_intent: keywordIntent || null,
+            guide_type: guideType || "game_offer",
+            needs_variation: Boolean(needsVariation),
+            payout_verified_at: dateInputToIso(payoutVerifiedAt),
+            tasks_verified_at: dateInputToIso(tasksVerifiedAt),
+            provider_terms_verified_at: dateInputToIso(providerTermsVerifiedAt),
+            last_offer_check_at: dateInputToIso(lastOfferCheckAt),
             guide_focus: guideFocus,
             guide_template: guideTemplate,
             status,
@@ -584,15 +719,34 @@ export default function GuideEditorForm({
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-medium">{error}</div>
             ) : null}
 
-            {(status === "published" || validationWarnings.length > 0) ? (
+            {(status === "published" || validationWarnings.length > 0 || serverQuality) ? (
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-2">
                     <div className="text-sm font-semibold text-amber-900">Pre-publish validation</div>
-                    {validationWarnings.length === 0 ? (
-                        <div className="text-sm text-green-700">No publish warnings.</div>
-                    ) : (
+                    {serverQuality ? (
+                        <div className="space-y-2">
+                            <div className="text-xs font-bold text-gray-600">
+                                Server checklist score {serverQuality.score} - {serverQuality.wordCount} words - {serverQuality.h2Count} H2s - {serverQuality.internalLinkCount} internal links
+                            </div>
+                            {serverQuality.requiredErrors.length > 0 ? (
+                                <ul className="list-disc pl-5 text-sm text-red-700 space-y-1">
+                                    {serverQuality.requiredErrors.map((warning) => <li key={warning}>{warning}</li>)}
+                                </ul>
+                            ) : null}
+                            {(serverQuality.optionalWarnings ?? serverQuality.warnings ?? []).length > 0 ? (
+                                <ul className="list-disc pl-5 text-sm text-amber-800 space-y-1">
+                                    {(serverQuality.optionalWarnings ?? serverQuality.warnings ?? []).map((warning) => <li key={warning}>{warning}</li>)}
+                                </ul>
+                            ) : null}
+                            {serverQuality.requiredErrors.length === 0 && (serverQuality.optionalWarnings ?? serverQuality.warnings ?? []).length === 0 ? (
+                                <div className="text-sm text-green-700">Server checklist has no required errors or warnings.</div>
+                            ) : null}
+                        </div>
+                    ) : validationWarnings.length > 0 ? (
                         <ul className="list-disc pl-5 text-sm text-amber-800 space-y-1">
                             {validationWarnings.map((warning) => <li key={warning}>{warning}</li>)}
                         </ul>
+                    ) : (
+                        <div className="text-sm text-gray-600">Run the publish checklist to verify server-side blockers before publishing.</div>
                     )}
                 </div>
             ) : null}
@@ -966,6 +1120,67 @@ export default function GuideEditorForm({
                     <label className={labelClass}>SEO Description</label>
                     <textarea value={seoDesc} onChange={(e) => setSeoDesc(e.target.value)} rows={2} placeholder="Auto-generated if left blank" className={`${inputClass} resize-none`} />
                 </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                        <label className={labelClass}>Keyword Target</label>
+                        <input type="text" value={keywordTarget} onChange={(e) => setKeywordTarget(e.target.value)} placeholder="sea of conquest offer guide" className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Keyword Cluster ID</label>
+                        <input type="text" value={keywordClusterId} onChange={(e) => setKeywordClusterId(e.target.value)} placeholder="Optional cluster id" className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Keyword Intent</label>
+                        <select value={keywordIntent} onChange={(e) => setKeywordIntent(e.target.value)} className={inputClass}>
+                            <option value="">Select intent</option>
+                            {KEYWORD_INTENT_OPTIONS.map((option) => (
+                                <option key={option} value={option}>{option.replace(/_/g, " ")}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <label className={labelClass}>Guide Type</label>
+                        <select value={guideType} onChange={(e) => setGuideType(e.target.value)} className={inputClass}>
+                            {GUIDE_TYPE_OPTIONS.map((option) => (
+                                <option key={option} value={option}>{option.replace(/_/g, " ")}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className="flex items-center justify-between rounded-xl border border-gray-200 px-4 py-3">
+                    <div>
+                        <div className="text-sm font-semibold text-gray-700">Needs Variation</div>
+                        <div className="text-xs text-gray-400 mt-0.5">Flag this guide when the topic overlaps with another page and needs a differentiated angle.</div>
+                    </div>
+                    <Toggle id="needsVariation" checked={needsVariation} onChange={setNeedsVariation} />
+                </div>
+                <div className="grid gap-4 md:grid-cols-4">
+                    <div>
+                        <label className={labelClass}>Payout Verified</label>
+                        <input type="date" value={payoutVerifiedAt} onChange={(e) => setPayoutVerifiedAt(e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Tasks Verified</label>
+                        <input type="date" value={tasksVerifiedAt} onChange={(e) => setTasksVerifiedAt(e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Terms Verified</label>
+                        <input type="date" value={providerTermsVerifiedAt} onChange={(e) => setProviderTermsVerifiedAt(e.target.value)} className={inputClass} />
+                    </div>
+                    <div>
+                        <label className={labelClass}>Last Offer Check</label>
+                        <input type="date" value={lastOfferCheckAt} onChange={(e) => setLastOfferCheckAt(e.target.value)} className={inputClass} />
+                    </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                    <button type="button" onClick={() => runQualityCheck().catch((qualityError) => setError(qualityError instanceof Error ? qualityError.message : "Quality check failed."))} className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700 hover:bg-gray-50" disabled={qualityChecking}>
+                        {qualityChecking ? "Checking..." : "Run publish checklist"}
+                    </button>
+                    <label className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700">
+                        <input type="checkbox" checked={autoInsertInternalLinks} onChange={(e) => setAutoInsertInternalLinks(e.target.checked)} />
+                        Auto-insert suggested internal links before saving
+                    </label>
+                </div>
             </div>
 
             <div id="preview" className="scroll-mt-24 grid gap-6 lg:grid-cols-2">
@@ -974,6 +1189,7 @@ export default function GuideEditorForm({
                     <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
                         <div
                             className="prose prose-slate max-w-none text-sm prose-img:rounded-xl prose-img:my-6 prose-img:max-w-full prose-table:border prose-th:border prose-td:border prose-th:bg-gray-100"
+                            // renderedPreview must come from the sanitized markdown renderer.
                             dangerouslySetInnerHTML={{ __html: renderedPreview }}
                         />
                     </div>

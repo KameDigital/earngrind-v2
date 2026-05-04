@@ -4,6 +4,7 @@ import Image from "next/image";
 import Container from "@/components/layout/Container";
 import Card from "@/components/ui/Card";
 import RatingPill from "@/components/ui/RatingPill";
+import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
     title: "GPT Site Reviews | Compare Trust, Payout Quality, and User Experience | EarnGrind",
@@ -31,7 +32,7 @@ interface ReviewSummary {
     platforms: ReviewPlatform | null;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const BASE_URL = getSiteUrl();
 
 async function getReviews(): Promise<ReviewSummary[]> {
     try {

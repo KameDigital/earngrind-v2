@@ -8,6 +8,7 @@ import {
     Boxes,
     ClipboardList,
     Compass,
+    DollarSign,
     FileText,
     Gamepad2,
     Home,
@@ -42,6 +43,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
         label: "Command",
         links: [
             { href: "/app/admin", label: "Admin Home", icon: Home },
+            { href: "/app/admin/monetization", label: "Monetization", icon: DollarSign },
             { href: "/app/admin/seo/action-plan", label: "SEO Action Plan", icon: Compass },
             { href: "/app/admin/content-queue", label: "Content Queue", icon: ClipboardList },
         ],

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import { formatPayoutFreshness } from "@/lib/payout-freshness";
 
 export interface SiteOfferTask {
   id: string;
@@ -20,6 +21,7 @@ export interface SiteOffer {
   goal_text: string | null;
   offer_url: string | null;
   status: string;
+  updated_at: string | null;
   site: { name: string } | null;
   provider: { name: string } | null;
   tasks: SiteOfferTask[];
@@ -176,7 +178,7 @@ function OfferCard({
       </div>
 
       <div className="mt-3 text-[11px] text-[var(--text-tertiary)]">
-        Payouts can change by device, country, and provider rules. Some outbound links may be affiliate links.
+        {formatPayoutFreshness(row.updated_at)}. Payouts can change by device, country, and provider rules. Some outbound links may be affiliate links.
       </div>
 
       {expanded && milestoneCount > 0 ? (

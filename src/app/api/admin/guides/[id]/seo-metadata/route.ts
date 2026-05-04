@@ -24,16 +24,17 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
-    const seoTitle = cleanString((body as Record<string, unknown>).seoTitle, 180);
-    const seoDescription = cleanString((body as Record<string, unknown>).seoDescription, 320);
+    const payload = body as Record<string, unknown>;
+    const hasSeoTitle = Object.prototype.hasOwnProperty.call(payload, "seoTitle");
+    const hasSeoDescription = Object.prototype.hasOwnProperty.call(payload, "seoDescription");
 
-    if (!seoTitle && !seoDescription) {
+    if (!hasSeoTitle && !hasSeoDescription) {
         return NextResponse.json({ error: "Nothing to update." }, { status: 400 });
     }
 
-    const updates: Record<string, string> = { updated_at: new Date().toISOString() };
-    if (seoTitle) updates.seo_title = seoTitle;
-    if (seoDescription) updates.seo_description = seoDescription;
+    const updates: Record<string, string | null> = { updated_at: new Date().toISOString() };
+    if (hasSeoTitle) updates.seo_title = cleanString(payload.seoTitle, 180);
+    if (hasSeoDescription) updates.seo_description = cleanString(payload.seoDescription, 320);
 
     const { error } = await supabase.from("guides").update(updates).eq("id", params.id);
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });

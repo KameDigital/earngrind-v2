@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import { renderMarkdown } from "@/app/guides/[slug]/markdownRenderer";
 import { analyzeGuideBodyHealth } from "@/lib/guide-body-health";
+import { analyzeGuideQuality } from "@/lib/guide-quality";
 
 function normalizeSlug(value: string): string {
     return value.trim().toLowerCase().replace(/\s+/g, "-");
@@ -24,6 +25,8 @@ export async function POST(req: NextRequest) {
         layout_style, show_related_offers, show_related_guides,
         seo_title, seo_description, status, platform_filter,
         primary_offer_id, disable_auto_offer_matching,
+        keyword_target, keyword_cluster_id, keyword_intent, guide_type, needs_variation,
+        payout_verified_at, tasks_verified_at, provider_terms_verified_at, last_offer_check_at,
     } = body;
 
     if (!title || !slug || !game_id) {
@@ -62,12 +65,30 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Guide slug already exists." }, { status: 409 });
     }
 
+    const renderedBody = body_md ? renderMarkdown(body_md) : "";
+    const nextStatus = status || "draft";
+    if (nextStatus === "published") {
+        const quality = analyzeGuideQuality({
+            bodyHtml: renderedBody,
+            seoTitle: seo_title,
+            seoDescription: seo_description,
+            keywordTarget: keyword_target,
+            payoutVerifiedAt: payout_verified_at,
+            tasksVerifiedAt: tasks_verified_at,
+            providerTermsVerifiedAt: provider_terms_verified_at,
+            lastOfferCheckAt: last_offer_check_at,
+        });
+        if (quality.requiredErrors.length > 0) {
+            return NextResponse.json({ error: "Publish blocked by checklist.", quality }, { status: 422 });
+        }
+    }
+
     const { data, error } = await supabase.from("guides").insert({
         title,
         slug: normalizedSlug,
         game_id: gameId,
         excerpt: excerpt || null,
-        body_md: body_md ? renderMarkdown(body_md) : null,
+        body_md: renderedBody || null,
         difficulty: difficulty || null,
         estimated_time: estimated_time || null,
         max_payout_usd: max_payout_usd ? parseFloat(max_payout_usd) : null,
@@ -82,10 +103,20 @@ export async function POST(req: NextRequest) {
         show_related_guides: show_related_guides !== false,
         seo_title: seo_title || null,
         seo_description: seo_description || null,
-        status: status || "draft",
+        status: nextStatus,
         platform_filter: platform_filter || "android",
         primary_offer_id: primary_offer_id || null,
         disable_auto_offer_matching: disable_auto_offer_matching === true,
+        keyword_target: keyword_target || null,
+        keyword_cluster_id: keyword_cluster_id || null,
+        keyword_intent: keyword_intent || null,
+        guide_type: guide_type || "game_offer",
+        needs_variation: Boolean(needs_variation),
+        payout_verified_at: payout_verified_at || null,
+        tasks_verified_at: tasks_verified_at || null,
+        provider_terms_verified_at: provider_terms_verified_at || null,
+        last_offer_check_at: last_offer_check_at || null,
+        published_at: nextStatus === "published" ? new Date().toISOString() : null,
         author_id: user.id,
     }).select().single();
 

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { formatPayoutFreshness } from "@/lib/payout-freshness";
 
 export type GamesIndexItem = {
   id: string;
@@ -15,6 +16,7 @@ export type GamesIndexItem = {
   bestProvider: string;
   bestPlatform: string;
   category: string;
+  updatedAt: string | null;
   providerCount: number;
   platformCount: number;
 };
@@ -258,6 +260,9 @@ export default function GamesIndexClient({
 
               <p className="mt-3 text-sm text-[var(--text-secondary)]">
                 Best visible route: <span className="font-bold text-[var(--brand-ink)]">{game.bestPlatform}</span> via {game.bestProvider}.
+              </p>
+              <p className="mt-2 text-xs font-semibold text-[var(--text-tertiary)]">
+                {formatPayoutFreshness(game.updatedAt)}
               </p>
 
               <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">

@@ -9,6 +9,8 @@ interface GuideJsonLdProps {
         tips: string[];
         published_at: string | null;
         updated_at: string;
+        guide_type: string | null;
+        keyword_intent: string | null;
     };
     gameName: string;
     gameSlug: string;
@@ -16,7 +18,7 @@ interface GuideJsonLdProps {
 }
 
 export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJsonLdProps) {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://earngrind.com";
+    const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://earngrind.com").replace(/\/$/, "");
     const url = `${baseUrl}/guides/${guide.slug}`;
     const description = guide.excerpt ?? `Completion guide for ${guide.title}. Verify live offer terms before starting.`;
 
@@ -33,7 +35,25 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
         publisher: { "@type": "Organization", name: "EarnGrind" },
     };
 
-    const howTo = {
+    const proceduralIntent = ["how_to", "task_specific", "payout_specific"].includes(guide.keyword_intent ?? "")
+        || ["how_to_earn", "payout_guide"].includes(guide.guide_type ?? "");
+    const proceduralHeading = /step|walkthrough|route|how to|complete|strategy/i;
+    const proceduralSteps = steps.filter((section) => proceduralHeading.test(section.heading));
+    const howToSteps = proceduralSteps.length > 0
+        ? proceduralSteps.map((section, index) => ({
+            "@type": "HowToStep",
+            position: index + 1,
+            name: section.heading,
+            text: section.body.replace(/<[^>]+>/g, "").slice(0, 300),
+        }))
+        : guide.tips.map((tip, index) => ({
+            "@type": "HowToStep",
+            position: index + 1,
+            name: `Tip ${index + 1}`,
+            text: tip,
+        }));
+
+    const howTo = proceduralIntent && howToSteps.length > 0 ? {
         "@context": "https://schema.org",
         "@type": "HowTo",
         name: guide.title,
@@ -52,21 +72,9 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
         }),
         datePublished: guide.published_at ?? guide.updated_at,
         dateModified: guide.updated_at,
-        step: steps.length > 0
-            ? steps.map((section, index) => ({
-                "@type": "HowToStep",
-                position: index + 1,
-                name: section.heading,
-                text: section.body.replace(/<[^>]+>/g, "").slice(0, 300),
-            }))
-            : guide.tips.map((tip, index) => ({
-                "@type": "HowToStep",
-                position: index + 1,
-                name: `Tip ${index + 1}`,
-                text: tip,
-            })),
+        step: howToSteps,
         tool: [{ "@type": "HowToTool", name: `${gameName} guide` }],
-    };
+    } : null;
 
     const breadcrumb = {
         "@context": "https://schema.org",
@@ -101,7 +109,7 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
         }
         : null;
 
-    const schemas = [article, howTo, breadcrumb, ...(faq ? [faq] : [])];
+    const schemas = [article, ...(howTo ? [howTo] : []), breadcrumb, ...(faq ? [faq] : [])];
 
     return (
         <>

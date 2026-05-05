@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { supabase as publicSupabase } from "@/lib/supabase/public";
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
 import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 import type { RailPreviewRoute, RailPreviewTask } from "@/components/home/GamePreviewModal";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
@@ -296,7 +298,7 @@ function matchesFeaturedName(candidate: string | null | undefined, targetName: s
 }
 
 async function getHomepageData(): Promise<HomepageData> {
-  const supabase = createClient();
+  const supabase = publicSupabase;
   const guideSelect =
     "id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, games(id, name, slug, thumbnail_url)";
   const featuredOfferFilters = FEATURED_GAME_NAMES.flatMap((name) =>

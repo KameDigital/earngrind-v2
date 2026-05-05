@@ -1,3 +1,20 @@
+const configuredImageHostnames = (process.env.NEXT_IMAGE_HOSTNAMES ?? "")
+    .split(",")
+    .map((hostname) => hostname.trim())
+    .filter(Boolean);
+
+const imageHostnames = Array.from(new Set([
+    "assets.efusercontent.com",
+    "img.gemsloot.com",
+    "cdn.offertoro.com",
+    "cdn.mychips.io",
+    "earnlab.com",
+    "api.earnlab.com",
+    "gain.gg",
+    "cashinstyle.com",
+    ...configuredImageHostnames,
+]));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // Prevent cosmetic ESLint warnings from blocking production builds.
@@ -6,14 +23,12 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
     images: {
-        // Allow external images from any HTTPS source.
-        // Game thumbnails and platform logos come from a variety of CDNs.
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: '**',
-            },
-        ],
+        // Keep image optimization scoped to known provider CDNs.
+        // Add new hosts through NEXT_IMAGE_HOSTNAMES as the catalog expands.
+        remotePatterns: imageHostnames.map((hostname) => ({
+            protocol: "https",
+            hostname,
+        })),
     },
 
     // ---------------------------------------------------------------

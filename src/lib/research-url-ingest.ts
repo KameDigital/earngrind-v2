@@ -4,6 +4,7 @@ import net from "node:net";
 const MAX_RESPONSE_BYTES = 1_500_000;
 const MAX_TEXT_LENGTH = 20000;
 const FETCH_TIMEOUT_MS = 10000;
+const MAX_REDIRECTS = 5;
 
 export type ResearchSourceType = "url" | "reddit" | "trustpilot";
 
@@ -72,36 +73,36 @@ export async function validateResearchUrl(value: string) {
 }
 
 export async function fetchResearchHtml(url: string) {
+  let currentUrl = await validateResearchUrl(url);
+
+  for (let redirectCount = 0; redirectCount <= MAX_REDIRECTS; redirectCount += 1) {
+    const response = await fetchResearchResponse(currentUrl);
+
+    if (response.status >= 300 && response.status < 400) {
+      const location = response.headers.get("location");
+      if (!location) throw new Error("Redirect response did not include a target URL.");
+      currentUrl = await validateResearchUrl(new URL(location, currentUrl).toString());
+      continue;
+    }
+
+    return readResearchResponse(response);
+  }
+
+  throw new Error("Too many redirects.");
+}
+
+async function fetchResearchResponse(url: string) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const response = await fetch(url, {
+    return await fetch(url, {
       signal: controller.signal,
       headers: {
         accept: "text/html,application/xhtml+xml,text/plain;q=0.9,*/*;q=0.5",
         "user-agent": "EarnGrindResearchBot/1.0 (+https://earngrind.com)",
       },
-      redirect: "follow",
+      redirect: "manual",
     });
-
-    if (!response.ok) throw new Error(`Fetch failed with status ${response.status}.`);
-
-    const contentLength = Number(response.headers.get("content-length") ?? 0);
-    if (contentLength > MAX_RESPONSE_BYTES) {
-      throw new Error("Response is too large to ingest safely.");
-    }
-
-    const buffer = await response.arrayBuffer();
-    if (buffer.byteLength > MAX_RESPONSE_BYTES) {
-      throw new Error("Response is too large to ingest safely.");
-    }
-
-    const contentType = response.headers.get("content-type") ?? "";
-    if (!/text\/html|application\/xhtml\+xml|text\/plain/i.test(contentType)) {
-      throw new Error("URL did not return readable HTML/text.");
-    }
-
-    return new TextDecoder("utf-8").decode(buffer);
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
       throw new Error("Fetch timed out. Paste the source text manually.");
@@ -110,6 +111,27 @@ export async function fetchResearchHtml(url: string) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+async function readResearchResponse(response: Response) {
+  if (!response.ok) throw new Error(`Fetch failed with status ${response.status}.`);
+
+  const contentLength = Number(response.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_RESPONSE_BYTES) {
+    throw new Error("Response is too large to ingest safely.");
+  }
+
+  const buffer = await response.arrayBuffer();
+  if (buffer.byteLength > MAX_RESPONSE_BYTES) {
+    throw new Error("Response is too large to ingest safely.");
+  }
+
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!/text\/html|application\/xhtml\+xml|text\/plain/i.test(contentType)) {
+    throw new Error("URL did not return readable HTML/text.");
+  }
+
+  return new TextDecoder("utf-8").decode(buffer);
 }
 
 function decodeHtmlEntities(value: string) {

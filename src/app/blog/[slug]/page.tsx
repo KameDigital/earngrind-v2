@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import sanitizeHtml from "sanitize-html";
 import { createClient } from "@/lib/supabase/server";
 import BlogJsonLd from "./BlogJsonLd";
 
@@ -69,7 +70,7 @@ export async function generateMetadata(
 // ---------------------------------------------------------------
 function renderMarkdown(md: string): string {
     if (!md) return "";
-    return md
+    const html = md
         .replace(/^#### (.+)$/gm, '<h4 class="text-base font-bold text-gray-900 mt-5 mb-2">$1</h4>')
         .replace(/^### (.+)$/gm, '<h3 class="text-lg font-bold text-gray-900 mt-6 mb-2">$1</h3>')
         .replace(/^## (.+)$/gm, '<h2 class="text-xl font-extrabold text-gray-900 mt-8 mb-3 tracking-tight">$1</h2>')
@@ -86,6 +87,41 @@ function renderMarkdown(md: string): string {
         .replace(/^(?!<[hul>])(.+)/, '<p class="text-gray-600 leading-relaxed mb-4">$1')
         .concat("</p>")
         .replace(/<p[^>]*>\s*<\/p>/g, "");
+
+    return sanitizeHtml(html, {
+        allowedTags: [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "p",
+            "strong",
+            "em",
+            "code",
+            "a",
+            "blockquote",
+            "ul",
+            "ol",
+            "li",
+            "br",
+        ],
+        allowedAttributes: {
+            "*": ["class"],
+            a: ["href", "target", "rel", "class"],
+        },
+        allowedSchemes: ["http", "https", "mailto"],
+        transformTags: {
+            a: (_tagName, attribs) => ({
+                tagName: "a",
+                attribs: {
+                    href: attribs.href ?? "#",
+                    class: attribs.class ?? "text-lime-700 hover:underline font-medium",
+                    target: "_blank",
+                    rel: "noopener noreferrer nofollow",
+                },
+            }),
+        },
+    });
 }
 
 // ---------------------------------------------------------------

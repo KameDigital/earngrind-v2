@@ -37,6 +37,7 @@ type PlatformRedirectTarget = {
 };
 
 const GAIN_AFFILIATE_URL = "https://gain.gg/r/macko";
+const EARNLAB_AFFILIATE_URL = "https://earnlab.com/r/mac";
 const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev";
 const SWAGBUCKS_AFFILIATE_URL = "https://www.swagbucks.com/profile/r_158565078?rp=1";
 const KASHKICK_AFFILIATE_URL = "https://app.kashkick.com?ref=MEF2ucEjcbtH";
@@ -45,7 +46,7 @@ const MYPOINTS_AFFILIATE_URL = "https://www.mypoints.com?rb=233983902";
 const PRIZEREBEL_AFFILIATE_URL = "https://www.prizerebel.com/index.php?r=16580973";
 const SCRAMBLY_URL = "https://scrambly.io/";
 const PLATFORM_FALLBACK_URLS: Record<string, string> = {
-    earnlab: GAIN_AFFILIATE_URL,
+    earnlab: EARNLAB_AFFILIATE_URL,
     gaingg: "https://gain.gg",
     gain: "https://gain.gg",
     gemsloot: "https://gemsloot.com",
@@ -79,7 +80,7 @@ export function getPlatformFallbackUrl(platform: PlatformRedirectTarget | null |
 export function getPlatformAffiliateOverride(platform: PlatformRedirectTarget | null | undefined): string | null {
     const candidates = getPlatformKeys(platform);
     if (candidates.some((candidate) => candidate === "earnlab" || candidate.includes("earnlab"))) {
-        return GAIN_AFFILIATE_URL;
+        return EARNLAB_AFFILIATE_URL;
     }
     if (candidates.some((candidate) => candidate === "gaingg" || candidate === "gain" || candidate.includes("gaingg"))) {
         return GAIN_AFFILIATE_URL;

@@ -250,7 +250,12 @@ export async function GET(
     const site = Array.isArray(siteOffer.site) ? siteOffer.site[0] ?? null : siteOffer.site;
     const game = Array.isArray(siteOffer.game) ? siteOffer.game[0] ?? null : siteOffer.game;
     const provider = Array.isArray(siteOffer.provider) ? siteOffer.provider[0] ?? null : siteOffer.provider;
-    const outboundUrl = getPlatformAffiliateOverride(site) ?? buildOutboundRedirectUrl({
+    const directSiteOfferUrl = buildOutboundRedirectUrl({
+        affiliateTemplate: null,
+        destinationUrl: siteOffer.offer_url,
+        fallbackUrl: null,
+    });
+    const outboundUrl = directSiteOfferUrl ?? getPlatformAffiliateOverride(site) ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: getPlatformFallbackUrl(site),
@@ -276,7 +281,9 @@ export async function GET(
         click_location: requestAttribution.click_location,
         source_context: requestAttribution.source_context,
         destination_url: outboundUrl,
-        affiliate_mode: getPlatformAffiliateOverride(site)
+        affiliate_mode: directSiteOfferUrl
+            ? "direct"
+            : getPlatformAffiliateOverride(site)
             ? "platform-override"
             : site?.affiliate_template?.includes("{destination}")
                 ? "destination-placeholder"

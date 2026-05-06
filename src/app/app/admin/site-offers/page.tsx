@@ -2,6 +2,7 @@ import { AdminButtonLink, AdminPageHeader, AdminStatCard } from "@/components/ad
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import EarnLabGalleryImportPanel from "./EarnLabGalleryImportPanel";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Site Offers | Admin" };
@@ -44,6 +45,8 @@ export default async function AdminSiteOffersPage() {
                 description="Curated site_offers records that power comparison routes on game and guide pages."
                 actions={<AdminButtonLink href="/app/admin/site-offers/new" variant="primary">New entry</AdminButtonLink>}
             />
+
+            <EarnLabGalleryImportPanel />
 
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 <AdminStatCard label="Active" value={rows.filter((offer) => offer.status === "active").length} tone="good" />

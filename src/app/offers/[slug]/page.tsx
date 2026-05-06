@@ -9,6 +9,8 @@ import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
 import { formatPayoutFreshness } from '@/lib/payout-freshness';
 import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
+import { EarnLabCountryOffersPage } from '@/components/offers/EarnLabCountryOffersPage';
+import { getEarnLabCountryName, isSupportedEarnLabCountry, normalizeEarnLabCountryCode } from '@/lib/earnlab-gallery';
 
 // ---------------------------------------------------------------
 // TYPES — mirrors /api/offers/game/[slug] response
@@ -122,6 +124,24 @@ async function getGameData(slug: string): Promise<GamePageData | null> {
 export async function generateMetadata(
     { params }: { params: { slug: string } }
 ): Promise<Metadata> {
+    const countryCode = normalizeEarnLabCountryCode(params.slug);
+    if (countryCode && isSupportedEarnLabCountry(countryCode)) {
+        const countryName = getEarnLabCountryName(countryCode);
+        const canonical = absoluteUrl(`/offers/${countryCode.toLowerCase()}`);
+        return {
+            title: `Best EarnLab Offers in ${countryName} | EarnGrind`,
+            description: `Browse the best EarnLab tasks and game offers available in ${countryName}. Compare rewards, requirements, and start high-paying offers.`,
+            alternates: {
+                canonical,
+            },
+            openGraph: {
+                title: `Best EarnLab Offers in ${countryName} | EarnGrind`,
+                description: `Compare EarnLab rewards, task requirements, and available app offers for ${countryName}.`,
+                url: canonical,
+            },
+        };
+    }
+
     const data = await getGameData(params.slug);
     if (!data) return { title: 'Game Not Found | EarnGrind' };
     const { game, summary } = data;
@@ -517,7 +537,18 @@ function StatCard({ label, value, accent }: { label: string; value: string; acce
 // ---------------------------------------------------------------
 // PAGE
 // ---------------------------------------------------------------
-export default async function GameOffersPage({ params }: { params: { slug: string } }) {
+export default async function GameOffersPage({
+    params,
+    searchParams,
+}: {
+    params: { slug: string };
+    searchParams?: { sort?: string };
+}) {
+    const countryCode = normalizeEarnLabCountryCode(params.slug);
+    if (countryCode && isSupportedEarnLabCountry(countryCode)) {
+        return <EarnLabCountryOffersPage countryCode={countryCode} sort={searchParams?.sort} />;
+    }
+
     const data = await getGameData(params.slug);
 
     if (!data) notFound();

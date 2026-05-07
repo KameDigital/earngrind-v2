@@ -5,6 +5,7 @@ import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
 import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 import type { RailPreviewRoute, RailPreviewTask } from "@/components/home/GamePreviewModal";
+import { getGainGalleryOffers, type GainGalleryOffer } from "@/lib/gain-gallery";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 
@@ -120,6 +121,15 @@ const FEATURED_GAME_NAMES = [
   "Hero Wars: Alliance",
 ] as const;
 
+const FEATURED_EARNLAB_TASK_GROUPS = [
+  ["DesignVille: Merge & Design", "DesignVille"],
+  ["Rise of Kingdoms: Lost Crusade", "Rise of Kingdoms"],
+  ["Palmon: Survival", "Palmon"],
+  ["Crazy Fox"],
+  ["Call of Dragons"],
+  ["Woodoku Blast"],
+] as const;
+
 type OfferRow = {
   id: string;
   source: string | null;
@@ -212,7 +222,8 @@ type HomepageRailOffer = OfferRow & {
 
 type HomepageData = {
   featuredGames: FeaturedGame[];
-  highestPayingOffers: HomepageRailOffer[];
+  earnLabFeaturedOffers: HomepageRailOffer[];
+  gainFeaturedOffers: GainGalleryOffer[];
   modalRoutesByGameKey: Record<string, RailPreviewRoute[]>;
   guideHrefByGameKey: Record<string, string>;
   popularGuides: GuideRow[];
@@ -286,6 +297,29 @@ function getFeaturedGameAliases(name: string) {
   return [name, ...(aliases[name] ?? [])];
 }
 
+function buildHomepageIlikeFilters(groups: readonly (readonly string[])[], fields: string[]) {
+  return groups
+    .flatMap((group) =>
+      group.flatMap((alias) =>
+        fields.map((field) => `${field}.ilike.%${alias}%`),
+      ),
+    )
+    .join(",");
+}
+
+function matchesAliasGroup(candidate: string | null | undefined, aliases: readonly string[]) {
+  const normalizedCandidate = normalizeName(candidate);
+  if (!normalizedCandidate) return false;
+
+  return aliases.some((alias) => {
+    const normalizedAlias = normalizeName(alias);
+    return (
+      normalizedCandidate.includes(normalizedAlias) ||
+      normalizedAlias.includes(normalizedCandidate)
+    );
+  });
+}
+
 function matchesFeaturedName(candidate: string | null | undefined, targetName: string) {
   const normalizedCandidate = normalizeName(candidate);
   if (!normalizedCandidate) return false;
@@ -303,14 +337,16 @@ async function getHomepageData(): Promise<HomepageData> {
   const supabase = publicSupabase;
   const guideSelect =
     "id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, games(id, name, slug, thumbnail_url)";
-  const featuredOfferFilters = FEATURED_GAME_NAMES.flatMap((name) =>
-    getFeaturedGameAliases(name).flatMap((alias) => [
-      `game_name.ilike.%${alias}%`,
-      `title.ilike.%${alias}%`,
-    ]),
-  ).join(",");
+  const featuredOfferFilters = buildHomepageIlikeFilters(
+    FEATURED_GAME_NAMES.map((name) => getFeaturedGameAliases(name)),
+    ["game_name", "title"],
+  );
+  const featuredEarnLabTaskFilters = buildHomepageIlikeFilters(
+    FEATURED_EARNLAB_TASK_GROUPS,
+    ["game_name", "title"],
+  );
 
-  const [offersResult, popularGuidesResult, featuredGamesResult, featuredGameOffersResult] = await Promise.all([
+  const [offersResult, popularGuidesResult, featuredGamesResult, featuredGameOffersResult, featuredEarnLabTasksResult, gainFeaturedOffersResult] = await Promise.all([
     supabase
       .from("unified_offers_view")
       .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text")
@@ -332,6 +368,17 @@ async function getHomepageData(): Promise<HomepageData> {
       .or(featuredOfferFilters)
       .order("total_payout_usd", { ascending: false })
       .limit(200),
+    supabase
+      .from("unified_offers_view")
+      .select("id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text")
+      .eq("platform_name", "EarnLab")
+      .or(featuredEarnLabTaskFilters)
+      .order("total_payout_usd", { ascending: false })
+      .limit(120),
+    getGainGalleryOffers("native", { country: "US", limit: 24 }).catch((error) => {
+      console.error("[homepage] failed to load Gain featured offers", error);
+      return null;
+    }),
   ]);
 
   const normalizePublicOfferRows = (rows: OfferRow[]) =>
@@ -350,8 +397,9 @@ async function getHomepageData(): Promise<HomepageData> {
 
   const offerRows = normalizePublicOfferRows((offersResult.data ?? []) as OfferRow[]);
   const featuredGameOfferRows = normalizePublicOfferRows((featuredGameOffersResult.data ?? []) as OfferRow[]);
+  const featuredEarnLabTaskRows = normalizePublicOfferRows((featuredEarnLabTasksResult.data ?? []) as OfferRow[]);
   const allOfferRows = Array.from(
-    new Map([...offerRows, ...featuredGameOfferRows].map((row) => [row.id, row])).values(),
+    new Map([...offerRows, ...featuredGameOfferRows, ...featuredEarnLabTaskRows].map((row) => [row.id, row])).values(),
   );
   const allOfferIds = allOfferRows.map((row) => row.id);
   const gameIds = Array.from(new Set(allOfferRows.map((row) => row.game_id).filter(Boolean))) as string[];
@@ -444,32 +492,69 @@ async function getHomepageData(): Promise<HomepageData> {
     };
   });
 
-  const highestPayingOffers: HomepageData["highestPayingOffers"] = Array.from(
+  const homepageOfferCardRows = enrichedAllOfferRows
+    .map((row) => ({
+      ...row,
+      image_url:
+        row.image_url ??
+        row.game_thumbnail ??
+        row.platform_logo ??
+        null,
+    }))
+    .filter((row) => row.game_slug || row.game_name);
+
+  const earnLabFeaturedOfferRows: OfferRow[] = FEATURED_EARNLAB_TASK_GROUPS
+    .map((aliases) =>
+      featuredEarnLabTaskRows
+        .filter((row) => {
+          if (row.platform_name !== "EarnLab") return false;
+          return (
+            matchesAliasGroup(row.title, aliases) ||
+            matchesAliasGroup(row.game_name, aliases)
+          );
+        })
+        .sort((a, b) => (b.total_payout_usd ?? b.payout_usd ?? 0) - (a.total_payout_usd ?? a.payout_usd ?? 0))[0] ?? null,
+    )
+    .filter(Boolean) as OfferRow[];
+
+  const earnLabPrimaryOffers = earnLabFeaturedOfferRows
+    .map((row) => ({
+      ...row,
+      badge: "EarnLab featured",
+      image_url:
+        row.image_url ??
+        row.game_thumbnail ??
+        row.platform_logo ??
+        null,
+    }));
+
+  const fallbackHighestOffers = Array.from(
     new Map(
-      enrichedOfferRows
-        .map((row) => ({
+      homepageOfferCardRows.map((row) => [
+        row.game_slug ?? row.game_name ?? row.id,
+        {
           ...row,
+          badge: "Live offer",
           image_url:
             row.image_url ??
             row.game_thumbnail ??
             row.platform_logo ??
             null,
-        }))
-        .filter((row) => row.game_slug || row.game_name)
-        .map((row) => [
-          row.game_slug ?? row.game_name ?? row.id,
-          {
-            ...row,
-            badge: "Live offer",
-            image_url:
-              row.image_url ??
-              row.game_thumbnail ??
-              row.platform_logo ??
-              null,
-          },
-        ]),
+        },
+      ]),
     ).values(),
-  ).slice(0, 6);
+  );
+
+  const earnLabFeaturedOffers: HomepageData["earnLabFeaturedOffers"] = [
+    ...earnLabPrimaryOffers,
+    ...fallbackHighestOffers.filter(
+      (row) => !earnLabPrimaryOffers.some((featured) => featured.id === row.id),
+    ),
+  ].slice(0, 6);
+
+  const gainFeaturedOffers = (gainFeaturedOffersResult?.offers ?? [])
+    .filter((offer) => offer.wall === "native")
+    .slice(0, 10);
 
   function tasksForOffer(row: OfferRow): RailPreviewTask[] {
     const manualTasks = manualTaskMap.get(row.id);
@@ -564,7 +649,8 @@ async function getHomepageData(): Promise<HomepageData> {
 
   return {
     featuredGames,
-    highestPayingOffers,
+    earnLabFeaturedOffers,
+    gainFeaturedOffers,
     modalRoutesByGameKey,
     guideHrefByGameKey,
     popularGuides: normalizeGuides((popularGuidesResult.data ?? []) as RawGuideRow[]),
@@ -577,13 +663,13 @@ async function getHomepageData(): Promise<HomepageData> {
 }
 
 export default async function HomePage() {
-  const { featuredGames, highestPayingOffers, modalRoutesByGameKey, guideHrefByGameKey, popularGuides, stats } =
+  const { featuredGames, earnLabFeaturedOffers, gainFeaturedOffers, modalRoutesByGameKey, guideHrefByGameKey, popularGuides, stats } =
     await getHomepageData();
   const guideHrefForGame = (slug: string | null | undefined, fallbackKey?: string) => {
     if (!slug) return fallbackKey ? guideHrefByGameKey[fallbackKey] ?? null : null;
     return guideHrefByGameKey[slug] ?? (modalRoutesByGameKey[slug]?.length ? `/guides/how-to-earn/${slug}` : null);
   };
-  const compactOfferRail: FeaturedOfferRailItem[] = highestPayingOffers.map((offer) => ({
+  const earnLabOfferRail: FeaturedOfferRailItem[] = earnLabFeaturedOffers.map((offer) => ({
       id: `offer-${offer.id}`,
       href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
       title: offer.title?.trim() || offer.game_name || "Offer",
@@ -609,6 +695,44 @@ export default async function HomePage() {
             payoutValue: offer.total_payout_usd ?? offer.payout_usd,
             taskCount: offer.goal_text ? 1 : 0,
             tasks: offer.goal_text ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.total_payout_usd ?? offer.payout_usd) }] : [],
+          },
+        ],
+      },
+    }));
+  const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map((offer) => ({
+      id: `gain-featured-${offer.wall}-${offer.id}`,
+      href: "/offers/gain/us/native",
+      title: offer.title,
+      badge: "Gain featured",
+      provider: "Gain.gg",
+      platform: offer.providerName,
+      payout: formatMoney(offer.totalPayout ?? offer.payout) ?? null,
+      secondaryValue:
+        offer.tasks.length > 0
+          ? `${offer.tasks.length} milestones available`
+          : offer.shortDescription ?? null,
+      imageUrl: offer.imageUrl,
+      preview: {
+        title: offer.title,
+        description:
+          offer.shortDescription ??
+          `Preview the featured Gain.gg route for ${offer.title} before opening the full wall.`,
+        imageUrl: offer.imageUrl,
+        gameHref: "/offers/gain/us/native",
+        guideHref: null,
+        routes: [
+          {
+            offerId: offer.id,
+            href: offer.startUrl,
+            providerName: offer.providerName,
+            platformName: "Gain.gg",
+            payout: formatMoney(offer.totalPayout ?? offer.payout),
+            payoutValue: offer.totalPayout ?? offer.payout,
+            taskCount: offer.tasks.length,
+            tasks: offer.tasks.slice(0, 6).map((task) => ({
+              title: task.title,
+              rewardDisplay: task.rewardDisplay,
+            })),
           },
         ],
       },
@@ -803,10 +927,17 @@ export default async function HomePage() {
               description="Use this section to scan strong payouts, preview routes, and open a game page before starting."
             />
               <FeaturedOfferRail
-                items={compactOfferRail}
-                title="Top Offers"
-                description="Current high-value routes from the offer feed. Open a preview to compare milestones before clicking out."
+                items={earnLabOfferRail}
+                title="Featured EarnLab tasks"
+                description="EarnLab-curated tasks matched to active offers on EarnGrind. Open a preview to compare milestones before clicking out."
               />
+              <div className="mt-10">
+                <FeaturedOfferRail
+                  items={gainOfferRail}
+                  title="Featured Gain.gg tasks"
+                  description="Current featured tasks from Gain.gg's native wall. Review milestones and payout before opening the Gain wall."
+                />
+              </div>
               <div className="mt-10">
                 <FeaturedOfferRail
                   items={featuredGameRail}

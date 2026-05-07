@@ -181,7 +181,7 @@ async function getNativeGainOffers({ limit, refresh, country }: { limit: number;
 
     const response = await fetch(url.toString(), {
         headers: buildGainHeaders("https://gain.gg/earn"),
-        cache: refresh ? "no-store" : "force-cache",
+        cache: refresh ? "no-store" : undefined,
         next: refresh ? undefined : { revalidate: CACHE_SECONDS, tags: ["gain-gallery-native"] },
     });
     if (!response.ok) throw new GainGalleryFetchError(`Gain native gallery request failed with status ${response.status}`, response.status);

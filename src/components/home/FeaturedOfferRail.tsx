@@ -73,7 +73,7 @@ function RailCardContent({ item }: { item: FeaturedOfferRailItem }) {
                 {[item.provider, item.platform].filter(Boolean).join(" / ")}
               </div>
             ) : null}
-            <h4 className="truncate text-sm font-extrabold leading-tight text-[var(--brand-ink)] transition-colors group-hover:text-[color:hsl(84,93%,32%)]">
+            <h4 className="line-clamp-2 text-sm font-extrabold leading-tight text-[var(--brand-ink)] transition-colors group-hover:text-[color:hsl(84,93%,32%)]">
               {item.title}
             </h4>
           </div>
@@ -94,7 +94,7 @@ function RailCardContent({ item }: { item: FeaturedOfferRailItem }) {
 
         <div className="mt-auto">
           {item.secondaryValue ? (
-            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
+            <div className="line-clamp-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
               {item.secondaryValue}
             </div>
           ) : null}

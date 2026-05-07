@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
     BadgeCheck,
@@ -7,10 +8,8 @@ import {
     CircleDollarSign,
     Clock3,
     Coins,
-    Dices,
     Gamepad2,
     Gift,
-    Landmark,
     LockKeyhole,
     MonitorSmartphone,
     ShieldCheck,
@@ -27,8 +26,10 @@ import { absoluteUrl } from "@/lib/site-url";
 const PAGE_PATH = "/guides/fanduel-casino-review-bonus";
 const PAGE_URL = absoluteUrl(PAGE_PATH);
 const AFFILIATE_URL = "https://fndl.co/4hmshhm";
-const CURRENT_OFFER = "[CURRENT_VERIFIED_FANDUEL_CASINO_OFFER]";
-const LAST_VERIFIED_DATE = "[LAST_VERIFIED_DATE]";
+const CURRENT_OFFER = "500 Bonus Spins + up to $1,000 back in Casino Bonus on any first-day net loss";
+const LAST_VERIFIED_DATE = "May 7, 2026";
+const HERO_IMAGE_SRC = "/images/guides/fanduel-casino/fanduel-casino-bonus-review-hero.png";
+const BONUS_BANNER_SRC = HERO_IMAGE_SRC;
 
 const disclosureText =
     "EarnGrind may earn a commission if you sign up through links on this page. FanDuel Casino availability and promotions vary by state. 21+. Terms apply. Gambling problem? Call or text 1-800-GAMBLER.";
@@ -36,24 +37,50 @@ const disclosureText =
 export const metadata: Metadata = {
     title: "FanDuel Casino Review: Bonus, Games, App Features & Promo Code",
     description:
-        "See why FanDuel Casino is worth trying. Explore slots, live dealer games, jackpots, app features, current bonus offers, and how to claim today's FanDuel Casino promo.",
+        "See why FanDuel Casino is worth trying. Explore slots, live dealer games, app features, 500 Bonus Spins, and up to $1,000 back in Casino Bonus.",
     alternates: {
         canonical: PAGE_URL,
     },
     openGraph: {
         title: "FanDuel Casino Review: Games, Bonuses & App Features",
         description:
-            "Explore FanDuel Casino's best features, including slots, live dealer games, jackpots, mobile app play, and current casino bonus offers.",
+            "Explore FanDuel Casino's best features, including slots, live dealer games, jackpots, mobile app play, 500 Bonus Spins, and current casino bonus offers.",
         url: PAGE_URL,
         type: "article",
+        images: [
+            {
+                url: BONUS_BANNER_SRC,
+                width: 2048,
+                height: 500,
+                alt: "FanDuel Casino review bonus guide with slots, jackpots, live dealer action, and mobile app play",
+            },
+        ],
     },
     twitter: {
         card: "summary_large_image",
         title: "FanDuel Casino Review: Games, Bonuses & App Features",
         description:
-            "Explore FanDuel Casino slots, live dealer games, jackpots, app features, and current bonus offers.",
+            "Explore FanDuel Casino slots, live dealer games, jackpots, app features, 500 Bonus Spins, and current bonus offers.",
+        images: [BONUS_BANNER_SRC],
     },
 };
+
+const bonusSteps = [
+    "Join FanDuel Casino through the current offer link.",
+    "Deposit $5 or more if required by the live promotion.",
+    "500 Bonus Spins are added to your account in increments of 50 per day over your first 10 days.",
+    "Play Bonus Spins on eligible Huff N' Puff Slot Games, including Huff N' Even More Puff Grand where available.",
+    "Complete the 1X play through on Bonus Spins; any resulting winnings are yours to keep subject to FanDuel terms.",
+];
+
+const bonusTerms = [
+    "Must not have previously placed any wager on FanDuel Sportsbook, FanDuel Casino, Betfair Casino, or Mohegan Sun Casino.",
+    "Bonus Spins may only be used in the state of first deposit.",
+    "Bonus Spins expire 7 days after receipt.",
+    "The first-day bonus period begins when you make your first real-money wager and runs for 24 hours.",
+    "If you are down after the first 24 hours of casino play, FanDuel may refund net losses as non-withdrawable Casino site credit up to $1,000.",
+    "Casino site credit is automatically applied within 72 hours after the bonus period ends and expires 7 days after receipt.",
+];
 
 const trustBadges = [
     "21+ only",
@@ -255,7 +282,7 @@ function JsonLd() {
         "@type": "Article",
         headline: "FanDuel Casino Review: Games, Bonuses, Live Dealer Action & Why It's Worth Trying",
         description:
-            "A conversion-focused EarnGrind guide to FanDuel Casino games, app features, live dealer tables, bonuses, referral links, trust, and signup basics.",
+            "A conversion-focused EarnGrind guide to FanDuel Casino games, app features, live dealer tables, 500 Bonus Spins, first-day Casino Bonus details, referral links, trust, and signup basics.",
         url: PAGE_URL,
         mainEntityOfPage: PAGE_URL,
         datePublished: "2026-05-04",
@@ -307,8 +334,8 @@ export default function FanDuelCasinoReviewPage() {
 
             <section className="relative overflow-hidden bg-slate-950 text-white">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(20,147,255,0.35),transparent_32%),linear-gradient(135deg,#10233f_0%,#08111f_48%,#0a1f17_100%)]" />
-                <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-16">
-                    <div className="min-w-0 flex flex-col justify-center">
+                <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+                    <div className="mb-6">
                         <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-white/70">
                             <Link href="/" className="hover:text-white">Home</Link>
                             <span>/</span>
@@ -316,6 +343,20 @@ export default function FanDuelCasinoReviewPage() {
                             <span>/</span>
                             <span className="text-white">FanDuel Casino Review</span>
                         </nav>
+                        <div className="overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-2xl">
+                            <Image
+                                src={HERO_IMAGE_SRC}
+                                alt="FanDuel Casino review hero showing slots, jackpots, live dealer action, mobile app play, bonuses, and today's offer"
+                                width={2048}
+                                height={500}
+                                priority
+                                className="h-auto w-full"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
+                        <div className="min-w-0">
                         <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sky-100">
                             <Sparkles className="h-4 w-4 text-[#44d17a]" aria-hidden="true" />
                             FanDuel Casino bonus guide
@@ -346,6 +387,21 @@ export default function FanDuelCasinoReviewPage() {
                             EarnGrind may earn a commission if you sign up through links on this page.
                             Offers vary by state and date. 21+. Terms apply.
                         </p>
+                        </div>
+                        <div className="rounded-3xl border border-white/15 bg-white/10 p-5 shadow-xl backdrop-blur">
+                            <p className="text-xs font-black uppercase tracking-[0.16em] text-[#44d17a]">New player offer</p>
+                            <p className="mt-2 text-xl font-black text-white">500 Bonus Spins + up to $1,000 back</p>
+                            <p className="mt-3 text-sm leading-6 text-slate-300">
+                                Join FanDuel Casino, deposit $5+ if required, and check the live terms before your first wager.
+                            </p>
+                            <CtaLink
+                                label="Join Now"
+                                eventLabel="fanduel_casino_hero_card_join_now"
+                                location="hero_offer_card"
+                                className="mt-5 w-full"
+                            />
+                        </div>
+                    </div>
                         <div className="mt-6 flex flex-wrap gap-2">
                             {trustBadges.map((badge) => (
                                 <span
@@ -356,54 +412,6 @@ export default function FanDuelCasinoReviewPage() {
                                 </span>
                             ))}
                         </div>
-                    </div>
-
-                    <div className="relative flex min-w-0 items-center justify-center lg:justify-end">
-                        <div className="w-full max-w-md min-w-0 rounded-[2rem] border border-white/15 bg-white/10 p-4 shadow-2xl backdrop-blur">
-                            <div className="rounded-[1.5rem] bg-slate-950 p-4 shadow-inner">
-                                <div className="mb-4 flex items-center justify-between">
-                                    <div>
-                                        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#44d17a]">
-                                            FanDuel Casino app
-                                        </p>
-                                        <p className="mt-1 text-xl font-black">Real-money lobby</p>
-                                    </div>
-                                    <div className="rounded-2xl bg-[#1493ff] p-3">
-                                        <Dices className="h-6 w-6" aria-hidden="true" />
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-3">
-                                    {[
-                                        ["Slots", "Jackpots + bonus features"],
-                                        ["Live Dealer", "Blackjack + roulette"],
-                                        ["Tables", "Cards, dice, wheels"],
-                                        ["Promos", "Check today's offer"],
-                                    ].map(([title, text]) => (
-                                        <div key={title} className="rounded-2xl border border-white/10 bg-white/[0.06] p-4">
-                                            <p className="text-sm font-black">{title}</p>
-                                            <p className="mt-2 text-xs leading-5 text-slate-300">{text}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="mt-4 rounded-2xl bg-gradient-to-r from-[#1493ff] to-[#44d17a] p-4 text-slate-950">
-                                    <p className="text-xs font-black uppercase tracking-[0.16em]">Ready to play?</p>
-                                    <p className="mt-1 text-lg font-black">Join FanDuel Casino today</p>
-                                    <TrackedOutboundLink
-                                        href={AFFILIATE_URL}
-                                        eventLabel="fanduel_casino_hero_card_join_now"
-                                        location="hero_app_card"
-                                        sourceContext="fanduel_casino_review_bonus"
-                                        platformName="FanDuel Casino"
-                                        rel="sponsored noopener noreferrer"
-                                        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-sm font-extrabold text-white shadow-[0_10px_20px_rgba(15,23,42,0.22)] transition hover:-translate-y-0.5 hover:bg-slate-900"
-                                    >
-                                        Join Now
-                                        <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                                    </TrackedOutboundLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -599,29 +607,75 @@ export default function FanDuelCasinoReviewPage() {
 
                 <section className="py-14">
                     <div className="rounded-3xl border border-sky-200 bg-white p-6 shadow-sm sm:p-8">
+                        <div className="mb-8 overflow-hidden rounded-3xl border border-slate-200 bg-slate-950 shadow-xl">
+                            <Image
+                                src={BONUS_BANNER_SRC}
+                                alt="FanDuel Casino review bonus guide showing slots, jackpots, live dealer action, mobile app play, and today's casino offer"
+                                width={2048}
+                                height={500}
+                                unoptimized
+                                className="h-auto w-full"
+                                priority={false}
+                            />
+                        </div>
                         <div className="grid min-w-0 gap-7 lg:grid-cols-[1fr_0.75fr] lg:items-center">
                             <div className="min-w-0">
                                 <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.18em] text-[#1493ff]">
                                     Bonus and promo
                                 </p>
                                 <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                                    FanDuel Casino Bonus: What New Players Should Check Today
+                                    FanDuel Casino Bonus: 500 Bonus Spins + Up to $1,000 Back
                                 </h2>
                                 <p className="mt-4 text-base leading-7 text-slate-600">
-                                    FanDuel Casino promotions can change by state and date, which is why the
-                                    best move is to check the current offer before signing up. Depending on your
-                                    location, you may see casino bonus offers, bonus spins, referral-style offers,
-                                    or other limited-time promotions.
+                                    The current FanDuel Casino bonus for new players is built around two strong
+                                    hooks: 500 Bonus Spins to play on Huff N&apos; Even More Puff Grand and up to
+                                    $1,000 back in Casino Bonus on any first-day net loss. That makes this one of
+                                    the main FanDuel Casino promo code and FanDuel Casino sign up bonus searches
+                                    worth checking before you create an account.
                                 </p>
                                 <p className="mt-4 text-base leading-7 text-slate-600">
-                                    Current verified placeholder: <strong className="break-all">{CURRENT_OFFER}</strong>. Last verified:{" "}
+                                    Current verified offer: <strong>{CURRENT_OFFER}</strong>. Last verified:{" "}
                                     <strong>{LAST_VERIFIED_DATE}</strong>. Offers vary by state, terms apply,
-                                    and some referral-style offers may require a qualifying wager or other
-                                    qualifying action. Check the live FanDuel offer page before depositing.
+                                    and users should check the live FanDuel offer page before depositing because
+                                    eligibility, games, timing, and bonus-credit rules can change.
+                                </p>
+                                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                                    <div className="rounded-2xl border border-sky-200 bg-sky-50 p-5">
+                                        <h3 className="text-base font-black text-slate-950">How the 500 Bonus Spins work</h3>
+                                        <ol className="mt-4 space-y-3 text-sm leading-6 text-slate-700">
+                                            {bonusSteps.map((step, index) => (
+                                                <li key={step} className="flex gap-3">
+                                                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[#1493ff] text-xs font-black text-white">
+                                                        {index + 1}
+                                                    </span>
+                                                    <span>{step}</span>
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </div>
+                                    <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+                                        <h3 className="text-base font-black text-slate-950">First-day Casino Bonus details</h3>
+                                        <p className="mt-3 text-sm leading-6 text-slate-700">
+                                            If you are down after your first day, FanDuel may give you up to
+                                            $1,000 back in non-withdrawable Casino site credit for net losses
+                                            from your first 24 hours of casino play.
+                                        </p>
+                                        <p className="mt-3 text-sm leading-6 text-slate-700">
+                                            The bonus period begins when you make your first real-money wager.
+                                            Eligible Casino site credit is applied within 72 hours after the
+                                            bonus period ends and expires 7 days after receipt.
+                                        </p>
+                                    </div>
+                                </div>
+                                <p className="mt-5 text-xs leading-5 text-slate-500">
+                                    Key terms: this offer is for eligible new players who have not previously
+                                    wagered on FanDuel Sportsbook, FanDuel Casino, Betfair Casino, or Mohegan
+                                    Sun Casino. Bonus Spins have 1X play through, may only be used in the state
+                                    of first deposit, and expire 7 days after receipt.
                                 </p>
                                 <div className="mt-6">
                                     <CtaLink
-                                        label="Check My Current FanDuel Casino Offer"
+                                        label="Join FanDuel Casino and Claim the Bonus"
                                         eventLabel="fanduel_casino_bonus_cta"
                                         location="bonus"
                                     />
@@ -634,9 +688,23 @@ export default function FanDuelCasinoReviewPage() {
                                 </p>
                                 <p className="mt-2 break-all text-xl font-black sm:text-2xl">{CURRENT_OFFER}</p>
                                 <p className="mt-3 text-sm leading-6 text-slate-300">
-                                    Replace this placeholder after you verify the live FanDuel Casino sign up bonus,
-                                    promo terms, and eligible states.
+                                    Join FanDuel Casino, deposit $5 or more if required, and check the live offer
+                                    terms before your first real-money wager. Bonus Spins are issued 50 per day
+                                    for 10 days and can be used on eligible Huff N&apos; Puff slot games.
                                 </p>
+                                <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.06] p-4">
+                                    <p className="text-xs font-black uppercase tracking-[0.16em] text-[#44d17a]">
+                                        Important bonus terms
+                                    </p>
+                                    <ul className="mt-3 space-y-2 text-xs leading-5 text-slate-300">
+                                        {bonusTerms.map((term) => (
+                                            <li key={term} className="flex gap-2">
+                                                <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-[#44d17a]" />
+                                                <span>{term}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

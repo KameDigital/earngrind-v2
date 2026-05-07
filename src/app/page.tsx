@@ -740,11 +740,7 @@ export default async function HomePage() {
     }));
   return (
     <main className="min-h-screen">
-      <section className="bg-[var(--surface-muted)] px-4 pb-2 pt-4 sm:px-6 sm:pt-5 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <EarnLabActivityRail />
-        </div>
-      </section>
+      <EarnLabActivityRail />
 
       <section
         className="relative overflow-hidden pt-14 pb-14 sm:pt-16 sm:pb-16 px-4 sm:px-6 lg:px-8"

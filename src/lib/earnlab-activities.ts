@@ -29,6 +29,11 @@ type EarnLabActivityResponse = {
     user?: EarnLabActivityUserResponse | null;
 };
 
+type EarnLabActivitiesPayload = EarnLabActivityResponse[] | {
+    success?: boolean;
+    data?: EarnLabActivityResponse[] | null;
+};
+
 const EARNLAB_ACTIVITIES_URL = "https://api.earnlab.com/activities";
 const EARNLAB_ACTIVITIES_REVALIDATE_SECONDS = 60;
 const EARNLAB_ACTIVITIES_TIMEOUT_MS = 8000;
@@ -118,13 +123,15 @@ export async function getEarnLabActivities(): Promise<EarnLabActivity[]> {
             return [];
         }
 
-        const payload = await response.json();
-        if (!Array.isArray(payload)) {
+        const payload = await response.json() as EarnLabActivitiesPayload;
+        const rows = Array.isArray(payload) ? payload : payload.data;
+
+        if (!Array.isArray(rows)) {
             console.error("[earnlab-activities] unexpected response shape");
             return [];
         }
 
-        return payload
+        return rows
             .map((item, index) => normalizeEarnLabActivity(item as EarnLabActivityResponse, index))
             .filter((item): item is EarnLabActivity => item !== null);
     } catch (error) {
@@ -134,4 +141,3 @@ export async function getEarnLabActivities(): Promise<EarnLabActivity[]> {
         return [];
     }
 }
-

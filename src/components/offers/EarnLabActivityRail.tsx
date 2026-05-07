@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import type { EarnLabActivity } from "@/lib/earnlab-activities";
 
 type RailState = {
@@ -44,12 +43,12 @@ function Avatar({ activity }: { activity: EarnLabActivity }) {
 
     if (activity.avatarUrl && !imageFailed) {
         return (
-            <Image
+            <img
                 src={activity.avatarUrl}
                 alt={activity.username}
-                width={32}
-                height={32}
                 className="h-8 w-8 rounded-full object-cover"
+                loading="lazy"
+                referrerPolicy="no-referrer"
                 onError={() => setImageFailed(true)}
             />
         );
@@ -67,19 +66,19 @@ function ActivityCard({ activity }: { activity: EarnLabActivity }) {
     const amount = formatAmount(activity.amountUsd);
 
     return (
-        <div className="flex w-[220px] flex-shrink-0 snap-start items-center gap-3 rounded-2xl border border-white/10 bg-[rgba(10,16,30,0.88)] px-3.5 py-3 text-left shadow-[0_18px_44px_-28px_rgba(15,23,42,0.9)] transition-colors hover:border-[var(--brand-lime)]/35 sm:w-[250px]">
+        <div className="flex h-14 w-[236px] flex-shrink-0 snap-start items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-3 text-left transition-colors hover:border-[var(--brand-lime)]/35 hover:bg-white/[0.09] sm:w-[260px]">
             <Avatar activity={activity} />
             <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-extrabold text-white">
+                <div className="truncate text-[13px] font-extrabold text-white">
                     {activity.title}
                 </div>
-                <div className="truncate text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+                <div className="truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                     {secondaryLabel}
                 </div>
             </div>
             {amount ? (
-                <div className="text-right">
-                    <div className="text-sm font-extrabold text-[var(--brand-lime)]">{amount}</div>
+                <div className="min-w-[56px] text-right">
+                    <div className="text-[13px] font-extrabold text-[var(--brand-lime)]">{amount}</div>
                 </div>
             ) : null}
         </div>
@@ -136,10 +135,10 @@ export default function EarnLabActivityRail() {
 
     const content = useMemo(() => {
         if (loading) {
-            return Array.from({ length: 4 }, (_, index) => (
+            return Array.from({ length: 6 }, (_, index) => (
                 <div
                     key={`earnlab-activity-skeleton-${index}`}
-                    className="h-[72px] w-[220px] flex-shrink-0 animate-pulse rounded-2xl border border-white/8 bg-white/5 sm:w-[250px]"
+                    className="h-14 w-[236px] flex-shrink-0 animate-pulse rounded-xl border border-white/8 bg-white/5 sm:w-[260px]"
                 />
             ));
         }
@@ -158,27 +157,25 @@ export default function EarnLabActivityRail() {
     }, [activities, loading]);
 
     return (
-        <section className="mb-6 overflow-hidden rounded-[28px] border border-[rgba(148,163,184,0.16)] bg-[linear-gradient(180deg,rgba(9,14,28,0.98),rgba(15,23,42,0.96))] px-4 py-4 text-white shadow-[0_24px_64px_-32px_rgba(15,23,42,0.85)] sm:mb-8 sm:px-5 sm:py-5">
-            <div className="mb-3 flex items-center justify-between gap-3">
-                <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--brand-lime)]">
-                        EarnLab activity
-                    </p>
-                    <h2 className="text-lg font-extrabold tracking-tight text-white sm:text-xl">
-                        Recently completed
-                    </h2>
+        <section className="overflow-hidden border-y border-white/10 bg-[#070b16] text-white">
+            <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+                <div className="flex min-w-[176px] items-center justify-between gap-3 lg:block">
+                    <div>
+                        <h2 className="text-sm font-extrabold tracking-tight text-white">
+                            Recently completed
+                        </h2>
+                    </div>
+                    <div className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-300 lg:hidden">
+                        Live
+                    </div>
                 </div>
-                <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">
-                    Live feed
-                </div>
-            </div>
 
-            <div className="-mx-4 overflow-x-auto px-4 pb-1 hide-scrollbar sm:-mx-5 sm:px-5">
-                <div className="flex min-h-[72px] snap-x snap-mandatory gap-3">
-                    {content}
+                <div className="-mx-4 min-w-0 flex-1 overflow-x-auto px-4 hide-scrollbar sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
+                    <div className="flex min-h-14 snap-x snap-mandatory gap-3">
+                        {content}
+                    </div>
                 </div>
             </div>
         </section>
     );
 }
-

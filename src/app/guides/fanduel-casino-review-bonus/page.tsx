@@ -386,9 +386,20 @@ export default function FanDuelCasinoReviewPage() {
                                     ))}
                                 </div>
                                 <div className="mt-4 rounded-2xl bg-gradient-to-r from-[#1493ff] to-[#44d17a] p-4 text-slate-950">
-                                    <p className="text-xs font-black uppercase tracking-[0.16em]">Current offer</p>
-                                    <p className="mt-1 text-lg font-black">{CURRENT_OFFER}</p>
-                                    <p className="mt-1 text-xs font-bold">Last verified: {LAST_VERIFIED_DATE}</p>
+                                    <p className="text-xs font-black uppercase tracking-[0.16em]">Ready to play?</p>
+                                    <p className="mt-1 text-lg font-black">Join FanDuel Casino today</p>
+                                    <TrackedOutboundLink
+                                        href={AFFILIATE_URL}
+                                        eventLabel="fanduel_casino_hero_card_join_now"
+                                        location="hero_app_card"
+                                        sourceContext="fanduel_casino_review_bonus"
+                                        platformName="FanDuel Casino"
+                                        rel="sponsored noopener noreferrer"
+                                        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-sm font-extrabold text-white shadow-[0_10px_20px_rgba(15,23,42,0.22)] transition hover:-translate-y-0.5 hover:bg-slate-900"
+                                    >
+                                        Join Now
+                                        <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                                    </TrackedOutboundLink>
                                 </div>
                             </div>
                         </div>

@@ -332,61 +332,63 @@ export default function FanDuelCasinoReviewPage() {
         <main className="min-h-screen bg-[#f6f8fb] text-slate-900">
             <JsonLd />
 
-            <section className="relative overflow-hidden bg-slate-950 text-white">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(20,147,255,0.35),transparent_32%),linear-gradient(135deg,#10233f_0%,#08111f_48%,#0a1f17_100%)]" />
-                <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-                    <div className="mb-6">
-                        <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-white/70">
-                            <Link href="/" className="hover:text-white">Home</Link>
-                            <span>/</span>
-                            <Link href="/guides" className="hover:text-white">Guides</Link>
-                            <span>/</span>
-                            <span className="text-white">FanDuel Casino Review</span>
-                        </nav>
-                        <div className="overflow-hidden rounded-3xl border border-white/15 bg-slate-950 shadow-2xl">
-                            <Image
-                                src={HERO_IMAGE_SRC}
-                                alt="FanDuel Casino review hero showing slots, jackpots, live dealer action, mobile app play, bonuses, and today's offer"
-                                width={2048}
-                                height={500}
-                                priority
-                                className="h-auto w-full"
-                            />
-                        </div>
-                    </div>
+            <section className="bg-slate-950 text-white">
+                <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+                    <nav className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white/70">
+                        <Link href="/" className="hover:text-white">Home</Link>
+                        <span>/</span>
+                        <Link href="/guides" className="hover:text-white">Guides</Link>
+                        <span>/</span>
+                        <span className="text-white">FanDuel Casino Review</span>
+                    </nav>
+                </div>
+                <div className="w-full overflow-hidden bg-slate-950">
+                    <Image
+                        src={HERO_IMAGE_SRC}
+                        alt="FanDuel Casino review hero showing slots, jackpots, live dealer action, mobile app play, bonuses, and today's offer"
+                        width={2048}
+                        height={500}
+                        priority
+                        className="h-auto w-full"
+                    />
+                </div>
+            </section>
 
+            <section className="relative overflow-hidden bg-slate-950 text-white">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(20,147,255,0.24),transparent_32%),linear-gradient(135deg,#10233f_0%,#08111f_48%,#0a1f17_100%)]" />
+                <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
                     <div className="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
                         <div className="min-w-0">
-                        <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sky-100">
-                            <Sparkles className="h-4 w-4 text-[#44d17a]" aria-hidden="true" />
-                            FanDuel Casino bonus guide
-                        </div>
-                        <h1 className="max-w-4xl break-words text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl">
-                            FanDuel Casino Review: Games, Bonuses, Live Dealer Action & Why It&apos;s Worth Trying
-                        </h1>
-                        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-200">
-                            FanDuel Casino gives players a polished real-money casino app with slots,
-                            blackjack, roulette, live dealer tables, jackpots, exclusive games, and a
-                            simple mobile experience. See what makes it one of the top casino apps to try today.
-                        </p>
-                        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                            <CtaLink
-                                label="Claim the Current FanDuel Casino Offer"
-                                eventLabel="fanduel_casino_hero_cta"
-                                location="hero"
-                                className="w-full sm:w-auto"
-                            />
-                            <a
-                                href="#features"
-                                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-extrabold text-white transition hover:bg-white/15 sm:w-auto"
-                            >
-                                See FanDuel Casino Features
-                            </a>
-                        </div>
-                        <p className="mt-4 max-w-2xl text-xs leading-5 text-slate-300">
-                            EarnGrind may earn a commission if you sign up through links on this page.
-                            Offers vary by state and date. 21+. Terms apply.
-                        </p>
+                            <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-sky-100">
+                                <Sparkles className="h-4 w-4 text-[#44d17a]" aria-hidden="true" />
+                                FanDuel Casino bonus guide
+                            </div>
+                            <h1 className="max-w-4xl break-words text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
+                                FanDuel Casino Review: Games, Bonuses, Live Dealer Action & Why It&apos;s Worth Trying
+                            </h1>
+                            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-200 sm:text-lg">
+                                FanDuel Casino gives players a polished real-money casino app with slots,
+                                blackjack, roulette, live dealer tables, jackpots, exclusive games, and a
+                                simple mobile experience. See what makes it one of the top casino apps to try today.
+                            </p>
+                            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                                <CtaLink
+                                    label="Claim the Current FanDuel Casino Offer"
+                                    eventLabel="fanduel_casino_hero_cta"
+                                    location="hero"
+                                    className="w-full sm:w-auto"
+                                />
+                                <a
+                                    href="#features"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-extrabold text-white transition hover:bg-white/15 sm:w-auto"
+                                >
+                                    See FanDuel Casino Features
+                                </a>
+                            </div>
+                            <p className="mt-4 max-w-2xl text-xs leading-5 text-slate-300">
+                                EarnGrind may earn a commission if you sign up through links on this page.
+                                Offers vary by state and date. 21+. Terms apply.
+                            </p>
                         </div>
                         <div className="rounded-3xl border border-white/15 bg-white/10 p-5 shadow-xl backdrop-blur">
                             <p className="text-xs font-black uppercase tracking-[0.16em] text-[#44d17a]">New player offer</p>
@@ -402,16 +404,16 @@ export default function FanDuelCasinoReviewPage() {
                             />
                         </div>
                     </div>
-                        <div className="mt-6 flex flex-wrap gap-2">
-                            {trustBadges.map((badge) => (
-                                <span
-                                    key={badge}
-                                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-bold text-slate-100"
-                                >
-                                    {badge}
-                                </span>
-                            ))}
-                        </div>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                        {trustBadges.map((badge) => (
+                            <span
+                                key={badge}
+                                className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-bold text-slate-100"
+                            >
+                                {badge}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </section>
 

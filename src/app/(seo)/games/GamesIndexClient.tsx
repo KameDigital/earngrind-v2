@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -104,8 +103,6 @@ function getGameImageUrl(game: GamesIndexItem) {
     game.gameThumbnailUrl ??
     game.thumbnailUrl ??
     game.offerImageUrl ??
-    game.platformLogoUrl ??
-    game.providerLogoUrl ??
     null
   );
 }
@@ -188,14 +185,14 @@ function GameThumbnail({
 
   return (
     <div className={`${sizeClass} relative shrink-0 overflow-hidden border border-slate-200 bg-white shadow-sm`}>
-      <Image
+      {/* Imported offer images come from several wall CDNs; native img avoids next/image host allow-list crashes. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={imageUrl}
         alt={`${title} game offer icon`}
-        fill
-        sizes={variant === "featured" ? "(min-width: 1024px) 280px, 100vw" : "64px"}
-        className="object-cover"
-        priority={priority}
-        unoptimized={imageUrl.endsWith(".svg")}
+        className="h-full w-full object-cover"
+        loading={priority ? "eager" : "lazy"}
+        referrerPolicy="no-referrer"
         onError={() => setHasError(true)}
       />
     </div>

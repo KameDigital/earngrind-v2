@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { firstNonEmpty, shapePublicOffer } from "@/lib/public-offers";
+import { firstNonEmpty, isPublicOfferRowEligible, shapePublicOffer } from "@/lib/public-offers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -46,7 +46,9 @@ export async function GET(
         .eq("status", "published")
         .order("updated_at", { ascending: false });
 
-    const shapedOffers = (offerRows ?? []).map((row) => shapePublicOffer(row));
+    const shapedOffers = (offerRows ?? [])
+        .filter((row) => isPublicOfferRowEligible(row))
+        .map((row) => shapePublicOffer(row));
     const manualOfferIds = shapedOffers
         .filter((row) => row.source === "manual")
         .map((row) => row.id);

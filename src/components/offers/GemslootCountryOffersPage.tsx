@@ -1,12 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
-import { type GainGalleryWall } from "@/lib/gain-gallery";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { createClient } from "@/lib/supabase/server";
 
-type GainOfferRow = {
+type GemslootOfferRow = {
     id: string;
     external_id: string | null;
     title: string | null;
@@ -23,43 +22,46 @@ type GainOfferRow = {
     tasks: { id: string }[] | null;
 };
 
-const WALL_LABELS: Record<string, string> = {
-    native: "Native Gain / Torox",
-    revu: "Revenue Universe",
-    adtowall: "AdToWall",
-    mychips: "MyChips",
-    cpx: "CPX Research",
-    asmwall: "ASMWall",
-    lootably: "Lootably",
-};
+export const GEMSLOOT_PUBLIC_PROVIDERS = [
+    { slug: "gemsloot", label: "Gemsloot" },
+    { slug: "torox", label: "ToroX" },
+    { slug: "revu", label: "Revenue Universe" },
+    { slug: "bitlabs", label: "BitLabs" },
+    { slug: "tyrads", label: "TyrAds" },
+    { slug: "adscendmedia", label: "AdscendMedia" },
+    { slug: "hangmyads", label: "HangMyAds" },
+] as const;
 
-export default async function GainCountryOffersPage({
+export type GemslootProviderSlug = typeof GEMSLOOT_PUBLIC_PROVIDERS[number]["slug"];
+
+export default async function GemslootCountryOffersPage({
     countryCode,
-    wall,
+    provider,
 }: {
     countryCode: "US";
-    wall?: GainGalleryWall;
+    provider?: GemslootProviderSlug;
 }) {
-    const offers = await getImportedGainOffers(countryCode, wall);
-    const title = wall ? `${WALL_LABELS[wall] ?? wall} Gain.gg offers` : "Best Gain.gg offers in the United States";
-    const intro = wall
-        ? `Browse imported ${WALL_LABELS[wall] ?? wall} offers available through Gain.gg for ${countryCode}.`
-        : "Browse imported Gain.gg offers across Torox, Revenue Universe, AdToWall, ASMWall, Lootably, and CPX Research.";
+    const offers = await getImportedGemslootOffers(countryCode, provider);
+    const providerLabel = provider ? GEMSLOOT_PUBLIC_PROVIDERS.find((item) => item.slug === provider)?.label ?? provider : null;
+    const title = providerLabel ? `${providerLabel} Gemsloot offers` : "Best Gemsloot offers in the United States";
+    const intro = providerLabel
+        ? `Browse imported ${providerLabel} offers available through Gemsloot for ${countryCode}.`
+        : "Browse imported Gemsloot offers across Gemsloot, ToroX, Revenue Universe, BitLabs, TyrAds, and other providers.";
 
     return (
         <main className="min-h-screen bg-[#f7f8fb]">
             <section className="border-b border-gray-200 bg-white">
                 <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                     <div className="max-w-3xl">
-                        <p className="text-xs font-black uppercase tracking-[0.28em] text-sky-700">Gain.gg offers / {countryCode}</p>
+                        <p className="text-xs font-black uppercase tracking-[0.28em] text-emerald-700">Gemsloot offers / {countryCode}</p>
                         <h1 className="mt-3 text-3xl font-black tracking-tight text-gray-950 sm:text-5xl">{title}</h1>
-                        <p className="mt-4 text-base leading-7 text-gray-600">{intro} Payouts and tasks can change, so compare the live wall before starting.</p>
+                        <p className="mt-4 text-base leading-7 text-gray-600">{intro} Payouts, availability, and tasks can change, so compare the live Gemsloot page before starting.</p>
                     </div>
                     <div className="mt-6 flex flex-wrap gap-2">
-                        <PillLink href="/offers/gain/us" active={!wall}>All Gain</PillLink>
-                        {(["native", "revu", "adtowall", "asmwall", "lootably", "cpx"] as GainGalleryWall[]).map((item) => (
-                            <PillLink key={item} href={`/offers/gain/us/${item}`} active={wall === item}>
-                                {WALL_LABELS[item] ?? item}
+                        <PillLink href="/offers/gemsloot/us" active={!provider}>All Gemsloot</PillLink>
+                        {GEMSLOOT_PUBLIC_PROVIDERS.map((item) => (
+                            <PillLink key={item.slug} href={`/offers/gemsloot/us/${item.slug}`} active={provider === item.slug}>
+                                {item.label}
                             </PillLink>
                         ))}
                     </div>
@@ -75,9 +77,9 @@ export default async function GainCountryOffersPage({
                     </div>
                 ) : (
                     <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-14 text-center">
-                        <h2 className="text-xl font-black text-gray-950">No imported Gain offers found</h2>
+                        <h2 className="text-xl font-black text-gray-950">No imported Gemsloot offers found</h2>
                         <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-gray-500">
-                            Run the Gain batch import from the admin site offers page, then refresh this page.
+                            Run the Gemsloot import from the admin site offers page, then refresh this page.
                         </p>
                     </div>
                 )}
@@ -86,12 +88,12 @@ export default async function GainCountryOffersPage({
     );
 }
 
-async function getImportedGainOffers(countryCode: string, wall?: GainGalleryWall): Promise<GainOfferRow[]> {
+async function getImportedGemslootOffers(countryCode: string, provider?: GemslootProviderSlug): Promise<GemslootOfferRow[]> {
     const supabase = createClient();
     const { data: site } = await supabase
         .from("platforms")
         .select("id")
-        .eq("slug", "gain-gg")
+        .eq("slug", "gemsloot")
         .maybeSingle();
 
     if (!site?.id) return [];
@@ -107,32 +109,31 @@ async function getImportedGainOffers(countryCode: string, wall?: GainGalleryWall
         .eq("site_id", site.id)
         .eq("status", "active")
         .contains("countries", [countryCode])
-        .like("external_id", "gain-%")
+        .like("external_id", "gemsloot-%")
         .order("total_payout_usd", { ascending: false })
         .limit(120);
 
-    if (wall) {
-        query = query.like("external_id", `gain-${wall}-%`);
+    if (provider) {
+        query = query.like("external_id", `gemsloot-${provider}-%`);
     }
 
     const { data, error } = await query;
     if (error) {
-        console.error("[GainCountryOffersPage] failed to load offers", { countryCode, wall, message: error.message });
+        console.error("[GemslootCountryOffersPage] failed to load offers", { countryCode, provider, message: error.message });
         return [];
     }
-    return ((data ?? []) as GainOfferRow[]).filter((offer) => {
+    return ((data ?? []) as GemslootOfferRow[]).filter((offer) => {
         const payout = Number(offer.payout_usd ?? 0);
         const total = normalizeTotalPayout(payout, Number(offer.total_payout_usd ?? payout));
         return isPublicPayoutEligible(payout, total);
     });
 }
 
-function OfferCard({ offer, countryCode }: { offer: GainOfferRow; countryCode: string }) {
+function OfferCard({ offer, countryCode }: { offer: GemslootOfferRow; countryCode: string }) {
     const provider = firstRelated(offer.provider);
     const providerName = normalizeProviderDisplayName(provider?.name);
     const game = firstRelated(offer.game);
-    const wall = extractGainWallFromExternalId(offer.external_id ?? "");
-    const title = game?.name ?? offer.title ?? "Gain offer";
+    const title = game?.name ?? offer.title ?? "Gemsloot offer";
     const payout = normalizeTotalPayout(Number(offer.payout_usd ?? 0), Number(offer.total_payout_usd ?? offer.payout_usd ?? 0));
     const devices = Array.isArray(offer.devices) ? offer.devices : [];
     const taskCount = Array.isArray(offer.tasks) ? offer.tasks.length : 0;
@@ -145,12 +146,12 @@ function OfferCard({ offer, countryCode }: { offer: GainOfferRow; countryCode: s
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={offer.image_url} alt="" className="h-full w-full object-cover" loading="lazy" />
                     ) : (
-                        <div className="flex h-full w-full items-center justify-center text-xs font-black text-gray-400">GAIN</div>
+                        <div className="flex h-full w-full items-center justify-center text-xs font-black text-gray-400">GEMS</div>
                     )}
                 </div>
                 <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap gap-1.5">
-                        <Badge>{WALL_LABELS[wall] ?? (wall || "Gain")}</Badge>
+                        <Badge>{providerName}</Badge>
                         <Badge>{countryCode}</Badge>
                         {devices.slice(0, 2).map((device) => <Badge key={device}>{device}</Badge>)}
                     </div>
@@ -171,18 +172,18 @@ function OfferCard({ offer, countryCode }: { offer: GainOfferRow; countryCode: s
                 </div>
                 <TrackedOutboundLink
                     href={`/go/${offer.id}`}
-                    eventLabel="gain-country-offer-cta"
+                    eventLabel="gemsloot-country-offer-cta"
                     offerId={offer.id}
                     offerTitle={title}
                     gameTitle={game?.name ?? title}
-                    platformName="Gain.gg"
+                    platformName="Gemsloot"
                     providerName={providerName}
                     payoutUsd={payout}
-                    location={`gain-country-${countryCode.toLowerCase()}`}
-                    sourceContext={wall ? `gain-${wall}-country-page` : "gain-country-page"}
+                    location={`gemsloot-country-${countryCode.toLowerCase()}`}
+                    sourceContext="gemsloot-country-page"
                     className="mt-3 inline-flex w-full items-center justify-center rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-black text-white transition hover:bg-gray-800"
                 >
-                    View on Gain.gg
+                    View on Gemsloot
                 </TrackedOutboundLink>
             </div>
         </article>
@@ -198,14 +199,9 @@ function PillLink({ href, active, children }: { href: string; active: boolean; c
 }
 
 function Badge({ children }: { children: ReactNode }) {
-    return <span className="rounded-full bg-sky-50 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-sky-700">{children}</span>;
+    return <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-700">{children}</span>;
 }
 
 function firstRelated<T>(value: T | T[] | null): T | null {
     return Array.isArray(value) ? value[0] ?? null : value;
-}
-
-function extractGainWallFromExternalId(externalId: string): string {
-    const match = externalId.match(/^gain-([a-z]+)-/);
-    return match?.[1] ?? "";
 }

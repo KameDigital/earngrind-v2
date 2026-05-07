@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Container from "@/components/layout/Container";
+import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
+import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
+import { cleanPublicImageUrl, pickPublicArtworkUrl } from "@/lib/public-image-url";
 import { createClient } from "@/lib/supabase/server";
 import GamesIndexClient, { type GamesIndexItem } from "./GamesIndexClient";
 
@@ -44,13 +47,6 @@ type AggregatedGame = GamesIndexItem & {
   bestImagePayout: number;
 };
 
-function cleanImageUrl(value?: string | null) {
-  const trimmed = value?.trim();
-  if (!trimmed || trimmed === "null" || trimmed === "undefined") return null;
-  if (trimmed.startsWith("/") || /^https?:\/\//i.test(trimmed)) return trimmed;
-  return null;
-}
-
 async function getGamesIndexData() {
   const supabase = createClient();
 
@@ -72,7 +68,7 @@ async function getGamesIndexData() {
 
   const providerLogos = new Map(
     ((providerRows ?? []) as ProviderRow[])
-      .map((row) => [row.name, cleanImageUrl(row.logo_url)] as const)
+      .map((row) => [row.name, cleanPublicImageUrl(row.logo_url)] as const)
       .filter((entry): entry is [string, string] => Boolean(entry[0] && entry[1])),
   );
   const guideCounts = new Map<string, number>();
@@ -89,14 +85,17 @@ async function getGamesIndexData() {
 
   for (const row of ((offerRows ?? []) as GameRow[]).filter((item) => item.game_id && item.game_slug)) {
     const id = row.game_id!;
-    const payout = Number(row.total_payout_usd ?? row.payout_usd ?? 0);
+    const payoutUsd = Number(row.payout_usd ?? 0);
+    const payout = normalizeTotalPayout(payoutUsd, Number(row.total_payout_usd ?? payoutUsd));
+    if (!isPublicPayoutEligible(payoutUsd, payout)) continue;
     const current = gamesById.get(id);
-    const gameThumbnailUrl = cleanImageUrl(row.game_thumbnail);
-    const offerImageUrl = cleanImageUrl(row.image_url);
-    const platformLogoUrl = cleanImageUrl(row.platform_logo);
+    const gameThumbnailUrl = pickPublicArtworkUrl(row.game_thumbnail);
+    const offerImageUrl = pickPublicArtworkUrl(row.image_url);
+    const platformLogoUrl = cleanPublicImageUrl(row.platform_logo);
     const providerLogoUrl = row.provider_name ? providerLogos.get(row.provider_name) ?? null : null;
-    const resolvedThumbnailUrl = gameThumbnailUrl ?? offerImageUrl ?? platformLogoUrl ?? providerLogoUrl ?? null;
-    if (row.provider_name) allProviders.add(row.provider_name);
+    const resolvedThumbnailUrl = pickPublicArtworkUrl(gameThumbnailUrl, offerImageUrl);
+    const providerName = row.provider_name ? normalizeProviderDisplayName(row.provider_name) : null;
+    if (providerName) allProviders.add(providerName);
 
     if (!current) {
       gamesById.set(id, {
@@ -112,13 +111,13 @@ async function getGamesIndexData() {
         guideCount: guideCounts.get(id) ?? 0,
         guideSlug: guideSlugs.get(id) ?? null,
         offerCount: 1,
-        bestProvider: row.provider_name ?? "Unknown Provider",
+        bestProvider: providerName ?? "Unknown Provider",
         bestPlatform: row.platform_name ?? "Unknown Platform",
         category: row.category ?? "General",
         updatedAt: row.updated_at,
         providerCount: row.provider_name ? 1 : 0,
         platformCount: row.platform_name ? 1 : 0,
-        providerSet: new Set(row.provider_name ? [row.provider_name] : []),
+        providerSet: new Set(providerName ? [providerName] : []),
         platformSet: new Set(row.platform_name ? [row.platform_name] : []),
         bestImagePayout: resolvedThumbnailUrl ? payout : 0,
       });
@@ -126,7 +125,7 @@ async function getGamesIndexData() {
     }
 
     current.offerCount += 1;
-    if (row.provider_name) current.providerSet.add(row.provider_name);
+    if (providerName) current.providerSet.add(providerName);
     if (row.platform_name) current.platformSet.add(row.platform_name);
     current.providerCount = current.providerSet.size;
     current.platformCount = current.platformSet.size;
@@ -137,13 +136,11 @@ async function getGamesIndexData() {
     current.thumbnailUrl =
       current.gameThumbnailUrl ??
       current.offerImageUrl ??
-      current.platformLogoUrl ??
-      current.providerLogoUrl ??
       current.thumbnailUrl;
     if (offerImageUrl && payout >= current.bestImagePayout) current.bestImagePayout = payout;
     if (payout > current.topPayout) {
       current.topPayout = payout;
-      current.bestProvider = row.provider_name ?? current.bestProvider;
+      current.bestProvider = providerName ?? current.bestProvider;
       current.bestPlatform = row.platform_name ?? current.bestPlatform;
       current.category = row.category ?? current.category;
       current.updatedAt = row.updated_at ?? current.updatedAt;

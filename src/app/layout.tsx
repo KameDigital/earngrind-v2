@@ -65,9 +65,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-        <html lang="en" className="scroll-smooth">
-      <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
+    <html lang="en" className="scroll-smooth">
+      <head>
         <GoogleAnalytics />
+      </head>
+      <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
         <div className="min-h-screen flex flex-col">
           <Header />
           <main id="main-content" className="flex-1 outline-none" tabIndex={-1}>

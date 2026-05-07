@@ -1,10 +1,5 @@
-"use client";
-
-import Script from "next/script";
-import { getGaMeasurementId } from "@/lib/analytics";
-
 export default function GoogleAnalytics() {
-    const measurementId = getGaMeasurementId();
+    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 
     if (!measurementId) {
         return null;
@@ -12,19 +7,22 @@ export default function GoogleAnalytics() {
 
     return (
         <>
-            <Script
+            <script
+                async
                 src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-                strategy="afterInteractive"
             />
-            <Script id="google-analytics" strategy="afterInteractive">
-                {`
+            <script
+                id="google-analytics"
+                dangerouslySetInnerHTML={{
+                    __html: `
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     window.gtag = gtag;
                     gtag('js', new Date());
                     gtag('config', '${measurementId}');
-                `}
-            </Script>
+                `,
+                }}
+            />
         </>
     );
 }

@@ -11,6 +11,7 @@ import { formatPayoutFreshness } from '@/lib/payout-freshness';
 import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
 import { EarnLabCountryOffersPage } from '@/components/offers/EarnLabCountryOffersPage';
 import { getEarnLabCountryName, isSupportedEarnLabCountry, normalizeEarnLabCountryCode } from '@/lib/earnlab-gallery';
+import { pickPublicArtworkUrl } from '@/lib/public-image-url';
 
 // ---------------------------------------------------------------
 // TYPES — mirrors /api/offers/game/[slug] response
@@ -590,13 +591,11 @@ export default async function GameOffersPage({
         relatedReviews[0] ??
         null;
 
-    const heroImageUrl =
-        game.thumbnail_url ??
-        sortedOffers.find((offer) => offer.image_url)?.image_url ??
-        sortedOffers.find((offer) => isImageUrl(offer.redirect_url))?.redirect_url ??
-        comparison.offers.find((offer) => offer.image_url)?.image_url ??
-        comparison.offers.find((offer) => isImageUrl(offer.offer_url))?.offer_url ??
-        null;
+    const heroImageUrl = pickPublicArtworkUrl(
+        game.thumbnail_url,
+        sortedOffers.find((offer) => offer.image_url)?.image_url ?? null,
+        comparison.offers.find((offer) => offer.image_url)?.image_url ?? null,
+    );
     const schemas = [
         buildBreadcrumbList([
             { name: "Home", path: "/" },

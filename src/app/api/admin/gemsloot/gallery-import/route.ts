@@ -1,10 +1,12 @@
 import { createClient as createSupabaseClient, type SupabaseClient } from "@supabase/supabase-js";
 import {
-    EarnLabGalleryTask,
-    getEarnLabGalleryTasksByCountry,
-    normalizeEarnLabCountryCode,
+    GemslootGalleryOffer,
+    GemslootGalleryTaskStep,
+    getGemslootGalleryOffers,
+    normalizeGemslootCountryCode,
+    normalizeGemslootProvider,
     slugify,
-} from "@/lib/earnlab-gallery";
+} from "@/lib/gemsloot-gallery";
 import { normalizeTotalPayout } from "@/lib/offer-quality";
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
@@ -16,6 +18,18 @@ type ImportStats = {
     updated: number;
     skipped: number;
     failed: number;
+};
+
+type QualityReport = {
+    totalGemslootRows: number;
+    byProvider: Record<string, number>;
+    byCountry: Record<string, number>;
+    byStatus: Record<string, number>;
+    missingImages: number;
+    zeroOrLowPayouts: number;
+    missingTasks: number;
+    duplicateExternalIds: number;
+    brokenGameSlugs: number;
 };
 
 type DbClient = SupabaseClient<any, "public", any>;
@@ -45,7 +59,7 @@ function getServiceClient(): DbClient {
     const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!url || !key) {
-        throw new Error("SUPABASE_SERVICE_ROLE_KEY is required for EarnLab gallery imports.");
+        throw new Error("SUPABASE_SERVICE_ROLE_KEY is required for Gemsloot gallery imports.");
     }
 
     serviceClient = createSupabaseClient(url, key, {
@@ -88,12 +102,16 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
-    const country = normalizeEarnLabCountryCode(typeof body.country === "string" ? body.country : null);
+    const country = normalizeGemslootCountryCode(typeof body.country === "string" ? body.country : "US");
     if (!country) {
-        return NextResponse.json({ error: "country must be a two-letter country code such as US, GB, CA, or AU" }, { status: 400 });
+        return NextResponse.json({ error: "country must be a two-letter country code such as US or GB" }, { status: 400 });
     }
 
-    const limit = Math.min(75, Math.max(1, Number(body.limit ?? 50) || 50));
+    const provider = normalizeGemslootProvider(typeof body.provider === "string" ? body.provider : null);
+    const device = typeof body.device === "string" ? body.device : null;
+    const search = typeof body.search === "string" ? body.search : null;
+    const sort = body.sort === "completed" ? "completed" : "epc";
+    const limit = Math.min(300, Math.max(1, Number(body.limit ?? 120) || 120));
     const refresh = body.refresh !== false;
     const stats: ImportStats = {
         fetched: 0,
@@ -105,23 +123,29 @@ export async function POST(req: NextRequest) {
     };
 
     try {
-        const gallery = await getEarnLabGalleryTasksByCountry(country, {
+        const gallery = await getGemslootGalleryOffers({
+            country,
+            provider,
+            device,
+            search,
+            sort,
             limit,
             refresh,
         });
         const db = getServiceClient();
-        const site = await ensureEarnLabPlatform(db);
+        const site = await ensureGemslootPlatform(db);
         stats.fetched = gallery.offers.length;
 
         for (const offer of gallery.offers) {
             try {
-                const result = await upsertGalleryOffer(db, site.id, offer);
+                const result = await upsertGemslootOffer(db, site.id, offer);
                 stats.imported += 1;
                 stats[result] += 1;
             } catch (error) {
                 stats.failed += 1;
-                console.error("[admin/earnlab/gallery-import] offer failed", {
+                console.error("[admin/gemsloot/gallery-import] offer failed", {
                     country,
+                    provider,
                     offerId: offer.id,
                     title: offer.title,
                     message: error instanceof Error ? error.message : String(error),
@@ -131,23 +155,26 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({
             countryCode: gallery.countryCode,
-            countryName: gallery.countryName,
+            provider: gallery.provider,
+            providers: gallery.providers,
             stats,
+            quality: await buildGemslootQualityReport(db),
         });
     } catch (error) {
-        console.error("[admin/earnlab/gallery-import] failed", {
+        console.error("[admin/gemsloot/gallery-import] failed", {
             country,
+            provider,
             message: error instanceof Error ? error.message : String(error),
         });
         return NextResponse.json({ error: "Import failed" }, { status: 500 });
     }
 }
 
-async function ensureEarnLabPlatform(db: DbClient): Promise<{ id: string }> {
+async function ensureGemslootPlatform(db: DbClient): Promise<{ id: string }> {
     const { data: existing, error: existingError } = await db
         .from("platforms")
         .select("id")
-        .eq("slug", "earnlab")
+        .eq("slug", "gemsloot")
         .maybeSingle();
 
     if (existingError) throw new Error(existingError.message);
@@ -156,16 +183,16 @@ async function ensureEarnLabPlatform(db: DbClient): Promise<{ id: string }> {
     const { data, error } = await db
         .from("platforms")
         .insert({
-            name: "EarnLab",
-            slug: "earnlab",
+            name: "Gemsloot",
+            slug: "gemsloot",
             platform_kind: "gpt_site",
-            affiliate_template: "https://earnlab.com/r/mac",
+            affiliate_template: "https://gemsloot.com/?aff=kamedev",
             is_active: true,
         })
         .select("id")
         .single();
 
-    if (error || !data) throw new Error(error?.message ?? "Failed to create EarnLab platform");
+    if (error || !data) throw new Error(error?.message ?? "Failed to create Gemsloot platform");
     return { id: String(data.id) };
 }
 
@@ -190,7 +217,7 @@ async function ensureProvider(db: DbClient, name: string): Promise<{ id: string 
     return { id: String(data.id) };
 }
 
-async function ensureGame(db: DbClient, offer: EarnLabGalleryTask): Promise<{ id: string }> {
+async function ensureGame(db: DbClient, offer: GemslootGalleryOffer): Promise<{ id: string }> {
     const slug = offer.slug || slugify(offer.title);
     const { data: existing, error: existingError } = await db
         .from("games")
@@ -219,15 +246,14 @@ async function ensureGame(db: DbClient, offer: EarnLabGalleryTask): Promise<{ id
     return { id: String(data.id) };
 }
 
-async function upsertGalleryOffer(
+async function upsertGemslootOffer(
     db: DbClient,
     siteId: string,
-    offer: EarnLabGalleryTask,
+    offer: GemslootGalleryOffer,
 ): Promise<"created" | "updated" | "skipped"> {
     const provider = await ensureProvider(db, offer.providerName);
     const game = await ensureGame(db, offer);
-    const externalId = `${offer.id}-${offer.countryCode}`;
-    const legacyExternalId = offer.id;
+    const externalId = `gemsloot-${slugify(offer.providerName)}-${offer.id}-${offer.countryCode}`;
     const now = new Date().toISOString();
     const payload: SiteOfferImportPayload = {
         site_id: siteId,
@@ -236,7 +262,7 @@ async function upsertGalleryOffer(
         external_id: externalId,
         title: offer.advertiserName ?? offer.title,
         payout_usd: offer.payout,
-        total_payout_usd: normalizeTotalPayout(offer.payout, offer.payout),
+        total_payout_usd: normalizeTotalPayout(offer.payout, offer.totalPayout),
         goal_text: offer.requirements[0] ?? offer.shortDescription,
         image_url: offer.imageUrl,
         devices: toDeviceTypes(offer.platform),
@@ -245,32 +271,23 @@ async function upsertGalleryOffer(
         ingested_at: now,
         updated_at: now,
     };
-    // EarnLab gallery responses do not currently include direct per-offer links.
-    // Preserve any future/manual direct URL instead of overwriting it with null.
+    // Gemsloot detail responses include advertiser URLs with CLICKID placeholders.
+    // Do not use those as direct tracking links; only store the safe Gemsloot modal URL.
     if (offer.trackingUrl) {
         payload.offer_url = offer.trackingUrl;
     }
 
-    const { data: existingScoped, error: scopedError } = await db
+    const { data: existing, error: existingError } = await db
         .from("site_offers")
         .select("id, provider_id, game_id, title, payout_usd, total_payout_usd, goal_text, offer_url, image_url, devices, countries, status")
         .eq("site_id", siteId)
+        .eq("provider_id", provider.id)
         .eq("external_id", externalId)
         .maybeSingle();
 
-    if (scopedError) throw new Error(scopedError.message);
-
-    const { data: existingLegacy, error: legacyError } = existingScoped ? { data: null, error: null } : await db
-        .from("site_offers")
-        .select("id, provider_id, game_id, title, payout_usd, total_payout_usd, goal_text, offer_url, image_url, devices, countries, status")
-        .eq("site_id", siteId)
-        .eq("external_id", legacyExternalId)
-        .maybeSingle();
-
-    if (legacyError) throw new Error(legacyError.message);
-    const existing = existingScoped ?? existingLegacy;
-
+    if (existingError) throw new Error(existingError.message);
     const row = existing as Record<string, unknown> | null;
+
     if (!row) {
         const { data, error } = await db
             .from("site_offers")
@@ -278,7 +295,7 @@ async function upsertGalleryOffer(
             .select("id")
             .single();
         if (error || !data) throw new Error(error?.message ?? `Failed to insert ${offer.title}`);
-        await replaceTasks(db, String(data.id), offer);
+        await replaceTasks(db, String(data.id), offer.tasks, offer);
         return "created";
     }
 
@@ -303,19 +320,88 @@ async function upsertGalleryOffer(
         if (error) throw new Error(error.message);
     }
 
-    await replaceTasks(db, String(row.id), offer);
+    await replaceTasks(db, String(row.id), offer.tasks, offer);
     return changed ? "updated" : "skipped";
 }
 
-async function replaceTasks(db: DbClient, siteOfferId: string, offer: EarnLabGalleryTask): Promise<void> {
+async function buildGemslootQualityReport(db: DbClient): Promise<QualityReport> {
+    const { data, error } = await db
+        .from("site_offers")
+        .select(`
+            id, external_id, payout_usd, image_url, countries, status,
+            provider:providers(name),
+            game:games(slug),
+            tasks:site_offer_tasks(id)
+        `)
+        .like("external_id", "gemsloot-%")
+        .limit(5000);
+
+    if (error) throw new Error(error.message);
+
+    const rows = (data ?? []) as Array<Record<string, any>>;
+    const externalCounts = new Map<string, number>();
+    const byProvider: Record<string, number> = {};
+    const byCountry: Record<string, number> = {};
+    const byStatus: Record<string, number> = {};
+    let missingImages = 0;
+    let zeroOrLowPayouts = 0;
+    let missingTasks = 0;
+    let brokenGameSlugs = 0;
+
+    for (const row of rows) {
+        const externalId = String(row.external_id ?? "");
+        externalCounts.set(externalId, (externalCounts.get(externalId) ?? 0) + 1);
+        increment(byProvider, firstRelated(row.provider)?.name ?? "Unknown");
+        increment(byStatus, String(row.status ?? "unknown"));
+
+        const countries = Array.isArray(row.countries) ? row.countries : [];
+        if (countries.length === 0) increment(byCountry, "Unknown");
+        for (const country of countries) increment(byCountry, String(country).toUpperCase());
+
+        if (!row.image_url) missingImages += 1;
+        if (Number(row.payout_usd ?? 0) <= 0.01) zeroOrLowPayouts += 1;
+        if (!Array.isArray(row.tasks) || row.tasks.length === 0) missingTasks += 1;
+
+        const game = firstRelated(row.game);
+        const slug = String(game?.slug ?? "");
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) brokenGameSlugs += 1;
+    }
+
+    return {
+        totalGemslootRows: rows.length,
+        byProvider,
+        byCountry,
+        byStatus,
+        missingImages,
+        zeroOrLowPayouts,
+        missingTasks,
+        duplicateExternalIds: Array.from(externalCounts.values()).filter((count) => count > 1).length,
+        brokenGameSlugs,
+    };
+}
+
+function increment(record: Record<string, number>, key: string): void {
+    record[key] = (record[key] ?? 0) + 1;
+}
+
+function firstRelated(value: unknown): any {
+    return Array.isArray(value) ? value[0] ?? null : value;
+}
+
+async function replaceTasks(
+    db: DbClient,
+    siteOfferId: string,
+    tasks: GemslootGalleryTaskStep[],
+    offer: GemslootGalleryOffer,
+): Promise<void> {
     const { error: deleteError } = await db
         .from("site_offer_tasks")
         .delete()
         .eq("site_offer_id", siteOfferId);
     if (deleteError) throw new Error(deleteError.message);
 
-    const tasks = offer.tasks.length > 0
-        ? offer.tasks
+    const rows = tasks.length > 0
+        ? tasks
         : [{
             title: offer.title,
             rewardAmount: offer.payout,
@@ -329,7 +415,7 @@ async function replaceTasks(db: DbClient, siteOfferId: string, offer: EarnLabGal
     const now = new Date().toISOString();
     const { error } = await db
         .from("site_offer_tasks")
-        .insert(tasks.map((task) => ({
+        .insert(rows.map((task) => ({
             site_offer_id: siteOfferId,
             sort_order: task.sortOrder,
             title: task.title,
@@ -345,7 +431,7 @@ async function replaceTasks(db: DbClient, siteOfferId: string, offer: EarnLabGal
     if (error) throw new Error(error.message);
 }
 
-function toDeviceTypes(platforms: EarnLabGalleryTask["platform"]): string[] {
+function toDeviceTypes(platforms: GemslootGalleryOffer["platform"]): string[] {
     const devices = new Set<string>();
     for (const platform of platforms) {
         if (platform === "iOS") devices.add("ios");
@@ -358,7 +444,7 @@ function toDeviceTypes(platforms: EarnLabGalleryTask["platform"]): string[] {
 }
 
 function toDbTaskType(value: string): "install" | "milestone" | "purchase" | "signup" | "other" {
-    return value === "install" || value === "milestone" || value === "purchase" || value === "signup" || value === "other"
+    return value === "install" || value === "milestone" || value === "purchase" || value === "signup"
         ? value
         : "other";
 }

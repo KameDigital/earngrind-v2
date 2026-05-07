@@ -1,3 +1,6 @@
+import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
+import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
+
 export type UnifiedOfferRow = Record<string, unknown> & {
     id?: string | null;
     source?: string | null;
@@ -68,7 +71,8 @@ export function getUnifiedOfferRedirectUrl(row: UnifiedOfferRow): string | null 
 
 export function shapePublicOffer(row: UnifiedOfferRow) {
     const payoutUsd = toNumber(row.payout_usd);
-    const totalPayoutUsd = toNumber(row.total_payout_usd, payoutUsd);
+    const totalPayoutUsd = normalizeTotalPayout(payoutUsd, toNumber(row.total_payout_usd, payoutUsd));
+    const providerName = typeof row.provider_name === "string" ? normalizeProviderDisplayName(row.provider_name) : row.provider_name ?? null;
 
     return {
         id: firstNonEmpty(row.id) ?? "",
@@ -93,7 +97,8 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
         offer_url: firstNonEmpty(row.offer_url),
         goal_text: row.goal_text ?? null,
         provider_id: row.provider_id ?? null,
-        provider_name: row.provider_name ?? null,
+        provider_name: providerName,
+        is_public_payout_eligible: isPublicPayoutEligible(payoutUsd, totalPayoutUsd),
         redirect_url: getUnifiedOfferRedirectUrl(row),
         game: {
             id: row.game_id ?? null,
@@ -110,4 +115,10 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
             platform_kind: row.platform_kind ?? null,
         },
     };
+}
+
+export function isPublicOfferRowEligible(row: UnifiedOfferRow): boolean {
+    const payoutUsd = toNumber(row.payout_usd);
+    const totalPayoutUsd = normalizeTotalPayout(payoutUsd, toNumber(row.total_payout_usd, payoutUsd));
+    return isPublicPayoutEligible(payoutUsd, totalPayoutUsd);
 }

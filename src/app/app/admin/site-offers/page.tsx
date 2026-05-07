@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import EarnLabGalleryImportPanel from "./EarnLabGalleryImportPanel";
 import GainGalleryImportPanel from "./GainGalleryImportPanel";
+import GemslootGalleryImportPanel from "./GemslootGalleryImportPanel";
+import { getPublicOfferMinPayout, normalizeTotalPayout } from "@/lib/offer-quality";
+import { groupProviderVariants, normalizeProviderDisplayName } from "@/lib/provider-normalization";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Site Offers | Admin" };
@@ -33,14 +36,16 @@ export default async function AdminSiteOffersPage({ searchParams = {} }: { searc
             id, external_id, payout_usd, total_payout_usd, status, goal_text, updated_at, image_url, offer_url, countries, devices,
             game:games(name, slug, category),
             site:platforms(name),
-            provider:providers(name)
+            provider:providers(name),
+            tasks:site_offer_tasks(id)
         `)
         .in("status", ["active", "expired", "boosted", "paused"])
         .order("updated_at", { ascending: false })
         .limit(500);
 
     const rows = sortRows(filterRows(siteOffers ?? [], filters), filters.sort).slice(0, 200);
-    const providerOptions = Array.from(new Set((siteOffers ?? []).map((offer) => firstRelated(offer.provider)?.name).filter(Boolean))).sort();
+    const providerOptions = Array.from(new Set((siteOffers ?? []).map((offer) => normalizeProviderDisplayName(firstRelated(offer.provider)?.name)).filter(Boolean))).sort();
+    const diagnostics = buildDiagnostics(siteOffers ?? []);
 
     return (
         <div className="space-y-6">
@@ -53,6 +58,22 @@ export default async function AdminSiteOffersPage({ searchParams = {} }: { searc
 
             <EarnLabGalleryImportPanel />
             <GainGalleryImportPanel />
+            <GemslootGalleryImportPanel />
+
+            <section className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 shadow-sm">
+                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-amber-700">Data quality</p>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
+                    <AdminStatCard label="Missing tasks" value={diagnostics.missingTasks} tone={diagnostics.missingTasks ? "warning" : "good"} />
+                    <AdminStatCard label="Missing images" value={diagnostics.missingImages} tone={diagnostics.missingImages ? "warning" : "good"} />
+                    <AdminStatCard label="Missing URLs" value={diagnostics.missingUrls} tone={diagnostics.missingUrls ? "warning" : "good"} />
+                    <AdminStatCard label="Low payout" value={diagnostics.lowPayouts} tone={diagnostics.lowPayouts ? "warning" : "good"} />
+                    <AdminStatCard label="Total < payout" value={diagnostics.totalBelowPayout} tone={diagnostics.totalBelowPayout ? "warning" : "good"} />
+                    <AdminStatCard label="Provider variants" value={diagnostics.providerVariantGroups} tone={diagnostics.providerVariantGroups ? "warning" : "good"} />
+                </div>
+                <p className="mt-3 text-xs font-medium text-amber-800">
+                    Snapshot is based on the latest loaded admin rows. Full checks live in scripts/audit-offer-data-quality.mjs.
+                </p>
+            </section>
 
             <form className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm" action="/app/admin/site-offers">
                 <div className="grid gap-3 md:grid-cols-4 xl:grid-cols-9">
@@ -141,6 +162,10 @@ export default async function AdminSiteOffersPage({ searchParams = {} }: { searc
                                 const game = Array.isArray(offer.game) ? offer.game[0] : offer.game;
                                 const site = Array.isArray(offer.site) ? offer.site[0] : offer.site;
                                 const provider = Array.isArray(offer.provider) ? offer.provider[0] : offer.provider;
+                                const normalizedProviderName = normalizeProviderDisplayName(provider?.name);
+                                const payout = Number(offer.payout_usd ?? 0);
+                                const totalPayout = normalizeTotalPayout(payout, Number(offer.total_payout_usd ?? payout));
+                                const lowPayout = payout < getPublicOfferMinPayout() || totalPayout < getPublicOfferMinPayout();
 
                                 return (
                                     <tr key={offer.id} className="transition-colors hover:bg-gray-50">
@@ -152,9 +177,10 @@ export default async function AdminSiteOffersPage({ searchParams = {} }: { searc
                                             ) : (game?.name ?? "-")}
                                         </td>
                                         <td className="px-4 py-3 text-gray-600">{site?.name ?? "-"}</td>
-                                        <td className="px-4 py-3 text-xs text-gray-500">{provider?.name ?? "-"}</td>
+                                        <td className="px-4 py-3 text-xs text-gray-500">{normalizedProviderName}</td>
                                         <td className="px-4 py-3 text-right font-bold text-gray-900">
-                                            ${Number(offer.payout_usd ?? 0).toFixed(2)}
+                                            <span className={lowPayout ? "text-amber-700" : ""}>${payout.toFixed(2)}</span>
+                                            {lowPayout ? <div className="text-[10px] font-bold uppercase tracking-wide text-amber-600">Low payout</div> : null}
                                         </td>
                                         <td className="px-4 py-3 text-center">
                                             <span className={`inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLES[offer.status] ?? "bg-gray-100 text-gray-500"}`}>
@@ -210,12 +236,12 @@ function normalizeFilters(searchParams: SearchParams) {
 function filterRows<T extends Record<string, any>>(rows: T[], filters: ReturnType<typeof normalizeFilters>): T[] {
     return rows.filter((row) => {
         const externalId = String(row.external_id ?? "");
-        const providerName = firstRelated(row.provider)?.name ?? "";
+        const providerName = normalizeProviderDisplayName(firstRelated(row.provider)?.name);
         const countries = Array.isArray(row.countries) ? row.countries.map((country) => String(country).toUpperCase()) : [];
         const devices = Array.isArray(row.devices) ? row.devices.map((device) => String(device).toLowerCase()) : [];
         if (filters.gain && !externalId.startsWith("gain-")) return false;
         if (filters.wall && extractGainWallFromExternalId(externalId) !== filters.wall) return false;
-        if (filters.provider && providerName !== filters.provider) return false;
+        if (filters.provider && providerName !== normalizeProviderDisplayName(filters.provider)) return false;
         if (filters.country && !countries.includes(filters.country)) return false;
         if (filters.minPayout && Number(row.payout_usd ?? 0) < filters.minPayout) return false;
         if (filters.category && String(firstRelated(row.game)?.category ?? "").toLowerCase() !== filters.category) return false;
@@ -230,7 +256,7 @@ function sortRows<T extends Record<string, any>>(rows: T[], sort: string): T[] {
     return [...rows].sort((left, right) => {
         if (sort === "payout") return Number(right.payout_usd ?? 0) - Number(left.payout_usd ?? 0);
         if (sort === "total") return Number(right.total_payout_usd ?? 0) - Number(left.total_payout_usd ?? 0);
-        if (sort === "provider") return String(firstRelated(left.provider)?.name ?? "").localeCompare(String(firstRelated(right.provider)?.name ?? ""));
+        if (sort === "provider") return normalizeProviderDisplayName(firstRelated(left.provider)?.name).localeCompare(normalizeProviderDisplayName(firstRelated(right.provider)?.name));
         if (sort === "title") return String(firstRelated(left.game)?.name ?? "").localeCompare(String(firstRelated(right.game)?.name ?? ""));
         return String(right.updated_at ?? "").localeCompare(String(left.updated_at ?? ""));
     });
@@ -247,4 +273,21 @@ function firstRelated(value: unknown): any {
 function extractGainWallFromExternalId(externalId: string): string {
     const match = externalId.match(/^gain-([a-z]+)-/);
     return match?.[1] ?? "";
+}
+
+function buildDiagnostics(rows: Array<Record<string, any>>) {
+    const providerNames = rows.map((row) => firstRelated(row.provider)?.name).filter(Boolean);
+    const minPayout = getPublicOfferMinPayout();
+    return {
+        missingTasks: rows.filter((row) => !Array.isArray(row.tasks) || row.tasks.length === 0).length,
+        missingImages: rows.filter((row) => !row.image_url).length,
+        missingUrls: rows.filter((row) => !row.offer_url).length,
+        lowPayouts: rows.filter((row) => {
+            const payout = Number(row.payout_usd ?? 0);
+            const total = normalizeTotalPayout(payout, Number(row.total_payout_usd ?? payout));
+            return payout < minPayout || total < minPayout;
+        }).length,
+        totalBelowPayout: rows.filter((row) => Number(row.total_payout_usd ?? row.payout_usd ?? 0) < Number(row.payout_usd ?? 0)).length,
+        providerVariantGroups: Object.keys(groupProviderVariants(providerNames)).length,
+    };
 }

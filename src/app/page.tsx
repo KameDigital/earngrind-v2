@@ -5,6 +5,8 @@ import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
 import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 import type { RailPreviewRoute, RailPreviewTask } from "@/components/home/GamePreviewModal";
+import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
+import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 
 export const revalidate = 300;
 
@@ -332,8 +334,22 @@ async function getHomepageData(): Promise<HomepageData> {
       .limit(200),
   ]);
 
-  const offerRows = (offersResult.data ?? []) as OfferRow[];
-  const featuredGameOfferRows = (featuredGameOffersResult.data ?? []) as OfferRow[];
+  const normalizePublicOfferRows = (rows: OfferRow[]) =>
+    rows
+      .map((row) => {
+        const payoutUsd = Number(row.payout_usd ?? 0);
+        const totalPayoutUsd = normalizeTotalPayout(payoutUsd, Number(row.total_payout_usd ?? payoutUsd));
+        return {
+          ...row,
+          provider_name: normalizeProviderDisplayName(row.provider_name),
+          payout_usd: payoutUsd,
+          total_payout_usd: totalPayoutUsd,
+        };
+      })
+      .filter((row) => isPublicPayoutEligible(row.payout_usd, row.total_payout_usd));
+
+  const offerRows = normalizePublicOfferRows((offersResult.data ?? []) as OfferRow[]);
+  const featuredGameOfferRows = normalizePublicOfferRows((featuredGameOffersResult.data ?? []) as OfferRow[]);
   const allOfferRows = Array.from(
     new Map([...offerRows, ...featuredGameOfferRows].map((row) => [row.id, row])).values(),
   );

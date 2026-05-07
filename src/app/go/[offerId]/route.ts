@@ -255,6 +255,8 @@ export async function GET(
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: null,
     });
+    // EarnLab gallery rows intentionally have no direct per-offer URL today.
+    // When offer_url is missing, keep CTAs working through the platform affiliate fallback.
     const outboundUrl = directSiteOfferUrl ?? getPlatformAffiliateOverride(site) ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,

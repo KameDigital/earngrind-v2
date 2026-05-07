@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase/public";
-import { shapePublicOffer } from "@/lib/public-offers";
+import { isPublicOfferRowEligible, shapePublicOffer } from "@/lib/public-offers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const revalidate = 60;
@@ -132,7 +132,9 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "internal", message: error.message }, { status: 500 });
     }
 
-    const shaped = (data ?? []).map((row) => shapePublicOffer(row));
+    const shaped = (data ?? [])
+        .filter((row) => isPublicOfferRowEligible(row))
+        .map((row) => shapePublicOffer(row));
 
     const total = count ?? 0;
 

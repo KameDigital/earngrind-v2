@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { normalizeTotalPayout } from "@/lib/offer-quality";
+import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { getSiteUrl } from "@/lib/site-url";
 
 const SITE_URL = getSiteUrl();
@@ -7,6 +9,7 @@ export type OfferApiRow = {
   id: string;
   title: string;
   payout_usd: number;
+  total_payout_usd?: number | null;
   payout_type: string | null;
   category: string | null;
   provider_name: string | null;
@@ -163,10 +166,10 @@ export function toSeoOfferRows(rows: OfferApiRow[]): SeoOfferRow[] {
       title: row.title,
       gameName: row.game!.name,
       gameSlug: row.game!.slug,
-      providerName: row.provider_name ?? "Unknown Provider",
+      providerName: normalizeProviderDisplayName(row.provider_name),
       platformName: row.platform!.name,
       payoutUsd: Number(row.payout_usd ?? 0),
-      totalPayoutUsd: Number(row.payout_usd ?? 0),
+      totalPayoutUsd: normalizeTotalPayout(Number(row.payout_usd ?? 0), Number(row.total_payout_usd ?? row.payout_usd ?? 0)),
       redirectUrl: row.redirect_url ?? "#",
       goalText: row.goal_text ?? null,
       updatedAt: row.updated_at ?? null,
@@ -180,10 +183,10 @@ export function mapComparisonToSeoRows(rows: GameComparisonOffer[], fallbackGame
     title: row.goal_text?.trim() || `Complete tasks for ${fallbackGame.name}`,
     gameName: fallbackGame.name,
     gameSlug: fallbackGame.slug,
-    providerName: row.provider_name ?? "Unknown Provider",
+    providerName: normalizeProviderDisplayName(row.provider_name),
     platformName: row.platform_name ?? "Unknown Platform",
     payoutUsd: Number(row.payout_usd ?? 0),
-    totalPayoutUsd: Number(row.total_payout_usd ?? row.payout_usd ?? 0),
+    totalPayoutUsd: normalizeTotalPayout(Number(row.payout_usd ?? 0), Number(row.total_payout_usd ?? row.payout_usd ?? 0)),
     redirectUrl: row.redirect_url ?? "#",
     goalText: row.goal_text ?? null,
     updatedAt: row.updated_at ?? null,

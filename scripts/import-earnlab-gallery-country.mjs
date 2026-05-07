@@ -266,7 +266,7 @@ async function upsertGalleryOffer(siteId, offer) {
         external_id: externalId,
         title: offer.advertiserName ?? offer.title,
         payout_usd: offer.payout,
-        total_payout_usd: offer.payout,
+        total_payout_usd: normalizeTotalPayout(offer.payout, offer.payout),
         goal_text: offer.requirements[0] ?? offer.shortDescription,
         image_url: offer.imageUrl,
         devices: toDeviceTypes(offer.platform),
@@ -364,7 +364,7 @@ async function replaceTasks(siteOfferId, offer) {
             title: task.title,
             reward_amount: task.rewardAmount,
             reward_display: task.rewardDisplay,
-            task_type: task.taskType,
+            task_type: toDbTaskType(task.taskType),
             time_limit_text: task.timeLimitText,
             notes: task.notes,
             created_at: now,
@@ -395,6 +395,19 @@ function toEarnLabUsd(reward) {
     const value = Number(reward ?? 0);
     if (!Number.isFinite(value) || value <= 0) return 0;
     return Number((value / 1000).toFixed(2));
+}
+
+function normalizeTotalPayout(payout, totalPayout) {
+    const payoutNumber = Number(payout);
+    const totalNumber = Number(totalPayout);
+    if (!Number.isFinite(payoutNumber) && !Number.isFinite(totalNumber)) return 0;
+    if (!Number.isFinite(totalNumber)) return Number(payoutNumber.toFixed(2));
+    if (!Number.isFinite(payoutNumber)) return Number(totalNumber.toFixed(2));
+    return Number(Math.max(payoutNumber, totalNumber).toFixed(2));
+}
+
+function toDbTaskType(value) {
+    return ["install", "milestone", "purchase", "signup", "other"].includes(value) ? value : "other";
 }
 
 function normalizeWhitespace(value) {

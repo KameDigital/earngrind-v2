@@ -492,13 +492,15 @@ async function upsertSiteParentOffer(
         ? Number(rawOffer.best_payout_usd)
         : Number.parseFloat(rawOffer.payout_raw);
     const totalPayout = Number.parseFloat(rawOffer.total_payout_raw ?? rawOffer.payout_raw);
+    const payoutUsd = Number.isFinite(bestPayout) ? bestPayout : 0;
+    const totalPayoutUsd = normalizeSiteOfferTotalPayout(payoutUsd, totalPayout);
     logger.info("Site offer payout write debug", {
         external_id: rawOffer.external_id,
         title: rawOffer.title,
         payout_raw: rawOffer.payout_raw,
         best_payout_usd: rawOffer.best_payout_usd ?? null,
         total_payout_raw: rawOffer.total_payout_raw ?? null,
-        resolved_payout_usd: Number.isFinite(bestPayout) ? bestPayout : 0,
+        resolved_payout_usd: payoutUsd,
     });
     const payload = {
         site_id: siteId,
@@ -506,8 +508,8 @@ async function upsertSiteParentOffer(
         game_id: gameId,
         external_id: rawOffer.external_id.trim(),
         title: (rawOffer.game_title?.trim() || rawOffer.title).trim(),
-        payout_usd: Number.isFinite(bestPayout) ? bestPayout : 0,
-        total_payout_usd: Number.isFinite(totalPayout) ? totalPayout : null,
+        payout_usd: payoutUsd,
+        total_payout_usd: totalPayoutUsd,
         goal_text: buildParentGoalText(taskList),
         offer_url: rawOffer.url.trim(),
         image_url: rawOffer.image_url?.trim() || null,
@@ -676,7 +678,7 @@ async function replaceSiteOfferTasks(
                         title: task.title,
                         reward_amount: task.reward_amount_usd,
                         reward_display: task.reward_display ?? `$${task.reward_amount_usd.toFixed(2)}`,
-                        task_type: task.task_type ?? "other",
+                        task_type: toDbSiteOfferTaskType(task.task_type),
                         time_limit_text: task.time_limit_text ?? null,
                         notes: task.notes ?? null,
                         created_at: now,
@@ -935,6 +937,26 @@ function buildParentGoalText(taskList: NonNullable<SourceOffer["task_list"]>): s
     }
 
     return `${taskList.length} milestones available`;
+}
+
+function normalizeSiteOfferTotalPayout(payoutUsd: number, totalPayoutUsd: number): number | null {
+    if (!Number.isFinite(totalPayoutUsd) && !Number.isFinite(payoutUsd)) return null;
+    if (!Number.isFinite(totalPayoutUsd)) return payoutUsd;
+    if (!Number.isFinite(payoutUsd)) return totalPayoutUsd;
+    return Math.max(totalPayoutUsd, payoutUsd);
+}
+
+function toDbSiteOfferTaskType(value: string | null | undefined): "install" | "milestone" | "purchase" | "signup" | "other" {
+    switch (value) {
+        case "install":
+        case "milestone":
+        case "purchase":
+        case "signup":
+        case "other":
+            return value;
+        default:
+            return "other";
+    }
 }
 
 if (require.main === module) {

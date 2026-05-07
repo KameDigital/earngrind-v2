@@ -9,6 +9,8 @@ import {
     getEarnLabCountryName,
 } from "@/lib/earnlab-countries";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
+import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 
 const COUNTRY_LINKS = EARNLAB_GALLERY_COUNTRIES.slice(0, 8);
 const MAX_DISPLAYED_OFFERS = 48;
@@ -155,8 +157,9 @@ function buildImportedOfferStartUrl(offer: ImportedSiteOfferRow, countryCode: st
 function mapImportedOffer(row: ImportedSiteOfferRow, countryCode: string): CountryOffer {
     const provider = firstRelated(row.provider);
     const game = firstRelated(row.game);
-    const payout = toNumber(row.total_payout_usd, toNumber(row.payout_usd));
-    const providerName = provider?.name?.trim() || "EarnLab";
+    const basePayout = toNumber(row.payout_usd);
+    const payout = normalizeTotalPayout(basePayout, toNumber(row.total_payout_usd, basePayout));
+    const providerName = normalizeProviderDisplayName(provider?.name?.trim() || "EarnLab");
     const description = row.goal_text ?? game?.description ?? null;
     const sourceId = row.external_id?.replace(new RegExp(`-${countryCode}$`, "i"), "") || row.id;
 
@@ -268,7 +271,9 @@ async function getImportedEarnLabOffers(countryCode: string, sort: CountryOfferS
     }
 
     return sortOffers(
-        dedupeImportedOffers(((data ?? []) as ImportedSiteOfferRow[]).map((row) => mapImportedOffer(row, countryCode))),
+        dedupeImportedOffers(((data ?? []) as ImportedSiteOfferRow[])
+            .map((row) => mapImportedOffer(row, countryCode))
+            .filter((offer) => isPublicPayoutEligible(offer.payout, offer.payout))),
         sort,
     ).slice(0, MAX_DISPLAYED_OFFERS);
 }

@@ -8,6 +8,7 @@ import {
     normalizeGainWall,
     slugify,
 } from "@/lib/gain-gallery";
+import { normalizeTotalPayout } from "@/lib/offer-quality";
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -301,7 +302,7 @@ async function upsertGainOffer(
         external_id: externalId,
         title: offer.advertiserName ?? offer.title,
         payout_usd: offer.payout,
-        total_payout_usd: offer.totalPayout,
+        total_payout_usd: normalizeTotalPayout(offer.payout, offer.totalPayout),
         goal_text: offer.requirements[0] ?? offer.shortDescription,
         image_url: offer.imageUrl,
         devices: toDeviceTypes(offer.platform),
@@ -485,7 +486,7 @@ async function replaceTasks(
             title: task.title,
             reward_amount: task.rewardAmount,
             reward_display: task.rewardDisplay,
-            task_type: task.taskType,
+            task_type: toDbTaskType(task.taskType),
             time_limit_text: task.timeLimitText,
             notes: task.notes,
             created_at: now,
@@ -505,4 +506,10 @@ function toDeviceTypes(platforms: GainGalleryOffer["platform"]): string[] {
     }
     if (devices.size === 0) devices.add("web");
     return Array.from(devices);
+}
+
+function toDbTaskType(value: string): "install" | "milestone" | "purchase" | "signup" | "other" {
+    return value === "install" || value === "milestone" || value === "purchase" || value === "signup"
+        ? value
+        : "other";
 }

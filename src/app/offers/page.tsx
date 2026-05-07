@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import React, { Suspense } from 'react';
 import OfferSearchEngine from '@/components/offers/OfferSearchEngine';
 import Container from '@/components/layout/Container';
-import EarnLabActivityRail from '@/components/offers/EarnLabActivityRail';
 
 export const metadata: Metadata = {
     title: 'Compare High-Paying Offers | EarnGrind',
@@ -37,8 +36,6 @@ export default function OffersPage() {
                         ))}
                     </div>
                 </div>
-
-                <EarnLabActivityRail />
 
                 {/* Main Client UI */}
                 <Suspense fallback={null}>

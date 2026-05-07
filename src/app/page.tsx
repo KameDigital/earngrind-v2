@@ -5,6 +5,7 @@ import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
 import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 import type { RailPreviewRoute, RailPreviewTask } from "@/components/home/GamePreviewModal";
+import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
 import { getGainGalleryOffers, type GainGalleryOffer } from "@/lib/gain-gallery";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
@@ -737,25 +738,14 @@ export default async function HomePage() {
         ],
       },
     }));
-  const featuredGameRail: FeaturedOfferRailItem[] = featuredGames.map((game) => ({
-    id: `game-${game.slug}`,
-    href: `/games/${game.slug}`,
-    title: game.name,
-    badge: "Game page",
-    provider: game.provider ?? "Game Page",
-    imageUrl: game.thumbnail,
-    preview: {
-      title: game.name,
-      description: `Preview available ${game.name} routes, milestones, and payout options before opening the full comparison page.`,
-      imageUrl: game.thumbnail,
-      gameHref: `/games/${game.slug}`,
-      guideHref: guideHrefForGame(game.slug),
-      routes: modalRoutesByGameKey[game.slug] ?? [],
-    },
-  }));
-
   return (
     <main className="min-h-screen">
+      <section className="bg-[var(--surface-muted)] px-4 pb-2 pt-4 sm:px-6 sm:pt-5 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <EarnLabActivityRail />
+        </div>
+      </section>
+
       <section
         className="relative overflow-hidden pt-14 pb-14 sm:pt-16 sm:pb-16 px-4 sm:px-6 lg:px-8"
         style={{
@@ -939,11 +929,6 @@ export default async function HomePage() {
                 />
               </div>
               <div className="mt-10">
-                <FeaturedOfferRail
-                  items={featuredGameRail}
-                  title="Featured Games"
-                  description={undefined}
-                />
               </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import type { SeoOfferRow } from "../_lib/seo-data";
 import { formatMoney } from "../_lib/seo-data";
@@ -232,27 +232,33 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
   const [expandedOffers, setExpandedOffers] = useState<Record<string, boolean>>({});
   const [selectedOffers, setSelectedOffers] = useState<string[]>([]);
 
-  const providerOfferCounts = rows.reduce((acc, row) => {
+  const providerOfferCounts = useMemo(() => rows.reduce((acc, row) => {
     acc.set(row.providerName, (acc.get(row.providerName) ?? 0) + 1);
     return acc;
-  }, new Map<string, number>());
+  }, new Map<string, number>()), [rows]);
 
-  const rowsAfterFilters = rows.filter((row) => {
+  const rowsAfterFilters = useMemo(() => rows.filter((row) => {
     const devices = inferDevices(row);
     const deviceMatch = deviceFilter === "all" ? true : devices.includes(deviceFilter);
     const taskMatch = taskFilter === "all" ? true : getTaskMode(row) === taskFilter;
     return deviceMatch && taskMatch;
-  });
+  }), [deviceFilter, rows, taskFilter]);
 
-  const sortedRows = sortRows(rowsAfterFilters, sortBy, providerOfferCounts);
+  const sortedRows = useMemo(
+    () => sortRows(rowsAfterFilters, sortBy, providerOfferCounts),
+    [providerOfferCounts, rowsAfterFilters, sortBy],
+  );
   const bestOverall = sortedRows[0] ?? null;
   const lowValueThreshold = bestOverall ? Math.max(1, bestOverall.totalPayoutUsd * 0.15) : 0;
 
-  const visibleRows = showLowValue
-    ? sortedRows
-    : sortedRows.filter((row) => row.totalPayoutUsd >= lowValueThreshold);
+  const visibleRows = useMemo(
+    () => showLowValue
+      ? sortedRows
+      : sortedRows.filter((row) => row.totalPayoutUsd >= lowValueThreshold),
+    [lowValueThreshold, showLowValue, sortedRows],
+  );
 
-  const groupedProviders = visibleRows.reduce<ProviderGroup[]>((acc, row) => {
+  const groupedProviders = useMemo(() => visibleRows.reduce<ProviderGroup[]>((acc, row) => {
     const current = acc.find((group) => group.providerName === row.providerName);
     if (current) {
       current.offers.push(row);
@@ -264,7 +270,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
       bestOffer: row,
     });
     return acc;
-  }, []);
+  }, []), [visibleRows]);
 
   const selectedRows = rows.filter((row) => selectedOffers.includes(row.id)).slice(0, 3);
   const topGridRows = visibleRows.slice(0, 3);

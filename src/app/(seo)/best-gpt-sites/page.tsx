@@ -94,6 +94,10 @@ export default async function BestGptSitesPage() {
   const featuredReviews = reviews.slice(0, 3);
   const primaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "primary");
   const secondaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "secondary");
+  const heroPlatform =
+    primaryPlatforms.find((platform) => best?.platformName?.toLowerCase().includes(platform.name.toLowerCase())) ??
+    primaryPlatforms[0] ??
+    null;
   const bestReview = best
     ? reviews.find((review) => review.platforms?.name?.toLowerCase() === best.platformName.toLowerCase()) ?? null
     : null;
@@ -168,6 +172,15 @@ export default async function BestGptSitesPage() {
                   : "Check back later for live payout comparisons."}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
+                {heroPlatform ? (
+                  <Link
+                    href={buildTrackedPlatformHref(heroPlatform, "best_gpt_sites_hero_primary")}
+                    prefetch={false}
+                    className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                  >
+                    Start with the top GPT site
+                  </Link>
+                ) : null}
                 <Link href="#best-site-offers" className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px">
                   Compare Live Offers
                 </Link>
@@ -328,6 +341,8 @@ export default async function BestGptSitesPage() {
             <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/guides">Game Guides</Link>
             <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/highest-paying-gpt-games">Highest Paying GPT Games</Link>
             <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/best-money-making-games">Best Money-Making Games</Link>
+            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/best-freecash-games">Best Freecash Games</Link>
+            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/best-gain-gg-offers">Best Gain.gg Offers</Link>
           </div>
         </section>
 

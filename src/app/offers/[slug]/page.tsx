@@ -829,6 +829,39 @@ export default async function GameOffersPage({
                     </>
                 )}
 
+                {bestOffer?.redirect_url && (
+                    <div className="bg-white rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] p-5">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <div className="text-xs font-extrabold uppercase tracking-wider text-[var(--text-tertiary)] mb-1">
+                                    Best available route
+                                </div>
+                                <h2 className="text-xl font-extrabold text-[var(--brand-ink)]">
+                                    Start the best available payout
+                                </h2>
+                                <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                                    {bestOffer.platform.name} is currently showing ${bestOffer.payout_usd.toFixed(2)} for {game.name}.
+                                </p>
+                            </div>
+                            <TrackedOutboundLink
+                                href={bestOffer.redirect_url}
+                                eventLabel="offer-detail-bottom-recap-cta"
+                                offerId={bestOffer.id}
+                                offerTitle={game.name}
+                                gameTitle={game.name}
+                                platformName={bestOffer.platform?.name}
+                                providerName={bestOffer.provider_name}
+                                payoutUsd={bestOffer.payout_usd}
+                                location="offer_detail_bottom_recap"
+                                sourceContext="offer_detail"
+                                className="inline-flex justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                            >
+                                Start the best available payout
+                            </TrackedOutboundLink>
+                        </div>
+                    </div>
+                )}
+
                 {/* ── Back link ── */}
                 <div className="px-1">
                     <Link

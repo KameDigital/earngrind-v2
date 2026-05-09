@@ -64,6 +64,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
   }).sort((a, b) => b.payoutUsd - a.payoutUsd);
 
   const bestOffer = rows[0];
+  const bestEligibleOffer = rows.find((row) => isPublicPayoutEligible(row.payoutUsd, row.totalPayoutUsd));
   const primaryGuide = data.guides[0] ?? null;
   const providerGroups = rows.reduce((acc, row) => {
     const key = row.providerName || "Unknown Provider";
@@ -312,6 +313,37 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
             </div>
           </div>
         </section>
+
+        {bestEligibleOffer ? (
+          <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="section-label">Best available route</p>
+                <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
+                  Start highest payout for {data.game.name}
+                </h2>
+                <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                  {bestEligibleOffer.providerName} on {bestEligibleOffer.platformName} is currently showing {formatMoney(bestEligibleOffer.totalPayoutUsd)}.
+                </p>
+              </div>
+              <TrackedOutboundLink
+                href={bestEligibleOffer.redirectUrl}
+                eventLabel="game-bottom-recap-cta"
+                offerId={bestEligibleOffer.id}
+                offerTitle={bestEligibleOffer.title}
+                gameTitle={data.game.name}
+                platformName={bestEligibleOffer.platformName}
+                providerName={bestEligibleOffer.providerName}
+                payoutUsd={bestEligibleOffer.totalPayoutUsd}
+                location="game_bottom_recap"
+                sourceContext="game_page"
+                className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+              >
+                Start highest payout
+              </TrackedOutboundLink>
+            </div>
+          </section>
+        ) : null}
 
         <FAQSection items={faqItems} />
       </Container>

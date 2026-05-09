@@ -2,12 +2,14 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/layout/Container";
+import { canonicalAlternates } from "@/lib/seo-metadata";
 
 export const revalidate = 120;
 
 export const metadata: Metadata = {
     title: "Blog — Offerwall Strategies & Earning Tips | EarnGrind",
     description: "In-depth articles on offerwall strategy, GPT site comparisons, and how to maximize earnings from mobile game offers.",
+    alternates: canonicalAlternates("/blog"),
 };
 
 const PAGE_SIZE = 12;

@@ -5,10 +5,12 @@ import Container from "@/components/layout/Container";
 import Card from "@/components/ui/Card";
 import RatingPill from "@/components/ui/RatingPill";
 import { getSiteUrl } from "@/lib/site-url";
+import { canonicalAlternates } from "@/lib/seo-metadata";
 
 export const metadata: Metadata = {
     title: "GPT Site Reviews | Compare Trust, Payout Quality, and User Experience | EarnGrind",
     description: "Compare GPT site reviews by trust, payout quality, and user experience so you can decide which platforms are worth joining before you start offers.",
+    alternates: canonicalAlternates("/reviews"),
 };
 
 interface ReviewPlatform {

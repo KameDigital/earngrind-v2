@@ -5,10 +5,12 @@ import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/layout/Container";
 import { STATIC_GUIDES } from "@/lib/static-guides";
 import { pickPublicArtworkUrl } from "@/lib/public-image-url";
+import { canonicalAlternates } from "@/lib/seo-metadata";
 
 export const metadata: Metadata = {
     title: "Game Guides — Maximize Your Offerwall Earnings | EarnGrind",
     description: "Step-by-step guides for the most popular offerwall game tasks. Learn the fastest routes to max payout on Coin Master, Bingo Blitz, and more.",
+    alternates: canonicalAlternates("/guides"),
 };
 
 const PAGE_SIZE = 18;

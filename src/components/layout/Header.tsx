@@ -9,6 +9,7 @@ const NAV_LINKS = [
     { href: "/offers", label: "Offers" },
     { href: "/games", label: "Games" },
     { href: "/guides", label: "Guides" },
+    { href: "/best-gpt-sites", label: "Best GPT Sites" },
     { href: "/reviews", label: "Platforms" },
     { href: "/blog", label: "Blog" },
 ];

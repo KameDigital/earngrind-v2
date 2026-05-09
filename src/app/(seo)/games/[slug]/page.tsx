@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import { isPublicPayoutEligible } from "@/lib/offer-quality";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "../../components/FAQSection";
 import GameHeader from "../../components/GameHeader";
@@ -32,13 +33,24 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: "Game Offers Not Found | EarnGrind",
       description: "The requested game page could not be found.",
       path: `/games/${params.slug}`,
+      indexable: false,
     });
   }
-  const maxPayout = data.comparison.summary.best_total_payout_usd || data.summary.max_payout_usd || 0;
+  const rows = mapComparisonToSeoRows(data.comparison.offers, {
+    name: data.game.name,
+    slug: data.game.slug,
+  });
+  const hasEligibleOffer = rows.some((row) => isPublicPayoutEligible(row.payoutUsd, row.totalPayoutUsd));
+  const indexable =
+    hasEligibleOffer ||
+    data.guides.length > 0 ||
+    (data.game.description?.trim().length ?? 0) >= 80;
+
   return buildSeoMetadata({
     title: `Best ${data.game.name} Offers: Payouts and Routes (${new Date().getFullYear()})`,
     description: `Compare ${data.game.name} offers by provider, payout, and task milestones. Track top payout opportunities in one place.`,
-    path: `/games/${params.slug}`,
+    path: `/games/${data.game.slug}`,
+    indexable,
   });
 }
 

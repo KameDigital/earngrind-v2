@@ -1,9 +1,15 @@
 import { logout } from "@/app/login/actions";
 import { createClient } from "@/lib/supabase/server";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import AdminNav from "./AdminNav";
 import AdminSearch from "./AdminSearch";
+import { noindexFollowRobots } from "@/lib/seo-metadata";
+
+export const metadata: Metadata = {
+    robots: noindexFollowRobots(),
+};
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
     const supabase = createClient();

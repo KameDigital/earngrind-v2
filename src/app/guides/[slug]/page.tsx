@@ -13,6 +13,9 @@ import GuideOfferCtaBlock from "./GuideOfferCtaBlock";
 import { matchOffersToGuide, type GuideOfferMatch } from "@/lib/guide-offer-matcher";
 import { summarizeGuideEvents, type GuideEventRow } from "@/lib/guide-event-stats";
 import { absoluteUrl } from "@/lib/site-url";
+import { evaluateIndexingReadiness } from "@/lib/indexing-readiness";
+import { getDuplicateKeywordGuideIds, shouldIncludeGuideInSitemap } from "@/lib/sitemap-quality";
+import { noindexFollowRobots, robotsForIndexability } from "@/lib/seo-metadata";
 import { seaOfConquestRoiGuideOverride } from "./seaOfConquestRoiGuide";
 
 const GUIDE_SLUG_REDIRECTS: Record<string, string> = {
@@ -76,16 +79,28 @@ export async function generateMetadata(
     const supabase = createClient();
     const { data: guide } = await supabase
         .from("guides")
-        .select("title, seo_title, seo_description, excerpt, max_payout_usd")
+        .select("id, title, slug, status, body_md, seo_title, seo_description, excerpt, max_payout_usd, keyword_target, keyword_cluster_id, keyword_intent, needs_variation, updated_at, published_at")
         .eq("slug", metadataSlug)
         .eq("status", "published")
         .maybeSingle();
 
-    if (!guide) return { title: "Guide Not Found | EarnGrind" };
+    if (!guide) return { title: "Guide Not Found | EarnGrind", robots: noindexFollowRobots() };
+
+    const { data: allGuides } = await supabase
+        .from("guides")
+        .select("id, title, slug, status, body_md, seo_title, seo_description, keyword_target, keyword_cluster_id, keyword_intent, needs_variation, updated_at, published_at")
+        .eq("status", "published");
 
     const guideForMetadata = metadataSlug === "sea-of-conquest-flagship-level-30-guide"
         ? { ...guide, ...seaOfConquestRoiGuideOverride }
         : guide;
+    const duplicateGuideIds = getDuplicateKeywordGuideIds(allGuides ?? []);
+    const sitemapDecision = shouldIncludeGuideInSitemap(guide, duplicateGuideIds);
+    const readiness = evaluateIndexingReadiness({
+        guide: guideForMetadata,
+        allGuides: allGuides ?? [],
+        includedInSitemap: sitemapDecision.include,
+    });
     const title = guideForMetadata.seo_title ?? guideForMetadata.title;
     const desc  = guideForMetadata.seo_description ?? guideForMetadata.excerpt ??
         `Compare ${guide.title} requirements, payout milestones, and completion tips before starting. Verify live terms because payouts and tasks can change.`;
@@ -97,6 +112,7 @@ export async function generateMetadata(
         alternates: {
             canonical,
         },
+        robots: robotsForIndexability(readiness.ready),
         openGraph: {
             title,
             description: desc,

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { getSiteUrl } from "@/lib/site-url";
+import { canonicalAlternates, robotsForIndexability } from "@/lib/seo-metadata";
 
 const SITE_URL = getSiteUrl();
 
@@ -235,18 +236,21 @@ export function buildSeoMetadata(input: {
   description: string;
   path: string;
   imagePath?: string;
+  canonicalPath?: string;
+  indexable?: boolean;
 }): Metadata {
   const image = input.imagePath ?? "/og-earngrind.png";
+  const canonicalPath = input.canonicalPath ?? input.path;
+  const canonicalUrl = `${SITE_URL}${canonicalPath}`;
   return {
     title: input.title,
     description: input.description,
-    alternates: {
-      canonical: input.path,
-    },
+    alternates: canonicalAlternates(canonicalPath),
+    robots: robotsForIndexability(input.indexable ?? true),
     openGraph: {
       title: input.title,
       description: input.description,
-      url: `${SITE_URL}${input.path}`,
+      url: canonicalUrl,
       images: [{ url: image, width: 1200, height: 630, alt: input.title }],
       type: "article",
     },

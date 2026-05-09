@@ -2,10 +2,12 @@ import { Metadata } from 'next';
 import React, { Suspense } from 'react';
 import OfferSearchEngine from '@/components/offers/OfferSearchEngine';
 import Container from '@/components/layout/Container';
+import { canonicalAlternates } from '@/lib/seo-metadata';
 
 export const metadata: Metadata = {
     title: 'Compare High-Paying Offers | EarnGrind',
     description: 'Compare current payouts, filter live offer opportunities, and find the best-paying games, signup routes, and tasks faster.',
+    alternates: canonicalAlternates('/offers'),
 };
 
 export default function OffersPage() {

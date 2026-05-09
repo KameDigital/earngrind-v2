@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
+import { isPublicPayoutEligible } from "@/lib/offer-quality";
+import { shouldIncludeGeneratedHowToEarnInSitemap } from "@/lib/sitemap-quality";
 import FAQSection from "../../../components/FAQSection";
 import OfferTable from "../../../components/OfferTable";
 import ProviderComparison from "../../../components/ProviderComparison";
@@ -29,14 +31,37 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title: "Guide Not Found | EarnGrind",
       description: "The guide you requested does not exist.",
       path: `/guides/how-to-earn/${params.slug}`,
+      indexable: false,
     });
   }
 
+  const rows = mapComparisonToSeoRows(data.comparison.offers, { name: data.game.name, slug: data.game.slug });
+  const eligibleOfferCount = rows.filter((row) => isPublicPayoutEligible(row.payoutUsd, row.totalPayoutUsd)).length;
+  const curatedGuide = data.guides[0] ?? null;
+  const hasTaskData = rows.some((row) => row.tasks.length > 0);
+  const latestOfferUpdate = rows.find((row) => row.updatedAt)?.updatedAt ?? null;
+  const sitemapDecision = shouldIncludeGeneratedHowToEarnInSitemap({
+    id: data.game.id,
+    slug: data.game.slug,
+    updated_at: latestOfferUpdate,
+    description: data.game.description,
+  }, {
+    eligibleOfferCount,
+    hasCuratedGuide: Boolean(curatedGuide),
+    hasTaskData,
+  });
+  const canonicalPath = curatedGuide
+    ? `/guides/${curatedGuide.slug}`
+    : sitemapDecision.include
+      ? `/guides/how-to-earn/${data.game.slug}`
+      : `/games/${data.game.slug}`;
   const maxPayout = data.comparison.summary.best_total_payout_usd || data.summary.max_payout_usd || 0;
   return buildSeoMetadata({
     title: `How to Earn with ${data.game.name} Offers - Up To ${formatMoney(maxPayout)}`,
     description: `Step-by-step ${data.game.name} guide with payout breakdown, provider comparison, and milestone tasks.`,
-    path: `/guides/how-to-earn/${params.slug}`,
+    path: `/guides/how-to-earn/${data.game.slug}`,
+    canonicalPath,
+    indexable: sitemapDecision.include,
   });
 }
 

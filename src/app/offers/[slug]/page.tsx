@@ -9,6 +9,7 @@ import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
 import { formatPayoutFreshness } from '@/lib/payout-freshness';
 import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
+import { robotsForIndexability, noindexFollowRobots } from '@/lib/seo-metadata';
 import { EarnLabCountryOffersPage } from '@/components/offers/EarnLabCountryOffersPage';
 import { getEarnLabCountryName, isSupportedEarnLabCountry, normalizeEarnLabCountryCode } from '@/lib/earnlab-gallery';
 import { pickPublicArtworkUrl } from '@/lib/public-image-url';
@@ -135,6 +136,7 @@ export async function generateMetadata(
             alternates: {
                 canonical,
             },
+            robots: robotsForIndexability(true),
             openGraph: {
                 title: `Best EarnLab Offers in ${countryName} | EarnGrind`,
                 description: `Compare EarnLab rewards, task requirements, and available app offers for ${countryName}.`,
@@ -144,15 +146,22 @@ export async function generateMetadata(
     }
 
     const data = await getGameData(params.slug);
-    if (!data) return { title: 'Game Not Found | EarnGrind' };
+    if (!data) {
+        return {
+            title: 'Game Not Found | EarnGrind',
+            robots: noindexFollowRobots(),
+        };
+    }
     const { game, summary } = data;
     const canonical = absoluteUrl(`/offers/${params.slug}`);
+    const indexable = summary.offer_count > 0;
     return {
         title: `${game.name} Offers: Payouts and Provider Routes | EarnGrind`,
         description: `Compare ${summary.offer_count} ${game.name} offer${summary.offer_count !== 1 ? 's' : ''} across platforms. Max payout: $${summary.max_payout_usd.toFixed(2)}. ${game.description ?? ''}`.trim(),
         alternates: {
             canonical,
         },
+        robots: robotsForIndexability(indexable),
         openGraph: {
             title: `${game.name} Offers | EarnGrind`,
             description: `Compare current ${game.name} payouts and routes across GPT platforms before clicking out.`,

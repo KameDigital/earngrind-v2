@@ -1,11 +1,36 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase/server';
-import { analyzeGuideQuality } from '@/lib/guide-quality';
 import { getGuideSitemapPriority } from '@/lib/indexing-readiness';
+import {
+    getDuplicateKeywordGuideIds,
+    getEligibleOfferStats,
+    shouldIncludeGameInSitemap,
+    shouldIncludeGeneratedHowToEarnInSitemap,
+    shouldIncludeGuideInSitemap,
+    shouldIncludeOfferPageInSitemap,
+} from '@/lib/sitemap-quality';
 import { getSiteUrl } from '@/lib/site-url';
 import { STATIC_GUIDES } from '@/lib/static-guides';
 
 export const revalidate = 3600; // regenerate every hour
+
+const STATIC_PAGE_LAST_MODIFIED = new Date('2026-05-09T00:00:00.000Z');
+const OFFER_PAGE_SIZE = 1000;
+const MAX_SITEMAP_OFFERS = 20000;
+
+function staticPage(
+    baseUrl: string,
+    path: string,
+    changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'],
+    priority: number,
+): MetadataRoute.Sitemap[number] {
+    return {
+        url: path === '/' ? baseUrl : `${baseUrl}${path}`,
+        lastModified: STATIC_PAGE_LAST_MODIFIED,
+        changeFrequency,
+        priority,
+    };
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = getSiteUrl();
@@ -20,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ] = await Promise.all([
         supabase
             .from('guides')
-            .select('slug, updated_at, body_md, seo_title, seo_description, keyword_target')
+            .select('id, status, slug, updated_at, body_md, seo_title, seo_description, keyword_target, keyword_cluster_id, keyword_intent, needs_variation, game_id')
             .eq('status', 'published')
             .order('updated_at', { ascending: false }),
         supabase
@@ -34,61 +59,100 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .eq('status', 'published'),
         supabase
             .from('games')
-            .select('slug, updated_at')
+            .select('id, slug, updated_at, description')
             .order('updated_at', { ascending: false })
             .limit(500),
     ]);
+    const offers = await fetchSitemapOffers(supabase);
+
+    const offerStats = getEligibleOfferStats(offers ?? []);
+    const publishedGuideGameIds = new Set(
+        (guides ?? [])
+            .map((guide) => guide.game_id)
+            .filter((gameId): gameId is string => Boolean(gameId)),
+    );
+    const duplicateKeywordGuideIds = getDuplicateKeywordGuideIds(guides ?? []);
+    const { data: taskRows } = offerStats.eligibleManualOfferIds.length
+        ? await supabase
+            .from('site_offer_tasks')
+            .select('site_offer_id')
+            .in('site_offer_id', offerStats.eligibleManualOfferIds)
+        : { data: [] };
+    const manualOfferIdsWithTasks = new Set(
+        (taskRows ?? [])
+            .map((task) => task.site_offer_id)
+            .filter((siteOfferId): siteOfferId is string => Boolean(siteOfferId)),
+    );
+    const gameIdsWithTaskData = new Set(
+        (offers ?? [])
+            .filter((offer) => offer.source === 'manual' && offer.id && manualOfferIdsWithTasks.has(offer.id))
+            .map((offer) => offer.game_id)
+            .filter((gameId): gameId is string => Boolean(gameId)),
+    );
 
     // Static pages
     const staticPages: MetadataRoute.Sitemap = [
-        { url: baseUrl,                        lastModified: new Date(), changeFrequency: 'daily',   priority: 1.0 },
-        { url: `${baseUrl}/offers`,            lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
-        { url: `${baseUrl}/guides`,            lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
-        { url: `${baseUrl}/guides/how-to-earn`,lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
-        { url: `${baseUrl}/blog`,              lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
-        { url: `${baseUrl}/reviews`,           lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
-        { url: `${baseUrl}/best-gpt-sites`,            lastModified: new Date(), changeFrequency: 'daily',   priority: 0.85 },
-        { url: `${baseUrl}/highest-paying-gpt-games`,  lastModified: new Date(), changeFrequency: 'daily',   priority: 0.85 },
-        { url: `${baseUrl}/best-freecash-games`,       lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
-        { url: `${baseUrl}/best-gain-gg-offers`,       lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
-        { url: `${baseUrl}/offers/gain/us`,            lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
-        { url: `${baseUrl}/offers/gain/us/native`,     lastModified: new Date(), changeFrequency: 'daily',   priority: 0.72 },
-        { url: `${baseUrl}/offers/gain/us/revu`,       lastModified: new Date(), changeFrequency: 'daily',   priority: 0.72 },
-        { url: `${baseUrl}/offers/gain/us/adtowall`,   lastModified: new Date(), changeFrequency: 'daily',   priority: 0.72 },
-        { url: `${baseUrl}/offers/gain/us/asmwall`,    lastModified: new Date(), changeFrequency: 'daily',   priority: 0.72 },
-        { url: `${baseUrl}/offers/gain/us/lootably`,   lastModified: new Date(), changeFrequency: 'daily',   priority: 0.72 },
-        { url: `${baseUrl}/offers/gain/us/cpx`,        lastModified: new Date(), changeFrequency: 'daily',   priority: 0.68 },
-        { url: `${baseUrl}/offers/gemsloot/us`,        lastModified: new Date(), changeFrequency: 'daily',   priority: 0.8 },
-        { url: `${baseUrl}/offers/gemsloot/us/gemsloot`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.72 },
-        { url: `${baseUrl}/offers/gemsloot/us/torox`,  lastModified: new Date(), changeFrequency: 'daily',   priority: 0.72 },
-        { url: `${baseUrl}/offers/gemsloot/us/revu`,   lastModified: new Date(), changeFrequency: 'daily',   priority: 0.72 },
-        { url: `${baseUrl}/offers/gemsloot/us/bitlabs`, lastModified: new Date(), changeFrequency: 'daily',  priority: 0.72 },
-        { url: `${baseUrl}/best-money-making-games`,   lastModified: new Date(), changeFrequency: 'daily',   priority: 0.85 },
-        { url: `${baseUrl}/about`,             lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-        { url: `${baseUrl}/how-it-works`,      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+        staticPage(baseUrl, '/', 'daily', 1.0),
+        staticPage(baseUrl, '/offers', 'daily', 0.9),
+        staticPage(baseUrl, '/guides', 'weekly', 0.8),
+        staticPage(baseUrl, '/guides/how-to-earn', 'weekly', 0.8),
+        staticPage(baseUrl, '/blog', 'weekly', 0.7),
+        staticPage(baseUrl, '/reviews', 'weekly', 0.7),
+        staticPage(baseUrl, '/best-gpt-sites', 'daily', 0.85),
+        staticPage(baseUrl, '/highest-paying-gpt-games', 'daily', 0.85),
+        staticPage(baseUrl, '/best-freecash-games', 'daily', 0.8),
+        staticPage(baseUrl, '/best-gain-gg-offers', 'daily', 0.8),
+        staticPage(baseUrl, '/offers/gain/us', 'daily', 0.8),
+        staticPage(baseUrl, '/offers/gain/us/native', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gain/us/revu', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gain/us/adtowall', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gain/us/asmwall', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gain/us/lootably', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gain/us/cpx', 'daily', 0.68),
+        staticPage(baseUrl, '/offers/gemsloot/us', 'daily', 0.8),
+        staticPage(baseUrl, '/offers/gemsloot/us/gemsloot', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gemsloot/us/torox', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gemsloot/us/revu', 'daily', 0.72),
+        staticPage(baseUrl, '/offers/gemsloot/us/bitlabs', 'daily', 0.72),
+        staticPage(baseUrl, '/best-money-making-games', 'daily', 0.85),
+        staticPage(baseUrl, '/about', 'monthly', 0.5),
+        staticPage(baseUrl, '/how-it-works', 'monthly', 0.5),
     ];
 
     // Dynamic game offer pages
-    const gameUrls: MetadataRoute.Sitemap = (games ?? []).map(g => ({
-        url:             `${baseUrl}/offers/${g.slug}`,
-        lastModified:    new Date(g.updated_at),
-        changeFrequency: 'daily' as const,
-        priority:        0.85,
-    }));
+    const gameUrls: MetadataRoute.Sitemap = (games ?? [])
+        .filter(g => shouldIncludeOfferPageInSitemap(g, offerStats.byGameId.get(g.id) ?? 0).include)
+        .map(g => ({
+            url:             `${baseUrl}/offers/${g.slug}`,
+            lastModified:    new Date(g.updated_at),
+            changeFrequency: 'daily' as const,
+            priority:        0.85,
+        }));
 
-    const seoGameUrls: MetadataRoute.Sitemap = (games ?? []).map(g => ({
-        url:             `${baseUrl}/games/${g.slug}`,
-        lastModified:    new Date(g.updated_at),
-        changeFrequency: 'daily' as const,
-        priority:        0.75,
-    }));
+    const seoGameUrls: MetadataRoute.Sitemap = (games ?? [])
+        .filter(g => shouldIncludeGameInSitemap(g, {
+            eligibleOfferCount: offerStats.byGameId.get(g.id) ?? 0,
+            hasPublishedGuide: publishedGuideGameIds.has(g.id),
+        }).include)
+        .map(g => ({
+            url:             `${baseUrl}/games/${g.slug}`,
+            lastModified:    new Date(g.updated_at),
+            changeFrequency: 'daily' as const,
+            priority:        0.75,
+        }));
 
-    const seoGuideUrls: MetadataRoute.Sitemap = (games ?? []).map(g => ({
-        url:             `${baseUrl}/guides/how-to-earn/${g.slug}`,
-        lastModified:    new Date(g.updated_at),
-        changeFrequency: 'weekly' as const,
-        priority:        0.62,
-    }));
+    const seoGuideUrls: MetadataRoute.Sitemap = (games ?? [])
+        .filter(g => shouldIncludeGeneratedHowToEarnInSitemap(g, {
+            eligibleOfferCount: offerStats.byGameId.get(g.id) ?? 0,
+            hasCuratedGuide: publishedGuideGameIds.has(g.id),
+            hasTaskData: gameIdsWithTaskData.has(g.id),
+        }).include)
+        .map(g => ({
+            url:             `${baseUrl}/guides/how-to-earn/${g.slug}`,
+            lastModified:    new Date(g.updated_at),
+            changeFrequency: 'weekly' as const,
+            priority:        0.62,
+        }));
 
     const staticGuideUrls: MetadataRoute.Sitemap = STATIC_GUIDES.map(guide => ({
         url:             `${baseUrl}${guide.href}`,
@@ -98,21 +162,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     // Guide pages — highest priority after homepage/offers (they target keywords)
-    const guideUrls: MetadataRoute.Sitemap = (guides ?? []).map(g => {
-        const quality = analyzeGuideQuality({
-            bodyHtml: g.body_md,
-            seoTitle: g.seo_title,
-            seoDescription: g.seo_description,
-            keywordTarget: g.keyword_target,
-        });
-
-        return {
-            url:             `${baseUrl}/guides/${g.slug}`,
-            lastModified:    new Date(g.updated_at),
+    const guideUrls: MetadataRoute.Sitemap = (guides ?? [])
+        .map(g => ({
+            guide: g,
+            decision: shouldIncludeGuideInSitemap(g, duplicateKeywordGuideIds),
+        }))
+        .filter(({ decision }) => decision.include)
+        .map(({ guide, decision }) => ({
+            url:             `${baseUrl}/guides/${guide.slug}`,
+            lastModified:    new Date(guide.updated_at),
             changeFrequency: 'weekly' as const,
-            priority:        getGuideSitemapPriority(quality.score),
-        };
-    });
+            priority:        getGuideSitemapPriority(decision.score),
+        }));
 
     // Blog posts
     const postUrls: MetadataRoute.Sitemap = (posts ?? []).map(p => ({
@@ -140,4 +201,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...postUrls,
         ...reviewUrls,
     ];
+}
+
+async function fetchSitemapOffers(supabase: ReturnType<typeof createClient>) {
+    const rows: Array<{
+        id: string | null;
+        source: string | null;
+        game_id: string | null;
+        game_slug: string | null;
+        payout_usd: number | string | null;
+        total_payout_usd: number | string | null;
+        updated_at: string | null;
+    }> = [];
+
+    for (let from = 0; from < MAX_SITEMAP_OFFERS; from += OFFER_PAGE_SIZE) {
+        const to = Math.min(from + OFFER_PAGE_SIZE - 1, MAX_SITEMAP_OFFERS - 1);
+        const { data, error } = await supabase
+            .from('unified_offers_view')
+            .select('id, source, game_id, game_slug, payout_usd, total_payout_usd, updated_at')
+            .order('updated_at', { ascending: false })
+            .range(from, to);
+
+        if (error) return rows;
+        rows.push(...(data ?? []));
+        if (!data || data.length < OFFER_PAGE_SIZE) break;
+    }
+
+    return rows;
 }

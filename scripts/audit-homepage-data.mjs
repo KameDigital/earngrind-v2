@@ -113,14 +113,33 @@ const earnLabFeaturedRows = featuredEarnLabTasksResult.data ?? [];
 const allRawOffers = [...homepageOffers, ...featuredGameOffers, ...earnLabFeaturedRows];
 const uniqueOfferIds = new Set(allRawOffers.map((offer) => offer.id).filter(Boolean));
 const duplicateOfferIds = allRawOffers.length - uniqueOfferIds.size;
-const gameIds = Array.from(new Set(allRawOffers.map((offer) => offer.game_id).filter(Boolean)));
+const normalizedHomepageOffers = normalizePublicOfferRows(homepageOffers);
+const normalizedFeaturedGameOffers = normalizePublicOfferRows(featuredGameOffers);
+const normalizedEarnLabRows = normalizePublicOfferRows(earnLabFeaturedRows);
+const allEligibleOfferRows = Array.from(
+  new Map(
+    [...normalizedHomepageOffers, ...normalizedFeaturedGameOffers, ...normalizedEarnLabRows].map((offer) => [offer.id, offer]),
+  ).values(),
+);
+const featuredGames = buildFeaturedGames(featuredGamesResult.data ?? [], normalizedFeaturedGameOffers, allEligibleOfferRows);
+const visibleRailOffers = buildEarnLabFeaturedOffers(normalizedEarnLabRows, allEligibleOfferRows);
+const modalRouteRows = getModalRouteRows(allEligibleOfferRows, featuredGames, visibleRailOffers);
+const currentTaskOfferIds = Array.from(new Set(modalRouteRows.map((offer) => offer.id).filter(Boolean)));
+const gameIds = Array.from(new Set(modalRouteRows.map((offer) => offer.game_id).filter(Boolean)));
 
-const [manualTasksResult, relatedGuidesResult, gainStatus] = await Promise.all([
+const [previousManualTasksResult, currentManualTasksResult, relatedGuidesResult, gainStatus] = await Promise.all([
   uniqueOfferIds.size
     ? supabase
         .from("site_offer_tasks")
         .select("site_offer_id, title, reward_amount, reward_display, time_limit_text, sort_order")
         .in("site_offer_id", Array.from(uniqueOfferIds))
+        .order("sort_order", { ascending: true })
+    : Promise.resolve({ data: [] }),
+  currentTaskOfferIds.length
+    ? supabase
+        .from("site_offer_tasks")
+        .select("site_offer_id, title, reward_amount, reward_display, time_limit_text, sort_order")
+        .in("site_offer_id", currentTaskOfferIds)
         .order("sort_order", { ascending: true })
     : Promise.resolve({ data: [] }),
   gameIds.length
@@ -135,7 +154,8 @@ const [manualTasksResult, relatedGuidesResult, gainStatus] = await Promise.all([
 ]);
 
 for (const [name, result] of [
-  ["manual tasks", manualTasksResult],
+  ["previous manual tasks", previousManualTasksResult],
+  ["current manual tasks", currentManualTasksResult],
   ["related guides", relatedGuidesResult],
 ]) {
   if (result.error) {
@@ -144,7 +164,8 @@ for (const [name, result] of [
   }
 }
 
-const manualTaskRows = manualTasksResult.data ?? [];
+const previousManualTaskRows = previousManualTasksResult.data ?? [];
+const manualTaskRows = currentManualTasksResult.data ?? [];
 const relatedGuideRows = relatedGuidesResult.data ?? [];
 const elapsedMs = Date.now() - startedAt;
 const warnings = [];
@@ -165,7 +186,12 @@ console.log(`Popular guides fetched: ${(popularGuidesResult.data ?? []).length}`
 console.log(`Combined raw offer rows: ${allRawOffers.length}`);
 console.log(`Unique offer IDs after dedupe: ${uniqueOfferIds.size}`);
 console.log(`Estimated duplicated offer IDs: ${duplicateOfferIds}`);
-console.log(`Manual task rows fetched: ${manualTaskRows.length}`);
+console.log(`Eligible offer IDs after homepage filtering: ${allEligibleOfferRows.length}`);
+console.log(`Visible rail offers prepared: ${visibleRailOffers.length}`);
+console.log(`Modal route offer IDs needing task preload: ${currentTaskOfferIds.length}`);
+console.log(`Manual task rows fetched previously: ${previousManualTaskRows.length}`);
+console.log(`Manual task rows fetched currently: ${manualTaskRows.length}`);
+console.log(`Manual task row reduction: ${Math.max(0, previousManualTaskRows.length - manualTaskRows.length)}`);
 console.log(`Related guide rows fetched: ${relatedGuideRows.length}`);
 console.log(`Related game IDs checked: ${gameIds.length}`);
 console.log(`Gain native provider call: ${gainStatus.ok ? "ok" : "failed"} (${gainStatus.message})`);
@@ -202,6 +228,33 @@ function getFeaturedGameAliases(name) {
   return [name, ...(aliases[name] ?? [])];
 }
 
+function normalizePublicOfferRows(rows) {
+  return rows
+    .map((row) => {
+      const payoutUsd = Number(row.payout_usd ?? 0);
+      const totalPayoutUsd = normalizeTotalPayout(payoutUsd, Number(row.total_payout_usd ?? payoutUsd));
+      return {
+        ...row,
+        payout_usd: payoutUsd,
+        total_payout_usd: totalPayoutUsd,
+      };
+    })
+    .filter((row) => isPublicPayoutEligible(row.payout_usd, row.total_payout_usd));
+}
+
+function isPublicPayoutEligible(payoutUsd, totalPayoutUsd) {
+  const threshold = Number(process.env.MIN_PUBLIC_OFFER_PAYOUT_USD ?? process.env.NEXT_PUBLIC_MIN_PUBLIC_OFFER_PAYOUT_USD ?? 0.05);
+  const minPayout = Number.isFinite(threshold) && threshold >= 0 ? threshold : 0.05;
+  return payoutUsd >= minPayout && totalPayoutUsd >= minPayout;
+}
+
+function normalizeTotalPayout(payoutUsd, totalPayoutUsd) {
+  if (!Number.isFinite(payoutUsd)) return Number.isFinite(Number(totalPayoutUsd)) ? Number(totalPayoutUsd) : 0;
+  const total = Number(totalPayoutUsd);
+  if (!Number.isFinite(total)) return payoutUsd;
+  return total < payoutUsd ? payoutUsd : total;
+}
+
 function buildHomepageIlikeFilters(groups, fields) {
   return groups
     .flatMap((group) =>
@@ -210,6 +263,144 @@ function buildHomepageIlikeFilters(groups, fields) {
       ),
     )
     .join(",");
+}
+
+function normalizeName(value) {
+  return (value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function safeSlug(value) {
+  return value
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function gameKeyFromParts(slug, name) {
+  return slug || (name ? safeSlug(name) : "");
+}
+
+function matchesAliasGroup(candidate, aliases) {
+  const normalizedCandidate = normalizeName(candidate);
+  if (!normalizedCandidate) return false;
+
+  return aliases.some((alias) => {
+    const normalizedAlias = normalizeName(alias);
+    return normalizedCandidate.includes(normalizedAlias) || normalizedAlias.includes(normalizedCandidate);
+  });
+}
+
+function matchesFeaturedName(candidate, targetName) {
+  const normalizedCandidate = normalizeName(candidate);
+  if (!normalizedCandidate) return false;
+
+  return getFeaturedGameAliases(targetName).some((alias) => {
+    const normalizedAlias = normalizeName(alias);
+    return normalizedCandidate.includes(normalizedAlias) || normalizedAlias.includes(normalizedCandidate);
+  });
+}
+
+function buildFeaturedGames(featuredGameRows, featuredGameOfferRows, allOfferRows) {
+  const bestImageByGameSlug = new Map(
+    allOfferRows
+      .filter((row) => row.game_slug)
+      .map((row) => [
+        row.game_slug,
+        row.image_url ?? row.game_thumbnail ?? row.platform_logo ?? null,
+      ]),
+  );
+
+  return FEATURED_GAME_NAMES.map((gameName) => {
+    const matchingGame = featuredGameRows.find((game) => matchesFeaturedName(game.name, gameName)) ?? null;
+    const matchingOffer =
+      featuredGameOfferRows.find(
+        (row) => matchesFeaturedName(row.game_name, gameName) || matchesFeaturedName(row.title, gameName),
+      ) ?? null;
+    const derivedSlug = matchingGame?.slug ?? matchingOffer?.game_slug ?? safeSlug(gameName);
+
+    return {
+      id: matchingGame?.id ?? matchingOffer?.game_id ?? null,
+      slug: derivedSlug,
+      name: matchingGame?.name ?? matchingOffer?.game_name ?? gameName,
+      thumbnail:
+        matchingGame?.thumbnail_url ??
+        (matchingOffer?.game_slug ? bestImageByGameSlug.get(matchingOffer.game_slug) ?? null : null) ??
+        matchingOffer?.image_url ??
+        matchingOffer?.game_thumbnail ??
+        null,
+      provider: matchingOffer?.platform_name ?? matchingOffer?.provider_name ?? "Game Page",
+    };
+  });
+}
+
+function buildEarnLabFeaturedOffers(featuredEarnLabTaskRows, allOfferRows) {
+  const homepageOfferCardRows = allOfferRows
+    .map((row) => ({
+      ...row,
+      image_url: row.image_url ?? row.game_thumbnail ?? row.platform_logo ?? null,
+    }))
+    .filter((row) => row.game_slug || row.game_name);
+
+  const earnLabFeaturedOfferRows = FEATURED_EARNLAB_TASK_GROUPS
+    .map((aliases) =>
+      featuredEarnLabTaskRows
+        .filter((row) => {
+          if (row.platform_name !== "EarnLab") return false;
+          return matchesAliasGroup(row.title, aliases) || matchesAliasGroup(row.game_name, aliases);
+        })
+        .sort((a, b) => (b.total_payout_usd ?? b.payout_usd ?? 0) - (a.total_payout_usd ?? a.payout_usd ?? 0))[0] ?? null,
+    )
+    .filter(Boolean);
+
+  const earnLabPrimaryOffers = earnLabFeaturedOfferRows.map((row) => ({
+    ...row,
+    badge: "EarnLab featured",
+    image_url: row.image_url ?? row.game_thumbnail ?? row.platform_logo ?? null,
+  }));
+
+  const fallbackHighestOffers = Array.from(
+    new Map(
+      homepageOfferCardRows.map((row) => [
+        row.game_slug ?? row.game_name ?? row.id,
+        {
+          ...row,
+          badge: "Live offer",
+          image_url: row.image_url ?? row.game_thumbnail ?? row.platform_logo ?? null,
+        },
+      ]),
+    ).values(),
+  );
+
+  return [
+    ...earnLabPrimaryOffers,
+    ...fallbackHighestOffers.filter((row) => !earnLabPrimaryOffers.some((featured) => featured.id === row.id)),
+  ].slice(0, 6);
+}
+
+function getModalRouteRows(allOfferRows, featuredGames, visibleRailOffers) {
+  const visibleGameKeys = new Set(
+    visibleRailOffers
+      .map((offer) => gameKeyFromParts(offer.game_slug, offer.game_name))
+      .filter(Boolean),
+  );
+  const visibleFeaturedGames = featuredGames.filter((game) => visibleGameKeys.has(game.slug));
+
+  return allOfferRows.filter((row) => {
+    const rowKey = gameKeyFromParts(row.game_slug, row.game_name);
+    if (visibleGameKeys.has(rowKey)) return true;
+
+    return visibleFeaturedGames.some(
+      (game) =>
+        row.game_slug === game.slug ||
+        matchesFeaturedName(row.game_name, game.name) ||
+        matchesFeaturedName(row.title, game.name),
+    );
+  });
 }
 
 async function checkGainNativeStatus() {

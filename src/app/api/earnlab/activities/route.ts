@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const CACHE_CONTROL = "s-maxage=60, stale-while-revalidate=300";
+const CACHE_CONTROL = "s-maxage=3600, stale-while-revalidate=3600";
 
 export async function GET() {
     try {
@@ -26,4 +26,3 @@ export async function GET() {
         });
     }
 }
-

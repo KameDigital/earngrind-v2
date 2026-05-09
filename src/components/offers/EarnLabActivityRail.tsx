@@ -8,6 +8,14 @@ type RailState = {
     loading: boolean;
 };
 
+type CachedActivityRail = {
+    fetchedAt: number;
+    activities: EarnLabActivity[];
+};
+
+const ACTIVITY_CACHE_KEY = "earngrind:earnlab-activity-rail:v1";
+const ACTIVITY_REFRESH_MS = 60 * 60 * 1000;
+
 const amountFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -43,6 +51,7 @@ function Avatar({ activity }: { activity: EarnLabActivity }) {
 
     if (activity.avatarUrl && !imageFailed) {
         return (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
                 src={activity.avatarUrl}
                 alt={activity.username}
@@ -85,6 +94,36 @@ function ActivityCard({ activity }: { activity: EarnLabActivity }) {
     );
 }
 
+function readCachedActivities(): CachedActivityRail | null {
+    try {
+        const raw = window.localStorage.getItem(ACTIVITY_CACHE_KEY);
+        if (!raw) return null;
+
+        const parsed = JSON.parse(raw) as CachedActivityRail;
+        if (!Array.isArray(parsed.activities) || typeof parsed.fetchedAt !== "number") {
+            return null;
+        }
+
+        return parsed;
+    } catch {
+        return null;
+    }
+}
+
+function writeCachedActivities(activities: EarnLabActivity[]) {
+    try {
+        window.localStorage.setItem(
+            ACTIVITY_CACHE_KEY,
+            JSON.stringify({
+                fetchedAt: Date.now(),
+                activities,
+            } satisfies CachedActivityRail),
+        );
+    } catch {
+        // Storage can be unavailable in private or restricted browser contexts.
+    }
+}
+
 export default function EarnLabActivityRail() {
     const [{ activities, loading }, setState] = useState<RailState>({
         activities: [],
@@ -93,6 +132,8 @@ export default function EarnLabActivityRail() {
 
     useEffect(() => {
         let isActive = true;
+        let refreshTimeout: ReturnType<typeof setTimeout> | undefined;
+        let refreshInterval: ReturnType<typeof setInterval> | undefined;
 
         async function loadActivities() {
             try {
@@ -109,6 +150,7 @@ export default function EarnLabActivityRail() {
 
                 const payload = await response.json();
                 const nextActivities = Array.isArray(payload) ? (payload as EarnLabActivity[]) : [];
+                writeCachedActivities(nextActivities);
 
                 if (isActive) {
                     setState({
@@ -126,14 +168,37 @@ export default function EarnLabActivityRail() {
             }
         }
 
-        void loadActivities();
+        function scheduleHourlyRefresh(delayMs: number) {
+            refreshTimeout = setTimeout(() => {
+                void loadActivities();
+                refreshInterval = setInterval(() => {
+                    void loadActivities();
+                }, ACTIVITY_REFRESH_MS);
+            }, delayMs);
+        }
+
+        const cached = readCachedActivities();
+        const cacheAge = cached ? Date.now() - cached.fetchedAt : Number.POSITIVE_INFINITY;
+
+        if (cached && cacheAge >= 0 && cacheAge < ACTIVITY_REFRESH_MS) {
+            setState({
+                activities: cached.activities,
+                loading: false,
+            });
+            scheduleHourlyRefresh(ACTIVITY_REFRESH_MS - cacheAge);
+        } else {
+            void loadActivities();
+            scheduleHourlyRefresh(ACTIVITY_REFRESH_MS);
+        }
 
         return () => {
             isActive = false;
+            if (refreshTimeout) clearTimeout(refreshTimeout);
+            if (refreshInterval) clearInterval(refreshInterval);
         };
     }, []);
 
-    const content = useMemo(() => {
+    const marqueeItems = useMemo(() => {
         if (loading) {
             return Array.from({ length: 6 }, (_, index) => (
                 <div
@@ -151,10 +216,10 @@ export default function EarnLabActivityRail() {
             );
         }
 
-        return activities.map((activity) => (
-            <ActivityCard key={activity.id} activity={activity} />
-        ));
+        return activities.map((activity) => <ActivityCard key={activity.id} activity={activity} />);
     }, [activities, loading]);
+
+    const shouldAnimate = !loading && activities.length > 0;
 
     return (
         <section className="overflow-hidden border-y border-white/10 bg-[#070b16] text-white">
@@ -170,12 +235,45 @@ export default function EarnLabActivityRail() {
                     </div>
                 </div>
 
-                <div className="-mx-4 min-w-0 flex-1 overflow-x-auto px-4 hide-scrollbar sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
-                    <div className="flex min-h-14 snap-x snap-mandatory gap-3">
-                        {content}
+                <div className="-mx-4 min-w-0 flex-1 overflow-hidden px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
+                    <div className={shouldAnimate ? "activity-marquee flex min-h-14 w-max gap-3" : "flex min-h-14 gap-3"}>
+                        <div className="flex gap-3">
+                            {marqueeItems}
+                        </div>
+                        {shouldAnimate ? (
+                            <div className="flex gap-3" aria-hidden="true">
+                                {activities.map((activity) => (
+                                    <ActivityCard key={`${activity.id}-duplicate`} activity={activity} />
+                                ))}
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             </div>
+            <style jsx>{`
+                .activity-marquee {
+                    animation: earnlab-activity-marquee 48s linear infinite;
+                }
+
+                .activity-marquee:hover {
+                    animation-play-state: paused;
+                }
+
+                @keyframes earnlab-activity-marquee {
+                    from {
+                        transform: translateX(0);
+                    }
+                    to {
+                        transform: translateX(calc(-50% - 0.375rem));
+                    }
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .activity-marquee {
+                        animation: none;
+                    }
+                }
+            `}</style>
         </section>
     );
 }

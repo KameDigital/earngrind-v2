@@ -35,7 +35,7 @@ type EarnLabActivitiesPayload = EarnLabActivityResponse[] | {
 };
 
 const EARNLAB_ACTIVITIES_URL = "https://api.earnlab.com/activities";
-const EARNLAB_ACTIVITIES_REVALIDATE_SECONDS = 60;
+const EARNLAB_ACTIVITIES_REVALIDATE_SECONDS = 60 * 60;
 const EARNLAB_ACTIVITIES_TIMEOUT_MS = 8000;
 
 function normalizeActivityType(value: string | null | undefined): EarnLabActivityType {

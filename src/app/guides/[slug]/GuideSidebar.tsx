@@ -45,64 +45,61 @@ export default function GuideSidebar({
 
     return (
         <aside className="space-y-4">
-
-            {/* Box 1 — Quick Info + CTA */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
                 <div className="bg-gray-900 px-4 py-3">
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-lime-400 mb-0.5">Quick Info</div>
-                    <div className="text-white font-bold text-sm">{gameName}</div>
+                    <div className="mb-0.5 text-[10px] font-extrabold uppercase tracking-widest text-lime-400">Quick Info</div>
+                    <div className="text-sm font-bold text-white">{gameName}</div>
                 </div>
-                <div className="px-4 py-3 space-y-2.5">
-                    {guide.max_payout_usd != null && (
+                <div className="space-y-2.5 px-4 py-3">
+                    {guide.max_payout_usd != null ? (
                         <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-500 font-medium">Max payout</span>
+                            <span className="font-medium text-gray-500">Max payout</span>
                             <span className="font-extrabold text-lime-700">${guide.max_payout_usd.toFixed(2)}</span>
                         </div>
-                    )}
-                    {guide.difficulty && (
+                    ) : null}
+                    {guide.difficulty ? (
                         <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-500 font-medium">Difficulty</span>
-                            <span className={`text-xs font-bold uppercase px-2 py-0.5 rounded ${DIFF_BADGE[guide.difficulty] ?? "bg-gray-100 text-gray-600"}`}>
+                            <span className="font-medium text-gray-500">Difficulty</span>
+                            <span className={`rounded px-2 py-0.5 text-xs font-bold uppercase ${DIFF_BADGE[guide.difficulty] ?? "bg-gray-100 text-gray-600"}`}>
                                 {guide.difficulty}
                             </span>
                         </div>
-                    )}
-                    {guide.estimated_time && (
+                    ) : null}
+                    {guide.estimated_time ? (
                         <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-500 font-medium">Time</span>
+                            <span className="font-medium text-gray-500">Time</span>
                             <span className="font-semibold text-gray-700">{guide.estimated_time}</span>
                         </div>
-                    )}
-                    {tipCount > 0 && (
+                    ) : null}
+                    {tipCount > 0 ? (
                         <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-500 font-medium">Tips included</span>
+                            <span className="font-medium text-gray-500">Tips included</span>
                             <span className="font-semibold text-gray-700">{tipCount}</span>
                         </div>
-                    )}
+                    ) : null}
                 </div>
                 <div className="px-4 pb-4">
                     <Link
-                        href={`/offers/${gameSlug}`}
-                        className="block w-full text-center px-4 py-2.5 bg-gray-900 text-lime-400 text-sm font-extrabold rounded-xl hover:bg-gray-800 transition shadow-sm"
+                        href={`/games/${gameSlug}`}
+                        className="block w-full rounded-xl bg-gray-900 px-4 py-2.5 text-center text-sm font-extrabold text-lime-400 shadow-sm transition hover:bg-gray-800"
                     >
-                        View Offer →
+                        Compare live offers
                     </Link>
                 </div>
             </div>
 
-            {/* Box 4 — Anchor Navigation (shown near top for UX) */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
-                <div className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 mb-3">Quick Navigation</div>
+            <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <div className="mb-3 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">Quick Navigation</div>
                 <nav className="space-y-1 text-sm">
                     {[
-                        { href: "#overview", label: "📋 Overview" },
-                        { href: "#steps",    label: "🪜 Steps" },
-                        ...(tipCount > 0 ? [{ href: "#tips", label: "💡 Tips" }] : []),
+                        { href: "#overview", label: "Overview" },
+                        { href: "#steps", label: "Steps" },
+                        ...(tipCount > 0 ? [{ href: "#tips", label: "Tips" }] : []),
                     ].map(({ href, label }) => (
                         <a
                             key={href}
                             href={href}
-                            className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors font-medium"
+                            className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
                         >
                             {label}
                         </a>
@@ -110,10 +107,9 @@ export default function GuideSidebar({
                 </nav>
             </div>
 
-            {/* Box 2 — Related Guides */}
-            {guide.show_related_guides && relatedGuides.length > 0 && (
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 mb-3">
+            {guide.show_related_guides && relatedGuides.length > 0 ? (
+                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                    <div className="mb-3 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">
                         More {gameName} Guides
                     </div>
                     <div className="space-y-2">
@@ -121,29 +117,28 @@ export default function GuideSidebar({
                             <Link
                                 key={g.id}
                                 href={`/guides/${g.slug}`}
-                                className="group block p-2.5 rounded-xl border border-gray-100 hover:border-lime-300 hover:bg-lime-50/50 transition-all"
+                                className="group block rounded-xl border border-gray-100 p-2.5 transition-all hover:border-lime-300 hover:bg-lime-50/50"
                             >
-                                <div className="text-sm font-semibold text-gray-900 group-hover:text-lime-700 transition-colors leading-snug line-clamp-2">
+                                <div className="line-clamp-2 text-sm font-semibold leading-snug text-gray-900 transition-colors group-hover:text-lime-700">
                                     {g.title}
                                 </div>
-                                <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
-                                    {g.difficulty && (
-                                        <span className={`px-1.5 py-0.5 rounded font-bold uppercase ${DIFF_BADGE[g.difficulty] ?? ""}`}>
+                                <div className="mt-1 flex items-center gap-2 text-xs text-gray-400">
+                                    {g.difficulty ? (
+                                        <span className={`rounded px-1.5 py-0.5 font-bold uppercase ${DIFF_BADGE[g.difficulty] ?? ""}`}>
                                             {g.difficulty}
                                         </span>
-                                    )}
-                                    {g.estimated_time && <span>{g.estimated_time}</span>}
+                                    ) : null}
+                                    {g.estimated_time ? <span>{g.estimated_time}</span> : null}
                                 </div>
                             </Link>
                         ))}
                     </div>
                 </div>
-            )}
+            ) : null}
 
-            {/* Box 3 — Related Offers */}
-            {guide.show_related_offers && relatedOffers.length > 0 && (
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
-                    <div className="text-[10px] font-extrabold uppercase tracking-widest text-gray-400 mb-3">
+            {guide.show_related_offers && relatedOffers.length > 0 ? (
+                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                    <div className="mb-3 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">
                         Top Offers
                     </div>
                     <div className="space-y-2">
@@ -151,15 +146,15 @@ export default function GuideSidebar({
                             <Link
                                 key={o.id}
                                 href={`/offers/${o.game_slug}`}
-                                className="group flex items-center justify-between px-2.5 py-2 rounded-xl border border-gray-100 hover:border-lime-300 hover:bg-lime-50/50 transition-all"
+                                className="group flex items-center justify-between rounded-xl border border-gray-100 px-2.5 py-2 transition-all hover:border-lime-300 hover:bg-lime-50/50"
                             >
                                 <div className="min-w-0">
-                                    <div className="text-sm font-semibold text-gray-900 group-hover:text-lime-700 transition-colors truncate">
+                                    <div className="truncate text-sm font-semibold text-gray-900 transition-colors group-hover:text-lime-700">
                                         {o.game_name}
                                     </div>
-                                    <div className="text-xs text-gray-400 truncate">{o.platform_name}</div>
+                                    <div className="truncate text-xs text-gray-400">{o.platform_name}</div>
                                 </div>
-                                <span className="text-sm font-extrabold text-lime-700 flex-shrink-0 ml-2">
+                                <span className="ml-2 shrink-0 text-sm font-extrabold text-lime-700">
                                     ${o.payout_usd.toFixed(2)}
                                 </span>
                             </Link>
@@ -167,13 +162,12 @@ export default function GuideSidebar({
                     </div>
                     <Link
                         href="/offers"
-                        className="block mt-3 text-center text-xs font-semibold text-gray-400 hover:text-gray-700 transition-colors"
+                        className="mt-3 block text-center text-xs font-semibold text-gray-400 transition-colors hover:text-gray-700"
                     >
-                        View all offers →
+                        View all offers
                     </Link>
                 </div>
-            )}
-
+            ) : null}
         </aside>
     );
 }

@@ -20,12 +20,16 @@ interface GuideJsonLdProps {
     gameName: string;
     gameSlug: string;
     steps: Array<{ heading: string; body: string }>;
+    imageUrl?: string | null;
 }
 
-export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJsonLdProps) {
+export default function GuideJsonLd({ guide, gameName, gameSlug, steps, imageUrl }: GuideJsonLdProps) {
     const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://earngrind.com").replace(/\/$/, "");
     const url = `${baseUrl}/guides/${guide.slug}`;
     const description = guide.excerpt ?? `Completion guide for ${guide.title}. Verify live offer terms before starting.`;
+    const absoluteImageUrl = imageUrl
+        ? imageUrl.startsWith("http") ? imageUrl : `${baseUrl}${imageUrl.startsWith("/") ? "" : "/"}${imageUrl}`
+        : null;
 
     const article = {
         "@context": "https://schema.org",
@@ -38,6 +42,7 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
         mainEntityOfPage: url,
         author: { "@type": "Organization", name: "EarnGrind" },
         publisher: { "@type": "Organization", name: "EarnGrind" },
+        ...(absoluteImageUrl ? { image: [absoluteImageUrl] } : {}),
     };
 
     const proceduralIntent = ["how_to", "task_specific", "payout_specific"].includes(guide.keyword_intent ?? "")
@@ -96,7 +101,7 @@ export default function GuideJsonLd({ guide, gameName, gameSlug, steps }: GuideJ
         ? {
             "@context": "https://schema.org",
             "@type": "VideoObject",
-            name: "Watch First: Sea of Conquest Offerwall ROI Breakdown",
+            name: `${guide.title} video walkthrough`,
             description: guide.video_summary ?? description,
             thumbnailUrl: guide.video_thumbnail_url ? [`${baseUrl}${guide.video_thumbnail_url}`] : undefined,
             uploadDate: guide.video_upload_date ?? guide.updated_at,

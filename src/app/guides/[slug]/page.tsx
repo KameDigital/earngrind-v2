@@ -5,6 +5,7 @@ import { extractSections } from "./markdownRenderer";
 import GuideHeader from "./GuideHeader";
 import GuideSidebar from "./GuideSidebar";
 import GuideJsonLd from "./GuideJsonLd";
+import GuideInternalLinks from "./GuideInternalLinks";
 import ClassicLayout from "./layouts/ClassicLayout";
 import StepsLayout  from "./layouts/StepsLayout";
 import ProLayout    from "./layouts/ProLayout";
@@ -16,6 +17,7 @@ import { absoluteUrl } from "@/lib/site-url";
 import { evaluateIndexingReadiness } from "@/lib/indexing-readiness";
 import { getDuplicateKeywordGuideIds, shouldIncludeGuideInSitemap } from "@/lib/sitemap-quality";
 import { noindexFollowRobots, robotsForIndexability } from "@/lib/seo-metadata";
+import { pickPublicArtworkUrl } from "@/lib/public-image-url";
 import { seaOfConquestRoiGuideOverride } from "./seaOfConquestRoiGuide";
 
 const GUIDE_SLUG_REDIRECTS: Record<string, string> = {
@@ -67,6 +69,7 @@ interface Game {
     id: string;
     name: string;
     slug: string;
+    thumbnail_url: string | null;
 }
 
 // ---------------------------------------------------------------
@@ -137,7 +140,7 @@ async function fetchGuideData(slug: string) {
             platform_id, platform_filter, keyword_target, keyword_intent, guide_type,
             payout_verified_at, tasks_verified_at, provider_terms_verified_at, last_offer_check_at,
             primary_offer_id, disable_auto_offer_matching,
-            game:games(id, name, slug)
+            game:games(id, name, slug, thumbnail_url)
         `)
         .eq("slug", slug)
         .eq("status", "published")
@@ -223,10 +226,12 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     }
     const layoutStyle = guide.layout_style ?? "classic";
     const hasMatchedOfferCtas = matchedOffers.length > 0;
-    const lastCheckedSource = guide.last_offer_check_at ?? guide.payout_verified_at ?? guide.tasks_verified_at ?? guide.provider_terms_verified_at;
-    const lastCheckedText = lastCheckedSource
-        ? `Last checked: ${new Date(lastCheckedSource).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}. Offers and payouts can change. Verify live terms before starting.`
-        : "Offers, payouts, deadlines, and tasks can change by provider, device, region, and account history. Verify live terms before starting.";
+    const heroImageUrl = pickPublicArtworkUrl(game.thumbnail_url);
+    const lastUpdatedText = `Last updated: ${new Date(guide.updated_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`;
+    const payoutCheckedText = guide.payout_verified_at
+        ? ` Payouts last checked: ${new Date(guide.payout_verified_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`
+        : "";
+    const freshnessText = `${lastUpdatedText}${payoutCheckedText} Offers, payouts, deadlines, and tasks can change by provider, device, region, and account history. Verify live terms before starting.`;
 
     return (
         <div className="min-h-screen bg-[#f5f5f0]">
@@ -255,6 +260,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                 gameName={game.name}
                 gameSlug={game.slug}
                 steps={extractSections(guide.body_md ?? "")}
+                imageUrl={heroImageUrl}
             />
 
             {/* Shared 3-row header */}
@@ -273,6 +279,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                 }}
                 gameName={game.name}
                 gameSlug={game.slug}
+                heroImageUrl={heroImageUrl}
             />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -314,13 +321,15 @@ export default async function GuidePage({ params }: { params: { slug: string } }
 
                         <div className="mb-6">
                             <div className="mb-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-gray-600">
-                                {lastCheckedText}
+                                {freshnessText}
                             </div>
                             <GuideOfferCtaBlock
                                 guideId={guide.id}
                                 guideSlug={guide.slug}
                                 offers={matchedOffers}
                                 placement={hasMatchedOfferCtas ? "top" : "fallback"}
+                                gameSlug={game.slug}
+                                gameName={game.name}
                             />
                         </div>
 
@@ -362,7 +371,26 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                 guideId={guide.id}
                                 guideSlug={guide.slug}
                                 offers={matchedOffers}
+                                placement={hasMatchedOfferCtas ? "mid" : "fallback"}
+                                gameSlug={game.slug}
+                                gameName={game.name}
+                            />
+                        </div>
+                        <div className="mt-6">
+                            <GuideInternalLinks
+                                gameName={game.name}
+                                gameSlug={game.slug}
+                                relatedGuides={relatedGuides}
+                            />
+                        </div>
+                        <div className="mt-6">
+                            <GuideOfferCtaBlock
+                                guideId={guide.id}
+                                guideSlug={guide.slug}
+                                offers={matchedOffers}
                                 placement={hasMatchedOfferCtas ? "bottom" : "fallback"}
+                                gameSlug={game.slug}
+                                gameName={game.name}
                             />
                         </div>
                     </main>

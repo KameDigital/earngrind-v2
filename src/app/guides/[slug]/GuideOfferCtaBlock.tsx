@@ -13,11 +13,28 @@ function placementLabel(placement: GuideOfferCtaBlockProps["placement"]) {
     return "Compare latest payouts";
 }
 
+function placementButtonText(placement: GuideOfferCtaBlockProps["placement"]) {
+    if (placement === "top") return "Compare live offers for this game";
+    if (placement === "mid") return "Check current payout routes";
+    if (placement === "bottom") return "Find the best available offer before starting";
+    return "Browse current offers";
+}
+
+function buildGuideCtaTarget(gameSlug?: string | null) {
+    return gameSlug ? `/games/${gameSlug}` : "/offers";
+}
+
+function buildOfferComparisonTarget(gameSlug?: string | null) {
+    return gameSlug ? `/offers/${gameSlug}` : "/offers";
+}
+
 type GuideOfferCtaBlockProps = {
     guideId: string;
     guideSlug: string;
     offers: GuideOfferMatch[];
     placement: GuideCtaPlacement;
+    gameSlug?: string | null;
+    gameName?: string | null;
 };
 
 export default function GuideOfferCtaBlock({
@@ -25,10 +42,16 @@ export default function GuideOfferCtaBlock({
     guideSlug,
     offers,
     placement,
+    gameSlug,
+    gameName,
 }: GuideOfferCtaBlockProps) {
     const variant = selectGuideCtaVariant({ guideId, slug: guideSlug, placement });
     const best = offers[0] ?? null;
     const alternatives = offers.slice(1, 4);
+    const primaryTarget = buildGuideCtaTarget(gameSlug);
+    const comparisonTarget = buildOfferComparisonTarget(gameSlug);
+    const buttonText = placementButtonText(placement);
+    const showAlternatives = placement === "top" && alternatives.length > 0;
 
     if (!best) {
         return (
@@ -40,7 +63,7 @@ export default function GuideOfferCtaBlock({
                 </p>
                 <p className="mt-2 text-xs font-semibold text-gray-500">{variant.subtext}</p>
                 <Link
-                    href="/offers"
+                    href={primaryTarget}
                     data-guide-cta="true"
                     data-cta-variant="guide_offer_matcher_fallback"
                     data-cta-variant-id={variant.id}
@@ -52,7 +75,7 @@ export default function GuideOfferCtaBlock({
                     data-placement={placement}
                     className="mt-4 inline-flex rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-extrabold text-white hover:bg-gray-800"
                 >
-                    {variant.buttonText}
+                    {buttonText}
                 </Link>
             </section>
         );
@@ -70,12 +93,12 @@ export default function GuideOfferCtaBlock({
                         {best.platform ? <span className="rounded-full bg-white px-2.5 py-1 text-gray-700 ring-1 ring-gray-200">{best.platform}</span> : null}
                     </div>
                     <p className="mt-3 text-sm leading-relaxed text-gray-700">
-                        This route is selected from the current offer feed. Verify live requirements and device/country fit on the platform before starting.
+                        This route is selected from the current offer feed. Compare live requirements, payout routes, and device/country fit before starting{gameName ? ` ${gameName}` : ""}.
                     </p>
                     <p className="mt-2 text-xs font-semibold text-lime-800">{variant.subtext}</p>
                 </div>
-                <a
-                    href={best.targetUrl}
+                <Link
+                    href={primaryTarget}
                     data-guide-cta="true"
                     data-cta-variant="guide_offer_matcher_primary"
                     data-cta-variant-id={variant.id}
@@ -89,18 +112,18 @@ export default function GuideOfferCtaBlock({
                     data-guide-slug={guideSlug}
                     className="inline-flex shrink-0 items-center justify-center rounded-xl bg-gray-900 px-5 py-3 text-sm font-extrabold text-lime-300 shadow-sm hover:bg-gray-800"
                 >
-                    {variant.buttonText}
-                </a>
+                    {buttonText}
+                </Link>
             </div>
 
-            {alternatives.length > 0 ? (
+            {showAlternatives ? (
                 <div className="mt-4 border-t border-lime-200 pt-4">
                     <div className="mb-2 text-[11px] font-extrabold uppercase tracking-widest text-lime-700">Other available routes</div>
                     <div className="grid gap-2 sm:grid-cols-3">
                         {alternatives.map((offer) => (
-                            <a
+                            <Link
                                 key={`${placement}-${offer.id}`}
-                                href={offer.targetUrl}
+                                href={comparisonTarget}
                                 data-guide-cta="true"
                                 data-cta-variant="guide_offer_matcher_alternative"
                                 data-cta-variant-id={variant.id}
@@ -116,7 +139,7 @@ export default function GuideOfferCtaBlock({
                             >
                                 <div className="truncate font-bold text-gray-900">{offer.platform ?? offer.provider ?? "Offer route"}</div>
                                 <div className="mt-0.5 text-xs font-semibold text-lime-700">{formatMoney(offer.payout)}</div>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>

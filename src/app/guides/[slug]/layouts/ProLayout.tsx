@@ -31,7 +31,7 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
         .filter(Boolean);
 
     const preamble = extractPreamble(guide.body_md ?? "", [2, 3]);
-    const showSeaOfConquestVideo = Boolean(guide.video_url && gameName.toLowerCase().includes("sea of conquest"));
+    const showGuideVideo = Boolean(guide.video_url);
 
     return (
         <div className="space-y-5">
@@ -53,20 +53,20 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
                 </div>
             )}
 
-            {showSeaOfConquestVideo && (
+            {showGuideVideo && (
                 <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
                     <h2 className="text-lg font-extrabold text-gray-900 mb-3">
-                        Watch First: Sea of Conquest Offerwall ROI Breakdown
+                        Watch first: {gameName} walkthrough
                     </h2>
                     <p className="text-sm leading-6 text-gray-700 mb-4">
-                        This video explains the core strategy before you start: Sea of Conquest offerwall rewards are tied to Flagship milestones, not overall ship power. The goal is to build a gold engine, avoid wasted upgrades, protect auto-trade with Ghost Mode, and know when to stop instead of chasing Level 30.
+                        Use this video as a quick overview before you commit time to the offer route. Confirm the written tasks and live platform terms before starting.
                     </p>
                     <div className="guide-video">
                         <video
                             controls
                             preload="metadata"
                             className="w-full rounded-xl border border-gray-200 bg-gray-950"
-                            title="Sea of Conquest offerwall ROI breakdown"
+                            title={`${gameName} guide video walkthrough`}
                         >
                             <source src={guide.video_url ?? ""} type="video/mp4" />
                         </video>
@@ -74,7 +74,7 @@ export default function ProLayout({ guide, gameSlug, gameName, showStaticCta = t
                     <div className="mt-4 rounded-xl border border-lime-200 bg-lime-50 p-4">
                         <div className="text-sm font-extrabold text-gray-900 mb-2">Video summary</div>
                         <p className="text-sm leading-6 text-gray-700">
-                            {guide.video_summary ?? "The video explains why Sea of Conquest offerwall runs should be managed as a Flagship milestone economy: build gold income by Day 4, protect auto-trade with Ghost Mode, buy only when tracking and ROI make sense, and treat Level 21 as the usual practical stopping point."}
+                            {guide.video_summary ?? `The video summarizes the ${gameName} route, common completion risks, and the checks to make before starting.`}
                         </p>
                     </div>
                     {guide.video_transcript && (

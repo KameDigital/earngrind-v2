@@ -239,6 +239,7 @@ export default async function BestGptSitesPage() {
                 <p className="mt-2 text-xs font-semibold text-[var(--text-tertiary)]">{platform.trustNote}</p>
                 <Link
                   href={buildTrackedPlatformHref(platform, "best_gpt_sites_primary_card")}
+                  prefetch={false}
                   className="mt-4 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                 >
                   {platform.cta}
@@ -256,6 +257,7 @@ export default async function BestGptSitesPage() {
                 {platform.disclosure ? <p className="mt-2 text-xs font-bold text-lime-700">{platform.disclosure}</p> : null}
                 <Link
                   href={buildTrackedPlatformHref(platform, "best_gpt_sites_secondary_card")}
+                  prefetch={false}
                   className="mt-3 inline-flex rounded-lg border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
                   {platform.cta}

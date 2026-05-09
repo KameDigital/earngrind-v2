@@ -48,15 +48,17 @@ const nextConfig = {
         const ContentSecurityPolicy = [
             "default-src 'self'",
             // Next.js inline scripts + Supabase JS
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co https://www.googletagmanager.com https://va.vercel-scripts.com",
             // Styles — Next.js injects inline
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             // Fonts
             "font-src 'self' https://fonts.gstatic.com",
             // Images — allow any HTTPS (game thumbnails from varied CDNs)
             "img-src 'self' data: blob: https:",
+            // Video previews for curated casino game rails
+            "media-src 'self' https://animatedtrailer.casino.fanduel.com",
             // API/auth calls
-            "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
+            "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://vitals.vercel-insights.com",
             // No plugins ever
             "object-src 'none'",
             // Frames — disallow embedding this site

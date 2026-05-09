@@ -22,7 +22,7 @@ export const STATIC_GUIDES: StaticGuide[] = [
         ctaLabel: "Read FanDuel Casino Review",
         accentClassName: "border-sky-200 bg-sky-50 text-sky-700",
         buttonClassName: "bg-[#1493ff] text-white",
-        lastModified: "2026-05-04",
+        lastModified: "2026-05-09",
         sitemapPriority: 0.82,
     },
 ];

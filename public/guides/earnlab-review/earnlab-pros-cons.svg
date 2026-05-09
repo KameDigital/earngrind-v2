@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">EarnLab pros and cons summary</title>
+  <desc id="desc">EarnLab pros and cons visual summary focused on earning options and tracking risks.</desc>
+  <rect width="1200" height="520" fill="#f5f5f0"/>
+  <rect x="70" y="70" width="500" height="380" rx="24" fill="#ecfccb"/>
+  <rect x="630" y="70" width="500" height="380" rx="24" fill="#ffffff" stroke="#d1d5db" stroke-width="2"/>
+  <text x="112" y="128" fill="#365314" font-family="Arial, sans-serif" font-size="34" font-weight="800">Pros</text>
+  <text x="672" y="128" fill="#111827" font-family="Arial, sans-serif" font-size="34" font-weight="800">Cons</text>
+  <g font-family="Arial, sans-serif" font-size="22">
+    <text x="112" y="190" fill="#365314">Multiple earning methods</text>
+    <text x="112" y="238" fill="#365314">Offerwall and game upside</text>
+    <text x="112" y="286" fill="#365314">Cash, crypto, gift-card options may exist</text>
+    <text x="112" y="334" fill="#365314">Bonuses and referrals can add value</text>
+    <text x="672" y="190" fill="#4b5563">Tracking is not guaranteed</text>
+    <text x="672" y="238" fill="#4b5563">Manual review can delay withdrawals</text>
+    <text x="672" y="286" fill="#4b5563">Promo details expire quickly</text>
+    <text x="672" y="334" fill="#4b5563">Chance-based features can confuse users</text>
+  </g>
+</svg>

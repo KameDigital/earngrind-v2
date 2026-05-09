@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { GOOGLE_SEARCH_CONSOLE_PROVIDER, getGoogleSearchConsoleEnvStatus } from "@/lib/google-search-console";
 import { createClient } from "@/lib/supabase/server";
+import SearchConsoleSyncPanel from "./SearchConsoleSyncPanel";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Search Console Report | Admin" };
@@ -36,6 +38,20 @@ export default async function SearchConsoleReportPage({ searchParams }: { search
 
     const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
     if (!profile || !["admin", "editor"].includes(profile.role)) redirect("/app/dashboard");
+    const isAdmin = profile.role === "admin";
+    const envStatus = getGoogleSearchConsoleEnvStatus();
+    const connectedMessage = queryValue(searchParams?.gsc_connected) === "1" ? "Google Search Console connected." : undefined;
+    const oauthError = queryValue(searchParams?.gsc_error);
+
+    let searchConsoleConnected = false;
+    if (isAdmin) {
+        const { data: token } = await supabase
+            .from("admin_integration_tokens")
+            .select("id")
+            .eq("provider", GOOGLE_SEARCH_CONSOLE_PROVIDER)
+            .maybeSingle();
+        searchConsoleConnected = Boolean(token?.id);
+    }
 
     const guideFilter = queryValue(searchParams?.guide);
     const queryFilter = queryValue(searchParams?.query);
@@ -83,6 +99,15 @@ export default async function SearchConsoleReportPage({ searchParams }: { search
                     Import CSV
                 </Link>
             </div>
+
+            <SearchConsoleSyncPanel
+                connected={searchConsoleConnected}
+                envReady={envStatus.ready}
+                missingEnv={envStatus.missing}
+                isAdmin={isAdmin}
+                message={connectedMessage}
+                error={oauthError}
+            />
 
             <div className="grid gap-3 md:grid-cols-3">
                 <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">

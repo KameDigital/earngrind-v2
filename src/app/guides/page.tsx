@@ -4,6 +4,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/layout/Container";
 import { STATIC_GUIDES } from "@/lib/static-guides";
+import { pickPublicArtworkUrl } from "@/lib/public-image-url";
 
 export const metadata: Metadata = {
     title: "Game Guides — Maximize Your Offerwall Earnings | EarnGrind",
@@ -11,6 +12,22 @@ export const metadata: Metadata = {
 };
 
 const PAGE_SIZE = 18;
+
+const PALMON_GAME_ID = "0044a577-5e22-4af3-9aac-054ccd4c0cb0";
+const PALMON_GAME_SLUG = "palmon-survival";
+const PALMON_GUIDE_SLUGS = new Set([
+    "palmon-survival-offerwall-guide",
+    "palmon-survival-camp-30-guide",
+    "palmon-survival-no-spend",
+    "palmon-survival-not-crediting",
+]);
+
+const PALMON_GUIDE_LINKS = [
+    { href: "/guides/palmon-survival-offerwall-guide", label: "Full Offerwall Guide" },
+    { href: "/guides/palmon-survival-camp-30-guide", label: "Camp 30 Guide" },
+    { href: "/guides/palmon-survival-no-spend", label: "No-Spend Guide" },
+    { href: "/guides/palmon-survival-not-crediting", label: "Not Crediting Guide" },
+];
 
 // ---------------------------------------------------------------
 // TYPES
@@ -20,6 +37,7 @@ interface GuideGame {
     name: string;
     slug: string;
     thumbnail_url: string | null;
+    fallback_image_url?: string | null;
 }
 
 interface Guide {
@@ -32,6 +50,30 @@ interface Guide {
     max_payout_usd: number | null;
     published_at: string | null;
     games: GuideGame | null;
+}
+
+interface OfferArtworkRow {
+    game_id: string | null;
+    game_thumbnail: string | null;
+    image_url: string | null;
+}
+
+function isSvgUrl(url: string) {
+    return /\.svg(?:$|[?#])/i.test(url);
+}
+
+function getInitials(name: string) {
+    return name
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase() || name.substring(0, 2).toUpperCase();
+}
+
+function getGameImageUrl(game: GuideGame | null) {
+    return pickPublicArtworkUrl(game?.thumbnail_url, game?.fallback_image_url);
 }
 
 // ---------------------------------------------------------------
@@ -56,6 +98,8 @@ function DifficultyBadge({ difficulty }: { difficulty: string | null }) {
 // GUIDE CARD
 // ---------------------------------------------------------------
 function GuideCard({ guide }: { guide: Guide }) {
+    const gameImageUrl = getGameImageUrl(guide.games);
+
     return (
         <Link
             href={`/guides/${guide.slug}`}
@@ -64,17 +108,17 @@ function GuideCard({ guide }: { guide: Guide }) {
             {guide.games && (
                 <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex-shrink-0 flex items-center justify-center">
-                        {guide.games.thumbnail_url ? (
+                        {gameImageUrl ? (
                             <Image
-                                src={guide.games.thumbnail_url}
+                                src={gameImageUrl}
                                 alt={guide.games.name}
                                 width={40}
                                 height={40}
-                                unoptimized={guide.games.thumbnail_url.endsWith(".svg")}
+                                unoptimized={isSvgUrl(gameImageUrl)}
                                 className="w-full h-full object-cover"
                             />
                         ) : (
-                            <span className="text-xs font-bold text-[var(--text-tertiary)]">{guide.games.name.substring(0, 2)}</span>
+                            <span className="text-xs font-bold text-[var(--text-tertiary)]">{getInitials(guide.games.name)}</span>
                         )}
                     </div>
                     <span className="section-label">{guide.games.name}</span>
@@ -103,6 +147,60 @@ function GuideCard({ guide }: { guide: Guide }) {
                 )}
             </div>
         </Link>
+    );
+}
+
+function PalmonGuideHub({ imageUrl }: { imageUrl: string | null }) {
+    return (
+        <section className="eg-card overflow-hidden p-5 sm:col-span-2 sm:p-6 lg:col-span-3">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                    <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl border border-lime-200 bg-lime-50">
+                        {imageUrl ? (
+                            <Image
+                                src={imageUrl}
+                                alt="Palmon: Survival"
+                                width={80}
+                                height={80}
+                                unoptimized={isSvgUrl(imageUrl)}
+                                className="h-full w-full object-cover"
+                            />
+                        ) : (
+                            <div className="flex h-full w-full items-center justify-center text-lg font-extrabold text-lime-700">
+                                PS
+                            </div>
+                        )}
+                    </div>
+                    <div>
+                        <p className="section-label mb-2">Featured guide cluster</p>
+                        <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+                            Palmon: Survival Guide Hub
+                        </h2>
+                        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+                            Best payouts, Camp 30 strategy, no-spend tips, tracking help, and current Palmon offer routes.
+                        </p>
+                    </div>
+                </div>
+                <Link
+                    href={`/games/${PALMON_GAME_SLUG}`}
+                    className="inline-flex w-full items-center justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] sm:w-auto"
+                >
+                    Compare current Palmon payouts →
+                </Link>
+            </div>
+
+            <div className="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                {PALMON_GUIDE_LINKS.map((guide) => (
+                    <Link
+                        key={guide.href}
+                        href={guide.href}
+                        className="rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition hover:border-lime-300 hover:bg-lime-50"
+                    >
+                        {guide.label}
+                    </Link>
+                ))}
+            </div>
+        </section>
     );
 }
 
@@ -169,6 +267,49 @@ export default async function GuidesPage({
         .order("published_at", { ascending: false })
         .range(from, to);
 
+    const rawGuides = (guides ?? []) as unknown as Guide[];
+    const guideGameIds = Array.from(new Set(rawGuides.map((guide) => guide.games?.id).filter(Boolean))) as string[];
+
+    const { data: offerArtworkRows } = guideGameIds.length > 0
+        ? await supabase
+            .from("unified_offers_view")
+            .select("game_id, game_thumbnail, image_url")
+            .in("game_id", guideGameIds)
+            .order("total_payout_usd", { ascending: false })
+            .limit(250)
+        : { data: [] };
+
+    const gameArtworkById = new Map<string, string>();
+    for (const row of (offerArtworkRows ?? []) as OfferArtworkRow[]) {
+        if (!row.game_id || gameArtworkById.has(row.game_id)) continue;
+
+        const imageUrl = pickPublicArtworkUrl(row.game_thumbnail, row.image_url);
+        if (imageUrl) {
+            gameArtworkById.set(row.game_id, imageUrl);
+        }
+    }
+
+    const enrichedGuides = rawGuides.map((guide) => ({
+        ...guide,
+        games: guide.games
+            ? {
+                ...guide.games,
+                fallback_image_url: gameArtworkById.get(guide.games.id) ?? null,
+            }
+            : null,
+    }));
+
+    const shouldShowPalmonHub = page === 1 && enrichedGuides.some((guide) => PALMON_GUIDE_SLUGS.has(guide.slug));
+    const visibleGuides = shouldShowPalmonHub
+        ? enrichedGuides.filter((guide) => !PALMON_GUIDE_SLUGS.has(guide.slug))
+        : enrichedGuides;
+    const palmonHubImageUrl =
+        gameArtworkById.get(PALMON_GAME_ID) ??
+        enrichedGuides
+            .filter((guide) => PALMON_GUIDE_SLUGS.has(guide.slug))
+            .map((guide) => getGameImageUrl(guide.games))
+            .find(Boolean) ??
+        null;
     const totalCount = count ?? 0;
 
     return (
@@ -220,7 +361,7 @@ export default async function GuidesPage({
                     ))}
                 </div>
 
-                {(guides ?? []).length === 0 ? (
+                {visibleGuides.length === 0 && !shouldShowPalmonHub ? (
                     <div className="bg-white rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] p-16 text-center">
                         <div className="text-3xl mb-4">📖</div>
                         <h2 className="text-lg font-bold text-[var(--brand-ink)] mb-2">No guides published yet</h2>
@@ -229,8 +370,9 @@ export default async function GuidesPage({
                 ) : (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                            {(guides ?? []).map((guide) => (
-                                <GuideCard key={guide.id} guide={guide as unknown as Guide} />
+                            {shouldShowPalmonHub && <PalmonGuideHub imageUrl={palmonHubImageUrl} />}
+                            {visibleGuides.map((guide) => (
+                                <GuideCard key={guide.id} guide={guide} />
                             ))}
                         </div>
                         <Pagination

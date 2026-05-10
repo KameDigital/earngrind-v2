@@ -76,9 +76,11 @@ Body:
 }
 ```
 
-Imports upsert into existing `site_offers` and `site_offer_tasks`. Dedupe uses `sourceId-countryCode` as `external_id`, so the same EarnLab task can exist separately for `US`, `GB`, and other countries.
+Imports use the shared provider-gallery ingestion modules in `src/lib/provider-gallery/*`. They upsert into existing `site_offers` and `site_offer_tasks`. Dedupe uses `sourceId-countryCode` as `external_id`, so the same EarnLab task can exist separately for `US`, `GB`, and other countries.
 
 Current imports do not erase an existing `site_offers.offer_url` when EarnLab does not return a direct per-offer URL. This preserves future/manual direct URLs while still refreshing payout, image, country, device, and task metadata.
+
+For the reusable provider-agnostic architecture, see `docs/provider-gallery-ingestion.md`.
 
 ## Environment Variables
 

@@ -39,13 +39,15 @@ The admin UI is on `/app/admin/site-offers` in the Gemsloot gallery import panel
 
 ## Database Behavior
 
-Imports upsert into `site_offers` under the `gemsloot` platform. Dedupe uses the Gemsloot platform, provider, source offer ID, and country:
+Imports use the shared provider-gallery ingestion modules in `src/lib/provider-gallery/*`. They upsert into `site_offers` under the `gemsloot` platform. Dedupe uses the Gemsloot platform, provider, source offer ID, and country:
 
 ```txt
 gemsloot-{providerSlug}-{offerId}-{country}
 ```
 
 Task steps are stored in `site_offer_tasks`. Existing rows are updated in place and re-running an import should not create duplicates.
+
+For the reusable provider-agnostic architecture, see `docs/provider-gallery-ingestion.md`.
 
 ## CTA Behavior
 

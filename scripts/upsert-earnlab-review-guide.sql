@@ -149,20 +149,23 @@ select
 
 <p>The public rewards area is separate from the offer gallery. It exposes generic rewards templates such as VIP tiers, 7-day streak boxes, and a 50-mission ladder. The mission templates include goals such as earning a certain amount from tasks, completing a task worth at least a certain amount, earning on a named provider, withdrawing a certain amount, and claiming milestone reward boxes. Late-stage examples can require thousands in total earnings or withdrawals, so treat missions as long-term bonus goals, not beginner income promises or permanent rules.</p>
 
-<div class="guide-summary-box">
-  <strong>Rewards data note:</strong> EarnLab rewards images are available for streak boxes and mission types, including box artwork, provider logos, complete-task artwork, withdrawal artwork, and milestone box artwork. User progress, avatars, usernames, cookies, and authenticated account state should not be reused in a public guide or offer page.
-</div>
+<figure class="guide-image">
+  <img src="/guides/earnlab-review/earnlab-rewards.webp" alt="EarnLab rewards page showing VIP tiers, bonuses, and promo code area" loading="lazy" />
+  <figcaption>EarnLab's rewards page is where VIP levels, streak bonuses, promo code redemption, and mission-style bonuses sit. I would treat this as extra upside, not the main reason to join.</figcaption>
+</figure>
 
 <div class="guide-summary-box">
-  <strong>Image note:</strong> A live EarnLab dashboard screenshot should only be added after a fresh, permission-safe capture that does not expose private account data.
+  <strong>Rewards data note:</strong> EarnLab rewards images are available for streak boxes and mission types, including box artwork, provider logos, complete-task artwork, withdrawal artwork, and milestone box artwork. I would not reuse user progress, avatars, usernames, cookies, or authenticated account state in a public guide or offer page.
 </div>
 
 <figure class="guide-image">
-  <img src="/guides/earnlab-review/earnlab-how-it-works.svg" alt="How EarnLab works from signup to offer completion and withdrawal" loading="eager" />
-  <figcaption>Use this flow as a risk checklist before starting a high-effort EarnLab offer.</figcaption>
+  <img src="/guides/earnlab-review/earnlab-how-to-use.webp" alt="How to use EarnLab from sign up to starting tasks and withdrawing rewards" loading="lazy" />
+  <figcaption>The basic flow is simple: sign up, open Earn, start a task, watch your wallet, then withdraw when your balance is ready. The hard part is picking offers that actually make sense.</figcaption>
 </figure>
 
 <h2>How EarnLab works</h2>
+<p>If you have used Freecash, Gain.gg, or any other GPT site, EarnLab will feel familiar. The big thing to remember is that EarnLab is mostly the middle layer. The offerwall or advertiser still has to track your click, accept your completion, and send credit back. That is why I would never start a big game offer without checking the terms first and taking screenshots.</p>
+
 <ol>
   <li><strong>Sign up for EarnLab.</strong> Create one account with accurate details. Avoid VPNs, proxies, emulators, duplicate accounts, shared devices, and tools that can make tracking or account review harder.</li>
   <li><strong>Choose an earning method.</strong> Common paths include surveys, apps, games, sign-up offers, offerwalls, referrals, streaks, missions, leaderboards, promos, and built-in gamified features.</li>
@@ -175,6 +178,8 @@ select
 </ol>
 
 <p><strong>Important:</strong> Do not spend money on an offer unless the expected reward, time limit, terms, and risk make sense. Advanced offers can pay more, but they are also where tracking problems, missed deadlines, and negative ROI are most likely.</p>
+
+<p>My simple rule: if an offer asks for money, a deposit, a subscription, or several days of grinding, slow down. Check if the same offer is on another wall, read the deadline twice, and make sure the payout is high enough to justify the risk. If it is a small app install or a short survey, you can be more casual. If it is a $100+ game offer, treat it like a project.</p>
 
 <h2>Is EarnLab legit?</h2>
 <div class="guide-summary-box">
@@ -211,9 +216,12 @@ select
 <p><a href="/go/platform/earnlab?click_location=earnlab_review_legitimacy_cta&amp;source_context=earnlab_review_guide&amp;platform_name=EarnLab">See EarnLab Offers</a> or compare the broader <a href="/best-gpt-sites">best GPT sites</a> before you start.</p>
 
 <h2>Ways to earn on EarnLab</h2>
-<div class="guide-summary-box">
-  <strong>Image note:</strong> A live EarnLab offerwall screenshot should only be added after verifying the current screen and removing any private account details.
-</div>
+<figure class="guide-image">
+  <img src="/guides/earnlab-review/earnlab-offerwalls.webp" alt="EarnLab offerwalls page showing Torox, Prime Earn, Adscend Media, Tyr Game Center, AdToWall, RevU, MyChips, and survey walls" loading="lazy" />
+  <figcaption>EarnLab has a lot of offerwall and survey-wall options. That is good for comparing payouts, but it also means every wall can have different rules and support paths.</figcaption>
+</figure>
+
+<p>The best way to use EarnLab is not to click the first big number you see. Open the offerwalls, compare the same game or app across a few providers, and look for the cleanest terms. In the screenshot above, you can see walls like Torox, Prime Earn, Adscend Media, Tyr Game Center, AdToWall, RevU, MyChips, AdGate Media, Lootably, TimeWall, Monlix, AdGem, CPX Research, BitLabs, and TheoremReach. Inventory changes, but the strategy stays the same: compare first, then start.</p>
 
 <table>
   <thead>
@@ -285,9 +293,19 @@ select
   </tbody>
 </table>
 
+<h3>Leaderboards and races</h3>
+<figure class="guide-image">
+  <img src="/guides/earnlab-review/earnlab-monthly-leaderboard.webp" alt="EarnLab monthly race leaderboard showing top prizes and ranked users" loading="lazy" />
+  <figcaption>Leaderboards can make EarnLab feel more rewarding, but they are competitive. I would see them as a bonus if you are already active, not a reason to force extra spending or chase bad offers.</figcaption>
+</figure>
+
+<p>EarnLab races and leaderboards can add real upside for heavy users, but they are not the same as normal offer payouts. The top prizes usually go to the people putting up the most volume. If you are new, do not build your plan around winning a leaderboard. Focus on getting your first few offers to track, cashing out, and learning which walls work best for your country and device.</p>
+
 <h2>Best EarnLab offers strategy</h2>
 <h3>How to choose a good EarnLab offer</h3>
 <p>Before clicking, check the payout amount, time limit, required level or milestone, whether purchases are required, whether it must be a new-user install, whether it is mobile-only or desktop-only, whether it requires ID/KYC, whether the same offer pays more on another wall, and whether users online report tracking issues.</p>
+
+<p>For game offers, I would also search the game name before starting. Look for how long the milestone takes, whether it is possible without spending, and whether other users say the offer tracks. If the offer pays well but everyone says it fails to credit, that is not a good offer. It is just a big number on a screen.</p>
 
 <h3>Beginner-safe offer types</h3>
 <p>Start with short surveys, low-friction app installs, free sign-up offers, small tasks that do not require spending money, and easy milestones with clear requirements. These are still not perfect, but they reduce the chance that you lose money or commit days to a route that does not fit.</p>
@@ -522,6 +540,9 @@ select
   <li><a href="https://help.earnlab.com/en/article/what-happens-if-my-account-is-flagged-during-withdrawal-1q7x3hn/" rel="nofollow">EarnLab help: flagged withdrawals</a></li>
   <li><a href="https://help.earnlab.com/en/article/how-do-bonuses-appear-in-my-account-balance-19lx9yo/" rel="nofollow">EarnLab help: bonus and wallet balances</a></li>
   <li><a href="https://earnlab.com/rewards" rel="nofollow">EarnLab rewards page</a></li>
+  <li><a href="https://api.earnlab.com/tasks" rel="nofollow">EarnLab public tasks endpoint, checked for offer-card fields</a></li>
+  <li><a href="https://api.earnlab.com/missions/info" rel="nofollow">EarnLab public missions endpoint, checked for generic mission templates</a></li>
+  <li><a href="https://api.earnlab.com/boxes/streaks/info" rel="nofollow">EarnLab public streak boxes endpoint, checked for generic streak-box images</a></li>
   <li><a href="https://www.trustpilot.com/review/earnlab.com" rel="nofollow">Trustpilot EarnLab profile, checked for public review-profile concerns</a></li>
 </ul>
 $guide$,
@@ -578,7 +599,7 @@ $guide$,
     "Current EarnLab promo code rules should be checked on publish day; no active code is claimed in this guide.",
     "Current referral bonus wording should be rechecked because referral bonuses and commission rules can change.",
     "Native app availability was not confirmed from official sources during implementation; the guide only claims desktop and mobile web appear to be supported.",
-    "Dashboard, offerwall, and withdrawal screenshots should be captured only from current, permission-safe sources before replacing the image notes.",
+    "The guide now uses current permission-safe EarnLab rewards, offerwalls, how-to-use, and leaderboard images supplied for publication; the withdrawal screenshot should still be captured from a current permission-safe source before replacing the remaining image note.",
     "Current minimum withdrawal amounts are based on EarnLab help docs checked May 9, 2026 and should be rechecked in the live withdrawal modal.",
     "Public task gallery and rewards endpoints were checked May 10, 2026; task gallery fields and reward mission templates can change.",
     "Public task gallery samples did not include exact per-advertiser milestone payout ladders, so offer pages should not claim exact task milestones unless a detail endpoint or imported provider data confirms them.",
@@ -612,7 +633,7 @@ $guide$,
   now(),
   now(),
   now(),
-  false,
+  true,
   'Imported by Codex on 2026-05-09. Uses the existing DB-backed guide renderer at /guides/[slug]. Recheck promo code rules, referral rules, native app availability, withdrawal modal values, country availability, Trustpilot status, and any marketing stats before a high-traffic launch.'
 from topic_game
 cross join platform_row

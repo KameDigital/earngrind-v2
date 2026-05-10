@@ -24,6 +24,13 @@ const GUIDE_SLUG_REDIRECTS: Record<string, string> = {
     "sea-of-conquest-offer-guide-best-path-flagship-level-30": "sea-of-conquest-flagship-level-30-guide",
 };
 
+const GUIDE_HERO_IMAGES: Record<string, string> = {
+    "palmon-survival-offerwall-guide": "/images/guides/palmon-survival/palmon-hero-image.png",
+    "palmon-survival-camp-30-guide": "/images/guides/palmon-survival/palmon-late-game.png",
+    "palmon-survival-no-spend": "/images/guides/palmon-survival/palmon-early-game.png",
+    "palmon-survival-not-crediting": "/images/guides/palmon-survival/palmon-task-list-confirm.png",
+};
+
 // ---------------------------------------------------------------
 // TYPES
 // ---------------------------------------------------------------
@@ -108,6 +115,7 @@ export async function generateMetadata(
     const desc  = guideForMetadata.seo_description ?? guideForMetadata.excerpt ??
         `Compare ${guide.title} requirements, payout milestones, and completion tips before starting. Verify live terms because payouts and tasks can change.`;
     const canonical = absoluteUrl(`/guides/${metadataSlug}`);
+    const imageUrl = GUIDE_HERO_IMAGES[metadataSlug];
 
     return {
         title,
@@ -120,6 +128,7 @@ export async function generateMetadata(
             title,
             description: desc,
             url: canonical,
+            ...(imageUrl ? { images: [{ url: absoluteUrl(imageUrl) }] } : {}),
         },
     };
 }
@@ -226,7 +235,8 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     }
     const layoutStyle = guide.layout_style ?? "classic";
     const hasMatchedOfferCtas = matchedOffers.length > 0;
-    const heroImageUrl = pickPublicArtworkUrl(game.thumbnail_url);
+    const showOfferCtaBlocks = !guide.disable_auto_offer_matching || hasMatchedOfferCtas;
+    const heroImageUrl = pickPublicArtworkUrl(GUIDE_HERO_IMAGES[guide.slug], game.thumbnail_url);
     const lastUpdatedText = `Last updated: ${new Date(guide.updated_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`;
     const payoutCheckedText = guide.payout_verified_at
         ? ` Payouts last checked: ${new Date(guide.payout_verified_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`
@@ -323,14 +333,16 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             <div className="mb-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-gray-600">
                                 {freshnessText}
                             </div>
-                            <GuideOfferCtaBlock
-                                guideId={guide.id}
-                                guideSlug={guide.slug}
-                                offers={matchedOffers}
-                                placement={hasMatchedOfferCtas ? "top" : "fallback"}
-                                gameSlug={game.slug}
-                                gameName={game.name}
-                            />
+                            {showOfferCtaBlocks ? (
+                                <GuideOfferCtaBlock
+                                    guideId={guide.id}
+                                    guideSlug={guide.slug}
+                                    offers={matchedOffers}
+                                    placement={hasMatchedOfferCtas ? "top" : "fallback"}
+                                    gameSlug={game.slug}
+                                    gameName={game.name}
+                                />
+                            ) : null}
                         </div>
 
                         {layoutStyle === "steps" ? (
@@ -366,16 +378,18 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                 showStaticCta={false}
                             />
                         )}
-                        <div className="mt-6">
-                            <GuideOfferCtaBlock
-                                guideId={guide.id}
-                                guideSlug={guide.slug}
-                                offers={matchedOffers}
-                                placement={hasMatchedOfferCtas ? "mid" : "fallback"}
-                                gameSlug={game.slug}
-                                gameName={game.name}
-                            />
-                        </div>
+                        {showOfferCtaBlocks ? (
+                            <div className="mt-6">
+                                <GuideOfferCtaBlock
+                                    guideId={guide.id}
+                                    guideSlug={guide.slug}
+                                    offers={matchedOffers}
+                                    placement={hasMatchedOfferCtas ? "mid" : "fallback"}
+                                    gameSlug={game.slug}
+                                    gameName={game.name}
+                                />
+                            </div>
+                        ) : null}
                         <div className="mt-6">
                             <GuideInternalLinks
                                 gameName={game.name}
@@ -383,16 +397,18 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                 relatedGuides={relatedGuides}
                             />
                         </div>
-                        <div className="mt-6">
-                            <GuideOfferCtaBlock
-                                guideId={guide.id}
-                                guideSlug={guide.slug}
-                                offers={matchedOffers}
-                                placement={hasMatchedOfferCtas ? "bottom" : "fallback"}
-                                gameSlug={game.slug}
-                                gameName={game.name}
-                            />
-                        </div>
+                        {showOfferCtaBlocks ? (
+                            <div className="mt-6">
+                                <GuideOfferCtaBlock
+                                    guideId={guide.id}
+                                    guideSlug={guide.slug}
+                                    offers={matchedOffers}
+                                    placement={hasMatchedOfferCtas ? "bottom" : "fallback"}
+                                    gameSlug={game.slug}
+                                    gameName={game.name}
+                                />
+                            </div>
+                        ) : null}
                     </main>
 
                     <div className={layoutStyle === "pro" ? "mt-6 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]" : "mt-6 lg:mt-0"}>

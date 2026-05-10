@@ -43,7 +43,7 @@ export const PROVIDER_GALLERY_REGISTRY = {
             const wall = typeof offer.rawMetadata?.wall === "string" ? offer.rawMetadata.wall : offer.sourceProviderSlug;
             return `gain-${slugifyGalleryValue(wall)}-${offer.sourceOfferId}-${offer.countryCode}`;
         },
-        genericFallbackUrl: "https://gain.gg/earn",
+        genericFallbackUrl: "https://gain.gg/r/macko",
     },
     cashinstyle: {
         key: "cashinstyle",

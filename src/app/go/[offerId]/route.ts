@@ -11,6 +11,7 @@ import {
     buildOutboundRedirectUrl,
     getPlatformAffiliateOverride,
     getPlatformFallbackUrl,
+    isGainTarget,
 } from "@/lib/outbound";
 import { buildCanonicalOutboundRecord } from "@/lib/outbound-reporting";
 
@@ -319,7 +320,7 @@ export async function GET(
         fallbackUrl: null,
     });
     const platformOverrideUrl = getPlatformAffiliateOverride(site);
-    const effectiveDirectSiteOfferUrl = platformOverrideUrl && isGenericPlatformDestination(site, directSiteOfferUrl)
+    const effectiveDirectSiteOfferUrl = platformOverrideUrl && (isGainTarget(site) || isGenericPlatformDestination(site, directSiteOfferUrl))
         ? null
         : directSiteOfferUrl;
     // EarnLab gallery rows intentionally have no direct per-offer URL today.

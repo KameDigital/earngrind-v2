@@ -58,8 +58,8 @@ const SCRAMBLY_URL = "https://scrambly.io/";
 const PLATFORM_FALLBACK_URLS: Record<string, string> = {
     cashinstyle: CASHINSTYLE_AFFILIATE_URL,
     earnlab: EARNLAB_AFFILIATE_URL,
-    gaingg: "https://gain.gg",
-    gain: "https://gain.gg",
+    gaingg: GAIN_AFFILIATE_URL,
+    gain: GAIN_AFFILIATE_URL,
     gemsloot: "https://gemsloot.com",
     freecash: "https://freecash.com",
     swagbucks: "https://www.swagbucks.com",
@@ -122,6 +122,11 @@ export function getPlatformAffiliateOverride(platform: PlatformRedirectTarget | 
     }
 
     return null;
+}
+
+export function isGainTarget(platform: PlatformRedirectTarget | null | undefined): boolean {
+    return getPlatformKeys(platform)
+        .some((candidate) => candidate === "gaingg" || candidate === "gain" || candidate.includes("gaingg"));
 }
 
 export function isCashInStyleTarget(

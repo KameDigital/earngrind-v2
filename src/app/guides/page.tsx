@@ -17,6 +17,7 @@ const PAGE_SIZE = 18;
 
 const PALMON_GAME_ID = "0044a577-5e22-4af3-9aac-054ccd4c0cb0";
 const PALMON_GAME_SLUG = "palmon-survival";
+const PALMON_HUB_IMAGE_URL = "/images/guides/palmon-survival/palmon-hero-image.jpg";
 const PALMON_GUIDE_SLUGS = new Set([
     "palmon-survival-offerwall-guide",
     "palmon-survival-camp-30-guide",
@@ -306,6 +307,7 @@ export default async function GuidesPage({
         ? enrichedGuides.filter((guide) => !PALMON_GUIDE_SLUGS.has(guide.slug))
         : enrichedGuides;
     const palmonHubImageUrl =
+        pickPublicArtworkUrl(PALMON_HUB_IMAGE_URL) ??
         gameArtworkById.get(PALMON_GAME_ID) ??
         enrichedGuides
             .filter((guide) => PALMON_GUIDE_SLUGS.has(guide.slug))

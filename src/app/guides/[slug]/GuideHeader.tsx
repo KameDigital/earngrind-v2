@@ -104,7 +104,7 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
                                 sizes="(min-width: 1024px) 360px, 100vw"
                                 className="object-cover"
                                 priority
-                                unoptimized
+                                unoptimized={heroImageUrl.startsWith("http")}
                             />
                         </div>
                     ) : null}

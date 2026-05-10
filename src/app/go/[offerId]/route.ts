@@ -53,6 +53,52 @@ function buildRequestAttribution(req: NextRequest): Partial<RedirectAttribution>
     return readRedirectAttributionFromSearchParams(req.nextUrl.searchParams);
 }
 
+const GENERIC_PLATFORM_DESTINATIONS: Record<string, { hostnames: string[]; paths: string[] }> = {
+    earnlab: {
+        hostnames: ["earnlab.com"],
+        paths: ["", "/earn", "/tasks"],
+    },
+    gain: {
+        hostnames: ["gain.gg"],
+        paths: ["", "/earn"],
+    },
+    gaingg: {
+        hostnames: ["gain.gg"],
+        paths: ["", "/earn"],
+    },
+    gemsloot: {
+        hostnames: ["gemsloot.com"],
+        paths: ["", "/earn", "/earn/all"],
+    },
+};
+
+function getPlatformDestinationKeys(platform: { slug?: string | null; name?: string | null } | null | undefined): string[] {
+    return [platform?.slug, platform?.name]
+        .map((value) => value?.trim().toLowerCase())
+        .filter((value): value is string => Boolean(value))
+        .flatMap((value) => {
+            const normalized = value.replace(/[^a-z0-9]+/g, "");
+            return normalized && normalized !== value ? [value, normalized] : [value];
+        });
+}
+
+function isGenericPlatformDestination(platform: { slug?: string | null; name?: string | null } | null | undefined, value: string | null | undefined): boolean {
+    if (!value) return false;
+
+    try {
+        const url = new URL(value);
+        const hostname = url.hostname.replace(/^www\./i, "").toLowerCase();
+        const pathname = url.pathname.replace(/\/+$/g, "").toLowerCase();
+
+        return getPlatformDestinationKeys(platform).some((key) => {
+            const generic = GENERIC_PLATFORM_DESTINATIONS[key];
+            return Boolean(generic?.hostnames.includes(hostname) && generic.paths.includes(pathname));
+        });
+    } catch {
+        return false;
+    }
+}
+
 function logRedirectAttribution(params: {
     entityType: "offer" | "site_offer";
     offerId: string;
@@ -255,9 +301,13 @@ export async function GET(
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: null,
     });
+    const platformOverrideUrl = getPlatformAffiliateOverride(site);
+    const effectiveDirectSiteOfferUrl = platformOverrideUrl && isGenericPlatformDestination(site, directSiteOfferUrl)
+        ? null
+        : directSiteOfferUrl;
     // EarnLab gallery rows intentionally have no direct per-offer URL today.
     // When offer_url is missing, keep CTAs working through the platform affiliate fallback.
-    const outboundUrl = directSiteOfferUrl ?? getPlatformAffiliateOverride(site) ?? buildOutboundRedirectUrl({
+    const outboundUrl = effectiveDirectSiteOfferUrl ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: getPlatformFallbackUrl(site),
@@ -283,9 +333,9 @@ export async function GET(
         click_location: requestAttribution.click_location,
         source_context: requestAttribution.source_context,
         destination_url: outboundUrl,
-        affiliate_mode: directSiteOfferUrl
+        affiliate_mode: effectiveDirectSiteOfferUrl
             ? "direct"
-            : getPlatformAffiliateOverride(site)
+            : platformOverrideUrl
             ? "platform-override"
             : site?.affiliate_template?.includes("{destination}")
                 ? "destination-placeholder"

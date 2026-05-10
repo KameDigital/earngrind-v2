@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { fetchSearchConsoleRows, getGoogleSearchConsoleEnvStatus, getValidGoogleAccessToken } from "@/lib/google-search-console";
+import {
+    fetchSearchConsoleRows,
+    formatMissingGoogleSearchConsoleEnvMessage,
+    getGoogleSearchConsoleEnvStatus,
+    getValidGoogleAccessToken,
+} from "@/lib/google-search-console";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     const env = getGoogleSearchConsoleEnvStatus();
     if (!env.ready) {
-        return NextResponse.json({ error: `Google Search Console is not configured. Missing: ${env.missing.join(", ")}` }, { status: 500 });
+        return NextResponse.json({ error: formatMissingGoogleSearchConsoleEnvMessage(env.missing) }, { status: 500 });
     }
 
     const body = await request.json().catch(() => ({})) as Record<string, unknown>;

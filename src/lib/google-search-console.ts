@@ -3,6 +3,12 @@ import { matchGuideIdFromPageUrl, type SearchConsoleGuide } from "@/lib/search-c
 
 export const GOOGLE_SEARCH_CONSOLE_SCOPE = "https://www.googleapis.com/auth/webmasters.readonly";
 export const GOOGLE_SEARCH_CONSOLE_PROVIDER = "google_search_console";
+export const GOOGLE_SEARCH_CONSOLE_ENV_VARS = [
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_REDIRECT_URI",
+    "GOOGLE_SEARCH_CONSOLE_SITE_URL",
+] as const;
 
 export type SearchConsoleApiRow = {
     pageUrl: string;
@@ -47,9 +53,12 @@ export function getGoogleSearchConsoleConfig() {
 }
 
 export function getGoogleSearchConsoleEnvStatus() {
-    const required = ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REDIRECT_URI", "GOOGLE_SEARCH_CONSOLE_SITE_URL"];
-    const missing = required.filter((name) => !process.env[name]?.trim());
+    const missing = GOOGLE_SEARCH_CONSOLE_ENV_VARS.filter((name) => !process.env[name]?.trim());
     return { ready: missing.length === 0, missing };
+}
+
+export function formatMissingGoogleSearchConsoleEnvMessage(missing: readonly string[]) {
+    return `Missing Google env vars: ${missing.join(", ")}`;
 }
 
 export function buildGoogleOAuthUrl(state: string) {

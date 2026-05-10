@@ -84,7 +84,7 @@ export default function SearchConsoleSyncPanel({
                     </div>
                     {!envReady ? (
                         <div className="mt-2 text-sm font-semibold text-red-700">
-                            Missing Google env vars: {missingEnv.join(", ")}
+                            {`Missing Google env vars: ${missingEnv.join(", ")}`}
                         </div>
                     ) : null}
                 </div>

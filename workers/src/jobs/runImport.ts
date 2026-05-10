@@ -18,6 +18,8 @@ import { gainRevuSource } from "../sources/gain_revu";
 import { gemslootSource } from "../sources/gemsloot";
 import { ImportStats, SourceOffer } from "../types/offer";
 
+const CASHINSTYLE_AFFILIATE_URL = "https://cashinstyle.com/?ref=earngrind";
+
 export const SOURCES: Record<string, SourceAdapter> = {
     [cashInStyleSource.key]: cashInStyleSource,
     [cashInStyleAyetSource.key]: cashInStyleAyetSource,
@@ -190,6 +192,21 @@ async function upsertPlatform(db: SupabaseClient, adapter: SourceAdapter): Promi
         .maybeSingle();
 
     if (existing) {
+        if (isCashInStylePlatform && existing.affiliate_template !== CASHINSTYLE_AFFILIATE_URL) {
+            const { data: updated, error } = await db
+                .from("platforms")
+                .update({ affiliate_template: CASHINSTYLE_AFFILIATE_URL })
+                .eq("id", existing.id)
+                .select("id, name, slug, platform_kind, logo_url, affiliate_template, description, countries, is_active")
+                .single();
+
+            if (error || !updated) {
+                throw new Error(`Failed to update CashInStyle affiliate template: ${error?.message ?? "unknown error"}`);
+            }
+
+            return updated as PlatformRecord;
+        }
+
         return existing as PlatformRecord;
     }
 
@@ -199,6 +216,7 @@ async function upsertPlatform(db: SupabaseClient, adapter: SourceAdapter): Promi
             name: platformName,
             slug,
             platform_kind: "gpt_site",
+            affiliate_template: isCashInStylePlatform ? CASHINSTYLE_AFFILIATE_URL : null,
             description: `${platformName} ingestion source`,
             is_active: true,
         })

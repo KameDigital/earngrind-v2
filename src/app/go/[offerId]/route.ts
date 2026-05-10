@@ -7,6 +7,7 @@ import {
 } from "@/lib/outbound-attribution";
 import { createClient } from "@/lib/supabase/server";
 import {
+    buildCashInStyleOutboundUrl,
     buildOutboundRedirectUrl,
     getPlatformAffiliateOverride,
     getPlatformFallbackUrl,
@@ -184,6 +185,7 @@ export async function GET(
         .select(`
             id,
             title,
+            external_id,
             custom_param,
             payout_usd,
             status,
@@ -208,7 +210,13 @@ export async function GET(
     if (offer) {
         const platform = Array.isArray(offer.platform) ? offer.platform[0] ?? null : offer.platform;
         const game = Array.isArray(offer.game) ? offer.game[0] ?? null : offer.game;
-        const outboundUrl = getPlatformAffiliateOverride(platform) ?? buildOutboundRedirectUrl({
+        const cashInStyleOutboundUrl = buildCashInStyleOutboundUrl({
+            platform,
+            externalId: offer.external_id,
+            customParam: offer.custom_param,
+        });
+        const platformOverrideUrl = getPlatformAffiliateOverride(platform);
+        const outboundUrl = cashInStyleOutboundUrl ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
             affiliateTemplate: platform?.affiliate_template,
             destinationUrl: offer.custom_param,
             fallbackUrl: getPlatformFallbackUrl(platform),
@@ -228,7 +236,9 @@ export async function GET(
             click_location: requestAttribution.click_location,
             source_context: requestAttribution.source_context,
             destination_url: outboundUrl,
-            affiliate_mode: getPlatformAffiliateOverride(platform)
+            affiliate_mode: cashInStyleOutboundUrl
+                ? "cashinstyle-deeplink"
+                : platformOverrideUrl
                 ? "platform-override"
                 : platform?.affiliate_template?.includes("{destination}")
                     ? "destination-placeholder"
@@ -251,7 +261,7 @@ export async function GET(
         logRedirectAttribution({
             entityType: "offer",
             offerId: offer.id,
-        platformId: platform?.id,
+            platformId: platform?.id,
             req,
             attribution,
         });
@@ -263,6 +273,7 @@ export async function GET(
         .from("site_offers")
         .select(`
             id,
+            external_id,
             offer_url,
             payout_usd,
             total_payout_usd,
@@ -296,6 +307,12 @@ export async function GET(
     const site = Array.isArray(siteOffer.site) ? siteOffer.site[0] ?? null : siteOffer.site;
     const game = Array.isArray(siteOffer.game) ? siteOffer.game[0] ?? null : siteOffer.game;
     const provider = Array.isArray(siteOffer.provider) ? siteOffer.provider[0] ?? null : siteOffer.provider;
+    const cashInStyleOutboundUrl = buildCashInStyleOutboundUrl({
+        platform: site,
+        provider,
+        externalId: siteOffer.external_id,
+        offerUrl: siteOffer.offer_url,
+    });
     const directSiteOfferUrl = buildOutboundRedirectUrl({
         affiliateTemplate: null,
         destinationUrl: siteOffer.offer_url,
@@ -307,7 +324,7 @@ export async function GET(
         : directSiteOfferUrl;
     // EarnLab gallery rows intentionally have no direct per-offer URL today.
     // When offer_url is missing, keep CTAs working through the platform affiliate fallback.
-    const outboundUrl = effectiveDirectSiteOfferUrl ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
+    const outboundUrl = cashInStyleOutboundUrl ?? effectiveDirectSiteOfferUrl ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: getPlatformFallbackUrl(site),
@@ -333,7 +350,9 @@ export async function GET(
         click_location: requestAttribution.click_location,
         source_context: requestAttribution.source_context,
         destination_url: outboundUrl,
-        affiliate_mode: effectiveDirectSiteOfferUrl
+        affiliate_mode: cashInStyleOutboundUrl
+            ? "cashinstyle-deeplink"
+            : effectiveDirectSiteOfferUrl
             ? "direct"
             : platformOverrideUrl
             ? "platform-override"

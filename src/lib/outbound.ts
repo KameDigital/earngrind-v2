@@ -36,9 +36,19 @@ type PlatformRedirectTarget = {
     affiliate_template?: string | null;
 };
 
+type CashInStyleOfferTarget = {
+    platform?: PlatformRedirectTarget | null;
+    provider?: { name?: string | null; slug?: string | null } | null;
+    providerOfferId?: string | number | null;
+    externalId?: string | null;
+    offerUrl?: string | null;
+    customParam?: string | null;
+};
+
 const GAIN_AFFILIATE_URL = "https://gain.gg/r/macko";
 const EARNLAB_AFFILIATE_URL = "https://earnlab.com/r/mac";
 const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev";
+export const CASHINSTYLE_AFFILIATE_URL = "https://cashinstyle.com/?ref=earngrind";
 const SWAGBUCKS_AFFILIATE_URL = "https://www.swagbucks.com/profile/r_158565078?rp=1";
 const KASHKICK_AFFILIATE_URL = "https://app.kashkick.com?ref=MEF2ucEjcbtH";
 const INBOXDOLLARS_AFFILIATE_URL = "https://www.inboxdollars.com?rb=193664312";
@@ -46,6 +56,7 @@ const MYPOINTS_AFFILIATE_URL = "https://www.mypoints.com?rb=233983902";
 const PRIZEREBEL_AFFILIATE_URL = "https://www.prizerebel.com/index.php?r=16580973";
 const SCRAMBLY_URL = "https://scrambly.io/";
 const PLATFORM_FALLBACK_URLS: Record<string, string> = {
+    cashinstyle: CASHINSTYLE_AFFILIATE_URL,
     earnlab: EARNLAB_AFFILIATE_URL,
     gaingg: "https://gain.gg",
     gain: "https://gain.gg",
@@ -79,6 +90,9 @@ export function getPlatformFallbackUrl(platform: PlatformRedirectTarget | null |
 
 export function getPlatformAffiliateOverride(platform: PlatformRedirectTarget | null | undefined): string | null {
     const candidates = getPlatformKeys(platform);
+    if (candidates.some((candidate) => candidate === "cashinstyle" || candidate === "cashinstyles")) {
+        return CASHINSTYLE_AFFILIATE_URL;
+    }
     if (candidates.some((candidate) => candidate === "earnlab" || candidate.includes("earnlab"))) {
         return EARNLAB_AFFILIATE_URL;
     }
@@ -110,6 +124,43 @@ export function getPlatformAffiliateOverride(platform: PlatformRedirectTarget | 
     return null;
 }
 
+export function isCashInStyleTarget(
+    platform: PlatformRedirectTarget | null | undefined,
+    provider?: { name?: string | null; slug?: string | null } | null,
+): boolean {
+    return [...getPlatformKeys(platform), ...getPlatformKeys(provider)]
+        .some((candidate) => candidate === "cashinstyle" || candidate === "cashinstyles");
+}
+
+export function extractCashInStyleOfferId({
+    providerOfferId,
+    externalId,
+    offerUrl,
+    customParam,
+}: Pick<CashInStyleOfferTarget, "providerOfferId" | "externalId" | "offerUrl" | "customParam">): string | null {
+    const explicitId = normalizeCashInStyleOfferId(providerOfferId);
+    if (explicitId) return explicitId;
+
+    const fromExternalId = extractCashInStyleOfferIdFromExternalId(externalId);
+    if (fromExternalId) return fromExternalId;
+
+    for (const url of [offerUrl, customParam]) {
+        const fromUrl = extractCashInStyleOfferIdFromUrl(url);
+        if (fromUrl) return fromUrl;
+    }
+
+    return null;
+}
+
+export function buildCashInStyleOutboundUrl(target: CashInStyleOfferTarget): string | null {
+    if (!isCashInStyleTarget(target.platform, target.provider)) return null;
+
+    const offerId = extractCashInStyleOfferId(target);
+    if (!offerId) return CASHINSTYLE_AFFILIATE_URL;
+
+    return `https://cashinstyle.com/walls/offers/${encodeURIComponent(offerId)}?ref=earngrind`;
+}
+
 export function buildPlatformAffiliateUrl({
     platform,
     customParam = "earngrind",
@@ -138,6 +189,40 @@ function sanitizeRedirectTarget(value: string | null | undefined): string | null
     if (isImageUrl(trimmed)) return null;
     if (!isSafeHttpUrl(trimmed)) return null;
     return trimmed;
+}
+
+function normalizeCashInStyleOfferId(value: string | number | null | undefined): string | null {
+    const normalized = String(value ?? "").trim();
+    if (!normalized || /^offer_id$/i.test(normalized)) return null;
+    return /^[A-Za-z0-9_-]+$/.test(normalized) ? normalized : null;
+}
+
+function extractCashInStyleOfferIdFromExternalId(value: string | null | undefined): string | null {
+    const normalized = value?.trim() ?? "";
+    if (!normalized) return null;
+
+    const directMatch = normalized.match(/^cashinstyle-(?:[a-z]+-)?([A-Za-z0-9_-]+)$/i);
+    if (directMatch) return normalizeCashInStyleOfferId(directMatch[1]);
+
+    return normalizeCashInStyleOfferId(normalized);
+}
+
+function extractCashInStyleOfferIdFromUrl(value: string | null | undefined): string | null {
+    const trimmed = value?.trim() ?? "";
+    if (!trimmed) return null;
+
+    try {
+        const url = new URL(trimmed);
+        const cashInStyleMatch = url.pathname.match(/\/walls\/offers\/([^/?#]+)/i);
+        if (cashInStyleMatch) return normalizeCashInStyleOfferId(decodeURIComponent(cashInStyleMatch[1]));
+
+        const toroxMatch = url.pathname.match(/\/click_track\/track\/([^/?#]+)/i);
+        if (toroxMatch) return normalizeCashInStyleOfferId(decodeURIComponent(toroxMatch[1]));
+    } catch {
+        return null;
+    }
+
+    return null;
 }
 
 function isSafeHttpUrl(value: string): boolean {

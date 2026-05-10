@@ -71,6 +71,23 @@ export default async function EditSiteOfferPage({
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
+                    <p className="text-xs font-bold uppercase tracking-widest text-gray-500">
+                        Tracked preview
+                    </p>
+                    <Link
+                        href={`/go/${offer.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex text-sm font-semibold text-blue-700 hover:text-blue-900"
+                    >
+                        Open tracked start URL
+                    </Link>
+                    <p className="mt-1 text-xs text-gray-500">
+                        Uses the same outbound redirect logic as public offer buttons.
+                    </p>
+                </div>
+
                 <SiteOfferEditForm
                     offer={{
                         id:         offer.id,

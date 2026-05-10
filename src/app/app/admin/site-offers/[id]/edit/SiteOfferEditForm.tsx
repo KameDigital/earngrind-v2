@@ -175,7 +175,7 @@ export default function SiteOfferEditForm({ offer }: SiteOfferEditFormProps) {
                     <label className={labelClass}>Offer URL</label>
                     <input type="url" value={offerUrl} onChange={e => setOfferUrl(e.target.value)}
                         className={inputClass} placeholder="https://..." />
-                    <p className={hintClass}>Referral / tracking link. If empty, the &quot;Start Offer&quot; button will be hidden.</p>
+                    <p className={hintClass}>Stored provider URL. Public start buttons use the tracked /go redirect.</p>
                 </div>
             </fieldset>
 

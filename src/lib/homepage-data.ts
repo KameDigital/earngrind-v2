@@ -37,12 +37,28 @@ const FEATURED_EARNLAB_TASK_GROUPS = [
 ] as const;
 
 const FEATURED_CASHINSTYLE_TASK_GROUPS = [
+  ["Palmon: Survival", "Palmon"],
+  ["Woodoku Blast", "Woodoku"],
+  ["Rock N' Cash Casino-Slots Game", "Rock N' Cash"],
+  ["Merge Paradise : Match Puzzle", "Merge Paradise"],
+  ["DesignVille: Merge & Design", "DesignVille"],
+  ["Superheroes Idle RPG", "Superheroes"],
+  ["Train Miner: Idle Railway Game", "Train Miner"],
+  ["Survivor Idle Run"],
+  ["Frost & Flame: King of Avalon", "Frost & Flame", "King of Avalon"],
+  ["Call of Dragons"],
+  ["Rise of Kingdoms", "Rise of Kingdoms: Lost Crusade"],
+  ["Bingo Card Adventures"],
   ["Zombie Waves"],
+  ["Puzzles & Chaos: Frozen Castle", "Puzzles & Chaos"],
+  ["MU: Dark Epoch", "MU Dark Epoch"],
+  ["Lords Mobile", "Lords Mobile: Kingdom Wars"],
+  ["Sea of Conquest: Pirate War", "Sea of Conquest"],
+  ["Raid: Shadow Legends", "Raid Shadow Legends"],
   ["Monopoly GO", "Monopoly Go"],
   ["Bingo Blitz"],
   ["Coin Master"],
-  ["Raid: Shadow Legends", "Raid Shadow Legends"],
-  ["Merge Gardens"],
+  ["Tile Mahjong Classic", "Tile Mahjong"],
 ] as const;
 
 const OFFER_SELECT =
@@ -148,6 +164,12 @@ export type HomepageData = {
 export function formatMoney(value: number | null | undefined) {
   if (typeof value !== "number" || Number.isNaN(value)) return null;
   return `$${value.toFixed(2)}`;
+}
+
+function formatRewardDisplay(value: string | null | undefined, fallbackAmount: number | null | undefined) {
+  const trimmed = value?.trim();
+  if (trimmed) return trimmed.replace(/^\$+/, "$");
+  return formatMoney(fallbackAmount);
 }
 
 export function gameKeyFromParts(slug: string | null | undefined, name: string | null | undefined) {
@@ -373,7 +395,7 @@ function buildManualTaskMap(tasks: SiteOfferTaskRow[]) {
     const existing = manualTaskMap.get(task.site_offer_id) ?? [];
     existing.push({
       title: task.title ?? "Offer milestone",
-      rewardDisplay: task.reward_display ?? formatMoney(task.reward_amount),
+      rewardDisplay: formatRewardDisplay(task.reward_display, task.reward_amount),
       timeLimitText: task.time_limit_text,
       sortOrder: task.sort_order,
     });
@@ -531,7 +553,11 @@ function buildCashInStyleFeaturedOffers({
             matchesAliasGroup(row.game_name, aliases)
           );
         })
-        .sort((a, b) => (b.total_payout_usd ?? b.payout_usd ?? 0) - (a.total_payout_usd ?? a.payout_usd ?? 0))[0] ?? null,
+        .sort(
+          (a, b) =>
+            (b.total_payout_usd ?? b.payout_usd ?? 0) -
+            (a.total_payout_usd ?? a.payout_usd ?? 0),
+        )[0] ?? null,
     )
     .filter(Boolean) as OfferRow[];
 
@@ -549,7 +575,7 @@ function buildCashInStyleFeaturedOffers({
         row.platform_logo ??
         null,
     }))
-    .slice(0, 6);
+    .slice(0, 12);
 }
 
 function getModalRouteRows({

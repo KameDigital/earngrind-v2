@@ -36,6 +36,15 @@ const FEATURED_EARNLAB_TASK_GROUPS = [
   ["Woodoku Blast"],
 ] as const;
 
+const FEATURED_CASHINSTYLE_TASK_GROUPS = [
+  ["Zombie Waves"],
+  ["Monopoly GO", "Monopoly Go"],
+  ["Bingo Blitz"],
+  ["Coin Master"],
+  ["Raid: Shadow Legends", "Raid Shadow Legends"],
+  ["Merge Gardens"],
+] as const;
+
 const OFFER_SELECT =
   "id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text";
 
@@ -117,6 +126,7 @@ export type HomepageRailOffer = OfferRow & {
 export type HomepageData = {
   featuredGames: FeaturedGame[];
   earnLabFeaturedOffers: HomepageRailOffer[];
+  cashInStyleFeaturedOffers: HomepageRailOffer[];
   gainFeaturedOffers: GainGalleryOffer[];
   modalRoutesByGameKey: Record<string, RailPreviewRoute[]>;
   guideHrefByGameKey: Record<string, string>;
@@ -296,6 +306,22 @@ async function loadEarnLabCandidates() {
     .limit(120);
 }
 
+// CashInStyle candidates: visible homepage rail for imported CashInStyle offers.
+async function loadCashInStyleCandidates() {
+  const featuredCashInStyleTaskFilters = buildHomepageIlikeFilters(
+    FEATURED_CASHINSTYLE_TASK_GROUPS,
+    ["game_name", "title"],
+  );
+
+  return publicSupabase
+    .from("unified_offers_view")
+    .select(OFFER_SELECT)
+    .eq("platform_name", "CashInStyle")
+    .or(featuredCashInStyleTaskFilters)
+    .order("total_payout_usd", { ascending: false })
+    .limit(120);
+}
+
 async function loadPopularGuides() {
   return publicSupabase
     .from("guides")
@@ -446,7 +472,11 @@ function buildEarnLabFeaturedOffers({
             matchesAliasGroup(row.game_name, aliases)
           );
         })
-        .sort((a, b) => (b.total_payout_usd ?? b.payout_usd ?? 0) - (a.total_payout_usd ?? a.payout_usd ?? 0))[0] ?? null,
+        .sort(
+          (a, b) =>
+            (b.total_payout_usd ?? b.payout_usd ?? 0) -
+            (a.total_payout_usd ?? a.payout_usd ?? 0),
+        )[0] ?? null,
     )
     .filter(Boolean) as OfferRow[];
 
@@ -484,6 +514,42 @@ function buildEarnLabFeaturedOffers({
       (row) => !earnLabPrimaryOffers.some((featured) => featured.id === row.id),
     ),
   ].slice(0, 6);
+}
+
+function buildCashInStyleFeaturedOffers({
+  featuredCashInStyleTaskRows,
+}: {
+  featuredCashInStyleTaskRows: OfferRow[];
+}) {
+  const cashInStyleFeaturedOfferRows: OfferRow[] = FEATURED_CASHINSTYLE_TASK_GROUPS
+    .map((aliases) =>
+      featuredCashInStyleTaskRows
+        .filter((row) => {
+          if (row.platform_name !== "CashInStyle") return false;
+          return (
+            matchesAliasGroup(row.title, aliases) ||
+            matchesAliasGroup(row.game_name, aliases)
+          );
+        })
+        .sort((a, b) => (b.total_payout_usd ?? b.payout_usd ?? 0) - (a.total_payout_usd ?? a.payout_usd ?? 0))[0] ?? null,
+    )
+    .filter(Boolean) as OfferRow[];
+
+  const primaryOffers = cashInStyleFeaturedOfferRows.length
+    ? cashInStyleFeaturedOfferRows
+    : featuredCashInStyleTaskRows;
+
+  return primaryOffers
+    .map((row) => ({
+      ...row,
+      badge: "CashInStyle featured",
+      image_url:
+        row.image_url ??
+        row.game_thumbnail ??
+        row.platform_logo ??
+        null,
+    }))
+    .slice(0, 6);
 }
 
 function getModalRouteRows({
@@ -627,6 +693,7 @@ export async function getHomepageData(): Promise<HomepageData> {
     featuredGamesResult,
     featuredGameOffersResult,
     featuredEarnLabTasksResult,
+    featuredCashInStyleTasksResult,
     gainFeaturedOffersResult,
   ] = await Promise.all([
     loadBaseOfferRows(),
@@ -634,15 +701,26 @@ export async function getHomepageData(): Promise<HomepageData> {
     loadFeaturedGames(),
     loadFeaturedGameCandidates(),
     loadEarnLabCandidates(),
+    loadCashInStyleCandidates(),
     loadGainFeaturedData(),
   ]);
 
   const offerRows = normalizePublicOfferRows((offersResult.data ?? []) as OfferRow[]);
   const featuredGameOfferRows = normalizePublicOfferRows((featuredGameOffersResult.data ?? []) as OfferRow[]);
   const featuredEarnLabTaskRows = normalizePublicOfferRows((featuredEarnLabTasksResult.data ?? []) as OfferRow[]);
+  const featuredCashInStyleTaskRows = normalizePublicOfferRows(
+    (featuredCashInStyleTasksResult.data ?? []) as OfferRow[],
+  );
 
   const allOfferRows = Array.from(
-    new Map([...offerRows, ...featuredGameOfferRows, ...featuredEarnLabTaskRows].map((row) => [row.id, row])).values(),
+    new Map(
+      [
+        ...offerRows,
+        ...featuredGameOfferRows,
+        ...featuredEarnLabTaskRows,
+        ...featuredCashInStyleTaskRows,
+      ].map((row) => [row.id, row]),
+    ).values(),
   );
 
   const featuredGames = buildFeaturedGames({
@@ -655,11 +733,14 @@ export async function getHomepageData(): Promise<HomepageData> {
     featuredEarnLabTaskRows,
     allOfferRows,
   });
+  const cashInStyleFeaturedOffers = buildCashInStyleFeaturedOffers({
+    featuredCashInStyleTaskRows,
+  });
 
   const modalRouteRows = getModalRouteRows({
     allOfferRows,
     featuredGames,
-    visibleRailOffers: earnLabFeaturedOffers,
+    visibleRailOffers: [...earnLabFeaturedOffers, ...cashInStyleFeaturedOffers],
   });
   const modalOfferIds = Array.from(new Set(modalRouteRows.map((row) => row.id)));
   const modalGameIds = Array.from(new Set(modalRouteRows.map((row) => row.game_id).filter(Boolean))) as string[];
@@ -696,6 +777,7 @@ export async function getHomepageData(): Promise<HomepageData> {
   return {
     featuredGames,
     earnLabFeaturedOffers,
+    cashInStyleFeaturedOffers,
     gainFeaturedOffers,
     modalRoutesByGameKey,
     guideHrefByGameKey,
@@ -706,7 +788,11 @@ export async function getHomepageData(): Promise<HomepageData> {
       topPayout: offerRows[0]?.total_payout_usd ?? offerRows[0]?.payout_usd ?? null,
     },
     audit: {
-      rawOfferRows: offerRows.length + featuredGameOfferRows.length + featuredEarnLabTaskRows.length,
+      rawOfferRows:
+        offerRows.length +
+        featuredGameOfferRows.length +
+        featuredEarnLabTaskRows.length +
+        featuredCashInStyleTaskRows.length,
       uniqueOfferIds: allOfferRows.length,
       modalTaskOfferIds: modalOfferIds.length,
       manualTaskRows: manualTasks.length,

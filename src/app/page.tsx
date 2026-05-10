@@ -98,8 +98,15 @@ const HOW_IT_WORKS_STEPS = [
 ] as const;
 
 export default async function HomePage() {
-  const { earnLabFeaturedOffers, gainFeaturedOffers, modalRoutesByGameKey, guideHrefByGameKey, popularGuides, stats } =
-    await getHomepageData();
+  const {
+    cashInStyleFeaturedOffers,
+    earnLabFeaturedOffers,
+    gainFeaturedOffers,
+    modalRoutesByGameKey,
+    guideHrefByGameKey,
+    popularGuides,
+    stats,
+  } = await getHomepageData();
   const guideHrefForGame = (slug: string | null | undefined, fallbackKey?: string) => {
     if (!slug) return fallbackKey ? guideHrefByGameKey[fallbackKey] ?? null : null;
     return guideHrefByGameKey[slug] ?? (modalRoutesByGameKey[slug]?.length ? `/guides/how-to-earn/${slug}` : null);
@@ -130,6 +137,40 @@ export default async function HomePage() {
             payoutValue: offer.total_payout_usd ?? offer.payout_usd,
             taskCount: offer.goal_text ? 1 : 0,
             tasks: offer.goal_text ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.total_payout_usd ?? offer.payout_usd) }] : [],
+          },
+        ],
+      },
+    }));
+  const cashInStyleOfferRail: FeaturedOfferRailItem[] = cashInStyleFeaturedOffers.map((offer) => ({
+      id: `cashinstyle-featured-${offer.id}`,
+      href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
+      title: offer.title?.trim() || offer.game_name || "Offer",
+      badge: offer.badge,
+      provider: offer.platform_name,
+      platform: offer.provider_name,
+      payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
+      secondaryValue: offer.goal_text ? offer.goal_text : null,
+      imageUrl: offer.image_url,
+      preview: {
+        title: offer.title?.trim() || offer.game_name || "Offer",
+        description: `Preview the CashInStyle route for ${
+          offer.game_name ?? offer.title ?? "this offer"
+        } before starting.`,
+        imageUrl: offer.image_url,
+        gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
+        guideHref: guideHrefForGame(offer.game_slug, gameKeyFromParts(offer.game_slug, offer.game_name)),
+        routes: modalRoutesByGameKey[gameKeyFromParts(offer.game_slug, offer.game_name)] ?? [
+          {
+            offerId: offer.id,
+            href: buildGoHref(offer, "homepage_cashinstyle_modal_single_route"),
+            providerName: offer.provider_name,
+            platformName: offer.platform_name,
+            payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
+            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
+            taskCount: offer.goal_text ? 1 : 0,
+            tasks: offer.goal_text
+              ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.total_payout_usd ?? offer.payout_usd) }]
+              : [],
           },
         ],
       },
@@ -359,6 +400,11 @@ export default async function HomePage() {
                 />
               </div>
               <div className="mt-10">
+                <FeaturedOfferRail
+                  items={cashInStyleOfferRail}
+                  title="Featured CashInStyle tasks"
+                  description="Current CashInStyle offers from EarnGrind's imported feed. Start buttons use the tracked CashInStyle deeplink flow."
+                />
               </div>
           </div>
         </div>

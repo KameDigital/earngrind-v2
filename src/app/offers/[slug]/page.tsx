@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import { buildBreadcrumbList, buildItemList, JsonLd } from '@/lib/seo-schema';
 import type { Offer } from '@/components/offers/OfferSearchEngine';
 import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
+import ProviderLogo from '@/components/providers/ProviderLogo';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
 import { formatPayoutFreshness } from '@/lib/payout-freshness';
 import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
@@ -477,7 +478,8 @@ function ComparisonRow({ offer, isBest, rank }: { offer: Offer; isBest: boolean;
                         {offer.is_hot && <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-orange-50 text-orange-700 border border-orange-200">HOT</span>}
                         {offer.is_boosted && <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">BOOSTED</span>}
                     </div>
-                    <div className="flex items-center gap-1 flex-wrap text-xs text-[var(--text-tertiary)]">
+                    <div className="flex items-center gap-2 flex-wrap text-xs text-[var(--text-tertiary)]">
+                        <ProviderLogo name={providerLabel} compact className="h-8" />
                         <span className="font-semibold">{providerLabel}</span>
                         <span>?</span>
                         {offer.devices.map((device) => (

@@ -1,3 +1,5 @@
+import ProviderLogo from "@/components/providers/ProviderLogo";
+
 type ProviderRow = {
   providerName: string;
   offers: number;
@@ -19,7 +21,10 @@ export default function ProviderComparison({ rows }: { rows: ProviderRow[] }) {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {rows.slice(0, 9).map((row) => (
           <article key={row.providerName} className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
-            <h3 className="text-sm font-extrabold text-[var(--brand-ink)]">{row.providerName}</h3>
+            <div className="flex items-center gap-3">
+              <ProviderLogo name={row.providerName} className="h-10 max-w-[180px]" />
+              <h3 className="min-w-0 text-sm font-extrabold text-[var(--brand-ink)]">{row.providerName}</h3>
+            </div>
             <p className="mt-1 text-xs text-[var(--text-tertiary)]">{row.offers} offer{row.offers !== 1 ? "s" : ""}</p>
             <dl className="mt-3 space-y-1 text-xs">
               <div className="flex items-center justify-between">

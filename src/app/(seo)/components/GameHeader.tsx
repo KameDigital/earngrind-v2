@@ -1,5 +1,6 @@
 import { formatMoney } from "../_lib/seo-data";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import ProviderLogo from "@/components/providers/ProviderLogo";
 import { formatPayoutFreshness, payoutFreshnessIsStale } from "@/lib/payout-freshness";
 
 type GameHeaderProps = {
@@ -44,9 +45,14 @@ export default function GameHeader({
         <div className="rounded-2xl border border-lime-300 bg-lime-50 p-4">
           <p className="text-xs font-extrabold uppercase tracking-wide text-lime-800">Highest current payout</p>
           <p className="mt-1 text-3xl font-extrabold text-[var(--brand-ink)]">{formatMoney(maxPayoutUsd)}</p>
-          <p className="mt-2 text-sm text-[var(--text-secondary)]">
-            {bestOffer ? `${bestOffer.platformName} via ${bestOffer.providerName}` : "No active route available"}
-          </p>
+          {bestOffer ? (
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-[var(--text-secondary)]">
+              <ProviderLogo name={bestOffer.providerName} compact className="h-8" />
+              <span>{bestOffer.platformName} via {bestOffer.providerName}</span>
+            </div>
+          ) : (
+            <p className="mt-2 text-sm text-[var(--text-secondary)]">No active route available</p>
+          )}
           {bestOffer ? (
             <div className={`mt-3 rounded-xl border px-3 py-2 text-xs font-bold ${
               payoutFreshnessIsStale(bestOffer.updatedAt)

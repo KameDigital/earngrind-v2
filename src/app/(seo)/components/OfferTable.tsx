@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import ProviderLogo from "@/components/providers/ProviderLogo";
 import type { SeoOfferRow } from "../_lib/seo-data";
 import { formatMoney } from "../_lib/seo-data";
 import { formatPayoutFreshness } from "@/lib/payout-freshness";
@@ -121,9 +122,10 @@ function OfferCard({
               </span>
             ) : null}
           </div>
-          <p className="mt-1 text-xs text-[var(--text-tertiary)]">
-            {row.providerName} on {row.platformName}
-          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[var(--text-tertiary)]">
+            <ProviderLogo name={row.providerName} compact className="h-8" />
+            <span>{row.providerName} on {row.platformName}</span>
+          </div>
         </div>
         <div className="text-right">
           <div className="text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Total payout</div>
@@ -353,9 +355,12 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="section-label">Best Offer</p>
-            <h3 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
-              {bestOverall ? `${bestOverall.providerName} on ${bestOverall.platformName}` : "No active offer"}
-            </h3>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              {bestOverall ? <ProviderLogo name={bestOverall.providerName} className="h-10 max-w-[180px]" /> : null}
+              <h3 className="text-2xl font-extrabold text-[var(--brand-ink)]">
+                {bestOverall ? `${bestOverall.providerName} on ${bestOverall.platformName}` : "No active offer"}
+              </h3>
+            </div>
             <p className="mt-2 text-sm text-[var(--text-secondary)]">
               {bestOverall
                 ? `${formatMoney(bestOverall.totalPayoutUsd)} is the strongest current route in this view. Start there if you want the highest visible return first.`
@@ -493,6 +498,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
               >
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
+                    <ProviderLogo name={group.providerName} className="h-10 max-w-[180px]" />
                     <h4 className="text-xl font-extrabold text-[var(--brand-ink)]">{group.providerName}</h4>
                     {index < 2 ? (
                       <span className="rounded-full border border-lime-300 bg-lime-50 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-lime-800">
@@ -555,7 +561,10 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
             <div className="grid gap-2 md:grid-cols-3">
               {selectedRows.map((row) => (
                 <div key={row.id} className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2">
-                  <div className="text-sm font-bold text-[var(--brand-ink)]">{row.providerName}</div>
+                  <div className="flex items-center gap-2">
+                    <ProviderLogo name={row.providerName} compact className="h-8" />
+                    <div className="text-sm font-bold text-[var(--brand-ink)]">{row.providerName}</div>
+                  </div>
                   <div className="text-xs text-[var(--text-tertiary)]">{row.platformName}</div>
                   <div className="mt-1 text-sm font-extrabold text-[var(--brand-ink)]">{formatMoney(row.totalPayoutUsd)}</div>
                 </div>

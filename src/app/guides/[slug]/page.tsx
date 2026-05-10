@@ -25,6 +25,13 @@ const GUIDE_SLUG_REDIRECTS: Record<string, string> = {
 };
 
 const GUIDE_HERO_IMAGES: Record<string, string> = {
+    "palmon-survival-offerwall-guide": "/images/guides/palmon-survival/palmon-guide-hero.jpg",
+    "palmon-survival-camp-30-guide": "/images/guides/palmon-survival/palmon-late-game.jpg",
+    "palmon-survival-no-spend": "/images/guides/palmon-survival/palmon-early-game.jpg",
+    "palmon-survival-not-crediting": "/images/guides/palmon-survival/palmon-task-list-confirm.jpg",
+};
+
+const GUIDE_PREVIEW_IMAGES: Record<string, string> = {
     "palmon-survival-offerwall-guide": "/images/guides/palmon-survival/palmon-hero-image.jpg",
     "palmon-survival-camp-30-guide": "/images/guides/palmon-survival/palmon-late-game.jpg",
     "palmon-survival-no-spend": "/images/guides/palmon-survival/palmon-early-game.jpg",
@@ -115,7 +122,7 @@ export async function generateMetadata(
     const desc  = guideForMetadata.seo_description ?? guideForMetadata.excerpt ??
         `Compare ${guide.title} requirements, payout milestones, and completion tips before starting. Verify live terms because payouts and tasks can change.`;
     const canonical = absoluteUrl(`/guides/${metadataSlug}`);
-    const imageUrl = GUIDE_HERO_IMAGES[metadataSlug];
+    const imageUrl = GUIDE_PREVIEW_IMAGES[metadataSlug];
     const absoluteImageUrl = imageUrl ? absoluteUrl(imageUrl) : null;
 
     return {

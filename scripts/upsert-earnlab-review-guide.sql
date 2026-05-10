@@ -113,7 +113,7 @@ select
   </ul>
 </div>
 
-<p><em>Last researched: May 9, 2026.</em> This EarnLab review is written for readers searching questions like “Is EarnLab legit?”, “Does EarnLab pay?”, “EarnLab promo code”, “EarnLab withdrawal”, and “EarnLab vs Freecash.” EarnLab appears to be a real GPT and offerwall platform where users can earn through surveys, apps, game offers, referrals, bonuses, and optional gamified features. However, it is not frictionless. Users should understand offer tracking, withdrawals, verification, VPN rules, account flags, and support delays before investing serious time or spending money on offers.</p>
+<p><em>Last researched: May 10, 2026.</em> This EarnLab review is written for readers searching questions like “Is EarnLab legit?”, “Does EarnLab pay?”, “EarnLab promo code”, “EarnLab withdrawal”, and “EarnLab vs Freecash.” EarnLab appears to be a real GPT and offerwall platform where users can earn through surveys, apps, game offers, referrals, bonuses, and optional gamified features. However, it is not frictionless. Users should understand offer tracking, withdrawals, verification, VPN rules, account flags, and support delays before investing serious time or spending money on offers.</p>
 
 <p>EarnGrind may earn a commission if you sign up through some links, but this guide still highlights risks, complaints, and alternatives. The goal is not to make EarnLab sound perfect. The goal is to help you decide whether EarnLab is worth testing, how to reduce avoidable mistakes, and when a competitor such as <a href="/best-gpt-sites">Freecash, KashKick, Swagbucks, InboxDollars, Scrambly, Gain.gg, or Gemsloot</a> may be a better fit.</p>
 
@@ -143,6 +143,15 @@ select
 <p>Users complete third-party offers through EarnLab or one of its offerwall providers. Rewards can vary by country, provider, device, account history, and current advertiser campaigns. Some tasks are short, such as surveys or app installs. Others are longer, such as mobile game milestones with deadlines. Some offers may require purchases, deposits, subscriptions, identity verification, or several days of activity. Read the terms before starting because the headline reward is only useful if the requirements make sense.</p>
 
 <p>EarnLab appears to support many countries, but offer inventory and withdrawal options vary by region. Desktop and mobile web appear to be supported. A dedicated native iOS or Android app should only be claimed if current official sources confirm it. Assume users should be 18+ unless current EarnLab terms clearly say otherwise.</p>
+
+<h3>What EarnLab's public offer and rewards data shows</h3>
+<p>EarnLab's public task gallery currently exposes offer-card fields such as title, provider, description, thumbnail image, reward amount, category, country query, and desktop, Android, or iOS flags. That is useful for comparing broad offer availability and artwork, but the sampled public gallery response did not include a full per-milestone payout ladder for each advertiser offer.</p>
+
+<p>The public rewards area is separate from the offer gallery. It exposes generic rewards templates such as VIP tiers, 7-day streak boxes, and a 50-mission ladder. The mission templates include goals such as earning a certain amount from tasks, completing a task worth at least a certain amount, earning on a named provider, withdrawing a certain amount, and claiming milestone reward boxes. Late-stage examples can require thousands in total earnings or withdrawals, so treat missions as long-term bonus goals, not beginner income promises or permanent rules.</p>
+
+<div class="guide-summary-box">
+  <strong>Rewards data note:</strong> EarnLab rewards images are available for streak boxes and mission types, including box artwork, provider logos, complete-task artwork, withdrawal artwork, and milestone box artwork. User progress, avatars, usernames, cookies, and authenticated account state should not be reused in a public guide or offer page.
+</div>
 
 <div class="guide-summary-box">
   <strong>Image note:</strong> A live EarnLab dashboard screenshot should only be added after a fresh, permission-safe capture that does not expose private account data.
@@ -263,8 +272,8 @@ select
       <td><strong>Leaderboards, streaks, missions, VIP, promos</strong></td>
       <td>Bonus systems layered on top of normal earning.</td>
       <td>Active repeat users.</td>
-      <td>Use them as extra upside, not promised income.</td>
-      <td>Competitive rewards, changing rules, promo expiration.</td>
+      <td>Use them as extra upside, not promised income. Public rewards templates can include VIP tiers, 7-day streak boxes, and a 50-mission ladder.</td>
+      <td>Competitive rewards, locked late-stage missions, high earning or withdrawal requirements, changing rules, promo expiration.</td>
     </tr>
     <tr>
       <td><strong>Built-in games, boxes, battles</strong></td>
@@ -560,6 +569,9 @@ $guide$,
     "https://help.earnlab.com/en/article/what-happens-if-my-account-is-flagged-during-withdrawal-1q7x3hn/",
     "https://help.earnlab.com/en/article/how-do-bonuses-appear-in-my-account-balance-19lx9yo/",
     "https://earnlab.com/rewards",
+    "https://api.earnlab.com/tasks",
+    "https://api.earnlab.com/missions/info",
+    "https://api.earnlab.com/boxes/streaks/info",
     "https://www.trustpilot.com/review/earnlab.com"
   ]'::jsonb,
   '[
@@ -568,6 +580,8 @@ $guide$,
     "Native app availability was not confirmed from official sources during implementation; the guide only claims desktop and mobile web appear to be supported.",
     "Dashboard, offerwall, and withdrawal screenshots should be captured only from current, permission-safe sources before replacing the image notes.",
     "Current minimum withdrawal amounts are based on EarnLab help docs checked May 9, 2026 and should be rechecked in the live withdrawal modal.",
+    "Public task gallery and rewards endpoints were checked May 10, 2026; task gallery fields and reward mission templates can change.",
+    "Public task gallery samples did not include exact per-advertiser milestone payout ladders, so offer pages should not claim exact task milestones unless a detail endpoint or imported provider data confirms them.",
     "Payout speed language varies across EarnLab help articles; keep cautious wording.",
     "Country availability and best inventory are region-variable and should not be treated as a complete country list.",
     "Trustpilot/public review-profile status should be rechecked on publish day because review-profile status can change.",

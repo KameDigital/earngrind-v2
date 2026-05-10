@@ -193,6 +193,7 @@ function normalizeEarnLabGalleryTask(task: EarnLabTaskSummary, countryCode: stri
     const platforms = normalizeEarnLabPlatforms(task);
     const category = normalizeEarnLabCategory(task.category, task.customCategory);
     const shortDescription = description ? truncateSentence(description, 150) : null;
+    const inferredSteps = buildEarnLabGalleryTaskSteps(title, payout, description);
     const startUrl = buildEarnLabGalleryStartUrl({
         title,
         countryCode,
@@ -219,18 +220,8 @@ function normalizeEarnLabGalleryTask(task: EarnLabTaskSummary, countryCode: stri
         category,
         difficulty: inferDifficulty(description, payout),
         estimatedTime: extractEstimatedTime(description),
-        requirements: description ? [description] : [],
-        tasks: description
-            ? [{
-                title,
-                rewardAmount: payout,
-                rewardDisplay: formatUsd(payout),
-                taskType: inferTaskType(description),
-                timeLimitText: extractEstimatedTime(description),
-                notes: description,
-                sortOrder: 1,
-            }]
-            : [],
+        requirements: extractEarnLabRequirements(description),
+        tasks: inferredSteps,
         expiresAt: null,
         status: "active",
         rawSourceMetadata: {
@@ -346,6 +337,103 @@ export function normalizeEarnLabProviderName(provider?: string | null): string {
             .filter(Boolean)
             .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
             .join(" ");
+}
+
+export function buildEarnLabGalleryTaskSteps(
+    title: string,
+    payout: number,
+    description: string | null,
+): EarnLabGalleryTaskStep[] {
+    const fragments = splitEarnLabDescription(description);
+    const timeLimitText = extractEstimatedTime(description);
+
+    return fragments.map((fragment, index) => {
+        const isFinalStep = index === fragments.length - 1;
+        return {
+            title: inferStepTitle(fragment, title),
+            rewardAmount: isFinalStep ? payout : 0,
+            rewardDisplay: isFinalStep ? formatUsd(payout) : "$0.00",
+            taskType: inferTaskType(fragment),
+            timeLimitText: extractEstimatedTime(fragment) ?? timeLimitText,
+            notes: fragment,
+            sortOrder: index + 1,
+        };
+    });
+}
+
+export function extractEarnLabRequirements(description: string | null): string[] {
+    const fragments = splitEarnLabDescription(description);
+    if (fragments.length === 0) return [];
+
+    const requirements = new Set<string>();
+    for (const fragment of fragments) {
+        const cleaned = normalizeWhitespace(fragment.replace(/^[0-9]+[.)]\s*/, ""));
+        if (!cleaned) continue;
+
+        requirements.add(cleaned);
+
+        const timeLimit = extractEstimatedTime(cleaned);
+        if (timeLimit) requirements.add(`Complete within ${timeLimit}`);
+        if (/\bnew (?:players?|users?|customers?) only\b/i.test(cleaned)) requirements.add("New users only");
+        if (/\b(?:purchase|buy|deposit|spend|subscription|subscribe)\b/i.test(cleaned)) requirements.add("May require spending or a paid action");
+        if (/\b(?:install|download)\b/i.test(cleaned)) requirements.add("Install from the tracked EarnLab or offerwall link");
+        if (/\b(?:register|sign up|signup|create an account)\b/i.test(cleaned)) requirements.add("Register through the tracked flow");
+    }
+
+    return Array.from(requirements).slice(0, 8);
+}
+
+function splitEarnLabDescription(description: string | null): string[] {
+    const value = normalizeWhitespace(description ?? "");
+    if (!value) return [];
+
+    const numberedMatches = Array.from(value.matchAll(/(?:^|\s)(\d{1,2})[.)]\s+(.+?)(?=\s+\d{1,2}[.)]\s+|$)/g))
+        .map((match) => normalizeWhitespace(match[2] ?? ""))
+        .filter(Boolean);
+    if (numberedMatches.length > 1) {
+        return numberedMatches.slice(0, 8);
+    }
+
+    const sentenceParts = value
+        .split(/(?<=[.!?])\s+(?=[A-Z0-9])/)
+        .map(normalizeWhitespace)
+        .filter(Boolean);
+    if (sentenceParts.length > 1) {
+        return sentenceParts.slice(0, 6);
+    }
+
+    const clauseParts = value
+        .split(/\s+(?:then|and then|after that)\s+/i)
+        .map(normalizeWhitespace)
+        .filter(Boolean);
+
+    return clauseParts.length > 1 ? clauseParts.slice(0, 6) : [value];
+}
+
+function inferStepTitle(fragment: string, fallbackTitle: string): string {
+    const text = fragment.toLowerCase();
+    const levelMatch = fragment.match(/\breach\s+(?:level|lvl)\s+([0-9A-Za-z-]+)/i);
+    if (levelMatch) return `Reach level ${levelMatch[1]}`;
+
+    const chapterMatch = fragment.match(/\b(?:complete|finish|reach)\s+chapter\s+([0-9A-Za-z-]+)/i);
+    if (chapterMatch) return `Complete chapter ${chapterMatch[1]}`;
+
+    const stageMatch = fragment.match(/\b(?:complete|finish|reach)\s+stage\s+([0-9A-Za-z-]+)/i);
+    if (stageMatch) return `Complete stage ${stageMatch[1]}`;
+
+    const worthMatch = fragment.match(/\bcomplete a task worth at least\s+\$?\s*([0-9]+(?:\.[0-9]{1,2})?)/i);
+    if (worthMatch) return `Complete a task worth at least $${worthMatch[1]}`;
+
+    const earnOnMatch = fragment.match(/\bearn\s+\$?\s*([0-9]+(?:\.[0-9]{1,2})?)\s+on\s+(.+?)(?:[.!]|$)/i);
+    if (earnOnMatch) return `Earn $${earnOnMatch[1]} on ${normalizeWhitespace(earnOnMatch[2] ?? "")}`;
+
+    if (/\b(?:install|download)\b/.test(text)) return "Install and open through the tracked link";
+    if (/\b(?:register|sign up|signup|create an account)\b/.test(text)) return "Register through the tracked flow";
+    if (/\b(?:purchase|buy|deposit|spend|subscription|subscribe)\b/.test(text)) return "Complete the required paid action";
+    if (/\b(?:within|in)\s+\d{1,3}\s+(?:minutes?|hours?|days?|weeks?)\b/i.test(fragment)) return "Complete before the deadline";
+    if (/\bcomplete\b/.test(text)) return "Complete the listed requirement";
+
+    return truncateSentence(fragment || fallbackTitle, 80);
 }
 
 function inferTaskType(value: string | null): EarnLabGalleryTaskStep["taskType"] {

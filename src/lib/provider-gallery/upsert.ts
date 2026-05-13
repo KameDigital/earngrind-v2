@@ -6,6 +6,7 @@ import {
     buildLegacyExternalIds,
     buildProviderGalleryExternalId,
     cleanText,
+    normalizeGalleryCountryCode,
     normalizeGalleryCountries,
     normalizeGalleryDevices,
     normalizeGalleryTasks,
@@ -220,6 +221,7 @@ async function upsertProviderGalleryOffer(
         providerId: provider.id,
         externalId,
         legacyExternalIds: buildLegacyExternalIds(config, offer),
+        equivalentExternalIdLike: buildEquivalentExternalIdLike(config, offer),
     });
 
     if (!existing) {
@@ -266,6 +268,7 @@ async function findExistingOffer(
         providerId: string;
         externalId: string;
         legacyExternalIds: string[];
+        equivalentExternalIdLike?: string | null;
     },
 ): Promise<Record<string, any> | null> {
     const select = "id, provider_id, game_id, external_id, title, payout_usd, total_payout_usd, goal_text, offer_url, image_url, devices, countries, status";
@@ -292,7 +295,39 @@ async function findExistingOffer(
         if (data) return data as Record<string, any>;
     }
 
+    if (options.equivalentExternalIdLike) {
+        const { data, error } = await db
+            .from("site_offers")
+            .select(select)
+            .eq("site_id", options.siteId)
+            .eq("provider_id", options.providerId)
+            .like("external_id", options.equivalentExternalIdLike)
+            .order("updated_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+        if (error) throw new Error(error.message);
+        if (data) return data as Record<string, any>;
+    }
+
     return null;
+}
+
+function buildEquivalentExternalIdLike(
+    config: ProviderGalleryConfig,
+    offer: NormalizedProviderGalleryOffer,
+): string | null {
+    if (config.key !== "gain-gg") return null;
+    const wall = typeof offer.rawMetadata?.wall === "string" ? offer.rawMetadata.wall : "";
+    if (wall !== "native") return null;
+    const family = getGainNativeOfferFamily(offer.sourceOfferId);
+    if (!family) return null;
+    const country = normalizeGalleryCountries(offer)[0] ?? normalizeGalleryCountryCode(offer.countryCode) ?? "US";
+    return `gain-native-${family}-%-${country}`;
+}
+
+function getGainNativeOfferFamily(sourceOfferId: string): string | null {
+    const match = sourceOfferId.match(/^([A-Za-z0-9]+)-[A-Za-z0-9]+$/);
+    return match?.[1] ?? null;
 }
 
 async function replaceTasks(

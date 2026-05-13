@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
-import { type GainGalleryWall } from "@/lib/gain-gallery";
+import { getGainGalleryOffers, type GainGalleryWall } from "@/lib/gain-gallery";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { createClient } from "@/lib/supabase/server";
@@ -21,6 +21,7 @@ type GainOfferRow = {
     provider: { name: string | null } | { name: string | null }[] | null;
     game: { name: string | null; slug: string | null; category: string | null } | { name: string | null; slug: string | null; category: string | null }[] | null;
     tasks: { id: string }[] | null;
+    current_gain_offer_id?: string | null;
 };
 
 const WALL_LABELS: Record<string, string> = {
@@ -120,7 +121,12 @@ async function getImportedGainOffers(countryCode: string, wall?: GainGalleryWall
         console.error("[GainCountryOffersPage] failed to load offers", { countryCode, wall, message: error.message });
         return [];
     }
-    return ((data ?? []) as GainOfferRow[]).filter((offer) => {
+    const currentNativeIds = wall === "native" ? await getCurrentNativeGainOfferIds(countryCode) : new Map<string, string>();
+
+    return ((data ?? []) as GainOfferRow[]).map((offer) => ({
+        ...offer,
+        current_gain_offer_id: currentNativeIds.get(getNativeGainOfferFamily(offer.external_id)) ?? null,
+    })).filter((offer) => {
         const payout = Number(offer.payout_usd ?? 0);
         const total = normalizeTotalPayout(payout, Number(offer.total_payout_usd ?? payout));
         return isPublicPayoutEligible(payout, total);
@@ -136,6 +142,7 @@ function OfferCard({ offer, countryCode }: { offer: GainOfferRow; countryCode: s
     const payout = normalizeTotalPayout(Number(offer.payout_usd ?? 0), Number(offer.total_payout_usd ?? offer.payout_usd ?? 0));
     const devices = Array.isArray(offer.devices) ? offer.devices : [];
     const taskCount = Array.isArray(offer.tasks) ? offer.tasks.length : 0;
+    const href = buildGainOfferHref(offer);
 
     return (
         <article className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
@@ -170,7 +177,7 @@ function OfferCard({ offer, countryCode }: { offer: GainOfferRow; countryCode: s
                     </div>
                 </div>
                 <TrackedOutboundLink
-                    href={`/go/${offer.id}`}
+                    href={href}
                     eventLabel="gain-country-offer-cta"
                     offerId={offer.id}
                     offerTitle={title}
@@ -207,5 +214,45 @@ function firstRelated<T>(value: T | T[] | null): T | null {
 
 function extractGainWallFromExternalId(externalId: string): string {
     const match = externalId.match(/^gain-([a-z]+)-/);
+    return match?.[1] ?? "";
+}
+
+async function getCurrentNativeGainOfferIds(countryCode: string): Promise<Map<string, string>> {
+    try {
+        const result = await getGainGalleryOffers("native", {
+            country: countryCode,
+            limit: 300,
+            refresh: true,
+        });
+        const byFamily = new Map<string, string>();
+        for (const offer of result.offers) {
+            const family = getGainOfferFamily(offer.id);
+            if (family && !byFamily.has(family)) byFamily.set(family, offer.id);
+        }
+        return byFamily;
+    } catch (error) {
+        console.error("[GainCountryOffersPage] failed to load current Gain native IDs", {
+            countryCode,
+            message: error instanceof Error ? error.message : String(error),
+        });
+        return new Map();
+    }
+}
+
+function buildGainOfferHref(offer: GainOfferRow): string {
+    if (!offer.current_gain_offer_id) return `/go/${offer.id}`;
+    const params = new URLSearchParams({
+        gain_offer_id: offer.current_gain_offer_id,
+    });
+    return `/go/${offer.id}?${params.toString()}`;
+}
+
+function getNativeGainOfferFamily(externalId: string | null | undefined): string {
+    const match = externalId?.match(/^gain-native-([A-Za-z0-9]+)-[A-Za-z0-9]+-[A-Z]{2}$/i);
+    return match?.[1] ?? "";
+}
+
+function getGainOfferFamily(offerId: string | null | undefined): string {
+    const match = offerId?.match(/^([A-Za-z0-9]+)-[A-Za-z0-9]+$/);
     return match?.[1] ?? "";
 }

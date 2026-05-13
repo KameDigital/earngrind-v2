@@ -12,7 +12,7 @@ import {
     getPlatformAffiliateOverride,
     getPlatformFallbackUrl,
 } from "@/lib/outbound";
-import { buildGainOfferDeepLinkFromSiteOffer } from "@/lib/gain-deeplinks";
+import { buildGainOfferDeepLink, buildGainOfferDeepLinkFromSiteOffer } from "@/lib/gain-deeplinks";
 import { buildCanonicalOutboundRecord } from "@/lib/outbound-reporting";
 
 export const dynamic = "force-dynamic";
@@ -99,6 +99,28 @@ function isGenericPlatformDestination(platform: { slug?: string | null; name?: s
     } catch {
         return false;
     }
+}
+
+function isGainSite(site: { slug?: string | null; name?: string | null } | null | undefined): boolean {
+    return getPlatformDestinationKeys(site).some((key) => key === "gain" || key === "gaingg" || key === "gain-gg");
+}
+
+function isNativeGainProvider(provider: { slug?: string | null; name?: string | null } | null | undefined): boolean {
+    return getPlatformDestinationKeys(provider).some((key) => key === "torox" || key === "gain" || key === "gaingg" || key === "gain-gg");
+}
+
+function buildCurrentGainNativeDeepLink({
+    gainOfferId,
+    site,
+    provider,
+}: {
+    gainOfferId: string | null;
+    site: { slug?: string | null; name?: string | null } | null | undefined;
+    provider: { slug?: string | null; name?: string | null } | null | undefined;
+}): string | null {
+    if (!gainOfferId) return null;
+    if (!isGainSite(site) || !isNativeGainProvider(provider)) return null;
+    return buildGainOfferDeepLink(gainOfferId);
 }
 
 function logRedirectAttribution(params: {
@@ -314,6 +336,11 @@ export async function GET(
         externalId: siteOffer.external_id,
         offerUrl: siteOffer.offer_url,
     });
+    const currentGainNativeDeepLink = buildCurrentGainNativeDeepLink({
+        gainOfferId: req.nextUrl.searchParams.get("gain_offer_id"),
+        site,
+        provider,
+    });
     const gainNativeDeepLink = buildGainOfferDeepLinkFromSiteOffer({
         externalId: siteOffer.external_id,
         site,
@@ -330,7 +357,7 @@ export async function GET(
         : directSiteOfferUrl;
     // EarnLab gallery rows intentionally have no direct per-offer URL today.
     // When offer_url is missing, keep CTAs working through the platform affiliate fallback.
-    const outboundUrl = cashInStyleOutboundUrl ?? effectiveDirectSiteOfferUrl ?? gainNativeDeepLink ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
+    const outboundUrl = cashInStyleOutboundUrl ?? currentGainNativeDeepLink ?? effectiveDirectSiteOfferUrl ?? gainNativeDeepLink ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: getPlatformFallbackUrl(site),
@@ -358,6 +385,8 @@ export async function GET(
         destination_url: outboundUrl,
         affiliate_mode: cashInStyleOutboundUrl
             ? "cashinstyle-deeplink"
+            : currentGainNativeDeepLink
+            ? "gain-current-deeplink"
             : effectiveDirectSiteOfferUrl
             ? "direct"
             : gainNativeDeepLink

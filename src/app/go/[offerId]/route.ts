@@ -11,8 +11,8 @@ import {
     buildOutboundRedirectUrl,
     getPlatformAffiliateOverride,
     getPlatformFallbackUrl,
-    isGainTarget,
 } from "@/lib/outbound";
+import { buildGainOfferDeepLinkFromSiteOffer } from "@/lib/gain-deeplinks";
 import { buildCanonicalOutboundRecord } from "@/lib/outbound-reporting";
 
 export const dynamic = "force-dynamic";
@@ -314,18 +314,23 @@ export async function GET(
         externalId: siteOffer.external_id,
         offerUrl: siteOffer.offer_url,
     });
+    const gainNativeDeepLink = buildGainOfferDeepLinkFromSiteOffer({
+        externalId: siteOffer.external_id,
+        site,
+        provider,
+    });
     const directSiteOfferUrl = buildOutboundRedirectUrl({
         affiliateTemplate: null,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: null,
     });
     const platformOverrideUrl = getPlatformAffiliateOverride(site);
-    const effectiveDirectSiteOfferUrl = platformOverrideUrl && (isGainTarget(site) || isGenericPlatformDestination(site, directSiteOfferUrl))
+    const effectiveDirectSiteOfferUrl = platformOverrideUrl && isGenericPlatformDestination(site, directSiteOfferUrl)
         ? null
         : directSiteOfferUrl;
     // EarnLab gallery rows intentionally have no direct per-offer URL today.
     // When offer_url is missing, keep CTAs working through the platform affiliate fallback.
-    const outboundUrl = cashInStyleOutboundUrl ?? effectiveDirectSiteOfferUrl ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
+    const outboundUrl = cashInStyleOutboundUrl ?? effectiveDirectSiteOfferUrl ?? gainNativeDeepLink ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: getPlatformFallbackUrl(site),
@@ -355,6 +360,8 @@ export async function GET(
             ? "cashinstyle-deeplink"
             : effectiveDirectSiteOfferUrl
             ? "direct"
+            : gainNativeDeepLink
+            ? "gain-deeplink"
             : platformOverrideUrl
             ? "platform-override"
             : site?.affiliate_template?.includes("{destination}")

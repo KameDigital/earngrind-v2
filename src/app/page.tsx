@@ -4,6 +4,7 @@ import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
 import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
+import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
 import { buildGoHref, formatMoney, gameKeyFromParts, getHomepageData } from "@/lib/homepage-data";
 
 export const revalidate = 300;
@@ -175,9 +176,12 @@ export default async function HomePage() {
         ],
       },
     }));
-  const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map((offer) => ({
+  const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map((offer) => {
+    const gainDeepLink = buildGainOfferDeepLink(offer.id);
+
+    return {
       id: `gain-featured-${offer.wall}-${offer.id}`,
-      href: "/offers/gain/us/native",
+      href: gainDeepLink ?? "/offers/gain/us/native",
       title: offer.title,
       badge: "Gain featured",
       provider: "Gain.gg",
@@ -199,7 +203,7 @@ export default async function HomePage() {
         routes: [
           {
             offerId: offer.id,
-            href: offer.startUrl,
+            href: gainDeepLink ?? offer.startUrl,
             providerName: offer.providerName,
             platformName: "Gain.gg",
             payout: formatMoney(offer.totalPayout ?? offer.payout),
@@ -212,7 +216,8 @@ export default async function HomePage() {
           },
         ],
       },
-    }));
+    };
+  });
   return (
     <main className="min-h-screen">
       <EarnLabActivityRail />

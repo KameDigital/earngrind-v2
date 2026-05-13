@@ -15,6 +15,7 @@ const GAIN_LOOTABLY_URL = process.env.GAIN_LOOTABLY_URL?.trim() || "https://wall
 const DEFAULT_LIMIT = 300;
 const MAX_LIMIT = 300;
 const CACHE_SECONDS = 60 * 30;
+const FEATURED_CACHE_SECONDS = 60 * 60 * 24;
 
 export const GAIN_GALLERY_WALLS = [
     "native",
@@ -172,6 +173,43 @@ export async function getGainGalleryOffers(
         return getGainLootablyOffers({ limit, refresh, country: options.country });
     }
     return getUnsupportedShellWall(wall, { limit, refresh, country: options.country });
+}
+
+export async function getGainFeaturedGalleryOffers(
+    options: {
+        country?: string | null;
+        limit?: number;
+        refresh?: boolean;
+    } = {},
+): Promise<GainGalleryResult> {
+    const limit = normalizeLimit(options.limit);
+    const refresh = options.refresh === true;
+    const requestCountry = normalizeGainCountryCode(options.country) ?? await getRequestCountry(refresh) ?? "US";
+    const url = new URL(GAIN_API_URL);
+    url.searchParams.set("limit", String(limit));
+
+    const response = await fetch(url.toString(), {
+        headers: buildGainHeaders("https://gain.gg/earn"),
+        cache: refresh ? "no-store" : undefined,
+        next: refresh ? undefined : { revalidate: FEATURED_CACHE_SECONDS, tags: ["gain-gallery-featured-native"] },
+    });
+    if (!response.ok) throw new GainGalleryFetchError(`Gain featured gallery request failed with status ${response.status}`, response.status);
+
+    const payload = await response.json() as GainNativeResponse;
+    const rows = Array.isArray(payload.data?.featuredOffers) ? payload.data!.featuredOffers! : [];
+    const seen = new Set<string>();
+    const offers = rows
+        .slice(0, limit)
+        .map((row) => normalizeNativeGainOffer(row, requestCountry))
+        .filter((offer): offer is GainGalleryOffer => Boolean(offer))
+        .filter((offer) => {
+            const key = offer.id;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
+
+    return { wall: "native", countryCode: requestCountry, offers, meta: { limit, cacheSeconds: refresh ? 0 : FEATURED_CACHE_SECONDS, upstreamCount: rows.length } };
 }
 
 async function getNativeGainOffers({ limit, refresh, country }: { limit: number; refresh: boolean; country?: string | null }): Promise<GainGalleryResult> {

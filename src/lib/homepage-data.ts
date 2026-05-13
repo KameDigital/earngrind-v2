@@ -1,7 +1,7 @@
 ﻿import "server-only";
 
 import type { RailPreviewRoute, RailPreviewTask } from "@/components/home/GamePreviewModal";
-import { getGainGalleryOffers, type GainGalleryOffer } from "@/lib/gain-gallery";
+import { getGainFeaturedGalleryOffers, type GainGalleryOffer } from "@/lib/gain-gallery";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { supabase as publicSupabase } from "@/lib/supabase/public";
@@ -360,9 +360,9 @@ async function loadFeaturedGames() {
     .in("name", [...FEATURED_GAME_NAMES]);
 }
 
-// Gain featured data: getGainGalleryOffers already uses Next fetch revalidation.
+// Gain featured data: use Gain.gg's featured native carousel and refresh it daily.
 async function loadGainFeaturedData() {
-  return getGainGalleryOffers("native", { country: "US", limit: 24 }).catch((error) => {
+  return getGainFeaturedGalleryOffers({ country: "US", limit: 24 }).catch((error) => {
     console.error("[homepage] failed to load Gain featured offers", error);
     return null;
   });

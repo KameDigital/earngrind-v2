@@ -78,7 +78,7 @@ export default function GainGalleryImportPanel() {
             providerName="Gain"
             eyebrow="Gain.gg gallery import"
             title="Pull Gain wall offers"
-            description="Imports Gain walls as separate sources through the shared provider-gallery upsert. Direct URLs are only updated when the wall returns a safe tracking link."
+            description="Imports Gain walls as separate sources through the shared provider-gallery upsert. Native Gain rows save direct /offer deeplinks when the original Gain offer id is available."
             endpoint="/api/admin/gain/gallery-import"
             tone="sky"
             primaryLabel="Pull Wall"

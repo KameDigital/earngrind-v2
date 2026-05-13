@@ -10,6 +10,7 @@ import {
     requireProviderGalleryEditor,
     runProviderGalleryAdminImport,
 } from "@/lib/provider-gallery/admin-route";
+import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
 import { getProviderGalleryConfig } from "@/lib/provider-gallery/provider-registry";
 import { buildProviderGalleryQualityReport } from "@/lib/provider-gallery/quality";
 import { getProviderGalleryServiceClient } from "@/lib/provider-gallery/upsert";
@@ -112,6 +113,8 @@ async function importGainWall(
 }
 
 function toNormalizedGainOffer(offer: GainGalleryOffer): NormalizedProviderGalleryOffer {
+    const directOfferUrl = offer.wall === "native" ? buildGainOfferDeepLink(offer.id) : null;
+
     return {
         sourceProviderSlug: offer.providerName,
         sourcePlatformSlug: "gain-gg",
@@ -131,8 +134,8 @@ function toNormalizedGainOffer(offer: GainGalleryOffer): NormalizedProviderGalle
         tasks: offer.tasks,
         devices: offer.platform,
         countries: [offer.countryCode],
-        trackingUrl: offer.trackingUrl,
-        offerUrl: null,
+        trackingUrl: directOfferUrl ? null : offer.trackingUrl,
+        offerUrl: directOfferUrl,
         rawMetadata: offer.rawSourceMetadata,
     };
 }

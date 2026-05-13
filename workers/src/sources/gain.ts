@@ -3,6 +3,7 @@ import { SourceAdapter } from "../models/source";
 import { SourceOffer } from "../types/offer";
 import { withRetry } from "../core/db";
 import { logger } from "../core/logger";
+import { buildGainOfferDeepLink } from "../services/gainDeeplinks";
 
 const DEFAULT_GAIN_API_URL = "https://gain.gg/api/v2/offers";
 const DEFAULT_GAIN_SITE_URL = "https://gain.gg/earn";
@@ -214,7 +215,7 @@ export function parseGainApiPayload(payload: unknown): SourceOffer[] {
                 currency: "USD",
                 device_raw: deviceRaw,
                 category_raw: categoryRaw,
-                url: normalizeUrl(offerLink || supportLink || DEFAULT_GAIN_SITE_URL),
+                url: buildGainOfferDeepLink(offerId) ?? normalizeUrl(offerLink || supportLink || DEFAULT_GAIN_SITE_URL),
                 expires_raw: null,
                 game_slug: null,
                 countries_raw: countries,
@@ -245,7 +246,7 @@ export function parseGainApiPayload(payload: unknown): SourceOffer[] {
             currency: "USD",
             device_raw: deviceRaw,
             category_raw: categoryRaw,
-            url: normalizeUrl(offerLink || supportLink || DEFAULT_GAIN_SITE_URL),
+            url: buildGainOfferDeepLink(offerId) ?? normalizeUrl(offerLink || supportLink || DEFAULT_GAIN_SITE_URL),
             expires_raw: null,
             game_slug: null,
             countries_raw: countries,

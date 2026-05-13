@@ -1,6 +1,6 @@
 import "server-only";
 
-const GAIN_API_URL = process.env.GAIN_API_URL?.trim() || "https://gain.gg/api/v2/offers";
+const GAIN_API_URL = process.env.GAIN_API_URL?.trim() || "https://gain.gg/api/v3/offers";
 const GAIN_SITE_SETTINGS_URL = "https://gain.gg/api/v3/site/settings";
 const GAIN_PLATFORM_REDIRECT = "/go/platform/gain-gg";
 const GAIN_REVU_PROFILE_URL = process.env.GAIN_REVU_PROFILE_URL?.trim() || "https://api-wall.revenueuniverse.com/profile.php";
@@ -909,7 +909,7 @@ async function getRequestCountry(refresh: boolean): Promise<string | null> {
 }
 
 function buildGainHeaders(referer: string): HeadersInit {
-    return {
+    const headers: Record<string, string> = {
         "User-Agent": process.env.GAIN_API_USER_AGENT?.trim() ||
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
         "Accept": "application/json, text/html, text/plain, */*",
@@ -917,6 +917,9 @@ function buildGainHeaders(referer: string): HeadersInit {
         "Origin": "https://gain.gg",
         "Referer": referer,
     };
+    const cookie = process.env.GAIN_API_COOKIE?.trim();
+    if (cookie) headers.Cookie = cookie;
+    return headers;
 }
 
 function buildGainStartUrl({ title, payout, totalPayout, providerName }: { title: string; payout: number; totalPayout: number; providerName: string }): string {

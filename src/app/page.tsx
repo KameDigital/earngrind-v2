@@ -177,11 +177,11 @@ export default async function HomePage() {
       },
     }));
   const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map((offer) => {
-    const gainDeepLink = buildGainOfferDeepLink(offer.id);
+    const gainHref = offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) ?? offer.startUrl;
 
     return {
       id: `gain-featured-${offer.wall}-${offer.id}`,
-      href: gainDeepLink ?? "/offers/gain/us/native",
+      href: gainHref,
       title: offer.title,
       badge: "Gain featured",
       provider: "Gain.gg",
@@ -203,7 +203,7 @@ export default async function HomePage() {
         routes: [
           {
             offerId: offer.id,
-            href: gainDeepLink ?? offer.startUrl,
+            href: gainHref,
             providerName: offer.providerName,
             platformName: "Gain.gg",
             payout: formatMoney(offer.totalPayout ?? offer.payout),

@@ -113,7 +113,7 @@ async function importGainWall(
 }
 
 function toNormalizedGainOffer(offer: GainGalleryOffer): NormalizedProviderGalleryOffer {
-    const directOfferUrl = offer.wall === "native" ? buildGainOfferDeepLink(offer.id) : null;
+    const directOfferUrl = offer.wall === "native" ? offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) : null;
 
     return {
         sourceProviderSlug: offer.providerName,

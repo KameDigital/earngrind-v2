@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ArrowRight, BookOpen, ShieldCheck, Trophy } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
 import { buildBreadcrumbList, buildItemList, JsonLd } from '@/lib/seo-schema';
 import type { Offer } from '@/components/offers/OfferSearchEngine';
@@ -625,7 +626,7 @@ export default async function GameOffersPage({
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
             <JsonLd data={schemas} />
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div className="mx-auto max-w-6xl space-y-6 px-4 sm:px-6 lg:px-8">
 
                 {/* ── Breadcrumb ── */}
                 <nav className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] font-medium" aria-label="Breadcrumb">
@@ -635,10 +636,11 @@ export default async function GameOffersPage({
                 </nav>
 
                 {/* ── Game Hero ── */}
-                <div className="bg-white rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] overflow-hidden">
-                    <div className="flex flex-col sm:flex-row gap-5 p-5 sm:p-6">
+                <div className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
+                    <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_22rem]">
+                        <div className="flex flex-col gap-5 p-5 sm:flex-row sm:p-6">
                         {/* Thumbnail */}
-                        <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center">
+                        <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] sm:h-28 sm:w-28">
                             {heroImageUrl ? (
                                 <img
                                     src={heroImageUrl}
@@ -655,10 +657,10 @@ export default async function GameOffersPage({
                         </div>
 
                         {/* Game info */}
-                        <div className="flex-1 min-w-0">
+                        <div className="min-w-0 flex-1">
                             <div className="flex flex-wrap items-start gap-2 mb-2">
                                 <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--brand-ink)] tracking-tight">
-                                    {game.name}
+                                    Best {game.name} payout routes
                                 </h1>
                                 {game.category && (
                                     <span className="mt-1 px-2.5 py-0.5 bg-[var(--surface-muted)] text-[var(--text-secondary)] text-xs font-semibold rounded-full border border-[var(--border-default)]">
@@ -667,11 +669,9 @@ export default async function GameOffersPage({
                                 )}
                             </div>
 
-                            {game.description && (
-                                <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-3 max-w-2xl">
-                                    {game.description}
-                                </p>
-                            )}
+                            <p className="mb-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+                                {game.description ?? `Compare current ${game.name} payouts across providers, pick the highest route, and open the strongest tracked offer first.`}
+                            </p>
 
                             {game.devices && game.devices.length > 0 && (
                                 <div className="flex flex-wrap gap-2">
@@ -714,29 +714,29 @@ export default async function GameOffersPage({
                                         payoutUsd={bestOffer.payout_usd}
                                         location="offer-detail-hero"
                                         sourceContext="offer-detail"
-                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all hover:-translate-y-px"
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-5 py-3 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95"
                                     >
-                                        Start Best Payout
+                                        Start Best Payout <ArrowRight aria-hidden className="h-4 w-4" />
                                     </TrackedOutboundLink>
                                 )}
                                 {primaryGuide && (
                                     <Link
                                         href={`/guides/${primaryGuide.slug}`}
-                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-[var(--brand-lime)]/10 border border-[var(--brand-lime)]/20 hover:bg-[var(--brand-lime)]/15 text-[color:hsl(84,93%,25%)] text-sm font-extrabold rounded-xl transition-colors"
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--brand-lime)]/20 bg-[var(--brand-lime)]/10 px-4 py-3 text-sm font-extrabold text-[color:hsl(84,93%,25%)] transition-colors hover:bg-[var(--brand-lime)]/15"
                                     >
-                                        Use Guide First
+                                        <BookOpen aria-hidden className="h-4 w-4" /> Use Guide First
                                     </Link>
                                 )}
                                 <Link
                                     href={`/games/${game.slug}`}
-                                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-colors"
+                                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
                                 >
                                     View Game Page
                                 </Link>
                                 {bestReview && (
                                     <Link
                                         href={`/review/${bestReview.slug}`}
-                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-colors"
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
                                     >
                                         Read Platform Review
                                     </Link>
@@ -747,6 +747,60 @@ export default async function GameOffersPage({
                                 {bestOffer ? `${formatPayoutFreshness(bestOffer.updated_at)}. ` : ""}Start Best Payout sends you through EarnGrind tracking to the payout platform. Payouts can vary by device, country, and provider rules. Some links may be affiliate links.
                             </p>
                         </div>
+                        </div>
+
+                        <aside className="border-t border-[var(--border-default)] bg-[var(--brand-ink)] p-5 text-white lg:border-l lg:border-t-0 lg:p-6">
+                            <div className="flex h-full flex-col justify-between gap-5">
+                                <div>
+                                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[var(--brand-lime)]">
+                                        <Trophy aria-hidden className="h-3.5 w-3.5" />
+                                        Highest route
+                                    </div>
+                                    <div className="mt-4 text-5xl font-black tracking-tight text-[var(--brand-lime)]">
+                                        {comparison.summary.best_total_payout_usd > 0 ? `$${comparison.summary.best_total_payout_usd.toFixed(2)}` : bestOffer ? `$${bestOffer.payout_usd.toFixed(2)}` : "-"}
+                                    </div>
+                                    <p className="mt-2 text-sm font-semibold text-white">
+                                        {bestOffer ? `${bestOffer.platform.name}${bestOffer.provider_name ? ` via ${bestOffer.provider_name}` : ""}` : "No active route"}
+                                    </p>
+                                    <p className="mt-3 text-sm leading-relaxed text-white/65">
+                                        Compare the table if you need details, or start the top tracked payout now.
+                                    </p>
+                                </div>
+                                <div className="space-y-3">
+                                    {bestOffer?.redirect_url ? (
+                                        <TrackedOutboundLink
+                                            href={bestOffer.redirect_url}
+                                            eventLabel="offer-detail-hero-panel-cta"
+                                            offerId={bestOffer.id}
+                                            offerTitle={game.name}
+                                            gameTitle={game.name}
+                                            platformName={bestOffer.platform?.name}
+                                            providerName={bestOffer.provider_name}
+                                            payoutUsd={bestOffer.payout_usd}
+                                            location="offer-detail-hero-panel"
+                                            sourceContext="offer-detail"
+                                            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand-lime)] px-5 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
+                                        >
+                                            Start Highest Route <ArrowRight aria-hidden className="h-4 w-4" />
+                                        </TrackedOutboundLink>
+                                    ) : null}
+                                    <div className="grid grid-cols-2 gap-2 text-xs">
+                                        <div className="rounded-xl border border-white/10 bg-white/10 p-3">
+                                            <div className="font-extrabold text-white">{comparison.offers.length}</div>
+                                            <div className="mt-0.5 text-white/55">Routes</div>
+                                        </div>
+                                        <div className="rounded-xl border border-white/10 bg-white/10 p-3">
+                                            <div className="font-extrabold text-white">{guides.length}</div>
+                                            <div className="mt-0.5 text-white/55">Guides</div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-2 text-[11px] leading-relaxed text-white/55">
+                                        <ShieldCheck aria-hidden className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--brand-lime)]" />
+                                        <span>{bestOffer ? `${formatPayoutFreshness(bestOffer.updated_at)}. ` : ""}Affiliate links may be used; provider rules can change by country and device.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
                     </div>
 
                     {/* Stats bar */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import ProviderLogo from "@/components/providers/ProviderLogo";
 import { formatPayoutFreshness } from "@/lib/payout-freshness";
@@ -47,6 +48,10 @@ const TYPE_COLORS: Record<string, string> = {
 
 const DEFAULT_VISIBLE_COUNT = 3;
 const DEFAULT_EXPANDED_PROVIDERS = 2;
+const PRIMARY_CTA_CLASS =
+  "inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95 active:translate-y-0";
+const SECONDARY_BUTTON_CLASS =
+  "inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-400 hover:bg-lime-50";
 
 function formatUsd(value: number) {
   return `$${Number(value || 0).toFixed(2)}`;
@@ -103,10 +108,11 @@ function OfferCard({
 
   return (
     <article
-      className={`rounded-2xl border p-4 shadow-[var(--shadow-card)] transition-all ${
-        isBest ? "border-lime-400 bg-lime-50/60" : "border-[var(--border-default)] bg-white"
+      className={`group relative overflow-hidden rounded-2xl border p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-md ${
+        isBest ? "border-lime-400 bg-lime-50/70 ring-1 ring-lime-200" : "border-[var(--border-default)] bg-white"
       }`}
     >
+      {isBest ? <div className="absolute inset-x-0 top-0 h-1 bg-[var(--brand-lime)]" /> : null}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -151,25 +157,26 @@ function OfferCard({
           payoutUsd={row.total_payout_usd}
           location="site-offers-comparison"
           sourceContext="offer-detail"
-          className={`inline-flex rounded-xl px-4 py-2 text-sm font-extrabold transition-all hover:-translate-y-px ${
+          className={`min-w-[10rem] flex-1 ${
             isBest
-              ? "bg-[var(--brand-ink)] text-[var(--brand-lime)]"
-              : "border border-[var(--border-default)] bg-[var(--surface-muted)] text-[var(--brand-ink)] hover:border-lime-400"
+              ? PRIMARY_CTA_CLASS
+              : "inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--brand-ink)] bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
           }`}
         >
-          {isBest ? "Start Best Payout" : "Start Offer"}
+          {isBest ? "Start Best Payout" : "Start Offer"} <ArrowRight aria-hidden className="h-4 w-4" />
         </TrackedOutboundLink>
         <button
           type="button"
           onClick={onToggleExpand}
-          className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400"
+          className={SECONDARY_BUTTON_CLASS}
         >
+          {expanded ? <ChevronUp aria-hidden className="h-4 w-4" /> : <ChevronDown aria-hidden className="h-4 w-4" />}
           {expanded ? "Hide milestones" : "Expand route"}
         </button>
         <button
           type="button"
           onClick={onToggleSelect}
-          className={`inline-flex rounded-xl border px-4 py-2 text-sm font-bold ${
+          className={`inline-flex items-center justify-center rounded-xl border px-4 py-3 text-sm font-bold ${
             isSelected
               ? "border-[var(--brand-ink)] bg-[var(--brand-ink)] text-[var(--brand-lime)]"
               : "border-[var(--border-default)] bg-white text-[var(--brand-ink)] hover:border-lime-400"
@@ -311,17 +318,17 @@ export default function SiteOffersComparison({ rows }: { rows: SiteOffer[] }) {
 
   return (
     <section className="space-y-4">
-      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="overflow-hidden rounded-2xl border border-[var(--brand-ink)] bg-[var(--brand-ink)] p-5 text-white shadow-[var(--shadow-card)]">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="section-label">Best Offer</p>
+            <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--brand-lime)]">Best Offer</p>
             <div className="mt-2 flex flex-wrap items-center gap-3">
               {bestOverall ? <ProviderLogo name={bestOverall.provider?.name} className="h-10 max-w-[180px]" /> : null}
-              <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">
+              <h2 className="text-2xl font-extrabold text-white">
                 {bestOverall ? `${bestOverall.site?.name ?? "Unknown Site"} via ${bestOverall.provider?.name ?? "Unknown Provider"}` : "No active route"}
               </h2>
             </div>
-            <p className="mt-2 text-sm text-[var(--text-secondary)]">
+            <p className="mt-2 max-w-2xl text-sm text-white/70">
               {bestOverall
                 ? `${formatUsd(bestOverall.total_payout_usd)} is the strongest visible payout in this comparison. Start there first if you want the highest-value route.`
                 : "No offers match the current filters."}
@@ -338,9 +345,9 @@ export default function SiteOffersComparison({ rows }: { rows: SiteOffer[] }) {
               payoutUsd={bestOverall.total_payout_usd}
               location="site-offers-best"
               sourceContext="offer-detail"
-              className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-lime)] px-5 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
             >
-              Start Best Offer
+              Start Best Offer <ArrowRight aria-hidden className="h-4 w-4" />
             </TrackedOutboundLink>
           ) : null}
         </div>
@@ -473,7 +480,7 @@ export default function SiteOffersComparison({ rows }: { rows: SiteOffer[] }) {
                     <button
                       type="button"
                       onClick={() => showMore(group.providerName, group.offers.length)}
-                      className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                      className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400 hover:bg-lime-50"
                     >
                       Show more
                     </button>

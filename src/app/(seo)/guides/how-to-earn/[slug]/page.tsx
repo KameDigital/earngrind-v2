@@ -35,7 +35,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     });
   }
 
-  const rows = mapComparisonToSeoRows(data.comparison.offers, { name: data.game.name, slug: data.game.slug });
+  const rows = mapComparisonToSeoRows(data.comparison.offers, {
+    name: data.game.name,
+    slug: data.game.slug,
+    thumbnailUrl: data.game.thumbnail_url,
+  });
   const eligibleOfferCount = rows.filter((row) => isPublicPayoutEligible(row.payoutUsd, row.totalPayoutUsd)).length;
   const curatedGuide = data.guides[0] ?? null;
   const hasTaskData = rows.some((row) => row.tasks.length > 0);
@@ -69,7 +73,11 @@ export default async function GameGuidePage({ params }: { params: { slug: string
   const data = await getGameSeoData(params.slug);
   if (!data) notFound();
 
-  const rows = mapComparisonToSeoRows(data.comparison.offers, { name: data.game.name, slug: data.game.slug }).sort(
+  const rows = mapComparisonToSeoRows(data.comparison.offers, {
+    name: data.game.name,
+    slug: data.game.slug,
+    thumbnailUrl: data.game.thumbnail_url,
+  }).sort(
     (a, b) => b.payoutUsd - a.payoutUsd,
   );
   const providerRows = buildProviderComparison(rows);

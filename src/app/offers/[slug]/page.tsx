@@ -572,6 +572,7 @@ export default async function GameOffersPage({
         id: row.id,
         payout_usd: row.payout_usd,
         total_payout_usd: row.total_payout_usd,
+        image_url: pickPublicArtworkUrl(row.image_url, game.thumbnail_url),
         goal_text: row.goal_text,
         offer_url: row.offer_url,
         status: row.status,

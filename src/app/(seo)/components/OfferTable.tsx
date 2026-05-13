@@ -82,6 +82,30 @@ function sortRows(rows: SeoOfferRow[], sortBy: SortOption, providerOfferCounts: 
   });
 }
 
+function OfferArtwork({ src, title }: { src: string | null; title: string }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const fallback = title.slice(0, 2).toUpperCase();
+
+  if (!src || imageFailed) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(190,242,100,0.2),_rgba(17,24,39,0.96))] text-lg font-extrabold uppercase tracking-[0.18em] text-white/80">
+        {fallback}
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={title}
+      className="h-full w-full object-cover"
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setImageFailed(true)}
+    />
+  );
+}
+
 function OfferCard({
   row,
   isBest,
@@ -118,6 +142,23 @@ function OfferCard({
       }`}
     >
       {isBest ? <div className="absolute inset-x-0 top-0 h-1 bg-[var(--brand-lime)]" /> : null}
+      <div className="-mx-4 -mt-4 mb-4">
+        <div className="relative aspect-[1.35/1] overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)]">
+          <OfferArtwork src={row.imageUrl} title={row.gameName} />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent p-3">
+            <div className="line-clamp-1 text-sm font-extrabold text-white">{row.gameName}</div>
+            <div className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white/65">
+              {row.providerName} / {row.platformName}
+            </div>
+          </div>
+          {isBest ? (
+            <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-[rgba(15,23,15,0.78)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--brand-lime)] backdrop-blur-sm">
+              Best route
+            </div>
+          ) : null}
+        </div>
+      </div>
+
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">

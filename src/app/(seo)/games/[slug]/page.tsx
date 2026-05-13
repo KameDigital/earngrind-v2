@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const rows = mapComparisonToSeoRows(data.comparison.offers, {
     name: data.game.name,
     slug: data.game.slug,
+    thumbnailUrl: data.game.thumbnail_url,
   });
   const hasEligibleOffer = rows.some((row) => isPublicPayoutEligible(row.payoutUsd, row.totalPayoutUsd));
   const indexable =
@@ -61,6 +62,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
   const rows = mapComparisonToSeoRows(data.comparison.offers, {
     name: data.game.name,
     slug: data.game.slug,
+    thumbnailUrl: data.game.thumbnail_url,
   }).sort((a, b) => b.payoutUsd - a.payoutUsd);
 
   const bestOffer = rows[0];

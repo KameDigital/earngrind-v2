@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
+import { pickPublicArtworkUrl } from "@/lib/public-image-url";
 import { getSiteUrl } from "@/lib/site-url";
 import { canonicalAlternates, robotsForIndexability } from "@/lib/seo-metadata";
 
@@ -110,6 +111,7 @@ export type SeoOfferRow = {
   title: string;
   gameName: string;
   gameSlug: string;
+  imageUrl: string | null;
   providerName: string;
   platformName: string;
   payoutUsd: number;
@@ -167,6 +169,7 @@ export function toSeoOfferRows(rows: OfferApiRow[]): SeoOfferRow[] {
       title: row.title,
       gameName: row.game!.name,
       gameSlug: row.game!.slug,
+      imageUrl: pickPublicArtworkUrl(row.game!.thumbnail_url),
       providerName: normalizeProviderDisplayName(row.provider_name),
       platformName: row.platform!.name,
       payoutUsd: Number(row.payout_usd ?? 0),
@@ -178,12 +181,13 @@ export function toSeoOfferRows(rows: OfferApiRow[]): SeoOfferRow[] {
     }));
 }
 
-export function mapComparisonToSeoRows(rows: GameComparisonOffer[], fallbackGame: { name: string; slug: string }): SeoOfferRow[] {
+export function mapComparisonToSeoRows(rows: GameComparisonOffer[], fallbackGame: { name: string; slug: string; thumbnailUrl?: string | null }): SeoOfferRow[] {
   return rows.map((row) => ({
     id: row.id,
     title: row.goal_text?.trim() || `Complete tasks for ${fallbackGame.name}`,
     gameName: fallbackGame.name,
     gameSlug: fallbackGame.slug,
+    imageUrl: pickPublicArtworkUrl(row.image_url, fallbackGame.thumbnailUrl ?? null),
     providerName: normalizeProviderDisplayName(row.provider_name),
     platformName: row.platform_name ?? "Unknown Platform",
     payoutUsd: Number(row.payout_usd ?? 0),

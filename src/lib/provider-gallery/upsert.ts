@@ -301,17 +301,10 @@ async function replaceTasks(
     offer: NormalizedProviderGalleryOffer,
     now: string,
 ): Promise<void> {
-    const { error: deleteError } = await db
-        .from("site_offer_tasks")
-        .delete()
-        .eq("site_offer_id", siteOfferId);
-    if (deleteError) throw new Error(deleteError.message);
-
     const tasks = normalizeGalleryTasks(offer);
-    const { error } = await db
-        .from("site_offer_tasks")
-        .insert(tasks.map((task) => ({
-            site_offer_id: siteOfferId,
+    const { error } = await db.rpc("replace_site_offer_tasks_atomic", {
+        p_site_offer_id: siteOfferId,
+        p_tasks: tasks.map((task) => ({
             sort_order: task.sortOrder,
             title: task.title,
             reward_amount: task.rewardAmount,
@@ -321,7 +314,8 @@ async function replaceTasks(
             notes: task.notes,
             created_at: now,
             updated_at: now,
-        })));
+        })),
+    });
 
     if (error) throw new Error(error.message);
 }

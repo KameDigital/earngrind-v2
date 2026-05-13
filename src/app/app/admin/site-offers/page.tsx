@@ -1,5 +1,5 @@
 import { AdminButtonLink, AdminPageHeader, AdminStatCard } from "@/components/admin/AdminUi";
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import EarnLabGalleryImportPanel from "./EarnLabGalleryImportPanel";
@@ -21,13 +21,9 @@ const STATUS_STYLES: Record<string, string> = {
 type SearchParams = Record<string, string | string[] | undefined>;
 
 export default async function AdminSiteOffersPage({ searchParams = {} }: { searchParams?: SearchParams }) {
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect("/login");
-
-    const { data: profile } = await supabase
-        .from("profiles").select("role").eq("id", user.id).single();
-    if (!profile || !["admin", "editor"].includes(profile.role)) redirect("/app/dashboard");
+    const auth = await requireAdminOrEditor();
+    if (!auth.ok) redirect(auth.status === 401 ? "/login" : "/app/dashboard");
+    const { supabase } = auth;
 
     const filters = normalizeFilters(searchParams);
     const { data: siteOffers } = await supabase

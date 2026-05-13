@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 
 // ---------------------------------------------------------------------------
 // POST /api/admin/site-offers
@@ -54,22 +54,11 @@ function buildRow(input: OfferInput) {
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-    const supabase = createClient();
+    const auth = await requireAdminOrEditor();
+    if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
+    const { supabase } = auth;
 
     // ── Auth ─────────────────────────────────────────────────────────────────
-    const { data: { user }, error: authErr } = await supabase.auth.getUser();
-    if (authErr || !user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-    const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .single();
-
-    if (!profile || !["admin", "editor"].includes(profile.role)) {
-        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
-
     // ── Body ─────────────────────────────────────────────────────────────────
     let body: unknown;
     try { body = await req.json(); } catch {

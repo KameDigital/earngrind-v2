@@ -42,7 +42,7 @@ export default function Header() {
                     </Link>
 
                     {/* Desktop nav */}
-                    <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+                    <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
                         {NAV_LINKS.map(({ href, label }) => {
                             const active = pathname === href || pathname.startsWith(href + "/");
                             return (
@@ -73,7 +73,7 @@ export default function Header() {
                     <div className="flex-1" />
 
                     {/* Right side */}
-                    <div className="hidden md:flex items-center gap-2">
+                    <div className="hidden lg:flex items-center gap-2">
                         <Link
                             href="/offers"
                             aria-label="Search offers"
@@ -91,7 +91,7 @@ export default function Header() {
                     </div>
 
                     {/* Mobile controls */}
-                    <div className="md:hidden flex items-center gap-2">
+                    <div className="lg:hidden flex items-center gap-2">
                         <Link
                             href="/offers"
                             className="px-3.5 py-1.5 bg-[var(--brand-ink)] text-white text-xs font-bold rounded-lg"
@@ -111,7 +111,7 @@ export default function Header() {
 
             {/* Mobile drawer */}
             {mobileOpen && (
-                <div className="md:hidden border-t border-[var(--border-default)] bg-white">
+                <div className="lg:hidden border-t border-[var(--border-default)] bg-white">
                     <nav className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
                         {NAV_LINKS.map(({ href, label }) => {
                             const active = pathname === href || pathname.startsWith(href + "/");

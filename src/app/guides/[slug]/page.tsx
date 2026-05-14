@@ -9,6 +9,7 @@ import GuideInternalLinks from "./GuideInternalLinks";
 import ClassicLayout from "./layouts/ClassicLayout";
 import StepsLayout  from "./layouts/StepsLayout";
 import ProLayout    from "./layouts/ProLayout";
+import ConversionLayout from "./layouts/ConversionLayout";
 import GuidePerformanceTracker from "./GuidePerformanceTracker";
 import GuideOfferCtaBlock from "./GuideOfferCtaBlock";
 import { matchOffersToGuide, type GuideOfferMatch } from "@/lib/guide-offer-matcher";
@@ -362,7 +363,22 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             ) : null}
                         </div>
 
-                        {layoutStyle === "steps" ? (
+                        {layoutStyle === "conversion" ? (
+                            <ConversionLayout
+                                guide={{
+                                    body_md:         guide.body_md,
+                                    tips:            guide.tips ?? [],
+                                    key_takeaways:   guide.key_takeaways,
+                                    checklist_items: guide.checklist_items ?? [],
+                                    max_payout_usd:  guide.max_payout_usd,
+                                    difficulty:      guide.difficulty,
+                                    estimated_time:  guide.estimated_time,
+                                }}
+                                gameSlug={game.slug}
+                                gameName={game.name}
+                                showStaticCta={false}
+                            />
+                        ) : layoutStyle === "steps" ? (
                             <StepsLayout
                                 guide={{ body_md: guide.body_md, tips: guide.tips ?? [], max_payout_usd: guide.max_payout_usd }}
                                 gameSlug={game.slug}

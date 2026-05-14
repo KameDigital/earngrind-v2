@@ -443,6 +443,7 @@ export default function GuideEditorForm({
         classic: "Clean single-column editorial article. Best for SEO.",
         steps: "Numbered step cards based on ## headings. Best for walkthroughs.",
         pro: "Most polished layout with checklist and key takeaways.",
+        conversion: "High-intent layout with route metrics, action checklist, and prominent step cards.",
     };
     const editorSections = [
         { id: "basic-info", label: "Basics" },
@@ -1119,6 +1120,7 @@ export default function GuideEditorForm({
                         <option value="classic">Classic - Editorial article</option>
                         <option value="steps">Steps - Numbered walkthrough</option>
                         <option value="pro">Pro - Premium conversion layout</option>
+                        <option value="conversion">Conversion - Offer-first action layout</option>
                     </select>
                     <p className={hintClass}>{layoutHints[layoutStyle]}</p>
                 </div>

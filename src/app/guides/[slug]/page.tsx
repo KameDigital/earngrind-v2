@@ -197,6 +197,7 @@ async function fetchGuideData(slug: string) {
         supabase
             .from("unified_offers_view")
             .select("id, source, title, payout_usd, total_payout_usd, status, devices, countries, category, offer_expires_at, updated_at, game_id, game_name, game_slug, platform_id, platform_name, platform_slug, provider_id, provider_name, goal_text, game_devices")
+            .eq("game_id", game.id)
             .order("total_payout_usd", { ascending: false })
             .limit(250),
         supabase

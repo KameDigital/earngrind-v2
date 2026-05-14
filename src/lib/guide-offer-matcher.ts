@@ -134,6 +134,8 @@ export function matchOffersToGuide({
             if (!id) return null;
 
             const offerGameId = asString(offer.game_id);
+            if (guideGameId && offerGameId && guideGameId !== offerGameId) return null;
+
             const offerGameName = asString(offer.game_name);
             const platformName = asString(offer.platform_name);
             const providerName = asString(offer.provider_name);

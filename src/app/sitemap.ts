@@ -11,6 +11,7 @@ import {
 } from '@/lib/sitemap-quality';
 import { getSiteUrl } from '@/lib/site-url';
 import { STATIC_GUIDES } from '@/lib/static-guides';
+import { getPublishedGptSiteGuides } from '@/lib/gpt-site-guides';
 
 export const revalidate = 3600; // regenerate every hour
 
@@ -161,6 +162,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority:        guide.sitemapPriority,
     }));
 
+    const publishedGptSiteGuides = getPublishedGptSiteGuides();
+    const gptSiteGuideUrls: MetadataRoute.Sitemap = [
+        {
+            url:             `${baseUrl}/guides/best-gpt-sites`,
+            lastModified:    new Date(STATIC_PAGE_LAST_MODIFIED),
+            changeFrequency: 'weekly' as const,
+            priority:        0.84,
+        },
+        ...publishedGptSiteGuides.map(guide => ({
+            url:             `${baseUrl}/guides/best-gpt-sites/${guide.slug}`,
+            lastModified:    new Date(guide.updatedAt),
+            changeFrequency: 'weekly' as const,
+            priority:        0.78,
+        })),
+    ];
+
     // Guide pages — highest priority after homepage/offers (they target keywords)
     const guideUrls: MetadataRoute.Sitemap = (guides ?? [])
         .map(g => ({
@@ -197,6 +214,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...seoGameUrls,
         ...seoGuideUrls,
         ...staticGuideUrls,
+        ...gptSiteGuideUrls,
         ...guideUrls,
         ...postUrls,
         ...reviewUrls,

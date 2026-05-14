@@ -92,6 +92,16 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         cta: "Open GemLoot",
         priority: "secondary",
     },
+    {
+        id: "71000000-0000-4000-8000-000000000009",
+        name: "EarnLab",
+        slug: "earnlab",
+        bestFor: "Best gamified GPT experience",
+        rewardNote: "Offerwalls, surveys, races, boxes, Mines, Keno, and reward-store style cashouts.",
+        trustNote: "Verify game rules, wager risk, and withdrawal methods before using original games.",
+        cta: "Open EarnLab",
+        priority: "secondary",
+    },
 ];
 
 export function buildTrackedPlatformHref(platform: GptAffiliatePlatform, clickLocation: string) {

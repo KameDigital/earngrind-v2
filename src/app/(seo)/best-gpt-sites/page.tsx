@@ -9,6 +9,7 @@ import ProviderComparison from "../components/ProviderComparison";
 import { formatMoney } from "../_lib/seo-data";
 import { getBestPageData, getBestPageMetadata } from "../_lib/best-pages";
 import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
+import { GPT_SITE_GUIDES } from "@/lib/gpt-site-guides";
 
 export const revalidate = 3600;
 
@@ -187,6 +188,9 @@ export default async function BestGptSitesPage() {
                 <Link href="/guides/best-gpt-sites-to-make-money" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
                   Read Full GPT Guide
                 </Link>
+                <Link href="/guides/best-gpt-sites" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
+                  Browse Site Guides
+                </Link>
                 {bestReview ? (
                   <Link href={`/review/${bestReview.slug}`} className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
                     Read {best.platformName} Review
@@ -238,8 +242,8 @@ export default async function BestGptSitesPage() {
                 These buttons use EarnGrind tracked outbound routes. We may earn a commission, but you should still verify payout freshness, device fit, and country eligibility before starting.
               </p>
             </div>
-            <Link href="/guides/best-gpt-sites-to-make-money" className="inline-flex rounded-xl border border-[var(--border-default)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400">
-              Read comparison guide
+            <Link href="/guides/best-gpt-sites" className="inline-flex rounded-xl border border-[var(--border-default)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400">
+              Read GPT site guides
             </Link>
           </div>
 
@@ -276,6 +280,34 @@ export default async function BestGptSitesPage() {
                   {platform.cta}
                 </Link>
               </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="section-label">Research guides</p>
+              <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">Read the guide for each GPT site</h2>
+              <p className="mt-2 max-w-3xl text-sm text-[var(--text-secondary)]">
+                Each guide includes a browser screenshot, payout notes, source links, strategy, and tracking checks before you commit to a platform.
+              </p>
+            </div>
+            <Link href="/guides/best-gpt-sites" className="inline-flex rounded-xl border border-[var(--border-default)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400">
+              View all GPT guides
+            </Link>
+          </div>
+          <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {GPT_SITE_GUIDES.map((guide) => (
+              <Link
+                key={guide.slug}
+                href={`/guides/best-gpt-sites/${guide.slug}`}
+                className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4 transition hover:-translate-y-px hover:border-lime-300"
+              >
+                <p className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">{guide.bestFor}</p>
+                <h3 className="mt-2 font-extrabold text-[var(--brand-ink)]">{guide.name} Guide</h3>
+                <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">{guide.description}</p>
+              </Link>
             ))}
           </div>
         </section>

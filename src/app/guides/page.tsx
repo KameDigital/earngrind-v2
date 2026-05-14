@@ -6,6 +6,7 @@ import Container from "@/components/layout/Container";
 import { STATIC_GUIDES } from "@/lib/static-guides";
 import { pickPublicArtworkUrl } from "@/lib/public-image-url";
 import { canonicalAlternates } from "@/lib/seo-metadata";
+import { GPT_SITE_GUIDES } from "@/lib/gpt-site-guides";
 
 export const metadata: Metadata = {
     title: "Game Guides — Maximize Your Offerwall Earnings | EarnGrind",
@@ -334,16 +335,16 @@ export default async function GuidesPage({
                         </p>
                     )}
                     <div className="mt-5 rounded-2xl border border-lime-200 bg-lime-50 p-4">
-                        <p className="text-xs font-bold uppercase tracking-wide text-lime-700">New monetization guide</p>
+                        <p className="text-xs font-bold uppercase tracking-wide text-lime-700">New GPT site guides</p>
                         <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <p className="max-w-2xl text-sm text-[var(--text-secondary)]">
-                                Compare top GPT sites, referral routes, payout methods, and safety checks before choosing where to start.
+                                Compare {GPT_SITE_GUIDES.length} GPT sites with researched strategy, screenshots, payout notes, and safety checks before choosing where to start.
                             </p>
                             <Link
-                                href="/guides/best-gpt-sites-to-make-money"
+                                href="/guides/best-gpt-sites"
                                 className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)]"
                             >
-                                Read GPT Site Guide
+                                Browse GPT Site Guides
                             </Link>
                         </div>
                     </div>

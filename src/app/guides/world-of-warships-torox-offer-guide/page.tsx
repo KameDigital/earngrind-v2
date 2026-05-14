@@ -23,6 +23,7 @@ import { absoluteUrl } from "@/lib/site-url";
 
 const PAGE_PATH = "/guides/world-of-warships-torox-offer-guide";
 const PAGE_URL = absoluteUrl(PAGE_PATH);
+const HERO_BACKGROUND_SRC = "/images/guides/world-of-warships/world-of-warships-hero-background.webp";
 const GAIN_WORLD_OF_WARSHIPS_OFFER_ID = "1-6b86";
 const GAIN_GG_DEEP_LINK =
     buildGainOfferDeepLink(GAIN_WORLD_OF_WARSHIPS_OFFER_ID) ??
@@ -313,33 +314,43 @@ export default function WorldOfWarshipsToroxOfferGuidePage() {
         <main className="min-h-screen bg-[#f7fafb] text-slate-900">
             <JsonLd />
 
-            <section className="border-b border-cyan-950 bg-slate-950 text-white">
-                <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-                    <nav className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white/70" aria-label="Breadcrumb">
-                        <Link href="/" className="hover:text-white">Home</Link>
-                        <span>/</span>
-                        <Link href="/guides" className="hover:text-white">Guides</Link>
-                        <span>/</span>
-                        <span className="text-white">World of Warships Torox Offer</span>
-                    </nav>
+            <section
+                className="relative isolate overflow-hidden bg-slate-950 text-white"
+                style={{
+                    backgroundImage: `url(${HERO_BACKGROUND_SRC})`,
+                    backgroundPosition: "center 42%",
+                    backgroundSize: "cover",
+                }}
+            >
+                <div className="absolute inset-0 -z-10 bg-slate-950/68" />
+                <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-slate-950/78 to-slate-950/28" />
+                <div className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-slate-950/70 to-transparent" />
+                <div className="border-b border-cyan-200/20">
+                    <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+                        <nav className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white/80" aria-label="Breadcrumb">
+                            <Link href="/" className="hover:text-white">Home</Link>
+                            <span>/</span>
+                            <Link href="/guides" className="hover:text-white">Guides</Link>
+                            <span>/</span>
+                            <span className="text-white">World of Warships Torox Offer</span>
+                        </nav>
+                    </div>
                 </div>
-            </section>
 
-            <section className="bg-slate-950 text-white">
                 <div className="mx-auto grid max-w-7xl gap-8 px-4 pb-14 pt-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pb-20 lg:pt-12">
                     <div className="min-w-0">
                         <div className="mb-5 flex flex-wrap gap-2 text-xs font-extrabold uppercase tracking-wide">
-                            <span className="rounded-full border border-lime-300/40 bg-lime-300/10 px-3 py-1 text-lime-200">Difficulty: Easy</span>
-                            <span className="rounded-full border border-cyan-300/40 bg-cyan-300/10 px-3 py-1 text-cyan-100">Desktop offer</span>
-                            <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white/80">Updated {LAST_UPDATED}</span>
+                            <span className="rounded-full border border-lime-300/50 bg-lime-300/15 px-3 py-1 text-lime-100">Difficulty: Easy</span>
+                            <span className="rounded-full border border-cyan-200/50 bg-cyan-300/15 px-3 py-1 text-cyan-50">Desktop offer</span>
+                            <span className="rounded-full border border-white/25 bg-white/15 px-3 py-1 text-white/90">Updated {LAST_UPDATED}</span>
                         </div>
-                        <p className="mb-3 text-sm font-extrabold uppercase tracking-wide text-cyan-200">
+                        <p className="mb-3 text-sm font-extrabold uppercase tracking-wide text-cyan-100">
                             World of Warships Torox offer
                         </p>
-                        <h1 className="max-w-4xl text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                            World of Warships Torox Offer Guide: How to Complete Every Task
+                        <h1 className="max-w-4xl text-4xl font-black tracking-tight text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.55)] sm:text-5xl lg:text-6xl">
+                            World of Warships Torox Offer Guide: Earn 10,692 Points (15$) With These Steps
                         </h1>
-                        <p className="mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
+                        <p className="mt-5 max-w-3xl text-base leading-7 text-slate-100 drop-shadow-[0_1px_12px_rgba(0,0,0,0.55)] sm:text-lg">
                             World of Warships is one of the easier desktop game offers if you have enough storage space and follow the tracking steps correctly. Register through Torox, download the desktop game, play your first battle, then keep playing until you unlock and use additional warships.
                         </p>
                         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -347,7 +358,7 @@ export default function WorldOfWarshipsToroxOfferGuidePage() {
                                 href={GAIN_GG_DEEP_LINK}
                                 target="_blank"
                                 rel="sponsored noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-2 rounded-lg bg-lime-300 px-5 py-3 text-sm font-extrabold text-slate-950 transition hover:bg-lime-200 focus:outline-none focus:ring-4 focus:ring-lime-200/40"
+                                className="inline-flex items-center justify-center gap-2 rounded-lg bg-lime-300 px-5 py-3 text-sm font-extrabold text-slate-950 shadow-[0_14px_32px_rgba(0,0,0,0.28)] transition hover:bg-lime-200 focus:outline-none focus:ring-4 focus:ring-lime-200/40"
                             >
                                 Start on Gain.gg
                                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -373,7 +384,6 @@ export default function WorldOfWarshipsToroxOfferGuidePage() {
                         </div>
                     ))}
                 </section>
-
                 <section className="py-12">
                     <SectionHeading eyebrow="Offer rewards" title="World of Warships Torox Offer Rewards">
                         <p>

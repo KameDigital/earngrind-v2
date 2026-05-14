@@ -18,12 +18,15 @@ import {
     Ship,
     Trophy,
 } from "lucide-react";
+import { buildGainOfferDeepLink, getGainOfferRef } from "@/lib/gain-deeplinks";
 import { absoluteUrl } from "@/lib/site-url";
 
 const PAGE_PATH = "/guides/world-of-warships-torox-offer-guide";
 const PAGE_URL = absoluteUrl(PAGE_PATH);
-const STEAM_URL = "https://store.steampowered.com/app/552990/World_of_Warships/";
-const TOROX_OFFERS_URL = "/offers/gemsloot/us/torox";
+const GAIN_WORLD_OF_WARSHIPS_OFFER_ID = "1-6b86";
+const GAIN_GG_DEEP_LINK =
+    buildGainOfferDeepLink(GAIN_WORLD_OF_WARSHIPS_OFFER_ID) ??
+    `https://gain.gg/offer/${GAIN_WORLD_OF_WARSHIPS_OFFER_ID}?ref=${getGainOfferRef()}`;
 const LAST_UPDATED = "May 14, 2026";
 
 export const metadata: Metadata = {
@@ -81,16 +84,17 @@ const steps = [
         title: "Register Through the Torox Offer Link",
         icon: MousePointerClick,
         copy: [
-            "Start from the offer page on EarnGrind, then open the World of Warships offer through Torox. Do not manually search for the game on Google, Steam, Epic, or the Wargaming site after clicking away.",
+            "Start from the Gain.gg deep link below, then open the World of Warships offer through Torox. Do not manually search for the game on a store page or the Wargaming site after clicking away.",
             "Offerwall tracking depends on the click, registration, install, and first activity being connected. If you register outside the tracked path, you may still be able to play the game, but Torox may not credit the task.",
             "After registering, keep your email and login information saved. You may need to reopen the game later to finish the second and third milestones.",
         ],
+        cta: true,
     },
     {
         title: "Download and Install World of Warships",
         icon: Download,
         copy: [
-            "World of Warships is a large desktop game, so this step may take longer than the early-game tasks. Steam lists 67.2 GB available space for the PC version, and the offer itself may show a 61 GB desktop download.",
+            "World of Warships is a large desktop game, so this step may take longer than the early-game tasks. The offer itself may show a 61 GB desktop download, so leave at least 70 GB free before starting.",
             "Use a stable internet connection and avoid switching devices mid-offer. Once the install finishes, launch the game and log in with the same account you created from the tracked offer path.",
             "Do not uninstall the game immediately after your first reward appears. Keep it installed until all milestones credit or until you are sure you are done.",
         ],
@@ -161,11 +165,11 @@ const quickRoute = [
 const faqs = [
     {
         q: "Is World of Warships free?",
-        a: "Yes. World of Warships is listed as free-to-play on Steam, and the game is built around free naval battles with optional paid content.",
+        a: "Yes. World of Warships is a free-to-play naval battle game with optional paid content.",
     },
     {
         q: "How much storage do I need for the World of Warships offer?",
-        a: "The offer may say 61 GB, but Steam lists 67.2 GB available space. Leave at least 70 GB free to avoid install issues.",
+        a: "The offer may say 61 GB. Leave at least 70 GB free to avoid install issues.",
     },
     {
         q: "Do I need to win battles for the Torox offer?",
@@ -339,20 +343,13 @@ export default function WorldOfWarshipsToroxOfferGuidePage() {
                             World of Warships is one of the easier desktop game offers if you have enough storage space and follow the tracking steps correctly. Register through Torox, download the desktop game, play your first battle, then keep playing until you unlock and use additional warships.
                         </p>
                         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                            <Link
-                                href={TOROX_OFFERS_URL}
+                            <a
+                                href={GAIN_GG_DEEP_LINK}
+                                target="_blank"
+                                rel="sponsored noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-lime-300 px-5 py-3 text-sm font-extrabold text-slate-950 transition hover:bg-lime-200 focus:outline-none focus:ring-4 focus:ring-lime-200/40"
                             >
-                                Browse Torox Offers
-                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                            </Link>
-                            <a
-                                href={STEAM_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-cyan-200/30"
-                            >
-                                Check Steam listing
+                                Start on Gain.gg
                                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
                             </a>
                         </div>
@@ -440,7 +437,7 @@ export default function WorldOfWarshipsToroxOfferGuidePage() {
                 <section className="py-12">
                     <SectionHeading eyebrow="Step by step" title="How to Complete the World of Warships Torox Offer" />
                     <div className="space-y-5">
-                        {steps.map(({ title, icon: Icon, copy }, index) => (
+                        {steps.map(({ title, icon: Icon, copy, cta }, index) => (
                             <article key={title} className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
                                 <div className="flex flex-col gap-4 sm:flex-row">
                                     <div className="flex h-12 w-12 flex-none items-center justify-center rounded-lg bg-slate-950 text-lime-300">
@@ -454,6 +451,17 @@ export default function WorldOfWarshipsToroxOfferGuidePage() {
                                                 <p key={paragraph}>{paragraph}</p>
                                             ))}
                                         </div>
+                                        {cta && (
+                                            <a
+                                                href={GAIN_GG_DEEP_LINK}
+                                                target="_blank"
+                                                rel="sponsored noopener noreferrer"
+                                                className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-lime-300 px-5 py-3 text-sm font-extrabold text-slate-950 transition hover:bg-lime-200 focus:outline-none focus:ring-4 focus:ring-lime-200/40"
+                                            >
+                                                Start World of Warships on Gain.gg
+                                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </article>
@@ -534,15 +542,15 @@ export default function WorldOfWarshipsToroxOfferGuidePage() {
                     <div className="rounded-lg border border-slate-200 bg-white p-5 text-sm leading-6 text-slate-600 shadow-sm">
                         <p className="font-black text-slate-950">Source and tracking note</p>
                         <p className="mt-2">
-                            Steam lists World of Warships as free-to-play and shows 67.2 GB available space in its system requirements. Offerwall rewards, task wording, device rules, and deadlines can change, so always trust the live Torox offer page before starting.
+                            Offerwall rewards, task wording, device rules, and deadlines can change, so always trust the live Torox offer page on Gain.gg before starting.
                         </p>
                         <a
-                            href={STEAM_URL}
+                            href={GAIN_GG_DEEP_LINK}
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel="sponsored noopener noreferrer"
                             className="mt-3 inline-flex items-center gap-2 font-extrabold text-cyan-700 hover:text-cyan-900"
                         >
-                            View World of Warships on Steam
+                            Start on Gain.gg
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </a>
                     </div>

@@ -154,6 +154,66 @@ function GuideCard({ guide }: { guide: Guide }) {
     );
 }
 
+function GuideIndexCard({
+    href,
+    label,
+    title,
+    description,
+    initials,
+    imageUrl,
+    difficulty,
+    estimatedTime,
+}: {
+    href: string;
+    label: string;
+    title: string;
+    description: string;
+    initials: string;
+    imageUrl?: string | null;
+    difficulty?: "easy" | "medium" | "hard" | null;
+    estimatedTime?: string | null;
+}) {
+    return (
+        <Link
+            href={href}
+            className="group eg-card flex flex-col p-5 hover:-translate-y-0.5"
+        >
+            <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)]">
+                    {imageUrl ? (
+                        <Image
+                            src={imageUrl}
+                            alt={label}
+                            width={40}
+                            height={40}
+                            unoptimized={isSvgUrl(imageUrl)}
+                            className="h-full w-full object-cover"
+                        />
+                    ) : (
+                        <span className="text-xs font-bold text-[var(--text-tertiary)]">{initials}</span>
+                    )}
+                </div>
+                <span className="section-label">{label}</span>
+            </div>
+
+            <h2 className="mb-2 flex-1 font-bold leading-snug text-[var(--brand-ink)] transition-colors group-hover:text-lime-700">
+                {title}
+            </h2>
+
+            <p className="mb-3 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">
+                {description}
+            </p>
+
+            <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-[var(--border-default)] pt-3">
+                <DifficultyBadge difficulty={difficulty ?? null} />
+                {estimatedTime && (
+                    <span className="text-xs font-medium text-[var(--text-tertiary)]">â± {estimatedTime}</span>
+                )}
+            </div>
+        </Link>
+    );
+}
+
 function PalmonGuideHub({ imageUrl }: { imageUrl: string | null }) {
     return (
         <section className="eg-card overflow-hidden p-5 sm:col-span-2 sm:p-6 lg:col-span-3">
@@ -316,6 +376,7 @@ export default async function GuidesPage({
             .find(Boolean) ??
         null;
     const totalCount = count ?? 0;
+    const displayedTotalCount = totalCount + STATIC_GUIDES.length + 1;
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
@@ -331,42 +392,12 @@ export default async function GuidesPage({
                     </p>
                     {totalCount > 0 && (
                         <p className="text-sm text-[var(--text-tertiary)] mt-2">
-                            {totalCount} guide{totalCount !== 1 ? "s" : ""} available
+                            {displayedTotalCount} guide{displayedTotalCount !== 1 ? "s" : ""} available
                         </p>
                     )}
-                    <div className="mt-5 rounded-2xl border border-lime-200 bg-lime-50 p-4">
-                        <p className="text-xs font-bold uppercase tracking-wide text-lime-700">New GPT site guides</p>
-                        <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                            <p className="max-w-2xl text-sm text-[var(--text-secondary)]">
-                                Compare {GPT_SITE_GUIDES.length} GPT sites with researched strategy, screenshots, payout notes, and safety checks before choosing where to start.
-                            </p>
-                            <Link
-                                href="/guides/best-gpt-sites"
-                                className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)]"
-                            >
-                                Browse GPT Site Guides
-                            </Link>
-                        </div>
-                    </div>
-                    {STATIC_GUIDES.map((guide) => (
-                        <div key={guide.slug} className={`mt-4 rounded-2xl border p-4 ${guide.accentClassName}`}>
-                            <p className="text-xs font-bold uppercase tracking-wide">{guide.eyebrow}</p>
-                            <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <p className="max-w-2xl text-sm text-[var(--text-secondary)]">
-                                    {guide.description}
-                                </p>
-                                <Link
-                                    href={guide.href}
-                                    className={`inline-flex rounded-xl px-4 py-2 text-sm font-extrabold ${guide.buttonClassName}`}
-                                >
-                                    {guide.ctaLabel}
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
                 </div>
 
-                {visibleGuides.length === 0 && !shouldShowPalmonHub ? (
+                {visibleGuides.length === 0 && !shouldShowPalmonHub && page !== 1 ? (
                     <div className="bg-white rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] p-16 text-center">
                         <div className="text-3xl mb-4">📖</div>
                         <h2 className="text-lg font-bold text-[var(--brand-ink)] mb-2">No guides published yet</h2>
@@ -375,6 +406,30 @@ export default async function GuidesPage({
                 ) : (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {page === 1 && (
+                                <GuideIndexCard
+                                    href="/guides/best-gpt-sites"
+                                    label="GPT Sites"
+                                    title="Best GPT Sites to Make Money in 2026: Top Reward Sites Compared"
+                                    description={`Compare ${GPT_SITE_GUIDES.length} GPT sites with researched strategy, screenshots, payout notes, and safety checks before choosing where to start.`}
+                                    initials="GS"
+                                    imageUrl="/images/guides/gpt-sites/gain-gg.png"
+                                    estimatedTime="10-20 minutes to compare"
+                                />
+                            )}
+                            {page === 1 && STATIC_GUIDES.map((guide) => (
+                                <GuideIndexCard
+                                    key={guide.slug}
+                                    href={guide.href}
+                                    label={guide.title.includes("World of Warships") ? "World of Warships" : "FanDuel Casino"}
+                                    title={guide.title}
+                                    description={guide.description}
+                                    initials={guide.title.includes("World of Warships") ? "WW" : "FC"}
+                                    imageUrl={guide.slug === "fanduel-casino-review-bonus" ? "/images/guides/fanduel-casino/fanduel-casino-bonus-review-hero.png" : null}
+                                    difficulty={guide.slug === "world-of-warships-torox-offer-guide" ? "easy" : null}
+                                    estimatedTime={guide.slug === "world-of-warships-torox-offer-guide" ? "Same day for many users" : "15-25 minutes to evaluate"}
+                                />
+                            ))}
                             {shouldShowPalmonHub && <PalmonGuideHub imageUrl={palmonHubImageUrl} />}
                             {visibleGuides.map((guide) => (
                                 <GuideCard key={guide.id} guide={guide} />

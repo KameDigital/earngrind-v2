@@ -47,3 +47,6 @@ raw_lint.txt
 raw_lint_output.txt
 lint-results.txt
 lint-results-ascii.txt
+previews/
+reports/
+supabase/.temp/

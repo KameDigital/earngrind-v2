@@ -4,6 +4,7 @@ import Link from "next/link";
 import GuideAdminActions from "./GuideAdminActions";
 import { analyzeGuideQuality } from "@/lib/guide-quality";
 import { analyzeGuideBodyHealth, type GuideBodyHealth } from "@/lib/guide-body-health";
+import { STATIC_GUIDES } from "@/lib/static-guides";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Guides | Admin" };
@@ -36,6 +37,10 @@ function FilterInput({ name, label, defaultValue }: { name: string; label: strin
 
 function statusHref(status?: string) {
     return status ? `/app/admin/guides?status=${encodeURIComponent(status)}` : "/app/admin/guides";
+}
+
+function staticGuideSourcePath(href: string) {
+    return `src/app${href}/page.tsx`;
 }
 
 function HealthBadges({ quality, bodyHealth, guide }: { quality: ReturnType<typeof analyzeGuideQuality>; bodyHealth: GuideBodyHealth; guide: { needs_variation: boolean | null; seo_title: string | null; seo_description: string | null } }) {
@@ -100,6 +105,7 @@ export default async function AdminGuidesPage({
         const game = Array.isArray(guide.game) ? guide.game[0] : guide.game;
         return game?.name?.toLowerCase().includes(gameFilter.toLowerCase());
     });
+    const cmsGuideSlugs = new Set(rows.map((guide) => guide.slug).filter(Boolean));
 
     return (
         <div className="space-y-6">
@@ -286,6 +292,69 @@ export default async function AdminGuidesPage({
                 </div>
                 {rows.length === 0 ? <div className="py-16 text-center text-sm font-semibold text-gray-500">No guides match these filters.</div> : null}
             </div>
+
+            <section className="rounded-xl border border-cyan-100 bg-cyan-50/60 p-4 shadow-sm">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                        <p className="text-xs font-bold uppercase tracking-widest text-cyan-700">Static / Code-backed</p>
+                        <h2 className="mt-1 text-xl font-extrabold text-gray-950">Code-backed guides</h2>
+                        <p className="mt-2 max-w-3xl text-sm leading-6 text-cyan-950/75">
+                            These guides are rendered from code and are not editable in the CMS. To edit them, update the corresponding TSX/static guide files.
+                        </p>
+                    </div>
+                    <span className="w-fit rounded-full bg-white px-3 py-1 text-xs font-bold text-cyan-800 ring-1 ring-cyan-100">
+                        {STATIC_GUIDES.length} static guide{STATIC_GUIDES.length === 1 ? "" : "s"}
+                    </span>
+                </div>
+
+                <div className="mt-4 grid gap-3">
+                    {STATIC_GUIDES.map((guide) => {
+                        const hasDuplicateCmsSlug = cmsGuideSlugs.has(guide.slug);
+                        return (
+                            <article key={guide.slug} className="rounded-xl border border-cyan-100 bg-white p-4 shadow-sm">
+                                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                                    <div className="min-w-0">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <h3 className="text-base font-extrabold text-gray-950">{guide.title}</h3>
+                                            <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-bold text-gray-700">Static / Code-backed</span>
+                                            {hasDuplicateCmsSlug ? (
+                                                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-800">
+                                                    Slug also exists in CMS
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                        <div className="mt-2 grid gap-1 text-xs text-gray-500 sm:grid-cols-2 lg:grid-cols-4">
+                                            <div>
+                                                <span className="font-bold text-gray-400">Slug:</span>{" "}
+                                                <span className="font-mono">{guide.slug}</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-bold text-gray-400">Type:</span>{" "}
+                                                {guide.eyebrow}
+                                            </div>
+                                            <div>
+                                                <span className="font-bold text-gray-400">URL:</span>{" "}
+                                                <span className="font-mono">{guide.href}</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-bold text-gray-400">Source:</span>{" "}
+                                                <span className="font-mono">{staticGuideSourcePath(guide.href)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <Link
+                                        href={guide.href}
+                                        target="_blank"
+                                        className="inline-flex shrink-0 items-center justify-center rounded-lg bg-gray-950 px-3 py-2 text-xs font-bold text-white transition hover:bg-gray-800"
+                                    >
+                                        View
+                                    </Link>
+                                </div>
+                            </article>
+                        );
+                    })}
+                </div>
+            </section>
         </div>
     );
 }

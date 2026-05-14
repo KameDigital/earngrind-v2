@@ -206,12 +206,12 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                         priority
                                         sizes="(min-width: 1024px) 420px, 100vw"
                                         className="object-cover"
-                                    />
-                                </div>
-                                <p className="mt-3 text-xs font-semibold text-[var(--text-tertiary)]">
-                                    Browser screenshot captured from the public {guide.name} site for page context. Verify live terms before signing up.
-                                </p>
+                                />
                             </div>
+                            <p className="mt-3 text-xs font-semibold text-[var(--text-tertiary)]">
+                                {guide.screenshotCaption ?? `Public ${guide.name} page shown for context. Verify live terms before signing up.`}
+                            </p>
+                        </div>
                         </div>
                     </div>
                 </section>
@@ -246,7 +246,7 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                             <section className={`rounded-2xl border ${accent.border} ${accent.soft} p-5 shadow-[var(--shadow-card)] sm:p-6`}>
                                 <p className="section-label">What people check first</p>
                                 <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
-                                    The questions guests bring to a {guide.name} review
+                                    Questions this {guide.name} guide answers
                                 </h2>
                                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                                     {readerInterests.map((interest) => (
@@ -258,13 +258,50 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                             </section>
                         ) : null}
 
+                        {guide.articleSections?.length ? (
+                            <section className="space-y-4">
+                                {guide.articleSections.map((section) => (
+                                    <section key={section.title} className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
+                                        {section.eyebrow ? (
+                                            <p className="section-label">{section.eyebrow}</p>
+                                        ) : null}
+                                        <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">{section.title}</h2>
+                                        <div className="mt-3 space-y-3 text-sm leading-6 text-[var(--text-secondary)]">
+                                            {section.body.map((paragraph) => (
+                                                <p key={paragraph}>{paragraph}</p>
+                                            ))}
+                                        </div>
+                                        {section.bullets?.length ? (
+                                            <div className="mt-4">
+                                                <BulletList items={section.bullets} icon="check" iconClassName={accent.icon} />
+                                            </div>
+                                        ) : null}
+                                        {section.callout ? (
+                                            <p className="mt-4 rounded-xl border border-lime-200 bg-lime-50 p-4 text-sm font-semibold leading-6 text-[var(--brand-ink)]">
+                                                {section.callout}
+                                            </p>
+                                        ) : null}
+                                        {section.cta ? (
+                                            <Link
+                                                href={section.cta.href}
+                                                className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[var(--brand-ink)] px-5 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition hover:-translate-y-0.5"
+                                            >
+                                                {section.cta.label}
+                                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                                            </Link>
+                                        ) : null}
+                                    </section>
+                                ))}
+                            </section>
+                        ) : null}
+
                         {navigationAudit ? (
                             <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
                                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                                     <div>
-                                        <p className="section-label">Navigation audit</p>
+                                        <p className="section-label">Site layout</p>
                                         <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
-                                            What stands out when you browse {guide.name}
+                                            How {guide.name} is organized
                                         </h2>
                                         <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">
                                             {navigationAudit.standout}
@@ -287,13 +324,59 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                             </section>
                         ) : null}
 
-                        {featureAudits.length > 0 ? (
+                        {featureAudits.length > 0 && guide.compactEvidence ? (
+                            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
+                                <div className="flex items-start gap-3">
+                                    <Camera className={`mt-1 h-6 w-6 flex-none ${accent.icon}`} aria-hidden="true" />
+                                    <div>
+                                        <p className="section-label">Supporting evidence</p>
+                                        <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
+                                            {guide.evidenceTitle ?? `Public ${guide.name} pages worth checking`}
+                                        </h2>
+                                        <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">
+                                            {guide.evidenceIntro ?? "These public pages support the guide, but live terms can change."}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="mt-5 grid gap-3 md:grid-cols-2">
+                                    {featureAudits.map((feature) => (
+                                        <details key={feature.title} className="group rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                                            <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
+                                                <span>
+                                                    <span className={`block text-xs font-extrabold uppercase tracking-wide ${accent.icon}`}>{feature.eyebrow}</span>
+                                                    <span className="mt-1 block font-extrabold text-[var(--brand-ink)]">{feature.title}</span>
+                                                </span>
+                                                <ArrowRight className="mt-1 h-4 w-4 flex-none text-[var(--text-tertiary)] transition group-open:rotate-90" aria-hidden="true" />
+                                            </summary>
+                                            <div className="mt-4 space-y-4">
+                                                <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-slate-950">
+                                                    <Image
+                                                        src={feature.image}
+                                                        alt={feature.imageAlt}
+                                                        fill
+                                                        sizes="(min-width: 768px) 45vw, 100vw"
+                                                        className="object-contain"
+                                                    />
+                                                </div>
+                                                <p className="text-sm leading-6 text-[var(--text-secondary)]">{feature.summary}</p>
+                                                <div className="rounded-lg border border-white bg-white p-3">
+                                                    <BulletList items={feature.mechanics} icon="check" iconClassName={accent.icon} />
+                                                </div>
+                                                <p className="rounded-lg border border-lime-200 bg-lime-50 p-3 text-sm font-semibold leading-6 text-[var(--brand-ink)]">
+                                                    {feature.readerValue}
+                                                </p>
+                                            </div>
+                                        </details>
+                                    ))}
+                                </div>
+                            </section>
+                        ) : featureAudits.length > 0 ? (
                             <section className="space-y-4">
                                 <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
                                     <div className="flex items-start gap-3">
                                         <Camera className={`mt-1 h-6 w-6 flex-none ${accent.icon}`} aria-hidden="true" />
                                         <div>
-                                            <p className="section-label">Feature audit screenshots</p>
+                                            <p className="section-label">Public screenshots</p>
                                             <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
                                                 The parts of {guide.name} people actually want to inspect
                                             </h2>
@@ -397,6 +480,37 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                 ))}
                             </div>
                         </section>
+
+                        {guide.sourcesPlacement === "bottom" ? (
+                            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
+                                <details className="group">
+                                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-extrabold text-[var(--brand-ink)]">
+                                        Sources checked
+                                        <ArrowRight className="h-4 w-4 flex-none text-[var(--text-tertiary)] transition group-open:rotate-90" aria-hidden="true" />
+                                    </summary>
+                                    <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
+                                        These are the public pages behind the main claims above. Live offers, rewards, survey inventory, and account-specific availability can change.
+                                    </p>
+                                    <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                                        {guide.sources.map((source) => (
+                                            <a
+                                                key={source.href}
+                                                href={source.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer nofollow"
+                                                className="flex items-start justify-between gap-3 rounded-lg border border-[var(--border-default)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400"
+                                            >
+                                                <span>{source.label}</span>
+                                                <ExternalLink className="mt-0.5 h-4 w-4 flex-none text-[var(--text-tertiary)]" aria-hidden="true" />
+                                            </a>
+                                        ))}
+                                    </div>
+                                    <p className="mt-3 text-xs leading-5 text-[var(--text-tertiary)]">
+                                        Source review date: {guide.updatedAt}.
+                                    </p>
+                                </details>
+                            </section>
+                        ) : null}
                     </article>
 
                     <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
@@ -416,26 +530,28 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                             </Link>
                         </section>
 
-                        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-                            <h2 className="font-extrabold text-[var(--brand-ink)]">Research sources</h2>
-                            <div className="mt-3 space-y-2">
-                                {guide.sources.map((source) => (
-                                    <a
-                                        key={source.href}
-                                        href={source.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer nofollow"
-                                        className="flex items-start justify-between gap-3 rounded-lg border border-[var(--border-default)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400"
-                                    >
-                                        <span>{source.label}</span>
-                                        <ExternalLink className="mt-0.5 h-4 w-4 flex-none text-[var(--text-tertiary)]" aria-hidden="true" />
-                                    </a>
-                                ))}
-                            </div>
-                            <p className="mt-3 text-xs leading-5 text-[var(--text-tertiary)]">
-                                Source review date: {guide.updatedAt}. EarnGrind may earn a commission from tracked links.
-                            </p>
-                        </section>
+                        {guide.sourcesPlacement !== "bottom" ? (
+                            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+                                <h2 className="font-extrabold text-[var(--brand-ink)]">Research sources</h2>
+                                <div className="mt-3 space-y-2">
+                                    {guide.sources.map((source) => (
+                                        <a
+                                            key={source.href}
+                                            href={source.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer nofollow"
+                                            className="flex items-start justify-between gap-3 rounded-lg border border-[var(--border-default)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400"
+                                        >
+                                            <span>{source.label}</span>
+                                            <ExternalLink className="mt-0.5 h-4 w-4 flex-none text-[var(--text-tertiary)]" aria-hidden="true" />
+                                        </a>
+                                    ))}
+                                </div>
+                                <p className="mt-3 text-xs leading-5 text-[var(--text-tertiary)]">
+                                    Source review date: {guide.updatedAt}. EarnGrind may earn a commission from tracked links.
+                                </p>
+                            </section>
+                        ) : null}
 
                         <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
                             <h2 className="font-extrabold text-[var(--brand-ink)]">More GPT site guides</h2>

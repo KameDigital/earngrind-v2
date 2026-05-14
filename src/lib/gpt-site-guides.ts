@@ -22,10 +22,23 @@ export type GptSiteGuide = {
     strategy: string[];
     faq: Array<{ question: string; answer: string }>;
     sources: Array<{ label: string; href: string }>;
+    articleSections?: Array<{
+        eyebrow?: string;
+        title: string;
+        body: string[];
+        bullets?: string[];
+        callout?: string;
+        cta?: { label: string; href: string };
+    }>;
+    compactEvidence?: boolean;
+    evidenceTitle?: string;
+    evidenceIntro?: string;
     primaryCtaLabel?: string;
     primaryCtaHref?: string;
     sidebarCtaLabel?: string;
     sidebarCtaHref?: string;
+    screenshotCaption?: string;
+    sourcesPlacement?: "sidebar" | "bottom";
 };
 
 export type GptSiteFeatureAudit = {
@@ -388,71 +401,76 @@ export const GPT_SITE_GUIDES: GptSiteGuide[] = [
         platformSlug: "gain-gg",
         name: "Gain.gg",
         status: "draft",
-        title: "GAIN.GG Review: Offers, Surveys, Cashouts, and Rules to Know",
+        title: "GAIN.GG Review: Is It Worth Using for Offers, Surveys, and Cashouts?",
         description:
-            "Source-backed EarnGrind review of GAIN.GG, covering public offers, surveys, withdrawals, coin value, support limits, and account-risk rules.",
-        bestFor: "Users comparing public offers, surveys, and reward rules before signing up",
+            "Learn how GAIN.GG works, who it is best for, how coins and withdrawals work, and what to check before starting offers.",
+        bestFor: "Offerwall users who want to compare Gain.gg before spending time on tasks",
         verdict:
-            "Based on the reviewed public pages, GAIN.GG is most useful for users who want a task-based rewards site with public game and app offers, surveys, multiple reward categories, and bonus surfaces like a leaderboard and Lucky Wheel. It is a weaker fit for users who need all survey inventory visible before sign-up, guaranteed payout timing, VPN or emulator use, or direct GAIN.GG staff resolution for every third-party offerwall credit issue.",
+            "Gain.gg can be worth trying if you already understand GPT sites and want another place to compare games, app offers, surveys, and offerwalls. The main upside is choice: you can inspect public offer examples, coin rules, withdrawal categories, and account rules before you start. The main downside is the same one you get with most offerwall-heavy sites: offers can vary by user, device, country, and provider, and missing credits may require patience and proof.",
         screenshot: "/images/guides/gpt-sites/gain-gg/homepage.png",
         accent: "teal",
         updatedAt: "2026-05-14",
         payoutStyle: "Coins; the public FAQ says 1,000 coins equals $1.00 USD",
         minimumCashout: "Public Withdraw page says options start from as low as 500 coins; exact availability can vary",
         rewardOptions: "Homepage lists PayPal funds, crypto, virtual Visa cards, bank transfer, and gift cards",
-        accountFit: "Users comfortable with offerwall-style tasks, strict anti-fraud rules, and source checking",
+        accountFit: "Users comfortable with offerwall-style tasks, strict rules, and careful tracking",
         earningModes: ["Games and app offers", "Surveys", "Offerwalls and tasks", "Videos", "Leaderboard and Lucky Wheel bonuses"],
         strengths: [
-            "Public pages explain the coin model, withdrawal categories, timing expectations, support limits, and account rules before sign-up.",
-            "The Offers and Earn pages show public game, app, and offerwall examples that users can inspect before committing.",
-            "The FAQ gives specific rule and timing language around credits, withdrawals, VPNs, duplicate accounts, and manual reviews.",
-            "Support channels are visible publicly, while the FAQ also makes clear that missing third-party offer credits usually go through the offerwall provider.",
+            "You can inspect public game, app, and offerwall examples before deciding whether to sign up.",
+            "The coin value is easy to understand because the FAQ states that 1,000 coins equals $1.00 USD.",
+            "Withdrawal categories are visible publicly, including cash, crypto, card, bank-transfer, and gift-card style options.",
+            "The FAQ is unusually direct about VPNs, duplicate accounts, missing-credit support, pending credits, and manual review risk.",
         ],
         watchouts: [
-            "Exact offer values, survey inventory, leaderboard values, Lucky Wheel state, and homepage trust metrics are dynamic and should be refreshed before final publication.",
-            "The public Surveys page says users must sign in to view available surveys, so inventory cannot be fully audited from public pages.",
-            "VPN, VPS, emulator, duplicate-account, and household-account rules are strict enough to matter before starting any offer.",
-            "Account-specific withdrawal availability is not guaranteed by the public pages and may vary by region or account state.",
+            "Offer payouts, survey availability, leaderboard totals, Lucky Wheel values, and homepage trust metrics can change.",
+            "The public Surveys page says users must sign in to view available surveys, so survey inventory is not guaranteed from the outside.",
+            "VPN, VPS, emulator, duplicate-account, and household-account rules can put an account at risk.",
+            "Withdrawal methods may vary by account, country, and live reward availability.",
         ],
         strategy: [
-            "Open the FAQ and Withdraw page before starting a major offer so the coin value, account rules, and reward caveats are clear.",
-            "Record the provider name, offer page, visible requirements, deadline, payout, and completion proof for high-value or purchase-related tasks.",
-            "Avoid VPNs, VPS services, emulators, duplicate accounts, and shared-account setups because the public FAQ flags them as ban risks.",
-            "Treat leaderboard and Lucky Wheel activity as incidental upside; the offer route still needs to make sense on its own.",
-            "Compare current Gain.gg routes on EarnGrind before installing a game or app, because public offer values can change.",
+            "Start with a smaller offer before committing to a high-value game or purchase-related task.",
+            "Screenshot the offer page, provider name, requirements, deadline, reward amount, and completion confirmation.",
+            "Read every task requirement before installing an app, creating an account, making a purchase, or switching devices.",
+            "Avoid VPNs, VPS services, emulators, duplicate accounts, and account sharing.",
+            "Treat leaderboards and Lucky Wheel entries as possible extras, not guaranteed earnings.",
+            "Compare current Gain.gg routes on EarnGrind before installing a game or app.",
         ],
         faq: [
             {
-                question: "What is GAIN.GG?",
-                answer: "GAIN.GG is a GPT rewards site where users can earn rewards by completing tasks such as surveys, videos, app downloads, games, and offers, based on its public FAQ and homepage.",
+                question: "Is Gain.gg legit?",
+                answer: "Gain.gg has public pages for offers, surveys, withdrawals, support, terms, privacy, and FAQ rules. That is enough to evaluate how the site presents itself, but it does not guarantee every offer will track or pay for every user. Treat it like any GPT site: verify the live terms before starting.",
             },
             {
-                question: "How do you earn coins on GAIN.GG?",
-                answer: "The public pages describe earning through games, surveys, offers, apps, and offerwalls. Survey inventory is not fully visible on the public Surveys page because it asks users to sign in to view available surveys.",
+                question: "Is Gain.gg worth using?",
+                answer: "It can be worth using if you want another GPT site for comparing game, app, survey, and offerwall routes. It is less appealing if you want guaranteed fast credits, full survey inventory before login, or direct platform resolution for every third-party offerwall issue.",
             },
             {
-                question: "What are GAIN.GG coins worth?",
-                answer: "GAIN.GG's public FAQ says every 1,000 coins is worth $1.00 USD.",
+                question: "How does Gain.gg work?",
+                answer: "Users complete tasks such as games, app offers, surveys, videos, and offerwall offers to earn coins. Those coins can then be used through the withdrawal system, subject to live reward availability and account rules.",
             },
             {
-                question: "What withdrawal options does GAIN.GG list publicly?",
-                answer: "The homepage names PayPal funds, crypto, virtual Visa cards, bank transfer, and gift cards. The Withdraw page says options start from as low as 500 coins and says gift card withdrawals are fee-free. Exact active options should be refreshed before publication because availability can change.",
+                question: "What are Gain.gg coins worth?",
+                answer: "Gain.gg's public FAQ says every 1,000 coins is worth $1.00 USD.",
             },
             {
-                question: "How long do GAIN.GG rewards or withdrawals take?",
-                answer: "The FAQ says most offer credits award within 5 minutes, rare offer-credit delays can take up to 48 hours, and withdrawals are typically processed within a few hours. It also says contacting support will not speed up withdrawal approval, and high-value or suspicious offers can be manually reviewed and held up to 90 days.",
+                question: "How do Gain.gg withdrawals work?",
+                answer: "The public Withdraw page says options start from as low as 500 coins, and the homepage lists PayPal funds, crypto, virtual Visa cards, bank transfer, and gift cards. Exact options can vary, so check the live Withdraw page from your account before relying on a specific method.",
             },
             {
-                question: "Can you use a VPN with GAIN.GG?",
+                question: "Why do Gain.gg offers sometimes not credit?",
+                answer: "Offer credits can depend on advertiser approval, provider tracking, task requirements, device eligibility, country fit, and completion proof. Gain.gg's FAQ says most offers credit quickly, but rare delays can happen and missing third-party credits usually need to go through the offerwall provider.",
+            },
+            {
+                question: "Can you use a VPN with Gain.gg?",
                 answer: "No. The public FAQ says VPN, VPS, and emulator use is strictly prohibited and can result in a permanent ban.",
             },
             {
-                question: "Who is GAIN.GG best for?",
-                answer: "GAIN.GG looks best for users who want public offer browsing, games and apps, surveys, multiple reward categories, and bonus surfaces, and who can follow strict anti-fraud and offerwall rules.",
+                question: "What should I do before starting a Gain.gg offer?",
+                answer: "Read the task requirements, confirm the provider, check the deadline and reward amount, avoid VPNs and device switching, and screenshot the offer details before you start.",
             },
             {
-                question: "Who should avoid GAIN.GG?",
-                answer: "Users should be cautious if they need guaranteed earnings, want to use VPNs or emulators, need survey inventory visible before login, or expect GAIN.GG staff to resolve all missing third-party offer credits directly.",
+                question: "Who should avoid Gain.gg?",
+                answer: "Avoid or move carefully if you need guaranteed earnings, want to use VPNs or emulators, need survey inventory visible before logging in, or do not want to deal with third-party offerwall support when an offer fails to credit.",
             },
         ],
         sources: [
@@ -466,10 +484,132 @@ export const GPT_SITE_GUIDES: GptSiteGuide[] = [
             { label: "GAIN.GG privacy policy", href: "https://gain.gg/privacy" },
             { label: "GAIN.GG terms", href: "https://gain.gg/terms" },
         ],
-        primaryCtaLabel: "Compare current Gain.gg offers on EarnGrind",
+        articleSections: [
+            {
+                eyebrow: "Basics",
+                title: "What Gain.gg is",
+                body: [
+                    "Gain.gg is a GPT rewards site. In plain English, that means users earn a site balance by completing tasks from advertisers and offerwall providers. The public pages describe games, app downloads, surveys, videos, and offers as the main earning paths.",
+                    "The important thing to understand is that Gain.gg is not one single task provider. Many offers come through third-party offerwalls, so the provider behind the offer can matter as much as Gain.gg itself.",
+                ],
+            },
+            {
+                eyebrow: "How it works",
+                title: "How Gain.gg works",
+                body: [
+                    "The basic flow is simple: pick an offer, complete the listed requirements, wait for coins to credit, then use the withdrawal page when your balance and preferred reward method are eligible.",
+                    "The part that needs care is the offer detail page. Before installing a game or signing up for anything, check whether the task is for new users only, which device is required, how long you have, what milestone counts, and whether the reward is pending or subject to advertiser approval.",
+                ],
+                cta: { label: "Compare Gain.gg Offers on EarnGrind", href: "/best-gain-gg-offers" },
+            },
+            {
+                eyebrow: "Earning paths",
+                title: "Best ways to earn on Gain.gg",
+                body: [
+                    "The best Gain.gg path depends on your country, device, and offer history. For most EarnGrind readers, game and app offers are the first place to compare because they often have clearer milestones than low-value surveys.",
+                    "Surveys can still be useful, but the public Surveys page does not show full inventory without sign-in. Treat survey availability as something to test inside your account rather than a guaranteed earning stream.",
+                ],
+                bullets: [
+                    "Compare the same game or app across more than one route before installing.",
+                    "Start with a smaller offer to confirm tracking before chasing a large payout.",
+                    "Use videos, surveys, and smaller tasks as filler, not as guaranteed high-value earnings.",
+                ],
+            },
+            {
+                eyebrow: "Coins and cashout",
+                title: "How coins and withdrawals work",
+                body: [
+                    "Gain.gg uses coins. Its public FAQ says 1,000 coins equals $1.00 USD. The public Withdraw page says options start from as low as 500 coins, and Gain.gg's homepage lists PayPal funds, crypto, virtual Visa cards, bank transfer, and gift cards as reward categories.",
+                    "That does not mean every withdrawal method is available to every account at all times. Reward availability, minimums, fees, and country support can change, so check the live Withdraw page before spending serious time on a long offer.",
+                ],
+                callout: "Practical rule: verify the withdrawal method you actually want before starting a multi-day game or purchase offer.",
+            },
+            {
+                eyebrow: "Tracking",
+                title: "Why Gain.gg offers may not credit",
+                body: [
+                    "Most GPT-site frustration comes from tracking. An offer can fail to credit if the advertiser cannot verify the install, signup, purchase, milestone, country, device, or new-user requirement. Gain.gg's FAQ says most offer credits are awarded quickly, but rare delays can take longer.",
+                    "For missing third-party offer credits, Gain.gg says users generally need to contact the offerwall provider directly. That makes your screenshots and written notes important.",
+                ],
+                bullets: [
+                    "Screenshot the offer page before clicking.",
+                    "Save the provider name, requirements, deadline, and reward amount.",
+                    "Keep proof of completion, especially for purchases or high-value milestones.",
+                    "Do not expect support to speed up advertiser approval just because you opened a ticket.",
+                ],
+            },
+            {
+                eyebrow: "Account safety",
+                title: "Rules that can get your account flagged",
+                body: [
+                    "Gain.gg's public FAQ is strict about VPNs, VPS services, emulators, duplicate accounts, and household account limits. If you use GPT sites casually, these rules are easy to underestimate, but they can matter more than picking the highest-looking offer.",
+                    "The safest approach is boring: use your normal device, do not switch tracking paths mid-offer, do not make duplicate accounts, and do not try to look like you are in another country.",
+                ],
+                bullets: [
+                    "Avoid VPNs, VPS services, and emulators.",
+                    "Do not create duplicate accounts.",
+                    "Avoid switching devices during a tracked offer unless the task explicitly allows it.",
+                    "Read the terms before using shared household or family accounts.",
+                ],
+            },
+            {
+                eyebrow: "New user plan",
+                title: "Best Gain.gg strategy for new users",
+                body: [
+                    "Do not start with the biggest offer on the page. Start with a smaller task that you can finish cleanly, watch how the coins post, then decide whether Gain.gg is worth more time.",
+                    "Once you trust the tracking flow, compare bigger game or app offers carefully. The right offer is not always the highest headline value; it is the route with realistic requirements, a clear deadline, a reward method you can use, and enough proof if something goes wrong.",
+                ],
+                cta: { label: "See Gain.gg-Style Offers", href: "/offers/gain/us" },
+            },
+            {
+                eyebrow: "User fit",
+                title: "Who Gain.gg is best for",
+                body: [
+                    "Gain.gg is best for users who already understand offerwalls or are willing to learn the rules before clicking. It is especially useful if you like comparing game and app offers across different reward sites.",
+                ],
+                bullets: [
+                    "Users who want another place to compare game and app offers.",
+                    "Users who can keep screenshots and track offer details.",
+                    "Users who are comfortable waiting for pending credits or advertiser review.",
+                    "Users who want PayPal, crypto, card, bank-transfer, or gift-card style reward categories, subject to live availability.",
+                ],
+            },
+            {
+                eyebrow: "Avoid if",
+                title: "Who should avoid Gain.gg",
+                body: [
+                    "Gain.gg is not a good fit if you want guaranteed earnings, guaranteed instant credits, or a platform that can directly fix every third-party offerwall issue. It is also not a fit if you rely on VPNs, emulators, or switching locations/devices.",
+                ],
+                bullets: [
+                    "You need guaranteed earnings or guaranteed payout timing.",
+                    "You want full survey inventory visible before login.",
+                    "You do not want to deal with third-party provider support.",
+                    "You use VPNs, emulators, duplicate accounts, or shared tracking setups.",
+                ],
+            },
+            {
+                eyebrow: "Alternatives",
+                title: "Gain.gg alternatives to compare",
+                body: [
+                    "Gain.gg is one option in a broader GPT-site stack. Before installing a game or committing to a long task, compare it with other reward sites and with EarnGrind's current offer pages.",
+                    "The goal is not to use every site. The goal is to find the route with the clearest requirements, strongest reward for your situation, and lowest tracking risk.",
+                ],
+                bullets: [
+                    "Compare Gain.gg with other GPT sites before committing to one route.",
+                    "Use EarnGrind's Gain.gg offer comparison when you want current offer context.",
+                    "Browse Gain.gg-style offers when you want more options before installing a game or app.",
+                ],
+            },
+        ],
+        compactEvidence: true,
+        evidenceTitle: "Pages worth checking before you start",
+        evidenceIntro: "These screenshots are supporting context for the claims above. Use them as a reminder of what to verify live before starting an offer.",
+        primaryCtaLabel: "Compare Gain.gg Offers on EarnGrind",
         primaryCtaHref: "/best-gain-gg-offers",
-        sidebarCtaLabel: "Browse EarnGrind's Gain.gg offer hub",
+        sidebarCtaLabel: "See Gain.gg-Style Offers",
         sidebarCtaHref: "/offers/gain/us",
+        screenshotCaption: "Gain.gg homepage and public earning categories. Live offers and terms can change.",
+        sourcesPlacement: "bottom",
     },
     {
         slug: "gemsloot",
@@ -943,10 +1083,10 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
     ],
     "gain-gg": [
         {
-            eyebrow: "Public earning flow",
-            title: "The public pages show offers before sign-up, but exact values can move",
+            eyebrow: "Offer browsing",
+            title: "You can preview earning categories before signing up",
             image: "/images/guides/gpt-sites/gain-gg/homepage.png",
-            imageAlt: "GAIN.GG homepage screenshot captured for EarnGrind research",
+            imageAlt: "GAIN.GG homepage showing earning categories",
             gallery: [
                 {
                     image: "/images/guides/gpt-sites/gain-gg/homepage.png",
@@ -965,35 +1105,35 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
                 },
             ],
             summary:
-                "GAIN.GG exposes a useful amount of public offer context: the homepage explains broad earning categories, while the Earn and Offers pages show examples of games, apps, and provider-driven routes. Treat visible offer amounts as date-sensitive rather than permanent claims.",
+                "Gain.gg shows broad earning categories and public examples of games, apps, and provider-driven routes. Treat visible offer values as live examples, not permanent guarantees.",
             mechanics: [
-                "Public pages support games, surveys, offers, apps, videos, and offerwall-style tasks.",
-                "Offer examples can be inspected before login, but payout values and eligibility can change.",
-                "Provider ownership matters because support and credit rules may sit with the offerwall.",
+                "Games, surveys, offers, apps, videos, and offerwall-style tasks are visible as earning categories.",
+                "Offer values and eligibility can change by account, country, and device.",
+                "The provider behind an offer can matter for tracking and support.",
             ],
             readerValue:
-                "Use GAIN.GG as a comparison target before installing an app or game. The useful decision is not whether an offer exists; it is whether the current provider, terms, payout, and proof requirements make sense.",
+                "Use the public pages to decide whether Gain.gg is worth testing, then verify the live offer page before installing anything.",
         },
         {
             eyebrow: "Surveys",
             title: "Survey inventory is partly login-gated",
             image: "/images/guides/gpt-sites/gain-gg/surveys-page.png",
-            imageAlt: "GAIN.GG surveys page screenshot captured for EarnGrind research",
+            imageAlt: "GAIN.GG surveys page showing sign-in prompt",
             summary:
-                "The public Surveys page says surveys earn coins and are added daily from multiple providers, but it also tells users to sign in to view available surveys. That makes public survey-availability claims weaker than the offers evidence.",
+                "The public Surveys page says surveys earn coins and are added daily from multiple providers, but it also tells users to sign in to view available surveys.",
             mechanics: [
-                "Survey inventory was not fully visible from public pages during the audit.",
+                "Survey inventory was not fully visible without signing in.",
                 "Survey availability can vary by account, geography, and provider matching.",
-                "A review should explain the limitation instead of implying a fixed survey catalog.",
+                "Do not assume a fixed survey catalog before checking your account.",
             ],
             readerValue:
-                "Survey users should treat GAIN.GG as a site to test after signup, not as a guaranteed survey pipeline based only on public screenshots.",
+                "Treat surveys as something to test inside Gain.gg, not a guaranteed reason to sign up.",
         },
         {
             eyebrow: "Withdrawals",
             title: "The coin model is public, but account-level reward access still needs checking",
             image: "/images/guides/gpt-sites/gain-gg/withdraw-page.png",
-            imageAlt: "GAIN.GG withdraw page screenshot captured for EarnGrind research",
+            imageAlt: "GAIN.GG withdraw page showing reward categories",
             gallery: [
                 {
                     image: "/images/guides/gpt-sites/gain-gg/withdraw-page.png",
@@ -1007,9 +1147,9 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
                 },
             ],
             summary:
-                "GAIN.GG's FAQ says 1,000 coins equals $1.00 USD. The public Withdraw page says options start from as low as 500 coins and presents reward categories, while the homepage names PayPal funds, crypto, virtual Visa cards, bank transfer, and gift cards.",
+                "Gain.gg's FAQ says 1,000 coins equals $1.00 USD. The public Withdraw page says options start from as low as 500 coins and presents reward categories, while the homepage names PayPal funds, crypto, virtual Visa cards, bank transfer, and gift cards.",
             mechanics: [
-                "Public coin value can be cited from the FAQ.",
+                "The public FAQ states the coin-to-dollar conversion.",
                 "Withdrawal methods and thresholds should be refreshed because availability can vary.",
                 "The FAQ says withdrawals are typically processed within a few hours, but support contact will not speed approval.",
                 "High-value or suspicious offers can be manually reviewed and held up to 90 days according to the FAQ.",
@@ -1019,9 +1159,9 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
         },
         {
             eyebrow: "Rules and support",
-            title: "The strongest guide angle is expectation-setting",
+            title: "The rules matter before you chase a big offer",
             image: "/images/guides/gpt-sites/gain-gg/faq-page.png",
-            imageAlt: "GAIN.GG FAQ page screenshot captured for EarnGrind research",
+            imageAlt: "GAIN.GG FAQ page showing account and credit rules",
             gallery: [
                 {
                     image: "/images/guides/gpt-sites/gain-gg/faq-page.png",
@@ -1045,7 +1185,7 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
                 },
             ],
             summary:
-                "The best GAIN.GG review does more than list rewards. It should explain the account rules, support limits, third-party offerwall expectations, and privacy notes that affect whether a user should start a task.",
+                "Gain.gg publishes account rules, support limits, third-party offerwall expectations, and privacy notes that can affect whether a user should start a task.",
             mechanics: [
                 "The public FAQ prohibits VPNs, VPS services, and emulators.",
                 "Users are limited to one account, with one account per household stated in the FAQ.",
@@ -1053,13 +1193,13 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
                 "External offerwalls may collect additional data under their own privacy policies.",
             ],
             readerValue:
-                "This is where EarnGrind can be more useful than a generic review: explain which rules can cost users their account or time before they chase a high-looking offer.",
+                "Read the rules first. A high-looking offer is not useful if the account setup or tracking path puts it at risk.",
         },
         {
             eyebrow: "Lucky Wheel",
-            title: "Lucky Wheel evidence is real, but the live state is dynamic",
+            title: "Lucky Wheel is bonus upside, not a plan",
             image: "/images/guides/gpt-sites/gain-gg/lucky-wheel-page.png",
-            imageAlt: "GAIN.GG Lucky Wheel page screenshot captured for EarnGrind research",
+            imageAlt: "GAIN.GG Lucky Wheel page showing dynamic bonus information",
             summary:
                 "The public Lucky Wheel page says users earn entries automatically by earning coins and that earning more can increase the chance of winning. Participant counts, prize state, and winner details are dynamic and should be refreshed before publication.",
             mechanics: [
@@ -1074,7 +1214,7 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
             eyebrow: "Leaderboard",
             title: "Leaderboards show activity, not guaranteed value",
             image: "/images/guides/gpt-sites/gain-gg/leaderboard-page.png",
-            imageAlt: "GAIN.GG leaderboard page screenshot captured for EarnGrind research",
+            imageAlt: "GAIN.GG leaderboard page showing time-sensitive earned-coin totals",
             summary:
                 "The public Leaderboard page shows daily and monthly views with earned-coin totals. That supports a claim that GAIN.GG has a public competitive bonus surface, but the exact values are time-sensitive.",
             mechanics: [
@@ -1320,8 +1460,8 @@ export const GPT_SITE_NAVIGATION_AUDITS: Record<string, GptSiteNavigationAudit> 
     },
     "gain-gg": {
         primary: ["Earn", "Offers", "Surveys", "Withdraw", "FAQ", "Contact", "Lucky Wheel", "Leaderboard"],
-        standout: "GAIN.GG exposes enough public pages to explain the earning flow, coin value, withdrawals, support expectations, account rules, and bonus surfaces before sign-up.",
-        gatedNote: "Survey inventory and account-specific withdrawal availability were not fully visible from public pages, so those claims should stay qualified until a login-approved audit is run.",
+        standout: "Gain.gg gives users enough public information to understand the earning flow, coin value, withdrawals, support expectations, account rules, and bonus surfaces before sign-up.",
+        gatedNote: "Survey inventory and account-specific withdrawal options may not be visible until you sign in, so check those inside your own account before relying on them.",
     },
     gemsloot: {
         primary: ["Earn", "Lobby", "Affiliates", "Leaderboard", "Rewards", "VIP"],
@@ -1341,7 +1481,7 @@ export const GPT_SITE_READER_INTERESTS: Record<string, string[]> = {
     mypoints: ["Point value by reward", "Shopping tracking", "Gift-card catalog", "Whether games are worth doing here"],
     prizerebel: ["Survey qualification rate", "PayPal and crypto options", "Fast digital rewards", "Country-specific reward availability"],
     scrambly: ["$1+ payout promise", "Game tracking", "Bonus/referral flow", "How quickly withdrawals arrive"],
-    "gain-gg": ["Coin value and withdrawal fit", "Public offers versus live values", "Survey inventory after sign-in", "VPN, account, and offerwall support rules"],
+    "gain-gg": ["Is Gain.gg legit?", "How coins and withdrawals work", "Why offers may not credit", "Rules to check before starting"],
     gemsloot: ["Ascend and Bundles", "Boosted offers", "VIP perks and chat rain", "Whether a game route is realistic before installing"],
     earnlab: ["Main Balance vs Game Wallet", "First withdrawal threshold", "Offerwall payout comparison", "Boxes, Keno, Mines, Races, and VIP"],
 };

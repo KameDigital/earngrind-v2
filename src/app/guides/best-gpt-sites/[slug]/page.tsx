@@ -16,7 +16,6 @@ import {
     Sparkles,
     Target,
 } from "lucide-react";
-import Container from "@/components/layout/Container";
 import {
     GPT_SITE_GUIDES,
     getPublishedGptSiteGuides,
@@ -157,11 +156,11 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
     const readerInterests = getGptSiteReaderInterests(guide.slug);
 
     return (
-        <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+        <main className="min-h-screen overflow-x-hidden bg-[var(--surface-muted)] pb-24 pt-8 sm:pt-10">
             <JsonLd guide={guide} />
-            <Container className="space-y-6">
+            <div className="mx-auto w-full max-w-[1280px] space-y-6 px-4 sm:px-6 lg:px-8">
                 <section className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
-                    <div className="p-5 sm:p-6">
+                    <div className="p-5 sm:p-6 lg:p-8">
                         <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
                             <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
                             <span>/</span>
@@ -171,13 +170,13 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                             <span>/</span>
                             <span className="text-[var(--brand-ink)]">{guide.name}</span>
                         </nav>
-                        <div className="grid gap-7 lg:grid-cols-[1fr_420px] lg:items-center">
-                            <div>
+                        <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)] lg:items-center xl:gap-10">
+                            <div className="min-w-0">
                                 <p className="section-label">{guide.bestFor}</p>
-                                <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-4xl">
+                                <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-4xl lg:text-5xl">
                                     {guide.title}
                                 </h1>
-                                <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--text-secondary)]">
+                                <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--text-secondary)] lg:text-lg lg:leading-8">
                                     {guide.description}
                                 </p>
                                 <div className="mt-5 flex flex-wrap gap-2">
@@ -197,14 +196,14 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                     </Link>
                                 </div>
                             </div>
-                            <div className={`rounded-2xl border ${accent.border} ${accent.soft} p-3`}>
-                                <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-white">
+                            <div className={`min-w-0 rounded-2xl border ${accent.border} ${accent.soft} p-3 sm:p-4`}>
+                                <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-white shadow-sm">
                                     <Image
                                         src={guide.screenshot}
                                         alt={`${guide.name} website screenshot captured for this EarnGrind guide`}
                                         fill
                                         priority
-                                        sizes="(min-width: 1024px) 420px, 100vw"
+                                        sizes="(min-width: 1280px) 480px, (min-width: 1024px) 38vw, 100vw"
                                         className="object-cover"
                                 />
                             </div>
@@ -234,8 +233,8 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                     })}
                 </section>
 
-                <section className="grid gap-6 lg:grid-cols-[1fr_340px]">
-                    <article className="space-y-6">
+                <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px] xl:gap-8">
+                    <article className="min-w-0 space-y-6">
                         <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
                             <p className="section-label">Quick verdict</p>
                             <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">Is {guide.name} worth using?</h2>
@@ -248,7 +247,7 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                 <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
                                     Questions this {guide.name} guide answers
                                 </h2>
-                                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                                <div className="mt-4 grid gap-3 md:grid-cols-2">
                                     {readerInterests.map((interest) => (
                                         <div key={interest} className="rounded-xl border border-white/70 bg-white/70 p-3 text-sm font-extrabold text-[var(--brand-ink)]">
                                             {interest}
@@ -338,7 +337,7 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                         </p>
                                     </div>
                                 </div>
-                                <div className="mt-5 grid gap-3 md:grid-cols-2">
+                                <div className="mt-5 grid gap-4 md:grid-cols-2">
                                     {featureAudits.map((feature) => (
                                         <details key={feature.title} className="group rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
                                             <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
@@ -349,13 +348,13 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                                 <ArrowRight className="mt-1 h-4 w-4 flex-none text-[var(--text-tertiary)] transition group-open:rotate-90" aria-hidden="true" />
                                             </summary>
                                             <div className="mt-4 space-y-4">
-                                                <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-slate-950">
+                                                <div className="relative aspect-[16/9] max-h-[300px] overflow-hidden rounded-lg bg-white p-2">
                                                     <Image
                                                         src={feature.image}
                                                         alt={feature.imageAlt}
                                                         fill
                                                         sizes="(min-width: 768px) 45vw, 100vw"
-                                                        className="object-contain"
+                                                        className="object-contain p-2"
                                                     />
                                                 </div>
                                                 <p className="text-sm leading-6 text-[var(--text-secondary)]">{feature.summary}</p>
@@ -391,28 +390,28 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                         key={feature.title}
                                         className={`overflow-hidden rounded-2xl border ${index === 0 ? accent.border : "border-[var(--border-default)]"} bg-white shadow-[var(--shadow-card)]`}
                                     >
-                                        <div className="grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
-                                            <div className="bg-slate-950">
-                                                <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto p-3">
+                                        <div className="grid gap-0 xl:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)]">
+                                            <div className={`${accent.soft} min-w-0 border-b border-[var(--border-default)] xl:self-start xl:border-b-0 xl:border-r`}>
+                                                <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto p-3 sm:p-4">
                                                     {(feature.gallery ?? [{ image: feature.image, imageAlt: feature.imageAlt, caption: feature.eyebrow }]).map((item) => (
                                                         <figure key={item.image} className="min-w-full snap-center">
-                                                            <div className="relative min-h-[360px] overflow-hidden rounded-xl bg-slate-950 lg:min-h-[430px]">
+                                                            <div className="relative aspect-[16/10] min-h-[190px] max-h-[470px] overflow-hidden rounded-xl border border-white/80 bg-white shadow-sm sm:min-h-[320px] lg:min-h-[360px]">
                                                                 <Image
                                                                     src={item.image}
                                                                     alt={item.imageAlt}
                                                                     fill
                                                                     sizes="(min-width: 1024px) 45vw, 100vw"
-                                                                    className="object-contain"
+                                                                    className="object-contain p-3 sm:p-4"
                                                                 />
                                                             </div>
-                                                            <figcaption className="mt-2 text-xs font-semibold leading-5 text-slate-300">
+                                                            <figcaption className="mt-2 text-xs font-semibold leading-5 text-[var(--text-secondary)]">
                                                                 {item.caption}
                                                             </figcaption>
                                                         </figure>
                                                     ))}
                                                 </div>
                                             </div>
-                                            <div className="p-5 sm:p-6">
+                                            <div className="min-w-0 p-5 sm:p-6 xl:p-7">
                                                 <p className={`text-xs font-extrabold uppercase tracking-wide ${accent.icon}`}>{feature.eyebrow}</p>
                                                 <h3 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">{feature.title}</h3>
                                                 <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{feature.summary}</p>
@@ -448,23 +447,25 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                             </section>
                         </div>
 
-                        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
-                            <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Best {guide.name} strategy</h2>
-                            <div className="mt-4">
-                                <BulletList items={guide.strategy} icon="step" iconClassName={accent.icon} />
-                            </div>
-                        </section>
+                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.18fr)_minmax(280px,0.82fr)]">
+                            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
+                                <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Best {guide.name} strategy</h2>
+                                <div className="mt-4">
+                                    <BulletList items={guide.strategy} icon="step" iconClassName={accent.icon} />
+                                </div>
+                            </section>
 
-                        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
-                            <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">{guide.name} earning modes</h2>
-                            <div className="mt-4 flex flex-wrap gap-2">
-                                {guide.earningModes.map((mode) => (
-                                    <span key={mode} className={`rounded-lg border ${accent.border} ${accent.soft} px-3 py-2 text-sm font-bold text-[var(--brand-ink)]`}>
-                                        {mode}
-                                    </span>
-                                ))}
-                            </div>
-                        </section>
+                            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
+                                <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">{guide.name} earning modes</h2>
+                                <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
+                                    {guide.earningModes.map((mode) => (
+                                        <span key={mode} className={`rounded-lg border ${accent.border} ${accent.soft} px-3 py-2 text-sm font-bold text-[var(--brand-ink)]`}>
+                                            {mode}
+                                        </span>
+                                    ))}
+                                </div>
+                            </section>
+                        </div>
 
                         <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
                             <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">{guide.name} FAQ</h2>
@@ -513,7 +514,7 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                         ) : null}
                     </article>
 
-                    <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
+                    <aside className="min-w-0 space-y-4 lg:sticky lg:top-24 lg:self-start">
                         <section className={`rounded-2xl border ${accent.border} ${accent.soft} p-5`}>
                             <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--text-tertiary)]">Recommended next step</p>
                             <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">Check the live {guide.name} terms</h2>
@@ -569,7 +570,7 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                         </section>
                     </aside>
                 </section>
-            </Container>
+            </div>
         </main>
     );
 }

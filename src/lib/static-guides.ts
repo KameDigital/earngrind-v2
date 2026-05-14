@@ -13,6 +13,19 @@ export interface StaticGuide {
 
 export const STATIC_GUIDES: StaticGuide[] = [
     {
+        title: "World of Warships Torox Offer Guide",
+        slug: "world-of-warships-torox-offer-guide",
+        href: "/guides/world-of-warships-torox-offer-guide",
+        eyebrow: "New desktop offer guide",
+        description:
+            "Complete the World of Warships Torox offer, earn up to 10,692 points, unlock two warships, and avoid tracking mistakes.",
+        ctaLabel: "Read World of Warships Guide",
+        accentClassName: "border-cyan-200 bg-cyan-50 text-cyan-800",
+        buttonClassName: "bg-slate-950 text-lime-300",
+        lastModified: "2026-05-14",
+        sitemapPriority: 0.82,
+    },
+    {
         title: "FanDuel Casino Review",
         slug: "fanduel-casino-review-bonus",
         href: "/guides/fanduel-casino-review-bonus",

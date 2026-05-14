@@ -4,12 +4,62 @@ import React, { Suspense } from 'react';
 import OfferSearchEngine from '@/components/offers/OfferSearchEngine';
 import Container from '@/components/layout/Container';
 import { canonicalAlternates } from '@/lib/seo-metadata';
+import { fetchPublicOffers, publicOfferFiltersFromSearchParams } from '@/lib/public-offer-search';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
     title: 'Compare High-Paying Offers | EarnGrind',
     description: 'Compare current payouts, filter live offer opportunities, and find the best-paying games, signup routes, and tasks faster.',
     alternates: canonicalAlternates('/offers'),
+    openGraph: {
+        title: 'Compare High-Paying Offers | EarnGrind',
+        description: 'Compare current payouts, filter live offer opportunities, and find the best-paying games, signup routes, and tasks faster.',
+        url: 'https://earngrind.com/offers',
+        siteName: 'EarnGrind',
+        images: [
+            {
+                url: '/og-earngrind.png',
+                width: 1200,
+                height: 630,
+                alt: 'Compare high-paying offers on EarnGrind',
+            },
+        ],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Compare High-Paying Offers | EarnGrind',
+        description: 'Compare current payouts, filter live offer opportunities, and find the best-paying games, signup routes, and tasks faster.',
+        images: ['/og-earngrind.png'],
+    },
 };
+
+interface OffersPageProps {
+    searchParams?: Record<string, string | string[] | undefined>;
+}
+
+function pageSearchParamsToUrlSearchParams(searchParams: OffersPageProps["searchParams"]): URLSearchParams {
+    const params = new URLSearchParams();
+
+    for (const [key, value] of Object.entries(searchParams ?? {})) {
+        if (Array.isArray(value)) {
+            for (const item of value) params.append(key, item);
+        } else if (typeof value === "string") {
+            params.set(key, value);
+        }
+    }
+
+    return params;
+}
+
+function initialOfferQueryString(searchParams: URLSearchParams): string {
+    const params = new URLSearchParams(searchParams);
+    if (!params.has("country")) params.set("country", "US");
+    if (!params.has("sort")) params.set("sort", "payout_desc");
+    if (!params.has("page")) params.set("page", "1");
+    return params.toString();
+}
 
 const GAIN_OFFERWALL_LINKS = [
     { href: "/offers/gain/us", label: "All Gain" },
@@ -20,7 +70,15 @@ const GAIN_OFFERWALL_LINKS = [
     { href: "/offers/gain/us/lootably", label: "Lootably" },
     { href: "/offers/gain/us/cpx", label: "CPX Research" },
 ];
-export default function OffersPage() {
+
+export default async function OffersPage({ searchParams }: OffersPageProps) {
+    const initialSearchParams = pageSearchParamsToUrlSearchParams(searchParams);
+    const initialQueryString = initialOfferQueryString(initialSearchParams);
+    const initialOffers = await fetchPublicOffers({
+        ...publicOfferFiltersFromSearchParams(new URLSearchParams(initialQueryString)),
+        country: initialSearchParams.get("country") ?? "US",
+    });
+
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-6 sm:pt-10">
             <Container>
@@ -83,9 +141,14 @@ export default function OffersPage() {
                         ))}
                     </div>
                 </section>
+
                 {/* Main Client UI */}
                 <Suspense fallback={null}>
-                    <OfferSearchEngine />
+                    <OfferSearchEngine
+                        initialOffers={initialOffers.data}
+                        initialMeta={initialOffers.meta}
+                        initialQueryString={initialQueryString}
+                    />
                 </Suspense>
             </Container>
         </main>

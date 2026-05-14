@@ -585,7 +585,7 @@ function FilterBar({ filters, dispatch, platforms, selectedPlatformName }: Filte
 
                 <button
                     onClick={() => dispatch({ type: "RESET" })}
-                    className="flex-shrink-0 ml-auto px-3.5 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-xl bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
+                    className="flex-shrink-0 px-3.5 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-xl bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
                 >
                     Clear
                 </button>
@@ -814,18 +814,27 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
 // ---------------------------------------------------------------
 interface OfferSearchEngineProps {
     initialGameSlug?: string; // for /offers/[game-slug] pages
+    initialOffers?: Offer[];
+    initialMeta?: OfferMeta | null;
+    initialQueryString?: string;
 }
 
-export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngineProps) {
+export default function OfferSearchEngine({
+    initialGameSlug,
+    initialOffers,
+    initialMeta,
+    initialQueryString,
+}: OfferSearchEngineProps) {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
     const [filters, dispatch] = useReducer(filterReducer, searchParams, buildFiltersFromSearchParams);
-    const [offers, setOffers] = React.useState<Offer[]>([]);
-    const [meta, setMeta] = React.useState<OfferMeta | null>(null);
-    const [loading, setLoading] = React.useState(true);
+    const [offers, setOffers] = React.useState<Offer[]>(() => initialOffers ?? []);
+    const [meta, setMeta] = React.useState<OfferMeta | null>(() => initialMeta ?? null);
+    const [loading, setLoading] = React.useState(initialOffers === undefined);
     const [pinned, setPinned] = React.useState<Offer[]>([]);
     const abortRef = useRef<AbortController | null>(null);
+    const hasRenderedInitialOffers = useRef(initialOffers !== undefined && !initialGameSlug);
 
     const debouncedQ = useDebounce(filters.q, 300);
     const reviewPlatformName = searchParams.get("platform_name") ?? "";
@@ -843,11 +852,17 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
     }, [offers]);
 
     const fetchOffers = useCallback(async () => {
+        const qs = buildQueryString(filters, debouncedQ);
+        if (hasRenderedInitialOffers.current && qs === initialQueryString) {
+            hasRenderedInitialOffers.current = false;
+            return;
+        }
+
+        hasRenderedInitialOffers.current = false;
         abortRef.current?.abort();
         abortRef.current = new AbortController();
         setLoading(true);
         try {
-            const qs = buildQueryString(filters, debouncedQ);
             const endpoint = initialGameSlug
                 ? `/api/offers/game/${initialGameSlug}?${qs}`
                 : `/api/offers?${qs}`;
@@ -862,7 +877,7 @@ export default function OfferSearchEngine({ initialGameSlug }: OfferSearchEngine
         } finally {
             setLoading(false);
         }
-    }, [filters, debouncedQ, initialGameSlug]);
+    }, [filters, debouncedQ, initialGameSlug, initialQueryString]);
 
     useEffect(() => { fetchOffers(); }, [fetchOffers]);
 

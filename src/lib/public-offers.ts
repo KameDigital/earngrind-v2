@@ -1,6 +1,11 @@
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 
+type PublicOfferSource = "ingested" | "manual";
+type PublicPayoutType = "online_cashback" | "gift_card" | "points" | "crypto" | null;
+type PublicDevice = "ios" | "android" | "pc" | "web";
+type PublicPlatformKind = "gpt_site" | "offerwall" | "casino" | "sportsbook" | "cashback";
+
 export type UnifiedOfferRow = Record<string, unknown> & {
     id?: string | null;
     source?: string | null;
@@ -50,6 +55,24 @@ export const isImageUrl = (url?: string | null) =>
     typeof url === "string" &&
     /\.(jpg|jpeg|png|webp|gif|avif|svg)(?:$|[?#])/i.test(url);
 
+function toPublicPayoutType(value: unknown): PublicPayoutType {
+    return value === "online_cashback" || value === "gift_card" || value === "points" || value === "crypto"
+        ? value
+        : null;
+}
+
+function toPublicDevices(values: unknown): PublicDevice[] {
+    if (!Array.isArray(values)) return [];
+    return values.filter((value): value is PublicDevice =>
+        value === "ios" || value === "android" || value === "pc" || value === "web");
+}
+
+function toPublicPlatformKind(value: unknown): PublicPlatformKind {
+    return value === "offerwall" || value === "casino" || value === "sportsbook" || value === "cashback"
+        ? value
+        : "gpt_site";
+}
+
 export function toNumber(value: unknown, fallback = 0): number {
     if (typeof value === "number" && Number.isFinite(value)) return value;
     if (typeof value === "string") {
@@ -73,16 +96,21 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
     const payoutUsd = toNumber(row.payout_usd);
     const totalPayoutUsd = normalizeTotalPayout(payoutUsd, toNumber(row.total_payout_usd, payoutUsd));
     const providerName = typeof row.provider_name === "string" ? normalizeProviderDisplayName(row.provider_name) : row.provider_name ?? null;
+    const gameName = firstNonEmpty(row.game_name, row.title) ?? "Unknown offer";
+    const gameSlug = firstNonEmpty(row.game_slug) ?? "";
+    const platformName = firstNonEmpty(row.platform_name) ?? "Unknown platform";
+    const platformSlug = firstNonEmpty(row.platform_slug) ?? "";
+    const source: PublicOfferSource = row.source === "manual" ? "manual" : "ingested";
 
     return {
         id: firstNonEmpty(row.id) ?? "",
-        source: row.source,
-        title: row.title,
+        source,
+        title: firstNonEmpty(row.title, row.game_name) ?? "Unknown offer",
         image_url: getUnifiedOfferImageUrl(row),
         payout_usd: payoutUsd,
         total_payout_usd: totalPayoutUsd,
-        payout_type: row.payout_type,
-        devices: row.devices ?? [],
+        payout_type: toPublicPayoutType(row.payout_type),
+        devices: toPublicDevices(row.devices),
         countries: row.countries ?? [],
         category: row.category,
         status: row.status,
@@ -93,7 +121,7 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
         is_boosted: Boolean(row.is_boosted),
         heat_score: row.heat_score ?? 0,
         offer_expires_at: row.offer_expires_at ?? null,
-        updated_at: row.updated_at ?? null,
+        updated_at: firstNonEmpty(row.updated_at) ?? "",
         offer_url: firstNonEmpty(row.offer_url),
         goal_text: row.goal_text ?? null,
         provider_id: row.provider_id ?? null,
@@ -101,18 +129,18 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
         is_public_payout_eligible: isPublicPayoutEligible(payoutUsd, totalPayoutUsd),
         redirect_url: getUnifiedOfferRedirectUrl(row),
         game: {
-            id: row.game_id ?? null,
-            name: row.game_name ?? null,
-            slug: row.game_slug ?? null,
+            id: firstNonEmpty(row.game_id) ?? "",
+            name: gameName,
+            slug: gameSlug,
             thumbnail_url: row.game_thumbnail ?? null,
-            devices: row.game_devices ?? [],
+            devices: toPublicDevices(row.game_devices),
         },
         platform: {
-            id: row.platform_id ?? null,
-            name: row.platform_name ?? null,
-            slug: row.platform_slug ?? null,
+            id: firstNonEmpty(row.platform_id) ?? "",
+            name: platformName,
+            slug: platformSlug,
             logo_url: row.platform_logo ?? null,
-            platform_kind: row.platform_kind ?? null,
+            platform_kind: toPublicPlatformKind(row.platform_kind),
         },
     };
 }

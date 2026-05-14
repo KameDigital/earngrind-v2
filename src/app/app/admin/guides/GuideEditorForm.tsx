@@ -17,6 +17,14 @@ type RegeneratableSection = "intro" | "overview" | "step_by_step" | "faq" | "seo
 type KeywordIntent = "informational" | "commercial_investigation" | "comparison" | "review" | "how_to" | "worth_it" | "task_specific" | "payout_specific";
 type GuideType = "game_offer" | "app_review" | "offer_comparison" | "how_to_earn" | "payout_guide" | "beginner_guide";
 
+type MultiPageDraft = {
+    id: string;
+    title: string;
+    slug: string;
+    keywordTarget: string;
+    excerpt: string;
+};
+
 const KEYWORD_INTENT_OPTIONS: KeywordIntent[] = [
     "informational",
     "commercial_investigation",
@@ -170,6 +178,16 @@ type SourceGuide = {
 
 function slugify(str: string) {
     return str.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+}
+
+function createMultiPageDraft(title = ""): MultiPageDraft {
+    return {
+        id: typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : String(Date.now()),
+        title,
+        slug: title ? slugify(title) : "",
+        keywordTarget: title,
+        excerpt: "",
+    };
 }
 
 function Toggle({ checked, onChange, id }: { checked: boolean; onChange: (v: boolean) => void; id: string }) {
@@ -388,6 +406,11 @@ export default function GuideEditorForm({
     const [error, setError] = useState<string | null>(null);
     const [serverQuality, setServerQuality] = useState<ServerQuality | null>(null);
     const [qualityChecking, setQualityChecking] = useState(false);
+    const [multiPageEnabled, setMultiPageEnabled] = useState(false);
+    const [multiPageDrafts, setMultiPageDrafts] = useState<MultiPageDraft[]>([
+        createMultiPageDraft(),
+        createMultiPageDraft(),
+    ]);
 
     const renderedPreview = useMemo(() => renderMarkdown(bodyMd), [bodyMd]);
     const bodyHealth = useMemo(() => analyzeGuideBodyHealth(bodyMd), [bodyMd]);
@@ -423,6 +446,7 @@ export default function GuideEditorForm({
     };
     const editorSections = [
         { id: "basic-info", label: "Basics" },
+        ...(mode === "create" ? [{ id: "multi-page", label: "Pages" }] : []),
         { id: "offer-data", label: "Offer Data" },
         { id: "related-offers", label: "Related Offers" },
         { id: "internal-links", label: "Internal Links" },
@@ -567,6 +591,29 @@ export default function GuideEditorForm({
         setBodyMd((current) => replaceSection(current, renderMarkdown(block), ["Related Links"]));
     }
 
+    function updateMultiPageDraft(id: string, field: keyof Omit<MultiPageDraft, "id">, value: string) {
+        setMultiPageDrafts((drafts) => drafts.map((draft) => {
+            if (draft.id !== id) return draft;
+            if (field === "title") {
+                return {
+                    ...draft,
+                    title: value,
+                    slug: draft.slug ? draft.slug : slugify(value),
+                    keywordTarget: draft.keywordTarget ? draft.keywordTarget : value,
+                };
+            }
+            return { ...draft, [field]: value };
+        }));
+    }
+
+    function addMultiPageDraft() {
+        setMultiPageDrafts((drafts) => [...drafts, createMultiPageDraft()]);
+    }
+
+    function removeMultiPageDraft(id: string) {
+        setMultiPageDrafts((drafts) => drafts.filter((draft) => draft.id !== id));
+    }
+
     function buildBodyForSave() {
         if (!autoInsertInternalLinks || internalLinks.length === 0) return bodyMd;
         const block = `## Related Links\n${buildMarkdownLinkBlock(internalLinks)}`;
@@ -614,6 +661,22 @@ export default function GuideEditorForm({
         const finalSeoTitle = seoTitle.trim() || buildSeoTitle(title, maxPayout);
         const bodyForSave = buildBodyForSave();
         const finalSeoDescription = seoDesc.trim() || buildSeoDescription(excerpt, estimatedTime, guideFocus, title);
+        const childPages = mode === "create" && multiPageEnabled
+            ? multiPageDrafts
+                .map((page) => ({
+                    title: page.title.trim(),
+                    slug: page.slug.trim(),
+                    keyword_target: page.keywordTarget.trim() || null,
+                    excerpt: page.excerpt.trim() || null,
+                }))
+                .filter((page) => page.title || page.slug)
+            : [];
+        const incompleteChildPage = childPages.find((page) => !page.title || !page.slug);
+        if (incompleteChildPage) {
+            setError("Each multi-page guide row needs both a title and slug.");
+            setSaving(false);
+            return;
+        }
         if (status === "published") {
             try {
                 const quality = await runQualityCheck(bodyForSave);
@@ -659,6 +722,7 @@ export default function GuideEditorForm({
             last_offer_check_at: dateInputToIso(lastOfferCheckAt),
             guide_focus: guideFocus,
             guide_template: guideTemplate,
+            child_pages: childPages,
             status,
         };
 
@@ -897,6 +961,61 @@ export default function GuideEditorForm({
                     <textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} rows={2} className={`${inputClass} resize-none`} />
                 </div>
             </div>
+
+            {mode === "create" ? (
+                <div id="multi-page" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Multi-Page Guide Set</h2>
+                            <p className={hintClass}>Create related draft pages with the same game, cluster, display settings, and review-safe draft status.</p>
+                        </div>
+                        <Toggle id="multiPageEnabled" checked={multiPageEnabled} onChange={setMultiPageEnabled} />
+                    </div>
+
+                    {multiPageEnabled ? (
+                        <div className="space-y-3">
+                            <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-900">
+                                Extra pages are saved as drafts and start with a short editorial stub. Add full body copy in each page editor before publishing.
+                            </div>
+                            {multiPageDrafts.map((page, index) => (
+                                <div key={page.id} className="rounded-xl border border-gray-200 p-4">
+                                    <div className="mb-3 flex items-center justify-between gap-3">
+                                        <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Page {index + 2}</div>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeMultiPageDraft(page.id)}
+                                            className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-bold text-gray-600 hover:bg-gray-50"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                    <div className="grid gap-3 md:grid-cols-2">
+                                        <div>
+                                            <label className={labelClass}>Page Title</label>
+                                            <input value={page.title} onChange={(e) => updateMultiPageDraft(page.id, "title", e.target.value)} className={inputClass} placeholder={`${title || "Game"} advanced guide`} />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Slug</label>
+                                            <input value={page.slug} onChange={(e) => updateMultiPageDraft(page.id, "slug", e.target.value)} className={`${inputClass} font-mono`} placeholder={`${slug || "game-guide"}-part-2`} />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Keyword Target</label>
+                                            <input value={page.keywordTarget} onChange={(e) => updateMultiPageDraft(page.id, "keywordTarget", e.target.value)} className={inputClass} placeholder="Optional page-specific keyword" />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Excerpt</label>
+                                            <input value={page.excerpt} onChange={(e) => updateMultiPageDraft(page.id, "excerpt", e.target.value)} className={inputClass} placeholder="Optional page-specific summary" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            <button type="button" onClick={addMultiPageDraft} className="rounded-xl border border-gray-200 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-50">
+                                Add another page
+                            </button>
+                        </div>
+                    ) : null}
+                </div>
+            ) : null}
 
             <div id="offer-data" className="scroll-mt-24 bg-white rounded-xl border border-gray-200 shadow-sm p-5 space-y-4">
                 <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Offer Data</h2>

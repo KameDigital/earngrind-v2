@@ -8,6 +8,35 @@ function normalizeSlug(value: string): string {
     return value.trim().toLowerCase().replace(/\s+/g, "-");
 }
 
+type ChildGuidePage = {
+    title?: unknown;
+    slug?: unknown;
+    keyword_target?: unknown;
+    excerpt?: unknown;
+};
+
+function textOrNull(value: unknown): string | null {
+    return typeof value === "string" && value.trim() ? value.trim() : null;
+}
+
+function buildChildGuideBody(input: {
+    parentTitle: string;
+    parentSlug: string;
+    childTitle: string;
+    siblingLinks: Array<{ title: string; slug: string }>;
+}) {
+    return renderMarkdown([
+        "## Editorial Draft",
+        `${input.childTitle} is part of the ${input.parentTitle} guide set. Expand this page with a unique angle, verified sources, and page-specific steps before publishing.`,
+        "",
+        "## Related Pages",
+        `- [Main guide](/guides/${input.parentSlug})`,
+        ...input.siblingLinks
+            .filter((page) => page.slug !== input.parentSlug)
+            .map((page) => `- [${page.title}](/guides/${page.slug})`),
+    ].join("\n"));
+}
+
 export async function POST(req: NextRequest) {
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -28,9 +57,23 @@ export async function POST(req: NextRequest) {
         keyword_target, keyword_cluster_id, keyword_intent, guide_type, needs_variation,
         payout_verified_at, tasks_verified_at, provider_terms_verified_at, last_offer_check_at,
     } = body;
+    const childPages = Array.isArray(body.child_pages)
+        ? (body.child_pages as ChildGuidePage[])
+            .map((page) => ({
+                title: textOrNull(page.title),
+                slug: textOrNull(page.slug),
+                keyword_target: textOrNull(page.keyword_target),
+                excerpt: textOrNull(page.excerpt),
+            }))
+            .filter((page) => page.title || page.slug)
+        : [];
 
     if (!title || !slug || !game_id) {
         return NextResponse.json({ error: "title, slug, and game_id are required." }, { status: 400 });
+    }
+    const incompleteChildPage = childPages.find((page) => !page.title || !page.slug);
+    if (incompleteChildPage) {
+        return NextResponse.json({ error: "Each child guide page needs both title and slug." }, { status: 400 });
     }
 
     const bodyHealth = analyzeGuideBodyHealth(body_md);
@@ -55,14 +98,25 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Invalid game_id. No matching game row found." }, { status: 422 });
     }
 
-    const { data: existingSlug, error: slugError } = await supabase
+    const childGuidePages = childPages.map((page) => ({
+        title: String(page.title),
+        slug: normalizeSlug(String(page.slug)),
+        keyword_target: page.keyword_target,
+        excerpt: page.excerpt,
+    }));
+    const requestedSlugs = [normalizedSlug, ...childGuidePages.map((page) => page.slug)];
+    const duplicateRequestedSlug = requestedSlugs.find((requestedSlug, index) => requestedSlugs.indexOf(requestedSlug) !== index);
+    if (duplicateRequestedSlug) {
+        return NextResponse.json({ error: `Duplicate guide slug in request: ${duplicateRequestedSlug}` }, { status: 409 });
+    }
+
+    const { data: existingSlugs, error: slugError } = await supabase
         .from("guides")
-        .select("id")
-        .eq("slug", normalizedSlug)
-        .maybeSingle();
+        .select("slug")
+        .in("slug", requestedSlugs);
     if (slugError) return NextResponse.json({ error: slugError.message }, { status: 500 });
-    if (existingSlug) {
-        return NextResponse.json({ error: "Guide slug already exists." }, { status: 409 });
+    if (existingSlugs && existingSlugs.length > 0) {
+        return NextResponse.json({ error: `Guide slug already exists: ${existingSlugs.map((row) => row.slug).join(", ")}` }, { status: 409 });
     }
 
     const renderedBody = body_md ? renderMarkdown(body_md) : "";
@@ -83,7 +137,12 @@ export async function POST(req: NextRequest) {
         }
     }
 
-    const { data, error } = await supabase.from("guides").insert({
+    const sharedClusterId = keyword_cluster_id || normalizedSlug;
+    const siblingLinks = [
+        { title: String(title), slug: normalizedSlug },
+        ...childGuidePages.map((page) => ({ title: page.title, slug: page.slug })),
+    ];
+    const baseGuideRow = {
         title,
         slug: normalizedSlug,
         game_id: gameId,
@@ -108,7 +167,7 @@ export async function POST(req: NextRequest) {
         primary_offer_id: primary_offer_id || null,
         disable_auto_offer_matching: disable_auto_offer_matching === true,
         keyword_target: keyword_target || null,
-        keyword_cluster_id: keyword_cluster_id || null,
+        keyword_cluster_id: sharedClusterId,
         keyword_intent: keyword_intent || null,
         guide_type: guide_type || "game_offer",
         needs_variation: Boolean(needs_variation),
@@ -118,8 +177,30 @@ export async function POST(req: NextRequest) {
         last_offer_check_at: last_offer_check_at || null,
         published_at: nextStatus === "published" ? new Date().toISOString() : null,
         author_id: user.id,
-    }).select().single();
+    };
+    const childGuideRows = childGuidePages.map((page) => ({
+        ...baseGuideRow,
+        title: page.title,
+        slug: page.slug,
+        excerpt: page.excerpt || `Draft page in the ${title} guide set.`,
+        body_md: buildChildGuideBody({
+            parentTitle: String(title),
+            parentSlug: normalizedSlug,
+            childTitle: page.title,
+            siblingLinks,
+        }),
+        seo_title: page.title,
+        seo_description: page.excerpt || seo_description || null,
+        status: "draft",
+        keyword_target: page.keyword_target || page.title,
+        published_at: null,
+    }));
+
+    const { data, error } = await supabase.from("guides").insert([
+        baseGuideRow,
+        ...childGuideRows,
+    ]).select();
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json(data, { status: 201 });
+    return NextResponse.json(childGuideRows.length > 0 ? { guide: data?.[0] ?? null, guides: data ?? [] } : data?.[0], { status: 201 });
 }

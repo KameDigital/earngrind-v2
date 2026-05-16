@@ -109,28 +109,28 @@ export default async function AdminGuidesPage({
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                     <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1">CMS</p>
-                    <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Guides</h1>
+                    <h1 className="text-xl font-extrabold tracking-tight text-gray-900 sm:text-2xl">Guides</h1>
                     <p className="text-sm text-gray-500 mt-1">
                         Review drafts, check SEO quality, connect internal links, and publish only when ready.
                     </p>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                    <Link href="/app/admin/guides/internal-links" className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 text-gray-700 text-sm font-semibold rounded-xl hover:border-gray-300 transition shadow-sm">
+                <div className="grid gap-2 sm:flex sm:flex-wrap">
+                    <Link href="/app/admin/guides/internal-links" className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300">
                         Internal Links
                     </Link>
-                    <Link href="/app/admin/guides/batch-generate" className="inline-flex items-center gap-2 px-4 py-2.5 bg-lime-100 text-lime-900 text-sm font-semibold rounded-xl hover:bg-lime-200 transition shadow-sm">
+                    <Link href="/app/admin/guides/batch-generate" className="inline-flex items-center justify-center gap-2 rounded-xl bg-lime-100 px-4 py-2.5 text-sm font-semibold text-lime-900 shadow-sm transition hover:bg-lime-200">
                         Generate Guides
                     </Link>
-                    <Link href="/app/admin/guides/new" className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition shadow-sm">
+                    <Link href="/app/admin/guides/new" className="inline-flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-800">
                         + New Guide
                     </Link>
                 </div>
             </div>
 
-            <form className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+            <form className="rounded-2xl border border-gray-200 bg-white p-3 shadow-sm sm:p-4">
                 <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-7">
                     <label className="block">
                         <span className="mb-1 block text-[11px] font-bold uppercase tracking-widest text-gray-400">Status</span>
@@ -154,9 +154,9 @@ export default async function AdminGuidesPage({
                     <FilterInput name="platform" label="Platform" defaultValue={platformFilter} />
                     <FilterInput name="cluster" label="Cluster" defaultValue={clusterFilter} />
                 </div>
-                <div className="mt-3 flex gap-2">
+                <div className="mt-3 grid gap-2 sm:flex">
                     <button className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-bold text-white">Filter</button>
-                    <Link href="/app/admin/guides" className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-bold text-gray-700">Clear</Link>
+                    <Link href="/app/admin/guides" className="inline-flex items-center justify-center rounded-lg border border-gray-200 px-4 py-2 text-sm font-bold text-gray-700">Clear</Link>
                 </div>
             </form>
 
@@ -186,7 +186,7 @@ export default async function AdminGuidesPage({
                 })}
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
                 <div className="grid gap-3 p-3 lg:hidden">
                     {rows.map((guide) => {
                         const game = Array.isArray(guide.game) ? guide.game[0] : guide.game;
@@ -198,25 +198,25 @@ export default async function AdminGuidesPage({
                         });
                         const bodyHealth = analyzeGuideBodyHealth(guide.body_md);
                         return (
-                            <div key={guide.id} className="rounded-xl border border-gray-200 bg-white p-4">
-                                <div className="flex items-start justify-between gap-3">
+                            <div key={guide.id} className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4">
+                                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                                     <div className="min-w-0">
-                                        <div className="font-bold text-gray-950">{guide.title}</div>
-                                        <div className="mt-1 truncate font-mono text-xs text-gray-400">{guide.slug}</div>
+                                        <div className="text-sm font-bold leading-snug text-gray-950 sm:text-base">{guide.title}</div>
+                                        <div className="mt-1 break-all font-mono text-xs text-gray-400">{guide.slug}</div>
                                         {game?.name ? <div className="mt-1 text-xs text-gray-500">{game.name}</div> : null}
                                     </div>
-                                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLES[guide.status] ?? "bg-gray-100 text-gray-500"}`}>{guide.status}</span>
+                                    <span className={`w-fit shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLES[guide.status] ?? "bg-gray-100 text-gray-500"}`}>{guide.status}</span>
                                 </div>
                                 <HealthBadges quality={quality} bodyHealth={bodyHealth} guide={guide} />
-                                <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-gray-600">
+                                <div className="mt-3 grid gap-2 text-xs text-gray-600 sm:grid-cols-2">
                                     <div><span className="font-bold text-gray-400">Keyword:</span> {guide.keyword_target ?? "n/a"}</div>
                                     <div><span className="font-bold text-gray-400">SEO:</span> {quality.score}</div>
                                     <div><span className="font-bold text-gray-400">Links:</span> {quality.internalLinkCount}</div>
                                     <div><span className="font-bold text-gray-400">Type:</span> {GUIDE_TYPE_LABELS[guide.guide_type ?? ""] ?? guide.guide_type ?? "n/a"}</div>
                                 </div>
-                                <div className="mt-3 flex flex-wrap gap-2">
-                                    <Link href={`/app/admin/guides/${guide.id}/edit`} className="rounded-lg bg-gray-950 px-3 py-2 text-xs font-bold text-white">Edit</Link>
-                                    <Link href={`/guides/${guide.slug}`} target="_blank" className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700">Preview</Link>
+                                <div className="mt-3 grid gap-2 sm:flex sm:flex-wrap">
+                                    <Link href={`/app/admin/guides/${guide.id}/edit`} className="inline-flex items-center justify-center rounded-lg bg-gray-950 px-3 py-2 text-xs font-bold text-white">Edit</Link>
+                                    <Link href={`/guides/${guide.slug}`} target="_blank" className="inline-flex items-center justify-center rounded-lg border border-gray-200 px-3 py-2 text-xs font-bold text-gray-700">Preview</Link>
                                     <GuideAdminActions guideId={guide.id} status={guide.status} />
                                 </div>
                             </div>

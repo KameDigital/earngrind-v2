@@ -157,7 +157,7 @@ export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
                     onChange={(event) => {
                         if (event.target.value) router.push(event.target.value);
                     }}
-                    className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    className="h-11 w-full rounded-xl border border-gray-200 bg-gray-50 px-3 text-sm font-bold text-gray-800 shadow-sm focus:border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-100"
                 >
                     <option value="" disabled>Navigate</option>
                     {MOBILE_LINKS.map(({ href, label }) => (

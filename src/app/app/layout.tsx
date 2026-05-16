@@ -27,7 +27,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     return (
         <div className="min-h-screen bg-gray-50">
             <header className="sticky top-0 z-40 border-b border-gray-200 bg-white">
-                <div className="flex min-h-14 items-center gap-3 px-4 sm:px-6">
+                <div className="flex min-h-14 flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2 sm:px-6 lg:flex-nowrap lg:py-0">
                     <Link
                         href={isAdmin ? "/app/admin" : "/app/dashboard"}
                         className="flex shrink-0 items-center gap-2 text-sm font-extrabold tracking-tight text-gray-950"
@@ -38,7 +38,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                         EarnGrind
                     </Link>
 
-                    <div className="min-w-0 flex-1 lg:hidden">
+                    <div className="order-3 w-full min-w-0 lg:order-none lg:hidden">
                         <AdminNav isAdmin={isAdmin} />
                     </div>
 
@@ -60,7 +60,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <div className="flex min-h-[calc(100vh-3.5rem)]">
                 {isAdmin ? <AdminNav isAdmin={isAdmin} /> : null}
                 <main className="min-w-0 flex-1">
-                    <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8">
+                    <div className="mx-auto w-full max-w-[1600px] px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
                         {children}
                     </div>
                 </main>

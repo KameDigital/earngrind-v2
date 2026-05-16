@@ -206,7 +206,7 @@ export default async function BestGptSitesPage() {
                 Reviews help you judge payout quality, trust, and user experience before you spend hours inside the wrong GPT site.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <Link href="/reviews" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
+                <Link href="/platforms" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
                   Browse Platform Reviews
                 </Link>
                 <Link href="/offers" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
@@ -368,7 +368,7 @@ export default async function BestGptSitesPage() {
             Use these pages if you want to go deeper into platform trust, live offers, or game-level payout decisions before you start.
           </p>
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/reviews">Platform Reviews</Link>
+            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/platforms">Platform Reviews</Link>
             <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/offers">All Offers</Link>
             <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/guides">Game Guides</Link>
             <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/highest-paying-gpt-games">Highest Paying GPT Games</Link>

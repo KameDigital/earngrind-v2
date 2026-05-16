@@ -10,7 +10,7 @@ import { canonicalAlternates } from "@/lib/seo-metadata";
 export const metadata: Metadata = {
     title: "GPT Site Reviews | Compare Trust, Payout Quality, and User Experience | EarnGrind",
     description: "Compare GPT site reviews by trust, payout quality, and user experience so you can decide which platforms are worth joining before you start offers.",
-    alternates: canonicalAlternates("/reviews"),
+    alternates: canonicalAlternates("/platforms"),
 };
 
 interface ReviewPlatform {
@@ -152,6 +152,9 @@ export default async function ReviewsPage() {
                         </h1>
                         <p className="text-lg leading-relaxed text-[var(--text-secondary)]">
                             Use these reviews to decide which GPT sites are worth joining, which ones look trustworthy, and where strong offer value actually shows up before you start clicking into routes.
+                        </p>
+                        <p className="mt-3 text-sm font-semibold text-[var(--text-tertiary)]">
+                            This legacy reviews index is kept live for existing links. The canonical platform review index is <Link href="/platforms" className="text-lime-700 hover:text-lime-800">/platforms</Link>.
                         </p>
                     </div>
 

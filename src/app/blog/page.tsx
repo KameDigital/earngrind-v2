@@ -8,7 +8,7 @@ export const revalidate = 120;
 
 export const metadata: Metadata = {
     title: "Blog — Offerwall Strategies & Earning Tips | EarnGrind",
-    description: "In-depth articles on offerwall strategy, GPT site comparisons, and how to maximize earnings from mobile game offers.",
+    description: "Editorial articles on offerwall strategy, earning experiments, roundups, and how to maximize earnings from mobile game offers.",
     alternates: canonicalAlternates("/blog"),
 };
 
@@ -117,7 +117,7 @@ export default async function BlogIndex({
                         Blog
                     </h1>
                     <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                        Strategy tips, earnings experiments, and platform breakdowns — so you spend less time guessing and more time earning.
+                        Strategy tips, earnings experiments, news, and roundups — so you spend less time guessing and more time earning.
                     </p>
                     {totalCount > 0 && (
                         <p className="text-sm text-[var(--text-tertiary)] mt-2">

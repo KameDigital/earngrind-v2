@@ -98,7 +98,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         staticPage(baseUrl, '/guides', 'weekly', 0.8),
         staticPage(baseUrl, '/guides/how-to-earn', 'weekly', 0.8),
         staticPage(baseUrl, '/blog', 'weekly', 0.7),
-        staticPage(baseUrl, '/reviews', 'weekly', 0.7),
+        staticPage(baseUrl, '/platforms', 'weekly', 0.72),
         staticPage(baseUrl, '/best-gpt-sites', 'daily', 0.85),
         staticPage(baseUrl, '/highest-paying-gpt-games', 'daily', 0.85),
         staticPage(baseUrl, '/best-freecash-games', 'daily', 0.8),

@@ -1,7 +1,10 @@
+import type { EarnGrindContentType } from "@/lib/content-routing";
+
 export interface StaticGuide {
     title: string;
     slug: string;
     href: string;
+    contentType: EarnGrindContentType;
     eyebrow: string;
     description: string;
     ctaLabel: string;
@@ -16,6 +19,7 @@ export const STATIC_GUIDES: StaticGuide[] = [
         title: "World of Warships Torox Offer Guide",
         slug: "world-of-warships-torox-offer-guide",
         href: "/guides/world-of-warships-torox-offer-guide",
+        contentType: "offer_guide",
         eyebrow: "New desktop offer guide",
         description:
             "Complete the World of Warships Torox offer, earn up to 10,692 points, unlock two warships, and avoid tracking mistakes.",
@@ -29,6 +33,7 @@ export const STATIC_GUIDES: StaticGuide[] = [
         title: "FanDuel Casino Review",
         slug: "fanduel-casino-review-bonus",
         href: "/guides/fanduel-casino-review-bonus",
+        contentType: "platform_review",
         eyebrow: "New casino app guide",
         description:
             "Review FanDuel Casino games, app features, live dealer tables, bonuses, promo code searches, and signup steps.",

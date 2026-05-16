@@ -274,7 +274,7 @@ export default async function BlogDetail({ params }: { params: { slug: string } 
                                 {[
                                     { label: "Browse Offers", href: "/offers", desc: "Live payouts across all platforms" },
                                     { label: "View Guides", href: "/guides", desc: "Step-by-step earning strategies" },
-                                    { label: "Platform Reviews", href: "/reviews", desc: "Independent GPT site ratings" },
+                                    { label: "Platform Reviews", href: "/platforms", desc: "Individual GPT site ratings" },
                                 ].map(link => (
                                     <Link key={link.href} href={link.href}
                                         className="group flex flex-col gap-1 p-3.5 bg-gray-50 border border-gray-200 rounded-xl hover:border-lime-300 hover:bg-lime-50 transition-all">

@@ -99,8 +99,8 @@ function JsonLd({ guide }: { guide: GptSiteGuide }) {
         "@type": "BreadcrumbList",
         itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-            { "@type": "ListItem", position: 2, name: "Guides", item: absoluteUrl("/guides") },
-            { "@type": "ListItem", position: 3, name: "Best GPT Sites", item: absoluteUrl("/guides/best-gpt-sites") },
+            { "@type": "ListItem", position: 2, name: "Best GPT Sites", item: absoluteUrl("/best-gpt-sites") },
+            { "@type": "ListItem", position: 3, name: "Site Guides", item: absoluteUrl("/guides/best-gpt-sites") },
             { "@type": "ListItem", position: 4, name: guide.name, item: pageUrl },
         ],
     };
@@ -164,9 +164,9 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                         <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
                             <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
                             <span>/</span>
-                            <Link href="/guides" className="hover:text-[var(--brand-ink)]">Guides</Link>
+                            <Link href="/best-gpt-sites" className="hover:text-[var(--brand-ink)]">Best GPT Sites</Link>
                             <span>/</span>
-                            <Link href="/guides/best-gpt-sites" className="hover:text-[var(--brand-ink)]">Best GPT Sites</Link>
+                            <Link href="/guides/best-gpt-sites" className="hover:text-[var(--brand-ink)]">Site Guides</Link>
                             <span>/</span>
                             <span className="text-[var(--brand-ink)]">{guide.name}</span>
                         </nav>

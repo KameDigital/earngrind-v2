@@ -8,11 +8,28 @@ import { Menu, X, Search } from "lucide-react";
 const NAV_LINKS = [
     { href: "/offers", label: "Offers" },
     { href: "/games", label: "Games" },
-    { href: "/guides", label: "Guides" },
-    { href: "/best-gpt-sites", label: "Best GPT Sites" },
-    { href: "/reviews", label: "Platforms" },
+    { href: "/guides", label: "Guides", excludePrefixes: ["/guides/best-gpt-sites", "/guides/fanduel-casino-review-bonus"] },
+    { href: "/best-gpt-sites", label: "Best GPT Sites", activePrefixes: ["/guides/best-gpt-sites"] },
+    { href: "/platforms", label: "Platforms", activePrefixes: ["/review", "/reviews", "/guides/fanduel-casino-review-bonus"] },
     { href: "/blog", label: "Blog" },
 ];
+
+function isActivePath(
+    pathname: string,
+    link: {
+        href: string;
+        activePrefixes?: string[];
+        excludePrefixes?: string[];
+    },
+) {
+    if (link.activePrefixes?.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+        return true;
+    }
+    if (link.excludePrefixes?.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))) {
+        return false;
+    }
+    return pathname === link.href || pathname.startsWith(`${link.href}/`);
+}
 
 export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,8 +60,8 @@ export default function Header() {
 
                     {/* Desktop nav */}
                     <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-                        {NAV_LINKS.map(({ href, label }) => {
-                            const active = pathname === href || pathname.startsWith(href + "/");
+                        {NAV_LINKS.map(({ href, label, activePrefixes, excludePrefixes }) => {
+                            const active = isActivePath(pathname, { href, activePrefixes, excludePrefixes });
                             return (
                                 <Link
                                     key={href}
@@ -113,8 +130,8 @@ export default function Header() {
             {mobileOpen && (
                 <div className="lg:hidden border-t border-[var(--border-default)] bg-white">
                     <nav className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
-                        {NAV_LINKS.map(({ href, label }) => {
-                            const active = pathname === href || pathname.startsWith(href + "/");
+                        {NAV_LINKS.map(({ href, label, activePrefixes, excludePrefixes }) => {
+                            const active = isActivePath(pathname, { href, activePrefixes, excludePrefixes });
                             return (
                                 <Link
                                     key={href}

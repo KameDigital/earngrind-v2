@@ -48,9 +48,9 @@ export default function BestGptSiteGuidesHubPage() {
                     <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
                         <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
                         <span>/</span>
-                        <Link href="/guides" className="hover:text-[var(--brand-ink)]">Guides</Link>
+                        <Link href="/best-gpt-sites" className="hover:text-[var(--brand-ink)]">Best GPT Sites</Link>
                         <span>/</span>
-                        <span className="text-[var(--brand-ink)]">Best GPT Sites</span>
+                        <span className="text-[var(--brand-ink)]">Site Guides</span>
                     </nav>
                     <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
                         <div>

@@ -6,7 +6,7 @@ import Container from "@/components/layout/Container";
 import { STATIC_GUIDES } from "@/lib/static-guides";
 import { pickPublicArtworkUrl } from "@/lib/public-image-url";
 import { canonicalAlternates } from "@/lib/seo-metadata";
-import { GPT_SITE_GUIDES } from "@/lib/gpt-site-guides";
+import { PUBLIC_GUIDE_TYPES, shouldShowOnGameGuidesIndex } from "@/lib/content-routing";
 
 export const metadata: Metadata = {
     title: "Game Guides — Maximize Your Offerwall Earnings | EarnGrind",
@@ -53,6 +53,7 @@ interface Guide {
     estimated_time: string | null;
     max_payout_usd: number | null;
     published_at: string | null;
+    guide_type: string | null;
     games: GuideGame | null;
 }
 
@@ -326,12 +327,14 @@ export default async function GuidesPage({
 
     const { data: guides, count } = await supabase
         .from("guides")
-        .select("id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, games(id, name, slug, thumbnail_url)", { count: "exact" })
+        .select("id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, guide_type, games(id, name, slug, thumbnail_url)", { count: "exact" })
         .eq("status", "published")
+        .or(`guide_type.is.null,guide_type.in.(${PUBLIC_GUIDE_TYPES.join(",")})`)
         .order("published_at", { ascending: false })
         .range(from, to);
 
-    const rawGuides = (guides ?? []) as unknown as Guide[];
+    const rawGuides = ((guides ?? []) as unknown as Guide[])
+        .filter((guide) => shouldShowOnGameGuidesIndex({ title: guide.title, guideType: guide.guide_type }));
     const guideGameIds = Array.from(new Set(rawGuides.map((guide) => guide.games?.id).filter(Boolean))) as string[];
 
     const { data: offerArtworkRows } = guideGameIds.length > 0
@@ -375,8 +378,9 @@ export default async function GuidesPage({
             .map((guide) => getGameImageUrl(guide.games))
             .find(Boolean) ??
         null;
-    const totalCount = count ?? 0;
-    const displayedTotalCount = totalCount + STATIC_GUIDES.length + 1;
+    const gameGuideStaticGuides = STATIC_GUIDES.filter((guide) => guide.contentType === "game_guide" || guide.contentType === "offer_guide");
+    const totalCount = count ?? rawGuides.length;
+    const displayedTotalCount = totalCount + gameGuideStaticGuides.length;
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
@@ -406,28 +410,17 @@ export default async function GuidesPage({
                 ) : (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                            {page === 1 && (
-                                <GuideIndexCard
-                                    href="/guides/best-gpt-sites"
-                                    label="GPT Sites"
-                                    title="Best GPT Sites to Make Money in 2026: Top Reward Sites Compared"
-                                    description={`Compare ${GPT_SITE_GUIDES.length} GPT sites with researched strategy, screenshots, payout notes, and safety checks before choosing where to start.`}
-                                    initials="GS"
-                                    imageUrl="/images/guides/gpt-sites/gain-gg.png"
-                                    estimatedTime="10-20 minutes to compare"
-                                />
-                            )}
-                            {page === 1 && STATIC_GUIDES.map((guide) => (
+                            {page === 1 && gameGuideStaticGuides.map((guide) => (
                                 <GuideIndexCard
                                     key={guide.slug}
                                     href={guide.href}
-                                    label={guide.title.includes("World of Warships") ? "World of Warships" : "FanDuel Casino"}
+                                    label={guide.title.includes("World of Warships") ? "World of Warships" : "Offer Guide"}
                                     title={guide.title}
                                     description={guide.description}
-                                    initials={guide.title.includes("World of Warships") ? "WW" : "FC"}
-                                    imageUrl={guide.slug === "fanduel-casino-review-bonus" ? "/images/guides/fanduel-casino/fanduel-casino-bonus-review-hero.png" : null}
+                                    initials={guide.title.includes("World of Warships") ? "WW" : "OG"}
+                                    imageUrl={null}
                                     difficulty={guide.slug === "world-of-warships-torox-offer-guide" ? "easy" : null}
-                                    estimatedTime={guide.slug === "world-of-warships-torox-offer-guide" ? "Same day for many users" : "15-25 minutes to evaluate"}
+                                    estimatedTime={guide.slug === "world-of-warships-torox-offer-guide" ? "Same day for many users" : "Completion time varies"}
                                 />
                             ))}
                             {shouldShowPalmonHub && <PalmonGuideHub imageUrl={palmonHubImageUrl} />}

@@ -170,7 +170,7 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
     const schemas = [
         buildBreadcrumbList([
             { name: "Home", path: "/" },
-            { name: "Reviews", path: "/reviews" },
+            { name: "Platforms", path: "/platforms" },
             { name: platformName, path: `/review/${review.slug}` },
         ]),
         platformSchema,
@@ -192,7 +192,7 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
                 <nav className="mb-8 flex items-center gap-2 text-sm font-medium text-[var(--text-tertiary)]" aria-label="Breadcrumb">
                     <Link href="/" className="transition-colors hover:text-lime-700">Home</Link>
                     <span>/</span>
-                    <Link href="/reviews" className="transition-colors hover:text-lime-700">Reviews</Link>
+                    <Link href="/platforms" className="transition-colors hover:text-lime-700">Platforms</Link>
                     <span>/</span>
                     <span className="truncate text-[var(--text-secondary)]">{platformName}</span>
                 </nav>

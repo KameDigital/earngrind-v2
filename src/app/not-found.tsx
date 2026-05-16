@@ -46,7 +46,7 @@ export default function NotFound() {
                     {[
                         { href: "/guides", label: "Guides" },
                         { href: "/blog",   label: "Blog" },
-                        { href: "/reviews", label: "Reviews" },
+                        { href: "/platforms", label: "Platforms" },
                     ].map(link => (
                         <Link
                             key={link.href}

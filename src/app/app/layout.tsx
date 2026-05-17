@@ -58,7 +58,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             </header>
 
             <div className="flex min-h-[calc(100vh-3.5rem)]">
-                {isAdmin ? <AdminNav isAdmin={isAdmin} /> : null}
+                {isAdmin ? (
+                    <div className="hidden shrink-0 lg:block">
+                        <AdminNav isAdmin={isAdmin} />
+                    </div>
+                ) : null}
                 <main className="min-w-0 flex-1">
                     <div className="mx-auto w-full max-w-[1600px] px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
                         {children}

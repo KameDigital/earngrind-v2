@@ -7,7 +7,6 @@ import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import ProviderLogo from "@/components/providers/ProviderLogo";
 import type { SeoOfferRow } from "../_lib/seo-data";
 import { formatMoney } from "../_lib/seo-data";
-import { formatPayoutFreshness } from "@/lib/payout-freshness";
 
 type OfferTableProps = {
   rows: SeoOfferRow[];
@@ -30,9 +29,9 @@ type ProviderGroup = {
 const DEFAULT_VISIBLE_COUNT = 3;
 const DEFAULT_EXPANDED_PROVIDERS = 2;
 const PRIMARY_CTA_CLASS =
-  "inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95 active:translate-y-0";
+  "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-3.5 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95 active:translate-y-0";
 const SECONDARY_BUTTON_CLASS =
-  "inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-400 hover:bg-lime-50";
+  "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-lg border border-[var(--border-default)] bg-white px-3 py-2 text-xs font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-400 hover:bg-lime-50";
 const DEVICE_LABELS: Record<DeviceFilter, string> = {
   all: "All devices",
   ios: "iOS",
@@ -132,78 +131,77 @@ function OfferCard({
     (milestoneCount > 1
       ? `${milestoneCount} milestones available on this route.`
       : "Single-step route.");
+  const deviceSummary = inferDevices(row)
+    .map((device) => DEVICE_LABELS[device])
+    .join(" + ") || "All devices";
 
   return (
     <article
-      className={`group relative overflow-hidden rounded-2xl border p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-md ${
+      className={`group relative overflow-hidden rounded-xl border p-3 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-md ${
         isBest
           ? "border-lime-400 bg-lime-50/70 ring-1 ring-lime-200"
           : "border-[var(--border-default)] bg-white"
       }`}
     >
       {isBest ? <div className="absolute inset-x-0 top-0 h-1 bg-[var(--brand-lime)]" /> : null}
-      <div className="-mx-4 -mt-4 mb-4">
-        <div className="relative aspect-[1.35/1] overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)]">
+      <div className="-mx-3 -mt-3 mb-3">
+        <div className="relative h-28 overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)] sm:h-32">
           <OfferArtwork src={row.imageUrl} title={row.gameName} />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent p-3">
-            <div className="line-clamp-1 text-sm font-extrabold text-white">{row.gameName}</div>
-            <div className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white/65">
-              {row.providerName} / {row.platformName}
-            </div>
-          </div>
           {isBest ? (
-            <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-[rgba(15,23,15,0.78)] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--brand-lime)] backdrop-blur-sm">
+            <div className="absolute left-2 top-2 rounded-full border border-white/15 bg-[rgba(15,23,15,0.82)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-[var(--brand-lime)] backdrop-blur-sm">
               Best route
             </div>
           ) : null}
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent px-3 py-2">
+            <div className="line-clamp-1 text-xs font-extrabold text-white">{row.gameName}</div>
+          </div>
         </div>
       </div>
 
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-base font-extrabold text-[var(--brand-ink)]">{row.title}</h3>
-            {isBest ? (
-              <span className="rounded-full bg-[var(--brand-lime)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-[var(--brand-ink)]">
-                Best route
-              </span>
-            ) : null}
-          </div>
-          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-[var(--text-tertiary)]">
-            <ProviderLogo name={row.providerName} compact className="h-8" />
-            <span>{row.providerName} on {row.platformName}</span>
+        <div className="min-w-0 flex-1">
+          <h3 className="line-clamp-2 text-sm font-extrabold leading-snug text-[var(--brand-ink)]">{row.title}</h3>
+          <div className="mt-1.5 flex min-w-0 items-center gap-2 text-xs text-[var(--text-tertiary)]">
+            <ProviderLogo name={row.providerName} compact className="h-6 max-w-[110px] shrink-0" />
+            <span className="min-w-0 truncate">{row.providerName}</span>
           </div>
         </div>
-        <div className="text-right">
+        <div className="shrink-0 text-right">
           <div className="text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Total payout</div>
-          <div className="text-2xl font-extrabold text-[var(--brand-ink)]">{formatMoney(row.totalPayoutUsd)}</div>
-          <div className="text-xs text-[var(--text-tertiary)]">Best step {formatMoney(row.payoutUsd)}</div>
+          <div className="text-2xl font-black leading-none text-[var(--brand-ink)]">{formatMoney(row.totalPayoutUsd)}</div>
+          <div className="mt-1 text-[11px] text-[var(--text-tertiary)]">Best step {formatMoney(row.payoutUsd)}</div>
         </div>
       </div>
 
-      <p className="mt-3 text-sm text-[var(--text-secondary)]">{routeSummary}</p>
+      <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">{routeSummary}</p>
 
-      <div className="mt-3 flex flex-wrap gap-2 text-xs text-[var(--text-tertiary)]">
-        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1">
-          {milestoneCount} milestone{milestoneCount !== 1 ? "s" : ""}
+      <div className="mt-2.5 flex flex-wrap gap-1.5 text-[11px] font-semibold text-[var(--text-tertiary)]">
+        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+          {deviceSummary}
         </span>
-        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1">
+        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+          {row.platformName}
+        </span>
+        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
           {milestoneCount > 1 ? "Multi-step" : "Single-step"}
         </span>
-        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1">
-          <Link href={`/games/${row.gameSlug}`} className="hover:text-lime-700 hover:underline">
+        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+          {milestoneCount} milestone{milestoneCount !== 1 ? "s" : ""}
+        </span>
+        <span className="min-w-0 max-w-full rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+          <Link href={`/games/${row.gameSlug}`} className="block max-w-[12rem] truncate hover:text-lime-700 hover:underline">
             {row.gameName}
           </Link>
         </span>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-3 grid grid-cols-2 gap-2">
         <TrackedOutboundLink
           href={row.redirectUrl}
-          className={`min-w-[10rem] flex-1 ${
+          className={`col-span-2 ${
             isBest
               ? PRIMARY_CTA_CLASS
-              : "inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--brand-ink)] bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+              : "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-[var(--brand-ink)] bg-[var(--brand-ink)] px-3.5 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
           }`}
           eventLabel="seo-offer-table-cta"
           offerId={row.id}
@@ -222,13 +220,13 @@ function OfferCard({
           onClick={onToggleExpand}
           className={SECONDARY_BUTTON_CLASS}
         >
-          {expanded ? <ChevronUp aria-hidden className="h-4 w-4" /> : <ChevronDown aria-hidden className="h-4 w-4" />}
-          {expanded ? "Hide milestones" : "Expand route"}
+          {expanded ? <ChevronUp aria-hidden className="h-3.5 w-3.5" /> : <ChevronDown aria-hidden className="h-3.5 w-3.5" />}
+          {expanded ? "Hide route" : "Expand"}
         </button>
         <button
           type="button"
           onClick={onToggleSelect}
-          className={`inline-flex items-center justify-center rounded-xl border px-4 py-3 text-sm font-bold ${
+          className={`inline-flex min-h-9 items-center justify-center rounded-lg border px-3 py-2 text-xs font-bold ${
             isSelected
               ? "border-[var(--brand-ink)] bg-[var(--brand-ink)] text-[var(--brand-lime)]"
               : "border-[var(--border-default)] bg-white text-[var(--brand-ink)] hover:border-lime-400"
@@ -238,24 +236,24 @@ function OfferCard({
         </button>
       </div>
 
-      <p className="mt-3 text-[11px] leading-relaxed text-[var(--text-tertiary)]">
-        {formatPayoutFreshness(row.updatedAt)}. Payouts can change by device, country, and provider rules. Some outbound links may be affiliate links.
+      <p className="mt-2 text-[11px] leading-snug text-[var(--text-tertiary)]">
+        Payout may change. Verify on provider.
       </p>
 
       {expanded && showTasks && milestoneCount > 0 ? (
-        <div className="mt-4 rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
-          <div className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Milestone breakdown</div>
-          <ol className="mt-2 space-y-2">
+        <div className="mt-3 rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-2.5">
+          <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Milestone breakdown</div>
+          <ol className="mt-2 space-y-1.5">
             {visibleTasks.map((task) => (
-              <li key={task.id} className="flex items-start justify-between gap-3 border-t border-[var(--border-default)] pt-2 first:border-0 first:pt-0">
+              <li key={task.id} className="flex items-start justify-between gap-3 border-t border-[var(--border-default)] pt-1.5 first:border-0 first:pt-0">
                 <div className="min-w-0">
-                  <div className="text-sm font-semibold text-[var(--brand-ink)]">{task.title}</div>
-                  <div className="text-xs text-[var(--text-tertiary)]">
+                  <div className="line-clamp-1 text-xs font-semibold text-[var(--brand-ink)]">{task.title}</div>
+                  <div className="text-[11px] text-[var(--text-tertiary)]">
                     {task.task_type}
                     {task.time_limit_text ? ` • ${task.time_limit_text}` : ""}
                   </div>
                 </div>
-                <div className="text-right text-sm font-bold text-[var(--brand-ink)]">
+                <div className="shrink-0 text-right text-xs font-bold text-[var(--brand-ink)]">
                   {typeof task.reward_amount === "number" && task.reward_amount > 0 ? formatMoney(task.reward_amount) : task.reward_display ?? "—"}
                 </div>
               </li>

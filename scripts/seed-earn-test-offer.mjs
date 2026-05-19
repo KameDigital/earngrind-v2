@@ -1,4 +1,48 @@
 import { createClient } from "@supabase/supabase-js";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+function parseEnvValue(rawValue) {
+  const trimmed = rawValue.trim();
+  const first = trimmed.at(0);
+  const last = trimmed.at(-1);
+
+  if ((first === '"' && last === '"') || (first === "'" && last === "'")) {
+    return trimmed.slice(1, -1);
+  }
+
+  return trimmed;
+}
+
+function loadLocalEnv() {
+  const scriptDir = dirname(fileURLToPath(import.meta.url));
+  const envPath = resolve(scriptDir, "..", ".env.local");
+
+  let envFile;
+  try {
+    envFile = readFileSync(envPath, "utf8");
+  } catch (error) {
+    if (error?.code === "ENOENT") return;
+    throw error;
+  }
+
+  for (const line of envFile.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+
+    const normalized = trimmed.startsWith("export ") ? trimmed.slice("export ".length).trimStart() : trimmed;
+    const separatorIndex = normalized.indexOf("=");
+    if (separatorIndex === -1) continue;
+
+    const key = normalized.slice(0, separatorIndex).trim();
+    if (!key || Object.prototype.hasOwnProperty.call(process.env, key)) continue;
+
+    process.env[key] = parseEnvValue(normalized.slice(separatorIndex + 1));
+  }
+}
+
+loadLocalEnv();
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;

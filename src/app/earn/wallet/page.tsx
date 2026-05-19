@@ -1,4 +1,5 @@
 import { EARN_REWARDS_BETA_WARNING, formatCents } from "@/lib/earn-rewards";
+import { getOrCreateEarnUserProfile } from "@/lib/earn-user-profile";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -20,6 +21,7 @@ export default async function EarnWalletPage() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect("/login");
 
+    const earnProfile = await getOrCreateEarnUserProfile(user.id);
     const { data, error } = await supabase
         .from("user_reward_ledger")
         .select(`
@@ -54,11 +56,21 @@ export default async function EarnWalletPage() {
                     <p className="text-xs font-bold uppercase tracking-[0.24em] text-gray-400">EarnGrind Rewards</p>
                     <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-950">Earn wallet</h1>
                     <p className="mt-2 text-sm text-gray-600">Signed in as {user.email}</p>
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <ProfileBadge label="Rewards" value={earnProfile.reward_status} />
+                        <ProfileBadge label="Review" value={earnProfile.review_status} />
+                    </div>
                 </div>
 
                 <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
                     {EARN_REWARDS_BETA_WARNING}
                 </div>
+
+                {earnProfile.reward_status !== "active" ? (
+                    <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
+                        Your EarnGrind rewards profile is {earnProfile.reward_status}. Earning may be restricted while this status is active.
+                    </div>
+                ) : null}
 
                 <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                     <WalletTotal label="Pending" value={totals.pending} tone="warning" />
@@ -109,6 +121,20 @@ export default async function EarnWalletPage() {
                 </section>
             </div>
         </main>
+    );
+}
+
+function ProfileBadge({ label, value }: { label: string; value: string }) {
+    const classes = value === "active" || value === "clean" || value === "cleared"
+        ? "border-lime-200 bg-lime-50 text-lime-800"
+        : value === "limited" || value === "flagged" || value === "under_review"
+            ? "border-amber-200 bg-amber-50 text-amber-800"
+            : "border-red-200 bg-red-50 text-red-800";
+
+    return (
+        <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-bold capitalize ${classes}`}>
+            {label}: {value.replaceAll("_", " ")}
+        </span>
     );
 }
 

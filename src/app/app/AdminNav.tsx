@@ -21,6 +21,7 @@ import {
     Sparkles,
     TrendingDown,
     Upload,
+    Users,
     WalletCards,
 } from "lucide-react";
 
@@ -65,6 +66,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
         label: "Offers",
         links: [
             { href: "/app/admin/earn-offers", label: "Earn Offers", icon: MousePointerClick },
+            { href: "/app/admin/earn-users", label: "Earn Users", icon: Users },
             { href: "/app/admin/conversions", label: "Conversions", icon: BarChart3 },
             { href: "/app/admin/rewards", label: "Reward Ledger", icon: WalletCards },
             { href: "/app/admin/site-offers", label: "Manual Offers", icon: Boxes },

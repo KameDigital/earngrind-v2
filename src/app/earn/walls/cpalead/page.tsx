@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { buildCpaleadWallUrl, getCpaleadWallEnv } from "@/lib/cpalead";
 import { EARN_REWARDS_BETA_WARNING } from "@/lib/earn-rewards";
+import { EarnUserProfileAccessError, markRewardActivity, requireActiveEarnUserProfile } from "@/lib/earn-user-profile";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -52,6 +53,23 @@ export default async function CpaleadWallPage() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect("/login?next=/earn/walls/cpalead");
 
+    let earnProfileIssue: string | null = null;
+    try {
+        await requireActiveEarnUserProfile(user.id);
+    } catch (error) {
+        if (error instanceof EarnUserProfileAccessError) {
+            earnProfileIssue = error.code === "limited"
+                ? "Your rewards profile is limited. CPAlead wall access is paused until review clears."
+                : `Your rewards profile is ${error.code}. CPAlead wall access is blocked.`;
+        } else {
+            console.error("[earn/walls/cpalead] failed to verify rewards profile", {
+                userId: user.id,
+                message: error instanceof Error ? error.message : "unknown_error",
+            });
+            earnProfileIssue = "Could not verify your rewards profile. CPAlead wall access is paused.";
+        }
+    }
+
     const env = getCpaleadWallEnv();
     const { data: offer, error: offerError } = await supabase
         .from("earn_offers")
@@ -80,6 +98,7 @@ export default async function CpaleadWallPage() {
         offerError ? "CPAlead offer lookup failed" : null,
         !offer ? "Seed the cpalead-offerwall earn offer" : null,
         offer && partner?.status !== "active" ? "CPAlead partner is not active" : null,
+        earnProfileIssue,
     ].filter(Boolean) as string[];
 
     let wallUrl: string | null = null;
@@ -120,6 +139,14 @@ export default async function CpaleadWallPage() {
             clickError = "Could not create the CPAlead tracking click. Try again after checking the offer_clicks insert policy.";
             wallUrl = null;
             clickId = null;
+        } else {
+            try {
+                await markRewardActivity(user.id);
+            } catch {
+                clickError = "Could not update your rewards profile activity. Try again before opening the wall.";
+                wallUrl = null;
+                clickId = null;
+            }
         }
     }
 

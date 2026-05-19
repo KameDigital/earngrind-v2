@@ -19,7 +19,7 @@ type EarnOfferRow = {
 };
 
 function isUuid(value: string): boolean {
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i.test(value);
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
 
 function getIpHash(req: NextRequest): string | null {
@@ -63,11 +63,21 @@ function buildTrackedUrl(template: string, clickId: string, userId: string | nul
     }
 }
 
+async function getOfferId(req: NextRequest, params: Promise<{ offerId: string }> | { offerId: string }): Promise<string> {
+    const resolvedParams = await params;
+    if (isUuid(resolvedParams.offerId)) return resolvedParams.offerId;
+
+    const urlMatch = req.url.match(/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i);
+    if (urlMatch) return urlMatch[0];
+
+    return req.nextUrl.pathname.split("/").filter(Boolean).at(-1) ?? "";
+}
+
 export async function GET(
     req: NextRequest,
-    { params }: { params: { offerId: string } },
+    { params }: { params: Promise<{ offerId: string }> | { offerId: string } },
 ) {
-    const offerId = params.offerId;
+    const offerId = await getOfferId(req, params);
     if (!isUuid(offerId)) {
         return NextResponse.json({ error: "invalid_offer_id" }, { status: 400 });
     }

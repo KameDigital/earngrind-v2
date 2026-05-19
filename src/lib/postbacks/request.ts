@@ -55,6 +55,20 @@ export function parseAmountCents(value: string | null): number | null {
     return Number(value);
 }
 
+function parseCurrencyAmountCents(value: string | null): number | null {
+    const normalized = value?.trim();
+    if (!normalized || !/^\d+(?:\.\d{1,4})?$/.test(normalized)) return null;
+    return Math.round(Number(normalized) * 100);
+}
+
+function parseProviderPayoutCents(config: ProviderConfig, value: string | null): number | null {
+    if (config.provider_slug === "cpalead") {
+        return parseCurrencyAmountCents(value);
+    }
+
+    return parseAmountCents(value);
+}
+
 export function normalizePostback(
     config: ProviderConfig,
     sources: PostbackSources,
@@ -63,7 +77,7 @@ export function normalizePostback(
     const externalTransactionId = getParam(sources, config.transaction_id_param);
     const payoutValue = getParam(sources, config.payout_param);
     const statusValue = getParam(sources, config.status_param);
-    const grossRevenueCents = parseAmountCents(payoutValue);
+    const grossRevenueCents = parseProviderPayoutCents(config, payoutValue);
 
     if (!clickId || !externalTransactionId || !statusValue || grossRevenueCents === null) {
         return { ok: false, error: "missing_required_fields" };

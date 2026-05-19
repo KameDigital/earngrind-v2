@@ -5,6 +5,7 @@ export type SecretType = "none" | "static_token" | "hmac";
 export type SignatureAlgorithm = "none" | "hmac-sha1" | "hmac-sha256" | "hmac-sha512";
 export type SignatureLocation = "header" | "query" | "body";
 export type ReviewStatus = "clean" | "flagged" | "ignored" | "reviewed";
+export type PostbackMethod = "GET" | "POST";
 
 export type ProviderConfig = {
     id: string;
@@ -16,6 +17,7 @@ export type ProviderConfig = {
     signature_algorithm: SignatureAlgorithm;
     signature_location: SignatureLocation;
     signature_param: string | null;
+    allowed_methods: PostbackMethod[];
     allowed_ip_ranges: string[] | null;
     click_id_param: string;
     transaction_id_param: string;

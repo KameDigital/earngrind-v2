@@ -2,18 +2,31 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ConversionWriteError, writeConversionAndLedger } from "@/lib/postbacks/conversion-writer";
 import { getRequestIp, isIpAllowed } from "@/lib/postbacks/ip";
-import { loadProviderConfig } from "@/lib/postbacks/provider-config";
+import { loadProviderConfig, resolveProviderConfigSecret } from "@/lib/postbacks/provider-config";
 import { buildReplayKey, buildRequestHash, createPostbackReceipt, linkReceiptToConversion } from "@/lib/postbacks/replay";
 import { getParam, normalizePostback, parsePostbackRequest, validateTimestampSkew } from "@/lib/postbacks/request";
 import { redactPostbackSources } from "@/lib/postbacks/redaction";
 import { getProvidedSignature, validatePostbackSignature } from "@/lib/postbacks/signatures";
-import type { NormalizedPostback, ProviderConfig, PostbackSources } from "@/lib/postbacks/types";
+import type { NormalizedPostback, PostbackMethod, ProviderConfig, PostbackSources } from "@/lib/postbacks/types";
 
 export const dynamic = "force-dynamic";
 
 async function getProviderSlug(params: Promise<{ provider: string }> | { provider: string }): Promise<string> {
     const resolvedParams = await params;
     return resolvedParams.provider;
+}
+
+function methodNotAllowed(method: string, allowedMethods: PostbackMethod[]) {
+    return NextResponse.json(
+        {
+            error: "method_not_allowed",
+            message: `Use ${allowedMethods.join(" or ")} with provider-signed postback parameters.`,
+        },
+        {
+            status: 405,
+            headers: { Allow: allowedMethods.join(", ") },
+        },
+    );
 }
 
 async function writeFailedReceipt({
@@ -79,18 +92,28 @@ async function writeFailedReceipt({
     );
 }
 
-export async function POST(
+async function handleProviderPostback(
     req: NextRequest,
     { params }: { params: Promise<{ provider: string }> | { provider: string } },
 ) {
     const providerSlug = await getProviderSlug(params);
     const db = createAdminClient();
-    const configResult = await loadProviderConfig(db, providerSlug);
+    const configResult = await loadProviderConfig(db, providerSlug, { resolveSecret: false });
     if (!configResult.ok) {
         return NextResponse.json({ error: configResult.error }, { status: configResult.status });
     }
 
-    const config = configResult.config;
+    const baseConfig = configResult.config;
+    if (!baseConfig.allowed_methods.includes(req.method as PostbackMethod)) {
+        return methodNotAllowed(req.method, baseConfig.allowed_methods);
+    }
+
+    const secretResult = resolveProviderConfigSecret(baseConfig);
+    if (!secretResult.ok) {
+        return NextResponse.json({ error: secretResult.error }, { status: secretResult.status });
+    }
+
+    const config = secretResult.config;
     const { rawBody, sources } = await parsePostbackRequest(req);
     const sourceIp = getRequestIp(req);
     const requestHash = buildRequestHash({ method: req.method, url: req.url, rawBody });
@@ -230,15 +253,16 @@ export async function POST(
     }
 }
 
-export async function GET() {
-    return NextResponse.json(
-        {
-            error: "method_not_allowed",
-            message: "Use POST with provider-signed postback parameters.",
-        },
-        {
-            status: 405,
-            headers: { Allow: "POST" },
-        },
-    );
+export async function POST(
+    req: NextRequest,
+    context: { params: Promise<{ provider: string }> | { provider: string } },
+) {
+    return handleProviderPostback(req, context);
+}
+
+export async function GET(
+    req: NextRequest,
+    context: { params: Promise<{ provider: string }> | { provider: string } },
+) {
+    return handleProviderPostback(req, context);
 }

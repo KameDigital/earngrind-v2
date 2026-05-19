@@ -59,6 +59,7 @@ const db = createClient(supabaseUrl, serviceRoleKey, {
 });
 
 const now = new Date().toISOString();
+const cpaleadWallId = process.env.CPALEAD_WALL_ID || "YOUR-WALL-SLUG";
 
 const { data: partner, error: partnerError } = await db
   .from("offer_partners")
@@ -90,6 +91,7 @@ const { data: postbackConfig, error: postbackConfigError } = await db
       signature_algorithm: "none",
       signature_location: "body",
       signature_param: "token",
+      allowed_methods: ["POST"],
       allowed_ip_ranges: [],
       click_id_param: "click_id",
       transaction_id_param: "external_transaction_id",
@@ -150,10 +152,112 @@ if (offerError) {
   throw new Error(`Failed to upsert test offer: ${offerError.message}`);
 }
 
+const { data: cpaleadPartner, error: cpaleadPartnerError } = await db
+  .from("offer_partners")
+  .upsert(
+    {
+      slug: "cpalead",
+      name: "CPAlead",
+      status: "active",
+      updated_at: now,
+    },
+    { onConflict: "slug" },
+  )
+  .select("id, slug, name")
+  .single();
+
+if (cpaleadPartnerError) {
+  throw new Error(`Failed to upsert CPAlead partner: ${cpaleadPartnerError.message}`);
+}
+
+const { data: cpaleadPostbackConfig, error: cpaleadPostbackConfigError } = await db
+  .from("offer_partner_postback_configs")
+  .upsert(
+    {
+      offer_partner_id: cpaleadPartner.id,
+      provider_slug: "cpalead",
+      status: "active",
+      secret_type: "static_token",
+      secret_env_var: "POSTBACK_PROVIDER_CPALEAD_SECRET",
+      signature_algorithm: "none",
+      signature_location: "query",
+      signature_param: "password",
+      allowed_methods: ["GET", "POST"],
+      allowed_ip_ranges: ["34.69.179.33/32"],
+      click_id_param: "subid",
+      transaction_id_param: "lead_id",
+      payout_param: "payout",
+      currency_param: "currency",
+      status_param: "status",
+      status_map: {
+        pending: "pending",
+        approved: "approved",
+        complete: "approved",
+        completed: "approved",
+        rejected: "rejected",
+        reversed: "reversed",
+        reversal: "reversed",
+        chargeback: "reversed",
+      },
+      redacted_fields: ["password"],
+      timestamp_param: null,
+      nonce_param: null,
+      max_clock_skew_seconds: 0,
+      replay_ttl_seconds: 86400,
+      updated_at: now,
+    },
+    { onConflict: "provider_slug" },
+  )
+  .select("id, provider_slug, secret_type, secret_env_var")
+  .single();
+
+if (cpaleadPostbackConfigError) {
+  throw new Error(`Failed to upsert CPAlead postback config: ${cpaleadPostbackConfigError.message}`);
+}
+
+const { data: cpaleadOffer, error: cpaleadOfferError } = await db
+  .from("earn_offers")
+  .upsert(
+    {
+      partner_id: cpaleadPartner.id,
+      title: "CPAlead Offerwall",
+      slug: "cpalead-offerwall",
+      description: "Beta CPAlead hosted offerwall entry for tracked EarnGrind reward testing.",
+      offer_url_template: `https://www.cpalead.com/wall/${encodeURIComponent(cpaleadWallId)}?subid={click_id}`,
+      countries: ["US"],
+      devices: ["web", "android", "ios"],
+      vertical: "offerwall",
+      payout_cents: 0,
+      user_reward_cents: 100,
+      currency: "USD",
+      incentive_allowed: true,
+      reward_allowed: true,
+      pending_days: 0,
+      requirements: "Beta/internal CPAlead hosted wall test. Rewards are credited only from validated postbacks.",
+      status: "active",
+      updated_at: now,
+    },
+    { onConflict: "slug" },
+  )
+  .select("id, slug, title, user_reward_cents")
+  .single();
+
+if (cpaleadOfferError) {
+  throw new Error(`Failed to upsert CPAlead offerwall offer: ${cpaleadOfferError.message}`);
+}
+
 console.log("Seeded EarnGrind test offer");
 console.log({
   partner,
   postbackConfig,
   offer,
   testPath: `/go/earn/${offer.id}`,
+});
+console.log("Seeded CPAlead starter offerwall");
+console.log({
+  partner: cpaleadPartner,
+  postbackConfig: cpaleadPostbackConfig,
+  offer: cpaleadOffer,
+  wallPath: "/earn/walls/cpalead",
+  postbackPath: "/api/postbacks/cpalead",
 });

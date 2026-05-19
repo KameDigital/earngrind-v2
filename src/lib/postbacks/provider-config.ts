@@ -1,16 +1,44 @@
 import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { ProviderConfig } from "./types";
+import type { PostbackMethod, ProviderConfig } from "./types";
 
 function getPartner(config: ProviderConfig): { id: string; status: string } | null {
     if (Array.isArray(config.partner)) return config.partner[0] ?? null;
     return config.partner ?? null;
 }
 
+function normalizeAllowedMethods(methods: unknown): PostbackMethod[] {
+    if (!Array.isArray(methods)) return ["POST"];
+
+    const allowed = methods
+        .filter((method): method is PostbackMethod => method === "GET" || method === "POST");
+
+    return allowed.length > 0 ? Array.from(new Set(allowed)) : ["POST"];
+}
+
+export function resolveProviderConfigSecret(
+    config: ProviderConfig,
+): { ok: true; config: ProviderConfig } | { ok: false; status: number; error: string } {
+    const needsSecret = config.secret_type !== "none" || config.signature_algorithm !== "none";
+    if (!needsSecret) return { ok: true, config: { ...config, secret: null } };
+
+    if (!config.secret_env_var) {
+        return { ok: false, status: 503, error: "provider_secret_not_configured" };
+    }
+
+    const secret = process.env[config.secret_env_var];
+    if (!secret) {
+        return { ok: false, status: 503, error: "provider_secret_not_configured" };
+    }
+
+    return { ok: true, config: { ...config, secret } };
+}
+
 export async function loadProviderConfig(
     db: SupabaseClient,
     providerSlug: string,
+    options: { resolveSecret?: boolean } = {},
 ): Promise<{ ok: true; config: ProviderConfig } | { ok: false; status: number; error: string }> {
     const { data, error } = await db
         .from("offer_partner_postback_configs")
@@ -24,6 +52,7 @@ export async function loadProviderConfig(
             signature_algorithm,
             signature_location,
             signature_param,
+            allowed_methods,
             allowed_ip_ranges,
             click_id_param,
             transaction_id_param,
@@ -51,17 +80,12 @@ export async function loadProviderConfig(
         return { ok: false, status: 404, error: "provider_not_found" };
     }
 
-    const needsSecret = data.secret_type !== "none" || data.signature_algorithm !== "none";
-    if (!needsSecret) return { ok: true, config: { ...data, secret: null } };
+    const config = {
+        ...data,
+        allowed_methods: normalizeAllowedMethods(data.allowed_methods),
+    };
 
-    if (!data.secret_env_var) {
-        return { ok: false, status: 503, error: "provider_secret_not_configured" };
-    }
-
-    const secret = process.env[data.secret_env_var];
-    if (!secret) {
-        return { ok: false, status: 503, error: "provider_secret_not_configured" };
-    }
-
-    return { ok: true, config: { ...data, secret } };
+    return options.resolveSecret === false
+        ? { ok: true, config: { ...config, secret: null } }
+        : resolveProviderConfigSecret(config);
 }

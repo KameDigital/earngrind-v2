@@ -16,10 +16,12 @@ import {
     LibraryBig,
     Link2,
     Microscope,
+    MousePointerClick,
     Search,
     Sparkles,
     TrendingDown,
     Upload,
+    WalletCards,
 } from "lucide-react";
 
 type AdminLink = {
@@ -62,6 +64,9 @@ const ADMIN_SECTIONS: AdminSection[] = [
     {
         label: "Offers",
         links: [
+            { href: "/app/admin/earn-offers", label: "Earn Offers", icon: MousePointerClick },
+            { href: "/app/admin/conversions", label: "Conversions", icon: BarChart3 },
+            { href: "/app/admin/rewards", label: "Reward Ledger", icon: WalletCards },
             { href: "/app/admin/site-offers", label: "Manual Offers", icon: Boxes },
             { href: "/app/admin/offers", label: "Ingested Offers", icon: LibraryBig },
             { href: "/app/admin/outbound", label: "Outbound Analytics", icon: BarChart3 },

@@ -19,7 +19,7 @@ type LedgerRow = {
     created_at: string;
     offer: { title: string; slug: string } | { title: string; slug: string }[] | null;
     partner: { name: string; slug: string } | { name: string; slug: string }[] | null;
-    conversion: { external_transaction_id: string; click_id: string } | { external_transaction_id: string; click_id: string }[] | null;
+    conversion: { external_transaction_id: string; click_id: string; provider_status: string | null; review_status: string } | { external_transaction_id: string; click_id: string; provider_status: string | null; review_status: string }[] | null;
 };
 
 const STATUSES = ["pending", "approved", "rejected", "reversed", "paid"] as const;
@@ -43,7 +43,7 @@ export default async function RewardsAdminPage() {
             created_at,
             offer:earn_offers(title, slug),
             partner:offer_partners(name, slug),
-            conversion:conversion_events(external_transaction_id, click_id)
+            conversion:conversion_events(external_transaction_id, click_id, provider_status, review_status)
         `)
         .order("created_at", { ascending: false })
         .limit(100);
@@ -116,6 +116,12 @@ export default async function RewardsAdminPage() {
                                             <td className="px-3 py-3">
                                                 <div className="font-mono text-xs text-gray-500">{conversion?.click_id ?? ""}</div>
                                                 <div className="mt-1 text-xs text-gray-500">{conversion?.external_transaction_id ?? ""}</div>
+                                                {conversion?.provider_status ? (
+                                                    <div className="mt-1 text-xs text-gray-500">Provider: {conversion.provider_status}</div>
+                                                ) : null}
+                                                {conversion?.review_status && conversion.review_status !== "clean" ? (
+                                                    <div className="mt-1 text-xs font-semibold text-amber-700">Review: {conversion.review_status}</div>
+                                                ) : null}
                                             </td>
                                             <td className="px-3 py-3 text-xs leading-relaxed text-gray-500">
                                                 <div>Created: {formatDate(row.created_at)}</div>

@@ -13,6 +13,7 @@ type PartnerRow = {
     name: string;
     status: string;
     created_at: string;
+    postback_configs: { provider_slug: string; status: string; secret_type: string; signature_algorithm: string }[] | null;
 };
 
 type EarnOfferRow = {
@@ -39,7 +40,17 @@ export default async function EarnOffersAdminPage() {
 
     const db = createAdminClient();
     const [partnersRes, offersRes] = await Promise.all([
-        db.from("offer_partners").select("id, slug, name, status, created_at").order("created_at", { ascending: false }),
+        db
+            .from("offer_partners")
+            .select(`
+                id,
+                slug,
+                name,
+                status,
+                created_at,
+                postback_configs:offer_partner_postback_configs(provider_slug, status, secret_type, signature_algorithm)
+            `)
+            .order("created_at", { ascending: false }),
         db
             .from("earn_offers")
             .select(`
@@ -93,6 +104,7 @@ export default async function EarnOffersAdminPage() {
                                 <th className="px-3 py-2">Partner</th>
                                 <th className="px-3 py-2">Slug</th>
                                 <th className="px-3 py-2">Status</th>
+                                <th className="px-3 py-2">Postbacks</th>
                                 <th className="px-3 py-2">ID</th>
                             </tr>
                         </thead>
@@ -102,12 +114,25 @@ export default async function EarnOffersAdminPage() {
                                     <td className="px-3 py-3 font-bold text-gray-950">{partner.name}</td>
                                     <td className="px-3 py-3 text-gray-600">{partner.slug}</td>
                                     <td className="px-3 py-3">{statusBadge(partner.status)}</td>
+                                    <td className="px-3 py-3 text-xs text-gray-600">
+                                        {partner.postback_configs?.length ? (
+                                            <div className="space-y-1">
+                                                {partner.postback_configs.map((config) => (
+                                                    <div key={config.provider_slug}>
+                                                        <span className="font-mono">{config.provider_slug}</span>
+                                                        <span className="ml-2">{config.status}</span>
+                                                        <span className="ml-2 text-gray-400">{config.secret_type}/{config.signature_algorithm}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : "Not configured"}
+                                    </td>
                                     <td className="px-3 py-3 font-mono text-xs text-gray-500">{partner.id}</td>
                                 </tr>
                             ))}
                             {partners.length === 0 ? (
                                 <tr>
-                                    <td className="px-3 py-6 text-gray-500" colSpan={4}>No partners seeded yet.</td>
+                                    <td className="px-3 py-6 text-gray-500" colSpan={5}>No partners seeded yet.</td>
                                 </tr>
                             ) : null}
                         </tbody>

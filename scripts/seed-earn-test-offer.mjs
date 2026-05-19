@@ -78,6 +78,47 @@ if (partnerError) {
   throw new Error(`Failed to upsert test partner: ${partnerError.message}`);
 }
 
+const { data: postbackConfig, error: postbackConfigError } = await db
+  .from("offer_partner_postback_configs")
+  .upsert(
+    {
+      offer_partner_id: partner.id,
+      provider_slug: "earngrind-test",
+      status: "active",
+      secret_type: "static_token",
+      secret_env_var: "POSTBACK_PROVIDER_EARNGRIND_TEST_SECRET",
+      signature_algorithm: "none",
+      signature_location: "body",
+      signature_param: "token",
+      allowed_ip_ranges: [],
+      click_id_param: "click_id",
+      transaction_id_param: "external_transaction_id",
+      payout_param: "amount",
+      currency_param: "currency",
+      status_param: "status",
+      status_map: {
+        pending: "pending",
+        approved: "approved",
+        rejected: "rejected",
+        reversed: "reversed",
+        chargeback: "reversed",
+      },
+      redacted_fields: ["token"],
+      timestamp_param: "timestamp",
+      nonce_param: "nonce",
+      max_clock_skew_seconds: 300,
+      replay_ttl_seconds: 86400,
+      updated_at: now,
+    },
+    { onConflict: "provider_slug" },
+  )
+  .select("id, provider_slug, secret_type, secret_env_var")
+  .single();
+
+if (postbackConfigError) {
+  throw new Error(`Failed to upsert test postback config: ${postbackConfigError.message}`);
+}
+
 const { data: offer, error: offerError } = await db
   .from("earn_offers")
   .upsert(
@@ -112,6 +153,7 @@ if (offerError) {
 console.log("Seeded EarnGrind test offer");
 console.log({
   partner,
+  postbackConfig,
   offer,
   testPath: `/go/earn/${offer.id}`,
 });

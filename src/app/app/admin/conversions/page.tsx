@@ -1,4 +1,5 @@
 import { AdminPageHeader, AdminPanel, AdminStatCard } from "@/components/admin/AdminUi";
+import { updateConversionReviewAction } from "./actions";
 import { formatCents } from "@/lib/earn-rewards";
 import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -28,7 +29,11 @@ type ConversionRow = {
     receipt: { id: string; failure_code: string | null; signature_valid: boolean; replay_key: string | null; source_ip: string | null } | { id: string; failure_code: string | null; signature_valid: boolean; replay_key: string | null; source_ip: string | null }[] | null;
 };
 
-export default async function ConversionsAdminPage() {
+type ConversionsAdminPageProps = {
+    searchParams?: { updated?: string; error?: string };
+};
+
+export default async function ConversionsAdminPage({ searchParams }: ConversionsAdminPageProps) {
     const auth = await requireAdminOrEditor();
     if (!auth.ok) redirect(auth.status === 401 ? "/login" : "/app/dashboard");
 
@@ -72,8 +77,20 @@ export default async function ConversionsAdminPage() {
             <AdminPageHeader
                 eyebrow="Tracked Rewards"
                 title="Conversions"
-                description="Recent test postback conversion events for EarnGrind tracked offers."
+                description="Recent postback conversion events with review controls that do not alter ledger state."
             />
+
+            {searchParams?.updated ? (
+                <p className="rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-sm font-semibold text-lime-800">
+                    Conversion review metadata was saved and audited.
+                </p>
+            ) : null}
+
+            {searchParams?.error ? (
+                <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
+                    Unable to save conversion review metadata. Check the selected values and try again.
+                </p>
+            ) : null}
 
             <section className="grid gap-3 sm:grid-cols-3">
                 <AdminStatCard label="Pending" value={pending} tone={pending > 0 ? "warning" : "neutral"} />
@@ -81,7 +98,7 @@ export default async function ConversionsAdminPage() {
                 <AdminStatCard label="Rejected/reversed" value={rejectedOrReversed} tone={rejectedOrReversed > 0 ? "critical" : "neutral"} />
             </section>
 
-            <AdminPanel title="Recent conversion events" description="Events are idempotent by partner and external transaction id.">
+            <AdminPanel title="Recent conversion events" description="Events are idempotent by partner and external transaction id. Review controls only mark metadata for admin workflow.">
                 {error ? (
                     <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
                         Failed to load conversion events.
@@ -97,6 +114,7 @@ export default async function ConversionsAdminPage() {
                                     <th className="px-3 py-2">User</th>
                                     <th className="px-3 py-2">Amounts</th>
                                     <th className="px-3 py-2">Raw payload</th>
+                                    <th className="px-3 py-2">Review controls</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -150,12 +168,47 @@ export default async function ConversionsAdminPage() {
                                                     {payloadPreview(row.raw_payload)}
                                                 </pre>
                                             </td>
+                                            <td className="px-3 py-3">
+                                                <form action={updateConversionReviewAction} className="grid min-w-72 gap-2 rounded-xl border border-gray-100 bg-gray-50 p-3">
+                                                    <input type="hidden" name="conversion_id" value={row.id} />
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                                        Review status
+                                                        <select
+                                                            name="review_status"
+                                                            defaultValue={row.review_status}
+                                                            className="mt-1 w-full rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm font-semibold normal-case tracking-normal text-gray-800"
+                                                        >
+                                                            <option value="clean">clean</option>
+                                                            <option value="flagged">flagged</option>
+                                                            <option value="ignored">ignored</option>
+                                                            <option value="reviewed">reviewed</option>
+                                                        </select>
+                                                    </label>
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                                        Review reasons
+                                                        <textarea
+                                                            name="review_reasons"
+                                                            defaultValue={(row.review_reasons ?? []).join("\n")}
+                                                            rows={3}
+                                                            className="mt-1 w-full rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm font-medium normal-case tracking-normal text-gray-700"
+                                                            placeholder="One reason per line"
+                                                        />
+                                                    </label>
+                                                    <button
+                                                        type="submit"
+                                                        className="rounded-lg bg-gray-950 px-3 py-2 text-sm font-bold text-white hover:bg-gray-800"
+                                                    >
+                                                        Save review
+                                                    </button>
+                                                    <p className="text-xs font-semibold text-gray-500">This does not change conversion status or reward ledger state.</p>
+                                                </form>
+                                            </td>
                                         </tr>
                                     );
                                 })}
                                 {rows.length === 0 ? (
                                     <tr>
-                                        <td className="px-3 py-6 text-gray-500" colSpan={6}>No conversion events yet.</td>
+                                        <td className="px-3 py-6 text-gray-500" colSpan={7}>No conversion events yet.</td>
                                     </tr>
                                 ) : null}
                             </tbody>

@@ -1,9 +1,11 @@
 import { createHash } from "crypto";
 import { headers } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { buildCpaleadWallUrl, getCpaleadWallEnv } from "@/lib/cpalead";
 import { EARN_REWARDS_BETA_WARNING } from "@/lib/earn-rewards";
 import { EarnUserProfileAccessError, markRewardActivity, requireActiveEarnUserProfile } from "@/lib/earn-user-profile";
+import { getCpaleadReadiness } from "@/lib/earn-provider-readiness";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -54,8 +56,12 @@ export default async function CpaleadWallPage() {
     if (!user) redirect("/login?next=/earn/walls/cpalead");
 
     let earnProfileIssue: string | null = null;
+    let termsIssue: string | null = null;
     try {
-        await requireActiveEarnUserProfile(user.id);
+        const earnProfile = await requireActiveEarnUserProfile(user.id);
+        if (!earnProfile.accepted_rewards_terms_at) {
+            termsIssue = "Accept beta rewards terms in your wallet before opening CPAlead.";
+        }
     } catch (error) {
         if (error instanceof EarnUserProfileAccessError) {
             earnProfileIssue = error.code === "limited"
@@ -70,6 +76,7 @@ export default async function CpaleadWallPage() {
         }
     }
 
+    const readiness = getCpaleadReadiness();
     const env = getCpaleadWallEnv();
     const { data: offer, error: offerError } = await supabase
         .from("earn_offers")
@@ -94,11 +101,13 @@ export default async function CpaleadWallPage() {
 
     const partner = offer ? getPartner(offer) : null;
     const setupIssues = [
-        ...env.missing.map((name) => `Missing ${name}`),
+        !readiness.enabled ? "CPAlead wall is disabled for beta readiness. Set NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=true only after production checks are complete." : null,
+        ...readiness.missing.map((name) => `Missing ${name}`),
         offerError ? "CPAlead offer lookup failed" : null,
         !offer ? "Seed the cpalead-offerwall earn offer" : null,
         offer && partner?.status !== "active" ? "CPAlead partner is not active" : null,
         earnProfileIssue,
+        termsIssue,
     ].filter(Boolean) as string[];
 
     let wallUrl: string | null = null;
@@ -167,9 +176,11 @@ export default async function CpaleadWallPage() {
 
                 {setupIssues.length > 0 || clickError ? (
                     <section className="rounded-2xl border border-red-200 bg-white p-5 shadow-sm">
-                        <h2 className="text-base font-extrabold text-gray-950">CPAlead setup needed</h2>
+                        <h2 className="text-base font-extrabold text-gray-950">
+                            {!readiness.enabled ? "CPAlead beta disabled" : termsIssue ? "Rewards terms required" : "CPAlead setup needed"}
+                        </h2>
                         <p className="mt-2 text-sm text-gray-600">
-                            The hosted wall is not opened until the local CPAlead configuration and seeded offer are available.
+                            The hosted wall is not opened until the beta flag, provider setup, rewards profile, and rewards terms checks all pass.
                         </p>
                         <ul className="mt-4 space-y-2 text-sm font-semibold text-red-800">
                             {setupIssues.map((issue) => (
@@ -177,6 +188,14 @@ export default async function CpaleadWallPage() {
                             ))}
                             {clickError ? <li>{clickError}</li> : null}
                         </ul>
+                        {termsIssue ? (
+                            <Link
+                                href="/earn/wallet"
+                                className="mt-4 inline-flex items-center justify-center rounded-lg bg-gray-950 px-4 py-2 text-sm font-bold text-white hover:bg-gray-800"
+                            >
+                                Go to wallet
+                            </Link>
+                        ) : null}
                     </section>
                 ) : null}
 

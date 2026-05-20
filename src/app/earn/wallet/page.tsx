@@ -1,6 +1,7 @@
 import { EARN_REWARDS_BETA_WARNING, formatCents } from "@/lib/earn-rewards";
-import { getOrCreateEarnUserProfile } from "@/lib/earn-user-profile";
+import { acceptRewardsTerms, getOrCreateEarnUserProfile } from "@/lib/earn-user-profile";
 import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +16,20 @@ type LedgerRow = {
     created_at: string;
     offer: { title: string; slug: string } | { title: string; slug: string }[] | null;
 };
+
+const REWARDS_TERMS_COPY = "EarnGrind rewards are in beta. Rewards are only credited after provider confirmation and may pend, reject, reverse, or require manual review.";
+
+async function acceptRewardsTermsAction() {
+    "use server";
+
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) redirect("/login");
+
+    await acceptRewardsTerms(user.id);
+    revalidatePath("/earn/wallet");
+    revalidatePath("/earn/walls/cpalead");
+}
 
 export default async function EarnWalletPage() {
     const supabase = createClient();
@@ -71,6 +86,34 @@ export default async function EarnWalletPage() {
                         Your EarnGrind rewards profile is {earnProfile.reward_status}. Earning may be restricted while this status is active.
                     </div>
                 ) : null}
+
+                {!earnProfile.accepted_rewards_terms_at ? (
+                    <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                            <div>
+                                <h2 className="text-base font-extrabold text-gray-950">Accept beta rewards terms</h2>
+                                <p className="mt-2 max-w-3xl text-sm font-semibold text-gray-700">
+                                    {REWARDS_TERMS_COPY}
+                                </p>
+                                <p className="mt-2 text-sm text-gray-500">
+                                    CPAlead and other reward walls stay locked until these terms are accepted.
+                                </p>
+                            </div>
+                            <form action={acceptRewardsTermsAction}>
+                                <button
+                                    type="submit"
+                                    className="inline-flex w-full items-center justify-center rounded-lg bg-gray-950 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-gray-800 sm:w-auto"
+                                >
+                                    Accept rewards terms
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+                ) : (
+                    <div className="rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-sm font-semibold text-lime-800">
+                        Rewards terms accepted {formatDate(earnProfile.accepted_rewards_terms_at)}.
+                    </div>
+                )}
 
                 <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                     <WalletTotal label="Pending" value={totals.pending} tone="warning" />

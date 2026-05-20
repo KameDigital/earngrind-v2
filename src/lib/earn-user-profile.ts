@@ -98,6 +98,31 @@ export async function requireActiveEarnUserProfile(userId: string): Promise<Earn
     return profile;
 }
 
+export async function acceptRewardsTerms(userId: string): Promise<EarnUserProfile> {
+    const existingProfile = await getOrCreateEarnUserProfile(userId);
+    if (existingProfile.accepted_rewards_terms_at) return existingProfile;
+
+    const db = createAdminClient();
+    const { data, error } = await db
+        .from("earn_user_profiles")
+        .update({
+            accepted_rewards_terms_at: new Date().toISOString(),
+        })
+        .eq("user_id", userId)
+        .select(PROFILE_COLUMNS)
+        .single<EarnUserProfile>();
+
+    if (error) {
+        console.error("[earn-user-profile] terms acceptance failed", {
+            userId,
+            message: error.message,
+        });
+        throw new Error("earn_user_profile_terms_acceptance_failed");
+    }
+
+    return data;
+}
+
 export async function markRewardActivity(userId: string): Promise<void> {
     const db = createAdminClient();
     const { error } = await db

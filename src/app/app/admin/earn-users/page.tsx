@@ -63,6 +63,10 @@ export default async function EarnUsersAdminPage() {
                 description="Read-only reward profile and risk status layer for EarnGrind earning users."
             />
 
+            <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
+                CPAlead GET postbacks include password in the request URL. App payloads are redacted, but infrastructure logs may capture query strings. Review hosting/proxy logs or ask CPAlead about POST/header/IP-only alternatives before real traffic.
+            </div>
+
             <section className="grid gap-3 sm:grid-cols-3">
                 <AdminStatCard label="Profiles" value={rows.length} description="Users with an EarnGrind rewards profile." />
                 <AdminStatCard label="Active" value={active} tone={active > 0 ? "good" : "neutral"} />

@@ -114,9 +114,9 @@ export default async function CpaleadWallPage() {
     let clickId: string | null = null;
     let clickError: string | null = null;
 
-    if (setupIssues.length === 0 && env.wallId && offer) {
+    if (setupIssues.length === 0 && env.wallBaseUrl && env.wallId && offer) {
         clickId = crypto.randomUUID();
-        wallUrl = buildCpaleadWallUrl(env.wallId, clickId);
+        wallUrl = buildCpaleadWallUrl(env.wallBaseUrl, env.wallId, clickId);
 
         const { error } = await supabase.from("offer_clicks").insert({
             click_id: clickId,

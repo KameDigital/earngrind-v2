@@ -59,7 +59,25 @@ const db = createClient(supabaseUrl, serviceRoleKey, {
 });
 
 const now = new Date().toISOString();
+const cpaleadWallBaseUrl = process.env.CPALEAD_WALL_BASE_URL || "https://www.cpalead.com";
 const cpaleadWallId = process.env.CPALEAD_WALL_ID || "YOUR-WALL-SLUG";
+
+function buildCpaleadWallTemplate(wallBaseUrl, wallId) {
+  const url = new URL(wallBaseUrl);
+  const normalizedPath = url.pathname.replace(/\/+$/, "");
+  const encodedWallId = encodeURIComponent(wallId);
+
+  if (normalizedPath.endsWith(`/wall/${encodedWallId}`)) {
+    url.pathname = normalizedPath;
+  } else if (normalizedPath.endsWith("/wall")) {
+    url.pathname = `${normalizedPath}/${encodedWallId}`;
+  } else {
+    url.pathname = `${normalizedPath}/wall/${encodedWallId}`;
+  }
+
+  url.searchParams.set("subid", "{click_id}");
+  return url.toString().replace("%7Bclick_id%7D", "{click_id}");
+}
 
 const { data: partner, error: partnerError } = await db
   .from("offer_partners")
@@ -223,7 +241,7 @@ const { data: cpaleadOffer, error: cpaleadOfferError } = await db
       title: "CPAlead Offerwall",
       slug: "cpalead-offerwall",
       description: "Beta CPAlead hosted offerwall entry for tracked EarnGrind reward testing.",
-      offer_url_template: `https://www.cpalead.com/wall/${encodeURIComponent(cpaleadWallId)}?subid={click_id}`,
+      offer_url_template: buildCpaleadWallTemplate(cpaleadWallBaseUrl, cpaleadWallId),
       countries: ["US"],
       devices: ["web", "android", "ios"],
       vertical: "offerwall",

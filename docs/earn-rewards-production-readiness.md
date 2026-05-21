@@ -10,11 +10,18 @@ CPAlead is currently integrated as a beta hosted offerwall at `/earn/walls/cpale
 https://earngrind.com/api/postbacks/cpalead
 ```
 
+The hosted wall URL is built from the CPAlead-generated wall base URL plus the wall id. Example wall URL shape:
+
+```text
+https://zwidgetbv3dft.xyz/wall/wASj?subid=<click_id>
+```
+
 ## Required CPAlead Environment Variables
 
 ```text
 NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=false
 CPALEAD_PUBLISHER_ID=
+CPALEAD_WALL_BASE_URL=
 CPALEAD_WALL_ID=
 POSTBACK_PROVIDER_CPALEAD_SECRET=
 ```
@@ -30,7 +37,7 @@ Before sending real traffic, review Vercel/proxy/access-log behavior and ask CPA
 ## Checklist Before Real Traffic
 
 - Confirm `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=true` only in the intended environment.
-- Confirm `CPALEAD_PUBLISHER_ID`, `CPALEAD_WALL_ID`, and `POSTBACK_PROVIDER_CPALEAD_SECRET` are set.
+- Confirm `CPALEAD_PUBLISHER_ID`, `CPALEAD_WALL_BASE_URL`, `CPALEAD_WALL_ID`, and `POSTBACK_PROVIDER_CPALEAD_SECRET` are set.
 - Confirm CPAlead provider config stores `secret_env_var = POSTBACK_PROVIDER_CPALEAD_SECRET`, not the secret value.
 - Confirm `/earn/wallet` requires rewards terms acceptance before wall access.
 - Confirm `/earn/walls/cpalead` blocks users without accepted terms.

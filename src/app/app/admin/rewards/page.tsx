@@ -3,6 +3,7 @@ import { formatCents } from "@/lib/earn-rewards";
 import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
+import { reverseLedgerRewardAction, updateLedgerReviewAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Reward Ledger | EarnGrind Admin" };
@@ -11,6 +12,8 @@ type LedgerRow = {
     id: string;
     user_id: string;
     status: string;
+    review_status: string;
+    review_reasons: string[] | null;
     amount_cents: number;
     currency: string;
     available_at: string | null;
@@ -41,7 +44,11 @@ type LedgerRow = {
 
 const STATUSES = ["pending", "approved", "rejected", "reversed", "paid"] as const;
 
-export default async function RewardsAdminPage() {
+type RewardsAdminPageProps = {
+    searchParams?: { updated?: string; error?: string };
+};
+
+export default async function RewardsAdminPage({ searchParams }: RewardsAdminPageProps) {
     const auth = await requireAdminOrEditor();
     if (!auth.ok) redirect(auth.status === 401 ? "/login" : "/app/dashboard");
 
@@ -53,6 +60,8 @@ export default async function RewardsAdminPage() {
                 id,
                 user_id,
                 status,
+                review_status,
+                review_reasons,
                 amount_cents,
                 currency,
                 available_at,
@@ -102,12 +111,24 @@ export default async function RewardsAdminPage() {
             <AdminPageHeader
                 eyebrow="Tracked Rewards"
                 title="Reward ledger"
-                description="Read-only reward ledger review surface. No payout, withdrawal, or cashout actions exist."
+                description="Reward ledger review controls for unpaid reward safety. No payout, withdrawal, or cashout actions exist."
             />
 
             <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
-                Reversed rewards are not payable. This page is visibility-only; no cashouts exist yet.
+                Reversed rewards are not payable. Manual reversal is limited to unpaid rewards. No payout, withdrawal, or cashout actions exist.
             </div>
+
+            {searchParams?.updated ? (
+                <p className="rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-sm font-semibold text-lime-800">
+                    Reward ledger admin action was saved and audited.
+                </p>
+            ) : null}
+
+            {searchParams?.error ? (
+                <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
+                    Unable to save reward ledger action. Paid rewards cannot be reversed here.
+                </p>
+            ) : null}
 
             <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <AdminStatCard label="Pending" value={formatCents(totals.pending)} tone={totals.pending > 0 ? "warning" : "neutral"} />
@@ -117,7 +138,7 @@ export default async function RewardsAdminPage() {
                 <AdminStatCard label="Paid" value={formatCents(totals.paid)} />
             </section>
 
-            <AdminPanel title="Recent ledger rows" description="Ledger status reflects provider-confirmed reward state. Review flags come from linked conversions.">
+            <AdminPanel title="Recent ledger rows" description="Ledger status reflects provider-confirmed reward state. Ledger review controls are admin-only and do not create payouts.">
                 {error ? (
                     <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
                         Failed to load reward ledger rows.
@@ -133,6 +154,7 @@ export default async function RewardsAdminPage() {
                                     <th className="px-3 py-2">Partner</th>
                                     <th className="px-3 py-2">Conversion</th>
                                     <th className="px-3 py-2">Dates</th>
+                                    <th className="px-3 py-2">Review controls</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
@@ -147,7 +169,16 @@ export default async function RewardsAdminPage() {
                                         <tr key={row.id} className="align-top">
                                             <td className="px-3 py-3">
                                                 {statusBadge(row.status)}
+                                                {reviewBadge(row.review_status)}
                                                 <div className="mt-2 font-bold text-gray-950">{formatCents(row.amount_cents, row.currency)}</div>
+                                                {row.review_reasons?.length ? (
+                                                    <div className="mt-2 max-w-xs text-xs font-semibold text-amber-700">
+                                                        {row.review_reasons.join(", ")}
+                                                    </div>
+                                                ) : null}
+                                                {row.status === "reversed" ? (
+                                                    <div className="mt-2 text-xs font-semibold text-red-700">Not payable</div>
+                                                ) : null}
                                             </td>
                                             <td className="px-3 py-3">
                                                 <div className="font-mono text-xs text-gray-500">{row.user_id}</div>
@@ -184,12 +215,72 @@ export default async function RewardsAdminPage() {
                                                 <div>Reversed: {formatDate(row.reversed_at)}</div>
                                                 <div>Paid: {formatDate(row.paid_at)}</div>
                                             </td>
+                                            <td className="px-3 py-3">
+                                                <form action={updateLedgerReviewAction} className="grid min-w-72 gap-2 rounded-xl border border-gray-100 bg-gray-50 p-3">
+                                                    <input type="hidden" name="ledger_id" value={row.id} />
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                                        Review status
+                                                        <select
+                                                            name="review_status"
+                                                            defaultValue={row.review_status}
+                                                            className="mt-1 w-full rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm font-semibold normal-case tracking-normal text-gray-800"
+                                                        >
+                                                            <option value="clean">clean</option>
+                                                            <option value="flagged">flagged</option>
+                                                            <option value="ignored">ignored</option>
+                                                            <option value="reviewed">reviewed</option>
+                                                        </select>
+                                                    </label>
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                                                        Admin reasons
+                                                        <textarea
+                                                            name="review_reasons"
+                                                            defaultValue={(row.review_reasons ?? []).join("\n")}
+                                                            rows={3}
+                                                            className="mt-1 w-full rounded-lg border border-gray-200 bg-white px-2 py-2 text-sm font-medium normal-case tracking-normal text-gray-700"
+                                                            placeholder="One reason per line"
+                                                        />
+                                                    </label>
+                                                    <button
+                                                        type="submit"
+                                                        name="ledger_id"
+                                                        value={row.id}
+                                                        className="rounded-lg bg-gray-950 px-3 py-2 text-sm font-bold text-white hover:bg-gray-800"
+                                                    >
+                                                        Save ledger review
+                                                    </button>
+                                                </form>
+                                                <form action={reverseLedgerRewardAction} className="mt-3 grid min-w-72 gap-2 rounded-xl border border-red-100 bg-red-50 p-3">
+                                                    <input type="hidden" name="ledger_id" value={row.id} />
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-red-500">
+                                                        Reversal reason
+                                                        <textarea
+                                                            name="admin_reason"
+                                                            rows={2}
+                                                            className="mt-1 w-full rounded-lg border border-red-200 bg-white px-2 py-2 text-sm font-medium normal-case tracking-normal text-gray-700"
+                                                            placeholder="Required context for audit trail"
+                                                        />
+                                                    </label>
+                                                    <button
+                                                        type="submit"
+                                                        name="ledger_id"
+                                                        value={row.id}
+                                                        disabled={row.status === "paid"}
+                                                        className="rounded-lg bg-red-700 px-3 py-2 text-sm font-bold text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:bg-gray-300"
+                                                    >
+                                                        Reverse unpaid reward
+                                                    </button>
+                                                    <p className="text-xs font-semibold text-red-700">
+                                                        Warning: only unpaid rewards can be reversed. This updates linked conversion review state and does not create cashout actions.
+                                                    </p>
+                                                </form>
+                                            </td>
                                         </tr>
                                     );
                                 })}
                                 {rows.length === 0 ? (
                                     <tr>
-                                        <td className="px-3 py-6 text-gray-500" colSpan={6}>No reward ledger rows yet.</td>
+                                        <td className="px-3 py-6 text-gray-500" colSpan={7}>No reward ledger rows yet.</td>
                                     </tr>
                                 ) : null}
                             </tbody>
@@ -209,6 +300,15 @@ function statusBadge(status: string) {
             : status === "paid"
                 ? "border-blue-200 bg-blue-50 text-blue-800"
                 : "border-red-200 bg-red-50 text-red-800";
+
+    return <span className={`inline-flex rounded-full border px-2 py-1 text-xs font-bold capitalize ${classes}`}>{status}</span>;
+}
+
+function reviewBadge(status: string) {
+    if (!status || status === "clean") return null;
+    const classes = status === "flagged"
+        ? "ml-2 border-amber-200 bg-amber-50 text-amber-800"
+        : "ml-2 border-gray-200 bg-gray-50 text-gray-700";
 
     return <span className={`inline-flex rounded-full border px-2 py-1 text-xs font-bold capitalize ${classes}`}>{status}</span>;
 }

@@ -1,5 +1,5 @@
 import { AdminPageHeader, AdminPanel, AdminStatCard } from "@/components/admin/AdminUi";
-import { updateConversionReviewAction } from "./actions";
+import { updateConversionLifecycleAction, updateConversionReviewAction } from "./actions";
 import { formatCents } from "@/lib/earn-rewards";
 import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -77,18 +77,18 @@ export default async function ConversionsAdminPage({ searchParams }: Conversions
             <AdminPageHeader
                 eyebrow="Tracked Rewards"
                 title="Conversions"
-                description="Recent postback conversion events with review controls that do not alter ledger state."
+                description="Recent postback conversion events with admin review controls and explicit unpaid reward reject/reverse actions."
             />
 
             {searchParams?.updated ? (
                 <p className="rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-sm font-semibold text-lime-800">
-                    Conversion review metadata was saved and audited.
+                    Conversion admin action was saved and audited.
                 </p>
             ) : null}
 
             {searchParams?.error ? (
                 <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
-                    Unable to save conversion review metadata. Check the selected values and try again.
+                    Unable to save conversion admin action. Paid rewards cannot be rejected or reversed here.
                 </p>
             ) : null}
 
@@ -98,7 +98,7 @@ export default async function ConversionsAdminPage({ searchParams }: Conversions
                 <AdminStatCard label="Rejected/reversed" value={rejectedOrReversed} tone={rejectedOrReversed > 0 ? "critical" : "neutral"} />
             </section>
 
-            <AdminPanel title="Recent conversion events" description="Events are idempotent by partner and external transaction id. Review controls only mark metadata for admin workflow.">
+            <AdminPanel title="Recent conversion events" description="Events are idempotent by partner and external transaction id. Metadata review does not alter rewards; explicit reject/reverse actions update only linked unpaid ledger rows.">
                 {error ? (
                     <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">
                         Failed to load conversion events.
@@ -196,11 +196,47 @@ export default async function ConversionsAdminPage({ searchParams }: Conversions
                                                     </label>
                                                     <button
                                                         type="submit"
+                                                        name="conversion_id"
+                                                        value={row.id}
                                                         className="rounded-lg bg-gray-950 px-3 py-2 text-sm font-bold text-white hover:bg-gray-800"
                                                     >
                                                         Save review
                                                     </button>
                                                     <p className="text-xs font-semibold text-gray-500">This does not change conversion status or reward ledger state.</p>
+                                                </form>
+                                                <form action={updateConversionLifecycleAction} className="mt-3 grid min-w-72 gap-2 rounded-xl border border-red-100 bg-red-50 p-3">
+                                                    <input type="hidden" name="conversion_id" value={row.id} />
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-red-500">
+                                                        Manual status action
+                                                        <select
+                                                            name="next_status"
+                                                            defaultValue="reversed"
+                                                            className="mt-1 w-full rounded-lg border border-red-200 bg-white px-2 py-2 text-sm font-semibold normal-case tracking-normal text-gray-800"
+                                                        >
+                                                            <option value="rejected">reject conversion</option>
+                                                            <option value="reversed">reverse conversion</option>
+                                                        </select>
+                                                    </label>
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-red-500">
+                                                        Admin reason
+                                                        <textarea
+                                                            name="admin_reason"
+                                                            rows={2}
+                                                            className="mt-1 w-full rounded-lg border border-red-200 bg-white px-2 py-2 text-sm font-medium normal-case tracking-normal text-gray-700"
+                                                            placeholder="Required context for audit trail"
+                                                        />
+                                                    </label>
+                                                    <button
+                                                        type="submit"
+                                                        name="conversion_id"
+                                                        value={row.id}
+                                                        className="rounded-lg bg-red-700 px-3 py-2 text-sm font-bold text-white hover:bg-red-800"
+                                                    >
+                                                        Apply status action
+                                                    </button>
+                                                    <p className="text-xs font-semibold text-red-700">
+                                                        Warning: rejects/reversals update linked unpaid ledger state. Paid rewards are blocked and no payout action is created.
+                                                    </p>
                                                 </form>
                                             </td>
                                         </tr>

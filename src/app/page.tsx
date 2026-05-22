@@ -78,6 +78,12 @@ const START_HERE_ITEMS = [
     badge: "Completion help",
     desc: "Use proven walkthroughs to finish milestones faster, avoid mistakes, and reach payout checkpoints sooner.",
   },
+  {
+    name: "EarnGrind Rewards Beta",
+    href: "/earn",
+    badge: "Logged-in beta",
+    desc: "Use EarnGrind-tracked reward walls when available. Rewards credit only after provider confirmation.",
+  },
 ] as const;
 
 const HOW_IT_WORKS_STEPS = [
@@ -93,8 +99,8 @@ const HOW_IT_WORKS_STEPS = [
   },
   {
     step: "3",
-    title: "Get paid",
-    desc: "Click through to the payout platform, complete the tracked tasks, and cash out through the provider directly.",
+    title: "Choose the payout path",
+    desc: "Partner GPT offers pay through the partner platform. EarnGrind Rewards Beta can track logged-in reward walls, but cashouts are not available yet.",
   },
 ] as const;
 
@@ -255,7 +261,7 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl">
-              Find current game and survey payouts, check platform trust, and use guides before you click out to a GPT site.
+              Find current game and survey payouts, check platform trust, use guides before you click out, or try EarnGrind Rewards Beta when tracked walls are available.
             </p>
 
             <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -278,7 +284,7 @@ export default async function HomePage() {
             </div>
 
             <div className="mb-8 flex flex-wrap items-center justify-start gap-2.5">
-              {["Compare live payouts", "Choose trusted platforms", "Complete milestones faster"].map((item) => (
+              {["Compare live payouts", "Choose trusted platforms", "Use Rewards Beta when available"].map((item) => (
                 <span
                   key={item}
                   className="inline-flex items-center rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs font-bold text-white/80"
@@ -303,6 +309,12 @@ export default async function HomePage() {
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
               >
                 Browse Guides
+              </Link>
+              <Link
+                href="/earn"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
+              >
+                Earn Rewards Beta
               </Link>
             </div>
           </div>
@@ -349,7 +361,7 @@ export default async function HomePage() {
                     EarnGrind compares those live offers, publishes game pages, and connects you to detailed guides so you can choose better routes before you start.
                   </p>
                   <p>
-                    Use the homepage to move from platform trust to live payouts to guide support without guessing which page matters.
+                    EarnGrind Rewards Beta adds a second path for logged-in users: tracked reward walls can credit your EarnGrind wallet after provider confirmation, while partner GPT offers still pay through the partner platform.
                   </p>
                 </div>
               </div>
@@ -377,7 +389,7 @@ export default async function HomePage() {
             <div className="mt-8 rounded-2xl border border-[var(--border-default)] bg-white px-4 py-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
               <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
+                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery, <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion, or <Link href="/earn" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">EarnGrind Rewards Beta</Link> for logged-in tracked rewards.
               </p>
             </div>
           </div>
@@ -459,7 +471,7 @@ export default async function HomePage() {
           <div className="space-y-3">
             <FaqItem
               question="Is this actually real? Can I really earn money?"
-              answer="Yes. The websites we list pay real money to millions of users. EarnGrind does not pay you directly. It helps you find the highest paying offers, game pages, and guides."
+              answer="Yes. The partner GPT sites we list pay real money to users for partner offers. EarnGrind Rewards Beta is separate: it can credit logged-in users after provider confirmation when EarnGrind-tracked walls are available."
             />
             <FaqItem
               question="How much can I earn?"
@@ -467,7 +479,7 @@ export default async function HomePage() {
             />
             <FaqItem
               question="Do I need to pay anything to start?"
-              answer="No. EarnGrind is free to use, and the linked GPT sites are free to join. Avoid anything that asks for upfront payment."
+              answer="No. EarnGrind is free to browse, and the linked GPT sites are free to join. No sign-up is required to browse. Login is required for EarnGrind Rewards."
             />
             <FaqItem
               question="Why are there so many internal pages?"
@@ -488,20 +500,28 @@ export default async function HomePage() {
             Ready to earn your first dollar online?
           </h2>
           <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
-            Start with the highest paying GPT offers, then use game guides to finish faster.
+            Start with the highest paying GPT offers, use game guides to finish faster, or open EarnGrind Rewards Beta when tracked rewards are available.
           </p>
-          <Link
-            href="/offers"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--brand-lime)] text-[var(--brand-ink)] font-extrabold text-base rounded-xl hover:bg-[color:hsl(84,93%,72%)] transition-all hover:-translate-y-px shadow-lg shadow-[var(--brand-lime)]/20"
-          >
-            Browse Offers - It&apos;s Free
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link
+              href="/offers"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--brand-lime)] text-[var(--brand-ink)] font-extrabold text-base rounded-xl hover:bg-[color:hsl(84,93%,72%)] transition-all hover:-translate-y-px shadow-lg shadow-[var(--brand-lime)]/20"
+            >
+              Browse Offers - It&apos;s Free
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+            <Link
+              href="/earn"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-8 py-4 text-base font-extrabold text-white transition-all hover:bg-white/15"
+            >
+              Open Rewards Beta
+            </Link>
+          </div>
 
           <p className="mt-5 text-xs text-white/30 font-medium">
-            No sign-up required. No credit card. No catch.
+            No sign-up required to browse. Login is required for EarnGrind Rewards.
           </p>
         </div>
       </section>

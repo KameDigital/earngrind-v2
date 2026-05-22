@@ -102,15 +102,23 @@ export default async function RewardSupportPage({ searchParams }: SupportPagePro
                         <div>
                             <h1 className="text-2xl font-extrabold tracking-tight text-gray-950 sm:text-3xl">Reward support</h1>
                             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
-                                Submit missing reward, wrong amount, rejected offer, or reversal questions for manual review. This does not create credits or payouts.
+                                Use support when a tracked offer is missing, credited for the wrong amount, rejected, or reversed unexpectedly. Tickets help admins review provider-confirmed activity and do not create credits automatically.
                             </p>
                         </div>
-                        <Link
-                            href="/earn/wallet"
-                            className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 transition hover:border-gray-300 hover:text-gray-950"
-                        >
-                            Back to wallet
-                        </Link>
+                        <div className="flex flex-wrap gap-2">
+                            <Link
+                                href="/earn"
+                                className="inline-flex items-center justify-center rounded-xl bg-gray-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-gray-800"
+                            >
+                                Rewards hub
+                            </Link>
+                            <Link
+                                href="/earn/wallet"
+                                className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 transition hover:border-gray-300 hover:text-gray-950"
+                            >
+                                Wallet
+                            </Link>
+                        </div>
                     </div>
                 </section>
 
@@ -133,6 +141,9 @@ export default async function RewardSupportPage({ searchParams }: SupportPagePro
                 <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.75fr)]">
                     <form action={createRewardSupportTicketAction} className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
                         <h2 className="text-lg font-extrabold text-gray-950">Open a support ticket</h2>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                            Pick the closest recent click if one exists. Include the completion time, what the provider showed, and any proof link you have.
+                        </p>
                         <div className="mt-5 grid gap-4">
                             <label className="text-sm font-bold text-gray-700">
                                 Issue type
@@ -150,7 +161,7 @@ export default async function RewardSupportPage({ searchParams }: SupportPagePro
                             </label>
 
                             <label className="text-sm font-bold text-gray-700">
-                                Related recent click
+                                Related started offer
                                 <select
                                     name="offer_click_id"
                                     className="mt-1 h-11 w-full rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-800 focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-100"
@@ -171,7 +182,7 @@ export default async function RewardSupportPage({ searchParams }: SupportPagePro
                             </label>
 
                             <label className="text-sm font-bold text-gray-700">
-                                Message
+                                What happened?
                                 <textarea
                                     name="message"
                                     required
@@ -184,7 +195,7 @@ export default async function RewardSupportPage({ searchParams }: SupportPagePro
                             </label>
 
                             <label className="text-sm font-bold text-gray-700">
-                                Proof URL
+                                Proof URL, optional
                                 <input
                                     name="proof_url"
                                     type="url"
@@ -198,13 +209,19 @@ export default async function RewardSupportPage({ searchParams }: SupportPagePro
                                 type="submit"
                                 className="rounded-xl bg-gray-950 px-4 py-3 text-sm font-bold text-white transition hover:bg-gray-800"
                             >
-                                Submit ticket
+                                Submit for review
                             </button>
+                            <p className="text-xs font-semibold text-gray-500">
+                                Submitting a ticket never creates a reward credit, payout, or cashout.
+                            </p>
                         </div>
                     </form>
 
                     <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-                        <h2 className="text-lg font-extrabold text-gray-950">Recent tracked activity</h2>
+                        <h2 className="text-lg font-extrabold text-gray-950">Recent started offers</h2>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                            These are recent EarnGrind-tracked clicks. Provider confirmation may arrive later or may be rejected/reversed.
+                        </p>
                         <div className="mt-4 space-y-3">
                             {clickRows.slice(0, 8).map((click) => {
                                 const offer = normalizeOne(click.earn_offer);

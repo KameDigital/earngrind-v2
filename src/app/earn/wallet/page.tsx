@@ -2,6 +2,7 @@ import { EARN_REWARDS_BETA_WARNING, formatCents } from "@/lib/earn-rewards";
 import { acceptRewardsTerms, getOrCreateEarnUserProfile } from "@/lib/earn-user-profile";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -67,15 +68,33 @@ export default async function EarnWalletPage() {
     return (
         <main className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-5xl space-y-6">
-                <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.24em] text-gray-400">EarnGrind Rewards</p>
-                    <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-950">Earn wallet</h1>
-                    <p className="mt-2 text-sm text-gray-600">Signed in as {user.email}</p>
-                    <div className="mt-3 flex flex-wrap items-center gap-2">
-                        <ProfileBadge label="Rewards" value={earnProfile.reward_status} />
-                        <ProfileBadge label="Review" value={earnProfile.review_status} />
+                <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                        <div>
+                            <p className="text-xs font-bold uppercase tracking-[0.24em] text-gray-400">EarnGrind Rewards</p>
+                            <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-950">Earn wallet</h1>
+                            <p className="mt-2 text-sm text-gray-600">Signed in as {user.email}</p>
+                            <div className="mt-3 flex flex-wrap items-center gap-2">
+                                <ProfileBadge label="Rewards" value={earnProfile.reward_status} />
+                                <ProfileBadge label="Review" value={earnProfile.review_status} />
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            <Link
+                                href="/earn"
+                                className="inline-flex items-center justify-center rounded-xl bg-gray-950 px-4 py-2.5 text-sm font-bold text-white hover:bg-gray-800"
+                            >
+                                Open EarnGrind Rewards
+                            </Link>
+                            <Link
+                                href="/earn/support"
+                                className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-gray-300"
+                            >
+                                Missing a reward?
+                            </Link>
+                        </div>
                     </div>
-                </div>
+                </section>
 
                 <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
                     {EARN_REWARDS_BETA_WARNING}
@@ -91,7 +110,8 @@ export default async function EarnWalletPage() {
                     <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
                         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                             <div>
-                                <h2 className="text-base font-extrabold text-gray-950">Accept beta rewards terms</h2>
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-600">Required before earning</p>
+                                <h2 className="mt-1 text-xl font-extrabold text-gray-950">Accept beta rewards terms</h2>
                                 <p className="mt-2 max-w-3xl text-sm font-semibold text-gray-700">
                                     {REWARDS_TERMS_COPY}
                                 </p>
@@ -120,6 +140,33 @@ export default async function EarnWalletPage() {
                     <WalletTotal label="Available" value={totals.approved} tone="good" />
                     <WalletTotal label="Reversed" value={totals.reversed} tone="critical" />
                     <WalletTotal label="Paid" value={totals.paid} tone="neutral" />
+                </section>
+
+                <section className="grid gap-3 md:grid-cols-2">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                        <h2 className="text-base font-extrabold text-gray-950">Missing a reward?</h2>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                            Open a support ticket with the related tracked click. Support can review provider-confirmed activity, but it does not create credits automatically.
+                        </p>
+                        <Link
+                            href="/earn/support"
+                            className="mt-4 inline-flex rounded-lg border border-gray-200 px-3 py-2 text-sm font-bold text-gray-800 hover:border-gray-300"
+                        >
+                            Open a support ticket
+                        </Link>
+                    </div>
+                    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                        <h2 className="text-base font-extrabold text-gray-950">EarnGrind Rewards hub</h2>
+                        <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                            Check wall availability, profile gates, rewards terms, and support links from one place.
+                        </p>
+                        <Link
+                            href="/earn"
+                            className="mt-4 inline-flex rounded-lg bg-gray-950 px-3 py-2 text-sm font-bold text-white hover:bg-gray-800"
+                        >
+                            Open EarnGrind Rewards
+                        </Link>
+                    </div>
                 </section>
 
                 <section className="rounded-2xl border border-gray-200 bg-white shadow-sm">

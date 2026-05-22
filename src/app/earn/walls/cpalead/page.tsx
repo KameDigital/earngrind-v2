@@ -109,6 +109,13 @@ export default async function CpaleadWallPage() {
         earnProfileIssue,
         termsIssue,
     ].filter(Boolean) as string[];
+    const gateStates = [
+        { label: "Logged in", ok: Boolean(user), detail: user.email ?? "Signed in" },
+        { label: "Active profile", ok: !earnProfileIssue, detail: earnProfileIssue ?? "Rewards profile active" },
+        { label: "Terms accepted", ok: !termsIssue, detail: termsIssue ?? "Rewards terms accepted" },
+        { label: "Feature flag enabled", ok: readiness.enabled, detail: readiness.enabled ? "Wall flag enabled" : "Private beta disabled" },
+        { label: "Provider env configured", ok: readiness.missing.length === 0, detail: readiness.missing.length ? `Missing ${readiness.missing.join(", ")}` : "Required env present" },
+    ];
 
     let wallUrl: string | null = null;
     let clickId: string | null = null;
@@ -162,17 +169,52 @@ export default async function CpaleadWallPage() {
     return (
         <main className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-6xl space-y-6">
-                <div>
+                <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
                     <p className="text-xs font-bold uppercase tracking-[0.24em] text-gray-400">EarnGrind Rewards</p>
-                    <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-gray-950">CPAlead offerwall</h1>
-                    <p className="mt-2 max-w-3xl text-sm text-gray-600">
-                        Private beta wall for testing CPAlead hosted offerwall tracking through EarnGrind postbacks.
-                    </p>
-                </div>
+                    <div className="mt-2 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                        <div>
+                            <h1 className="text-3xl font-extrabold tracking-tight text-gray-950">CPAlead offerwall</h1>
+                            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
+                                CPAlead Offerwall is tracked by EarnGrind. Each eligible session creates an EarnGrind click id and sends it to CPAlead as the provider subid.
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            <Link href="/earn" className="rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-gray-300">
+                                Rewards hub
+                            </Link>
+                            <Link href="/earn/wallet" className="rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-gray-300">
+                                Wallet
+                            </Link>
+                            <Link href="/earn/support" className="rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-700 hover:border-gray-300">
+                                Support
+                            </Link>
+                        </div>
+                    </div>
+                </section>
 
                 <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
                     {EARN_REWARDS_BETA_WARNING}
                 </div>
+
+                <section className="grid gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+                    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Provider</p>
+                        <h2 className="mt-2 text-xl font-extrabold text-gray-950">CPAlead Offerwall</h2>
+                        <div className="mt-4 space-y-2 text-sm font-semibold text-gray-700">
+                            <div>Tracked by EarnGrind</div>
+                            <div>Subid/click tracking active when gates pass</div>
+                            <div>No cashouts are available yet</div>
+                        </div>
+                    </div>
+                    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                        <h2 className="text-base font-extrabold text-gray-950">Access gates</h2>
+                        <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+                            {gateStates.map((gate) => (
+                                <GateCard key={gate.label} {...gate} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
                 {setupIssues.length > 0 || clickError ? (
                     <section className="rounded-2xl border border-red-200 bg-white p-5 shadow-sm">
@@ -180,7 +222,7 @@ export default async function CpaleadWallPage() {
                             {!readiness.enabled ? "CPAlead beta disabled" : termsIssue ? "Rewards terms required" : "CPAlead setup needed"}
                         </h2>
                         <p className="mt-2 text-sm text-gray-600">
-                            The hosted wall is not opened until the beta flag, provider setup, rewards profile, and rewards terms checks all pass.
+                            The hosted wall is not opened and no click is created until the beta flag, provider setup, rewards profile, and rewards terms checks all pass.
                         </p>
                         <ul className="mt-4 space-y-2 text-sm font-semibold text-red-800">
                             {setupIssues.map((issue) => (
@@ -194,6 +236,14 @@ export default async function CpaleadWallPage() {
                                 className="mt-4 inline-flex items-center justify-center rounded-lg bg-gray-950 px-4 py-2 text-sm font-bold text-white hover:bg-gray-800"
                             >
                                 Go to wallet
+                            </Link>
+                        ) : null}
+                        {!termsIssue ? (
+                            <Link
+                                href="/earn"
+                                className="mt-4 inline-flex items-center justify-center rounded-lg border border-gray-200 px-4 py-2 text-sm font-bold text-gray-700 hover:border-gray-300"
+                            >
+                                Back to rewards hub
                             </Link>
                         ) : null}
                     </section>
@@ -216,7 +266,7 @@ export default async function CpaleadWallPage() {
                                     rel="noreferrer"
                                     className="inline-flex items-center justify-center rounded-lg bg-gray-950 px-4 py-2 text-sm font-bold text-white hover:bg-gray-800"
                                 >
-                                    Open wall
+                                    Open Offerwall
                                 </a>
                             </div>
                         </div>
@@ -231,5 +281,15 @@ export default async function CpaleadWallPage() {
                 ) : null}
             </div>
         </main>
+    );
+}
+
+function GateCard({ label, ok, detail }: { label: string; ok: boolean; detail: string }) {
+    return (
+        <div className={`rounded-xl border px-3 py-3 ${ok ? "border-lime-200 bg-lime-50" : "border-amber-200 bg-amber-50"}`}>
+            <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-500">{label}</div>
+            <div className={`mt-1 text-sm font-extrabold ${ok ? "text-lime-800" : "text-amber-800"}`}>{ok ? "Pass" : "Blocked"}</div>
+            <div className="mt-2 text-xs font-semibold text-gray-600">{detail}</div>
+        </div>
     );
 }

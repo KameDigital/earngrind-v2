@@ -34,6 +34,8 @@ const REQUIRED_ENV_VARS = [
     "CPALEAD_WALL_BASE_URL",
     "POSTBACK_PROVIDER_CPALEAD_SECRET",
     "NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED",
+    "EARN_REWARDS_PRIVATE_BETA_ENABLED",
+    "EARN_REWARDS_PRIVATE_BETA_EMAILS",
 ] as const;
 
 export default async function RewardsReadinessPage() {
@@ -43,6 +45,7 @@ export default async function RewardsReadinessPage() {
     const db = createAdminClient();
     const readiness = getCpaleadReadiness();
     const featureFlagValue = process.env.NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED?.trim() ?? "";
+    const privateBetaFlagValue = process.env.EARN_REWARDS_PRIVATE_BETA_ENABLED?.trim() ?? "";
 
     const [
         partnerResult,
@@ -99,11 +102,18 @@ export default async function RewardsReadinessPage() {
         present: getEnvPresent(name),
         valueLabel: name === "NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED"
             ? featureFlagValue || "missing"
+            : name === "EARN_REWARDS_PRIVATE_BETA_ENABLED"
+                ? privateBetaFlagValue || "missing"
+                : name === "EARN_REWARDS_PRIVATE_BETA_EMAILS"
+                    ? readiness.privateBetaEmailCount ? `${readiness.privateBetaEmailCount} allowed` : "empty"
             : getEnvPresent(name) ? "set" : "missing",
     }));
-    const envReady = requiredEnvStatuses.every((env) => env.present);
+    const providerEnvReady = readiness.missing.length === 0 && getEnvPresent("NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED");
+    const privateBetaReady = readiness.privateBetaEnabled && readiness.privateBetaEmailCount > 0;
+    const wallAccessReady = readiness.publicEnabled || privateBetaReady;
     const cpaleadReadyForInternalTesting = [
-        envReady,
+        providerEnvReady,
+        wallAccessReady,
         cpaleadPartnerExists,
         providerConfigExists,
         providerConfigActive,
@@ -131,10 +141,16 @@ export default async function RewardsReadinessPage() {
                     description="Prerequisites for a controlled private beta test."
                 />
                 <AdminStatCard
-                    label="CPAlead wall flag"
-                    value={readiness.enabled ? "Enabled" : "Disabled"}
-                    tone={readiness.enabled ? "warning" : "neutral"}
-                    description="Feature flag only controls wall availability. It is not a secret."
+                    label="CPAlead public flag"
+                    value={readiness.publicEnabled ? "Enabled" : "Disabled"}
+                    tone={readiness.publicEnabled ? "warning" : "neutral"}
+                    description="Public flag remains off until public launch is intentional."
+                />
+                <AdminStatCard
+                    label="Private beta"
+                    value={readiness.privateBetaEnabled ? `${readiness.privateBetaEmailCount} allowed` : "Disabled"}
+                    tone={privateBetaReady ? "good" : "neutral"}
+                    description="Allowlist count only. Email values are not rendered."
                 />
                 <AdminStatCard
                     label="Public launch"
@@ -157,13 +173,32 @@ export default async function RewardsReadinessPage() {
                     <div className="space-y-3">
                         {[
                             {
-                                label: "CPAlead feature flag status",
+                                label: "CPAlead public feature flag status",
                                 ready: getEnvPresent("NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED"),
                                 detail: `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=${featureFlagValue || "missing"}`,
                             },
                             {
+                                label: "CPAlead private beta flag status",
+                                ready: getEnvPresent("EARN_REWARDS_PRIVATE_BETA_ENABLED"),
+                                detail: `EARN_REWARDS_PRIVATE_BETA_ENABLED=${privateBetaFlagValue || "missing"}`,
+                            },
+                            {
+                                label: "CPAlead private beta allowlist configured",
+                                ready: readiness.privateBetaEmailCount > 0,
+                                detail: `${readiness.privateBetaEmailCount} email${readiness.privateBetaEmailCount === 1 ? "" : "s"} allowlisted`,
+                            },
+                            {
+                                label: "CPAlead wall access mode",
+                                ready: wallAccessReady,
+                                detail: readiness.publicEnabled
+                                    ? "Public beta enabled"
+                                    : privateBetaReady
+                                        ? "Private beta can be tested by allowlisted accounts"
+                                        : "No public or private beta access configured",
+                            },
+                            {
                                 label: "Required CPAlead env vars",
-                                ready: envReady,
+                                ready: providerEnvReady,
                                 detail: readiness.missing.length ? `Missing: ${readiness.missing.join(", ")}` : "All required values are set",
                             },
                             {

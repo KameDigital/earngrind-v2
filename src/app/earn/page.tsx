@@ -35,15 +35,26 @@ export default async function EarnHubPage() {
         rows = (data ?? []) as LedgerRow[];
     }
 
-    const cpaleadReadiness = getCpaleadReadiness();
+    const cpaleadReadiness = getCpaleadReadiness(user?.email);
     const termsAccepted = Boolean(profile?.accepted_rewards_terms_at);
     const activeProfile = profile?.reward_status === "active";
-    const cpaleadAvailable = Boolean(user && profile && activeProfile && termsAccepted && cpaleadReadiness.enabled && cpaleadReadiness.missing.length === 0);
+    const cpaleadAvailable = Boolean(user && profile && activeProfile && termsAccepted && cpaleadReadiness.accessMode !== "disabled" && cpaleadReadiness.missing.length === 0);
+    const cpaleadAvailabilityLabel = cpaleadReadiness.accessMode === "public"
+        ? "Public beta enabled"
+        : cpaleadReadiness.accessMode === "private"
+            ? "Private beta access enabled for your account"
+            : cpaleadReadiness.privateBetaEnabled
+                ? "Private beta closed"
+                : "Disabled";
     const cpaleadReasons = [
         !user ? "Login is required for tracked rewards." : null,
         user && !activeProfile ? `Rewards profile is ${profile?.reward_status ?? "not ready"}.` : null,
         user && profile && !termsAccepted ? "Rewards terms must be accepted in your wallet." : null,
-        !cpaleadReadiness.enabled ? "CPAlead wall is disabled for private beta readiness." : null,
+        cpaleadReadiness.accessMode === "disabled"
+            ? cpaleadReadiness.privateBetaEnabled
+                ? "CPAlead private beta is not open for this account."
+                : "CPAlead wall is disabled for private beta readiness."
+            : null,
         cpaleadReadiness.missing.length ? "CPAlead setup is not fully configured." : null,
     ].filter(Boolean) as string[];
 
@@ -156,6 +167,7 @@ export default async function EarnHubPage() {
                             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600">
                                 CPAlead sessions use an EarnGrind click id as the provider subid. The wall stays private until the feature flag, terms, profile, and setup checks pass.
                             </p>
+                            <p className="mt-2 text-sm font-bold text-gray-700">{cpaleadAvailabilityLabel}</p>
                         </div>
                         {cpaleadAvailable ? (
                             <Link href="/earn/walls/cpalead" className="rounded-xl bg-gray-950 px-4 py-2.5 text-sm font-bold text-white hover:bg-gray-800">
@@ -169,7 +181,7 @@ export default async function EarnHubPage() {
                         <Gate label="Logged in" ok={Boolean(user)} />
                         <Gate label="Active profile" ok={Boolean(activeProfile)} />
                         <Gate label="Terms accepted" ok={termsAccepted} />
-                        <Gate label="Feature flag" ok={cpaleadReadiness.enabled} />
+                        <Gate label="Beta access" ok={cpaleadReadiness.accessMode !== "disabled"} />
                         <Gate label="Provider setup" ok={cpaleadReadiness.missing.length === 0} />
                     </div>
                     {cpaleadReasons.length ? (

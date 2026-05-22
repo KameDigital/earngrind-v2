@@ -76,7 +76,7 @@ export default async function CpaleadWallPage() {
         }
     }
 
-    const readiness = getCpaleadReadiness();
+    const readiness = getCpaleadReadiness(user.email);
     const env = getCpaleadWallEnv();
     const { data: offer, error: offerError } = await supabase
         .from("earn_offers")
@@ -100,8 +100,13 @@ export default async function CpaleadWallPage() {
     }
 
     const partner = offer ? getPartner(offer) : null;
+    const betaAccessIssue = readiness.accessMode === "disabled"
+        ? readiness.privateBetaEnabled
+            ? "CPAlead private beta access is closed for this account."
+            : "CPAlead wall is disabled for beta readiness. Public traffic remains off."
+        : null;
     const setupIssues = [
-        !readiness.enabled ? "CPAlead wall is disabled for beta readiness. Set NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=true only after production checks are complete." : null,
+        betaAccessIssue,
         ...readiness.missing.map((name) => `Missing ${name}`),
         offerError ? "CPAlead offer lookup failed" : null,
         !offer ? "Seed the cpalead-offerwall earn offer" : null,
@@ -113,7 +118,17 @@ export default async function CpaleadWallPage() {
         { label: "Logged in", ok: Boolean(user), detail: user.email ?? "Signed in" },
         { label: "Active profile", ok: !earnProfileIssue, detail: earnProfileIssue ?? "Rewards profile active" },
         { label: "Terms accepted", ok: !termsIssue, detail: termsIssue ?? "Rewards terms accepted" },
-        { label: "Feature flag enabled", ok: readiness.enabled, detail: readiness.enabled ? "Wall flag enabled" : "Private beta disabled" },
+        {
+            label: "Beta access",
+            ok: readiness.accessMode !== "disabled",
+            detail: readiness.accessMode === "public"
+                ? "Public beta enabled"
+                : readiness.accessMode === "private"
+                    ? "Private beta access"
+                    : readiness.privateBetaEnabled
+                        ? "Private beta allowlist required"
+                        : "Public and private beta disabled",
+        },
         { label: "Provider env configured", ok: readiness.missing.length === 0, detail: readiness.missing.length ? `Missing ${readiness.missing.join(", ")}` : "Required env present" },
     ];
 
@@ -203,6 +218,7 @@ export default async function CpaleadWallPage() {
                         <div className="mt-4 space-y-2 text-sm font-semibold text-gray-700">
                             <div>Tracked by EarnGrind</div>
                             <div>Subid/click tracking active when gates pass</div>
+                            {readiness.accessMode === "private" ? <div>Private beta access enabled for your account</div> : null}
                             <div>No cashouts are available yet</div>
                         </div>
                     </div>
@@ -219,7 +235,7 @@ export default async function CpaleadWallPage() {
                 {setupIssues.length > 0 || clickError ? (
                     <section className="rounded-2xl border border-red-200 bg-white p-5 shadow-sm">
                         <h2 className="text-base font-extrabold text-gray-950">
-                            {!readiness.enabled ? "CPAlead beta disabled" : termsIssue ? "Rewards terms required" : "CPAlead setup needed"}
+                            {readiness.accessMode === "disabled" ? "CPAlead private beta closed" : termsIssue ? "Rewards terms required" : "CPAlead setup needed"}
                         </h2>
                         <p className="mt-2 text-sm text-gray-600">
                             The hosted wall is not opened and no click is created until the beta flag, provider setup, rewards profile, and rewards terms checks all pass.

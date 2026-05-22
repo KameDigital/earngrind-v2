@@ -20,6 +20,8 @@ https://zwidgetbv3dft.xyz/wall/wASj?subid=<click_id>
 
 ```text
 NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=false
+EARN_REWARDS_PRIVATE_BETA_ENABLED=false
+EARN_REWARDS_PRIVATE_BETA_EMAILS=
 CPALEAD_PUBLISHER_ID=
 CPALEAD_WALL_BASE_URL=
 CPALEAD_WALL_ID=
@@ -27,6 +29,20 @@ POSTBACK_PROVIDER_CPALEAD_SECRET=
 ```
 
 `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED` is a public UI availability flag only. Do not use it for secrets. Keep the CPAlead postback secret in `POSTBACK_PROVIDER_CPALEAD_SECRET`; the database should store only the secret env var name.
+
+`EARN_REWARDS_PRIVATE_BETA_ENABLED` and `EARN_REWARDS_PRIVATE_BETA_EMAILS` are server-only controls for allowlisted testing. Do not prefix them with `NEXT_PUBLIC_`, and do not put the CPAlead postback secret or any other secret in the allowlist.
+
+## Private Beta Access
+
+Use private beta mode to test CPAlead with selected accounts while public traffic remains disabled:
+
+```text
+NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=false
+EARN_REWARDS_PRIVATE_BETA_ENABLED=true
+EARN_REWARDS_PRIVATE_BETA_EMAILS=tester@example.com
+```
+
+The allowlist is comma-separated and matched case-insensitively against the logged-in user's email address. Private beta access still requires an active rewards profile, accepted rewards terms, valid CPAlead setup, and normal CPAlead provider config. Private beta is not a public launch; do not enable the public `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=true` flag until the launch decision is explicit.
 
 ## CPAlead GET Password Risk
 
@@ -37,6 +53,7 @@ Before sending real traffic, review Vercel/proxy/access-log behavior and ask CPA
 ## Checklist Before Real Traffic
 
 - Confirm `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=true` only in the intended environment.
+- For private beta, keep `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=false`, set `EARN_REWARDS_PRIVATE_BETA_ENABLED=true`, and allowlist only selected test-account emails.
 - Confirm `CPALEAD_PUBLISHER_ID`, `CPALEAD_WALL_BASE_URL`, `CPALEAD_WALL_ID`, and `POSTBACK_PROVIDER_CPALEAD_SECRET` are set.
 - Confirm CPAlead provider config stores `secret_env_var = POSTBACK_PROVIDER_CPALEAD_SECRET`, not the secret value.
 - Confirm `/earn/wallet` requires rewards terms acceptance before wall access.

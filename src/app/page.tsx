@@ -257,11 +257,11 @@ export default async function HomePage() {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold text-white leading-[1.05] tracking-tight mb-4">
-              Compare GPT offers before you start
+              Earn More From GPT Offers
             </h1>
 
             <p className="text-base sm:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl">
-              Find current game and survey payouts, check platform trust, use guides before you click out, or try EarnGrind Rewards Beta when tracked walls are available.
+              Compare live GPT offers across trusted platforms, or join EarnGrind Rewards Beta to track rewards directly through EarnGrind.
             </p>
 
             <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -284,7 +284,7 @@ export default async function HomePage() {
             </div>
 
             <div className="mb-8 flex flex-wrap items-center justify-start gap-2.5">
-              {["Compare live payouts", "Choose trusted platforms", "Use Rewards Beta when available"].map((item) => (
+              {["Browse without signup", "Partner payouts stay ungated", "Rewards Beta needs login"].map((item) => (
                 <span
                   key={item}
                   className="inline-flex items-center rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs font-bold text-white/80"
@@ -296,25 +296,84 @@ export default async function HomePage() {
 
             <div className="flex flex-wrap items-center justify-start gap-3">
               <Link
-                href="/offers"
+                href="/earn"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--brand-lime)] text-[var(--brand-ink)] font-extrabold text-sm rounded-xl hover:bg-[color:hsl(84,93%,72%)] transition-all hover:-translate-y-px active:translate-y-0 shadow-lg shadow-[var(--brand-lime)]/20"
               >
-                Compare Offers
+                Start EarnGrind Rewards
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
               <Link
-                href="/guides"
+                href="/offers"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
               >
-                Browse Guides
+                Compare Live Offers
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[var(--surface-muted)] py-14 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 max-w-3xl">
+            <p className="section-label mb-3">Choose your path</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+              Browse freely or use tracked Rewards Beta
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+              EarnGrind keeps public offer discovery open. Login is only required when EarnGrind needs to track your rewards, wallet, and support history.
+            </p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-2">
+            <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-sm">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                  No signup required
+                </span>
+              </div>
+              <h3 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">Compare GPT Offers</h3>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                Compare live offers, guides, partner sites, and partner payouts without creating an EarnGrind account.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm font-semibold text-[var(--text-secondary)]">
+                <li>Browse /offers, /games, /guides, and /best-gpt-sites.</li>
+                <li>Normal partner redirects stay ungated.</li>
+                <li>Partner GPT sites pay directly for partner offers.</li>
+              </ul>
+              <Link
+                href="/offers"
+                className="mt-6 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2.5 text-sm font-extrabold text-white transition-colors hover:bg-[var(--brand-ink)]/90"
+              >
+                Browse Offers
+              </Link>
+            </div>
+
+            <div className="rounded-2xl border border-lime-200 bg-white p-6 shadow-sm">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-lime-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-lime-800">
+                  Beta
+                </span>
+                <span className="rounded-full bg-amber-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-amber-800">
+                  Login required
+                </span>
+              </div>
+              <h3 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">EarnGrind Rewards Beta</h3>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                Track rewards, wallet status, support tickets, and offerwall completions directly through EarnGrind when beta walls are available.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm font-semibold text-[var(--text-secondary)]">
+                <li>Tracked clicks and provider confirmations are tied to your account.</li>
+                <li>Wallet and missing reward support need login history.</li>
+                <li>Cashouts are not available yet.</li>
+              </ul>
               <Link
                 href="/earn"
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
+                className="mt-6 inline-flex rounded-xl bg-[var(--brand-lime)] px-4 py-2.5 text-sm font-extrabold text-[var(--brand-ink)] transition-colors hover:bg-[color:hsl(84,93%,72%)]"
               >
-                Earn Rewards Beta
+                Start Rewards
               </Link>
             </div>
           </div>
@@ -339,7 +398,7 @@ export default async function HomePage() {
               Start with the path that matches what you need
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)] max-w-2xl">
-              New users should check platform trust first. Returning users can jump straight into live offer comparisons or game guides.
+              New visitors can browse without signup. Rewards users should log in so tracked clicks, wallet history, and support tickets stay connected.
             </p>
           </div>
 
@@ -471,7 +530,7 @@ export default async function HomePage() {
           <div className="space-y-3">
             <FaqItem
               question="Is this actually real? Can I really earn money?"
-              answer="Yes. The partner GPT sites we list pay real money to users for partner offers. EarnGrind Rewards Beta is separate: it can credit logged-in users after provider confirmation when EarnGrind-tracked walls are available."
+              answer="Yes. Some offers send you to partner GPT sites that pay you directly. EarnGrind Rewards Beta is separate and can credit logged-in users after provider confirmation when EarnGrind-tracked walls are available."
             />
             <FaqItem
               question="How much can I earn?"
@@ -479,7 +538,7 @@ export default async function HomePage() {
             />
             <FaqItem
               question="Do I need to pay anything to start?"
-              answer="No. EarnGrind is free to browse, and the linked GPT sites are free to join. No sign-up is required to browse. Login is required for EarnGrind Rewards."
+              answer="No. No signup is required to browse offers, guides, and GPT comparisons. Login is required for EarnGrind Rewards Beta because rewards need tracked clicks, wallet history, and support tools."
             />
             <FaqItem
               question="Why are there so many internal pages?"

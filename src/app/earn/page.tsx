@@ -67,6 +67,11 @@ export default async function EarnHubPage() {
                             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
                                 Compare GPT offers across partner platforms, or use EarnGrind Rewards Beta for tracked offerwalls that credit your EarnGrind wallet after provider confirmation.
                             </p>
+                            {!user ? (
+                                <div className="mt-5 rounded-2xl border border-white/10 bg-white/8 p-4 text-sm leading-relaxed text-white/75">
+                                    Rewards require login because EarnGrind has to connect tracked clicks, wallet history, and support tickets to your account. Browsing public offers, games, guides, and partner comparisons does not require an account.
+                                </div>
+                            ) : null}
                             <div className="mt-6 flex flex-wrap gap-3">
                                 {user ? (
                                     <>

@@ -61,6 +61,7 @@ const db = createClient(supabaseUrl, serviceRoleKey, {
 const now = new Date().toISOString();
 const cpaleadWallBaseUrl = process.env.CPALEAD_WALL_BASE_URL || "https://www.cpalead.com";
 const cpaleadWallId = process.env.CPALEAD_WALL_ID || "YOUR-WALL-SLUG";
+const cpaleadPostbackAllowedIps = parseCsvEnv("CPALEAD_POSTBACK_ALLOWED_IPS", ["34.69.179.33/32"]);
 
 function buildCpaleadWallTemplate(wallBaseUrl, wallId) {
   const url = new URL(wallBaseUrl);
@@ -77,6 +78,15 @@ function buildCpaleadWallTemplate(wallBaseUrl, wallId) {
 
   url.searchParams.set("subid", "{click_id}");
   return url.toString().replace("%7Bclick_id%7D", "{click_id}");
+}
+
+function parseCsvEnv(key, fallback) {
+  const values = (process.env[key] || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return values.length > 0 ? values : fallback;
 }
 
 const { data: partner, error: partnerError } = await db
@@ -195,13 +205,13 @@ const { data: cpaleadPostbackConfig, error: cpaleadPostbackConfigError } = await
       offer_partner_id: cpaleadPartner.id,
       provider_slug: "cpalead",
       status: "active",
-      secret_type: "static_token",
-      secret_env_var: "POSTBACK_PROVIDER_CPALEAD_SECRET",
+      secret_type: "none",
+      secret_env_var: null,
       signature_algorithm: "none",
       signature_location: "query",
-      signature_param: "password",
+      signature_param: null,
       allowed_methods: ["GET", "POST"],
-      allowed_ip_ranges: ["34.69.179.33/32"],
+      allowed_ip_ranges: cpaleadPostbackAllowedIps,
       click_id_param: "subid",
       transaction_id_param: "lead_id",
       payout_param: "payout",

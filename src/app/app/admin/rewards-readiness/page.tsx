@@ -12,8 +12,10 @@ type ProviderConfigRow = {
     id: string;
     provider_slug: string;
     status: string;
+    secret_type: string;
     secret_env_var: string | null;
     allowed_methods: string[] | null;
+    allowed_ip_ranges: string[] | null;
 };
 
 type EarnOfferRow = {
@@ -32,7 +34,7 @@ const REQUIRED_ENV_VARS = [
     "CPALEAD_PUBLISHER_ID",
     "CPALEAD_WALL_ID",
     "CPALEAD_WALL_BASE_URL",
-    "POSTBACK_PROVIDER_CPALEAD_SECRET",
+    "CPALEAD_POSTBACK_ALLOWED_IPS",
     "NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED",
     "EARN_REWARDS_PRIVATE_BETA_ENABLED",
     "EARN_REWARDS_PRIVATE_BETA_EMAILS",
@@ -61,7 +63,7 @@ export default async function RewardsReadinessPage() {
         db.from("offer_partners").select("id,slug,status", { count: "exact" }).eq("slug", "cpalead").limit(1),
         db
             .from("offer_partner_postback_configs")
-            .select("id,provider_slug,status,secret_env_var,allowed_methods")
+            .select("id,provider_slug,status,secret_type,secret_env_var,allowed_methods,allowed_ip_ranges")
             .eq("provider_slug", "cpalead")
             .maybeSingle(),
         db
@@ -92,6 +94,8 @@ export default async function RewardsReadinessPage() {
     const providerConfigExists = Boolean(config);
     const providerConfigActive = config?.status === "active";
     const cpaleadAllowsGet = Boolean(config?.allowed_methods?.includes("GET"));
+    const cpaleadPasswordlessPostback = config?.secret_type === "none" && !config?.secret_env_var;
+    const cpaleadIpAllowlistConfigured = Boolean(config?.allowed_ip_ranges?.filter(Boolean).length);
     const cpaleadOfferActive = offer?.status === "active";
     const cpaleadPartnerExists = (partnerResult.count ?? 0) > 0;
     const profileSystemReady = !profilesResult.error;
@@ -108,7 +112,10 @@ export default async function RewardsReadinessPage() {
                     ? readiness.privateBetaEmailCount ? `${readiness.privateBetaEmailCount} allowed` : "empty"
             : getEnvPresent(name) ? "set" : "missing",
     }));
-    const providerEnvReady = readiness.missing.length === 0 && getEnvPresent("NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED");
+    const missingRequiredEnv = requiredEnvStatuses.filter((env) => !env.present).map((env) => env.name);
+    const providerEnvReady = readiness.missing.length === 0
+        && getEnvPresent("NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED")
+        && getEnvPresent("CPALEAD_POSTBACK_ALLOWED_IPS");
     const privateBetaReady = readiness.privateBetaEnabled && readiness.privateBetaEmailCount > 0;
     const wallAccessReady = readiness.publicEnabled || privateBetaReady;
     const cpaleadReadyForInternalTesting = [
@@ -118,6 +125,8 @@ export default async function RewardsReadinessPage() {
         providerConfigExists,
         providerConfigActive,
         cpaleadAllowsGet,
+        cpaleadPasswordlessPostback,
+        cpaleadIpAllowlistConfigured,
         cpaleadOfferActive,
         profileSystemReady,
         manualReviewReady,
@@ -161,7 +170,7 @@ export default async function RewardsReadinessPage() {
             </div>
 
             <section className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-900">
-                CPAlead GET postbacks include password in the request URL. App payloads are redacted, but Vercel, proxy, or access logs may capture query strings before app redaction runs. Review hosting/proxy logs or ask CPAlead about POST/header/IP-only alternatives before real traffic.
+                CPAlead postbacks must stay passwordless in the URL. Use the CPAlead relay IP allowlist plus duplicate/replay protections; do not add password, token, or secret query parameters to the saved CPAlead postback URL.
             </section>
 
             <section className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
@@ -199,7 +208,7 @@ export default async function RewardsReadinessPage() {
                             {
                                 label: "Required CPAlead env vars",
                                 ready: providerEnvReady,
-                                detail: readiness.missing.length ? `Missing: ${readiness.missing.join(", ")}` : "All required values are set",
+                                detail: missingRequiredEnv.length ? `Missing: ${missingRequiredEnv.join(", ")}` : "All required values are set",
                             },
                             {
                                 label: "CPAlead partner exists",
@@ -220,6 +229,20 @@ export default async function RewardsReadinessPage() {
                                 label: "CPAlead allowed_methods includes GET",
                                 ready: cpaleadAllowsGet,
                                 detail: config?.allowed_methods?.join(", ") || "missing",
+                            },
+                            {
+                                label: "CPAlead postback URL has no query secret",
+                                ready: cpaleadPasswordlessPostback,
+                                detail: cpaleadPasswordlessPostback
+                                    ? "secret_type none, no secret env var"
+                                    : `secret_type ${config?.secret_type ?? "missing"} with ${config?.secret_env_var ? "secret env var set" : "no secret env var"}`,
+                            },
+                            {
+                                label: "CPAlead IP allowlist configured",
+                                ready: cpaleadIpAllowlistConfigured,
+                                detail: cpaleadIpAllowlistConfigured
+                                    ? `${config?.allowed_ip_ranges?.filter(Boolean).length ?? 0} CIDR range${config?.allowed_ip_ranges?.filter(Boolean).length === 1 ? "" : "s"}`
+                                    : "Missing allowed_ip_ranges",
                             },
                             {
                                 label: "CPAlead offer exists and is active",
@@ -287,7 +310,7 @@ export default async function RewardsReadinessPage() {
                         title="Blocked for public launch"
                         active
                         critical
-                        description="Public rewards launch remains blocked by GET-password logging risk and missing cashout/withdrawal implementation."
+                        description="Public rewards launch remains blocked until passwordless CPAlead postback setup is verified in production and cashouts/withdrawals are implemented."
                     />
                 </div>
             </AdminPanel>

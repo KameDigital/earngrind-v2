@@ -21,7 +21,6 @@ export function getCpaleadReadiness(userEmail?: string | null): CpaleadReadiness
         process.env.CPALEAD_PUBLISHER_ID?.trim() ? null : "CPALEAD_PUBLISHER_ID",
         wallBaseUrl && isHttpUrl(wallBaseUrl) ? null : "CPALEAD_WALL_BASE_URL",
         process.env.CPALEAD_WALL_ID?.trim() ? null : "CPALEAD_WALL_ID",
-        process.env.POSTBACK_PROVIDER_CPALEAD_SECRET?.trim() ? null : "POSTBACK_PROVIDER_CPALEAD_SECRET",
     ].filter(Boolean) as string[];
 
     return {

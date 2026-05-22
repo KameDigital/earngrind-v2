@@ -34,10 +34,7 @@ const REQUIRED_ENV_VARS = [
     "CPALEAD_PUBLISHER_ID",
     "CPALEAD_WALL_ID",
     "CPALEAD_WALL_BASE_URL",
-    "CPALEAD_POSTBACK_ALLOWED_IPS",
     "NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED",
-    "EARN_REWARDS_PRIVATE_BETA_ENABLED",
-    "EARN_REWARDS_PRIVATE_BETA_EMAILS",
 ] as const;
 
 export default async function RewardsReadinessPage() {
@@ -92,10 +89,8 @@ export default async function RewardsReadinessPage() {
     const config = configResult.data as ProviderConfigRow | null;
     const offer = offerResult.data as EarnOfferRow | null;
     const providerConfigExists = Boolean(config);
-    const providerConfigActive = config?.status === "active";
-    const cpaleadAllowsGet = Boolean(config?.allowed_methods?.includes("GET"));
-    const cpaleadPasswordlessPostback = config?.secret_type === "none" && !config?.secret_env_var;
-    const cpaleadIpAllowlistConfigured = Boolean(config?.allowed_ip_ranges?.filter(Boolean).length);
+    const cpaleadAutomaticPostbacksDisabled = config?.status === "paused" && !config?.allowed_methods?.includes("GET");
+    const cpaleadManualPostbackSafe = config?.secret_type === "none" && !config?.secret_env_var;
     const cpaleadOfferActive = offer?.status === "active";
     const cpaleadPartnerExists = (partnerResult.count ?? 0) > 0;
     const profileSystemReady = !profilesResult.error;
@@ -106,16 +101,11 @@ export default async function RewardsReadinessPage() {
         present: getEnvPresent(name),
         valueLabel: name === "NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED"
             ? featureFlagValue || "missing"
-            : name === "EARN_REWARDS_PRIVATE_BETA_ENABLED"
-                ? privateBetaFlagValue || "missing"
-                : name === "EARN_REWARDS_PRIVATE_BETA_EMAILS"
-                    ? readiness.privateBetaEmailCount ? `${readiness.privateBetaEmailCount} allowed` : "empty"
             : getEnvPresent(name) ? "set" : "missing",
     }));
     const missingRequiredEnv = requiredEnvStatuses.filter((env) => !env.present).map((env) => env.name);
     const providerEnvReady = readiness.missing.length === 0
-        && getEnvPresent("NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED")
-        && getEnvPresent("CPALEAD_POSTBACK_ALLOWED_IPS");
+        && getEnvPresent("NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED");
     const privateBetaReady = readiness.privateBetaEnabled && readiness.privateBetaEmailCount > 0;
     const wallAccessReady = readiness.publicEnabled || privateBetaReady;
     const cpaleadReadyForInternalTesting = [
@@ -123,10 +113,8 @@ export default async function RewardsReadinessPage() {
         wallAccessReady,
         cpaleadPartnerExists,
         providerConfigExists,
-        providerConfigActive,
-        cpaleadAllowsGet,
-        cpaleadPasswordlessPostback,
-        cpaleadIpAllowlistConfigured,
+        cpaleadAutomaticPostbacksDisabled,
+        cpaleadManualPostbackSafe,
         cpaleadOfferActive,
         profileSystemReady,
         manualReviewReady,
@@ -170,7 +158,7 @@ export default async function RewardsReadinessPage() {
             </div>
 
             <section className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-900">
-                CPAlead postbacks must stay passwordless in the URL. Use the CPAlead relay IP allowlist plus duplicate/replay protections; do not add password, token, or secret query parameters to the saved CPAlead postback URL.
+                CPAlead is in manual-credit mode. Do not save CPAlead macro query parameters against earngrind.com; verify completions in CPAlead, then credit users from the support queue or click lookup.
             </section>
 
             <section className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
@@ -221,28 +209,28 @@ export default async function RewardsReadinessPage() {
                                 detail: providerConfigExists ? `Config ${config?.id}` : "Missing offer_partner_postback_configs row",
                             },
                             {
-                                label: "CPAlead postback config active",
-                                ready: providerConfigActive,
+                                label: "CPAlead automatic postbacks disabled",
+                                ready: cpaleadAutomaticPostbacksDisabled,
                                 detail: config?.status ?? "missing",
                             },
                             {
-                                label: "CPAlead allowed_methods includes GET",
-                                ready: cpaleadAllowsGet,
+                                label: "CPAlead direct GET disabled",
+                                ready: Boolean(config && !config.allowed_methods?.includes("GET")),
                                 detail: config?.allowed_methods?.join(", ") || "missing",
                             },
                             {
-                                label: "CPAlead postback URL has no query secret",
-                                ready: cpaleadPasswordlessPostback,
-                                detail: cpaleadPasswordlessPostback
+                                label: "CPAlead postback config stores no secret",
+                                ready: cpaleadManualPostbackSafe,
+                                detail: cpaleadManualPostbackSafe
                                     ? "secret_type none, no secret env var"
                                     : `secret_type ${config?.secret_type ?? "missing"} with ${config?.secret_env_var ? "secret env var set" : "no secret env var"}`,
                             },
                             {
-                                label: "CPAlead IP allowlist configured",
-                                ready: cpaleadIpAllowlistConfigured,
-                                detail: cpaleadIpAllowlistConfigured
-                                    ? `${config?.allowed_ip_ranges?.filter(Boolean).length ?? 0} CIDR range${config?.allowed_ip_ranges?.filter(Boolean).length === 1 ? "" : "s"}`
-                                    : "Missing allowed_ip_ranges",
+                                label: "Manual credit workflow available",
+                                ready: manualReviewReady && supportTicketsReady,
+                                detail: manualReviewReady && supportTicketsReady
+                                    ? "Admin audit and support ticket systems are available"
+                                    : "Missing admin audit or support ticket table",
                             },
                             {
                                 label: "CPAlead offer exists and is active",
@@ -284,7 +272,7 @@ export default async function RewardsReadinessPage() {
                         </div>
                     </AdminPanel>
 
-                    <AdminPanel title="Recent activity" description="Last 7 days. Failed postbacks do not create reward credits.">
+                    <AdminPanel title="Recent activity" description="Last 7 days. CPAlead rewards are credited manually, not from automatic postbacks.">
                         <div className="grid gap-3">
                             <MetricRow label="Postback receipts" value={countLabel(receiptsResult)} />
                             <MetricRow label="Failed postbacks" value={countLabel(failedReceiptsResult)} />
@@ -304,13 +292,13 @@ export default async function RewardsReadinessPage() {
                     <DecisionCard
                         title="Not ready"
                         active={!cpaleadReadyForInternalTesting}
-                        description="Resolve missing env, provider config, offer, or table prerequisites before testing."
+                        description="Resolve missing env, manual-credit config, offer, or table prerequisites before testing."
                     />
                     <DecisionCard
                         title="Blocked for public launch"
                         active
                         critical
-                        description="Public rewards launch remains blocked until passwordless CPAlead postback setup is verified in production and cashouts/withdrawals are implemented."
+                        description="Public rewards launch remains blocked until manual credit operations are proven in production and cashouts/withdrawals are implemented."
                     />
                 </div>
             </AdminPanel>

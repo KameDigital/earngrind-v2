@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { AdminPageHeader, AdminPanel, AdminStatCard } from "@/components/admin/AdminUi";
 import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { updateRewardSupportTicketAction } from "./actions";
+import { createManualCpaleadCreditAction, updateRewardSupportTicketAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Reward Support | EarnGrind Admin" };
@@ -91,12 +91,12 @@ export default async function RewardSupportAdminPage({ searchParams }: RewardSup
             />
 
             <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900">
-                Support tickets are an admin review workflow only. Provider confirmations, conversion status, and ledger integrity remain separate from user-submitted claims.
+                Support tickets are an admin review workflow. Manual CPAlead credits must be verified in the CPAlead dashboard first, use the stored click reward snapshot, and do not create payouts or cashouts.
             </div>
 
             {searchParams?.updated ? (
                 <p className="rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-sm font-semibold text-lime-800">
-                    Support ticket update was saved and audited.
+                    Admin action was saved and audited.
                 </p>
             ) : null}
 
@@ -112,6 +112,52 @@ export default async function RewardSupportAdminPage({ searchParams }: RewardSup
                 <AdminStatCard label="Escalated" value={escalatedCount} tone={escalatedCount > 0 ? "critical" : "neutral"} />
                 <AdminStatCard label="Resolved" value={resolvedCount} tone={resolvedCount > 0 ? "good" : "neutral"} />
             </section>
+
+            <AdminPanel
+                title="Manual CPAlead credit"
+                description="Use only after verifying the CPAlead completion in the publisher dashboard. The reward amount comes from the original EarnGrind click snapshot."
+            >
+                <form action={createManualCpaleadCreditAction} className="grid gap-3 rounded-xl border border-gray-100 bg-gray-50 p-4 lg:grid-cols-[minmax(220px,1fr)_minmax(220px,1fr)_minmax(260px,1.4fr)_auto] lg:items-end">
+                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                        EarnGrind click/subid
+                        <input
+                            name="click_id"
+                            required
+                            className="mt-1 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold normal-case tracking-normal text-gray-800"
+                            placeholder="click_id from CPAlead subid"
+                        />
+                    </label>
+                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                        CPAlead lead/reference
+                        <input
+                            name="external_reference"
+                            required
+                            maxLength={200}
+                            className="mt-1 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold normal-case tracking-normal text-gray-800"
+                            placeholder="lead_id or verified reference"
+                        />
+                    </label>
+                    <label className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                        Required admin reason
+                        <input
+                            name="admin_reason"
+                            required
+                            maxLength={200}
+                            className="mt-1 h-11 w-full rounded-lg border border-gray-200 bg-white px-3 text-sm font-semibold normal-case tracking-normal text-gray-800"
+                            placeholder="Verified in CPAlead dashboard"
+                        />
+                    </label>
+                    <button
+                        type="submit"
+                        className="h-11 rounded-lg bg-gray-950 px-4 text-sm font-bold text-white hover:bg-gray-800"
+                    >
+                        Credit click
+                    </button>
+                </form>
+                <p className="mt-3 text-xs font-semibold text-amber-700">
+                    Duplicate CPAlead lead/reference values are blocked by provider + external transaction uniqueness. Manual credit creates conversion and ledger rows only, never payout/cashout rows.
+                </p>
+            </AdminPanel>
 
             <AdminPanel title="Support tickets" description="Update ticket workflow status and admin notes. Use conversions and reward ledger pages for status or ledger decisions.">
                 {error ? (
@@ -187,6 +233,42 @@ export default async function RewardSupportAdminPage({ searchParams }: RewardSup
                                                     Rewards
                                                 </Link>
                                             </div>
+                                            {row.click_id && row.provider_slug === "cpalead" && !row.conversion_event_id ? (
+                                                <form action={createManualCpaleadCreditAction} className="mt-3 grid gap-2 rounded-xl border border-lime-100 bg-lime-50 p-3">
+                                                    <input type="hidden" name="support_ticket_id" value={row.id} />
+                                                    <input type="hidden" name="click_id" value={row.click_id} />
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-lime-700">
+                                                        CPAlead lead/reference
+                                                        <input
+                                                            name="external_reference"
+                                                            required
+                                                            maxLength={200}
+                                                            className="mt-1 h-10 w-full rounded-lg border border-lime-200 bg-white px-2 text-sm font-semibold normal-case tracking-normal text-gray-800"
+                                                            placeholder="Verified CPAlead lead_id"
+                                                        />
+                                                    </label>
+                                                    <label className="text-xs font-bold uppercase tracking-widest text-lime-700">
+                                                        Credit reason
+                                                        <textarea
+                                                            name="admin_reason"
+                                                            required
+                                                            rows={2}
+                                                            maxLength={200}
+                                                            className="mt-1 w-full rounded-lg border border-lime-200 bg-white px-2 py-2 text-sm font-medium normal-case tracking-normal text-gray-700"
+                                                            placeholder="Verified in CPAlead dashboard"
+                                                        />
+                                                    </label>
+                                                    <button
+                                                        type="submit"
+                                                        className="rounded-lg bg-lime-700 px-3 py-2 text-sm font-bold text-white hover:bg-lime-800"
+                                                    >
+                                                        Credit this ticket
+                                                    </button>
+                                                    <p className="text-xs font-semibold text-lime-800">
+                                                        Uses stored click reward amount. No payout or cashout action is created.
+                                                    </p>
+                                                </form>
+                                            ) : null}
                                         </td>
                                         <td className="px-3 py-3">
                                             <form action={updateRewardSupportTicketAction} className="grid min-w-72 gap-2 rounded-xl border border-gray-100 bg-gray-50 p-3">

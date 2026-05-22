@@ -4,11 +4,9 @@
 
 EarnGrind rewards are built around tracked offer clicks, provider postback receipts, conversion events, and a user reward ledger. Users must have an `earn_user_profiles` row before earning, and reward access is controlled by `reward_status`, `review_status`, and `accepted_rewards_terms_at`.
 
-CPAlead is currently integrated as a beta hosted offerwall at `/earn/walls/cpalead`. The wall creates an EarnGrind `click_id`, passes it to CPAlead as `subid`, and expects provider postbacks at:
+CPAlead is currently integrated as a beta hosted offerwall at `/earn/walls/cpalead`. The wall creates an EarnGrind `click_id` and passes it to CPAlead as `subid`.
 
-```text
-https://earngrind.com/api/postbacks/cpalead
-```
+CPAlead rewards are currently manual-credit only. Admins verify completions in the CPAlead publisher dashboard using `subid=<EarnGrind click_id>` and the CPAlead lead/reference id, then credit the matching EarnGrind click from `/app/admin/reward-support`.
 
 The hosted wall URL is built from the CPAlead-generated wall base URL plus the wall id. Example wall URL shape:
 
@@ -25,10 +23,9 @@ EARN_REWARDS_PRIVATE_BETA_EMAILS=
 CPALEAD_PUBLISHER_ID=
 CPALEAD_WALL_BASE_URL=
 CPALEAD_WALL_ID=
-CPALEAD_POSTBACK_ALLOWED_IPS=34.69.179.33/32
 ```
 
-`NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED` is a public UI availability flag only. Do not use it for secrets. CPAlead postbacks should not include a password, token, or secret in the URL. The provider config should use `secret_type = none`, `secret_env_var = null`, and a strict CPAlead relay IP allowlist.
+`NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED` is a public UI availability flag only. Do not use it for secrets. In manual-credit mode, CPAlead postbacks should be disabled or saved as a no-query URL only. Do not save CPAlead macro query parameters against `earngrind.com`.
 
 `EARN_REWARDS_PRIVATE_BETA_ENABLED` and `EARN_REWARDS_PRIVATE_BETA_EMAILS` are server-only controls for allowlisted testing. Do not prefix them with `NEXT_PUBLIC_`, and do not put the CPAlead postback secret or any other secret in the allowlist.
 
@@ -44,31 +41,31 @@ EARN_REWARDS_PRIVATE_BETA_EMAILS=tester@example.com
 
 The allowlist is comma-separated and matched case-insensitively against the logged-in user's email address. Private beta access still requires an active rewards profile, accepted rewards terms, valid CPAlead setup, and normal CPAlead provider config. Private beta is not a public launch; do not enable the public `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=true` flag until the launch decision is explicit.
 
-## CPAlead Passwordless GET Postbacks
+## CPAlead Manual Credit Mode
 
-CPAlead GET postbacks can include `password` in the request URL if the saved dashboard URL contains `password={password}`. Do not use that URL shape. Infrastructure, proxy, CDN, hosting, or framework access logs may capture full query strings before EarnGrind app redaction runs.
+CPAlead GET postbacks put macro values in the request URL. A direct Vercel URL with `{subid}`, `{lead_id}`, `{campaign_name}`, or `{payout}` can expose those values in infrastructure, proxy, CDN, hosting, or framework logs before EarnGrind app redaction runs.
 
-Use this passwordless URL shape instead:
+For manual-credit mode, keep CPAlead postbacks disabled if possible. If CPAlead requires a saved URL, use this no-query URL only:
 
 ```text
-https://earngrind.com/api/postbacks/cpalead?subid={subid}&lead_id={lead_id}&campaign_id={campaign_id}&campaign_name={campaign_name}&payout={payout}&currency=USD&status=approved
+https://earngrind.com/api/postbacks/cpalead
 ```
 
-EarnGrind validates CPAlead with the configured `allowed_ip_ranges` and still applies receipt logging, payload redaction, replay protection, duplicate `lead_id` protection, conversion lifecycle rules, and manual admin review. This removes the URL-secret logging risk, but it does mean CPAlead access depends on the relay IP allowlist staying current.
+This endpoint will not credit rewards without the required postback fields. Admins should credit verified completions manually from `/app/admin/reward-support` using the EarnGrind `click_id` and a unique CPAlead lead/reference id. Manual credits use the original `offer_clicks.user_reward_cents` snapshot and write conversion, ledger, support-ticket, and audit records.
 
 ## Checklist Before Real Traffic
 
 - Confirm `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=true` only in the intended environment.
 - For private beta, keep `NEXT_PUBLIC_EARN_CPALEAD_WALL_ENABLED=false`, set `EARN_REWARDS_PRIVATE_BETA_ENABLED=true`, and allowlist only selected test-account emails.
-- Confirm `CPALEAD_PUBLISHER_ID`, `CPALEAD_WALL_BASE_URL`, `CPALEAD_WALL_ID`, and `CPALEAD_POSTBACK_ALLOWED_IPS` are set.
-- Confirm CPAlead provider config has `secret_type = none`, `secret_env_var = null`, and a non-empty `allowed_ip_ranges` list.
-- Confirm the saved CPAlead dashboard postback URL does not include `password`, `token`, `secret`, or any other credential query parameter.
+- Confirm `CPALEAD_PUBLISHER_ID`, `CPALEAD_WALL_BASE_URL`, and `CPALEAD_WALL_ID` are set.
+- Confirm CPAlead provider config is paused for automatic postbacks and does not allow direct GET crediting.
+- Confirm the saved CPAlead dashboard postback URL does not include `{subid}`, `{lead_id}`, `{campaign_id}`, `{campaign_name}`, `{payout}`, `password`, `token`, `secret`, or any other macro/credential query parameter.
+- Confirm admins can manually credit a verified CPAlead completion from `/app/admin/reward-support`.
 - Confirm `/earn/wallet` requires rewards terms acceptance before wall access.
 - Confirm `/earn/walls/cpalead` blocks users without accepted terms.
 - Confirm `limited`, `suspended`, and `banned` reward profiles cannot open the wall.
-- Confirm failed postbacks store redacted receipts only.
-- Confirm duplicate CPAlead `lead_id` values do not duplicate ledger credit.
-- Confirm hosting/proxy logs are reviewed for query-string exposure before using any provider that requires URL secrets.
+- Confirm duplicate CPAlead lead/reference values do not duplicate ledger credit.
+- Confirm hosting/proxy logs are reviewed before ever re-enabling automatic provider postbacks.
 
 ## Not Implemented Yet
 

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { requireAdminOrEditor } from "@/lib/admin-auth";
+import { createManualCpaleadCredit, ManualCreditError } from "@/lib/earn-manual-credit";
 import { writeEarnAdminAuditEvent } from "@/lib/earn-admin-audit";
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -18,6 +19,11 @@ function parseAdminNote(value: FormDataEntryValue | null) {
     if (typeof value !== "string") return null;
     const trimmed = value.trim();
     return trimmed ? trimmed.slice(0, 500) : null;
+}
+
+function parseRequiredText(value: FormDataEntryValue | null, maxLength: number) {
+    if (typeof value !== "string") return "";
+    return value.trim().slice(0, maxLength);
 }
 
 function uniqueNotes(existing: string[] | null | undefined, next: string | null) {
@@ -87,4 +93,49 @@ export async function updateRewardSupportTicketAction(formData: FormData) {
     revalidatePath("/app/admin/reward-support");
     revalidatePath("/earn/support");
     redirect("/app/admin/reward-support?updated=ticket");
+}
+
+export async function createManualCpaleadCreditAction(formData: FormData) {
+    const auth = await requireAdminOrEditor();
+    if (!auth.ok) {
+        redirect(auth.status === 401 ? "/login" : "/app/dashboard");
+    }
+
+    const clickId = parseRequiredText(formData.get("click_id"), 80);
+    const externalReference = parseRequiredText(formData.get("external_reference"), 200);
+    const adminReason = parseRequiredText(formData.get("admin_reason"), 200);
+    const supportTicketId = parseRequiredText(formData.get("support_ticket_id"), 80) || null;
+
+    if (!clickId || !externalReference || !adminReason) {
+        redirect("/app/admin/reward-support?error=manual_credit_missing");
+    }
+
+    const db = createAdminClient();
+
+    try {
+        await createManualCpaleadCredit({
+            db,
+            adminUserId: auth.userId,
+            clickId,
+            externalReference,
+            adminReason,
+            supportTicketId,
+        });
+    } catch (error) {
+        if (error instanceof ManualCreditError) {
+            redirect(`/app/admin/reward-support?error=${encodeURIComponent(error.code)}`);
+        }
+
+        console.error("[admin/reward-support] manual CPAlead credit failed", {
+            message: error instanceof Error ? error.message : "unknown",
+        });
+        redirect("/app/admin/reward-support?error=manual_credit_failed");
+    }
+
+    revalidatePath("/app/admin/reward-support");
+    revalidatePath("/app/admin/conversions");
+    revalidatePath("/app/admin/rewards");
+    revalidatePath("/earn/support");
+    revalidatePath("/earn/wallet");
+    redirect("/app/admin/reward-support?updated=manual_credit");
 }

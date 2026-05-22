@@ -2,7 +2,11 @@ import "server-only";
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-type AuditTargetType = "earn_user_profile" | "conversion_event" | "user_reward_ledger";
+type AuditTargetType =
+  | "earn_user_profile"
+  | "conversion_event"
+  | "user_reward_ledger"
+  | "earn_reward_support_ticket";
 
 type WriteEarnAdminAuditEventInput = {
   adminUserId: string;

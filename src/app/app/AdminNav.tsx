@@ -69,6 +69,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
             { href: "/app/admin/earn-users", label: "Earn Users", icon: Users },
             { href: "/app/admin/conversions", label: "Conversions", icon: BarChart3 },
             { href: "/app/admin/rewards", label: "Reward Ledger", icon: WalletCards },
+            { href: "/app/admin/reward-support", label: "Reward Support", icon: ClipboardList },
             { href: "/app/admin/site-offers", label: "Manual Offers", icon: Boxes },
             { href: "/app/admin/offers", label: "Ingested Offers", icon: LibraryBig },
             { href: "/app/admin/outbound", label: "Outbound Analytics", icon: BarChart3 },

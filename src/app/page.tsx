@@ -78,12 +78,6 @@ const START_HERE_ITEMS = [
     badge: "Completion help",
     desc: "Use proven walkthroughs to finish milestones faster, avoid mistakes, and reach payout checkpoints sooner.",
   },
-  {
-    name: "EarnGrind Rewards Beta",
-    href: "/earn",
-    badge: "Logged-in beta",
-    desc: "Use EarnGrind-tracked reward walls when available. Rewards credit only after provider confirmation.",
-  },
 ] as const;
 
 const HOW_IT_WORKS_STEPS = [
@@ -100,7 +94,7 @@ const HOW_IT_WORKS_STEPS = [
   {
     step: "3",
     title: "Choose the payout path",
-    desc: "Partner GPT offers pay through the partner platform. EarnGrind Rewards Beta can track logged-in reward walls, but cashouts are not available yet.",
+    desc: "Partner GPT offers pay through the partner platform. EarnGrind helps you compare routes before you leave for the partner site.",
   },
 ] as const;
 
@@ -261,7 +255,7 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl">
-              Compare live GPT offers across trusted platforms, or join EarnGrind Rewards Beta to track rewards directly through EarnGrind.
+              Compare live GPT offers across trusted platforms, use guides to finish faster, and choose the best partner payout route before you start.
             </p>
 
             <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -284,7 +278,7 @@ export default async function HomePage() {
             </div>
 
             <div className="mb-8 flex flex-wrap items-center justify-start gap-2.5">
-              {["Browse without signup", "Partner payouts stay ungated", "Rewards Beta needs login"].map((item) => (
+              {["Browse without signup", "Partner payouts stay ungated", "Compare before you click"].map((item) => (
                 <span
                   key={item}
                   className="inline-flex items-center rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-xs font-bold text-white/80"
@@ -296,19 +290,19 @@ export default async function HomePage() {
 
             <div className="flex flex-wrap items-center justify-start gap-3">
               <Link
-                href="/earn"
+                href="/offers"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-[var(--brand-lime)] text-[var(--brand-ink)] font-extrabold text-sm rounded-xl hover:bg-[color:hsl(84,93%,72%)] transition-all hover:-translate-y-px active:translate-y-0 shadow-lg shadow-[var(--brand-lime)]/20"
               >
-                Start EarnGrind Rewards
+                Compare Live Offers
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
               <Link
-                href="/offers"
+                href="/best-gpt-sites"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
               >
-                Compare Live Offers
+                Best GPT Sites
               </Link>
             </div>
           </div>
@@ -320,10 +314,10 @@ export default async function HomePage() {
           <div className="mb-8 max-w-3xl">
             <p className="section-label mb-3">Choose your path</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--brand-ink)]">
-              Browse freely or use tracked Rewards Beta
+              Browse freely by offer or by guide
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-              EarnGrind keeps public offer discovery open. Login is only required when EarnGrind needs to track your rewards, wallet, and support history.
+              EarnGrind keeps public offer discovery open so you can compare platforms, payouts, and completion paths without creating an account.
             </p>
           </div>
 
@@ -351,29 +345,26 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            <div className="rounded-2xl border border-lime-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-sm">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-lime-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-lime-800">
-                  Beta
-                </span>
-                <span className="rounded-full bg-amber-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-amber-800">
-                  Login required
+                <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                  Completion help
                 </span>
               </div>
-              <h3 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">EarnGrind Rewards Beta</h3>
+              <h3 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">Use Game Guides</h3>
               <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-                Track rewards, wallet status, support tickets, and offerwall completions directly through EarnGrind when beta walls are available.
+                Read walkthroughs before starting high-value game offers so you understand milestones, timing, and common mistakes.
               </p>
               <ul className="mt-5 space-y-2 text-sm font-semibold text-[var(--text-secondary)]">
-                <li>Tracked clicks and provider confirmations are tied to your account.</li>
-                <li>Wallet and missing reward support need login history.</li>
-                <li>Cashouts are not available yet.</li>
+                <li>Find route-specific tips before clicking out.</li>
+                <li>Compare milestones across platforms when multiple routes exist.</li>
+                <li>Use guides alongside live payout discovery.</li>
               </ul>
               <Link
-                href="/earn"
-                className="mt-6 inline-flex rounded-xl bg-[var(--brand-lime)] px-4 py-2.5 text-sm font-extrabold text-[var(--brand-ink)] transition-colors hover:bg-[color:hsl(84,93%,72%)]"
+                href="/guides"
+                className="mt-6 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2.5 text-sm font-extrabold text-white transition-colors hover:bg-[var(--brand-ink)]/90"
               >
-                Start Rewards
+                Browse Guides
               </Link>
             </div>
           </div>
@@ -420,7 +411,7 @@ export default async function HomePage() {
                     EarnGrind compares those live offers, publishes game pages, and connects you to detailed guides so you can choose better routes before you start.
                   </p>
                   <p>
-                    EarnGrind Rewards Beta adds a second path for logged-in users: tracked reward walls can credit your EarnGrind wallet after provider confirmation, while partner GPT offers still pay through the partner platform.
+                    EarnGrind keeps the comparison layer separate from partner payout systems: you browse here, then complete eligible offers on the partner platform that owns the payout.
                   </p>
                 </div>
               </div>
@@ -448,7 +439,7 @@ export default async function HomePage() {
             <div className="mt-8 rounded-2xl border border-[var(--border-default)] bg-white px-4 py-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
               <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery, <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion, or <Link href="/earn" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">EarnGrind Rewards Beta</Link> for logged-in tracked rewards.
+                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
               </p>
             </div>
           </div>
@@ -530,7 +521,7 @@ export default async function HomePage() {
           <div className="space-y-3">
             <FaqItem
               question="Is this actually real? Can I really earn money?"
-              answer="Yes. Some offers send you to partner GPT sites that pay you directly. EarnGrind Rewards Beta is separate and can credit logged-in users after provider confirmation when EarnGrind-tracked walls are available."
+              answer="Yes. EarnGrind helps you compare offers from partner GPT sites. When you click out to a partner platform, that partner owns the offer completion, approval, and payout process."
             />
             <FaqItem
               question="How much can I earn?"
@@ -538,7 +529,7 @@ export default async function HomePage() {
             />
             <FaqItem
               question="Do I need to pay anything to start?"
-              answer="No. No signup is required to browse offers, guides, and GPT comparisons. Login is required for EarnGrind Rewards Beta because rewards need tracked clicks, wallet history, and support tools."
+              answer="No. No signup is required to browse offers, guides, and GPT comparisons. Some partner platforms may require their own account before you can complete offers there."
             />
             <FaqItem
               question="Why are there so many internal pages?"
@@ -559,7 +550,7 @@ export default async function HomePage() {
             Ready to earn your first dollar online?
           </h2>
           <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
-            Start with the highest paying GPT offers, use game guides to finish faster, or open EarnGrind Rewards Beta when tracked rewards are available.
+            Start with the highest paying GPT offers, use game guides to finish faster, and compare partner payout routes before you click.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link
@@ -571,16 +562,10 @@ export default async function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
-            <Link
-              href="/earn"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-8 py-4 text-base font-extrabold text-white transition-all hover:bg-white/15"
-            >
-              Open Rewards Beta
-            </Link>
           </div>
 
           <p className="mt-5 text-xs text-white/30 font-medium">
-            No sign-up required to browse. Login is required for EarnGrind Rewards.
+            No sign-up required to browse EarnGrind. Partner platforms may require accounts for their own offers.
           </p>
         </div>
       </section>

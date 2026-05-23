@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { formatCents } from "@/lib/earn-rewards";
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createClient } from "@/lib/supabase/server";
 import { createRewardSupportTicketAction } from "./actions";
 
@@ -46,7 +47,11 @@ type TicketRow = {
 };
 
 export default async function RewardSupportPage({ searchParams }: SupportPageProps) {
-    const supabase = await createClient();
+    const publicEntryEnabled = process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true";
+    const adminAuth = publicEntryEnabled ? null : await requireAdminOrEditor();
+    if (adminAuth && !adminAuth.ok) redirect("/offers");
+
+    const supabase = adminAuth?.ok ? adminAuth.supabase : await createClient();
     const {
         data: { user },
     } = await supabase.auth.getUser();

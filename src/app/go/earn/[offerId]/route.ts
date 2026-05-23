@@ -1,5 +1,6 @@
 import { createHash } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -82,7 +83,13 @@ export async function GET(
         return NextResponse.json({ error: "invalid_offer_id" }, { status: 400 });
     }
 
-    const supabase = createClient();
+    const publicEntryEnabled = process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true";
+    const adminAuth = publicEntryEnabled ? null : await requireAdminOrEditor();
+    if (adminAuth && !adminAuth.ok) {
+        return NextResponse.redirect(new URL("/offers", req.nextUrl.origin), { status: 302 });
+    }
+
+    const supabase = adminAuth?.ok ? adminAuth.supabase : createClient();
     const {
         data: { user },
     } = await supabase.auth.getUser();

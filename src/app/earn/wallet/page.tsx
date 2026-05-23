@@ -1,5 +1,6 @@
 import { EARN_REWARDS_BETA_WARNING, formatCents } from "@/lib/earn-rewards";
 import { acceptRewardsTerms, getOrCreateEarnUserProfile } from "@/lib/earn-user-profile";
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
@@ -23,6 +24,11 @@ const REWARDS_TERMS_COPY = "EarnGrind rewards are in beta. Rewards are only cred
 async function acceptRewardsTermsAction() {
     "use server";
 
+    if (process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED !== "true") {
+        const adminAuth = await requireAdminOrEditor();
+        if (!adminAuth.ok) redirect("/offers");
+    }
+
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect("/login");
@@ -33,7 +39,11 @@ async function acceptRewardsTermsAction() {
 }
 
 export default async function EarnWalletPage() {
-    const supabase = createClient();
+    const publicEntryEnabled = process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true";
+    const adminAuth = publicEntryEnabled ? null : await requireAdminOrEditor();
+    if (adminAuth && !adminAuth.ok) redirect("/offers");
+
+    const supabase = adminAuth?.ok ? adminAuth.supabase : createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect("/login");
 

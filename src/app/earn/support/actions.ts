@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { createClient } from "@/lib/supabase/server";
 
 const ISSUE_TYPES = new Set([
@@ -33,6 +34,11 @@ function isUuid(value: string | null) {
 }
 
 export async function createRewardSupportTicketAction(formData: FormData) {
+    if (process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED !== "true") {
+        const adminAuth = await requireAdminOrEditor();
+        if (!adminAuth.ok) redirect("/offers");
+    }
+
     const supabase = await createClient();
     const {
         data: { user },

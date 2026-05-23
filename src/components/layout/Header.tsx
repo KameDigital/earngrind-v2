@@ -10,7 +10,7 @@ const NAV_LINKS = [
     { href: "/games", label: "Games" },
     { href: "/guides", label: "Guides", excludePrefixes: ["/guides/best-gpt-sites", "/guides/fanduel-casino-review-bonus"] },
     { href: "/best-gpt-sites", label: "Best GPT Sites", activePrefixes: ["/guides/best-gpt-sites"] },
-    { href: "/earn", label: "Earn Rewards" },
+    ...(process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true" ? [{ href: "/earn", label: "Earn Rewards" }] : []),
     { href: "/platforms", label: "Platforms", activePrefixes: ["/review", "/reviews", "/guides/fanduel-casino-review-bonus"] },
     { href: "/blog", label: "Blog" },
 ];

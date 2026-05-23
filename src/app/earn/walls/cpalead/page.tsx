@@ -2,6 +2,7 @@ import { createHash } from "crypto";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { buildCpaleadWallUrl, getCpaleadWallEnv } from "@/lib/cpalead";
 import { EARN_REWARDS_BETA_WARNING } from "@/lib/earn-rewards";
 import { EarnUserProfileAccessError, markRewardActivity, requireActiveEarnUserProfile } from "@/lib/earn-user-profile";
@@ -51,7 +52,11 @@ function getClientHints(): Record<string, string> {
 }
 
 export default async function CpaleadWallPage() {
-    const supabase = createClient();
+    const publicEntryEnabled = process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true";
+    const adminAuth = publicEntryEnabled ? null : await requireAdminOrEditor();
+    if (adminAuth && !adminAuth.ok) redirect("/offers");
+
+    const supabase = adminAuth?.ok ? adminAuth.supabase : createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect("/login?next=/earn/walls/cpalead");
 

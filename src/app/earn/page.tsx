@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
+import { requireAdminOrEditor } from "@/lib/admin-auth";
 import { formatCents } from "@/lib/earn-rewards";
 import { getCpaleadReadiness } from "@/lib/earn-provider-readiness";
 import { getOrCreateEarnUserProfile, type EarnUserProfile } from "@/lib/earn-user-profile";
@@ -17,7 +19,11 @@ const REWARDS_BETA_COPY =
     "EarnGrind Rewards is in beta. Rewards are credited only after provider confirmation and may pend, reject, reverse, or require manual review.";
 
 export default async function EarnHubPage() {
-    const supabase = createClient();
+    const publicEntryEnabled = process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true";
+    const adminAuth = publicEntryEnabled ? null : await requireAdminOrEditor();
+    if (adminAuth && !adminAuth.ok) redirect("/offers");
+
+    const supabase = adminAuth?.ok ? adminAuth.supabase : createClient();
     const {
         data: { user },
     } = await supabase.auth.getUser();

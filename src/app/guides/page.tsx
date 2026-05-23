@@ -164,6 +164,7 @@ function GuideIndexCard({
     imageUrl,
     difficulty,
     estimatedTime,
+    maxPayoutUsd,
 }: {
     href: string;
     label: string;
@@ -173,6 +174,7 @@ function GuideIndexCard({
     imageUrl?: string | null;
     difficulty?: "easy" | "medium" | "hard" | null;
     estimatedTime?: string | null;
+    maxPayoutUsd?: number | null;
 }) {
     return (
         <Link
@@ -209,6 +211,11 @@ function GuideIndexCard({
                 <DifficultyBadge difficulty={difficulty ?? null} />
                 {estimatedTime && (
                     <span className="text-xs font-medium text-[var(--text-tertiary)]">â± {estimatedTime}</span>
+                )}
+                {maxPayoutUsd != null && (
+                    <span className="ml-auto text-sm font-extrabold text-lime-600">
+                        up to ${maxPayoutUsd.toFixed(2)}
+                    </span>
                 )}
             </div>
         </Link>
@@ -414,13 +421,14 @@ export default async function GuidesPage({
                                 <GuideIndexCard
                                     key={guide.slug}
                                     href={guide.href}
-                                    label={guide.title.includes("World of Warships") ? "World of Warships" : "Offer Guide"}
+                                    label={guide.indexLabel ?? (guide.title.includes("World of Warships") ? "World of Warships" : "Offer Guide")}
                                     title={guide.title}
                                     description={guide.description}
-                                    initials={guide.title.includes("World of Warships") ? "WW" : "OG"}
+                                    initials={guide.initials ?? (guide.title.includes("World of Warships") ? "WW" : "OG")}
                                     imageUrl={null}
-                                    difficulty={guide.slug === "world-of-warships-torox-offer-guide" ? "easy" : null}
-                                    estimatedTime={guide.slug === "world-of-warships-torox-offer-guide" ? "Same day for many users" : "Completion time varies"}
+                                    difficulty={guide.difficulty ?? (guide.slug === "world-of-warships-torox-offer-guide" ? "easy" : null)}
+                                    estimatedTime={guide.estimatedTime ?? (guide.slug === "world-of-warships-torox-offer-guide" ? "Same day for many users" : "Completion time varies")}
+                                    maxPayoutUsd={guide.maxPayoutUsd ?? null}
                                 />
                             ))}
                             {shouldShowPalmonHub && <PalmonGuideHub imageUrl={palmonHubImageUrl} />}

@@ -5,6 +5,11 @@ export interface StaticGuide {
     slug: string;
     href: string;
     contentType: EarnGrindContentType;
+    indexLabel?: string;
+    initials?: string;
+    difficulty?: "easy" | "medium" | "hard" | null;
+    estimatedTime?: string | null;
+    maxPayoutUsd?: number | null;
     eyebrow: string;
     description: string;
     ctaLabel: string;
@@ -15,6 +20,25 @@ export interface StaticGuide {
 }
 
 export const STATIC_GUIDES: StaticGuide[] = [
+    {
+        title: "Bid Wars 2 Offer Guide",
+        slug: "bid-wars-2",
+        href: "/guides/bid-wars-2",
+        contentType: "offer_guide",
+        indexLabel: "Bid Wars 2",
+        initials: "BW",
+        difficulty: "medium",
+        estimatedTime: "7 days",
+        maxPayoutUsd: 20.11,
+        eyebrow: "New Android offer guide",
+        description:
+            "Complete the Bid Wars 2 Torox offer, earn up to $20.11, track vaults, auctions, ads, quests, and the purchase tier.",
+        ctaLabel: "Read Bid Wars 2 Guide",
+        accentClassName: "border-amber-200 bg-amber-50 text-amber-800",
+        buttonClassName: "bg-slate-950 text-amber-200",
+        lastModified: "2026-05-23",
+        sitemapPriority: 0.82,
+    },
     {
         title: "World of Warships Torox Offer Guide",
         slug: "world-of-warships-torox-offer-guide",

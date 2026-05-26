@@ -21,6 +21,25 @@ export interface StaticGuide {
 
 export const STATIC_GUIDES: StaticGuide[] = [
     {
+        title: "Infinite Lagrange Offer Guide",
+        slug: "infinite-lagrange-star-hunter",
+        href: "/guides/infinite-lagrange-star-hunter",
+        contentType: "offer_guide",
+        indexLabel: "Infinite Lagrange",
+        initials: "IL",
+        difficulty: "hard",
+        estimatedTime: "30 days",
+        maxPayoutUsd: 117.55,
+        eyebrow: "New Android strategy offer",
+        description:
+            "Complete the Infinite Lagrange Star Hunter Torox offer, earn up to $117.55, and track purchases, Control Center, Battle Pass, and alliance tasks.",
+        ctaLabel: "Read Infinite Lagrange Guide",
+        accentClassName: "border-cyan-200 bg-cyan-50 text-cyan-800",
+        buttonClassName: "bg-slate-950 text-cyan-200",
+        lastModified: "2026-05-25",
+        sitemapPriority: 0.82,
+    },
+    {
         title: "Bid Wars 2 Offer Guide",
         slug: "bid-wars-2",
         href: "/guides/bid-wars-2",

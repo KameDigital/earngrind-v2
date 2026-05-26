@@ -5,6 +5,8 @@ export interface StaticGuide {
     slug: string;
     href: string;
     contentType: EarnGrindContentType;
+    gameSlug?: string;
+    imageUrl?: string | null;
     indexLabel?: string;
     initials?: string;
     difficulty?: "easy" | "medium" | "hard" | null;
@@ -65,6 +67,7 @@ export const STATIC_GUIDES: StaticGuide[] = [
         contentType: "offer_guide",
         indexLabel: "Bid Wars 2",
         initials: "BW",
+        imageUrl: "https://play-lh.googleusercontent.com/NJsfTLl3zPgNQKF2FxZu7a-XjREnxsDI2gHTeixHaHiI9fL9SBLOsRLE1CEidyeYhruk=w240-h480",
         difficulty: "medium",
         estimatedTime: "7 days",
         maxPayoutUsd: 20.11,
@@ -82,6 +85,8 @@ export const STATIC_GUIDES: StaticGuide[] = [
         slug: "world-of-warships-torox-offer-guide",
         href: "/guides/world-of-warships-torox-offer-guide",
         contentType: "offer_guide",
+        gameSlug: "world-of-warships",
+        imageUrl: "/images/guides/world-of-warships/world-of-warships-hero-background.webp",
         eyebrow: "New desktop offer guide",
         description:
             "Complete the World of Warships Torox offer, earn up to 10,692 points, unlock two warships, and avoid tracking mistakes.",
@@ -96,6 +101,7 @@ export const STATIC_GUIDES: StaticGuide[] = [
         slug: "fanduel-casino-review-bonus",
         href: "/guides/fanduel-casino-review-bonus",
         contentType: "platform_review",
+        imageUrl: "/images/guides/fanduel-casino/fanduel-casino-bonus-review-hero.png",
         eyebrow: "New casino app guide",
         description:
             "Review FanDuel Casino games, app features, live dealer tables, bonuses, promo code searches, and signup steps.",

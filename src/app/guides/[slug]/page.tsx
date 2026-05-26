@@ -197,7 +197,7 @@ async function fetchGuideData(slug: string) {
             .limit(4),
         supabase
             .from("unified_offers_view")
-            .select("id, source, title, payout_usd, total_payout_usd, status, devices, countries, category, offer_expires_at, updated_at, game_id, game_name, game_slug, platform_id, platform_name, platform_slug, provider_id, provider_name, goal_text, game_devices")
+            .select("id, source, title, payout_usd, total_payout_usd, status, devices, countries, category, offer_expires_at, updated_at, game_id, game_name, game_slug, game_thumbnail, image_url, platform_id, platform_name, platform_slug, provider_id, provider_name, goal_text, game_devices")
             .eq("game_id", game.id)
             .order("total_payout_usd", { ascending: false })
             .limit(250),
@@ -217,6 +217,10 @@ async function fetchGuideData(slug: string) {
             offers: allOffersResult.data ?? [],
             guideEventStats,
         });
+    const offerHeroImageUrl = pickPublicArtworkUrl(
+        ...((allOffersResult.data ?? []) as Array<{ game_thumbnail?: string | null; image_url?: string | null }>)
+            .flatMap((offer) => [offer.game_thumbnail, offer.image_url])
+    );
 
     return {
         guide,
@@ -230,6 +234,7 @@ async function fetchGuideData(slug: string) {
             payout_usd:    o.payout_usd as number,
         })),
         matchedOffers,
+        offerHeroImageUrl,
     };
 }
 
@@ -244,7 +249,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     if (!data) notFound();
 
     let { guide } = data;
-    const { game, relatedGuides, relatedOffers, matchedOffers } = data;
+    const { game, relatedGuides, relatedOffers, matchedOffers, offerHeroImageUrl } = data;
     if (guide.slug === "sea-of-conquest-flagship-level-30-guide") {
         guide = {
             ...guide,
@@ -254,7 +259,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     const layoutStyle = guide.layout_style ?? "classic";
     const hasMatchedOfferCtas = matchedOffers.length > 0;
     const showOfferCtaBlocks = !guide.disable_auto_offer_matching || hasMatchedOfferCtas;
-    const heroImageUrl = pickPublicArtworkUrl(GUIDE_HERO_IMAGES[guide.slug], game.thumbnail_url);
+    const heroImageUrl = pickPublicArtworkUrl(GUIDE_HERO_IMAGES[guide.slug], game.thumbnail_url, offerHeroImageUrl);
     const lastUpdatedText = `Last updated: ${new Date(guide.updated_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`;
     const payoutCheckedText = guide.payout_verified_at
         ? ` Payouts last checked: ${new Date(guide.payout_verified_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`

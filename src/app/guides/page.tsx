@@ -63,6 +63,12 @@ interface OfferArtworkRow {
     image_url: string | null;
 }
 
+interface StaticGuideGameRow {
+    id: string;
+    slug: string;
+    thumbnail_url: string | null;
+}
+
 function isSvgUrl(url: string) {
     return /\.svg(?:$|[?#])/i.test(url);
 }
@@ -331,6 +337,12 @@ export default async function GuidesPage({
     const page      = Math.max(1, parseInt(searchParams.page ?? "1") || 1);
     const from      = (page - 1) * PAGE_SIZE;
     const to        = from + PAGE_SIZE - 1;
+    const gameGuideStaticGuides = STATIC_GUIDES.filter((guide) => guide.contentType === "game_guide" || guide.contentType === "offer_guide");
+    const staticGuideGameSlugs = Array.from(new Set(
+        gameGuideStaticGuides
+            .map((guide) => guide.gameSlug ?? guide.slug)
+            .filter(Boolean)
+    ));
 
     const { data: guides, count } = await supabase
         .from("guides")
@@ -344,11 +356,25 @@ export default async function GuidesPage({
         .filter((guide) => shouldShowOnGameGuidesIndex({ title: guide.title, guideType: guide.guide_type }));
     const guideGameIds = Array.from(new Set(rawGuides.map((guide) => guide.games?.id).filter(Boolean))) as string[];
 
-    const { data: offerArtworkRows } = guideGameIds.length > 0
+    const { data: staticGuideGames } = staticGuideGameSlugs.length > 0
+        ? await supabase
+            .from("games")
+            .select("id, slug, thumbnail_url")
+            .in("slug", staticGuideGameSlugs)
+        : { data: [] };
+    const staticGameBySlug = new Map(
+        ((staticGuideGames ?? []) as StaticGuideGameRow[]).map((game) => [game.slug, game])
+    );
+    const allGuideGameIds = Array.from(new Set([
+        ...guideGameIds,
+        ...((staticGuideGames ?? []) as StaticGuideGameRow[]).map((game) => game.id),
+    ]));
+
+    const { data: offerArtworkRows } = allGuideGameIds.length > 0
         ? await supabase
             .from("unified_offers_view")
             .select("game_id, game_thumbnail, image_url")
-            .in("game_id", guideGameIds)
+            .in("game_id", allGuideGameIds)
             .order("total_payout_usd", { ascending: false })
             .limit(250)
         : { data: [] };
@@ -373,6 +399,19 @@ export default async function GuidesPage({
             : null,
     }));
 
+    const staticGuideImageBySlug = new Map<string, string | null>();
+    for (const guide of gameGuideStaticGuides) {
+        const game = staticGameBySlug.get(guide.gameSlug ?? guide.slug);
+        staticGuideImageBySlug.set(
+            guide.slug,
+            pickPublicArtworkUrl(
+                guide.imageUrl,
+                game?.thumbnail_url,
+                game?.id ? gameArtworkById.get(game.id) : null
+            )
+        );
+    }
+
     const shouldShowPalmonHub = page === 1 && enrichedGuides.some((guide) => PALMON_GUIDE_SLUGS.has(guide.slug));
     const visibleGuides = shouldShowPalmonHub
         ? enrichedGuides.filter((guide) => !PALMON_GUIDE_SLUGS.has(guide.slug))
@@ -385,7 +424,6 @@ export default async function GuidesPage({
             .map((guide) => getGameImageUrl(guide.games))
             .find(Boolean) ??
         null;
-    const gameGuideStaticGuides = STATIC_GUIDES.filter((guide) => guide.contentType === "game_guide" || guide.contentType === "offer_guide");
     const totalCount = count ?? rawGuides.length;
     const displayedTotalCount = totalCount + gameGuideStaticGuides.length;
 
@@ -425,7 +463,7 @@ export default async function GuidesPage({
                                     title={guide.title}
                                     description={guide.description}
                                     initials={guide.initials ?? (guide.title.includes("World of Warships") ? "WW" : "OG")}
-                                    imageUrl={null}
+                                    imageUrl={staticGuideImageBySlug.get(guide.slug) ?? null}
                                     difficulty={guide.difficulty ?? (guide.slug === "world-of-warships-torox-offer-guide" ? "easy" : null)}
                                     estimatedTime={guide.estimatedTime ?? (guide.slug === "world-of-warships-torox-offer-guide" ? "Same day for many users" : "Completion time varies")}
                                     maxPayoutUsd={guide.maxPayoutUsd ?? null}

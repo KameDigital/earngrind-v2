@@ -21,6 +21,25 @@ export interface StaticGuide {
 
 export const STATIC_GUIDES: StaticGuide[] = [
     {
+        title: "Solitaire Stash Offer Guide",
+        slug: "solitaire-stash",
+        href: "/guides/solitaire-stash",
+        contentType: "offer_guide",
+        indexLabel: "Solitaire Stash",
+        initials: "SS",
+        difficulty: "hard",
+        estimatedTime: "No fixed limit",
+        maxPayoutUsd: 607.02,
+        eyebrow: "New Lootably cash tournament guide",
+        description:
+            "Complete the Solitaire Stash Lootably offer, track up to 1,000 cash tournament wins, avoid purchase risk, and prepare missing-credit proof.",
+        ctaLabel: "Read Solitaire Stash Guide",
+        accentClassName: "border-emerald-200 bg-emerald-50 text-emerald-800",
+        buttonClassName: "bg-slate-950 text-emerald-200",
+        lastModified: "2026-05-26",
+        sitemapPriority: 0.82,
+    },
+    {
         title: "Infinite Lagrange Offer Guide",
         slug: "infinite-lagrange-star-hunter",
         href: "/guides/infinite-lagrange-star-hunter",

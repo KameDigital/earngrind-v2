@@ -4,9 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 import { analyzeGuideQuality } from "@/lib/guide-quality";
 import { getGuideSitemapPriority } from "@/lib/indexing-readiness";
 import { getSiteUrl } from "@/lib/site-url";
+import { PUBLIC_GAIN_WALLS } from "@/lib/gain-gallery";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Sitemap Preview | Admin" };
+const GAME_PAGE_SIZE = 1000;
+const MAX_PREVIEW_GAMES = 20000;
 
 function queryValue(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
@@ -27,7 +30,7 @@ export default async function AdminSitemapPage({
   const type = queryValue(searchParams?.type) ?? "guides";
   const baseUrl = getSiteUrl();
 
-  const [{ data: guides }, { count: draftCount }, { data: games }, { data: reviews }, { data: posts }] = await Promise.all([
+  const [{ data: guides }, { count: draftCount }, games, { data: reviews }, { data: posts }] = await Promise.all([
     supabase
       .from("guides")
       .select("id, title, slug, status, updated_at, body_md, seo_title, seo_description, keyword_target, batch_name")
@@ -38,11 +41,7 @@ export default async function AdminSitemapPage({
       .from("guides")
       .select("id", { count: "exact", head: true })
       .in("status", ["draft", "needs_review"]),
-    supabase
-      .from("games")
-      .select("id, name, slug, updated_at")
-      .order("updated_at", { ascending: false })
-      .limit(500),
+    fetchGameRows(supabase),
     supabase
       .from("reviews")
       .select("id, title, slug, updated_at")
@@ -71,6 +70,7 @@ export default async function AdminSitemapPage({
   const staticRows = [
     { url: baseUrl, label: "Home", priority: "1.0", frequency: "daily" },
     { url: `${baseUrl}/offers`, label: "Offers", priority: "0.9", frequency: "daily" },
+    { url: `${baseUrl}/games`, label: "Games", priority: "0.8", frequency: "weekly" },
     { url: `${baseUrl}/guides`, label: "Guides", priority: "0.8", frequency: "weekly" },
     { url: `${baseUrl}/guides/how-to-earn`, label: "How to earn", priority: "0.8", frequency: "weekly" },
     { url: `${baseUrl}/blog`, label: "Blog", priority: "0.7", frequency: "weekly" },
@@ -79,9 +79,19 @@ export default async function AdminSitemapPage({
     { url: `${baseUrl}/highest-paying-gpt-games`, label: "Highest paying GPT games", priority: "0.85", frequency: "daily" },
     { url: `${baseUrl}/best-freecash-games`, label: "Best Freecash games", priority: "0.8", frequency: "daily" },
     { url: `${baseUrl}/best-gain-gg-offers`, label: "Best Gain.gg offers", priority: "0.8", frequency: "daily" },
+    { url: `${baseUrl}/offers/gain/us`, label: "Gain.gg US offers", priority: "0.8", frequency: "daily" },
+    ...PUBLIC_GAIN_WALLS.map((wall) => ({
+      url: `${baseUrl}/offers/gain/us/${wall}`,
+      label: `Gain.gg ${wall} offers`,
+      priority: wall === "cpx" ? "0.68" : "0.72",
+      frequency: "daily",
+    })),
     { url: `${baseUrl}/best-money-making-games`, label: "Best money making games", priority: "0.85", frequency: "daily" },
     { url: `${baseUrl}/about`, label: "About", priority: "0.5", frequency: "monthly" },
     { url: `${baseUrl}/how-it-works`, label: "How it works", priority: "0.5", frequency: "monthly" },
+    { url: `${baseUrl}/legal/privacy`, label: "Privacy policy", priority: "0.3", frequency: "yearly" },
+    { url: `${baseUrl}/legal/terms`, label: "Terms of service", priority: "0.3", frequency: "yearly" },
+    { url: `${baseUrl}/legal/disclosure`, label: "Affiliate disclosure", priority: "0.3", frequency: "yearly" },
   ];
 
   return (
@@ -211,4 +221,31 @@ export default async function AdminSitemapPage({
       </div>
     </div>
   );
+}
+
+async function fetchGameRows(supabase: ReturnType<typeof createClient>) {
+  const rows: Array<{
+    id: string;
+    name: string | null;
+    slug: string | null;
+    updated_at: string | null;
+  }> = [];
+
+  for (let from = 0; from < MAX_PREVIEW_GAMES; from += GAME_PAGE_SIZE) {
+    const to = Math.min(from + GAME_PAGE_SIZE - 1, MAX_PREVIEW_GAMES - 1);
+    const { data, error } = await supabase
+      .from("games")
+      .select("id, name, slug, updated_at")
+      .order("updated_at", { ascending: false })
+      .range(from, to);
+
+    if (error) {
+      console.error("[admin/sitemap] failed to fetch games", { from, to, message: error.message });
+      return rows;
+    }
+    rows.push(...(data ?? []));
+    if (!data || data.length < GAME_PAGE_SIZE) break;
+  }
+
+  return rows;
 }

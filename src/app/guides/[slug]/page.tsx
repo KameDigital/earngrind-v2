@@ -10,6 +10,7 @@ import ClassicLayout from "./layouts/ClassicLayout";
 import StepsLayout  from "./layouts/StepsLayout";
 import ProLayout    from "./layouts/ProLayout";
 import ConversionLayout from "./layouts/ConversionLayout";
+import ProConversionLayout from "./layouts/ProConversionLayout";
 import GuidePerformanceTracker from "./GuidePerformanceTracker";
 import GuideOfferCtaBlock from "./GuideOfferCtaBlock";
 import { matchOffersToGuide, type GuideOfferMatch } from "@/lib/guide-offer-matcher";
@@ -259,6 +260,8 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     const layoutStyle = guide.layout_style ?? "classic";
     const hasMatchedOfferCtas = matchedOffers.length > 0;
     const showOfferCtaBlocks = !guide.disable_auto_offer_matching || hasMatchedOfferCtas;
+    const layoutOwnsOfferCtas = layoutStyle === "pro_conversion";
+    const showPageOfferCtaBlocks = showOfferCtaBlocks && !layoutOwnsOfferCtas;
     const heroImageUrl = pickPublicArtworkUrl(GUIDE_HERO_IMAGES[guide.slug], game.thumbnail_url, offerHeroImageUrl);
     const lastUpdatedText = `Last updated: ${new Date(guide.updated_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`;
     const payoutCheckedText = guide.payout_verified_at
@@ -356,7 +359,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             <div className="mb-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-gray-600">
                                 {freshnessText}
                             </div>
-                            {showOfferCtaBlocks ? (
+                            {showPageOfferCtaBlocks ? (
                                 <GuideOfferCtaBlock
                                     guideId={guide.id}
                                     guideSlug={guide.slug}
@@ -368,7 +371,27 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             ) : null}
                         </div>
 
-                        {layoutStyle === "conversion" ? (
+                        {layoutStyle === "pro_conversion" ? (
+                            <ProConversionLayout
+                                guide={{
+                                    body_md:         guide.body_md,
+                                    tips:            guide.tips ?? [],
+                                    key_takeaways:   guide.key_takeaways,
+                                    checklist_items: guide.checklist_items ?? [],
+                                    max_payout_usd:  guide.max_payout_usd,
+                                    difficulty:      guide.difficulty,
+                                    estimated_time:  guide.estimated_time,
+                                    video_url:       guide.video_url,
+                                    video_summary:   guide.video_summary,
+                                    video_transcript: guide.video_transcript,
+                                }}
+                                guideId={guide.id}
+                                guideSlug={guide.slug}
+                                gameSlug={game.slug}
+                                gameName={game.name}
+                                offers={matchedOffers}
+                            />
+                        ) : layoutStyle === "conversion" ? (
                             <ConversionLayout
                                 guide={{
                                     body_md:         guide.body_md,
@@ -416,7 +439,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                 showStaticCta={false}
                             />
                         )}
-                        {showOfferCtaBlocks ? (
+                        {showPageOfferCtaBlocks ? (
                             <div className="mt-6">
                                 <GuideOfferCtaBlock
                                     guideId={guide.id}
@@ -435,7 +458,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                                 relatedGuides={relatedGuides}
                             />
                         </div>
-                        {showOfferCtaBlocks ? (
+                        {showPageOfferCtaBlocks ? (
                             <div className="mt-6">
                                 <GuideOfferCtaBlock
                                     guideId={guide.id}
@@ -449,7 +472,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                         ) : null}
                     </main>
 
-                    <div className={layoutStyle === "pro" ? "mt-6 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]" : "mt-6 lg:mt-0"}>
+                    <div className={layoutStyle === "pro" || layoutStyle === "pro_conversion" ? "mt-6 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]" : "mt-6 lg:mt-0"}>
                         <GuideSidebar
                             guide={{
                                 id:                  guide.id,

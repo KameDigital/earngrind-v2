@@ -26,9 +26,11 @@ const DIFFICULTY_STYLES: Record<string, { bar: string; badge: string }> = {
 };
 
 const LAYOUT_LABELS: Record<string, string> = {
-    classic: "Strategy Guide",
-    steps:   "Walkthrough",
-    pro:     "Pro Guide",
+    classic:        "Strategy Guide",
+    steps:          "Walkthrough",
+    pro:            "Pro Guide",
+    conversion:     "Offer Guide",
+    pro_conversion: "Pro Conversion Guide",
 };
 
 export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }: GuideHeaderProps) {

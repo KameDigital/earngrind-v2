@@ -14,34 +14,26 @@ if (!supabaseUrl || !supabaseKey) {
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
+const GAME_PAGE_SIZE = 1000;
+const MAX_AUDIT_GAMES = 20000;
 const OFFER_PAGE_SIZE = 1000;
 const MAX_AUDIT_OFFERS = 20000;
 
-const [guidesResult, gamesResult] = await Promise.all([
+const [guidesResult, games] = await Promise.all([
   supabase
     .from("guides")
     .select("id, status, slug, updated_at, body_md, seo_title, seo_description, keyword_target, keyword_cluster_id, keyword_intent, needs_variation, game_id")
     .eq("status", "published")
     .order("updated_at", { ascending: false }),
-  supabase
-    .from("games")
-    .select("id, slug, updated_at, description")
-    .order("updated_at", { ascending: false })
-    .limit(500),
+  fetchGameRows(),
 ]);
 
-for (const [name, result] of [
-  ["guides", guidesResult],
-  ["games", gamesResult],
-]) {
-  if (result.error) {
-    console.error(`Failed to fetch ${name}: ${result.error.message}`);
-    process.exit(1);
-  }
+if (guidesResult.error) {
+  console.error(`Failed to fetch guides: ${guidesResult.error.message}`);
+  process.exit(1);
 }
 
 const guides = guidesResult.data ?? [];
-const games = gamesResult.data ?? [];
 const offers = await fetchOfferRows();
 const offerStats = getEligibleOfferStats(offers);
 const publishedGuideGameIds = new Set(guides.map((guide) => guide.game_id).filter(Boolean));
@@ -201,6 +193,25 @@ async function fetchTaskRows(offerIds) {
       process.exit(1);
     }
     rows.push(...(data ?? []));
+  }
+  return rows;
+}
+
+async function fetchGameRows() {
+  const rows = [];
+  for (let from = 0; from < MAX_AUDIT_GAMES; from += GAME_PAGE_SIZE) {
+    const to = Math.min(from + GAME_PAGE_SIZE - 1, MAX_AUDIT_GAMES - 1);
+    const { data, error } = await supabase
+      .from("games")
+      .select("id, slug, updated_at, description")
+      .order("updated_at", { ascending: false })
+      .range(from, to);
+    if (error) {
+      console.error(`Failed to fetch games: ${error.message}`);
+      process.exit(1);
+    }
+    rows.push(...(data ?? []));
+    if (!data || data.length < GAME_PAGE_SIZE) break;
   }
   return rows;
 }

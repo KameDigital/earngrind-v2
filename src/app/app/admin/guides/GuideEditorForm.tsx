@@ -444,6 +444,7 @@ export default function GuideEditorForm({
         steps: "Numbered step cards based on ## headings. Best for walkthroughs.",
         pro: "Most polished layout with checklist and key takeaways.",
         conversion: "High-intent layout with route metrics, action checklist, and prominent step cards.",
+        pro_conversion: "Polished pro guide with offer-first route metrics, action checklist, and stronger tracked CTAs.",
     };
     const editorSections = [
         { id: "basic-info", label: "Basics" },
@@ -1121,6 +1122,7 @@ export default function GuideEditorForm({
                         <option value="steps">Steps - Numbered walkthrough</option>
                         <option value="pro">Pro - Premium conversion layout</option>
                         <option value="conversion">Conversion - Offer-first action layout</option>
+                        <option value="pro_conversion">Pro Conversion - Polished offer-first layout</option>
                     </select>
                     <p className={hintClass}>{layoutHints[layoutStyle]}</p>
                 </div>

@@ -5,6 +5,7 @@ import OfferSearchEngine from '@/components/offers/OfferSearchEngine';
 import Container from '@/components/layout/Container';
 import { canonicalAlternates } from '@/lib/seo-metadata';
 import { fetchPublicOffers, publicOfferFiltersFromSearchParams } from '@/lib/public-offer-search';
+import { PUBLIC_GAIN_WALLS, type GainGalleryWall } from '@/lib/gain-gallery';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,14 +62,30 @@ function initialOfferQueryString(searchParams: URLSearchParams): string {
     return params.toString();
 }
 
+const GAIN_WALL_LABELS: Record<GainGalleryWall, string> = {
+    native: "Native Gain / Torox",
+    revu: "Revenue Universe",
+    adtowall: "AdToWall",
+    timewall: "Timewall",
+    mychips: "MyChips",
+    grabcherries: "GrabCherries",
+    cpx: "CPX Research",
+    adgate: "AdGate",
+    ayet: "AyeT Studios",
+    polltastic: "Polltastic",
+    asmwall: "ASMWall",
+    lootably: "Lootably",
+    theoremreach: "TheoremReach",
+    primeearn: "PrimeEarn",
+    bitlabs: "BitLabs",
+};
+
 const GAIN_OFFERWALL_LINKS = [
     { href: "/offers/gain/us", label: "All Gain" },
-    { href: "/offers/gain/us/native", label: "Native Gain / Torox" },
-    { href: "/offers/gain/us/revu", label: "Revenue Universe" },
-    { href: "/offers/gain/us/adtowall", label: "AdToWall" },
-    { href: "/offers/gain/us/asmwall", label: "ASMWall" },
-    { href: "/offers/gain/us/lootably", label: "Lootably" },
-    { href: "/offers/gain/us/cpx", label: "CPX Research" },
+    ...PUBLIC_GAIN_WALLS.map((wall) => ({
+        href: `/offers/gain/us/${wall}`,
+        label: GAIN_WALL_LABELS[wall],
+    })),
 ];
 
 export default async function OffersPage({ searchParams }: OffersPageProps) {
@@ -118,7 +135,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                                 Browse Gain.gg Offers
                             </h2>
                             <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                                Browse imported Gain.gg offers by provider and route, including native Gain, Revenue Universe, AdToWall, ASMWall, Lootably, and CPX Research.
+                                Browse imported Gain.gg offers by provider and route, including native Gain, Revenue Universe, AdToWall, MyChips, ASMWall, Lootably, and CPX Research.
                             </p>
                         </div>
                         <Link

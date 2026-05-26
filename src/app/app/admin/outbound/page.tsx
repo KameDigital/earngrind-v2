@@ -153,7 +153,7 @@ export default async function AdminOutboundPage() {
                     <table className="min-w-full text-sm">
                         <thead className="border-b border-gray-200 bg-gray-50 text-[11px] font-bold uppercase tracking-wider text-gray-500">
                             <tr>
-                                <th className="px-4 py-3 text-left">Time</th>
+                                <th className="px-4 py-3 text-left">Time (ET)</th>
                                 <th className="px-4 py-3 text-left">Source table</th>
                                 <th className="px-4 py-3 text-left">Offer / Game</th>
                                 <th className="px-4 py-3 text-left">Platform / Provider</th>
@@ -317,12 +317,19 @@ function formatDateTime(value?: string) {
         return "-";
     }
 
-    return new Date(value).toLocaleString("en-US", {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return "-";
+    }
+
+    return new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York",
         month: "short",
         day: "numeric",
         hour: "numeric",
         minute: "2-digit",
-    });
+        timeZoneName: "short",
+    }).format(date);
 }
 
 function sourceTableForType(type: string) {

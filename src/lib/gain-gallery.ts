@@ -37,6 +37,16 @@ export const GAIN_GALLERY_WALLS = [
 
 export type GainGalleryWall = typeof GAIN_GALLERY_WALLS[number];
 
+export const PUBLIC_GAIN_WALLS = [
+    "native",
+    "revu",
+    "adtowall",
+    "mychips",
+    "cpx",
+    "asmwall",
+    "lootably",
+] as const satisfies readonly GainGalleryWall[];
+
 export type GainGalleryOffer = {
     id: string;
     wall: GainGalleryWall;

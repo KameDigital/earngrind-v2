@@ -48,9 +48,8 @@ export default function GuideOfferCtaBlock({
     const variant = selectGuideCtaVariant({ guideId, slug: guideSlug, placement });
     const best = offers[0] ?? null;
     const alternatives = offers.slice(1, 4);
-    const primaryTarget = buildGuideCtaTarget(gameSlug);
-    const comparisonTarget = buildOfferComparisonTarget(gameSlug);
-    const buttonText = placementButtonText(placement);
+    const fallbackTarget = buildGuideCtaTarget(gameSlug);
+    const buttonText = best?.ctaLabel ?? placementButtonText(placement);
     const showAlternatives = placement === "top" && alternatives.length > 0;
 
     if (!best) {
@@ -63,7 +62,7 @@ export default function GuideOfferCtaBlock({
                 </p>
                 <p className="mt-2 text-xs font-semibold text-gray-500">{variant.subtext}</p>
                 <Link
-                    href={primaryTarget}
+                    href={fallbackTarget}
                     data-guide-cta="true"
                     data-cta-variant="guide_offer_matcher_fallback"
                     data-cta-variant-id={variant.id}
@@ -98,7 +97,7 @@ export default function GuideOfferCtaBlock({
                     <p className="mt-2 text-xs font-semibold text-lime-800">{variant.subtext}</p>
                 </div>
                 <Link
-                    href={primaryTarget}
+                    href={best.targetUrl}
                     data-guide-cta="true"
                     data-cta-variant="guide_offer_matcher_primary"
                     data-cta-variant-id={variant.id}
@@ -123,7 +122,7 @@ export default function GuideOfferCtaBlock({
                         {alternatives.map((offer) => (
                             <Link
                                 key={`${placement}-${offer.id}`}
-                                href={comparisonTarget}
+                                href={offer.targetUrl}
                                 data-guide-cta="true"
                                 data-cta-variant="guide_offer_matcher_alternative"
                                 data-cta-variant-id={variant.id}

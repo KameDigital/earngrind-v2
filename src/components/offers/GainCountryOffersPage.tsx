@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
-import { getGainGalleryOffers, type GainGalleryWall } from "@/lib/gain-gallery";
+import { PUBLIC_GAIN_WALLS, type GainGalleryWall } from "@/lib/gain-gallery";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { createClient } from "@/lib/supabase/server";
@@ -21,7 +21,6 @@ type GainOfferRow = {
     provider: { name: string | null } | { name: string | null }[] | null;
     game: { name: string | null; slug: string | null; category: string | null } | { name: string | null; slug: string | null; category: string | null }[] | null;
     tasks: { id: string }[] | null;
-    current_gain_offer_id?: string | null;
 };
 
 const WALL_LABELS: Record<string, string> = {
@@ -38,32 +37,41 @@ export default async function GainCountryOffersPage({
     countryCode,
     wall,
 }: {
-    countryCode: "US";
+    countryCode?: string;
     wall?: GainGalleryWall;
 }) {
-    const offers = await getImportedGainOffers(countryCode, wall);
-    const title = wall ? `${WALL_LABELS[wall] ?? wall} Gain.gg offers` : "Best Gain.gg offers in the United States";
+    const normalizedCountryCode = normalizeCountryCode(countryCode);
+    const countryName = countryDisplayName(normalizedCountryCode);
+    const countrySlug = normalizedCountryCode.toLowerCase();
+    const offers = await getImportedGainOffers(normalizedCountryCode, wall);
+    const hasSharedGainUrls = await hasGainOfferUrlsSharedAcrossCountries(normalizedCountryCode, offers);
+    const title = wall ? `${WALL_LABELS[wall] ?? wall} Gain.gg offers` : `Best Gain.gg offers in ${countryName}`;
     const intro = wall
-        ? `Browse imported ${WALL_LABELS[wall] ?? wall} offers available through Gain.gg for ${countryCode}.`
-        : "Browse imported Gain.gg offers across Torox, Revenue Universe, AdToWall, ASMWall, Lootably, and CPX Research.";
+        ? `Browse imported ${WALL_LABELS[wall] ?? wall} offers available through Gain.gg for ${normalizedCountryCode}.`
+        : `Browse imported Gain.gg offers available in ${countryName} across Torox, Revenue Universe, AdToWall, MyChips, ASMWall, Lootably, and CPX Research.`;
 
     return (
         <main className="min-h-screen bg-[#f7f8fb]">
             <section className="border-b border-gray-200 bg-white">
                 <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                     <div className="max-w-3xl">
-                        <p className="text-xs font-black uppercase tracking-[0.28em] text-sky-700">Gain.gg offers / {countryCode}</p>
+                        <p className="text-xs font-black uppercase tracking-[0.28em] text-sky-700">Gain.gg offers / {normalizedCountryCode}</p>
                         <h1 className="mt-3 text-3xl font-black tracking-tight text-gray-950 sm:text-5xl">{title}</h1>
                         <p className="mt-4 text-base leading-7 text-gray-600">{intro} Payouts and tasks can change, so compare the live wall before starting.</p>
                     </div>
                     <div className="mt-6 flex flex-wrap gap-2">
-                        <PillLink href="/offers/gain/us" active={!wall}>All Gain</PillLink>
-                        {(["native", "revu", "adtowall", "asmwall", "lootably", "cpx"] as GainGalleryWall[]).map((item) => (
-                            <PillLink key={item} href={`/offers/gain/us/${item}`} active={wall === item}>
+                        <PillLink href={`/offers/gain/${countrySlug}`} active={!wall}>All Gain</PillLink>
+                        {PUBLIC_GAIN_WALLS.map((item) => (
+                            <PillLink key={item} href={`/offers/gain/${countrySlug}/${item}`} active={wall === item}>
                                 {WALL_LABELS[item] ?? item}
                             </PillLink>
                         ))}
                     </div>
+                    {hasSharedGainUrls ? (
+                        <p className="mt-4 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-xs font-semibold leading-5 text-sky-800">
+                            Debug note: these results are loaded from {normalizedCountryCode} offer rows, but some Gain.gg offer URLs are reused across country imports. Gain.gg may still geo-route users after clickout.
+                        </p>
+                    ) : null}
                 </div>
             </section>
 
@@ -71,7 +79,7 @@ export default async function GainCountryOffersPage({
                 {offers.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                         {offers.map((offer) => (
-                            <OfferCard key={offer.id} offer={offer} countryCode={countryCode} />
+                            <OfferCard key={offer.id} offer={offer} countryCode={normalizedCountryCode} />
                         ))}
                     </div>
                 ) : (
@@ -121,16 +129,75 @@ async function getImportedGainOffers(countryCode: string, wall?: GainGalleryWall
         console.error("[GainCountryOffersPage] failed to load offers", { countryCode, wall, message: error.message });
         return [];
     }
-    const currentNativeIds = wall === "native" ? await getCurrentNativeGainOfferIds(countryCode) : new Map<string, string>();
-
-    return ((data ?? []) as GainOfferRow[]).map((offer) => ({
-        ...offer,
-        current_gain_offer_id: currentNativeIds.get(getNativeGainOfferFamily(offer.external_id)) ?? null,
-    })).filter((offer) => {
+    return ((data ?? []) as GainOfferRow[]).filter((offer) => {
         const payout = Number(offer.payout_usd ?? 0);
         const total = normalizeTotalPayout(payout, Number(offer.total_payout_usd ?? payout));
         return isPublicPayoutEligible(payout, total);
     });
+}
+
+async function hasGainOfferUrlsSharedAcrossCountries(countryCode: string, offers: GainOfferRow[]): Promise<boolean> {
+    const offerUrls = Array.from(new Set(offers
+        .map((offer) => offer.offer_url)
+        .filter((url): url is string => Boolean(url && isGainOfferUrl(url)))));
+
+    if (offerUrls.length === 0) return false;
+
+    const supabase = createClient();
+    const { data, error } = await supabase
+        .from("site_offers")
+        .select("offer_url, countries")
+        .in("offer_url", offerUrls)
+        .limit(1000);
+
+    if (error) {
+        console.error("[GainCountryOffersPage] failed to check shared Gain URLs", { countryCode, message: error.message });
+        return false;
+    }
+
+    const countriesByUrl = new Map<string, Set<string>>();
+    for (const row of data ?? []) {
+        const url = typeof row.offer_url === "string" ? row.offer_url : "";
+        if (!url) continue;
+        const countries = Array.isArray(row.countries) ? row.countries : [];
+        const set = countriesByUrl.get(url) ?? new Set<string>();
+        for (const country of countries) {
+            if (typeof country === "string") set.add(country.toUpperCase());
+        }
+        countriesByUrl.set(url, set);
+    }
+
+    return offerUrls.some((url) => {
+        const countries = countriesByUrl.get(url);
+        return Boolean(countries?.has(countryCode) && Array.from(countries).some((country) => country !== countryCode));
+    });
+}
+
+function isGainOfferUrl(value: string): boolean {
+    try {
+        const url = new URL(value);
+        return url.hostname.replace(/^www\./i, "").toLowerCase() === "gain.gg";
+    } catch {
+        return false;
+    }
+}
+
+function normalizeCountryCode(value?: string): string {
+    const normalized = value?.trim().toUpperCase() ?? "";
+    if (!normalized) return "US";
+    if (!/^[A-Z]{2}$/.test(normalized)) {
+        throw new Error(`Invalid Gain country code: ${value}`);
+    }
+    return normalized;
+}
+
+function countryDisplayName(countryCode: string): string {
+    if (countryCode === "CL") return "Chile";
+    try {
+        return new Intl.DisplayNames(["en"], { type: "region" }).of(countryCode) ?? countryCode;
+    } catch {
+        return countryCode;
+    }
 }
 
 function OfferCard({ offer, countryCode }: { offer: GainOfferRow; countryCode: string }) {
@@ -217,42 +284,6 @@ function extractGainWallFromExternalId(externalId: string): string {
     return match?.[1] ?? "";
 }
 
-async function getCurrentNativeGainOfferIds(countryCode: string): Promise<Map<string, string>> {
-    try {
-        const result = await getGainGalleryOffers("native", {
-            country: countryCode,
-            limit: 300,
-            refresh: true,
-        });
-        const byFamily = new Map<string, string>();
-        for (const offer of result.offers) {
-            const family = getGainOfferFamily(offer.id);
-            if (family && !byFamily.has(family)) byFamily.set(family, offer.id);
-        }
-        return byFamily;
-    } catch (error) {
-        console.error("[GainCountryOffersPage] failed to load current Gain native IDs", {
-            countryCode,
-            message: error instanceof Error ? error.message : String(error),
-        });
-        return new Map();
-    }
-}
-
 function buildGainOfferHref(offer: GainOfferRow): string {
-    if (!offer.current_gain_offer_id) return `/go/${offer.id}`;
-    const params = new URLSearchParams({
-        gain_offer_id: offer.current_gain_offer_id,
-    });
-    return `/go/${offer.id}?${params.toString()}`;
-}
-
-function getNativeGainOfferFamily(externalId: string | null | undefined): string {
-    const match = externalId?.match(/^gain-native-([A-Za-z0-9]+)-[A-Za-z0-9]+-[A-Z]{2}$/i);
-    return match?.[1] ?? "";
-}
-
-function getGainOfferFamily(offerId: string | null | undefined): string {
-    const match = offerId?.match(/^([A-Za-z0-9]+)-[A-Za-z0-9]+$/);
-    return match?.[1] ?? "";
+    return `/go/${offer.id}`;
 }

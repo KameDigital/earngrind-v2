@@ -12,10 +12,13 @@ import {
 import { getSiteUrl } from '@/lib/site-url';
 import { STATIC_GUIDES } from '@/lib/static-guides';
 import { getPublishedGptSiteGuides } from '@/lib/gpt-site-guides';
+import { PUBLIC_GAIN_WALLS } from '@/lib/gain-gallery';
 
 export const revalidate = 3600; // regenerate every hour
 
 const STATIC_PAGE_LAST_MODIFIED = new Date('2026-05-09T00:00:00.000Z');
+const GAME_PAGE_SIZE = 1000;
+const MAX_SITEMAP_GAMES = 20000;
 const OFFER_PAGE_SIZE = 1000;
 const MAX_SITEMAP_OFFERS = 20000;
 
@@ -42,7 +45,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         { data: guides },
         { data: posts },
         { data: reviews },
-        { data: games },
     ] = await Promise.all([
         supabase
             .from('guides')
@@ -58,13 +60,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .from('reviews')
             .select('slug, updated_at')
             .eq('status', 'published'),
-        supabase
-            .from('games')
-            .select('id, slug, updated_at, description')
-            .order('updated_at', { ascending: false })
-            .limit(500),
     ]);
-    const offers = await fetchSitemapOffers(supabase);
+    const [games, offers] = await Promise.all([
+        fetchSitemapGames(supabase),
+        fetchSitemapOffers(supabase),
+    ]);
 
     const offerStats = getEligibleOfferStats(offers ?? []);
     const publishedGuideGameIds = new Set(
@@ -84,6 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .map((task) => task.site_offer_id)
             .filter((siteOfferId): siteOfferId is string => Boolean(siteOfferId)),
     );
+    const sitemapGames = games.filter(hasSitemapGameFields);
     const gameIdsWithTaskData = new Set(
         (offers ?? [])
             .filter((offer) => offer.source === 'manual' && offer.id && manualOfferIdsWithTasks.has(offer.id))
@@ -95,6 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const staticPages: MetadataRoute.Sitemap = [
         staticPage(baseUrl, '/', 'daily', 1.0),
         staticPage(baseUrl, '/offers', 'daily', 0.9),
+        staticPage(baseUrl, '/games', 'weekly', 0.8),
         staticPage(baseUrl, '/guides', 'weekly', 0.8),
         staticPage(baseUrl, '/guides/how-to-earn', 'weekly', 0.8),
         staticPage(baseUrl, '/blog', 'weekly', 0.7),
@@ -104,12 +106,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         staticPage(baseUrl, '/best-freecash-games', 'daily', 0.8),
         staticPage(baseUrl, '/best-gain-gg-offers', 'daily', 0.8),
         staticPage(baseUrl, '/offers/gain/us', 'daily', 0.8),
-        staticPage(baseUrl, '/offers/gain/us/native', 'daily', 0.72),
-        staticPage(baseUrl, '/offers/gain/us/revu', 'daily', 0.72),
-        staticPage(baseUrl, '/offers/gain/us/adtowall', 'daily', 0.72),
-        staticPage(baseUrl, '/offers/gain/us/asmwall', 'daily', 0.72),
-        staticPage(baseUrl, '/offers/gain/us/lootably', 'daily', 0.72),
-        staticPage(baseUrl, '/offers/gain/us/cpx', 'daily', 0.68),
+        ...PUBLIC_GAIN_WALLS.map((wall) => staticPage(baseUrl, `/offers/gain/us/${wall}`, 'daily', wall === 'cpx' ? 0.68 : 0.72)),
         staticPage(baseUrl, '/offers/gemsloot/us', 'daily', 0.8),
         staticPage(baseUrl, '/offers/gemsloot/us/gemsloot', 'daily', 0.72),
         staticPage(baseUrl, '/offers/gemsloot/us/torox', 'daily', 0.72),
@@ -118,10 +115,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         staticPage(baseUrl, '/best-money-making-games', 'daily', 0.85),
         staticPage(baseUrl, '/about', 'monthly', 0.5),
         staticPage(baseUrl, '/how-it-works', 'monthly', 0.5),
+        staticPage(baseUrl, '/legal/privacy', 'yearly', 0.3),
+        staticPage(baseUrl, '/legal/terms', 'yearly', 0.3),
+        staticPage(baseUrl, '/legal/disclosure', 'yearly', 0.3),
     ];
 
     // Dynamic game offer pages
-    const gameUrls: MetadataRoute.Sitemap = (games ?? [])
+    const gameUrls: MetadataRoute.Sitemap = sitemapGames
         .filter(g => shouldIncludeOfferPageInSitemap(g, offerStats.byGameId.get(g.id) ?? 0).include)
         .map(g => ({
             url:             `${baseUrl}/offers/${g.slug}`,
@@ -130,7 +130,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority:        0.85,
         }));
 
-    const seoGameUrls: MetadataRoute.Sitemap = (games ?? [])
+    const seoGameUrls: MetadataRoute.Sitemap = sitemapGames
         .filter(g => shouldIncludeGameInSitemap(g, {
             eligibleOfferCount: offerStats.byGameId.get(g.id) ?? 0,
             hasPublishedGuide: publishedGuideGameIds.has(g.id),
@@ -142,7 +142,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority:        0.75,
         }));
 
-    const seoGuideUrls: MetadataRoute.Sitemap = (games ?? [])
+    const seoGuideUrls: MetadataRoute.Sitemap = sitemapGames
         .filter(g => shouldIncludeGeneratedHowToEarnInSitemap(g, {
             eligibleOfferCount: offerStats.byGameId.get(g.id) ?? 0,
             hasCuratedGuide: publishedGuideGameIds.has(g.id),
@@ -221,6 +221,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ];
 }
 
+type SitemapGameRow = {
+    id: string;
+    slug: string;
+    updated_at: string;
+    description: string | null;
+};
+
+function hasSitemapGameFields(game: {
+    id: string | null;
+    slug: string | null;
+    updated_at: string | null;
+    description: string | null;
+}): game is SitemapGameRow {
+    return Boolean(game.id?.trim() && game.slug?.trim() && game.updated_at);
+}
+
+async function fetchSitemapGames(supabase: ReturnType<typeof createClient>) {
+    const rows: Array<{
+        id: string | null;
+        slug: string | null;
+        updated_at: string | null;
+        description: string | null;
+    }> = [];
+
+    for (let from = 0; from < MAX_SITEMAP_GAMES; from += GAME_PAGE_SIZE) {
+        const to = Math.min(from + GAME_PAGE_SIZE - 1, MAX_SITEMAP_GAMES - 1);
+        const { data, error } = await supabase
+            .from('games')
+            .select('id, slug, updated_at, description')
+            .order('updated_at', { ascending: false })
+            .range(from, to);
+
+        if (error) {
+            console.error('[sitemap] failed to fetch games', { from, to, message: error.message });
+            throw new Error(`Failed to fetch sitemap games: ${error.message}`);
+        }
+        rows.push(...(data ?? []));
+        if (!data || data.length < GAME_PAGE_SIZE) break;
+    }
+
+    return rows;
+}
+
 async function fetchSitemapOffers(supabase: ReturnType<typeof createClient>) {
     const rows: Array<{
         id: string | null;
@@ -240,7 +283,10 @@ async function fetchSitemapOffers(supabase: ReturnType<typeof createClient>) {
             .order('updated_at', { ascending: false })
             .range(from, to);
 
-        if (error) return rows;
+        if (error) {
+            console.error('[sitemap] failed to fetch offers', { from, to, message: error.message });
+            throw new Error(`Failed to fetch sitemap offers: ${error.message}`);
+        }
         rows.push(...(data ?? []));
         if (!data || data.length < OFFER_PAGE_SIZE) break;
     }

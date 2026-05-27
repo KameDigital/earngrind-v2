@@ -23,6 +23,25 @@ export interface StaticGuide {
 
 export const STATIC_GUIDES: StaticGuide[] = [
     {
+        title: "MU Dark Epoch Offer Guide",
+        slug: "mu-dark-epoch",
+        href: "/guides/mu-dark-epoch",
+        contentType: "offer_guide",
+        indexLabel: "MU: Dark Epoch",
+        initials: "MU",
+        difficulty: "hard",
+        estimatedTime: "30 days",
+        maxPayoutUsd: 576.862,
+        eyebrow: "New Torox Android guide",
+        description:
+            "Complete the MU: Dark Epoch Torox offer, plan 576,862 points, time Diamonds and Month Cards, and protect level 440 proof.",
+        ctaLabel: "Read MU Dark Epoch Guide",
+        accentClassName: "border-teal-200 bg-teal-50 text-teal-800",
+        buttonClassName: "bg-slate-950 text-lime-200",
+        lastModified: "2026-05-27",
+        sitemapPriority: 0.82,
+    },
+    {
         title: "Woodoku Blast Offer Guide",
         slug: "woodoku-blast",
         href: "/guides/woodoku-blast",

@@ -23,6 +23,25 @@ export interface StaticGuide {
 
 export const STATIC_GUIDES: StaticGuide[] = [
     {
+        title: "Woodoku Blast Offer Guide",
+        slug: "woodoku-blast",
+        href: "/guides/woodoku-blast",
+        contentType: "offer_guide",
+        indexLabel: "Woodoku Blast",
+        initials: "WB",
+        difficulty: "hard",
+        estimatedTime: "30 days",
+        maxPayoutUsd: 293.71,
+        eyebrow: "New Torox Journey guide",
+        description:
+            "Complete the Woodoku Blast Torox offer, earn up to $293.71, track Journey levels, time the $4.99 purchase, and protect high-value proof.",
+        ctaLabel: "Read Woodoku Blast Guide",
+        accentClassName: "border-lime-200 bg-lime-50 text-lime-800",
+        buttonClassName: "bg-slate-950 text-lime-200",
+        lastModified: "2026-05-27",
+        sitemapPriority: 0.82,
+    },
+    {
         title: "Solitaire Stash Offer Guide",
         slug: "solitaire-stash",
         href: "/guides/solitaire-stash",

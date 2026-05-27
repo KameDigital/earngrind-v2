@@ -4,12 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BadgeDollarSign, BookOpen, CheckCircle2, Search, ShieldCheck, SlidersHorizontal, Trophy } from "lucide-react";
 import Container from "@/components/layout/Container";
-import { createClient } from "@/lib/supabase/server";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "../components/FAQSection";
 import OfferTable from "../components/OfferTable";
 import ProviderComparison from "../components/ProviderComparison";
-import { formatMoney } from "../_lib/seo-data";
 import { getBestPageData, getBestPageMetadata } from "../_lib/best-pages";
 import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
 import { GPT_SITE_GUIDES } from "@/lib/gpt-site-guides";
@@ -18,41 +16,10 @@ export const revalidate = 3600;
 
 const config = {
   pathname: "/best-gpt-sites",
-  title: "Compare the Best GPT Sites | EarnGrind",
+  title: "Compare the Best GPT Sites",
   description: "Compare GPT sites by live payouts, trust signals, and current offer value so you can choose the best place to start.",
   intro:
     "Compare GPT sites by current payout strength, review coverage, and live offer value. Use this page to decide which platforms are worth joining before you start an offer.",
-};
-
-type ReviewSummary = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string | null;
-  rating_overall: number | null;
-  rating_payout: number | null;
-  rating_trust: number | null;
-  platforms: {
-    name: string;
-    slug: string;
-  } | null;
-};
-
-type ReviewQueryRow = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string | null;
-  rating_overall: number | null;
-  rating_payout: number | null;
-  rating_trust: number | null;
-  platforms: Array<{
-    name: string;
-    slug: string;
-  }> | {
-    name: string;
-    slug: string;
-  } | null;
 };
 
 export const metadata: Metadata = getBestPageMetadata(config);
@@ -82,6 +49,10 @@ const platformLabels: Record<string, string> = {
 
 function getPlatformGuide(platform: PlatformCard) {
   return GPT_SITE_GUIDES.find((guide) => guide.platformSlug === platform.slug || guide.slug === platform.slug) ?? null;
+}
+
+function getPublishedPlatformGuide(platform: PlatformCard, guides: GptGuide[]) {
+  return guides.find((guide) => guide.platformSlug === platform.slug || guide.slug === platform.slug) ?? null;
 }
 
 function getPlatformImage(platform: PlatformCard) {
@@ -236,56 +207,69 @@ function GptGuideCard({ guide }: { guide: GptGuide }) {
   );
 }
 
-async function getRelevantReviews(platformNames: string[]): Promise<ReviewSummary[]> {
-  if (platformNames.length === 0) return [];
+function ComparisonTable({ platforms, guides }: { platforms: PlatformCard[]; guides: GptGuide[] }) {
+  return (
+    <section className="space-y-4 rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+      <SectionHeader
+        eyebrow="Quick comparison"
+        title="Best GPT sites quick comparison"
+        copy="Compare the core site fit before you jump into live offers. Cashout details and reward options can change, so verify the current terms on each platform before starting."
+      />
+      <div className="overflow-x-auto rounded-xl border border-[var(--border-default)]">
+        <table className="min-w-[980px] w-full border-collapse bg-white text-left text-sm">
+          <thead className="bg-[var(--surface-muted)] text-xs font-extrabold uppercase tracking-wide text-[var(--text-tertiary)]">
+            <tr>
+              <th className="px-4 py-3">Site</th>
+              <th className="px-4 py-3">Best for</th>
+              <th className="px-4 py-3">Cashout / payout style</th>
+              <th className="px-4 py-3">Rewards</th>
+              <th className="px-4 py-3">Good fit</th>
+              <th className="px-4 py-3">Start</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-[var(--border-default)]">
+            {platforms.map((platform) => {
+              const guide = getPublishedPlatformGuide(platform, guides);
+              const cashout = guide ? `${guide.minimumCashout} / ${guide.payoutStyle}` : platform.rewardNote;
+              const rewards = guide?.rewardOptions ?? platform.rewardNote;
+              const fit = guide?.accountFit ?? platform.trustNote;
 
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("reviews")
-    .select(`
-      id,
-      slug,
-      title,
-      excerpt,
-      rating_overall,
-      rating_payout,
-      rating_trust,
-      platforms:platform_id ( name, slug )
-    `)
-    .eq("status", "published")
-    .order("published_at", { ascending: false });
-
-  if (error || !data) return [];
-
-  const platformSet = new Set(platformNames.map((name) => name.toLowerCase()));
-  return (data as ReviewQueryRow[]).map((review) => {
-    const platform = Array.isArray(review.platforms) ? review.platforms[0] ?? null : review.platforms;
-    return {
-      ...review,
-      platforms: platform,
-    };
-  }).filter((review) => {
-    const name = review.platforms?.name;
-    return name ? platformSet.has(name.toLowerCase()) : false;
-  });
+              return (
+                <tr key={platform.id} className="align-top">
+                  <td className="px-4 py-4">
+                    <div className="font-extrabold text-[var(--brand-ink)]">{platform.name}</div>
+                    <div className="mt-1 text-xs font-bold text-lime-700">{platformLabels[platform.slug] ?? platform.bestFor}</div>
+                  </td>
+                  <td className="px-4 py-4 text-[var(--text-secondary)]">{guide?.bestFor ?? platform.bestFor}</td>
+                  <td className="px-4 py-4 text-[var(--text-secondary)]">{cashout}</td>
+                  <td className="px-4 py-4 text-[var(--text-secondary)]">{rewards}</td>
+                  <td className="px-4 py-4 text-[var(--text-secondary)]">{fit}</td>
+                  <td className="px-4 py-4">
+                    <Link
+                      href={buildTrackedPlatformHref(platform, "best_gpt_sites_comparison_table")}
+                      prefetch={false}
+                      className="inline-flex whitespace-nowrap rounded-xl bg-[var(--brand-ink)] px-3 py-2 text-xs font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                    >
+                      {platform.cta}
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
 }
 
 export default async function BestGptSitesPage() {
   const { rows, providerRows } = await getBestPageData(config);
-  const best = rows[0] ?? null;
-  const reviews = await getRelevantReviews(Array.from(new Set(rows.map((row) => row.platformName).filter(Boolean))));
-  const featuredReviews = reviews.slice(0, 3);
   const primaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "primary");
   const secondaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "secondary");
   const recommendedPlatforms = [...primaryPlatforms, ...secondaryPlatforms];
   const publishedGuides = GPT_SITE_GUIDES.filter((guide) => guide.status !== "draft");
-  const heroPlatform =
-    primaryPlatforms.find((platform) => best?.platformName?.toLowerCase().includes(platform.name.toLowerCase())) ??
-    primaryPlatforms[0] ??
-    null;
-  const bestReview = best
-    ? reviews.find((review) => review.platforms?.name?.toLowerCase() === best.platformName.toLowerCase()) ?? null
-    : null;
+  const heroPlatform = primaryPlatforms[0] ?? null;
 
   const faqItems = [
     {
@@ -307,11 +291,14 @@ export default async function BestGptSitesPage() {
       { name: "Best GPT Sites", path: config.pathname },
     ]),
     buildItemList(
-      rows.slice(0, 20).map((row) => ({
-        name: `${row.platformName} via ${row.providerName}`,
-        path: `/offers/${row.gameSlug}`,
-        description: `${formatMoney(row.totalPayoutUsd)} total payout route for ${row.gameName}.`,
-      })),
+      recommendedPlatforms.map((platform) => {
+        const guide = getPublishedPlatformGuide(platform, publishedGuides);
+        return {
+          name: platform.name,
+          path: guide ? `/guides/best-gpt-sites/${guide.slug}` : `${config.pathname}#best-sites`,
+          description: `${platform.bestFor}. ${platform.rewardNote}`,
+        };
+      }),
     ),
   ];
 
@@ -363,9 +350,9 @@ export default async function BestGptSitesPage() {
 
           <div className="mt-6 grid gap-3 md:grid-cols-4">
             <StatCard
-              label="Recommended top pick"
+              label="Best beginner pick"
               value={heroPlatform?.name ?? "Review first"}
-              detail={best ? `${best.providerName} currently leads visible route value below.` : "Use the cards below to choose a starting point."}
+              detail="A simple cash-first starting point before comparing higher-upside live routes."
             />
             <StatCard
               label="Total live offers"
@@ -396,6 +383,8 @@ export default async function BestGptSitesPage() {
             ))}
           </div>
         </section>
+
+        <ComparisonTable platforms={recommendedPlatforms} guides={publishedGuides} />
 
         <section id="best-sites" className="space-y-5 scroll-mt-24">
           <SectionHeader
@@ -438,35 +427,6 @@ export default async function BestGptSitesPage() {
           </div>
         </section>
 
-        {featuredReviews.length > 0 ? (
-          <section className="space-y-4 rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-            <SectionHeader
-              eyebrow="Trust context"
-              title="Trusted platform reviews"
-              copy="Read these first if you want trust and payout context before you choose which GPT site deserves your time."
-            />
-            <div className="grid gap-3 lg:grid-cols-3">
-              {featuredReviews.map((review) => (
-                <article key={review.id} className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">
-                    {review.platforms?.name ?? "Platform"} review
-                  </p>
-                  <h3 className="mt-2 text-lg font-extrabold text-[var(--brand-ink)]">{review.title}</h3>
-                  <div className="mt-2 flex flex-wrap gap-2 text-xs text-[var(--text-tertiary)]">
-                    {review.rating_overall != null ? <span>Overall {review.rating_overall.toFixed(1)}/5</span> : null}
-                    {review.rating_payout != null ? <span>Payout {review.rating_payout.toFixed(1)}/5</span> : null}
-                    {review.rating_trust != null ? <span>Trust {review.rating_trust.toFixed(1)}/5</span> : null}
-                  </div>
-                  {review.excerpt ? <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{review.excerpt}</p> : null}
-                  <Link href={`/review/${review.slug}`} className="mt-4 inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400">
-                    Read Review
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </section>
-        ) : null}
-
         <section id="live-payouts" className="space-y-4 scroll-mt-24">
           <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
             <div className="grid gap-5 lg:grid-cols-[1fr_280px] lg:items-center">
@@ -493,7 +453,7 @@ export default async function BestGptSitesPage() {
               </div>
             </div>
           </div>
-          <OfferTable rows={rows} title="Top GPT Site Routes" />
+          <OfferTable rows={rows} />
         </section>
 
         <section id="provider-comparison" className="space-y-4 scroll-mt-24">

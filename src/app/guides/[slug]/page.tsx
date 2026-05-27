@@ -140,14 +140,12 @@ export async function generateMetadata(
             url: canonical,
             ...(absoluteImageUrl ? { images: [{ url: absoluteImageUrl }] } : {}),
         },
-        ...(absoluteImageUrl ? {
-            twitter: {
-                card: "summary_large_image",
-                title,
-                description: desc,
-                images: [absoluteImageUrl],
-            },
-        } : {}),
+        twitter: {
+            card: absoluteImageUrl ? "summary_large_image" : "summary",
+            title,
+            description: desc,
+            ...(absoluteImageUrl ? { images: [absoluteImageUrl] } : {}),
+        },
     };
 }
 
@@ -195,7 +193,7 @@ async function fetchGuideData(slug: string) {
             .select("id, game_name, game_slug, platform_name, payout_usd")
             .eq("game_id", game.id)
             .order("payout_usd", { ascending: false })
-            .limit(4),
+            .limit(25),
         supabase
             .from("unified_offers_view")
             .select("id, source, title, payout_usd, total_payout_usd, status, devices, countries, category, offer_expires_at, updated_at, game_id, game_name, game_slug, game_thumbnail, image_url, platform_id, platform_name, platform_slug, provider_id, provider_name, goal_text, game_devices")
@@ -227,13 +225,34 @@ async function fetchGuideData(slug: string) {
         guide,
         game,
         relatedGuides: relatedGuides ?? [],
-        relatedOffers: (topOffers ?? []).map(o => ({
-            id:            o.id as string,
-            game_name:     o.game_name as string,
-            game_slug:     o.game_slug as string,
-            platform_name: o.platform_name as string,
-            payout_usd:    o.payout_usd as number,
-        })),
+        relatedOffers: Array.from(
+            (topOffers ?? []).reduce((offersByPlatform, offer) => {
+                const platformName = (offer.platform_name as string | null) ?? "Unknown platform";
+                const platformKey = platformName.trim().toLowerCase();
+                const payoutUsd = Number(offer.payout_usd ?? 0);
+                const existingOffer = offersByPlatform.get(platformKey);
+
+                if (!existingOffer || payoutUsd > existingOffer.payout_usd) {
+                    offersByPlatform.set(platformKey, {
+                        id:            offer.id as string,
+                        game_name:     offer.game_name as string,
+                        game_slug:     offer.game_slug as string,
+                        platform_name: platformName,
+                        payout_usd:    payoutUsd,
+                    });
+                }
+
+                return offersByPlatform;
+            }, new Map<string, {
+                id: string;
+                game_name: string;
+                game_slug: string;
+                platform_name: string;
+                payout_usd: number;
+            }>()).values(),
+        )
+            .sort((a, b) => b.payout_usd - a.payout_usd)
+            .slice(0, 4),
         matchedOffers,
         offerHeroImageUrl,
     };

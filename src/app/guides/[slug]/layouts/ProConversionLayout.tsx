@@ -54,8 +54,10 @@ export default function ProConversionLayout({
     offers,
     showStaticCta = true,
 }: ProConversionLayoutProps) {
-    const sections = extractSections(guide.body_md ?? "", [2, 3]);
-    const preamble = extractPreamble(guide.body_md ?? "", [2, 3]);
+    const sections = extractSections(guide.body_md ?? "");
+    const faqSections = sections.filter((section) => /faq|frequently asked questions/i.test(section.heading));
+    const routeSections = sections.filter((section) => !/faq|frequently asked questions/i.test(section.heading));
+    const preamble = extractPreamble(guide.body_md ?? "");
     const takeaways = cleanLines(guide.key_takeaways);
     const checklist = guide.checklist_items ?? [];
     const tips = guide.tips ?? [];
@@ -243,8 +245,8 @@ export default function ProConversionLayout({
             ) : null}
 
             <section id="steps" className="space-y-4">
-                {sections.length > 0 ? (
-                    sections.map((section, index) => (
+                {routeSections.length > 0 ? (
+                    routeSections.map((section, index) => (
                         <article
                             key={`${section.id}-${index}`}
                             id={section.id}
@@ -280,6 +282,22 @@ export default function ProConversionLayout({
                     </section>
                 )}
             </section>
+
+            {faqSections.map((section) => (
+                <section
+                    key={section.id}
+                    id={section.id}
+                    className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6"
+                >
+                    <h2 className="text-xl font-extrabold leading-snug text-gray-950">{section.heading}</h2>
+                    {section.body ? (
+                        <div
+                            className="prose prose-slate mt-3 max-w-none prose-img:my-6 prose-img:max-w-full prose-img:rounded-xl prose-table:border prose-th:border prose-th:bg-gray-100 prose-td:border"
+                            dangerouslySetInnerHTML={{ __html: section.body }}
+                        />
+                    ) : null}
+                </section>
+            ))}
 
             {tips.length > 0 ? (
                 <section id="tips" className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">

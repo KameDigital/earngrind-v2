@@ -51,13 +51,17 @@ export default function BestOffersPageTemplate({
       { name: "Home", path: "/" },
       { name: title, path: pathname },
     ]),
-    buildItemList(
-      rows.slice(0, 20).map((row) => ({
-        name: `${row.gameName} on ${row.platformName}`,
-        path: `/offers/${row.gameSlug}`,
-        description: `${row.providerName} route with ${formatMoney(row.totalPayoutUsd)} total payout.`,
-      })),
-    ),
+    ...(rows.length > 0
+      ? [
+          buildItemList(
+            rows.slice(0, 20).map((row) => ({
+              name: `${row.gameName} on ${row.platformName}`,
+              path: `/offers/${row.gameSlug}`,
+              description: `${row.providerName} route with ${formatMoney(row.totalPayoutUsd)} total payout.`,
+            })),
+          ),
+        ]
+      : []),
   ];
 
   return (

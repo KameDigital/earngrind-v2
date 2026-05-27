@@ -1258,14 +1258,9 @@ export const GPT_SITE_FEATURE_AUDITS: Record<string, GptSiteFeatureAudit[]> = {
         {
             eyebrow: "Offers, VIP, and live competition",
             title: "GemLoot makes offers feel like a live rewards lobby",
-            image: "/images/guides/gpt-sites/features/precise/gemsloot-earn-offer-detail.png",
-            imageAlt: "GemLoot earn page screenshot showing provider offers",
+            image: "/images/guides/gpt-sites/features/precise/gemsloot-leaderboard-race.png",
+            imageAlt: "GemLoot leaderboard page screenshot",
             gallery: [
-                {
-                    image: "/images/guides/gpt-sites/features/precise/gemsloot-earn-offer-detail.png",
-                    imageAlt: "GemLoot Earn page showing provider offer cards and chat",
-                    caption: "Earn: provider offers sit below live activity and chat.",
-                },
                 {
                     image: "/images/guides/gpt-sites/features/precise/gemsloot-leaderboard-race.png",
                     imageAlt: "GemLoot leaderboard page screenshot",

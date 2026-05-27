@@ -49,6 +49,18 @@ assert(
   "sitemap should fetch games through a paginated helper",
 );
 assert(
+  sitemapSource.includes("fetchSitemapTaskRows"),
+  "sitemap should fetch site offer task rows through a chunked helper",
+);
+assert(
+  sitemapSource.includes("TASK_PAGE_SIZE"),
+  "sitemap task helper should use a bounded TASK_PAGE_SIZE",
+);
+assert(
+  sitemapSource.includes(".in('site_offer_id', chunk)"),
+  "sitemap task helper should query site_offer_tasks in chunks",
+);
+assert(
   auditSource.includes("fetchGameRows"),
   "sitemap quality audit should fetch games through a paginated helper",
 );

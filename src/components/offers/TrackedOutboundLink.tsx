@@ -54,7 +54,7 @@ export default function TrackedOutboundLink({
     href,
     className,
     target = "_blank",
-    rel = "noopener noreferrer sponsored",
+    rel = "noopener noreferrer sponsored nofollow",
     eventLabel,
     offerId,
     offerTitle,

@@ -21,6 +21,7 @@ const GAME_PAGE_SIZE = 1000;
 const MAX_SITEMAP_GAMES = 20000;
 const OFFER_PAGE_SIZE = 1000;
 const MAX_SITEMAP_OFFERS = 20000;
+const TASK_PAGE_SIZE = 200;
 
 function staticPage(
     baseUrl: string,
@@ -73,12 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             .filter((gameId): gameId is string => Boolean(gameId)),
     );
     const duplicateKeywordGuideIds = getDuplicateKeywordGuideIds(guides ?? []);
-    const { data: taskRows } = offerStats.eligibleManualOfferIds.length
-        ? await supabase
-            .from('site_offer_tasks')
-            .select('site_offer_id')
-            .in('site_offer_id', offerStats.eligibleManualOfferIds)
-        : { data: [] };
+    const taskRows = await fetchSitemapTaskRows(supabase, offerStats.eligibleManualOfferIds);
     const manualOfferIdsWithTasks = new Set(
         (taskRows ?? [])
             .map((task) => task.site_offer_id)
@@ -289,6 +285,29 @@ async function fetchSitemapOffers(supabase: ReturnType<typeof createClient>) {
         }
         rows.push(...(data ?? []));
         if (!data || data.length < OFFER_PAGE_SIZE) break;
+    }
+
+    return rows;
+}
+
+async function fetchSitemapTaskRows(
+    supabase: ReturnType<typeof createClient>,
+    siteOfferIds: string[],
+) {
+    const rows: Array<{ site_offer_id: string | null }> = [];
+
+    for (let i = 0; i < siteOfferIds.length; i += TASK_PAGE_SIZE) {
+        const chunk = siteOfferIds.slice(i, i + TASK_PAGE_SIZE);
+        const { data, error } = await supabase
+            .from('site_offer_tasks')
+            .select('site_offer_id')
+            .in('site_offer_id', chunk);
+
+        if (error) {
+            console.error('[sitemap] failed to fetch site offer tasks', { from: i, to: i + chunk.length - 1, message: error.message });
+            throw new Error(`Failed to fetch sitemap site offer tasks: ${error.message}`);
+        }
+        rows.push(...(data ?? []));
     }
 
     return rows;

@@ -69,11 +69,25 @@ const payoutRows = [
     ["Reach Character level 440", "174,048", "$174.048", "30 days", "Stretch"],
 ];
 
+const navSections = [
+    ["Executive assessment", "executive-assessment"],
+    ["Payout table", "payout-breakdown"],
+    ["Decision ladder", "decision-ladder"],
+    ["Android setup", "android-setup"],
+    ["Leveling route", "leveling-route"],
+    ["Server and guild", "server-guild-class"],
+    ["Purchases", "purchase-timing"],
+    ["30-day playbook", "thirty-day-playbook"],
+    ["Stretch goals", "stretch-goals"],
+    ["Support", "missing-credit"],
+    ["FAQ", "faq"],
+];
+
 const decisionSteps = [
     ["Confirm tracking", "Open, log in, reach level 5, and check Torox activity before spending."],
-    ["Use early purchase windows carefully", "Diamonds 60 is within 3 days, and Month Card is within 7 days."],
-    ["Wait for delayed purchases", "Diamonds 980, Month Card Plus, Diamonds 1980, and Diamonds 3280 all have after-day timing."],
-    ["Treat level 270 as a checkpoint", "Only chase level 318, 366, and 440 if tracking and pace are still clean."],
+    ["Build around level 270", "Treat 270 as the primary expected-value goal, not a consolation prize."],
+    ["Use purchase windows carefully", "Diamonds 60 and Month Card are early; later Diamond and Month Card Plus tasks require waiting."],
+    ["Only stretch to 318 when ahead", "Level 318 needs older-server catch-up, EXP stacking, event discipline, uptime, and usually some spend."],
 ];
 
 const levelGroups = [
@@ -99,8 +113,22 @@ const levelGroups = [
         title: "Stretch goals",
         reward: "$345.610",
         levels: "318, 366, 440",
-        copy: "More than half the value is here. No source proves every player can reach level 440 inside 30 days.",
+        copy: "More than half the value is here, but 318 is a stretch and 366/440 are not dependable 30-day goals.",
     },
+];
+
+const communityReports = [
+    ["No-spend new-server run", "Level 224 on day 13 and level 289 on day 30."],
+    ["Late strategy learner", "Level 313 on day 30 after learning the EXP route late."],
+    ["Near miss", "Level 317 on day 30, just short of the level 318 payout."],
+    ["Optimized older-server spender", "Level 322 on day 24 with stronger guild/server setup."],
+];
+
+const playbookSteps = [
+    ["Opening sprint", "Rush the task chain, join an active guild the same day, and secure Diamonds 60 and Month Card only inside their offer windows."],
+    ["Daily engine", "Turn daily activity into contribution, then use contribution for Land of Demons and other high-EXP windows."],
+    ["Saturday burst", "Save your best EXP resources for a long Saturday Land of Demons session instead of spending them randomly."],
+    ["Class and gear discipline", "Advance around level 120 and 200 promptly, but spend gear resources only when they improve farming stability or speed."],
 ];
 
 const proofChecklist = [
@@ -323,6 +351,43 @@ export default function MuDarkEpochGuidePage() {
             <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
                     <article className="space-y-10">
+                        <section className="rounded-lg border border-teal-200 bg-white p-5 shadow-sm">
+                            <div className="mb-3 flex items-center gap-2 text-sm font-extrabold uppercase tracking-[0.08em] text-teal-700">
+                                <CalendarClock className="h-4 w-4" aria-hidden="true" />
+                                Section navigation
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {navSections.map(([label, id]) => (
+                                    <a
+                                        key={id}
+                                        href={`#${id}`}
+                                        className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-800 hover:border-teal-300 hover:bg-teal-50"
+                                    >
+                                        {label}
+                                    </a>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section id="executive-assessment" className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                            <SectionHeading eyebrow="Executive assessment" title="Plan around level 270, not level 440">
+                                <p>
+                                    The best expected-value strategy is to treat level 270 as the primary target, level 318 as a stretch, and level 366 plus 440 as unreliable goals for a typical 30-day offerwall player.
+                                </p>
+                            </SectionHeading>
+                            <div className="grid gap-4 md:grid-cols-2">
+                                {communityReports.map(([label, report]) => (
+                                    <div key={label} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                                        <h3 className="text-base font-black text-slate-950">{label}</h3>
+                                        <p className="mt-2 text-sm leading-6 text-slate-700">{report}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <Warning>
+                                The raw level 440 payout is large, but the available strategy evidence does not support using it as the default 30-day plan. Build around 270 first, then decide if 318 is live.
+                            </Warning>
+                        </section>
+
                         <section id="payout-breakdown" className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
                             <SectionHeading eyebrow="Payout table" title="MU: Dark Epoch Torox rewards">
                                 <p>
@@ -355,7 +420,7 @@ export default function MuDarkEpochGuidePage() {
                             </div>
                         </section>
 
-                        <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                        <section id="decision-ladder" className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
                             <SectionHeading eyebrow="Decision ladder" title="Use this offer as a stoplight">
                                 <p>
                                     The first rows are low value, but they tell you whether Torox sees the install and account. Do not make the expensive decisions until those signals are clean.
@@ -377,7 +442,7 @@ export default function MuDarkEpochGuidePage() {
                             </Warning>
                         </section>
 
-                        <section>
+                        <section id="android-setup">
                             <SectionHeading eyebrow="Setup" title="Android setup and first tracking checks" />
                             <div className="space-y-4 text-base leading-8 text-slate-700">
                                 <p>
@@ -395,7 +460,48 @@ export default function MuDarkEpochGuidePage() {
                             </Tip>
                         </section>
 
-                        <section>
+                        <section id="leveling-route">
+                            <SectionHeading eyebrow="Leveling route" title="How the MU: Dark Epoch leveling route actually works">
+                                <p>
+                                    This run is less about mechanical skill and more about account setup, EXP routing, uptime, and event timing.
+                                </p>
+                            </SectionHeading>
+                            <div className="space-y-4 text-base leading-8 text-slate-700">
+                                <p>
+                                    Start with the task chain because it unlocks the systems and zones that matter later. After the opening rush, the run becomes an EXP optimization loop built around tasks, monster hunting, EXP potions, hourglass-style boosts, Benediction or similar EXP gain effects, event windows, and long auto-combat uptime.
+                                </p>
+                                <p>
+                                    Saturday is the premium grinding window in the strongest strategy notes. Some sources describe a 1.5x monster EXP effect, while offer runners often describe the stacked Saturday/Land of Demons value as closer to a 2x-style burst. The safe takeaway is the same: save your best contribution and EXP resources for the best burst window.
+                                </p>
+                            </div>
+                            <Tip>
+                                Think in burst windows, not constant consumption. Save contribution and premium EXP resources for your best Saturday Land of Demons session.
+                            </Tip>
+                        </section>
+
+                        <section id="server-guild-class">
+                            <SectionHeading eyebrow="Setup choices" title="Older server, active guild, practical class">
+                                <p>
+                                    Server, guild, and class choices shape how realistic level 318 becomes.
+                                </p>
+                            </SectionHeading>
+                            <div className="space-y-4 text-base leading-8 text-slate-700">
+                                <p>
+                                    Community runners repeatedly point to older servers as the better offer setup because catch-up mechanics can make progress much faster than a fresh-server start. An older high-world-level server is the setup that keeps showing up in stronger 300+ reports.
+                                </p>
+                                <p>
+                                    Join an active guild immediately. Guild quests, world content, boss participation, and cooperative event activity feed the same progression engine that makes Land of Demons and EXP stacking matter.
+                                </p>
+                                <p>
+                                    For class choice, do not over-optimize endgame fantasy. Ranged PvE comfort such as Dark Wizard/Archmage-style or Energy Elf-style play is a reasonable offer-run bias because safe farming and unattended killing matter more than PvP identity.
+                                </p>
+                            </div>
+                            <Warning>
+                                Some strategy notes are iOS/App Store oriented. This submitted Torox task says Android, so keep the offer click, install, account, and payment path on the Android device that started the route.
+                            </Warning>
+                        </section>
+
+                        <section id="purchase-timing">
                             <SectionHeading eyebrow="Purchases" title="Diamonds, Month Cards, and daily package timing">
                                 <p>
                                     The purchase tasks are where the route can turn from profitable to messy. Match the exact wording on the offer screen and the exact visible product in the game store.
@@ -430,7 +536,26 @@ export default function MuDarkEpochGuidePage() {
                             </Warning>
                         </section>
 
-                        <section>
+                        <section id="thirty-day-playbook" className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                            <SectionHeading eyebrow="30-day playbook" title="The route that gives level 318 a chance">
+                                <p>
+                                    The stronger reports keep pointing to the same loop: rush unlocks, build daily contribution, save it, then spend it in stacked EXP windows.
+                                </p>
+                            </SectionHeading>
+                            <div className="grid gap-4 md:grid-cols-2">
+                                {playbookSteps.map(([title, copy]) => (
+                                    <div key={title} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                                        <h3 className="text-lg font-black text-slate-950">{title}</h3>
+                                        <p className="mt-2 text-sm leading-6 text-slate-700">{copy}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <Warning>
+                                After level 200, pace can slow sharply. If you are behind the stronger community paths by late week 3, level 318 becomes a poor-risk chase and level 270 becomes the sensible finish line.
+                            </Warning>
+                        </section>
+
+                        <section id="stretch-goals">
                             <SectionHeading eyebrow="Level route" title="Level 15 to 440 route decisions">
                                 <p>
                                     Leveling guidance sources point to tasks, monster hunting, EXP potions, and EXP gain buffs as important ways to gain EXP in MU: Dark Epoch. Use those systems around the offer checkpoints, not as generic gameplay filler.
@@ -453,15 +578,15 @@ export default function MuDarkEpochGuidePage() {
                                     Keep progression tasks moving before grinding idle monsters. Use EXP boosts when you can actually play, not during a short idle window. Join cooperative or guild content when it helps unlock better progression or EXP sources.
                                 </p>
                                 <p>
-                                    Reach Character level 270 is the last major checkpoint before the stretch tier stack. If you barely reach level 270 near the end of the 30-day window, level 318, 366, and 440 are not a safe assumption.
+                                    Reach Character level 270 is the last major checkpoint before the stretch tier stack. If you barely reach level 270 near the end of the 30-day window, level 318, 366, and 440 are not a safe assumption. Level 318 is only worth chasing when your server, guild, event participation, EXP stack, and daily uptime are clearly ahead of the average reports.
                                 </p>
                             </div>
                             <Warning>
-                                Current community discussion around MU: Dark Epoch offerwalls focuses on late-level reachability, server choice, XP boosts, and diamond-purchase wording. Treat that as risk context, not a guaranteed route.
+                                Do not treat level 366 or 440 as dependable 30-day milestones. Fresh servers, missed events, weak guild activity, or late discovery of the Land of Demons/contribution loop can make those rows unrealistic.
                             </Warning>
                         </section>
 
-                        <section>
+                        <section id="missing-credit">
                             <SectionHeading eyebrow="Missing credit" title="If your MU: Dark Epoch offer does not credit" />
                             <div className="space-y-4 text-base leading-8 text-slate-700">
                                 <p>
@@ -476,7 +601,7 @@ export default function MuDarkEpochGuidePage() {
                             </div>
                         </section>
 
-                        <section>
+                        <section id="worth-it">
                             <SectionHeading eyebrow="Worth it" title="Is the MU: Dark Epoch Torox offer worth doing?" />
                             <div className="space-y-4 text-base leading-8 text-slate-700">
                                 <p>
@@ -488,7 +613,7 @@ export default function MuDarkEpochGuidePage() {
                             </div>
                         </section>
 
-                        <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                        <section id="faq" className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
                             <SectionHeading eyebrow="FAQ" title="MU: Dark Epoch Torox questions" />
                             <div className="divide-y divide-slate-200">
                                 {faqs.map((item) => (

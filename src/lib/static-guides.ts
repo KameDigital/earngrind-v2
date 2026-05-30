@@ -23,6 +23,26 @@ export interface StaticGuide {
 
 export const STATIC_GUIDES: StaticGuide[] = [
     {
+        title: "Raid: Shadow Legends Offer Guide",
+        slug: "raid-shadow-legends",
+        href: "/guides/raid-shadow-legends",
+        contentType: "offer_guide",
+        indexLabel: "Raid: Shadow Legends",
+        initials: "RS",
+        imageUrl: "/images/guides/gpt-sites/gain-gg.png",
+        difficulty: "hard",
+        estimatedTime: "60 days",
+        maxPayoutUsd: 361.695,
+        eyebrow: "New Gain.gg Android guide",
+        description:
+            "Complete the Raid: Shadow Legends Gain.gg Android offer, plan 361,695 points, track purchases, Sacred Shards, Champion ranks, and Level 70 proof.",
+        ctaLabel: "Read Raid Guide",
+        accentClassName: "border-red-200 bg-red-50 text-red-800",
+        buttonClassName: "bg-slate-950 text-red-100",
+        lastModified: "2026-05-30",
+        sitemapPriority: 0.82,
+    },
+    {
         title: "MU Dark Epoch Offer Guide",
         slug: "mu-dark-epoch",
         href: "/guides/mu-dark-epoch",

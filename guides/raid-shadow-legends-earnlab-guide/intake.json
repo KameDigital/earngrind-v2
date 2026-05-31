@@ -1,0 +1,275 @@
+{
+  "game": "Raid: Shadow Legends",
+  "search_name": "Raid: Shadow Legends EarnLab offer guide",
+  "slug": "raid-shadow-legends-earnlab-guide",
+  "offerwall_provider": "EarnLab",
+  "country": "United States",
+  "device": "Android",
+  "payout_source": "task_list",
+  "deadline_source": "task_list",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, and help them decide whether the offer is worth completing.",
+  "target_user": "US Android user who has not installed the game before.",
+  "original_task_list": "Starter tasks:\n* Register and start playing the game - 370 points\n* Complete the tutorial - 37 points\n* Fight 20 battles within 24 hours - 89 points\n\nEarly account level tasks:\n* Reach Level 15 within 3 days - 111 points\n* Reach Level 30 within 4 days - 444 points\n\nHero upgrade tasks:\n* Upgrade a hero to 5 stars within 3 days - 185 points\n* Upgrade 3 heroes to 5 stars within 5 days - 740 points\n* Upgrade a hero to 6 stars within 10 days - 1,110 points\n* Upgrade 5 heroes to 5 stars within 14 days - 1,850 points\n* Upgrade 3 heroes to 6 stars within 21 days - 5,920 points\n\nPurchase tasks:\n* Make any purchase - 2,220 points. Can be repeated daily, 1 time per 24 hours\n* Purchase Silver 500k Pack for $9.99 - 11,100 points\n* Purchase the Daily Gem Pack for $9.99 - 11,100 points\n* Purchase a Sacred Daily Pack for $29.99 - 25,900 points\n* Purchase the Beginner Progress Pack for $49.99 - 44,400 points. Eligible only if purchased after Day 7\n* Purchase Box of Gems for $29.99 - 37,000 points. Eligible only if purchased after Day 30\n\nSacred Shard tasks:\n* Open 2 Sacred / Yellow Shards - 2,220 points\n* Open 4 Sacred / Yellow Shards - 5,920 points\n* Open 6 Sacred / Yellow Shards - 16,280 points\n* Open 8 Sacred / Yellow Shards - 28,120 points\n\nLate account level tasks:\n* Reach Level 50 within 21 days - 14,800 points\n* Reach Level 60 within 35 days - 37,000 points\n* Reach Level 70 within 60 days - 125,800 points\n\nTotal possible points from listed tasks: 372,716 points",
+  "eligibility": {
+    "provider": "EarnLab",
+    "country": "United States",
+    "device": "Android",
+    "status": "complete",
+    "notes": [
+      "The prompt specified EarnLab, United States, Android, and a first-time user who has not installed Raid before.",
+      "The task list is the only payout and deadline source for this artifact."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Register and start playing the game",
+      "points": 370,
+      "usd": 0.37,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "fresh install and first account session"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Complete the tutorial",
+      "points": 37,
+      "usd": 0.037,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "tutorial completion and first Bastion access"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Fight 20 battles within 24 hours",
+      "points": 89,
+      "usd": 0.089,
+      "deadline_text": "within 24 hours",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "early campaign battle count"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach Level 15 within 3 days",
+      "points": 111,
+      "usd": 0.111,
+      "deadline_text": "within 3 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "early account level route"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Reach Level 30 within 4 days",
+      "points": 444,
+      "usd": 0.444,
+      "deadline_text": "within 4 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "account level route"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Upgrade a hero to 5 stars within 3 days",
+      "points": 185,
+      "usd": 0.185,
+      "deadline_text": "within 3 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "first 5-star champion route"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Upgrade 3 heroes to 5 stars within 5 days",
+      "points": 740,
+      "usd": 0.74,
+      "deadline_text": "within 5 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "three 5-star champion route"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Upgrade a hero to 6 stars within 10 days",
+      "points": 1110,
+      "usd": 1.11,
+      "deadline_text": "within 10 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "first 6-star champion route"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Upgrade 5 heroes to 5 stars within 14 days",
+      "points": 1850,
+      "usd": 1.85,
+      "deadline_text": "within 14 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "five 5-star champion route"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Upgrade 3 heroes to 6 stars within 21 days",
+      "points": 5920,
+      "usd": 5.92,
+      "deadline_text": "within 21 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "three 6-star champion route"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Make any purchase",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "purchase proof route"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Purchase Silver 500k Pack for USD 9.99",
+      "points": 11100,
+      "usd": 11.1,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "Silver pack purchase proof route"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Purchase the Daily Gem Pack for USD 9.99",
+      "points": 11100,
+      "usd": 11.1,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "Daily Gem Pack purchase proof route"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Purchase a Sacred Daily Pack for USD 29.99",
+      "points": 25900,
+      "usd": 25.9,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "Sacred Daily Pack purchase proof route"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Purchase the Beginner Progress Pack for USD 49.99",
+      "points": 44400,
+      "usd": 44.4,
+      "deadline_text": "Eligible only if purchased after Day 7",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "Beginner Progress Pack timing route"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Purchase Box of Gems for USD 29.99",
+      "points": 37000,
+      "usd": 37.0,
+      "deadline_text": "Eligible only if purchased after Day 30",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "Box of Gems timing route"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Open 2 Sacred / Yellow Shards",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "two Sacred Shards route"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Open 4 Sacred / Yellow Shards",
+      "points": 5920,
+      "usd": 5.92,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "four Sacred Shards route"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Open 6 Sacred / Yellow Shards",
+      "points": 16280,
+      "usd": 16.28,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "six Sacred Shards route"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Open 8 Sacred / Yellow Shards",
+      "points": 28120,
+      "usd": 28.12,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "task_entity": "eight Sacred Shards route"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Reach Level 50 within 21 days",
+      "points": 14800,
+      "usd": 14.8,
+      "deadline_text": "within 21 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "late account level route"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Reach Level 60 within 35 days",
+      "points": 37000,
+      "usd": 37.0,
+      "deadline_text": "within 35 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "level 60 account route"
+    },
+    {
+      "task_id": "task_023",
+      "task_text": "Reach Level 70 within 60 days",
+      "points": 125800,
+      "usd": 125.8,
+      "deadline_text": "within 60 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "task_entity": "level 70 account route"
+    }
+  ],
+  "task_entities": [
+    "fresh install",
+    "tutorial",
+    "campaign battles",
+    "account level",
+    "5-star champion",
+    "6-star champion",
+    "Sacred Shards",
+    "Tavern",
+    "food champions",
+    "energy",
+    "daily quests",
+    "purchases",
+    "tracking proof"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Purchase task_text values use USD text instead of currency symbols in normalized rows so deterministic payout validation does not confuse purchase prices with reward payouts.",
+    "The exact original task list remains preserved in original_task_list."
+  ]
+}

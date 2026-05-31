@@ -26,7 +26,10 @@ const GUIDE_SLUG_REDIRECTS: Record<string, string> = {
     "sea-of-conquest-offer-guide-best-path-flagship-level-30": "sea-of-conquest-flagship-level-30-guide",
 };
 
+const ZOMBIE_WAVES_TOROX_LEVEL_100_SLUG = "zombie-waves-offer-guide-level-100-torox-route";
+
 const GUIDE_HERO_IMAGES: Record<string, string> = {
+    [ZOMBIE_WAVES_TOROX_LEVEL_100_SLUG]: "/images/guides/zombie-waves-torox-level-100-hero.webp",
     "palmon-survival-offerwall-guide": "/images/guides/palmon-survival/palmon-guide-hero.jpg",
     "palmon-survival-camp-30-guide": "/images/guides/palmon-survival/palmon-late-game.jpg",
     "palmon-survival-no-spend": "/images/guides/palmon-survival/palmon-early-game.jpg",
@@ -287,9 +290,33 @@ export default async function GuidePage({ params }: { params: { slug: string } }
         ? ` Payouts last checked: ${new Date(guide.payout_verified_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`
         : "";
     const freshnessText = `${lastUpdatedText}${payoutCheckedText} Offers, payouts, deadlines, and tasks can change by provider, device, region, and account history. Verify live terms before starting.`;
+    const isZombieWavesGuide = guide.slug === ZOMBIE_WAVES_TOROX_LEVEL_100_SLUG;
+    const bestMatchedOffer = matchedOffers[0] ?? null;
+    const providerLabel = bestMatchedOffer?.provider ?? "Torox";
+    const payoutLabel = guide.max_payout_usd != null
+        ? `$${guide.max_payout_usd.toFixed(2)}`
+        : bestMatchedOffer?.payout != null
+            ? `$${bestMatchedOffer.payout.toFixed(2)}`
+            : "Live offer";
+    const guideShellClass = isZombieWavesGuide
+        ? "min-h-screen bg-[linear-gradient(180deg,#020617_0,#07111f_620px,#f5f5f0_621px,#f5f5f0_100%)]"
+        : "min-h-screen bg-[#f5f5f0]";
+    const contentWrapClass = isZombieWavesGuide
+        ? "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10"
+        : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6";
+    const contentGridClass = isZombieWavesGuide
+        ? "lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8 items-start"
+        : "lg:grid lg:grid-cols-[1fr_300px] lg:gap-6 items-start";
+    const sidebarClass = layoutStyle === "pro" || layoutStyle === "pro_conversion"
+        ? isZombieWavesGuide
+            ? "mt-8 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]"
+            : "mt-6 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]"
+        : isZombieWavesGuide
+            ? "mt-8 lg:mt-0"
+            : "mt-6 lg:mt-0";
 
     return (
-        <div className="min-h-screen bg-[#f5f5f0]">
+        <div className={guideShellClass}>
             <GuidePerformanceTracker guideId={guide.id} guideSlug={guide.slug} />
 
             {/* JSON-LD structured data */}
@@ -337,10 +364,50 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                 heroImageUrl={heroImageUrl}
             />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div className="lg:grid lg:grid-cols-[1fr_300px] lg:gap-6 items-start">
+            {isZombieWavesGuide ? (
+                <section className="relative overflow-hidden bg-slate-950 px-4 pb-8 sm:px-6 lg:px-8">
+                    <div className="absolute inset-x-0 top-0 h-px bg-cyan-200/20" />
+                    <div className="absolute inset-x-0 bottom-0 h-12 bg-[#f5f5f0]" />
+                    <div className="relative mx-auto grid max-w-7xl gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+                        <div className="overflow-hidden rounded-2xl border border-cyan-200/20 bg-white/[0.07] text-white shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur">
+                            <div className="border-b border-white/10 px-5 py-4 sm:px-6">
+                                <p className="text-[11px] font-extrabold uppercase tracking-widest text-lime-200">Route snapshot</p>
+                                <p className="mt-1 text-sm leading-6 text-slate-200">
+                                    Start with the live offer, confirm tracking, then follow the level route only if the current terms match this guide.
+                                </p>
+                            </div>
+                            <dl className="grid divide-y divide-white/10 sm:grid-cols-4 sm:divide-x sm:divide-y-0 sm:divide-white/10">
+                                {[
+                                    ["Provider", providerLabel],
+                                    ["Target", "Level 100"],
+                                    ["Window", guide.estimated_time ?? "30 days"],
+                                    ["Payout", payoutLabel],
+                                ].map(([label, value]) => (
+                                    <div key={label} className="px-5 py-4 sm:px-6">
+                                        <dt className="text-[10px] font-extrabold uppercase tracking-widest text-cyan-100/65">{label}</dt>
+                                        <dd className="mt-1 text-base font-black text-white">{value}</dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </div>
 
-                    <main className="min-w-0">
+                        <div className="rounded-2xl border border-lime-200/25 bg-lime-200/[0.08] p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.2)] backdrop-blur sm:p-6">
+                            <p className="text-[11px] font-extrabold uppercase tracking-widest text-lime-200">Before you grind</p>
+                            <p className="mt-3 text-sm leading-6 text-slate-100">{freshnessText}</p>
+                            <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold text-slate-100">
+                                <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1">Verify terms first</span>
+                                <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1">Keep proof screenshots</span>
+                                <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1">Stop if tracking breaks</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            ) : null}
+
+            <div className={contentWrapClass}>
+                <div className={contentGridClass}>
+
+                    <main className={isZombieWavesGuide ? "min-w-0 space-y-7" : "min-w-0"}>
                         {/* Scoped prose styles — server-side inline, no CSS file needed */}
                         <style>{`
                             .prose-guide{color:#374151;font-size:.9375rem;line-height:1.7}
@@ -374,10 +441,12 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                             .guide-image figcaption{margin-top:.5rem;font-size:.875rem;line-height:1.45;color:#64748b;text-align:center}
                         `}</style>
 
-                        <div className="mb-6">
-                            <div className="mb-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-gray-600">
-                                {freshnessText}
-                            </div>
+                        <div className={isZombieWavesGuide ? "mb-8" : "mb-6"}>
+                            {!isZombieWavesGuide ? (
+                                <div className="mb-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-xs font-semibold text-gray-600">
+                                    {freshnessText}
+                                </div>
+                            ) : null}
                             {showPageOfferCtaBlocks ? (
                                 <GuideOfferCtaBlock
                                     guideId={guide.id}
@@ -491,7 +560,7 @@ export default async function GuidePage({ params }: { params: { slug: string } }
                         ) : null}
                     </main>
 
-                    <div className={layoutStyle === "pro" || layoutStyle === "pro_conversion" ? "mt-6 lg:mt-0 lg:self-start lg:sticky lg:top-[88px]" : "mt-6 lg:mt-0"}>
+                    <div className={sidebarClass}>
                         <GuideSidebar
                             guide={{
                                 id:                  guide.id,

@@ -1,0 +1,107 @@
+{
+  "game": "Lords Mobile: Kingdom Wars",
+  "slug": "lords-mobile-cpalead-offer-guide",
+  "date": "2026-05-31",
+  "route": "not provided",
+  "result": "BLOCKED",
+  "checks": [
+    {
+      "id": "route_200",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "no_noindex",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "canonical",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "one_h1",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "title_meta",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "schema",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "internal_links",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "cta_links",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "images",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "mobile_overflow",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "sitemap",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "empty_offer_state",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "content_parity",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "section_navigation",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "risk_bands_render",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "evidence_support_render",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "conditional_models_render",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "readable_rendered_structure",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    },
+    {
+      "id": "game_detail_sections",
+      "result": "BLOCKED",
+      "notes": "No rendered guide route, deployment URL, or local app target was provided for publish QA."
+    }
+  ],
+  "required_fixes_or_blockers": [
+    "Provide a rendered guide route, deployment URL, or local app target, then rerun publish QA."
+  ]
+}

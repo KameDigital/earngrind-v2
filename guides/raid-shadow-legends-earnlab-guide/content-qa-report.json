@@ -1,0 +1,114 @@
+{
+  "game": "Raid: Shadow Legends",
+  "slug": "raid-shadow-legends-earnlab-guide",
+  "date": "2026-05-30",
+  "result": "PASS",
+  "checks": [
+    {
+      "id": "word_count",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "h1_keyword",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "meta_description",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "payout_safety",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "deadline_safety",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "claim_support",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "do_not_claim",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "task_guidance",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "guided_task_depth",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "progression_route_depth",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "strategy_guide_depth",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "game_systems",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "original_value_block",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "section_navigation",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "readable_structure",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "content_preservation",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "offerwall_focus",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "faq_usefulness",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "links_cta",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "prohibited_phrases",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "voice",
+      "result": "PASS",
+      "notes": "Checked against intake, dossier, keyword map, and index.md."
+    }
+  ],
+  "required_fixes": []
+}

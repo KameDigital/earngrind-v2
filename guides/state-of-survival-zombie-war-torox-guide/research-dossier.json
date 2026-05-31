@@ -1,0 +1,1254 @@
+{
+  "game": "State of Survival: Zombie War",
+  "slug": "state-of-survival-zombie-war-torox-guide",
+  "research_date": "2026-05-30",
+  "intake": {
+    "source_file": "intake.json",
+    "game": "State of Survival: Zombie War",
+    "provider": "Torox via Gain.gg",
+    "country": "United States",
+    "device": "Android",
+    "task_count": 15,
+    "max_points": 275451,
+    "max_usd": 275.451
+  },
+  "eligibility": {
+    "provider": "Torox via Gain.gg",
+    "country": "United States",
+    "device": "Android",
+    "new_user_requirement": "Target user is a US Android user who has not installed the game before.",
+    "status": "complete"
+  },
+  "research_brief": {
+    "primary_question": "Can a first-time US Android user decide whether to start the Torox/Gain.gg State of Survival: Zombie War offer and understand how to approach each power, HQ, and purchase task safely?",
+    "offer_safety_focus": [
+      "Preserve the task list as the only payout and deadline source.",
+      "Separate in-game purchase requirements from payout amounts.",
+      "Explain tracking and proof steps before spend-heavy tasks.",
+      "Avoid promising that HQ 28 or 90m power is achievable for every player."
+    ],
+    "task_research_needs": [
+      "What Headquarters controls and what buildings/resources gate HQ 16, 20, 23, and 28.",
+      "How power grows through buildings, troops, research, heroes, alliances, and purchases.",
+      "What Torox and Gain.gg say about missing reward support and proof.",
+      "What competitors and community posts miss about purchase risk and deadline stacking."
+    ]
+  },
+  "source_log": [
+    {
+      "source_id": "source_001",
+      "source_type": "app_store",
+      "title": "State of Survival: Zombie War - Apps on Google Play",
+      "url": "https://play.google.com/store/apps/details?hl=en-US&id=com.kingsgroup.sos",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Google Play identifies FunPlus International AG as publisher, Android availability, in-app purchases, data safety, and game description around shelter building, resources, troops, research, heroes, and alliances."
+    },
+    {
+      "source_id": "source_002",
+      "source_type": "official",
+      "title": "State of Survival - FunPlus",
+      "url": "https://funplus.com/games/state-of-survival/",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "FunPlus describes the game as building a settlement, making alliances, strategic partnerships, and surviving infected wilderness."
+    },
+    {
+      "source_id": "source_003",
+      "source_type": "wiki",
+      "title": "Headquarters | State of Survival Wiki",
+      "url": "https://state-of-survival.fandom.com/wiki/Headquarters",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Headquarters is the main settlement building, caps other building levels, and the page lists HQ 16, 20, 23, and 28 requirements/resources/construction times."
+    },
+    {
+      "source_id": "source_004",
+      "source_type": "wiki",
+      "title": "Alliance | State of Survival Wiki",
+      "url": "https://state-of-survival.fandom.com/wiki/Alliance",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Alliance page describes construction/research timer help, alliance store, alliance tech, crates, and shared benefits."
+    },
+    {
+      "source_id": "source_005",
+      "source_type": "wiki",
+      "title": "Training Camp | State of Survival Wiki",
+      "url": "https://state-of-survival.fandom.com/wiki/Training_Camp",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Training Camp upgrades increase total troops trained and reduce training time; Army Overview shows total troops, march slots, wounded, and formations."
+    },
+    {
+      "source_id": "source_006",
+      "source_type": "offerwall_support",
+      "title": "Missing your reward? - Torox",
+      "url": "https://torox.io/faq-missing-your-reward/",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Torox says users can submit a missing reward ticket with proof after 24 hours, via My Activity, and that response is expected within 7 business days."
+    },
+    {
+      "source_id": "source_007",
+      "source_type": "offerwall_support",
+      "title": "FAQ - GAIN.GG",
+      "url": "https://gain.gg/faq",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Gain.gg says missing coins for offer walls must be handled with the offerwall provider directly, generally through offer history/support on the wall."
+    },
+    {
+      "source_id": "source_008",
+      "source_type": "reddit",
+      "title": "State of Survival - Headquarters Level 28 for 105,696 SB doable. TOROX 3X event",
+      "url": "https://www.reddit.com/r/SwagBucks/comments/1hitab8",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Community completion report claims HQ 28 was reached around day 23 with spending during a Torox event; useful as caveated difficulty context, not as an offer deadline."
+    },
+    {
+      "source_id": "source_009",
+      "source_type": "reddit",
+      "title": "State of Survival Guide to Reach Level 25",
+      "url": "https://www.reddit.com/r/GetPaidToPlay/comments/18kl8wu",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Community guide frames the game as time/resource management and recommends keeping HQ/Hero Precinct and other critical buildings moving; use only as low-confidence strategy context."
+    }
+  ],
+  "source_freshness": {
+    "captured_date": "2026-05-30",
+    "official_sources": [
+      "Google Play page updated May 18, 2026.",
+      "FunPlus page current footer shows 2026."
+    ],
+    "community_sources": [
+      "Reddit completion reports are older and should be treated as anecdotal, not as current offer terms."
+    ],
+    "offer_terms": [
+      "Payouts and deadlines come only from the user-provided task list captured on 2026-05-30."
+    ]
+  },
+  "serp_top_10": [
+    {
+      "rank": 1,
+      "url": "https://state-of-survival.fandom.com/wiki/Headquarters",
+      "title": "Headquarters | State of Survival Wiki",
+      "result_type": "wiki",
+      "intent": "HQ requirements",
+      "strengths": "Detailed level requirements and timers.",
+      "weaknesses": "Not offerwall-specific.",
+      "earngrind_opportunity": "Translate HQ requirements into task-risk guidance."
+    },
+    {
+      "rank": 2,
+      "url": "https://play.google.com/store/apps/details?hl=en-US&id=com.kingsgroup.sos",
+      "title": "State of Survival: Zombie War - Apps on Google Play",
+      "result_type": "app store",
+      "intent": "install and game overview",
+      "strengths": "Official Android listing and publisher data.",
+      "weaknesses": "No offerwall task strategy.",
+      "earngrind_opportunity": "Confirm Android and in-app purchase context."
+    },
+    {
+      "rank": 3,
+      "url": "https://funplus.com/games/state-of-survival/",
+      "title": "State of Survival - FunPlus",
+      "result_type": "official",
+      "intent": "official game description",
+      "strengths": "Publisher description of settlement and alliances.",
+      "weaknesses": "No progression table.",
+      "earngrind_opportunity": "Source game overview without generic filler."
+    },
+    {
+      "rank": 4,
+      "url": "https://state-of-survival.fandom.com/wiki/Alliance",
+      "title": "Alliance | State of Survival Wiki",
+      "result_type": "wiki",
+      "intent": "alliance systems",
+      "strengths": "Explains timer help, store, crates, and alliance tech.",
+      "weaknesses": "Dense reference page.",
+      "earngrind_opportunity": "Turn alliance mechanics into early setup checklist."
+    },
+    {
+      "rank": 5,
+      "url": "https://state-of-survival.fandom.com/wiki/Training_Camp",
+      "title": "Training Camp | State of Survival Wiki",
+      "result_type": "wiki",
+      "intent": "troop and power growth",
+      "strengths": "Explains troop training capacity and Army Overview.",
+      "weaknesses": "Not tied to offer power tasks.",
+      "earngrind_opportunity": "Use for power task explanation."
+    },
+    {
+      "rank": 6,
+      "url": "https://torox.io/faq-missing-your-reward/",
+      "title": "Missing your reward? - Torox",
+      "result_type": "offerwall support",
+      "intent": "missing reward support",
+      "strengths": "Direct support steps and timing.",
+      "weaknesses": "Does not address this specific offer.",
+      "earngrind_opportunity": "Build proof checklist and support instructions."
+    },
+    {
+      "rank": 7,
+      "url": "https://gain.gg/faq",
+      "title": "FAQ - GAIN.GG",
+      "result_type": "platform support",
+      "intent": "Gain.gg support path",
+      "strengths": "Explains platform versus offerwall support split.",
+      "weaknesses": "General FAQ.",
+      "earngrind_opportunity": "Clarify who to contact if Torox tasks fail to credit."
+    },
+    {
+      "rank": 8,
+      "url": "https://www.reddit.com/r/SwagBucks/comments/1hitab8",
+      "title": "State of Survival - Headquarters Level 28 for Torox event",
+      "result_type": "community",
+      "intent": "completion feasibility",
+      "strengths": "Real user reports deadline pressure and spend.",
+      "weaknesses": "Anecdotal and event-specific.",
+      "earngrind_opportunity": "Use only as a caveat that late milestones are spend-pressured."
+    },
+    {
+      "rank": 9,
+      "url": "https://www.bluestacks.com/blog/game-guides/state-of-survival/sos-garrison-guide-en.html",
+      "title": "State of Survival: Build a Garrison",
+      "result_type": "competitor guide",
+      "intent": "beginner game guide",
+      "strengths": "Explains base growth and troop training.",
+      "weaknesses": "No offerwall payout/deadline logic.",
+      "earngrind_opportunity": "Keep EarnGrind guide task-first."
+    },
+    {
+      "rank": 10,
+      "url": "https://www.gamesguideinfo.com/state-of-survival-zombie-war/building/120000411-Headquarters",
+      "title": "State of Survival: Zombie War - Headquarters",
+      "result_type": "database",
+      "intent": "HQ data",
+      "strengths": "Building data reference.",
+      "weaknesses": "No offerwall support or proof guidance.",
+      "earngrind_opportunity": "Cross-check HQ data when rendering final guide."
+    }
+  ],
+  "competitor_gaps": [
+    {
+      "gap": "Most game guides explain State of Survival progression but do not preserve Torox/Gain.gg payout and deadline terms.",
+      "opportunity": "Put the exact task table near the top and separate task-list facts from strategy."
+    },
+    {
+      "gap": "Community offer reports often discuss feasibility but are tied to old payouts, events, or different platforms.",
+      "opportunity": "Use community reports only as caution, never as current deadline or payout proof."
+    },
+    {
+      "gap": "Missing-credit advice is often scattered across Gain.gg, Torox, and Reddit threads.",
+      "opportunity": "Give a single proof and support workflow before the user spends on purchase tasks."
+    }
+  ],
+  "keyword_research": {
+    "primary_keyword": "State of Survival Zombie War Torox guide",
+    "secondary_keywords": [
+      "State of Survival offerwall guide",
+      "State of Survival HQ 28 offer",
+      "State of Survival power tasks",
+      "Torox State of Survival not credited",
+      "Gain.gg State of Survival offer"
+    ],
+    "entity_terms": [
+      "State of Survival: Zombie War",
+      "FunPlus International AG",
+      "Torox",
+      "Gain.gg",
+      "Android",
+      "United States",
+      "Headquarters",
+      "Hero Precinct",
+      "Alliance",
+      "Training Camp"
+    ],
+    "game_mechanics": [
+      "settlement upgrades",
+      "Headquarters requirements",
+      "construction timers",
+      "resource gathering",
+      "troop training",
+      "research",
+      "alliance timer help",
+      "power growth"
+    ],
+    "offerwall_terms": [
+      "offerwall",
+      "tracking",
+      "missing reward",
+      "clicked status",
+      "proof screenshots",
+      "first-time install",
+      "Android offer"
+    ],
+    "user_problem_terms": [
+      "is the offer worth it",
+      "will Torox credit",
+      "should I buy package",
+      "can I reach HQ 28",
+      "how to prove completion"
+    ],
+    "task_terms": [
+      "Reach power 10w within 18 days",
+      "Reach power 40w within 18 days",
+      "Reach power 200w within 18 days",
+      "Upgrade headquarter to level 16 within 18 days",
+      "Purchase any 4.99 package in 7 days within 7 days",
+      "Reach power 10m within 18 days",
+      "Purchase any 9.99 package in 30 days within 30 days",
+      "Upgrade headquarter to level 20 within 18 days",
+      "Purchase any 19.99 package",
+      "Purchase any 49.99 package in 7 days within 7 days",
+      "Upgrade headquarter to level 23 within 22 days",
+      "Cumulative purchase over USD 100 in 15 days within 15 days",
+      "Upgrade headquarter to level 28 within 22 days",
+      "Reach power 90m within 22 days"
+    ],
+    "game_system_terms": [
+      "Headquarters",
+      "Hero Precinct",
+      "Barracks",
+      "Garage",
+      "Range",
+      "Training Camp",
+      "Alliance Store",
+      "Alliance Tech",
+      "Timer Help",
+      "Army Overview"
+    ]
+  },
+  "claim_ledger": [
+    {
+      "claim_id": "claim_001",
+      "claim": "The offer task list supplies 15 tasks worth up to 275,451 points total.",
+      "claim_type": "payout",
+      "source_url": "user-provided task list",
+      "source_type": "task_list",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "User provided the task list and Earn Up to 275,451.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Exact cashout value depends on the EarnGrind points-to-USD conversion rule used by this pipeline."
+      ],
+      "used_in_sections": [
+        "payout",
+        "worth-it",
+        "task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_002",
+      "claim": "The task list sets deadlines of 7, 15, 18, 22, or 30 days on specific tasks; the Install and Purchase any 19.99 package rows do not state a deadline.",
+      "claim_type": "deadline",
+      "source_url": "user-provided task list",
+      "source_type": "task_list",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Deadlines are present in the user-provided rows.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "No additional deadline should be inferred for rows that do not include one."
+      ],
+      "used_in_sections": [
+        "payout",
+        "task-route",
+        "faq"
+      ]
+    },
+    {
+      "claim_id": "claim_003",
+      "claim": "Google Play lists State of Survival: Zombie War by FunPlus International AG with Android availability and in-app purchases.",
+      "claim_type": "game_overview",
+      "source_url": "https://play.google.com/store/apps/details?hl=en-US&id=com.kingsgroup.sos",
+      "source_type": "app_store",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Google Play page shows publisher, Android availability, Install action, and in-app purchases.",
+      "source_published_date": "2026-05-18",
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "App store metadata can change."
+      ],
+      "used_in_sections": [
+        "setup",
+        "game-overview"
+      ]
+    },
+    {
+      "claim_id": "claim_004",
+      "claim": "The game centers on building and strengthening a shelter, training troops, researching, gathering resources, recruiting heroes, and alliances.",
+      "claim_type": "game_overview",
+      "source_url": "https://play.google.com/store/apps/details?hl=en-US&id=com.kingsgroup.sos",
+      "source_type": "app_store",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Google Play description mentions shelter building, troop training, strategy, research, resources, heroes, and alliances.",
+      "source_published_date": "2026-05-18",
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "game-overview",
+        "game-systems",
+        "task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_005",
+      "claim": "FunPlus describes State of Survival as a strategy survival game where players build a settlement and make alliances.",
+      "claim_type": "game_overview",
+      "source_url": "https://funplus.com/games/state-of-survival/",
+      "source_type": "official",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "FunPlus page describes settlement building, allies, and strategic partnerships.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "game-overview"
+      ]
+    },
+    {
+      "claim_id": "claim_006",
+      "claim": "Headquarters is the main settlement building and caps other building levels.",
+      "claim_type": "game_system",
+      "source_url": "https://state-of-survival.fandom.com/wiki/Headquarters",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Fandom Headquarters page describes HQ as the main building and level cap for other buildings.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Wiki data can lag live game changes."
+      ],
+      "used_in_sections": [
+        "game-systems",
+        "task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_007",
+      "claim": "HQ 16, 20, 23, and 28 are gated by Hero Precinct plus another building and large food, wood, metal, gas, prosperity, and construction-time requirements.",
+      "claim_type": "progression",
+      "source_url": "https://state-of-survival.fandom.com/wiki/Headquarters",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Fandom lists HQ 16, 20, 23, and 28 prerequisite buildings, resources, prosperity, and base construction times.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Base construction times do not include research, talents, VIP, alliance help, or buffs."
+      ],
+      "used_in_sections": [
+        "game-systems",
+        "task-route",
+        "worth-it"
+      ]
+    },
+    {
+      "claim_id": "claim_008",
+      "claim": "Alliance membership can provide construction/research timer help, alliance store access, crates, and alliance tech benefits.",
+      "claim_type": "game_system",
+      "source_url": "https://state-of-survival.fandom.com/wiki/Alliance",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Alliance page explains timer help, alliance store, alliance crates, and alliance research/tech.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Alliance quality varies by server and cannot be guaranteed."
+      ],
+      "used_in_sections": [
+        "setup",
+        "game-systems",
+        "task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_009",
+      "claim": "Training Camp upgrades increase troop training volume and reduce training time, while Army Overview shows troop count, march slots, wounded, and formations.",
+      "claim_type": "game_system",
+      "source_url": "https://state-of-survival.fandom.com/wiki/Training_Camp",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Training Camp page explains training capacity/time and Army Overview information.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "game-systems",
+        "task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_010",
+      "claim": "Power tasks should be treated as broad growth tasks because power comes from multiple systems such as buildings, troops, research, heroes, and upgrades.",
+      "claim_type": "strategy",
+      "source_url": "https://play.google.com/store/apps/details?hl=en-US&id=com.kingsgroup.sos",
+      "source_type": "app_store",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Official store description ties power and defense capability to buildings, troops, strategy, research, resources, and gear.",
+      "source_published_date": "2026-05-18",
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Exact power efficiency by item or pack was not independently verified."
+      ],
+      "used_in_sections": [
+        "game-systems",
+        "task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_011",
+      "claim": "Torox says missing reward tickets can be submitted with proof from the My Activity tab after at least 24 hours if the offer status is Clicked.",
+      "claim_type": "support",
+      "source_url": "https://torox.io/faq-missing-your-reward/",
+      "source_type": "offerwall_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Torox FAQ describes My Activity, Apply for Missing Reward, proof screenshots, 24-hour wait, Clicked status, and 7 business day response expectation.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Support decisions are controlled by Torox and advertiser validation."
+      ],
+      "used_in_sections": [
+        "proof-support",
+        "faq"
+      ]
+    },
+    {
+      "claim_id": "claim_012",
+      "claim": "Gain.gg says missing offerwall coins generally must be handled through the offerwall provider, not Gain.gg staff.",
+      "claim_type": "support",
+      "source_url": "https://gain.gg/faq",
+      "source_type": "offerwall_support",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Gain.gg FAQ says staff cannot investigate why an offer has not credited properly and users must contact offerwall providers directly.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "FAQ text can change and Gain.gg support policies may differ by case."
+      ],
+      "used_in_sections": [
+        "proof-support",
+        "faq"
+      ]
+    },
+    {
+      "claim_id": "claim_013",
+      "claim": "A community Torox report says HQ 28 was completed around day 23 with spending during a Torox event, which suggests the HQ 28 task is high-pressure and spend-sensitive.",
+      "claim_type": "strategy",
+      "source_url": "https://www.reddit.com/r/SwagBucks/comments/1hitab8",
+      "source_type": "reddit",
+      "confidence": "low",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Reddit report is anecdotal and event-specific, but useful for caveating late HQ goals.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Do not present this as a guarantee or current offer requirement."
+      ],
+      "used_in_sections": [
+        "worth-it",
+        "task-route",
+        "faq"
+      ]
+    },
+    {
+      "claim_id": "claim_014",
+      "claim": "Community guides commonly frame State of Survival offer completion as time and resource management with HQ/Hero Precinct and important buildings kept moving.",
+      "claim_type": "strategy",
+      "source_url": "https://www.reddit.com/r/GetPaidToPlay/comments/18kl8wu",
+      "source_type": "reddit",
+      "confidence": "low",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Community guide emphasizes time/resource management and continuous HQ/Hero Precinct progression.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Anecdotal advice only; not proof of completion for this offer."
+      ],
+      "used_in_sections": [
+        "task-route",
+        "worth-it"
+      ]
+    },
+    {
+      "claim_id": "claim_015",
+      "claim": "The offer includes purchase tasks for 4.99, 9.99, 19.99, 49.99, and cumulative purchase over USD 100 requirements.",
+      "claim_type": "strategy",
+      "source_url": "user-provided task list",
+      "source_type": "task_list",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Purchase tasks are present in the task list.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Purchase costs are requirements, not payouts."
+      ],
+      "used_in_sections": [
+        "payout",
+        "worth-it",
+        "task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_016",
+      "claim": "The target user is a first-time US Android user and should start from the provided Gain.gg/Torox click path to preserve tracking.",
+      "claim_type": "tracking",
+      "source_url": "user-provided task list",
+      "source_type": "task_list",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "The user specified US Android and not installed before.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "The local guide cannot verify live click tracking."
+      ],
+      "used_in_sections": [
+        "setup",
+        "proof-support"
+      ]
+    }
+  ],
+  "game_overview": {
+    "summary": "State of Survival: Zombie War is a mobile strategy survival game about rebuilding a shelter, growing a settlement, training troops, researching upgrades, recruiting heroes, and working with an alliance.",
+    "why_it_matters_for_offer": "The offer tasks are not about finishing a story campaign. They are about account growth: power, Headquarters levels, and purchases. A reader needs to understand which systems affect those goals before starting.",
+    "claim_ids": [
+      "claim_003",
+      "claim_004",
+      "claim_005"
+    ]
+  },
+  "game_systems": [
+    {
+      "system": "Headquarters and building gates",
+      "include_in_guide": true,
+      "what_it_is": "The central settlement building and the level cap for other buildings.",
+      "why_it_matters": "Four offer tasks require HQ 16, 20, 23, and 28; later HQ levels require Hero Precinct and another building plus large resources and timers.",
+      "claim_ids": [
+        "claim_006",
+        "claim_007"
+      ]
+    },
+    {
+      "system": "Power growth",
+      "include_in_guide": true,
+      "what_it_is": "A total growth number affected by buildings, troops, research, heroes, and upgrades.",
+      "why_it_matters": "Six offer tasks require power milestones, including 10m and 90m.",
+      "claim_ids": [
+        "claim_004",
+        "claim_009",
+        "claim_010"
+      ]
+    },
+    {
+      "system": "Alliance support",
+      "include_in_guide": true,
+      "what_it_is": "A social system with timer help, alliance store, crates, and alliance tech.",
+      "why_it_matters": "An active alliance can reduce timer pressure and create more resource/speedup opportunities.",
+      "claim_ids": [
+        "claim_008"
+      ]
+    },
+    {
+      "system": "Purchases and proof",
+      "include_in_guide": true,
+      "what_it_is": "Offer rows that require package purchases and may need screenshots if tracking fails.",
+      "why_it_matters": "Purchase tasks can cost more than several individual rewards, so proof and support readiness matter before spending.",
+      "claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_015",
+        "claim_016"
+      ]
+    }
+  ],
+  "task_strategy": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "strategy_status": "source_backed",
+      "strategy": "Start from the Gain.gg/Torox offer click path on the Android device, install fresh, open the app, register, and screenshot the offer before and after install.",
+      "claim_ids": [
+        "claim_001",
+        "claim_016"
+      ],
+      "risk_notes": [
+        "Do not install from a separate ad or app store search if tracking matters."
+      ],
+      "proof_notes": [
+        "Offer page, clicked/activity status, install screen, player ID or account screen."
+      ]
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach power 10w within 18 days",
+      "strategy_status": "source_backed",
+      "strategy": "Use early growth systems: upgrade core buildings, train troops, claim beginner rewards, join an alliance, and keep timers moving.",
+      "claim_ids": [
+        "claim_002",
+        "claim_004",
+        "claim_008",
+        "claim_010"
+      ],
+      "risk_notes": [
+        "The guide should keep the 10w label from the offer and not rewrite it as a guaranteed numeric conversion."
+      ],
+      "proof_notes": [
+        "Screenshot the profile or power display when the milestone is reached."
+      ]
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach power 40w within 18 days",
+      "strategy_status": "source_backed",
+      "strategy": "Continue broad account growth and avoid spending speedups on side systems that do not move power or HQ progress.",
+      "claim_ids": [
+        "claim_002",
+        "claim_009",
+        "claim_010"
+      ],
+      "risk_notes": [
+        "Power milestones can track late; keep proof before moving on."
+      ],
+      "proof_notes": [
+        "Screenshot power display and Torox activity status."
+      ]
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach power 200w within 18 days",
+      "strategy_status": "source_backed",
+      "strategy": "Prioritize the same activities that also support HQ growth: building upgrades, troop training, research, and alliance help.",
+      "claim_ids": [
+        "claim_002",
+        "claim_008",
+        "claim_009",
+        "claim_010"
+      ],
+      "risk_notes": [
+        "Do not chase only power if it delays HQ 16 and HQ 20."
+      ],
+      "proof_notes": [
+        "Screenshot power display immediately after crossing the milestone."
+      ]
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Upgrade headquarter to level 16 within 18 days",
+      "strategy_status": "source_backed",
+      "strategy": "Keep Headquarters and prerequisite buildings moving; the HQ table shows HQ 16 requires Hero Precinct 15 and Garage 15 plus resources.",
+      "claim_ids": [
+        "claim_002",
+        "claim_006",
+        "claim_007",
+        "claim_014"
+      ],
+      "risk_notes": [
+        "HQ progress can stall if Hero Precinct or secondary building gates are ignored."
+      ],
+      "proof_notes": [
+        "Screenshot HQ level and upgrade completion screen."
+      ]
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Purchase any 4.99 package in 7 days within 7 days",
+      "strategy_status": "source_backed",
+      "strategy": "Only buy from the tracked game session after confirming the offer is clicked/activity-visible; save receipt and in-game purchase screenshots.",
+      "claim_ids": [
+        "claim_002",
+        "claim_011",
+        "claim_015",
+        "claim_016"
+      ],
+      "risk_notes": [
+        "The reward value is lower than the purchase price, so this task makes sense only if it helps larger milestones."
+      ],
+      "proof_notes": [
+        "Receipt, package screen, player ID, Torox activity status."
+      ]
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach power 10m within 18 days",
+      "strategy_status": "source_backed",
+      "strategy": "Treat this as a mid-offer checkpoint that needs compounding growth from buildings, troops, research, heroes, and alliance support.",
+      "claim_ids": [
+        "claim_002",
+        "claim_008",
+        "claim_009",
+        "claim_010"
+      ],
+      "risk_notes": [
+        "Power alone is not the same as HQ progress; balance both paths."
+      ],
+      "proof_notes": [
+        "Screenshot power display and account/player ID."
+      ]
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Purchase any 9.99 package in 30 days within 30 days",
+      "strategy_status": "source_backed",
+      "strategy": "Delay optional purchase until tracking is confirmed from earlier tasks when possible; keep a clean receipt trail.",
+      "claim_ids": [
+        "claim_002",
+        "claim_011",
+        "claim_015",
+        "claim_016"
+      ],
+      "risk_notes": [
+        "A 30-day purchase deadline is more flexible than the 7-day purchases, but the app session still needs to be tracked."
+      ],
+      "proof_notes": [
+        "Receipt, package screen, Torox activity status."
+      ]
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Upgrade headquarter to level 20 within 18 days",
+      "strategy_status": "source_backed",
+      "strategy": "Focus on HQ, Hero Precinct, and the listed secondary building gates; HQ 20 requires Hero Precinct 19 and Range 19 in the wiki table.",
+      "claim_ids": [
+        "claim_002",
+        "claim_006",
+        "claim_007",
+        "claim_014"
+      ],
+      "risk_notes": [
+        "Construction timers and resource gates are the main pressure before day 18."
+      ],
+      "proof_notes": [
+        "Screenshot HQ 20 screen after completion."
+      ]
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Purchase any 19.99 package",
+      "strategy_status": "source_backed",
+      "strategy": "Do not treat this as timed beyond the task list; buy only if the reward path and larger milestones justify the spend.",
+      "claim_ids": [
+        "claim_002",
+        "claim_011",
+        "claim_015"
+      ],
+      "risk_notes": [
+        "The task row does not state a deadline, so the guide must not invent one."
+      ],
+      "proof_notes": [
+        "Receipt, in-game purchase confirmation, account/player ID."
+      ]
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Purchase any 49.99 package in 7 days within 7 days",
+      "strategy_status": "source_backed",
+      "strategy": "This is an early high-spend task; require proof readiness and a clear plan for HQ/power value before purchase.",
+      "claim_ids": [
+        "claim_002",
+        "claim_011",
+        "claim_015",
+        "claim_016"
+      ],
+      "risk_notes": [
+        "The purchase cost is higher than its listed reward value, so it should be evaluated as part of the full offer, not alone."
+      ],
+      "proof_notes": [
+        "Receipt, package contents, player ID, Torox clicked/activity status."
+      ]
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Upgrade headquarter to level 23 within 22 days",
+      "strategy_status": "source_backed",
+      "strategy": "Plan from HQ 20 onward for larger resources and construction time; HQ 23 requires Hero Precinct 22 and Range 22 in the wiki table.",
+      "claim_ids": [
+        "claim_002",
+        "claim_006",
+        "claim_007",
+        "claim_013",
+        "claim_014"
+      ],
+      "risk_notes": [
+        "Community evidence suggests late HQ milestones become spend-sensitive."
+      ],
+      "proof_notes": [
+        "Screenshot HQ 23 completion and profile ID."
+      ]
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Cumulative purchase over USD 100 in 15 days within 15 days",
+      "strategy_status": "source_backed",
+      "strategy": "Treat this as a separate spend threshold, not as extra payout; keep receipts for every purchase and total them before day 15.",
+      "claim_ids": [
+        "claim_002",
+        "claim_011",
+        "claim_015",
+        "claim_016"
+      ],
+      "risk_notes": [
+        "The cumulative spend requirement can outstrip the reward if later milestones fail."
+      ],
+      "proof_notes": [
+        "All receipts, package screens, purchase history, player ID, Torox activity."
+      ]
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Upgrade headquarter to level 28 within 22 days",
+      "strategy_status": "source_backed",
+      "strategy": "Label as a high-risk late milestone; HQ 28 requires Hero Precinct 27, Garage 26, major resources, prosperity, and long base construction time in the wiki table.",
+      "claim_ids": [
+        "claim_002",
+        "claim_006",
+        "claim_007",
+        "claim_013",
+        "claim_014"
+      ],
+      "risk_notes": [
+        "Do not promise HQ 28 in 22 days; community evidence is anecdotal and spend-heavy."
+      ],
+      "proof_notes": [
+        "Screenshot HQ 28 completion, profile ID, and Torox task status."
+      ]
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach power 90m within 22 days",
+      "strategy_status": "source_backed",
+      "strategy": "Treat as the most speculative power target; it likely depends on sustained growth, purchases, events, troops, research, heroes, and alliance support.",
+      "claim_ids": [
+        "claim_002",
+        "claim_008",
+        "claim_009",
+        "claim_010",
+        "claim_013"
+      ],
+      "risk_notes": [
+        "No source confirms a reliable low-spend route to 90m power within 22 days."
+      ],
+      "proof_notes": [
+        "Screenshot power display, profile ID, and offerwall status."
+      ]
+    }
+  ],
+  "navigation_plan": {
+    "top_nav": [
+      {
+        "label": "Payout table",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout",
+        "required": true
+      },
+      {
+        "label": "Before you start",
+        "anchor_id": "before-you-start",
+        "section_type": "setup",
+        "priority": 2,
+        "mobile_label": "Start",
+        "required": true
+      },
+      {
+        "label": "Game basics",
+        "anchor_id": "game-basics",
+        "section_type": "game_overview",
+        "priority": 3,
+        "mobile_label": "Basics",
+        "required": true
+      },
+      {
+        "label": "Systems that matter",
+        "anchor_id": "systems-that-matter",
+        "section_type": "game_system",
+        "priority": 4,
+        "mobile_label": "Systems",
+        "required": true
+      },
+      {
+        "label": "Task route",
+        "anchor_id": "task-route",
+        "section_type": "task_route",
+        "priority": 5,
+        "mobile_label": "Tasks",
+        "required": true
+      },
+      {
+        "label": "Proof and support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 6,
+        "mobile_label": "Proof",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 7,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Next step",
+        "anchor_id": "next-step",
+        "section_type": "cta",
+        "priority": 8,
+        "mobile_label": "Next",
+        "required": true
+      }
+    ],
+    "major_sections": [
+      {
+        "label": "Payout table",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout",
+        "required": true
+      },
+      {
+        "label": "Before you start",
+        "anchor_id": "before-you-start",
+        "section_type": "setup",
+        "priority": 2,
+        "mobile_label": "Start",
+        "required": true
+      },
+      {
+        "label": "Game basics",
+        "anchor_id": "game-basics",
+        "section_type": "game_overview",
+        "priority": 3,
+        "mobile_label": "Basics",
+        "required": true
+      },
+      {
+        "label": "Systems that matter",
+        "anchor_id": "systems-that-matter",
+        "section_type": "game_system",
+        "priority": 4,
+        "mobile_label": "Systems",
+        "required": true
+      },
+      {
+        "label": "Task route",
+        "anchor_id": "task-route",
+        "section_type": "task_route",
+        "priority": 5,
+        "mobile_label": "Tasks",
+        "required": true
+      },
+      {
+        "label": "Proof and support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 6,
+        "mobile_label": "Proof",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 7,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Next step",
+        "anchor_id": "next-step",
+        "section_type": "cta",
+        "priority": 8,
+        "mobile_label": "Next",
+        "required": true
+      }
+    ],
+    "game_detail_sections": [
+      {
+        "label": "Game basics",
+        "anchor_id": "game-basics",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Basics",
+        "required": true
+      },
+      {
+        "label": "Systems that matter",
+        "anchor_id": "systems-that-matter",
+        "section_type": "game_system",
+        "priority": 2,
+        "mobile_label": "Systems",
+        "required": true
+      }
+    ],
+    "task_sections": [
+      {
+        "label": "Task route",
+        "anchor_id": "task-route",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "Tasks",
+        "required": true
+      }
+    ],
+    "support_sections": [
+      {
+        "label": "Proof and support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 2,
+        "mobile_label": "FAQ",
+        "required": true
+      }
+    ]
+  },
+  "original_value_block": {
+    "type": "skip-complete-verdict",
+    "title": "Spend gate decision table",
+    "description": "A decision block that separates early tracking checks, purchase thresholds, HQ milestones, and high-risk late goals.",
+    "rows": [
+      {
+        "stage": "Before spending",
+        "decision": "Confirm install tracking and early task credit before paying for packages when possible."
+      },
+      {
+        "stage": "Early purchases",
+        "decision": "Treat 4.99 and 49.99 seven-day purchase rows as high proof-risk because they happen before long-term tracking confidence."
+      },
+      {
+        "stage": "Late milestones",
+        "decision": "HQ 28 and 90m power should be attempted only if progress is already strong and spend risk is acceptable."
+      }
+    ]
+  },
+  "worth_it_score": {
+    "score": 56,
+    "verdict": "High ceiling, high risk",
+    "rationale": [
+      "The maximum listed payout is large, but several valuable tasks require purchases and late-game growth.",
+      "HQ 28 and 90m power within 22 days are high-pressure tasks with no source-backed low-spend guarantee.",
+      "The offer is more reasonable for users willing to track carefully, join an active alliance, play daily, and stop if early tracking fails."
+    ]
+  },
+  "questions_unanswered": [
+    {
+      "severity": "medium",
+      "question": "Does Torox credit each tier instantly, pending, or after advertiser review for this exact Gain.gg offer?",
+      "safe_handling": "Tell readers to verify activity status and keep proof before spending."
+    },
+    {
+      "severity": "medium",
+      "question": "Does the game display 10w, 40w, and 200w exactly for US Android users, or does it localize those labels?",
+      "safe_handling": "Preserve the offer labels and advise screenshots of the in-game power value."
+    },
+    {
+      "severity": "high",
+      "question": "Is 90m power within 22 days practical without heavy spending on the current live build?",
+      "safe_handling": "Do not promise completion; flag as the highest-risk task."
+    }
+  ],
+  "do_not_claim": [
+    "guaranteed credit",
+    "free to complete",
+    "HQ 28 is easy",
+    "90m power is guaranteed",
+    "no purchase is needed for every milestone",
+    "Torox will always approve a ticket",
+    "all tasks credit instantly"
+  ],
+  "quality_gate": {
+    "status": "pass",
+    "score": 82,
+    "checks": [
+      {
+        "id": "official_source",
+        "result": "pass",
+        "notes": "Google Play and FunPlus sources captured."
+      },
+      {
+        "id": "serp_top_10",
+        "result": "pass",
+        "notes": "Ten results recorded with intent and EarnGrind opportunity."
+      },
+      {
+        "id": "competitor_gaps",
+        "result": "pass",
+        "notes": "Three gaps captured."
+      },
+      {
+        "id": "payout_deadline_safety",
+        "result": "pass",
+        "notes": "Payouts and deadlines use task list claims only."
+      },
+      {
+        "id": "task_strategy",
+        "result": "pass",
+        "notes": "Every task has source-backed guidance or caveated strategy."
+      },
+      {
+        "id": "game_systems",
+        "result": "pass",
+        "notes": "HQ, power, alliance, training, and purchase proof systems are included."
+      },
+      {
+        "id": "original_value",
+        "result": "pass",
+        "notes": "Spend gate decision table planned."
+      }
+    ],
+    "blocking_reasons": []
+  }
+}

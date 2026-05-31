@@ -5,6 +5,8 @@ const EXPLORE = [
     { href: "/offers", label: "All Offers" },
     { href: "/games", label: "Games" },
     { href: "/guides", label: "Game Guides" },
+    { href: "/guides/how-to-earn", label: "How-to-Earn Guides" },
+    { href: "/best-gpt-sites", label: "Best GPT Sites" },
     { href: "/platforms", label: "Platform Reviews" },
     { href: "/blog", label: "Blog" },
 ];

@@ -1,0 +1,5094 @@
+{
+  "game": "Raid: Shadow Legends",
+  "slug": "raid-shadow-legends-earnlab-guide",
+  "research_date": "2026-05-30",
+  "intake": {
+    "source_file": "intake.json",
+    "game": "Raid: Shadow Legends",
+    "provider": "EarnLab",
+    "country": "United States",
+    "device": "Android",
+    "task_count": 23,
+    "max_points": 372716,
+    "max_usd": 372.716
+  },
+  "eligibility": {
+    "provider": "EarnLab",
+    "country": "United States",
+    "device": "Android",
+    "new_user_requirement": "US Android user who has not installed the game before.",
+    "status": "complete"
+  },
+  "research_brief": {
+    "primary_question": "Can a first-time US Android user use the Raid Shadow Legends EarnLab task list safely, understand the game systems behind each task, and decide where to stop?",
+    "task_research_needs": [
+      "campaign progression",
+      "account level",
+      "Tavern rank route",
+      "Sacred Shard route",
+      "purchase proof",
+      "tracking safety"
+    ],
+    "safety_rules": [
+      "Use only the prompt task list for payouts and deadlines.",
+      "Do not publish stale promo codes.",
+      "Treat Level 70 and 8 Sacred Shards as high risk."
+    ]
+  },
+  "source_log": [
+    {
+      "source_id": "source_001",
+      "source_type": "task_list",
+      "title": "user-provided task list",
+      "url": "user-provided task list",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "The listed Raid EarnLab tasks total 372,716 points, and points convert at 1,000 points per USD in EarnGrind rules."
+    },
+    {
+      "source_id": "source_002",
+      "source_type": "task_list",
+      "title": "user-provided task list",
+      "url": "user-provided task list",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Task deadlines include 24 hours, 3, 4, 5, 10, 14, 21, 35, and 60 day windows, plus purchase timing conditions after Day 7 and Day 30."
+    },
+    {
+      "source_id": "source_003",
+      "source_type": "app_store",
+      "title": "https://play.google.com/store/apps/details?id=com.plarium.raidlegends",
+      "url": "https://play.google.com/store/apps/details?id=com.plarium.raidlegends",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Google Play lists RAID: Shadow Legends for Android, with in-app purchases, role playing, turn-based RPG, multiplayer, single player, battling, dungeon, and events tags. The page showed an update date of May 11, 2026 when captured."
+    },
+    {
+      "source_id": "source_004",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "The Tavern lets players level champions using sacrificed champions, XP Brews, XP Barrels, and Instant Upgrade."
+    },
+    {
+      "source_id": "source_005",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Champion ranks have level caps from Rank 1 level 10 through Rank 6 level 60, and rank upgrades require sacrificing champions or chickens of the same rank."
+    },
+    {
+      "source_id": "source_006",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/4411358560914-Campaign-Farm-FAQ",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/4411358560914-Campaign-Farm-FAQ",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "XP Boosts help champions level faster by giving extra XP after clearing Campaign stages, and consecutive boosts extend duration."
+    },
+    {
+      "source_id": "source_007",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/360014657140-Basic-Guide-Gear-Overview",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014657140-Basic-Guide-Gear-Overview",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Artifacts and Accessories are gear equipped by champions; artifacts come from Campaign Battles, Dungeons, Forge, Market, Doom Tower, Arena Chests, Clan Boss Chests, Events, and Tournaments."
+    },
+    {
+      "source_id": "source_008",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/4411358827538-Promo-Codes-FAQ",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/4411358827538-Promo-Codes-FAQ",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Promo codes can be entered in game or on Plarium's web page; official channels and content creators can publish codes, and new player codes may have first-account and time limits."
+    },
+    {
+      "source_id": "source_009",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/360014705159-Guide-Clans",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014705159-Guide-Clans",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Clans unlock Clan Boss, Clan Shop, Clan Quests, extra Multi-Battles, bonus Campaign Silver, and Clan Activity tasks."
+    },
+    {
+      "source_id": "source_010",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/360014705159-Guide-Clans",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014705159-Guide-Clans",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Clan Activity includes daily actions such as playing, fighting Campaign or Dungeon battles, fighting Arena battles, and Clan Boss attempts."
+    },
+    {
+      "source_id": "source_011",
+      "source_type": "publisher_support",
+      "title": "https://raid-support.plarium.com/hc/en-us/articles/360014038080-RAID-Card-General-information",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014038080-RAID-Card-General-information",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Raid Card is a subscription offer that gives extra XP and Silver from Campaign Battles and increases daily Multi-battle attempts."
+    },
+    {
+      "source_id": "source_012",
+      "source_type": "competitor",
+      "title": "https://earnlab.com/guides/raid-shadow-legends",
+      "url": "https://earnlab.com/guides/raid-shadow-legends",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "EarnLab's own public guide covers Raid offer concepts such as campaign progression, daily rewards, Sacred Shards, purchases, and a progression roadmap, but it includes conflicting offer context and should not be used as this task list's payout source."
+    },
+    {
+      "source_id": "source_013",
+      "source_type": "competitor",
+      "title": "https://hellhades.com/beginners-energy-guide-raid-shadow-legends/",
+      "url": "https://hellhades.com/beginners-energy-guide-raid-shadow-legends/",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "HellHades beginner guidance prioritizes developing a starter champion, using campaign as the efficient place to farm XP for food, managing energy, and doing missions, quests, and challenges for rewards."
+    },
+    {
+      "source_id": "source_014",
+      "source_type": "competitor",
+      "title": "https://hellhades.com/raid/new-player-guide/",
+      "url": "https://hellhades.com/raid/new-player-guide/",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "HellHades new player guidance frames campaign as a key source of champion XP and describes daily login rewards and shard use in events."
+    },
+    {
+      "source_id": "source_015",
+      "source_type": "wiki",
+      "title": "https://raidshadowlegends.fandom.com/wiki/Monthly_Quests",
+      "url": "https://raidshadowlegends.fandom.com/wiki/Monthly_Quests",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "The community wiki lists Monthly Quests with a Sacred Shard reward for completing all monthly quests and account XP rewards on quest rows."
+    },
+    {
+      "source_id": "source_016",
+      "source_type": "competitor",
+      "title": "https://hellhades.com/where-is-the-best-place-to-get-shards-in-raid-shadow-legends/",
+      "url": "https://hellhades.com/where-is-the-best-place-to-get-shards-in-raid-shadow-legends/",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "HellHades describes Sacred Shards as hard to obtain, with reliable monthly quest access and late-game Clan Boss access rather than easy early farming."
+    },
+    {
+      "source_id": "source_017",
+      "source_type": "competitor",
+      "title": "https://www.pocketgamer.com/raid-shadow-legends/sacred-shards/",
+      "url": "https://www.pocketgamer.com/raid-shadow-legends/sacred-shards/",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Pocket Gamer lists Sacred Shard routes including monthly quests, packs, progression rewards, and referral rewards, with buying packs as an easier but spend-heavy route."
+    },
+    {
+      "source_id": "source_018",
+      "source_type": "offerwall_support",
+      "title": "https://support.google.com/googleplay/answer/2479637",
+      "url": "https://support.google.com/googleplay/answer/2479637",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Google Play purchase history and receipts can be used to document mobile purchases if offer support asks for proof."
+    },
+    {
+      "source_id": "source_019",
+      "source_type": "other",
+      "title": "https://earnlab.com/guides/raid-shadow-legends",
+      "url": "https://earnlab.com/guides/raid-shadow-legends",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "EarnLab guide pages demonstrate that public offer guides can drift from a specific task list, so this guide treats the provided task list as authoritative."
+    },
+    {
+      "source_id": "source_020",
+      "source_type": "reddit",
+      "title": "https://www.reddit.com/r/GetPaidToPlay/comments/1rfzud7/is_this_raid_shadow_legends_offer_worth_it/",
+      "url": "https://www.reddit.com/r/GetPaidToPlay/comments/1rfzud7/is_this_raid_shadow_legends_offer_worth_it/",
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Anecdotal get-paid-to-play discussion describes Level 70 and high Sacred Shard goals as difficult or spend-heavy. Use as low-confidence difficulty context, not as offer terms."
+    }
+  ],
+  "source_freshness": {
+    "captured_date": "2026-05-30",
+    "official_sources": [
+      "Google Play page captured with May 11, 2026 update date.",
+      "Plarium support pages captured in current search results."
+    ],
+    "community_sources": [
+      "Reddit difficulty context is anecdotal and low confidence."
+    ],
+    "offer_terms": [
+      "The user-provided task list is the source of truth."
+    ]
+  },
+  "serp_top_10": [
+    {
+      "position": 1,
+      "url": "https://earnlab.com/guides/raid-shadow-legends",
+      "title": "Complete Guide: Raid Shadow Legends - How to Complete the Offer",
+      "result_type": "competitor",
+      "intent": "offer completion",
+      "strengths": [
+        "offer angle",
+        "roadmap"
+      ],
+      "weaknesses": [
+        "conflicting offer overview",
+        "not this task list"
+      ],
+      "earngrind_opportunity": "Use exact EarnLab task table from the prompt and safer stop logic."
+    },
+    {
+      "position": 2,
+      "url": "https://hellhades.com/beginners-energy-guide-raid-shadow-legends/",
+      "title": "Beginners Energy Guide - Raid Shadow Legends",
+      "result_type": "game guide",
+      "intent": "beginner progression",
+      "strengths": [
+        "energy and campaign detail"
+      ],
+      "weaknesses": [
+        "not offerwall-specific"
+      ],
+      "earngrind_opportunity": "Tie energy to tasks and deadlines."
+    },
+    {
+      "position": 3,
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "title": "The Tavern - RAID: Shadow Legends",
+      "result_type": "official support",
+      "intent": "mechanic help",
+      "strengths": [
+        "rank and level mechanics"
+      ],
+      "weaknesses": [
+        "not task route"
+      ],
+      "earngrind_opportunity": "Translate ranks into 5-star and 6-star task routes."
+    },
+    {
+      "position": 4,
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/4411358560914-Campaign-Farm-FAQ",
+      "title": "Campaign Farm FAQ",
+      "result_type": "official support",
+      "intent": "campaign XP",
+      "strengths": [
+        "XP boost explanation"
+      ],
+      "weaknesses": [
+        "thin page"
+      ],
+      "earngrind_opportunity": "Connect campaign farming to account and champion progress."
+    },
+    {
+      "position": 5,
+      "url": "https://hellhades.com/where-is-the-best-place-to-get-shards-in-raid-shadow-legends/",
+      "title": "Where is the best place to get Shards",
+      "result_type": "game guide",
+      "intent": "shard sources",
+      "strengths": [
+        "Sacred Shard difficulty"
+      ],
+      "weaknesses": [
+        "not EarnLab-specific"
+      ],
+      "earngrind_opportunity": "Warn that 6 and 8 Sacred Shards are spend-heavy."
+    },
+    {
+      "position": 6,
+      "url": "https://www.pocketgamer.com/raid-shadow-legends/sacred-shards/",
+      "title": "How you can earn Sacred Shards",
+      "result_type": "game guide",
+      "intent": "shard sources",
+      "strengths": [
+        "lists routes"
+      ],
+      "weaknesses": [
+        "older and generic"
+      ],
+      "earngrind_opportunity": "Separate confirmed sources from offer deadlines."
+    },
+    {
+      "position": 7,
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/4411358827538-Promo-Codes-FAQ",
+      "title": "Promo Codes FAQ",
+      "result_type": "official support",
+      "intent": "codes",
+      "strengths": [
+        "official code rules"
+      ],
+      "weaknesses": [
+        "no active code list"
+      ],
+      "earngrind_opportunity": "Explain code safety without publishing stale codes."
+    },
+    {
+      "position": 8,
+      "url": "https://play.google.com/store/apps/details?id=com.plarium.raidlegends",
+      "title": "RAID: Shadow Legends - Apps on Google Play",
+      "result_type": "app store",
+      "intent": "install and app details",
+      "strengths": [
+        "Android listing"
+      ],
+      "weaknesses": [
+        "not offer-specific"
+      ],
+      "earngrind_opportunity": "Use for Android and in-app purchase context."
+    },
+    {
+      "position": 9,
+      "url": "https://www.reddit.com/r/GetPaidToPlay/comments/1rfzud7/is_this_raid_shadow_legends_offer_worth_it/",
+      "title": "Is this Raid Shadow Legends offer worth it?",
+      "result_type": "reddit",
+      "intent": "worth it",
+      "strengths": [
+        "real risk discussion"
+      ],
+      "weaknesses": [
+        "anecdotal"
+      ],
+      "earngrind_opportunity": "Use caveated difficulty context and avoid promises."
+    },
+    {
+      "position": 10,
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014705159-Guide-Clans",
+      "title": "Guide: Clans",
+      "result_type": "official support",
+      "intent": "clan systems",
+      "strengths": [
+        "clan benefits"
+      ],
+      "weaknesses": [
+        "not beginner offer route"
+      ],
+      "earngrind_opportunity": "Explain why clan activity supports campaign and daily loops."
+    }
+  ],
+  "competitor_gaps": [
+    "Competitors often cover Sacred Shards without matching this EarnLab task list, deadlines, and exact payout rows.",
+    "Competitors do not consistently separate purchase requirements from reward payouts and profit risk.",
+    "Beginner Raid guides explain energy or champions but do not tie those systems to offer proof, tracking, and stop points.",
+    "EarnLab's public Raid guide contains conflicting offer context, so EarnGrind can win by preserving the exact prompt task list."
+  ],
+  "keyword_research": {
+    "primary_keyword": "Raid Shadow Legends EarnLab offer guide",
+    "secondary_keywords": [
+      "Raid Shadow Legends offer guide",
+      "EarnLab Raid task guide",
+      "Raid Sacred Shards offer",
+      "Raid 5 star champion guide",
+      "Raid 6 star champion guide",
+      "Raid Shadow Legends worth it"
+    ],
+    "entity_terms": [
+      "Raid: Shadow Legends",
+      "EarnLab",
+      "Plarium",
+      "Google Play",
+      "Android",
+      "Sacred Shards",
+      "Tavern",
+      "Campaign",
+      "Clan",
+      "Arena"
+    ],
+    "game_mechanics": [
+      "campaign progression",
+      "account level",
+      "Tavern rank route",
+      "food champions",
+      "XP Brews",
+      "chickens",
+      "energy",
+      "gear",
+      "daily quests",
+      "promo codes"
+    ],
+    "offerwall_terms": [
+      "tracking",
+      "credit",
+      "fresh install",
+      "same device",
+      "purchase proof",
+      "deadline",
+      "task page screenshot",
+      "support"
+    ],
+    "user_problem_terms": [
+      "is Raid EarnLab worth it",
+      "Raid task not crediting",
+      "how to get Sacred Shards",
+      "how to make a 6 star champion",
+      "Raid Level 70 offer"
+    ],
+    "task_terms": [
+      "Register and start playing the game",
+      "Complete the tutorial",
+      "Fight 20 battles within 24 hours",
+      "Reach Level 15 within 3 days",
+      "Reach Level 30 within 4 days",
+      "Upgrade a hero to 5 stars within 3 days",
+      "Upgrade 3 heroes to 5 stars within 5 days",
+      "Upgrade a hero to 6 stars within 10 days",
+      "Upgrade 5 heroes to 5 stars within 14 days",
+      "Upgrade 3 heroes to 6 stars within 21 days",
+      "Make any purchase",
+      "Purchase Silver 500k Pack for USD 9.99",
+      "Purchase the Daily Gem Pack for USD 9.99",
+      "Purchase a Sacred Daily Pack for USD 29.99",
+      "Purchase the Beginner Progress Pack for USD 49.99",
+      "Purchase Box of Gems for USD 29.99",
+      "Open 2 Sacred / Yellow Shards",
+      "Open 4 Sacred / Yellow Shards",
+      "Open 6 Sacred / Yellow Shards",
+      "Open 8 Sacred / Yellow Shards",
+      "Reach Level 50 within 21 days",
+      "Reach Level 60 within 35 days",
+      "Reach Level 70 within 60 days"
+    ],
+    "game_system_terms": [
+      "Campaign progression",
+      "Tavern rank route",
+      "Energy management",
+      "Gear and silver",
+      "Promo codes",
+      "Clans",
+      "Sacred Shard route"
+    ]
+  },
+  "claim_ledger": [
+    {
+      "claim_id": "claim_001",
+      "claim": "The listed Raid EarnLab tasks total 372,716 points, and points convert at 1,000 points per USD in EarnGrind rules.",
+      "claim_type": "payout",
+      "source_url": "user-provided task list",
+      "source_type": "task_list",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "The listed Raid EarnLab tasks total 372,716 points, and points convert at 1,000 points per USD in EarnGrind rules.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "payout table"
+      ]
+    },
+    {
+      "claim_id": "claim_002",
+      "claim": "Task deadlines include 24 hours, 3, 4, 5, 10, 14, 21, 35, and 60 day windows, plus purchase timing conditions after Day 7 and Day 30.",
+      "claim_type": "deadline",
+      "source_url": "user-provided task list",
+      "source_type": "task_list",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Task deadlines include 24 hours, 3, 4, 5, 10, 14, 21, 35, and 60 day windows, plus purchase timing conditions after Day 7 and Day 30.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "payout table"
+      ]
+    },
+    {
+      "claim_id": "claim_003",
+      "claim": "Google Play lists RAID: Shadow Legends for Android, with in-app purchases, role playing, turn-based RPG, multiplayer, single player, battling, dungeon, and events tags. The page showed an update date of May 11, 2026 when captured.",
+      "claim_type": "other",
+      "source_url": "https://play.google.com/store/apps/details?id=com.plarium.raidlegends",
+      "source_type": "app_store",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Google Play lists RAID: Shadow Legends for Android, with in-app purchases, role playing, turn-based RPG, multiplayer, single player, battling, dungeon, and events tags. The page showed an update date of May 11, 2026 when captured.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "game overview"
+      ]
+    },
+    {
+      "claim_id": "claim_004",
+      "claim": "The Tavern lets players level champions using sacrificed champions, XP Brews, XP Barrels, and Instant Upgrade.",
+      "claim_type": "mechanic",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "The Tavern lets players level champions using sacrificed champions, XP Brews, XP Barrels, and Instant Upgrade.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "Tavern route"
+      ]
+    },
+    {
+      "claim_id": "claim_005",
+      "claim": "Champion ranks have level caps from Rank 1 level 10 through Rank 6 level 60, and rank upgrades require sacrificing champions or chickens of the same rank.",
+      "claim_type": "progression",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Champion ranks have level caps from Rank 1 level 10 through Rank 6 level 60, and rank upgrades require sacrificing champions or chickens of the same rank.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "rank route"
+      ]
+    },
+    {
+      "claim_id": "claim_006",
+      "claim": "XP Boosts help champions level faster by giving extra XP after clearing Campaign stages, and consecutive boosts extend duration.",
+      "claim_type": "game_system",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/4411358560914-Campaign-Farm-FAQ",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "XP Boosts help champions level faster by giving extra XP after clearing Campaign stages, and consecutive boosts extend duration.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "campaign XP route"
+      ]
+    },
+    {
+      "claim_id": "claim_007",
+      "claim": "Artifacts and Accessories are gear equipped by champions; artifacts come from Campaign Battles, Dungeons, Forge, Market, Doom Tower, Arena Chests, Clan Boss Chests, Events, and Tournaments.",
+      "claim_type": "game_system",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014657140-Basic-Guide-Gear-Overview",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Artifacts and Accessories are gear equipped by champions; artifacts come from Campaign Battles, Dungeons, Forge, Market, Doom Tower, Arena Chests, Clan Boss Chests, Events, and Tournaments.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "gear section"
+      ]
+    },
+    {
+      "claim_id": "claim_008",
+      "claim": "Promo codes can be entered in game or on Plarium's web page; official channels and content creators can publish codes, and new player codes may have first-account and time limits.",
+      "claim_type": "promo_code",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/4411358827538-Promo-Codes-FAQ",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Promo codes can be entered in game or on Plarium's web page; official channels and content creators can publish codes, and new player codes may have first-account and time limits.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "codes section"
+      ]
+    },
+    {
+      "claim_id": "claim_009",
+      "claim": "Clans unlock Clan Boss, Clan Shop, Clan Quests, extra Multi-Battles, bonus Campaign Silver, and Clan Activity tasks.",
+      "claim_type": "game_system",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014705159-Guide-Clans",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Clans unlock Clan Boss, Clan Shop, Clan Quests, extra Multi-Battles, bonus Campaign Silver, and Clan Activity tasks.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "clan section"
+      ]
+    },
+    {
+      "claim_id": "claim_010",
+      "claim": "Clan Activity includes daily actions such as playing, fighting Campaign or Dungeon battles, fighting Arena battles, and Clan Boss attempts.",
+      "claim_type": "progression",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014705159-Guide-Clans",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Clan Activity includes daily actions such as playing, fighting Campaign or Dungeon battles, fighting Arena battles, and Clan Boss attempts.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "daily loop"
+      ]
+    },
+    {
+      "claim_id": "claim_011",
+      "claim": "Raid Card is a subscription offer that gives extra XP and Silver from Campaign Battles and increases daily Multi-battle attempts.",
+      "claim_type": "game_system",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014038080-RAID-Card-General-information",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Raid Card is a subscription offer that gives extra XP and Silver from Campaign Battles and increases daily Multi-battle attempts.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "spending section"
+      ]
+    },
+    {
+      "claim_id": "claim_012",
+      "claim": "EarnLab's own public guide covers Raid offer concepts such as campaign progression, daily rewards, Sacred Shards, purchases, and a progression roadmap, but it includes conflicting offer context and should not be used as this task list's payout source.",
+      "claim_type": "strategy",
+      "source_url": "https://earnlab.com/guides/raid-shadow-legends",
+      "source_type": "competitor",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "EarnLab's own public guide covers Raid offer concepts such as campaign progression, daily rewards, Sacred Shards, purchases, and a progression roadmap, but it includes conflicting offer context and should not be used as this task list's payout source.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Community or competitor sources are not used for payouts or deadlines."
+      ],
+      "used_in_sections": [
+        "competitor gaps"
+      ]
+    },
+    {
+      "claim_id": "claim_013",
+      "claim": "HellHades beginner guidance prioritizes developing a starter champion, using campaign as the efficient place to farm XP for food, managing energy, and doing missions, quests, and challenges for rewards.",
+      "claim_type": "strategy",
+      "source_url": "https://hellhades.com/beginners-energy-guide-raid-shadow-legends/",
+      "source_type": "competitor",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "HellHades beginner guidance prioritizes developing a starter champion, using campaign as the efficient place to farm XP for food, managing energy, and doing missions, quests, and challenges for rewards.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Community or competitor sources are not used for payouts or deadlines."
+      ],
+      "used_in_sections": [
+        "beginner strategy"
+      ]
+    },
+    {
+      "claim_id": "claim_014",
+      "claim": "HellHades new player guidance frames campaign as a key source of champion XP and describes daily login rewards and shard use in events.",
+      "claim_type": "strategy",
+      "source_url": "https://hellhades.com/raid/new-player-guide/",
+      "source_type": "competitor",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "HellHades new player guidance frames campaign as a key source of champion XP and describes daily login rewards and shard use in events.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Community or competitor sources are not used for payouts or deadlines."
+      ],
+      "used_in_sections": [
+        "beginner strategy"
+      ]
+    },
+    {
+      "claim_id": "claim_015",
+      "claim": "The community wiki lists Monthly Quests with a Sacred Shard reward for completing all monthly quests and account XP rewards on quest rows.",
+      "claim_type": "progression",
+      "source_url": "https://raidshadowlegends.fandom.com/wiki/Monthly_Quests",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "The community wiki lists Monthly Quests with a Sacred Shard reward for completing all monthly quests and account XP rewards on quest rows.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Community or competitor sources are not used for payouts or deadlines."
+      ],
+      "used_in_sections": [
+        "Sacred Shard route"
+      ]
+    },
+    {
+      "claim_id": "claim_016",
+      "claim": "HellHades describes Sacred Shards as hard to obtain, with reliable monthly quest access and late-game Clan Boss access rather than easy early farming.",
+      "claim_type": "progression",
+      "source_url": "https://hellhades.com/where-is-the-best-place-to-get-shards-in-raid-shadow-legends/",
+      "source_type": "competitor",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "HellHades describes Sacred Shards as hard to obtain, with reliable monthly quest access and late-game Clan Boss access rather than easy early farming.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Community or competitor sources are not used for payouts or deadlines."
+      ],
+      "used_in_sections": [
+        "Sacred Shard route"
+      ]
+    },
+    {
+      "claim_id": "claim_017",
+      "claim": "Pocket Gamer lists Sacred Shard routes including monthly quests, packs, progression rewards, and referral rewards, with buying packs as an easier but spend-heavy route.",
+      "claim_type": "progression",
+      "source_url": "https://www.pocketgamer.com/raid-shadow-legends/sacred-shards/",
+      "source_type": "competitor",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Pocket Gamer lists Sacred Shard routes including monthly quests, packs, progression rewards, and referral rewards, with buying packs as an easier but spend-heavy route.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Community or competitor sources are not used for payouts or deadlines."
+      ],
+      "used_in_sections": [
+        "Sacred Shard route"
+      ]
+    },
+    {
+      "claim_id": "claim_018",
+      "claim": "Google Play purchase history and receipts can be used to document mobile purchases if offer support asks for proof.",
+      "claim_type": "tracking",
+      "source_url": "https://support.google.com/googleplay/answer/2479637",
+      "source_type": "offerwall_support",
+      "confidence": "low",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Google Play purchase history and receipts can be used to document mobile purchases if offer support asks for proof.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "purchase proof"
+      ]
+    },
+    {
+      "claim_id": "claim_019",
+      "claim": "EarnLab guide pages demonstrate that public offer guides can drift from a specific task list, so this guide treats the provided task list as authoritative.",
+      "claim_type": "support",
+      "source_url": "https://earnlab.com/guides/raid-shadow-legends",
+      "source_type": "other",
+      "confidence": "low",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "EarnLab guide pages demonstrate that public offer guides can drift from a specific task list, so this guide treats the provided task list as authoritative.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [],
+      "used_in_sections": [
+        "source safety"
+      ]
+    },
+    {
+      "claim_id": "claim_020",
+      "claim": "Anecdotal get-paid-to-play discussion describes Level 70 and high Sacred Shard goals as difficult or spend-heavy. Use as low-confidence difficulty context, not as offer terms.",
+      "claim_type": "strategy",
+      "source_url": "https://www.reddit.com/r/GetPaidToPlay/comments/1rfzud7/is_this_raid_shadow_legends_offer_worth_it/",
+      "source_type": "reddit",
+      "confidence": "low",
+      "publishable": true,
+      "captured_date": "2026-05-30",
+      "evidence_summary": "Anecdotal get-paid-to-play discussion describes Level 70 and high Sacred Shard goals as difficult or spend-heavy. Use as low-confidence difficulty context, not as offer terms.",
+      "source_published_date": null,
+      "last_verified": "2026-05-30",
+      "conflicts": [],
+      "caveats": [
+        "Community or competitor sources are not used for payouts or deadlines."
+      ],
+      "used_in_sections": [
+        "worth it"
+      ]
+    }
+  ],
+  "game_overview": {
+    "summary": "Raid: Shadow Legends is an Android turn-based RPG with champions, campaign, dungeons, multiplayer, events, and in-app purchases.",
+    "why_it_matters_for_offer": "The EarnLab task list asks users to move account level, run battles, upgrade champions, open Sacred Shards, and decide on purchases.",
+    "claim_ids": [
+      "claim_003"
+    ]
+  },
+  "game_systems": [
+    {
+      "system_name": "Campaign progression",
+      "explanation": "Campaign battles are the first repeatable path for account activity, champion XP, gear, and food leveling.",
+      "why_it_matters": "Campaign progression supports 20 battles, account level movement, starter champion growth, and food champions for the Tavern rank route.",
+      "claim_ids": [
+        "claim_006",
+        "claim_013"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Tavern rank route",
+      "explanation": "The Tavern handles champion level and rank upgrades through sacrificed champions, XP Brews, XP Barrels, Instant Upgrade, and same-rank food or chickens.",
+      "why_it_matters": "Every 5-star and 6-star hero task depends on understanding rank caps and same-rank sacrifice requirements.",
+      "claim_ids": [
+        "claim_004",
+        "claim_005"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Energy management",
+      "explanation": "Energy is the resource spent to attempt campaign and other PvE content, and XP Boosts increase XP from Campaign clears.",
+      "why_it_matters": "Energy choices decide whether the user can farm food, move account level, and keep the daily loop going.",
+      "claim_ids": [
+        "claim_006",
+        "claim_013"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Gear and silver",
+      "explanation": "Artifacts and Accessories raise champion stats and come from Campaign, Dungeons, Forge, Market, Arena and Clan Boss sources.",
+      "why_it_matters": "Basic gear keeps the starter champion farming, but random upgrades can drain silver needed for useful progress.",
+      "claim_ids": [
+        "claim_007"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Promo codes",
+      "explanation": "Promo codes can be redeemed in game or on Plarium's web page, with official channels and creator sources publishing codes.",
+      "why_it_matters": "Codes can help early resources, but stale or link-style claims should not replace EarnLab's tracked install path.",
+      "claim_ids": [
+        "claim_008"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Clans",
+      "explanation": "Clans unlock Clan Boss, Clan Shop, Clan Quests, extra Multi-Battles, Campaign Silver bonuses, and activity rewards.",
+      "why_it_matters": "Clan activity can support the daily repeatable loop, but late Clan Boss Sacred Shard routes are not a beginner guarantee.",
+      "claim_ids": [
+        "claim_009",
+        "claim_010"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Sacred Shard route",
+      "explanation": "Sacred Shards are limited high-value summon resources, with monthly quests, progression rewards, packs, and late-game sources discussed by current guides.",
+      "why_it_matters": "The 2, 4, 6, and 8 Sacred Shard tasks are decision points, not automatic free-to-play goals.",
+      "claim_ids": [
+        "claim_015",
+        "claim_016",
+        "claim_017"
+      ],
+      "include_in_guide": true
+    }
+  ],
+  "strategy_guide_sections": [
+    {
+      "section_title": "Key takeaways",
+      "section_type": "key_takeaways",
+      "why_it_matters_for_offer": "Gives the reader the stop-loss verdict before time or money is spent.",
+      "supported_task_ids": [
+        "task_001",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_020"
+      ],
+      "tables_or_checklists": [
+        "verdict bullets"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Completion checklist",
+      "section_type": "completion_checklist",
+      "why_it_matters_for_offer": "Keeps tracking, proof, campaign progression, Tavern rank route, and purchase proof in one scanable list.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020",
+        "task_021",
+        "task_022",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002"
+      ],
+      "tables_or_checklists": [
+        "tracking checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Offer planning",
+      "section_type": "offer_planning",
+      "why_it_matters_for_offer": "Separates free-to-play, low-spend, and high-spend paths by deadline pressure.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020",
+        "task_021",
+        "task_022",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002"
+      ],
+      "tables_or_checklists": [
+        "task order table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Resources and bottlenecks",
+      "section_type": "resources",
+      "why_it_matters_for_offer": "Explains energy, silver, food champions, XP Brews, gems, and proof bottlenecks.",
+      "supported_task_ids": [
+        "task_004",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_004",
+        "claim_006",
+        "claim_007"
+      ],
+      "tables_or_checklists": [
+        "resource table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Rank path",
+      "section_type": "rank_path",
+      "why_it_matters_for_offer": "Turns 5-star and 6-star tasks into a Tavern route instead of vague upgrade advice.",
+      "supported_task_ids": [
+        "task_006",
+        "task_010"
+      ],
+      "claim_ids": [
+        "claim_004",
+        "claim_005"
+      ],
+      "tables_or_checklists": [
+        "rank route checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Purchase timing",
+      "section_type": "purchase_timing",
+      "why_it_matters_for_offer": "Prevents users from buying packs before proof, timing, or profit checks.",
+      "supported_task_ids": [
+        "task_011",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_018"
+      ],
+      "tables_or_checklists": [
+        "purchase risk table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Codes",
+      "section_type": "codes",
+      "why_it_matters_for_offer": "Explains code safety and freshness without publishing stale code claims.",
+      "supported_task_ids": [
+        "task_003",
+        "task_010"
+      ],
+      "claim_ids": [
+        "claim_008"
+      ],
+      "tables_or_checklists": [
+        "code freshness note"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Alliance",
+      "section_type": "alliance",
+      "why_it_matters_for_offer": "Shows why joining a clan can support daily activity and campaign loops.",
+      "supported_task_ids": [
+        "task_021",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_009",
+        "claim_010"
+      ],
+      "tables_or_checklists": [
+        "clan checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Reassessment",
+      "section_type": "reassessment",
+      "why_it_matters_for_offer": "Shows when most users should stop instead of chasing Level 70 or 8 Sacred Shards.",
+      "supported_task_ids": [
+        "task_020",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_020"
+      ],
+      "tables_or_checklists": [
+        "stop-loss table"
+      ],
+      "include_in_guide": true
+    }
+  ],
+  "task_strategy": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Register and start playing the game",
+      "points": 370,
+      "usd": 0.37,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "fresh install and first account session"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Register and start playing the game by using the fresh install and first account session without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on fresh install and first account session, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": "Register and start playing the game",
+        "progression_systems_to_cover": [
+          "offer task screen",
+          "campaign progression",
+          "task page screenshot"
+        ],
+        "xp_or_progress_sources": [
+          "tutorial and early battles",
+          "campaign fights",
+          "task activity page"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial",
+          "fight 20 campaign battles",
+          "screenshot progress"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking proof",
+          "using the wrong account",
+          "missing the first 24 hours"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Complete the tutorial",
+      "points": 37,
+      "usd": 0.037,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "tutorial completion and first Bastion access"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Complete the tutorial by using the tutorial completion and first Bastion access without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on tutorial completion and first Bastion access, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": "Complete the tutorial",
+        "progression_systems_to_cover": [
+          "offer task screen",
+          "campaign progression",
+          "task page screenshot"
+        ],
+        "xp_or_progress_sources": [
+          "tutorial and early battles",
+          "campaign fights",
+          "task activity page"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial",
+          "fight 20 campaign battles",
+          "screenshot progress"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking proof",
+          "using the wrong account",
+          "missing the first 24 hours"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Fight 20 battles within 24 hours",
+      "points": 89,
+      "usd": 0.089,
+      "deadline_text": "within 24 hours",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "early campaign battle count"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Fight 20 battles within 24 hours by using the early campaign battle count without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on early campaign battle count, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": "Fight 20 battles within 24 hours",
+        "progression_systems_to_cover": [
+          "offer task screen",
+          "campaign progression",
+          "task page screenshot"
+        ],
+        "xp_or_progress_sources": [
+          "tutorial and early battles",
+          "campaign fights",
+          "task activity page"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial",
+          "fight 20 campaign battles",
+          "screenshot progress"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking proof",
+          "using the wrong account",
+          "missing the first 24 hours"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Reach Level 15 within 3 days",
+      "points": 111,
+      "usd": 0.111,
+      "deadline_text": "within 3 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "early account level route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Reach Level 15 within 3 days by using the early account level route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on early account level route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "Reach Level 15 within 3 days",
+        "progression_systems_to_cover": [
+          "campaign progression",
+          "daily quests",
+          "missions and challenges",
+          "energy management",
+          "clan activity"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign battles",
+          "daily quests",
+          "missions",
+          "challenges",
+          "energy spending with XP Boosts"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial and early campaign",
+          "reach Level 15 and Level 30 checkpoints",
+          "push Level 50 and Level 60 only if daily account XP is still moving",
+          "treat Level 70 as the final reassessment target"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "energy cap",
+          "weak campaign farmer",
+          "missed daily quests",
+          "late account XP slowdown"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "Reach Level 30 within 4 days",
+      "points": 444,
+      "usd": 0.444,
+      "deadline_text": "within 4 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "account level route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Reach Level 30 within 4 days by using the account level route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on account level route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "Reach Level 30 within 4 days",
+        "progression_systems_to_cover": [
+          "campaign progression",
+          "daily quests",
+          "missions and challenges",
+          "energy management",
+          "clan activity"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign battles",
+          "daily quests",
+          "missions",
+          "challenges",
+          "energy spending with XP Boosts"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial and early campaign",
+          "reach Level 15 and Level 30 checkpoints",
+          "push Level 50 and Level 60 only if daily account XP is still moving",
+          "treat Level 70 as the final reassessment target"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "energy cap",
+          "weak campaign farmer",
+          "missed daily quests",
+          "late account XP slowdown"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Upgrade a hero to 5 stars within 3 days",
+      "points": 185,
+      "usd": 0.185,
+      "deadline_text": "within 3 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "first 5-star champion route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Upgrade a hero to 5 stars within 3 days by using the first 5-star champion route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on first 5-star champion route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "Upgrade a hero to 5 stars within 3 days",
+        "progression_systems_to_cover": [
+          "Tavern rank route",
+          "campaign food farming",
+          "starter champion carry",
+          "XP Brews",
+          "chickens and same-rank food"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign XP",
+          "sacrificed food champions",
+          "XP Brews",
+          "same-rank chickens",
+          "Instant Upgrade for low-rank food"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "level the base champion to the rank cap",
+          "build same-rank food",
+          "rank to 5-star or 6-star",
+          "screenshot champion count and rank"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "food champion count",
+          "energy",
+          "silver for gear",
+          "feeding useful rare champions by mistake"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "Upgrade 3 heroes to 5 stars within 5 days",
+      "points": 740,
+      "usd": 0.74,
+      "deadline_text": "within 5 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "three 5-star champion route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Upgrade 3 heroes to 5 stars within 5 days by using the three 5-star champion route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on three 5-star champion route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "Upgrade 3 heroes to 5 stars within 5 days",
+        "progression_systems_to_cover": [
+          "Tavern rank route",
+          "campaign food farming",
+          "starter champion carry",
+          "XP Brews",
+          "chickens and same-rank food"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign XP",
+          "sacrificed food champions",
+          "XP Brews",
+          "same-rank chickens",
+          "Instant Upgrade for low-rank food"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "level the base champion to the rank cap",
+          "build same-rank food",
+          "rank to 5-star or 6-star",
+          "screenshot champion count and rank"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "food champion count",
+          "energy",
+          "silver for gear",
+          "feeding useful rare champions by mistake"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Upgrade a hero to 6 stars within 10 days",
+      "points": 1110,
+      "usd": 1.11,
+      "deadline_text": "within 10 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "first 6-star champion route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Upgrade a hero to 6 stars within 10 days by using the first 6-star champion route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on first 6-star champion route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "Upgrade a hero to 6 stars within 10 days",
+        "progression_systems_to_cover": [
+          "Tavern rank route",
+          "campaign food farming",
+          "starter champion carry",
+          "XP Brews",
+          "chickens and same-rank food"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign XP",
+          "sacrificed food champions",
+          "XP Brews",
+          "same-rank chickens",
+          "Instant Upgrade for low-rank food"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "level the base champion to the rank cap",
+          "build same-rank food",
+          "rank to 5-star or 6-star",
+          "screenshot champion count and rank"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "food champion count",
+          "energy",
+          "silver for gear",
+          "feeding useful rare champions by mistake"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Upgrade 5 heroes to 5 stars within 14 days",
+      "points": 1850,
+      "usd": 1.85,
+      "deadline_text": "within 14 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "five 5-star champion route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Upgrade 5 heroes to 5 stars within 14 days by using the five 5-star champion route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on five 5-star champion route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "Upgrade 5 heroes to 5 stars within 14 days",
+        "progression_systems_to_cover": [
+          "Tavern rank route",
+          "campaign food farming",
+          "starter champion carry",
+          "XP Brews",
+          "chickens and same-rank food"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign XP",
+          "sacrificed food champions",
+          "XP Brews",
+          "same-rank chickens",
+          "Instant Upgrade for low-rank food"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "level the base champion to the rank cap",
+          "build same-rank food",
+          "rank to 5-star or 6-star",
+          "screenshot champion count and rank"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "food champion count",
+          "energy",
+          "silver for gear",
+          "feeding useful rare champions by mistake"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Upgrade 3 heroes to 6 stars within 21 days",
+      "points": 5920,
+      "usd": 5.92,
+      "deadline_text": "within 21 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "three 6-star champion route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Upgrade 3 heroes to 6 stars within 21 days by using the three 6-star champion route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on three 6-star champion route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "Upgrade 3 heroes to 6 stars within 21 days",
+        "progression_systems_to_cover": [
+          "Tavern rank route",
+          "campaign food farming",
+          "starter champion carry",
+          "XP Brews",
+          "chickens and same-rank food"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign XP",
+          "sacrificed food champions",
+          "XP Brews",
+          "same-rank chickens",
+          "Instant Upgrade for low-rank food"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "level the base champion to the rank cap",
+          "build same-rank food",
+          "rank to 5-star or 6-star",
+          "screenshot champion count and rank"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "food champion count",
+          "energy",
+          "silver for gear",
+          "feeding useful rare champions by mistake"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Make any purchase",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "purchase proof route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Make any purchase by using the purchase proof route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on purchase proof route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "Make any purchase",
+        "progression_systems_to_cover": [
+          "purchase proof route",
+          "receipt screenshot",
+          "same device account",
+          "pack timing",
+          "tracking activity"
+        ],
+        "xp_or_progress_sources": [
+          "in-game Shop purchase",
+          "Google Play receipt",
+          "EarnLab activity proof"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm the tracked install",
+          "screenshot the pack before buying",
+          "save the receipt",
+          "screenshot credited task status"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking not visible",
+          "pack not available",
+          "buying before Day 7 or Day 30 timing rules",
+          "spend exceeding reward value"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Purchase Silver 500k Pack for USD 9.99",
+      "points": 11100,
+      "usd": 11.1,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "Silver pack purchase proof route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Purchase Silver 500k Pack for USD 9.99 by using the Silver pack purchase proof route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on Silver pack purchase proof route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "Purchase Silver 500k Pack for USD 9.99",
+        "progression_systems_to_cover": [
+          "purchase proof route",
+          "receipt screenshot",
+          "same device account",
+          "pack timing",
+          "tracking activity"
+        ],
+        "xp_or_progress_sources": [
+          "in-game Shop purchase",
+          "Google Play receipt",
+          "EarnLab activity proof"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm the tracked install",
+          "screenshot the pack before buying",
+          "save the receipt",
+          "screenshot credited task status"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking not visible",
+          "pack not available",
+          "buying before Day 7 or Day 30 timing rules",
+          "spend exceeding reward value"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "Purchase the Daily Gem Pack for USD 9.99",
+      "points": 11100,
+      "usd": 11.1,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "Daily Gem Pack purchase proof route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Purchase the Daily Gem Pack for USD 9.99 by using the Daily Gem Pack purchase proof route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on Daily Gem Pack purchase proof route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "Purchase the Daily Gem Pack for USD 9.99",
+        "progression_systems_to_cover": [
+          "purchase proof route",
+          "receipt screenshot",
+          "same device account",
+          "pack timing",
+          "tracking activity"
+        ],
+        "xp_or_progress_sources": [
+          "in-game Shop purchase",
+          "Google Play receipt",
+          "EarnLab activity proof"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm the tracked install",
+          "screenshot the pack before buying",
+          "save the receipt",
+          "screenshot credited task status"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking not visible",
+          "pack not available",
+          "buying before Day 7 or Day 30 timing rules",
+          "spend exceeding reward value"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "Purchase a Sacred Daily Pack for USD 29.99",
+      "points": 25900,
+      "usd": 25.9,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "Sacred Daily Pack purchase proof route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Purchase a Sacred Daily Pack for USD 29.99 by using the Sacred Daily Pack purchase proof route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on Sacred Daily Pack purchase proof route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "Purchase a Sacred Daily Pack for USD 29.99",
+        "progression_systems_to_cover": [
+          "purchase proof route",
+          "receipt screenshot",
+          "same device account",
+          "pack timing",
+          "tracking activity"
+        ],
+        "xp_or_progress_sources": [
+          "in-game Shop purchase",
+          "Google Play receipt",
+          "EarnLab activity proof"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm the tracked install",
+          "screenshot the pack before buying",
+          "save the receipt",
+          "screenshot credited task status"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking not visible",
+          "pack not available",
+          "buying before Day 7 or Day 30 timing rules",
+          "spend exceeding reward value"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "Purchase the Beginner Progress Pack for USD 49.99",
+      "points": 44400,
+      "usd": 44.4,
+      "deadline_text": "Eligible only if purchased after Day 7",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "Beginner Progress Pack timing route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Purchase the Beginner Progress Pack for USD 49.99 by using the Beginner Progress Pack timing route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on Beginner Progress Pack timing route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "Purchase the Beginner Progress Pack for USD 49.99",
+        "progression_systems_to_cover": [
+          "purchase proof route",
+          "receipt screenshot",
+          "same device account",
+          "pack timing",
+          "tracking activity"
+        ],
+        "xp_or_progress_sources": [
+          "in-game Shop purchase",
+          "Google Play receipt",
+          "EarnLab activity proof"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm the tracked install",
+          "screenshot the pack before buying",
+          "save the receipt",
+          "screenshot credited task status"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking not visible",
+          "pack not available",
+          "buying before Day 7 or Day 30 timing rules",
+          "spend exceeding reward value"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Purchase Box of Gems for USD 29.99",
+      "points": 37000,
+      "usd": 37.0,
+      "deadline_text": "Eligible only if purchased after Day 30",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "Box of Gems timing route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Purchase Box of Gems for USD 29.99 by using the Box of Gems timing route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on Box of Gems timing route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "Purchase Box of Gems for USD 29.99",
+        "progression_systems_to_cover": [
+          "purchase proof route",
+          "receipt screenshot",
+          "same device account",
+          "pack timing",
+          "tracking activity"
+        ],
+        "xp_or_progress_sources": [
+          "in-game Shop purchase",
+          "Google Play receipt",
+          "EarnLab activity proof"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm the tracked install",
+          "screenshot the pack before buying",
+          "save the receipt",
+          "screenshot credited task status"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "tracking not visible",
+          "pack not available",
+          "buying before Day 7 or Day 30 timing rules",
+          "spend exceeding reward value"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_017",
+      "exact_task_text": "Open 2 Sacred / Yellow Shards",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "two Sacred Shards route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Open 2 Sacred / Yellow Shards by using the two Sacred Shards route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on two Sacred Shards route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "Open 2 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Sacred Shard route",
+          "monthly quests",
+          "campaign and progression rewards",
+          "packs",
+          "late-game Clan Boss context"
+        ],
+        "xp_or_progress_sources": [
+          "monthly quest completion",
+          "progression rewards",
+          "purchased packs",
+          "campaign and challenge rewards when available"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm current Sacred Shard count",
+          "open 2 Sacred Shards only after proof screenshots",
+          "reassess before 4, 6, and 8 Sacred Shards",
+          "avoid assuming late-game drops are beginner-friendly"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "monthly quest timing",
+          "pack cost",
+          "late-game difficulty",
+          "limited free Sacred Shard sources"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_018",
+      "exact_task_text": "Open 4 Sacred / Yellow Shards",
+      "points": 5920,
+      "usd": 5.92,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "four Sacred Shards route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Open 4 Sacred / Yellow Shards by using the four Sacred Shards route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on four Sacred Shards route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "Open 4 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Sacred Shard route",
+          "monthly quests",
+          "campaign and progression rewards",
+          "packs",
+          "late-game Clan Boss context"
+        ],
+        "xp_or_progress_sources": [
+          "monthly quest completion",
+          "progression rewards",
+          "purchased packs",
+          "campaign and challenge rewards when available"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm current Sacred Shard count",
+          "open 2 Sacred Shards only after proof screenshots",
+          "reassess before 4, 6, and 8 Sacred Shards",
+          "avoid assuming late-game drops are beginner-friendly"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "monthly quest timing",
+          "pack cost",
+          "late-game difficulty",
+          "limited free Sacred Shard sources"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_019",
+      "exact_task_text": "Open 6 Sacred / Yellow Shards",
+      "points": 16280,
+      "usd": 16.28,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "six Sacred Shards route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Open 6 Sacred / Yellow Shards by using the six Sacred Shards route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on six Sacred Shards route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "Open 6 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Sacred Shard route",
+          "monthly quests",
+          "campaign and progression rewards",
+          "packs",
+          "late-game Clan Boss context"
+        ],
+        "xp_or_progress_sources": [
+          "monthly quest completion",
+          "progression rewards",
+          "purchased packs",
+          "campaign and challenge rewards when available"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm current Sacred Shard count",
+          "open 2 Sacred Shards only after proof screenshots",
+          "reassess before 4, 6, and 8 Sacred Shards",
+          "avoid assuming late-game drops are beginner-friendly"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "monthly quest timing",
+          "pack cost",
+          "late-game difficulty",
+          "limited free Sacred Shard sources"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_020",
+      "exact_task_text": "Open 8 Sacred / Yellow Shards",
+      "points": 28120,
+      "usd": 28.12,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "eight Sacred Shards route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Open 8 Sacred / Yellow Shards by using the eight Sacred Shards route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on eight Sacred Shards route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "Open 8 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Sacred Shard route",
+          "monthly quests",
+          "campaign and progression rewards",
+          "packs",
+          "late-game Clan Boss context"
+        ],
+        "xp_or_progress_sources": [
+          "monthly quest completion",
+          "progression rewards",
+          "purchased packs",
+          "campaign and challenge rewards when available"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "confirm current Sacred Shard count",
+          "open 2 Sacred Shards only after proof screenshots",
+          "reassess before 4, 6, and 8 Sacred Shards",
+          "avoid assuming late-game drops are beginner-friendly"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "monthly quest timing",
+          "pack cost",
+          "late-game difficulty",
+          "limited free Sacred Shard sources"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_021",
+      "exact_task_text": "Reach Level 50 within 21 days",
+      "points": 14800,
+      "usd": 14.8,
+      "deadline_text": "within 21 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "late account level route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Reach Level 50 within 21 days by using the late account level route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on late account level route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "Reach Level 50 within 21 days",
+        "progression_systems_to_cover": [
+          "campaign progression",
+          "daily quests",
+          "missions and challenges",
+          "energy management",
+          "clan activity"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign battles",
+          "daily quests",
+          "missions",
+          "challenges",
+          "energy spending with XP Boosts"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial and early campaign",
+          "reach Level 15 and Level 30 checkpoints",
+          "push Level 50 and Level 60 only if daily account XP is still moving",
+          "treat Level 70 as the final reassessment target"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "energy cap",
+          "weak campaign farmer",
+          "missed daily quests",
+          "late account XP slowdown"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_022",
+      "exact_task_text": "Reach Level 60 within 35 days",
+      "points": 37000,
+      "usd": 37.0,
+      "deadline_text": "within 35 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "level 60 account route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Reach Level 60 within 35 days by using the level 60 account route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on level 60 account route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "Reach Level 60 within 35 days",
+        "progression_systems_to_cover": [
+          "campaign progression",
+          "daily quests",
+          "missions and challenges",
+          "energy management",
+          "clan activity"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign battles",
+          "daily quests",
+          "missions",
+          "challenges",
+          "energy spending with XP Boosts"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial and early campaign",
+          "reach Level 15 and Level 30 checkpoints",
+          "push Level 50 and Level 60 only if daily account XP is still moving",
+          "treat Level 70 as the final reassessment target"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "energy cap",
+          "weak campaign farmer",
+          "missed daily quests",
+          "late account XP slowdown"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_023",
+      "exact_task_text": "Reach Level 70 within 60 days",
+      "points": 125800,
+      "usd": 125.8,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "campaign progression",
+        "task page screenshot",
+        "level 70 account route"
+      ],
+      "task_goal_plain_english": "Complete the offer row for Reach Level 70 within 60 days by using the level 70 account route without breaking EarnLab tracking.",
+      "mechanic_deep_dive": "This task depends on level 70 account route, campaign progression, the task page screenshot habit, and a stop-loss decision before spending or pushing late goals.",
+      "prerequisites": [
+        "fresh EarnLab Android install",
+        "same device and account",
+        "tutorial completion",
+        "visible in-game profile or progress screen"
+      ],
+      "step_by_step_route": [
+        "Open Raid only from the tracked EarnLab install path and keep a task page screenshot.",
+        "Use campaign progression, daily quests, Tavern rank route, energy, and proof screenshots before moving to the next task.",
+        "Reassess before spending or chasing late Sacred Shard and account level goals."
+      ],
+      "resource_requirements": [
+        "energy",
+        "time",
+        "silver",
+        "food champions",
+        "XP Brews",
+        "same-rank chickens when available",
+        "purchase receipt if buying"
+      ],
+      "resource_bottlenecks": [
+        "energy cap",
+        "food champion count",
+        "silver",
+        "weak campaign farmer",
+        "tracking proof"
+      ],
+      "task_conflicts": [
+        "spending energy on dungeons too early can slow campaign progression",
+        "feeding useful champions can hurt later progression",
+        "buying packs before tracking proof increases risk"
+      ],
+      "common_mistakes": [
+        "using an old account",
+        "using VPN",
+        "switching devices",
+        "feeding rare champions blindly",
+        "buying packs only for points",
+        "ignoring daily quests"
+      ],
+      "progress_checkpoints": [
+        "task page screenshot",
+        "profile level screenshot",
+        "champion rank screenshot",
+        "Sacred Shard count screenshot"
+      ],
+      "proof_screenshots": [
+        "task page screenshot",
+        "profile ID screenshot",
+        "purchase receipt screenshot when relevant",
+        "champion rank or shard opening screenshot"
+      ],
+      "when_to_stop_or_skip": "Stop or skip if tracking is not visible, the next purchase is not profitable for you, or the late Level 70 and 8 Sacred Shard path is far behind pace.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "Reach Level 70 within 60 days",
+        "progression_systems_to_cover": [
+          "campaign progression",
+          "daily quests",
+          "missions and challenges",
+          "energy management",
+          "clan activity"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign battles",
+          "daily quests",
+          "missions",
+          "challenges",
+          "energy spending with XP Boosts"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy in campaign progression",
+          "claim daily quests",
+          "check missions and challenges",
+          "capture task page screenshot",
+          "reassess before spending"
+        ],
+        "priority_order": [
+          "protect tracking proof",
+          "push campaign progression",
+          "build the starter champion",
+          "use Tavern rank route",
+          "reassess late tasks"
+        ],
+        "milestone_route": [
+          "finish tutorial and early campaign",
+          "reach Level 15 and Level 30 checkpoints",
+          "push Level 50 and Level 60 only if daily account XP is still moving",
+          "treat Level 70 as the final reassessment target"
+        ],
+        "gates_and_unlocks": [
+          "tutorial completion",
+          "Bastion access",
+          "Tavern access",
+          "campaign stage access",
+          "Shop access for purchase tasks"
+        ],
+        "resource_plan": [
+          "energy",
+          "silver",
+          "food champions",
+          "XP Brews",
+          "gems",
+          "receipts for purchase proof"
+        ],
+        "accelerators": [
+          "XP Boosts",
+          "promo codes when freshly verified",
+          "active clan benefits",
+          "daily login rewards",
+          "careful purchases only after tracking proof"
+        ],
+        "what_to_ignore": [
+          "unsupported tier lists",
+          "random gear upgrades",
+          "untracked installs",
+          "packs bought only because a task exists"
+        ],
+        "tables_or_checklists_needed": [
+          "day-by-day route",
+          "proof checklist",
+          "stop-loss table"
+        ],
+        "late_stage_bottlenecks": [
+          "energy cap",
+          "weak campaign farmer",
+          "missed daily quests",
+          "late account XP slowdown"
+        ],
+        "reassessment_triggers": [
+          "task does not credit",
+          "energy runs dry",
+          "progress misses the deadline pace",
+          "a purchase would exceed expected reward value"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    }
+  ],
+  "navigation_plan": {
+    "top_nav": [
+      {
+        "label": "Offer Task Table",
+        "anchor_id": "offer-task-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Offer",
+        "required": true
+      },
+      {
+        "label": "Before You Install",
+        "anchor_id": "before-you-install",
+        "section_type": "setup",
+        "priority": 2,
+        "mobile_label": "Before",
+        "required": true
+      },
+      {
+        "label": "Quick Verdict",
+        "anchor_id": "quick-verdict",
+        "section_type": "other",
+        "priority": 3,
+        "mobile_label": "Quick",
+        "required": true
+      },
+      {
+        "label": "How Raid Works",
+        "anchor_id": "how-raid-works",
+        "section_type": "game_overview",
+        "priority": 4,
+        "mobile_label": "How",
+        "required": true
+      },
+      {
+        "label": "Game Systems That Move Tasks",
+        "anchor_id": "game-systems-that-move-tasks",
+        "section_type": "game_system",
+        "priority": 5,
+        "mobile_label": "Game",
+        "required": true
+      },
+      {
+        "label": "Day-by-Day Route",
+        "anchor_id": "day-by-day-route",
+        "section_type": "task_route",
+        "priority": 6,
+        "mobile_label": "Day-by-Day",
+        "required": true
+      },
+      {
+        "label": "Guided Task Route",
+        "anchor_id": "guided-task-route",
+        "section_type": "task_route",
+        "priority": 7,
+        "mobile_label": "Guided",
+        "required": true
+      },
+      {
+        "label": "Purchase Analysis",
+        "anchor_id": "purchase-analysis",
+        "section_type": "task_route",
+        "priority": 8,
+        "mobile_label": "Purchase",
+        "required": true
+      },
+      {
+        "label": "Sacred Shard Plan",
+        "anchor_id": "sacred-shard-plan",
+        "section_type": "task_route",
+        "priority": 9,
+        "mobile_label": "Sacred",
+        "required": true
+      },
+      {
+        "label": "Proof and Support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 10,
+        "mobile_label": "Proof",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 11,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Next Step",
+        "anchor_id": "next-step",
+        "section_type": "cta",
+        "priority": 12,
+        "mobile_label": "Next",
+        "required": true
+      }
+    ],
+    "major_sections": [
+      {
+        "label": "Offer Task Table",
+        "anchor_id": "offer-task-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Offer",
+        "required": true
+      },
+      {
+        "label": "Before You Install",
+        "anchor_id": "before-you-install",
+        "section_type": "setup",
+        "priority": 2,
+        "mobile_label": "Before",
+        "required": true
+      },
+      {
+        "label": "Quick Verdict",
+        "anchor_id": "quick-verdict",
+        "section_type": "other",
+        "priority": 3,
+        "mobile_label": "Quick",
+        "required": true
+      },
+      {
+        "label": "How Raid Works",
+        "anchor_id": "how-raid-works",
+        "section_type": "game_overview",
+        "priority": 4,
+        "mobile_label": "How",
+        "required": true
+      },
+      {
+        "label": "Game Systems That Move Tasks",
+        "anchor_id": "game-systems-that-move-tasks",
+        "section_type": "game_system",
+        "priority": 5,
+        "mobile_label": "Game",
+        "required": true
+      },
+      {
+        "label": "Day-by-Day Route",
+        "anchor_id": "day-by-day-route",
+        "section_type": "task_route",
+        "priority": 6,
+        "mobile_label": "Day-by-Day",
+        "required": true
+      },
+      {
+        "label": "Guided Task Route",
+        "anchor_id": "guided-task-route",
+        "section_type": "task_route",
+        "priority": 7,
+        "mobile_label": "Guided",
+        "required": true
+      },
+      {
+        "label": "Purchase Analysis",
+        "anchor_id": "purchase-analysis",
+        "section_type": "task_route",
+        "priority": 8,
+        "mobile_label": "Purchase",
+        "required": true
+      },
+      {
+        "label": "Sacred Shard Plan",
+        "anchor_id": "sacred-shard-plan",
+        "section_type": "task_route",
+        "priority": 9,
+        "mobile_label": "Sacred",
+        "required": true
+      },
+      {
+        "label": "Proof and Support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 10,
+        "mobile_label": "Proof",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 11,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Next Step",
+        "anchor_id": "next-step",
+        "section_type": "cta",
+        "priority": 12,
+        "mobile_label": "Next",
+        "required": true
+      }
+    ],
+    "game_detail_sections": [
+      {
+        "label": "How Raid Works",
+        "anchor_id": "how-raid-works",
+        "section_type": "game_overview",
+        "priority": 4,
+        "mobile_label": "How",
+        "required": true
+      },
+      {
+        "label": "Game Systems That Move Tasks",
+        "anchor_id": "game-systems-that-move-tasks",
+        "section_type": "game_system",
+        "priority": 5,
+        "mobile_label": "Game",
+        "required": true
+      }
+    ],
+    "task_sections": [
+      {
+        "label": "Day-by-Day Route",
+        "anchor_id": "day-by-day-route",
+        "section_type": "task_route",
+        "priority": 6,
+        "mobile_label": "Day-by-Day",
+        "required": true
+      },
+      {
+        "label": "Guided Task Route",
+        "anchor_id": "guided-task-route",
+        "section_type": "task_route",
+        "priority": 7,
+        "mobile_label": "Guided",
+        "required": true
+      },
+      {
+        "label": "Purchase Analysis",
+        "anchor_id": "purchase-analysis",
+        "section_type": "task_route",
+        "priority": 8,
+        "mobile_label": "Purchase",
+        "required": true
+      },
+      {
+        "label": "Sacred Shard Plan",
+        "anchor_id": "sacred-shard-plan",
+        "section_type": "task_route",
+        "priority": 9,
+        "mobile_label": "Sacred",
+        "required": true
+      }
+    ],
+    "support_sections": [
+      {
+        "label": "Proof and Support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 10,
+        "mobile_label": "Proof",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 11,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Next Step",
+        "anchor_id": "next-step",
+        "section_type": "cta",
+        "priority": 12,
+        "mobile_label": "Next",
+        "required": true
+      }
+    ]
+  },
+  "original_value_block": {
+    "type": "stop_loss_table",
+    "title": "EarnLab Raid stop-loss table",
+    "content_plan": [
+      "free-to-play route",
+      "low-spend route",
+      "high-spend route",
+      "stop before Level 70 or 8 Sacred Shards if pace is weak"
+    ]
+  },
+  "worth_it_score": {
+    "score": 68,
+    "verdict": "Worth starting for early tasks and learning the route, but not worth blindly chasing every task; Level 70 and 8 Sacred Shards are high-risk and likely spending-heavy for most new users.",
+    "drivers": [
+      "large total points",
+      "many early tasks",
+      "purchase risk",
+      "late progression uncertainty",
+      "tracking risk"
+    ]
+  },
+  "questions_unanswered": [
+    {
+      "severity": "medium",
+      "question": "Exact current in-game pack availability can vary by account and day.",
+      "handling": "Tell users to confirm pack names and timing inside the app before buying."
+    }
+  ],
+  "do_not_claim": [
+    "Level 70 is easy",
+    "8 Sacred Shards is free-to-play guaranteed",
+    "promo codes listed here are active",
+    "purchase tasks are automatically profitable",
+    "community completion estimates are offer deadlines"
+  ],
+  "quality_gate": {
+    "status": "pass",
+    "score": 88,
+    "checks": [
+      "official/app store source present",
+      "SERP top 10 captured",
+      "competitor gaps recorded",
+      "task strategies cover all rows",
+      "progression routes populated",
+      "do-not-claim list present"
+    ],
+    "blocking_reasons": []
+  }
+}

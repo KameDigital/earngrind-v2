@@ -24,6 +24,7 @@ const imageHostnames = Array.from(new Set([
     "is1-ssl.mzstatic.com",
     "gain.gg",
     "cashinstyle.com",
+    "www.appbrain.com",
     ...configuredImageHostnames,
 ]));
 

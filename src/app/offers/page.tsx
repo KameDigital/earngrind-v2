@@ -4,8 +4,10 @@ import React, { Suspense } from 'react';
 import OfferSearchEngine from '@/components/offers/OfferSearchEngine';
 import Container from '@/components/layout/Container';
 import { canonicalAlternates } from '@/lib/seo-metadata';
+import { EARNLAB_COUNTRY_NAMES, EARNLAB_GALLERY_COUNTRIES } from '@/lib/earnlab-countries';
 import { fetchPublicOffers, publicOfferFiltersFromSearchParams } from '@/lib/public-offer-search';
 import { PUBLIC_GAIN_WALLS, type GainGalleryWall } from '@/lib/gain-gallery';
+import { GEMSLOOT_PUBLIC_PROVIDERS } from '@/lib/gemsloot-providers';
 
 export const dynamic = 'force-dynamic';
 
@@ -88,6 +90,27 @@ const GAIN_OFFERWALL_LINKS = [
     })),
 ];
 
+const GEMSLOOT_OFFERWALL_LINKS = [
+    { href: "/offers/gemsloot/us", label: "All Gemsloot" },
+    ...GEMSLOOT_PUBLIC_PROVIDERS.map((provider) => ({
+        href: `/offers/gemsloot/us/${provider.slug}`,
+        label: provider.label,
+    })),
+];
+
+const EARNLAB_COUNTRY_LINKS = EARNLAB_GALLERY_COUNTRIES.slice(0, 8).map((countryCode) => ({
+    href: `/offers/${countryCode.toLowerCase()}`,
+    label: EARNLAB_COUNTRY_NAMES[countryCode] ?? countryCode,
+}));
+
+const POPULAR_OFFER_ROUTE_LINKS = [
+    { href: "/highest-paying-gpt-games", label: "Highest-paying GPT games" },
+    { href: "/best-money-making-games", label: "Best money-making games" },
+    { href: "/best-gain-gg-offers", label: "Best Gain.gg offers" },
+    { href: "/best-freecash-games", label: "Best Freecash games" },
+    { href: "/guides/how-to-earn", label: "How-to-earn game guides" },
+];
+
 export default async function OffersPage({ searchParams }: OffersPageProps) {
     const initialSearchParams = pageSearchParamsToUrlSearchParams(searchParams);
     const initialQueryString = initialOfferQueryString(initialSearchParams);
@@ -125,37 +148,111 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                 </div>
 
                 <section
-                    className="mb-6 rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)] sm:mb-8 sm:p-5"
-                    aria-labelledby="gain-offerwall-heading"
+                    className="mb-6 sm:mb-8"
+                    aria-labelledby="offerwall-route-heading"
                 >
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                        <div className="max-w-2xl">
-                            <p className="section-label mb-2">Browse by Offerwall</p>
-                            <h2 id="gain-offerwall-heading" className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-2xl">
-                                Browse Gain.gg Offers
-                            </h2>
-                            <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                                Browse imported Gain.gg offers by provider and route, including native Gain, Revenue Universe, AdToWall, MyChips, ASMWall, Lootably, and CPX Research.
-                            </p>
-                        </div>
-                        <Link
-                            href="/offers/gain/us/native"
-                            className="inline-flex items-center justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/90"
-                        >
-                            View Gain.gg Offers
-                            <span aria-hidden="true" className="ml-2">-&gt;</span>
-                        </Link>
+                    <div className="max-w-3xl">
+                        <p className="section-label mb-2">Browse by route</p>
+                        <h2 id="offerwall-route-heading" className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-2xl">
+                            Offerwall, country, and provider hubs
+                        </h2>
+                        <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                            Jump into the most useful public offer routes without adding more items to the main header.
+                        </p>
                     </div>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                        {GAIN_OFFERWALL_LINKS.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
+
+                    <div className="mt-5 grid gap-4 lg:grid-cols-3">
+                        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                            <div className="flex items-start justify-between gap-3">
+                                <div>
+                                    <h3 className="font-extrabold text-[var(--brand-ink)]">Gain.gg offers</h3>
+                                    <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">
+                                        Browse Gain.gg by wall, including native Gain, RevU, MyChips, ASMWall, Lootably, and CPX.
+                                    </p>
+                                </div>
+                                <Link href="/offers/gain/us" className="shrink-0 text-xs font-extrabold text-lime-700 hover:text-lime-800">
+                                    All Gain
+                                </Link>
+                            </div>
+                            <div className="mt-4 flex flex-wrap gap-2">
+                                {GAIN_OFFERWALL_LINKS.map((link) => (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                            <div className="flex items-start justify-between gap-3">
+                                <div>
+                                    <h3 className="font-extrabold text-[var(--brand-ink)]">Gemsloot providers</h3>
+                                    <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">
+                                        Compare Gemsloot routes by provider before opening a Gemsloot offer.
+                                    </p>
+                                </div>
+                                <Link href="/offers/gemsloot/us" className="shrink-0 text-xs font-extrabold text-lime-700 hover:text-lime-800">
+                                    All Gemsloot
+                                </Link>
+                            </div>
+                            <div className="mt-4 flex flex-wrap gap-2">
+                                {GEMSLOOT_OFFERWALL_LINKS.map((link) => (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                            <div className="flex items-start justify-between gap-3">
+                                <div>
+                                    <h3 className="font-extrabold text-[var(--brand-ink)]">EarnLab countries</h3>
+                                    <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">
+                                        Check imported EarnLab country pages for regional payout availability.
+                                    </p>
+                                </div>
+                                <Link href="/offers/us" className="shrink-0 text-xs font-extrabold text-lime-700 hover:text-lime-800">
+                                    United States
+                                </Link>
+                            </div>
+                            <div className="mt-4 flex flex-wrap gap-2">
+                                {EARNLAB_COUNTRY_LINKS.map((link) => (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-5 border-t border-[var(--border-default)] pt-4">
+                        <p className="mb-3 text-xs font-extrabold uppercase tracking-wider text-[var(--text-tertiary)]">
+                            Popular offer routes
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {POPULAR_OFFER_ROUTE_LINKS.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </section>
 

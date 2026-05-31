@@ -1,0 +1,186 @@
+{
+  "game": "State of Survival: Zombie War",
+  "slug": "state-of-survival-zombie-war-torox-guide",
+  "primary_keyword": "State of Survival Zombie War Torox guide",
+  "secondary_keywords": [
+    "State of Survival offerwall guide",
+    "State of Survival HQ 28 offer",
+    "State of Survival power tasks",
+    "Torox State of Survival not credited",
+    "Gain.gg State of Survival offer"
+  ],
+  "entity_terms": [
+    "State of Survival: Zombie War",
+    "FunPlus International AG",
+    "Torox",
+    "Gain.gg",
+    "Android",
+    "United States",
+    "Headquarters",
+    "Hero Precinct",
+    "Alliance",
+    "Training Camp"
+  ],
+  "game_mechanics": [
+    "settlement upgrades",
+    "Headquarters requirements",
+    "construction timers",
+    "resource gathering",
+    "troop training",
+    "research",
+    "alliance timer help",
+    "power growth"
+  ],
+  "offerwall_terms": [
+    "offerwall",
+    "tracking",
+    "missing reward",
+    "clicked status",
+    "proof screenshots",
+    "first-time install",
+    "Android offer"
+  ],
+  "user_problem_terms": [
+    "is the offer worth it",
+    "will Torox credit",
+    "should I buy package",
+    "can I reach HQ 28",
+    "how to prove completion"
+  ],
+  "task_terms": [
+    "Reach power 10w within 18 days",
+    "Reach power 40w within 18 days",
+    "Reach power 200w within 18 days",
+    "Upgrade headquarter to level 16 within 18 days",
+    "Purchase any 4.99 package in 7 days within 7 days",
+    "Reach power 10m within 18 days",
+    "Purchase any 9.99 package in 30 days within 30 days",
+    "Upgrade headquarter to level 20 within 18 days",
+    "Purchase any 19.99 package",
+    "Purchase any 49.99 package in 7 days within 7 days",
+    "Upgrade headquarter to level 23 within 22 days",
+    "Cumulative purchase over USD 100 in 15 days within 15 days",
+    "Upgrade headquarter to level 28 within 22 days",
+    "Reach power 90m within 22 days"
+  ],
+  "game_system_terms": [
+    "Headquarters",
+    "Hero Precinct",
+    "Barracks",
+    "Garage",
+    "Range",
+    "Training Camp",
+    "Alliance Store",
+    "Alliance Tech",
+    "Timer Help",
+    "Army Overview"
+  ],
+  "section_keyword_map": [
+    {
+      "section": "Payout table",
+      "anchor_id": "payout-table",
+      "primary_terms": [
+        "State of Survival offerwall guide",
+        "Gain.gg State of Survival offer"
+      ],
+      "intent": "Show exact task list payout, deadlines, and risk notes."
+    },
+    {
+      "section": "Before you start",
+      "anchor_id": "before-you-start",
+      "primary_terms": [
+        "first-time install",
+        "Android offer",
+        "tracking"
+      ],
+      "intent": "Help a US Android user avoid tracking mistakes before installing."
+    },
+    {
+      "section": "Game basics",
+      "anchor_id": "game-basics",
+      "primary_terms": [
+        "State of Survival Zombie War Torox guide",
+        "settlement upgrades",
+        "resources"
+      ],
+      "intent": "Explain only the game context needed for offer tasks."
+    },
+    {
+      "section": "Systems that matter",
+      "anchor_id": "systems-that-matter",
+      "primary_terms": [
+        "State of Survival power tasks",
+        "Headquarters requirements",
+        "Alliance timer help"
+      ],
+      "intent": "Map game systems to power, HQ, and purchase tasks."
+    },
+    {
+      "section": "Task route",
+      "anchor_id": "task-route",
+      "primary_terms": [
+        "State of Survival HQ 28 offer",
+        "Reach power 90m within 22 days",
+        "Torox State of Survival"
+      ],
+      "intent": "Provide task-by-task guidance with caveats."
+    },
+    {
+      "section": "Proof and support",
+      "anchor_id": "proof-and-support",
+      "primary_terms": [
+        "Torox State of Survival not credited",
+        "missing reward",
+        "proof screenshots"
+      ],
+      "intent": "Explain proof capture and missing reward ticket path."
+    }
+  ],
+  "faq_keyword_map": [
+    {
+      "question": "Is the State of Survival Zombie War Torox guide offer worth doing?",
+      "terms": [
+        "State of Survival Zombie War Torox guide",
+        "worth it"
+      ]
+    },
+    {
+      "question": "Can I finish HQ 28 or 90m power without spending?",
+      "terms": [
+        "State of Survival HQ 28 offer",
+        "Reach power 90m within 22 days"
+      ]
+    },
+    {
+      "question": "What should I do if Torox does not credit a task?",
+      "terms": [
+        "Torox State of Survival not credited",
+        "missing reward"
+      ]
+    },
+    {
+      "question": "Should I buy the package tasks early?",
+      "terms": [
+        "Purchase any 49.99 package",
+        "cumulative purchase over USD 100"
+      ]
+    }
+  ],
+  "cta_keyword_map": [
+    {
+      "placement": "bottom",
+      "anchor_id": "next-step",
+      "copy_intent": "Send readers to live EarnGrind offers after they understand tracking and spend risk.",
+      "internal_link": "[INTERNAL: /offers]"
+    }
+  ],
+  "search_intent": "mixed",
+  "difficulty": "high",
+  "serp_opportunities": [
+    "Offerwall-specific task table is more useful than generic State of Survival beginner content.",
+    "Proof and support workflow addresses missing-credit searches better than competitor game guides.",
+    "Spend-gate verdict helps users decide before chasing high-risk HQ 28 and 90m power tasks."
+  ],
+  "meta_description_draft": "State of Survival Zombie War Torox guide for US Android users: compare tasks, deadlines, HQ goals, purchases, proof, and risk before you start safely.",
+  "h1_draft": "State of Survival Zombie War Torox guide: tasks, HQ goals, purchases, and risk"
+}

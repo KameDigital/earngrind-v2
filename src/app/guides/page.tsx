@@ -33,6 +33,29 @@ const PALMON_GUIDE_LINKS = [
     { href: "/guides/palmon-survival-not-crediting", label: "Not Crediting Guide" },
 ];
 
+const GUIDE_HUB_LINKS = [
+    {
+        href: "/guides/how-to-earn",
+        label: "How-to-earn guides",
+        description: "Generated game pages with live payout breakdowns and milestone context.",
+    },
+    {
+        href: "/guides/best-gpt-sites",
+        label: "GPT site guides",
+        description: "Platform-specific guides for trust checks, cashout rules, and first-route strategy.",
+    },
+    {
+        href: "/best-gpt-sites",
+        label: "Best GPT sites",
+        description: "Ranked comparison hub for choosing a platform before starting a game offer.",
+    },
+    {
+        href: "/platforms",
+        label: "Platform reviews",
+        description: "Review index for payout, UX, and trust summaries across rewards platforms.",
+    },
+];
+
 // ---------------------------------------------------------------
 // TYPES
 // ---------------------------------------------------------------
@@ -445,6 +468,29 @@ export default async function GuidesPage({
                         </p>
                     )}
                 </div>
+
+                {page === 1 ? (
+                    <section className="mb-8" aria-labelledby="guide-hubs-heading">
+                        <div className="mb-4">
+                            <p className="section-label mb-2">Guide hubs</p>
+                            <h2 id="guide-hubs-heading" className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+                                Browse by guide type
+                            </h2>
+                        </div>
+                        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                            {GUIDE_HUB_LINKS.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300"
+                                >
+                                    <h3 className="font-extrabold text-[var(--brand-ink)]">{link.label}</h3>
+                                    <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">{link.description}</p>
+                                </Link>
+                            ))}
+                        </div>
+                    </section>
+                ) : null}
 
                 {visibleGuides.length === 0 && !shouldShowPalmonHub && page !== 1 ? (
                     <div className="bg-white rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] p-16 text-center">

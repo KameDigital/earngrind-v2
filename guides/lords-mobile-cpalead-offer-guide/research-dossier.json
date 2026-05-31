@@ -1,0 +1,4511 @@
+{
+  "game": "Lords Mobile: Kingdom Wars",
+  "slug": "lords-mobile-cpalead-offer-guide",
+  "research_date": "2026-05-31",
+  "intake": {
+    "source_file": "intake.json",
+    "game": "Lords Mobile: Kingdom Wars",
+    "provider": "CPAlead",
+    "country": "US",
+    "device": "Android",
+    "task_count": 16,
+    "max_points": 383653,
+    "max_usd": 383.65
+  },
+  "eligibility": {
+    "provider": "CPAlead",
+    "country": "US",
+    "device": "Android",
+    "platform_note": "Game is available on Android and iOS, but this offer device is Android.",
+    "status": "complete",
+    "notes": [
+      "User supplied CPAlead, US, Android device, Android and iOS platform context, payout source task_list, and deadline source task_list."
+    ]
+  },
+  "research_brief": {
+    "primary_question": "Can a new US Android Lords Mobile player safely decide whether to start, spend on, continue, or stop the CPAlead offer?",
+    "offer_safety_focus": [
+      "Preserve payout and deadline source boundaries.",
+      "Treat Academy 25 and Character level 60 as make-or-break.",
+      "Warn that New Kingdom is day-8 eligible only.",
+      "Build proof before paid tasks."
+    ],
+    "task_research_needs": [
+      "Castle and Academy upgrade route",
+      "Player EXP route to 15, 33, 38, and 60",
+      "purchase proof and timing",
+      "CPAlead tracking and support model"
+    ]
+  },
+  "source_log": [
+    {
+      "source_id": "source_001",
+      "source_type": "app_store",
+      "title": "Lords Mobile: Kingdom Wars - Apps on Google Play",
+      "url": "https://play.google.com/store/apps/details?gl=us&hl=en-us&id=com.igg.android.lordsmobile",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Google Play identifies IGG.COM as the publisher, Android availability, in-app purchases, internet requirement, and core systems: upgrading buildings, research, troops, heroes, formations, and guild play."
+    },
+    {
+      "source_id": "source_002",
+      "source_type": "app_store",
+      "title": "Lords Mobile: Kingdom Wars - App Store",
+      "url": "https://apps.apple.com/US/app/id1071976327?mt=8",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Apple App Store confirms iOS availability for Lords Mobile: Kingdom Wars by IGG SINGAPORE PTE. LTD."
+    },
+    {
+      "source_id": "source_003",
+      "source_type": "wiki",
+      "title": "Academy | Lords Mobile Wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Academy",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The Academy researches technology, reduces research time when upgraded, and Academy level 25 effectively requires one of every key building at level 25 plus special items such as Gold Hammers, War Tomes, Soul Crystals, and Steel Cuffs."
+    },
+    {
+      "source_id": "source_004",
+      "source_type": "wiki",
+      "title": "Castle | Lords Mobile Wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Castle",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The Castle is the central progression building and higher Castle levels unlock important game features and requirements."
+    },
+    {
+      "source_id": "source_005",
+      "source_type": "wiki",
+      "title": "Player EXP | Lords Mobile Wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Player_EXP",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Player EXP comes from monster hunting, equipment forging, admin and guild quests, enemy troop engagements, hero stages, Colosseum, turf quests, and Player EXP items; player level 60 is the top listed level and needs sharply higher EXP late."
+    },
+    {
+      "source_id": "source_006",
+      "source_type": "wiki",
+      "title": "Turf Quests/Building | Lords Mobile Wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Turf_Quests/Building",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Building upgrades have Turf Quest rewards, including player EXP and resource figures for Castle and Academy progress."
+    },
+    {
+      "source_id": "source_007",
+      "source_type": "wiki",
+      "title": "Mall | Lords Mobile Wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Mall",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The Mall sells packages, bundles, passes, and subscriptions for real money or Diamonds to accelerate progress."
+    },
+    {
+      "source_id": "source_008",
+      "source_type": "official",
+      "title": "CPAlead Offerwall Documentation",
+      "url": "https://www.cpalead.com/en/offerwall/documentation",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "CPAlead explains offerwall eligibility by country/device/offer rules, subid tracking, advertiser completion signals, postbacks, reward history, and why a clicked offer alone should not be rewarded."
+    },
+    {
+      "source_id": "source_009",
+      "source_type": "other",
+      "title": "Lords Mobile Beginners Guide - Games Guide Info",
+      "url": "https://www.gamesguideinfo.com/lords-mobile/guide/beginners",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The guide describes guild helps, admin/guild/VIP quests, and early growth advice; use as secondary strategy context only."
+    },
+    {
+      "source_id": "source_010",
+      "source_type": "other",
+      "title": "Lords Mobile Academy - Games Guide Info",
+      "url": "https://www.gamesguideinfo.com/lords-mobile/building/120000156-Academy",
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The building database lists Academy prerequisites and resource/time context, supporting the claim that late Academy levels are building-chain and resource gated."
+    }
+  ],
+  "source_freshness": {
+    "captured_date": "2026-05-31",
+    "official_sources": [
+      "Google Play, App Store, and CPAlead documentation checked on 2026-05-31."
+    ],
+    "community_sources": [
+      "Wiki and third-party guide sources are used for game mechanics, not offer terms."
+    ],
+    "offer_terms": [
+      "Payouts, deadlines, purchase costs, and day-8 restriction come only from the provided task list."
+    ]
+  },
+  "serp_top_10": [
+    {
+      "rank": 1,
+      "url": "https://play.google.com/store/apps/details?gl=us&hl=en-us&id=com.igg.android.lordsmobile",
+      "title": "Lords Mobile: Kingdom Wars - Apps on Google Play",
+      "result_type": "app_store",
+      "search_intent": "install and game overview",
+      "strengths": "official app listing",
+      "weaknesses": "no CPAlead task strategy",
+      "earngrind_opportunity": "connect game systems to offer tasks"
+    },
+    {
+      "rank": 2,
+      "url": "https://apps.apple.com/US/app/id1071976327?mt=8",
+      "title": "Lords Mobile: Kingdom Wars App Store",
+      "result_type": "app_store",
+      "search_intent": "iOS availability",
+      "strengths": "official platform listing",
+      "weaknesses": "no offerwall context",
+      "earngrind_opportunity": "separate platform availability from Android offer eligibility"
+    },
+    {
+      "rank": 3,
+      "url": "https://lordsmobile.fandom.com/wiki/Academy",
+      "title": "Academy | Lords Mobile Wiki",
+      "result_type": "wiki",
+      "search_intent": "Academy requirements",
+      "strengths": "detailed Academy chain",
+      "weaknesses": "not written for CPAlead deadlines",
+      "earngrind_opportunity": "explain why Academy 25 is a make-or-break task"
+    },
+    {
+      "rank": 4,
+      "url": "https://lordsmobile.fandom.com/wiki/Player_EXP",
+      "title": "Player EXP | Lords Mobile Wiki",
+      "result_type": "wiki",
+      "search_intent": "level route",
+      "strengths": "lists EXP sources and level curve",
+      "weaknesses": "not offer-specific",
+      "earngrind_opportunity": "convert into level 15/33/38/60 route"
+    },
+    {
+      "rank": 5,
+      "url": "https://lordsmobile.fandom.com/wiki/Castle",
+      "title": "Castle | Lords Mobile Wiki",
+      "result_type": "wiki",
+      "search_intent": "Castle requirements",
+      "strengths": "building context",
+      "weaknesses": "no proof guidance",
+      "earngrind_opportunity": "build Castle 5 proof route"
+    },
+    {
+      "rank": 6,
+      "url": "https://www.cpalead.com/en/offerwall/documentation",
+      "title": "CPAlead Offerwall Documentation",
+      "result_type": "official",
+      "search_intent": "offerwall tracking",
+      "strengths": "official tracking/postback explanation",
+      "weaknesses": "publisher-focused",
+      "earngrind_opportunity": "translate into user proof steps"
+    },
+    {
+      "rank": 7,
+      "url": "https://www.gamesguideinfo.com/lords-mobile/guide/beginners",
+      "title": "Lords Mobile Beginners Guide",
+      "result_type": "guide",
+      "search_intent": "beginner route",
+      "strengths": "guild help and quest context",
+      "weaknesses": "older general guide",
+      "earngrind_opportunity": "use only as caveated context"
+    },
+    {
+      "rank": 8,
+      "url": "https://lordsmobile.org/lords-mobile-fastest-way-to-reach-level-60/",
+      "title": "Fastest Way to Reach Level 60",
+      "result_type": "guide",
+      "search_intent": "level 60 tips",
+      "strengths": "task-relevant topic",
+      "weaknesses": "older and not provider-safe",
+      "earngrind_opportunity": "avoid unsupported time promises"
+    },
+    {
+      "rank": 9,
+      "url": "https://www.lordswin.com/post/how-to-rush-castle-level-25-in-lords-mobile-2024-fast-track-guide",
+      "title": "How to Rush Castle Level 25",
+      "result_type": "guide",
+      "search_intent": "late building rush",
+      "strengths": "modern building-rush framing",
+      "weaknesses": "not Academy 25 offer specific",
+      "earngrind_opportunity": "add purchase/proof economics"
+    },
+    {
+      "rank": 10,
+      "url": "https://www.reddit.com/r/lordsmobile/comments/sg5pb6",
+      "title": "Help a beginner out",
+      "result_type": "reddit",
+      "search_intent": "community difficulty",
+      "strengths": "difficulty caveats",
+      "weaknesses": "anecdotal and not offer terms",
+      "earngrind_opportunity": "label community context as non-deadline"
+    }
+  ],
+  "competitor_gaps": [
+    "Most pages explain Lords Mobile mechanics without exact CPAlead payout and task economics.",
+    "General level 60 guides do not separate community strategy from offer deadlines.",
+    "Competitors rarely warn that the New Kingdom pack is negative gross spread and only eligible from day 8.",
+    "Academy 25 guides often miss offerwall proof and stop-loss logic."
+  ],
+  "keyword_research": {
+    "primary_keyword": "Lords Mobile CPAlead offer guide",
+    "secondary_keywords": [
+      "Lords Mobile offerwall guide",
+      "Lords Mobile CPAlead tasks",
+      "Lords Mobile Academy level 25",
+      "Lords Mobile character level 60",
+      "Lords Mobile purchase task not crediting",
+      "Lords Mobile worth it"
+    ],
+    "entity_terms": [
+      "Lords Mobile",
+      "Kingdom Wars",
+      "IGG.COM",
+      "CPAlead",
+      "Academy",
+      "Castle",
+      "Player EXP",
+      "Mall",
+      "Guild",
+      "Turf Quests"
+    ],
+    "game_mechanics": [
+      "building upgrades",
+      "research",
+      "troop training",
+      "hero stages",
+      "monster hunting",
+      "admin quests",
+      "guild quests",
+      "player level",
+      "pack purchases"
+    ],
+    "offerwall_terms": [
+      "CPAlead",
+      "subid",
+      "postback",
+      "advertiser completion signal",
+      "new user",
+      "Android",
+      "US",
+      "missing credit",
+      "support packet"
+    ],
+    "user_problem_terms": [
+      "is the Lords Mobile CPAlead offer worth it",
+      "Academy 25 within 21 days",
+      "character level 60 in 25 days",
+      "New Kingdom pack day 8",
+      "Lords Mobile offer not crediting"
+    ],
+    "task_terms": [
+      "Open and play the game",
+      "Create your account",
+      "Play the game for 2 days",
+      "Purchase the winning start pack (USD 0.99) within the first 7 days",
+      "Purchase the Newbie Special pack (USD 1.99) within the first 7 days",
+      "Reach Castle Level 5",
+      "Make any in-app purchase (can be repeated daily)",
+      "Complete an attack on a random castle",
+      "Purchase the Heroic Encounters pack (USD 4.99)",
+      "Reach Academy level 1",
+      "Reach Character level 15",
+      "Purchase the New Kingdom pack (USD 29.99) - eligible only if purchased from 8th day",
+      "Reach Character level 33",
+      "Reach Character level 38",
+      "Reach Academy level 25 within 21 days",
+      "Reach Character level 60 in 25 days"
+    ],
+    "game_system_terms": [
+      "Castle",
+      "Academy",
+      "Player EXP",
+      "Turf Quests",
+      "Admin Quests",
+      "Guild Quests",
+      "Hero Stages",
+      "Mall",
+      "Guild helps"
+    ]
+  },
+  "claim_ledger": [
+    {
+      "claim_id": "claim_001",
+      "claim": "Lords Mobile: Kingdom Wars is published by IGG.COM on Google Play and includes in-app purchases.",
+      "claim_type": "game_overview",
+      "source_url": "https://play.google.com/store/apps/details?gl=us&hl=en-us&id=com.igg.android.lordsmobile",
+      "source_type": "app_store",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Google Play identifies IGG.COM as the publisher, Android availability, in-app purchases, internet requirement, and core systems: upgrading buildings, research, troops, heroes, formations, and guild play.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "game-overview",
+        "purchase-economics"
+      ]
+    },
+    {
+      "claim_id": "claim_002",
+      "claim": "The Google Play listing describes building upgrades, research, troop training, hero leveling, formations, and guild play as core systems.",
+      "claim_type": "game_system",
+      "source_url": "https://play.google.com/store/apps/details?gl=us&hl=en-us&id=com.igg.android.lordsmobile",
+      "source_type": "app_store",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Google Play identifies IGG.COM as the publisher, Android availability, in-app purchases, internet requirement, and core systems: upgrading buildings, research, troops, heroes, formations, and guild play.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "task-moving-game-systems"
+      ]
+    },
+    {
+      "claim_id": "claim_003",
+      "claim": "Lords Mobile: Kingdom Wars is available on iOS through the Apple App Store.",
+      "claim_type": "device",
+      "source_url": "https://apps.apple.com/US/app/id1071976327?mt=8",
+      "source_type": "app_store",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Apple App Store confirms iOS availability for Lords Mobile: Kingdom Wars by IGG SINGAPORE PTE. LTD.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "before-you-start"
+      ]
+    },
+    {
+      "claim_id": "claim_004",
+      "claim": "The Academy researches technology, can reduce research time when upgraded, and some technologies require higher Academy levels.",
+      "claim_type": "mechanic",
+      "source_url": "https://lordsmobile.fandom.com/wiki/Academy",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The Academy researches technology, reduces research time when upgraded, and Academy level 25 effectively requires one of every key building at level 25 plus special items such as Gold Hammers, War Tomes, Soul Crystals, and Steel Cuffs.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "task-moving-game-systems",
+        "guided-task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_005",
+      "claim": "Academy level 25 is a major building-chain task because it effectively requires one of every key building at level 25 and special items such as Gold Hammers, War Tomes, Soul Crystals, and Steel Cuffs.",
+      "claim_type": "progression",
+      "source_url": "https://lordsmobile.fandom.com/wiki/Academy",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The Academy researches technology, reduces research time when upgraded, and Academy level 25 effectively requires one of every key building at level 25 plus special items such as Gold Hammers, War Tomes, Soul Crystals, and Steel Cuffs.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "milestone-matrix",
+        "guided-task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_006",
+      "claim": "The Castle is the central turf progression building, and Castle level controls many building and feature gates.",
+      "claim_type": "mechanic",
+      "source_url": "https://lordsmobile.fandom.com/wiki/Castle",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The Castle is the central progression building and higher Castle levels unlock important game features and requirements.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "task-moving-game-systems",
+        "guided-task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_007",
+      "claim": "Player EXP can come from monster hunting, equipment forging, admin and guild quests, enemy troop engagements, hero stages, Colosseum, turf quests, and Player EXP items.",
+      "claim_type": "progression",
+      "source_url": "https://lordsmobile.fandom.com/wiki/Player_EXP",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Player EXP comes from monster hunting, equipment forging, admin and guild quests, enemy troop engagements, hero stages, Colosseum, turf quests, and Player EXP items; player level 60 is the top listed level and needs sharply higher EXP late.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "milestone-matrix",
+        "guided-task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_008",
+      "claim": "Player level 60 is the top listed player level and late levels require sharply more Player EXP than early levels.",
+      "claim_type": "progression",
+      "source_url": "https://lordsmobile.fandom.com/wiki/Player_EXP",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Player EXP comes from monster hunting, equipment forging, admin and guild quests, enemy troop engagements, hero stages, Colosseum, turf quests, and Player EXP items; player level 60 is the top listed level and needs sharply higher EXP late.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "milestone-matrix",
+        "guided-task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_009",
+      "claim": "Building upgrades can generate Turf Quest rewards, including Player EXP, while moving Castle and Academy progress.",
+      "claim_type": "strategy",
+      "source_url": "https://lordsmobile.fandom.com/wiki/Turf_Quests/Building",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "Building upgrades have Turf Quest rewards, including player EXP and resource figures for Castle and Academy progress.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "task-moving-game-systems",
+        "guided-task-route"
+      ]
+    },
+    {
+      "claim_id": "claim_010",
+      "claim": "The Mall sells packages and bundles for real money or Diamonds that can accelerate progress.",
+      "claim_type": "mechanic",
+      "source_url": "https://lordsmobile.fandom.com/wiki/Mall",
+      "source_type": "wiki",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The Mall sells packages, bundles, passes, and subscriptions for real money or Diamonds to accelerate progress.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "purchase-economics"
+      ]
+    },
+    {
+      "claim_id": "claim_011",
+      "claim": "CPAlead selects eligible offers based on visitor, offer rules, device, country, and availability.",
+      "claim_type": "tracking",
+      "source_url": "https://www.cpalead.com/en/offerwall/documentation",
+      "source_type": "official",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "CPAlead explains offerwall eligibility by country/device/offer rules, subid tracking, advertiser completion signals, postbacks, reward history, and why a clicked offer alone should not be rewarded.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "before-you-start"
+      ]
+    },
+    {
+      "claim_id": "claim_012",
+      "claim": "CPAlead recommends passing a subid or username reference so rewards and history can be matched to the correct visitor.",
+      "claim_type": "tracking",
+      "source_url": "https://www.cpalead.com/en/offerwall/documentation",
+      "source_type": "official",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "CPAlead explains offerwall eligibility by country/device/offer rules, subid tracking, advertiser completion signals, postbacks, reward history, and why a clicked offer alone should not be rewarded.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "before-you-start",
+        "evidence-log"
+      ]
+    },
+    {
+      "claim_id": "claim_013",
+      "claim": "CPAlead says the advertiser controls the final completion signal and the offerwall cannot confirm a reward without a valid advertiser signal.",
+      "claim_type": "support",
+      "source_url": "https://www.cpalead.com/en/offerwall/documentation",
+      "source_type": "official",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "CPAlead explains offerwall eligibility by country/device/offer rules, subid tracking, advertiser completion signals, postbacks, reward history, and why a clicked offer alone should not be rewarded.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "proof-and-support"
+      ]
+    },
+    {
+      "claim_id": "claim_014",
+      "claim": "CPAlead says reward systems should not reward solely because a visitor clicked an offer or says they completed it.",
+      "claim_type": "support",
+      "source_url": "https://www.cpalead.com/en/offerwall/documentation",
+      "source_type": "official",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "CPAlead explains offerwall eligibility by country/device/offer rules, subid tracking, advertiser completion signals, postbacks, reward history, and why a clicked offer alone should not be rewarded.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "proof-and-support"
+      ]
+    },
+    {
+      "claim_id": "claim_015",
+      "claim": "Guild helps, admin quests, guild quests, and VIP quests are relevant early growth systems, but third-party strategy sources should be treated as supporting context rather than offer terms.",
+      "claim_type": "strategy",
+      "source_url": "https://www.gamesguideinfo.com/lords-mobile/guide/beginners",
+      "source_type": "other",
+      "confidence": "medium",
+      "publishable": true,
+      "captured_date": "2026-05-31",
+      "evidence_summary": "The guide describes guild helps, admin/guild/VIP quests, and early growth advice; use as secondary strategy context only.",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [
+        "Offer payouts and deadlines still come only from the task list."
+      ],
+      "used_in_sections": [
+        "task-moving-game-systems",
+        "guided-task-route"
+      ]
+    }
+  ],
+  "game_overview": {
+    "summary": "Lords Mobile is an IGG strategy game where a new account upgrades buildings, researches technology, trains troops, uses heroes, joins guild play, and can buy packs.",
+    "why_it_matters": "The offer tasks touch tracking, Castle, Academy, Player EXP, PvP, purchases, and support proof.",
+    "claim_ids": [
+      "claim_001",
+      "claim_002"
+    ]
+  },
+  "game_systems": [
+    {
+      "system_name": "Castle",
+      "explanation": "Central building progression and early proof surface.",
+      "why_it_matters": "Supports Castle Level 5 and unlocks building chain progress.",
+      "include_in_guide": true,
+      "claim_ids": [
+        "claim_006",
+        "claim_009"
+      ]
+    },
+    {
+      "system_name": "Academy",
+      "explanation": "Research building that has a severe level 25 prerequisite chain.",
+      "why_it_matters": "Academy 25 is one of the two make-or-break tasks.",
+      "include_in_guide": true,
+      "claim_ids": [
+        "claim_004",
+        "claim_005"
+      ]
+    },
+    {
+      "system_name": "Player EXP",
+      "explanation": "Profile level route from quests, stages, monster hunting, combat, Colosseum, and EXP items.",
+      "why_it_matters": "Character levels 15, 33, 38, and 60 map to this route.",
+      "include_in_guide": true,
+      "claim_ids": [
+        "claim_007",
+        "claim_008"
+      ]
+    },
+    {
+      "system_name": "Mall and Purchases",
+      "explanation": "Packs and bundles can accelerate progress but require exact receipt proof.",
+      "why_it_matters": "Five paid tasks depend on pack timing and wording.",
+      "include_in_guide": true,
+      "claim_ids": [
+        "claim_010",
+        "claim_013"
+      ]
+    },
+    {
+      "system_name": "Guild Helps and Quests",
+      "explanation": "Guild activity supports helps, quests, monster hunting, and progression pace.",
+      "why_it_matters": "Guild systems can reduce building pressure and provide EXP routes.",
+      "include_in_guide": true,
+      "claim_ids": [
+        "claim_002",
+        "claim_015"
+      ]
+    }
+  ],
+  "task_archetype_map": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Open and play the game",
+      "primary_archetype": "install_open_tracking",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013"
+      ]
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Create your account",
+      "primary_archetype": "install_open_tracking",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ]
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Play the game for 2 days",
+      "primary_archetype": "install_open_tracking",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ]
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Purchase the winning start pack (USD 0.99) within the first 7 days",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ]
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "Purchase the Newbie Special pack (USD 1.99) within the first 7 days",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ]
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Castle Level 5",
+      "primary_archetype": "base_castle_hq_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_002",
+        "claim_006",
+        "claim_009",
+        "claim_015"
+      ]
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "Make any in-app purchase (can be repeated daily)",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ]
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Complete an attack on a random castle",
+      "primary_archetype": "alliance_guild_social",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_002",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014",
+        "claim_015"
+      ]
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Purchase the Heroic Encounters pack (USD 4.99)",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ]
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Reach Academy level 1",
+      "primary_archetype": "building",
+      "secondary_archetypes": [
+        "base_castle_hq_level"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_002",
+        "claim_004",
+        "claim_006",
+        "claim_009",
+        "claim_015"
+      ]
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Reach Character level 15",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ]
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Purchase the New Kingdom pack (USD 29.99) - eligible only if purchased from 8th day",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ]
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "Reach Character level 33",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ]
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "Reach Character level 38",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ]
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "Reach Academy level 25 within 21 days",
+      "primary_archetype": "building",
+      "secondary_archetypes": [
+        "research",
+        "base_castle_hq_level"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_009",
+        "claim_015"
+      ]
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Reach Character level 60 in 25 days",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "The task wording maps directly to the listed generic archetype and controls proof, risk, and guide depth.",
+      "required_sections": [
+        "Payout Table",
+        "Risk Band Economics",
+        "Guided Task Route",
+        "Evidence Log",
+        "Proof And Support"
+      ],
+      "required_proof": [
+        "offer row",
+        "profile/player ID",
+        "completion screen",
+        "receipt if paid"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ]
+    }
+  ],
+  "risk_band_economics": [
+    {
+      "band": "safe_free_to_play",
+      "task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_006",
+        "task_010"
+      ],
+      "listed_reward_value": "780 points, USD 0.78",
+      "estimated_cash_cost": "USD 0",
+      "non_cash_constraints": [
+        "clean tracking",
+        "starter building progress"
+      ],
+      "main_tracking_support_risk": "early task credit delay",
+      "continue_reassess_stop_rule": "continue if first tasks track before spend",
+      "editorial_treatment": "safe starter proof band"
+    },
+    {
+      "band": "active_grind",
+      "task_ids": [
+        "task_008",
+        "task_011",
+        "task_013",
+        "task_014"
+      ],
+      "listed_reward_value": "5,476 points, USD 5.48",
+      "estimated_cash_cost": "USD 0",
+      "non_cash_constraints": [
+        "Player EXP",
+        "quests",
+        "hero stages",
+        "monster energy",
+        "safe PvP"
+      ],
+      "main_tracking_support_risk": "milestones may need screenshots if delayed",
+      "continue_reassess_stop_rule": "continue only while level pace remains visible",
+      "editorial_treatment": "worth doing as checkpoints"
+    },
+    {
+      "band": "low_spend",
+      "task_ids": [
+        "task_004",
+        "task_005",
+        "task_007",
+        "task_009"
+      ],
+      "listed_reward_value": "11,100 points, USD 11.10",
+      "estimated_cash_cost": "USD 0.99 to USD 4.99 plus any repeat purchase chosen",
+      "non_cash_constraints": [
+        "pack availability",
+        "receipt proof"
+      ],
+      "main_tracking_support_risk": "purchase signal can lag or mismatch pack wording",
+      "continue_reassess_stop_rule": "buy only after tracking is clean and stop after one failed purchase",
+      "editorial_treatment": "positive gross spread but proof-first"
+    },
+    {
+      "band": "high_risk_or_not_recommended",
+      "task_ids": [
+        "task_012",
+        "task_015",
+        "task_016"
+      ],
+      "listed_reward_value": "366,300 points, USD 366.30",
+      "estimated_cash_cost": "USD 29.99 plus possible speedup/resource spend",
+      "non_cash_constraints": [
+        "day-8 purchase restriction",
+        "Academy 25 chain",
+        "level 60 EXP wall",
+        "21-day and 25-day pressure"
+      ],
+      "main_tracking_support_risk": "highest-value tasks are most painful if unsupported",
+      "continue_reassess_stop_rule": "treat Academy 25 and level 60 as make-or-break; stop if either is off pace",
+      "editorial_treatment": "not recommended unless tracking and pace are excellent"
+    }
+  ],
+  "purchase_economics": [
+    {
+      "task_id": "task_004",
+      "required_purchase_wording": "winning start pack",
+      "listed_reward_value": "$1.11",
+      "known_or_user_provided_cost": "USD 0.99",
+      "gross_spread_before_taxes_fees": "positive before taxes/fees",
+      "timing_restrictions": "within the first 7 days",
+      "supports_another_task": "may provide resources for early building and EXP progress",
+      "proof_packet": [
+        "pack screen",
+        "receipt",
+        "inventory reward",
+        "CPAlead row"
+      ],
+      "risk_notes": [
+        "match exact wording"
+      ],
+      "editorial_treatment": "low-spend only after tracking proof"
+    },
+    {
+      "task_id": "task_005",
+      "required_purchase_wording": "Newbie Special pack",
+      "listed_reward_value": "$2.22",
+      "known_or_user_provided_cost": "USD 1.99",
+      "gross_spread_before_taxes_fees": "positive before taxes/fees",
+      "timing_restrictions": "within the first 7 days",
+      "supports_another_task": "may help early resources",
+      "proof_packet": [
+        "pack screen",
+        "receipt",
+        "reward screen"
+      ],
+      "risk_notes": [
+        "exact pack name matters"
+      ],
+      "editorial_treatment": "low-spend after starter tracking"
+    },
+    {
+      "task_id": "task_007",
+      "required_purchase_wording": "any in-app purchase",
+      "listed_reward_value": "$1.11",
+      "known_or_user_provided_cost": "not specified by task",
+      "gross_spread_before_taxes_fees": "depends on cheapest available purchase",
+      "timing_restrictions": "can be repeated daily",
+      "supports_another_task": "choose only if it helps Academy or EXP progress",
+      "proof_packet": [
+        "store screen",
+        "receipt",
+        "CPAlead status"
+      ],
+      "risk_notes": [
+        "daily repeat wording can still need separate credit events"
+      ],
+      "editorial_treatment": "do not chain repeats without first credit"
+    },
+    {
+      "task_id": "task_009",
+      "required_purchase_wording": "Heroic Encounters pack",
+      "listed_reward_value": "$6.66",
+      "known_or_user_provided_cost": "USD 4.99",
+      "gross_spread_before_taxes_fees": "positive before taxes/fees",
+      "timing_restrictions": "none provided by task row",
+      "supports_another_task": "may help heroes or resources if pack contents match current bottleneck",
+      "proof_packet": [
+        "pack screen",
+        "receipt",
+        "reward screen"
+      ],
+      "risk_notes": [
+        "pack name must match"
+      ],
+      "editorial_treatment": "optional low-spend checkpoint"
+    },
+    {
+      "task_id": "task_012",
+      "required_purchase_wording": "New Kingdom pack",
+      "listed_reward_value": "$25.90",
+      "known_or_user_provided_cost": "USD 29.99",
+      "gross_spread_before_taxes_fees": "negative before taxes/fees",
+      "timing_restrictions": "eligible only if purchased from 8th day",
+      "supports_another_task": "may support late resources but cost is not covered by reward",
+      "proof_packet": [
+        "day count proof",
+        "pack screen",
+        "receipt",
+        "CPAlead row"
+      ],
+      "risk_notes": [
+        "trap task if bought before day 8",
+        "negative gross spread"
+      ],
+      "editorial_treatment": "high-risk; generally skip unless supporting larger goals"
+    }
+  ],
+  "evidence_log_plan": {
+    "offer_proof": [
+      "CPAlead offer page",
+      "task list",
+      "points",
+      "deadlines",
+      "click timestamp",
+      "subid or username reference when visible"
+    ],
+    "game_proof": [
+      "Lords Mobile profile/player ID",
+      "Castle screen",
+      "Academy screen",
+      "player level profile",
+      "battle report",
+      "pack purchase screens"
+    ],
+    "support_proof": [
+      "receipts",
+      "timestamps",
+      "before and after screenshots",
+      "CPAlead status history",
+      "device/account continuity notes"
+    ],
+    "task_rows": [
+      {
+        "task_id": "task_001",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_002",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_003",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_004",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_005",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_006",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_007",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_008",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_009",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_010",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_011",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_012",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_013",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_014",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_015",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      },
+      {
+        "task_id": "task_016",
+        "proof": [
+          "offer row",
+          "in-game milestone",
+          "post-action status"
+        ]
+      }
+    ]
+  },
+  "support_state_model": {
+    "provider": "CPAlead",
+    "known_crediting_states": [
+      "clicked or started",
+      "advertiser completion signal pending",
+      "conversion recorded",
+      "rewarded by publisher/app after postback"
+    ],
+    "unknown_states": [
+      "exact consumer-facing CPAlead status labels can vary by host implementation"
+    ],
+    "support_packet_fields": [
+      "task ID",
+      "task wording",
+      "points",
+      "completion time",
+      "Lords Mobile player ID",
+      "screenshots",
+      "receipt if paid",
+      "device/account notes"
+    ],
+    "risk_triggers": [
+      "old install",
+      "device switch",
+      "missing subid or username reference",
+      "purchase before timing eligibility",
+      "no advertiser signal"
+    ],
+    "wait_review_language": "Wait for the provider state to update before filing a missing-credit packet; do not assume a click or in-game completion alone proves payable credit."
+  },
+  "mechanic_dossiers": [
+    {
+      "mechanic_name": "CPAlead tracking and proof",
+      "plain_english_explanation": "The offer needs a trackable click, stable user reference, and advertiser completion signal.",
+      "unlock_timing": "before install",
+      "task_ids_affected": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "progress_inputs_outputs": [
+        "offer click creates tracking context",
+        "advertiser signal creates conversion"
+      ],
+      "resources_consumed": [
+        "proof time"
+      ],
+      "bottlenecks_and_conflicts": [
+        "missing subid",
+        "old install",
+        "device/account switch"
+      ],
+      "proof_screens": [
+        "offer row",
+        "profile ID",
+        "status history"
+      ],
+      "source_claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "what_to_ignore": [
+        "unsupported claims that a click alone should pay"
+      ]
+    },
+    {
+      "mechanic_name": "Castle and building queue",
+      "plain_english_explanation": "Castle progress moves through prerequisite buildings, basic resources, timers, and speedups.",
+      "unlock_timing": "tutorial",
+      "task_ids_affected": [
+        "task_006",
+        "task_015"
+      ],
+      "progress_inputs_outputs": [
+        "resources and construction time produce Castle or prerequisite levels"
+      ],
+      "resources_consumed": [
+        "food",
+        "stone",
+        "timber",
+        "ore",
+        "gold",
+        "speedups"
+      ],
+      "bottlenecks_and_conflicts": [
+        "speedups used here compete with Academy 25"
+      ],
+      "proof_screens": [
+        "Castle level screen"
+      ],
+      "source_claim_ids": [
+        "claim_002",
+        "claim_006",
+        "claim_009"
+      ],
+      "what_to_ignore": [
+        "cosmetic progress"
+      ]
+    },
+    {
+      "mechanic_name": "Academy and research chain",
+      "plain_english_explanation": "The Academy is the research building, and Academy 25 is gated by a wide building and item chain.",
+      "unlock_timing": "early building phase",
+      "task_ids_affected": [
+        "task_010",
+        "task_015"
+      ],
+      "progress_inputs_outputs": [
+        "building prerequisites unlock Academy upgrades"
+      ],
+      "resources_consumed": [
+        "resources",
+        "speedups",
+        "Gold Hammers",
+        "War Tomes",
+        "Soul Crystals",
+        "Steel Cuffs"
+      ],
+      "bottlenecks_and_conflicts": [
+        "hidden prerequisite chain",
+        "special item gates"
+      ],
+      "proof_screens": [
+        "Academy level screen",
+        "prerequisite screen"
+      ],
+      "source_claim_ids": [
+        "claim_004",
+        "claim_005"
+      ],
+      "what_to_ignore": [
+        "research projects that do not unlock the required Academy level"
+      ]
+    },
+    {
+      "mechanic_name": "Player EXP route",
+      "plain_english_explanation": "Character level is best treated as player level progress from quests, stages, monsters, combat, Colosseum, and Player EXP items.",
+      "unlock_timing": "profile access",
+      "task_ids_affected": [
+        "task_011",
+        "task_013",
+        "task_014",
+        "task_016"
+      ],
+      "progress_inputs_outputs": [
+        "repeatable and one-time EXP sources raise player level"
+      ],
+      "resources_consumed": [
+        "energy",
+        "stamina",
+        "quest scrolls",
+        "time"
+      ],
+      "bottlenecks_and_conflicts": [
+        "late level curve",
+        "resource competition with Academy 25"
+      ],
+      "proof_screens": [
+        "profile level screen"
+      ],
+      "source_claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_015"
+      ],
+      "what_to_ignore": [
+        "might growth with no Player EXP"
+      ]
+    },
+    {
+      "mechanic_name": "Mall and purchases",
+      "plain_english_explanation": "Pack tasks require exact in-game pack matching, receipt proof, and timing discipline.",
+      "unlock_timing": "store availability varies",
+      "task_ids_affected": [
+        "task_004",
+        "task_005",
+        "task_007",
+        "task_009",
+        "task_012"
+      ],
+      "progress_inputs_outputs": [
+        "purchase grants pack contents and a receipt"
+      ],
+      "resources_consumed": [
+        "real-money payment or Diamonds"
+      ],
+      "bottlenecks_and_conflicts": [
+        "wrong pack",
+        "timing trap",
+        "refund/support risk"
+      ],
+      "proof_screens": [
+        "pack page",
+        "receipt",
+        "reward screen"
+      ],
+      "source_claim_ids": [
+        "claim_010",
+        "claim_013"
+      ],
+      "what_to_ignore": [
+        "unlisted packs"
+      ]
+    }
+  ],
+  "milestone_matrix": [
+    {
+      "task_or_milestone": "Open/account/two-day activity",
+      "deadline": "for 2 days where listed",
+      "main_mechanic": "tracking and account continuity",
+      "required_systems": [
+        "CPAlead tracking",
+        "profile proof"
+      ],
+      "checkpoint_target": "first credit or pending state",
+      "proof_screen": "offer row and profile",
+      "continue_rule": "continue if tracking is visible",
+      "reassess_rule": "pause spend if early tasks lag",
+      "stop_rule": "stop before purchases if install/account proof is broken",
+      "unresolved_gaps": []
+    },
+    {
+      "task_or_milestone": "Castle Level 5 and Academy level 1",
+      "deadline": "none provided by task row",
+      "main_mechanic": "early building queue",
+      "required_systems": [
+        "Castle",
+        "Academy",
+        "resources"
+      ],
+      "checkpoint_target": "level screen complete",
+      "proof_screen": "building detail",
+      "continue_rule": "continue to low-cost progression",
+      "reassess_rule": "watch for delayed credits",
+      "stop_rule": "do not spend to solve a failed early credit",
+      "unresolved_gaps": []
+    },
+    {
+      "task_or_milestone": "Character levels 15, 33, and 38",
+      "deadline": "none provided by task row",
+      "main_mechanic": "Player EXP",
+      "required_systems": [
+        "quests",
+        "hero stages",
+        "monster hunting",
+        "turf quests"
+      ],
+      "checkpoint_target": "profile level milestone",
+      "proof_screen": "profile/player level",
+      "continue_rule": "continue if each level credits",
+      "reassess_rule": "slow pace before level 38",
+      "stop_rule": "do not chase level 60 if mid-level pace is weak",
+      "unresolved_gaps": []
+    },
+    {
+      "task_or_milestone": "Academy level 25 within 21 days",
+      "deadline": "within 21 days",
+      "main_mechanic": "Academy prerequisite chain",
+      "required_systems": [
+        "Castle",
+        "Academy",
+        "special buildings",
+        "special items",
+        "guild helps"
+      ],
+      "checkpoint_target": "Academy 25 complete",
+      "proof_screen": "Academy level and prerequisite chain",
+      "continue_rule": "continue only with clean tracking and active guild",
+      "reassess_rule": "special items or speedups missing",
+      "stop_rule": "stop if the 21-day chain is not plausible",
+      "unresolved_gaps": [
+        "current pack availability and event rewards vary by account"
+      ]
+    },
+    {
+      "task_or_milestone": "Character level 60 in 25 days",
+      "deadline": "in 25 days",
+      "main_mechanic": "late Player EXP route",
+      "required_systems": [
+        "Player EXP items",
+        "quests",
+        "hero stages",
+        "monster hunting",
+        "Turf Quest rewards"
+      ],
+      "checkpoint_target": "profile level 60",
+      "proof_screen": "profile/player level",
+      "continue_rule": "continue only if late EXP sources remain",
+      "reassess_rule": "level 38 and Academy 25 compete for resources",
+      "stop_rule": "stop if level 60 is not visibly close before final deadline",
+      "unresolved_gaps": [
+        "no official guarantee that a new player can reach level 60 in the listed time"
+      ]
+    }
+  ],
+  "random_reward_model": {
+    "model_scope": "No intake task requires opening random chests, summons, or gacha directly, but resource packs and monster or quest rewards can include variable contents.",
+    "guaranteed_sources": [
+      "exact purchase task credit is tied to pack purchase wording, not random pack contents"
+    ],
+    "random_sources": [
+      "monster drops",
+      "quest rewards",
+      "pack contents where the in-game pack labels them as chance-based"
+    ],
+    "paid_sources": [
+      "Mall packs and bundles"
+    ],
+    "time_gated_sources": [
+      "daily repeat purchase wording",
+      "quest refreshes",
+      "energy and stamina regeneration"
+    ],
+    "opening_timing": "Do not count random contents as guaranteed progress unless the in-game screen explicitly shows them before purchase or claim.",
+    "pity_mercy_guarantee_status": "not verified for these offer tasks",
+    "proof_before_after_opening": [
+      "screenshot pack or reward preview",
+      "screenshot inventory after claim"
+    ],
+    "stop_rule": "Do not spend for random contents to solve Academy 25 or level 60 unless the guaranteed items clearly cover the bottleneck."
+  },
+  "terminology_map": [
+    {
+      "offer_wording": "Character level",
+      "game_wording": "Player EXP level/profile level",
+      "task_ids": [
+        "task_011",
+        "task_013",
+        "task_014",
+        "task_016"
+      ],
+      "source_claim_ids": [
+        "claim_007",
+        "claim_008"
+      ]
+    },
+    {
+      "offer_wording": "Castle Level",
+      "game_wording": "Castle building level",
+      "task_ids": [
+        "task_006"
+      ],
+      "source_claim_ids": [
+        "claim_006"
+      ]
+    },
+    {
+      "offer_wording": "Academy level",
+      "game_wording": "Academy building level and research-building prerequisite chain",
+      "task_ids": [
+        "task_010",
+        "task_015"
+      ],
+      "source_claim_ids": [
+        "claim_004",
+        "claim_005"
+      ]
+    },
+    {
+      "offer_wording": "Random castle attack",
+      "game_wording": "PvP march/battle report against another castle",
+      "task_ids": [
+        "task_008"
+      ],
+      "source_claim_ids": [
+        "claim_002",
+        "claim_015"
+      ]
+    }
+  ],
+  "strategy_guide_sections": [
+    {
+      "section_title": "Key Takeaways",
+      "section_type": "key_takeaways",
+      "why_it_matters_for_offer": "Shows whether the reader should start before spending.",
+      "supported_task_ids": [
+        "task_001",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_005",
+        "claim_008",
+        "claim_013"
+      ],
+      "tables_or_checklists": [
+        "verdict checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Completion Checklist",
+      "section_type": "completion_checklist",
+      "why_it_matters_for_offer": "Keeps tracking, proof, and spend order clean.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013"
+      ],
+      "tables_or_checklists": [
+        "proof checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Offer Planning",
+      "section_type": "offer_planning",
+      "why_it_matters_for_offer": "Separates safe early tasks from make-or-break late tasks.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_005",
+        "claim_008"
+      ],
+      "tables_or_checklists": [
+        "risk band economics table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Early Route",
+      "section_type": "early_route",
+      "why_it_matters_for_offer": "Covers open, account, two-day play, Castle 5, and Academy 1.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_006",
+        "task_010"
+      ],
+      "claim_ids": [
+        "claim_006",
+        "claim_009"
+      ],
+      "tables_or_checklists": [
+        "early route checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Resources And Bottlenecks",
+      "section_type": "resources",
+      "why_it_matters_for_offer": "Explains food, stone, timber, ore, gold, speedups, energy, stamina, and quest supply.",
+      "supported_task_ids": [
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_005",
+        "claim_007",
+        "claim_009"
+      ],
+      "tables_or_checklists": [
+        "resource table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Shops And Purchases",
+      "section_type": "shops",
+      "why_it_matters_for_offer": "Handles paid pack tasks and the day-8 trap.",
+      "supported_task_ids": [
+        "task_004",
+        "task_005",
+        "task_007",
+        "task_009",
+        "task_012"
+      ],
+      "claim_ids": [
+        "claim_010",
+        "claim_013"
+      ],
+      "tables_or_checklists": [
+        "purchase economics table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Alliance And Guild Helps",
+      "section_type": "alliance",
+      "why_it_matters_for_offer": "Guild activity supports monster hunting, quests, and building helps.",
+      "supported_task_ids": [
+        "task_008",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_002",
+        "claim_015"
+      ],
+      "tables_or_checklists": [
+        "guild checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Codes And Event Rewards",
+      "section_type": "codes",
+      "why_it_matters_for_offer": "Codes or events can help but cannot be treated as guaranteed offer terms.",
+      "supported_task_ids": [
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_015"
+      ],
+      "tables_or_checklists": [
+        "freshness note"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Upgrade Path",
+      "section_type": "upgrade_path",
+      "why_it_matters_for_offer": "Needed for Castle and Academy progression.",
+      "supported_task_ids": [
+        "task_006",
+        "task_010",
+        "task_015"
+      ],
+      "claim_ids": [
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "milestone matrix"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Research And Heroes",
+      "section_type": "research",
+      "why_it_matters_for_offer": "Research, hero stages, and Player EXP routes connect the late goals.",
+      "supported_task_ids": [
+        "task_011",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_004",
+        "claim_007"
+      ],
+      "tables_or_checklists": [
+        "daily loop"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Proof And Reassessment",
+      "section_type": "reassessment",
+      "why_it_matters_for_offer": "Defines when to continue, pause, or stop.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "tables_or_checklists": [
+        "support packet"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "FAQ",
+      "section_type": "faq",
+      "why_it_matters_for_offer": "Answers worth-it, purchase, tracking, and late-task questions.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [
+        "claim_013"
+      ],
+      "tables_or_checklists": [
+        "FAQ"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "CTA",
+      "section_type": "cta",
+      "why_it_matters_for_offer": "Sends readers to compare offers when risk is too high.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "claim_ids": [],
+      "tables_or_checklists": [
+        "internal CTA"
+      ],
+      "include_in_guide": true
+    }
+  ],
+  "task_strategy": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Open and play the game",
+      "points": 148,
+      "usd": 0.15,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "install_open_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Open and play the game and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is an install, account, or activity-tracking task. The goal is to make the CPAlead click, new install, first account, and activity state easy to prove.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Start from the CPAlead offer page on the Android device.",
+        "Do not use an old install or alternate device.",
+        "Open the game and complete the account or activity step in the same tracked session.",
+        "Save screenshots of the offer row, player/profile screen, and activity progress.",
+        "Wait for the provider state before spending."
+      ],
+      "resource_requirements": [
+        "clean install",
+        "stable account",
+        "time in-game"
+      ],
+      "resource_bottlenecks": [
+        "old install history",
+        "device/account mismatch",
+        "delayed crediting"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "opening the app outside the tracked click path",
+        "switching accounts",
+        "spending before tracking proof"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Create your account",
+      "points": 74,
+      "usd": 0.07,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "install_open_tracking",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Create your account and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is an install, account, or activity-tracking task. The goal is to make the CPAlead click, new install, first account, and activity state easy to prove.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Start from the CPAlead offer page on the Android device.",
+        "Do not use an old install or alternate device.",
+        "Open the game and complete the account or activity step in the same tracked session.",
+        "Save screenshots of the offer row, player/profile screen, and activity progress.",
+        "Wait for the provider state before spending."
+      ],
+      "resource_requirements": [
+        "clean install",
+        "stable account",
+        "time in-game"
+      ],
+      "resource_bottlenecks": [
+        "old install history",
+        "device/account mismatch",
+        "delayed crediting"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "opening the app outside the tracked click path",
+        "switching accounts",
+        "spending before tracking proof"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Play the game for 2 days",
+      "points": 185,
+      "usd": 0.19,
+      "deadline_text": "for 2 days",
+      "mechanics_needed": [
+        "install_open_tracking",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Play the game for 2 days and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is an install, account, or activity-tracking task. The goal is to make the CPAlead click, new install, first account, and activity state easy to prove.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Start from the CPAlead offer page on the Android device.",
+        "Do not use an old install or alternate device.",
+        "Open the game and complete the account or activity step in the same tracked session.",
+        "Save screenshots of the offer row, player/profile screen, and activity progress.",
+        "Wait for the provider state before spending."
+      ],
+      "resource_requirements": [
+        "clean install",
+        "stable account",
+        "time in-game"
+      ],
+      "resource_bottlenecks": [
+        "old install history",
+        "device/account mismatch",
+        "delayed crediting"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "opening the app outside the tracked click path",
+        "switching accounts",
+        "spending before tracking proof"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Purchase the winning start pack (USD 0.99) within the first 7 days",
+      "points": 1110,
+      "usd": 1.11,
+      "deadline_text": "within the first 7 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Purchase the winning start pack (USD 0.99) within the first 7 days and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is a purchase tracking task. Match the exact pack wording, preserve the receipt, and do not treat a click or purchase intent as credit proof.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Open the CPAlead offer status before buying.",
+        "Confirm the exact pack name and timing rule in the task row.",
+        "Buy only after tracking is visible and the timing rule is satisfied.",
+        "Screenshot the in-game pack page, receipt, inventory/reward screen, and CPAlead status.",
+        "Stop further spend if this purchase does not move to a tracked or credited state."
+      ],
+      "resource_requirements": [
+        "listed cash cost in the task wording",
+        "payment receipt",
+        "stable app account and device"
+      ],
+      "resource_bottlenecks": [
+        "advertiser signal delay",
+        "pack availability",
+        "timing restrictions",
+        "receipt/support review"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "buying New Kingdom before day 8",
+        "buying a similarly named pack",
+        "spending before first-open tracking is clean",
+        "using a different device or account"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "Purchase the Newbie Special pack (USD 1.99) within the first 7 days",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": "within the first 7 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Purchase the Newbie Special pack (USD 1.99) within the first 7 days and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is a purchase tracking task. Match the exact pack wording, preserve the receipt, and do not treat a click or purchase intent as credit proof.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Open the CPAlead offer status before buying.",
+        "Confirm the exact pack name and timing rule in the task row.",
+        "Buy only after tracking is visible and the timing rule is satisfied.",
+        "Screenshot the in-game pack page, receipt, inventory/reward screen, and CPAlead status.",
+        "Stop further spend if this purchase does not move to a tracked or credited state."
+      ],
+      "resource_requirements": [
+        "listed cash cost in the task wording",
+        "payment receipt",
+        "stable app account and device"
+      ],
+      "resource_bottlenecks": [
+        "advertiser signal delay",
+        "pack availability",
+        "timing restrictions",
+        "receipt/support review"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "buying New Kingdom before day 8",
+        "buying a similarly named pack",
+        "spending before first-open tracking is clean",
+        "using a different device or account"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Castle Level 5",
+      "points": 148,
+      "usd": 0.15,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "base_castle_hq_level"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Reach Castle Level 5 and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is an early building task. It moves through the tutorial building queue, basic resources, short timers, and a final building info screenshot.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Follow the tutorial until the building menu is available.",
+        "Upgrade the prerequisite building chain.",
+        "Use starter resources and short speedups only if needed.",
+        "Open the building detail panel at completion.",
+        "Capture the level screen and CPAlead state."
+      ],
+      "resource_requirements": [
+        "starter resources",
+        "short speedups",
+        "building queue"
+      ],
+      "resource_bottlenecks": [
+        "small resource waits",
+        "tracking delay"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "leaving the app before the completion screen",
+        "not saving the building level proof"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "castle_level",
+        "target_value": "5",
+        "progression_systems_to_cover": [
+          "Castle",
+          "building queue",
+          "resources",
+          "Turf Quests"
+        ],
+        "xp_or_progress_sources": [
+          "building upgrades",
+          "Turf Quest rewards"
+        ],
+        "daily_repeatable_loop": [
+          "upgrade prerequisite buildings",
+          "collect required resources",
+          "screenshot Castle level"
+        ],
+        "priority_order": [
+          "follow tutorial",
+          "upgrade Castle prerequisites",
+          "start Castle 5",
+          "capture proof"
+        ],
+        "milestone_route": [
+          "Castle 2",
+          "Castle 3",
+          "Castle 4",
+          "Castle 5"
+        ],
+        "gates_and_unlocks": [
+          "tutorial and early building prerequisites"
+        ],
+        "resource_plan": [
+          "basic food",
+          "stone",
+          "timber",
+          "ore",
+          "gold",
+          "starter speedups"
+        ],
+        "accelerators": [
+          "starter speedups",
+          "guild help if unlocked"
+        ],
+        "what_to_ignore": [
+          "extra military projects before Castle 5"
+        ],
+        "tables_or_checklists_needed": [
+          "early castle checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "minor early resource waits"
+        ],
+        "reassessment_triggers": [
+          "Castle 5 fails to credit after proof"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_002",
+        "claim_006",
+        "claim_009",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "Make any in-app purchase (can be repeated daily)",
+      "points": 1110,
+      "usd": 1.11,
+      "deadline_text": "can be repeated daily",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Make any in-app purchase (can be repeated daily) and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is a purchase tracking task. Match the exact pack wording, preserve the receipt, and do not treat a click or purchase intent as credit proof.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Open the CPAlead offer status before buying.",
+        "Confirm the exact pack name and timing rule in the task row.",
+        "Buy only after tracking is visible and the timing rule is satisfied.",
+        "Screenshot the in-game pack page, receipt, inventory/reward screen, and CPAlead status.",
+        "Stop further spend if this purchase does not move to a tracked or credited state."
+      ],
+      "resource_requirements": [
+        "listed cash cost in the task wording",
+        "payment receipt",
+        "stable app account and device"
+      ],
+      "resource_bottlenecks": [
+        "advertiser signal delay",
+        "pack availability",
+        "timing restrictions",
+        "receipt/support review"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "buying New Kingdom before day 8",
+        "buying a similarly named pack",
+        "spending before first-open tracking is clean",
+        "using a different device or account"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Complete an attack on a random castle",
+      "points": 740,
+      "usd": 0.74,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "alliance_guild_social",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Complete an attack on a random castle and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "The random castle attack is a PvP activity task. It should be treated as proof-first participation, not as a reason to start a costly war.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Scout the map for a low-risk random castle target.",
+        "Send the smallest useful march that completes an attack.",
+        "Avoid provoking powerful castles or wasting main progression troops.",
+        "Screenshot march, battle report, and CPAlead task status.",
+        "Return to building and EXP priorities."
+      ],
+      "resource_requirements": [
+        "trained troops",
+        "march slot",
+        "battle report"
+      ],
+      "resource_bottlenecks": [
+        "shielded targets",
+        "troop losses",
+        "retaliation risk"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "attacking a much stronger player",
+        "using too many troops",
+        "continuing PvP after the task is done"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_002",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Purchase the Heroic Encounters pack (USD 4.99)",
+      "points": 6660,
+      "usd": 6.66,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Purchase the Heroic Encounters pack (USD 4.99) and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is a purchase tracking task. Match the exact pack wording, preserve the receipt, and do not treat a click or purchase intent as credit proof.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Open the CPAlead offer status before buying.",
+        "Confirm the exact pack name and timing rule in the task row.",
+        "Buy only after tracking is visible and the timing rule is satisfied.",
+        "Screenshot the in-game pack page, receipt, inventory/reward screen, and CPAlead status.",
+        "Stop further spend if this purchase does not move to a tracked or credited state."
+      ],
+      "resource_requirements": [
+        "listed cash cost in the task wording",
+        "payment receipt",
+        "stable app account and device"
+      ],
+      "resource_bottlenecks": [
+        "advertiser signal delay",
+        "pack availability",
+        "timing restrictions",
+        "receipt/support review"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "buying New Kingdom before day 8",
+        "buying a similarly named pack",
+        "spending before first-open tracking is clean",
+        "using a different device or account"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Reach Academy level 1",
+      "points": 222,
+      "usd": 0.22,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "building",
+        "base_castle_hq_level"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Reach Academy level 1 and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is an early building task. It moves through the tutorial building queue, basic resources, short timers, and a final building info screenshot.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Follow the tutorial until the building menu is available.",
+        "Upgrade the prerequisite building chain.",
+        "Use starter resources and short speedups only if needed.",
+        "Open the building detail panel at completion.",
+        "Capture the level screen and CPAlead state."
+      ],
+      "resource_requirements": [
+        "starter resources",
+        "short speedups",
+        "building queue"
+      ],
+      "resource_bottlenecks": [
+        "small resource waits",
+        "tracking delay"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "leaving the app before the completion screen",
+        "not saving the building level proof"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "building",
+        "target_value": "Academy 1",
+        "progression_systems_to_cover": [
+          "Academy",
+          "Castle",
+          "building queue"
+        ],
+        "xp_or_progress_sources": [
+          "building completion",
+          "Turf Quest reward"
+        ],
+        "daily_repeatable_loop": [
+          "complete tutorial buildings",
+          "build Academy",
+          "screenshot Academy info panel"
+        ],
+        "priority_order": [
+          "unlock building menu",
+          "place Academy",
+          "finish Academy level 1",
+          "capture proof"
+        ],
+        "milestone_route": [
+          "building placed",
+          "Academy level 1 complete"
+        ],
+        "gates_and_unlocks": [
+          "early tutorial building access"
+        ],
+        "resource_plan": [
+          "starter resources",
+          "short speedup if needed"
+        ],
+        "accelerators": [
+          "starter speedups"
+        ],
+        "what_to_ignore": [
+          "research queues before the building-level task credits"
+        ],
+        "tables_or_checklists_needed": [
+          "Academy proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "none beyond tracking"
+        ],
+        "reassessment_triggers": [
+          "task does not appear pending after proof"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_002",
+        "claim_004",
+        "claim_006",
+        "claim_009",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Reach Character level 15",
+      "points": 296,
+      "usd": 0.3,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "account_player_level"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Reach Character level 15 and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "Character level maps to player level progress. The route is Player EXP from quests, hero stages, monster hunting, turf/building activity, combat, Colosseum, and Player EXP items.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Record the current profile level.",
+        "Use early quests and hero stages to clear the low-level checkpoint.",
+        "Join an active guild for guild quests and monster hunting.",
+        "Claim building-related Turf Quest rewards while pushing Castle and Academy progress.",
+        "Save Player EXP items and visible EXP boosts for late levels when the curve steepens.",
+        "Reassess at each level milestone before spending."
+      ],
+      "resource_requirements": [
+        "Player EXP",
+        "hero stamina",
+        "monster energy",
+        "quest scrolls",
+        "speedups/resources for Turf Quest progress"
+      ],
+      "resource_bottlenecks": [
+        "late Player EXP curve",
+        "limited energy and stamina",
+        "quest supply",
+        "competing Academy 25 resource needs"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "treating early levels as proof level 60 is easy",
+        "wasting resources on power padding",
+        "forgetting profile screenshots"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "character_level",
+        "target_value": "15",
+        "progression_systems_to_cover": [
+          "Player EXP",
+          "Turf Quests",
+          "Admin Quests",
+          "Guild Quests",
+          "Hero Stages",
+          "Monster Hunting",
+          "Colosseum",
+          "Player EXP items"
+        ],
+        "xp_or_progress_sources": [
+          "monster hunting",
+          "equipment forging",
+          "admin quests",
+          "guild quests",
+          "enemy troop engagements",
+          "hero stages",
+          "Colosseum",
+          "turf quests",
+          "Player EXP items"
+        ],
+        "daily_repeatable_loop": [
+          "claim admin quests and guild quests",
+          "spend hero stage stamina",
+          "hunt monsters while in a guild",
+          "complete turf/building progress",
+          "save proof before and after each level milestone"
+        ],
+        "priority_order": [
+          "secure tracking",
+          "use early turf quests and hero stages for level 15",
+          "stack quest rewards and monster hunting for level 33 and 38",
+          "treat level 60 as a late EXP wall requiring saved Player EXP items and boosts"
+        ],
+        "milestone_route": [
+          "Level 15: early proof checkpoint",
+          "Level 33: mid-progress checkpoint",
+          "Level 38: grind checkpoint",
+          "Level 60: make-or-break checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "profile access for current player level",
+          "guild access for guild quests and monster hunting",
+          "hero stage access for repeatable EXP"
+        ],
+        "resource_plan": [
+          "energy for monster hunting",
+          "stamina for hero stages",
+          "quest scrolls and rewards",
+          "speedups/resources for building quests",
+          "Player EXP items"
+        ],
+        "accelerators": [
+          "guild activity",
+          "VIP quest convenience when available",
+          "EXP boosts only when visible in-game",
+          "purchase packs only after proof is clean"
+        ],
+        "what_to_ignore": [
+          "power padding that does not produce Player EXP",
+          "PvP losses that waste troops",
+          "late research not tied to Academy or EXP goals"
+        ],
+        "tables_or_checklists_needed": [
+          "player level milestone table",
+          "daily EXP loop checklist",
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "level 60 needs much more Player EXP than early levels",
+          "energy/stamina and quest supply can run out",
+          "high-value deadline pressure is severe"
+        ],
+        "reassessment_triggers": [
+          "tracking is missing before any purchase",
+          "level 38 is far behind pace",
+          "Academy 25 has consumed speedups needed for level 60",
+          "level 60 is not visibly close before the final stretch"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Purchase the New Kingdom pack (USD 29.99) - eligible only if purchased from 8th day",
+      "points": 25900,
+      "usd": 25.9,
+      "deadline_text": "eligible only if purchased from 8th day",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Purchase the New Kingdom pack (USD 29.99) - eligible only if purchased from 8th day and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "This is a purchase tracking task. Match the exact pack wording, preserve the receipt, and do not treat a click or purchase intent as credit proof.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Open the CPAlead offer status before buying.",
+        "Confirm the exact pack name and timing rule in the task row.",
+        "Buy only after tracking is visible and the timing rule is satisfied.",
+        "Screenshot the in-game pack page, receipt, inventory/reward screen, and CPAlead status.",
+        "Stop further spend if this purchase does not move to a tracked or credited state."
+      ],
+      "resource_requirements": [
+        "listed cash cost in the task wording",
+        "payment receipt",
+        "stable app account and device"
+      ],
+      "resource_bottlenecks": [
+        "advertiser signal delay",
+        "pack availability",
+        "timing restrictions",
+        "receipt/support review"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "buying New Kingdom before day 8",
+        "buying a similarly named pack",
+        "spending before first-open tracking is clean",
+        "using a different device or account"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "offer tracking",
+          "proof screenshots",
+          "CPAlead status"
+        ],
+        "xp_or_progress_sources": [],
+        "daily_repeatable_loop": [
+          "check tracking state",
+          "capture before/after proof"
+        ],
+        "priority_order": [
+          "verify offer page",
+          "complete only the exact action",
+          "capture result",
+          "wait for provider state"
+        ],
+        "milestone_route": [
+          "pre-action proof",
+          "action complete",
+          "provider status proof"
+        ],
+        "gates_and_unlocks": [
+          "clean new install and account continuity"
+        ],
+        "resource_plan": [
+          "time",
+          "receipt for purchase tasks"
+        ],
+        "accelerators": [
+          "none beyond clean tracking"
+        ],
+        "what_to_ignore": [
+          "unlisted purchases",
+          "VPN/account switching",
+          "refund attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "advertiser completion signal"
+        ],
+        "reassessment_triggers": [
+          "offer not tracking",
+          "purchase timing restriction unclear"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_010",
+        "claim_011",
+        "claim_012",
+        "claim_013",
+        "claim_014"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "Reach Character level 33",
+      "points": 1480,
+      "usd": 1.48,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "account_player_level"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Reach Character level 33 and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "Character level maps to player level progress. The route is Player EXP from quests, hero stages, monster hunting, turf/building activity, combat, Colosseum, and Player EXP items.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Record the current profile level.",
+        "Use early quests and hero stages to clear the low-level checkpoint.",
+        "Join an active guild for guild quests and monster hunting.",
+        "Claim building-related Turf Quest rewards while pushing Castle and Academy progress.",
+        "Save Player EXP items and visible EXP boosts for late levels when the curve steepens.",
+        "Reassess at each level milestone before spending."
+      ],
+      "resource_requirements": [
+        "Player EXP",
+        "hero stamina",
+        "monster energy",
+        "quest scrolls",
+        "speedups/resources for Turf Quest progress"
+      ],
+      "resource_bottlenecks": [
+        "late Player EXP curve",
+        "limited energy and stamina",
+        "quest supply",
+        "competing Academy 25 resource needs"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "treating early levels as proof level 60 is easy",
+        "wasting resources on power padding",
+        "forgetting profile screenshots"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "character_level",
+        "target_value": "33",
+        "progression_systems_to_cover": [
+          "Player EXP",
+          "Turf Quests",
+          "Admin Quests",
+          "Guild Quests",
+          "Hero Stages",
+          "Monster Hunting",
+          "Colosseum",
+          "Player EXP items"
+        ],
+        "xp_or_progress_sources": [
+          "monster hunting",
+          "equipment forging",
+          "admin quests",
+          "guild quests",
+          "enemy troop engagements",
+          "hero stages",
+          "Colosseum",
+          "turf quests",
+          "Player EXP items"
+        ],
+        "daily_repeatable_loop": [
+          "claim admin quests and guild quests",
+          "spend hero stage stamina",
+          "hunt monsters while in a guild",
+          "complete turf/building progress",
+          "save proof before and after each level milestone"
+        ],
+        "priority_order": [
+          "secure tracking",
+          "use early turf quests and hero stages for level 15",
+          "stack quest rewards and monster hunting for level 33 and 38",
+          "treat level 60 as a late EXP wall requiring saved Player EXP items and boosts"
+        ],
+        "milestone_route": [
+          "Level 15: early proof checkpoint",
+          "Level 33: mid-progress checkpoint",
+          "Level 38: grind checkpoint",
+          "Level 60: make-or-break checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "profile access for current player level",
+          "guild access for guild quests and monster hunting",
+          "hero stage access for repeatable EXP"
+        ],
+        "resource_plan": [
+          "energy for monster hunting",
+          "stamina for hero stages",
+          "quest scrolls and rewards",
+          "speedups/resources for building quests",
+          "Player EXP items"
+        ],
+        "accelerators": [
+          "guild activity",
+          "VIP quest convenience when available",
+          "EXP boosts only when visible in-game",
+          "purchase packs only after proof is clean"
+        ],
+        "what_to_ignore": [
+          "power padding that does not produce Player EXP",
+          "PvP losses that waste troops",
+          "late research not tied to Academy or EXP goals"
+        ],
+        "tables_or_checklists_needed": [
+          "player level milestone table",
+          "daily EXP loop checklist",
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "level 60 needs much more Player EXP than early levels",
+          "energy/stamina and quest supply can run out",
+          "high-value deadline pressure is severe"
+        ],
+        "reassessment_triggers": [
+          "tracking is missing before any purchase",
+          "level 38 is far behind pace",
+          "Academy 25 has consumed speedups needed for level 60",
+          "level 60 is not visibly close before the final stretch"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "Reach Character level 38",
+      "points": 2960,
+      "usd": 2.96,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "account_player_level"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Reach Character level 38 and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "Character level maps to player level progress. The route is Player EXP from quests, hero stages, monster hunting, turf/building activity, combat, Colosseum, and Player EXP items.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Record the current profile level.",
+        "Use early quests and hero stages to clear the low-level checkpoint.",
+        "Join an active guild for guild quests and monster hunting.",
+        "Claim building-related Turf Quest rewards while pushing Castle and Academy progress.",
+        "Save Player EXP items and visible EXP boosts for late levels when the curve steepens.",
+        "Reassess at each level milestone before spending."
+      ],
+      "resource_requirements": [
+        "Player EXP",
+        "hero stamina",
+        "monster energy",
+        "quest scrolls",
+        "speedups/resources for Turf Quest progress"
+      ],
+      "resource_bottlenecks": [
+        "late Player EXP curve",
+        "limited energy and stamina",
+        "quest supply",
+        "competing Academy 25 resource needs"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "treating early levels as proof level 60 is easy",
+        "wasting resources on power padding",
+        "forgetting profile screenshots"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "character_level",
+        "target_value": "38",
+        "progression_systems_to_cover": [
+          "Player EXP",
+          "Turf Quests",
+          "Admin Quests",
+          "Guild Quests",
+          "Hero Stages",
+          "Monster Hunting",
+          "Colosseum",
+          "Player EXP items"
+        ],
+        "xp_or_progress_sources": [
+          "monster hunting",
+          "equipment forging",
+          "admin quests",
+          "guild quests",
+          "enemy troop engagements",
+          "hero stages",
+          "Colosseum",
+          "turf quests",
+          "Player EXP items"
+        ],
+        "daily_repeatable_loop": [
+          "claim admin quests and guild quests",
+          "spend hero stage stamina",
+          "hunt monsters while in a guild",
+          "complete turf/building progress",
+          "save proof before and after each level milestone"
+        ],
+        "priority_order": [
+          "secure tracking",
+          "use early turf quests and hero stages for level 15",
+          "stack quest rewards and monster hunting for level 33 and 38",
+          "treat level 60 as a late EXP wall requiring saved Player EXP items and boosts"
+        ],
+        "milestone_route": [
+          "Level 15: early proof checkpoint",
+          "Level 33: mid-progress checkpoint",
+          "Level 38: grind checkpoint",
+          "Level 60: make-or-break checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "profile access for current player level",
+          "guild access for guild quests and monster hunting",
+          "hero stage access for repeatable EXP"
+        ],
+        "resource_plan": [
+          "energy for monster hunting",
+          "stamina for hero stages",
+          "quest scrolls and rewards",
+          "speedups/resources for building quests",
+          "Player EXP items"
+        ],
+        "accelerators": [
+          "guild activity",
+          "VIP quest convenience when available",
+          "EXP boosts only when visible in-game",
+          "purchase packs only after proof is clean"
+        ],
+        "what_to_ignore": [
+          "power padding that does not produce Player EXP",
+          "PvP losses that waste troops",
+          "late research not tied to Academy or EXP goals"
+        ],
+        "tables_or_checklists_needed": [
+          "player level milestone table",
+          "daily EXP loop checklist",
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "level 60 needs much more Player EXP than early levels",
+          "energy/stamina and quest supply can run out",
+          "high-value deadline pressure is severe"
+        ],
+        "reassessment_triggers": [
+          "tracking is missing before any purchase",
+          "level 38 is far behind pace",
+          "Academy 25 has consumed speedups needed for level 60",
+          "level 60 is not visibly close before the final stretch"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "Reach Academy level 25 within 21 days",
+      "points": 44400,
+      "usd": 44.4,
+      "deadline_text": "within 21 days",
+      "mechanics_needed": [
+        "building",
+        "research",
+        "base_castle_hq_level"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Reach Academy level 25 within 21 days and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "Academy 25 is a building-chain and research-building task. It is not just one upgrade; the chain reaches Castle and many prerequisite buildings plus special item gates.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Keep Castle and economy upgrades moving first.",
+        "Confirm every Academy prerequisite on the building screen.",
+        "Use guild helps and construction boosts before spending speedups.",
+        "Track special item gates for Battle Hall, Altar, and Prison.",
+        "Attempt Academy 25 only if the 21-day timer, tracking state, and resources still line up.",
+        "Screenshot the Academy level screen and prerequisite panels."
+      ],
+      "resource_requirements": [
+        "food",
+        "stone",
+        "timber",
+        "ore",
+        "gold",
+        "speedups",
+        "Gold Hammers",
+        "War Tomes",
+        "Soul Crystals",
+        "Steel Cuffs"
+      ],
+      "resource_bottlenecks": [
+        "many prerequisite buildings",
+        "special item gates",
+        "speedup/resource burn",
+        "inactive guild"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "starting Academy 25 without counting all hidden prerequisites",
+        "using speedups on unrelated combat projects",
+        "buying packs before tracking is proven"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "research",
+        "target_value": "25",
+        "progression_systems_to_cover": [
+          "Academy",
+          "Castle",
+          "building prerequisite chain",
+          "research",
+          "resources",
+          "speedups",
+          "guild helps",
+          "special building items"
+        ],
+        "xp_or_progress_sources": [
+          "building upgrades",
+          "Turf Quest rewards",
+          "research unlocks",
+          "resource gathering",
+          "guild helps"
+        ],
+        "daily_repeatable_loop": [
+          "keep one construction queue moving",
+          "request guild helps",
+          "gather resources",
+          "claim building-related Turf Quests",
+          "save screenshots of Academy prerequisites"
+        ],
+        "priority_order": [
+          "Castle and basic economy",
+          "Academy level 1",
+          "Castle and prerequisite buildings",
+          "special buildings and items",
+          "Academy 25 only if resources and tracking stay clean"
+        ],
+        "milestone_route": [
+          "Academy 1: early unlock",
+          "Castle 5: first castle checkpoint",
+          "mid-building chain: confirm prerequisites",
+          "Academy 25: high-risk finish"
+        ],
+        "gates_and_unlocks": [
+          "Castle levels",
+          "Castle Wall",
+          "Watchtower",
+          "Vault",
+          "Battle Hall",
+          "Altar",
+          "Trading Post",
+          "Infirmary",
+          "building-specific item gates"
+        ],
+        "resource_plan": [
+          "food",
+          "stone",
+          "timber",
+          "ore",
+          "gold",
+          "speedups",
+          "Gold Hammers",
+          "War Tomes",
+          "Soul Crystals",
+          "Steel Cuffs"
+        ],
+        "accelerators": [
+          "active guild helps",
+          "construction speed boosts",
+          "resource packs after clean tracking",
+          "event rewards when visible"
+        ],
+        "what_to_ignore": [
+          "cosmetic progress",
+          "unnecessary troop losses",
+          "deep combat research that does not unlock Academy 25 prerequisites"
+        ],
+        "tables_or_checklists_needed": [
+          "Academy 25 prerequisite chain",
+          "resource and item risk table",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "the level 25 chain needs many buildings",
+          "special items can gate Battle Hall, Altar, and Prison",
+          "speedup demand can exceed the payout value"
+        ],
+        "reassessment_triggers": [
+          "missing special items",
+          "inactive guild",
+          "tracking uncertainty",
+          "Academy 25 not plausible before the listed 21-day deadline"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_002",
+        "claim_004",
+        "claim_005",
+        "claim_006",
+        "claim_009",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Reach Character level 60 in 25 days",
+      "points": 296000,
+      "usd": 296.0,
+      "deadline_text": "in 25 days",
+      "mechanics_needed": [
+        "account_player_level"
+      ],
+      "task_goal_plain_english": "Complete the offer action for Reach Character level 60 in 25 days and preserve proof that the same tracked account did it.",
+      "mechanic_deep_dive": "Character level maps to player level progress. The route is Player EXP from quests, hero stages, monster hunting, turf/building activity, combat, Colosseum, and Player EXP items.",
+      "prerequisites": [
+        "new user on this device",
+        "US Android CPAlead offer availability",
+        "same device and account from click to completion"
+      ],
+      "step_by_step_route": [
+        "Record the current profile level.",
+        "Use early quests and hero stages to clear the low-level checkpoint.",
+        "Join an active guild for guild quests and monster hunting.",
+        "Claim building-related Turf Quest rewards while pushing Castle and Academy progress.",
+        "Save Player EXP items and visible EXP boosts for late levels when the curve steepens.",
+        "Reassess at each level milestone before spending."
+      ],
+      "resource_requirements": [
+        "Player EXP",
+        "hero stamina",
+        "monster energy",
+        "quest scrolls",
+        "speedups/resources for Turf Quest progress"
+      ],
+      "resource_bottlenecks": [
+        "late Player EXP curve",
+        "limited energy and stamina",
+        "quest supply",
+        "competing Academy 25 resource needs"
+      ],
+      "task_conflicts": [
+        "Spending and speedups used here may reduce resources for Academy 25 or character level 60.",
+        "PvP activity can cost troops needed for safe progress."
+      ],
+      "common_mistakes": [
+        "treating early levels as proof level 60 is easy",
+        "wasting resources on power padding",
+        "forgetting profile screenshots"
+      ],
+      "progress_checkpoints": [
+        "offer row before action",
+        "in-game screen showing the milestone",
+        "CPAlead status after action"
+      ],
+      "proof_screenshots": [
+        "CPAlead task row",
+        "Lords Mobile profile/player ID",
+        "task-specific completion screen",
+        "receipt for purchase tasks"
+      ],
+      "when_to_stop_or_skip": "Stop before additional spend if tracking is not visible, if proof is incomplete, or if the next milestone requires resources that exceed the listed reward value.",
+      "progression_route": {
+        "target_type": "character_level",
+        "target_value": "60",
+        "progression_systems_to_cover": [
+          "Player EXP",
+          "Turf Quests",
+          "Admin Quests",
+          "Guild Quests",
+          "Hero Stages",
+          "Monster Hunting",
+          "Colosseum",
+          "Player EXP items"
+        ],
+        "xp_or_progress_sources": [
+          "monster hunting",
+          "equipment forging",
+          "admin quests",
+          "guild quests",
+          "enemy troop engagements",
+          "hero stages",
+          "Colosseum",
+          "turf quests",
+          "Player EXP items"
+        ],
+        "daily_repeatable_loop": [
+          "claim admin quests and guild quests",
+          "spend hero stage stamina",
+          "hunt monsters while in a guild",
+          "complete turf/building progress",
+          "save proof before and after each level milestone"
+        ],
+        "priority_order": [
+          "secure tracking",
+          "use early turf quests and hero stages for level 15",
+          "stack quest rewards and monster hunting for level 33 and 38",
+          "treat level 60 as a late EXP wall requiring saved Player EXP items and boosts"
+        ],
+        "milestone_route": [
+          "Level 15: early proof checkpoint",
+          "Level 33: mid-progress checkpoint",
+          "Level 38: grind checkpoint",
+          "Level 60: make-or-break checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "profile access for current player level",
+          "guild access for guild quests and monster hunting",
+          "hero stage access for repeatable EXP"
+        ],
+        "resource_plan": [
+          "energy for monster hunting",
+          "stamina for hero stages",
+          "quest scrolls and rewards",
+          "speedups/resources for building quests",
+          "Player EXP items"
+        ],
+        "accelerators": [
+          "guild activity",
+          "VIP quest convenience when available",
+          "EXP boosts only when visible in-game",
+          "purchase packs only after proof is clean"
+        ],
+        "what_to_ignore": [
+          "power padding that does not produce Player EXP",
+          "PvP losses that waste troops",
+          "late research not tied to Academy or EXP goals"
+        ],
+        "tables_or_checklists_needed": [
+          "player level milestone table",
+          "daily EXP loop checklist",
+          "proof checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "level 60 needs much more Player EXP than early levels",
+          "energy/stamina and quest supply can run out",
+          "high-value deadline pressure is severe"
+        ],
+        "reassessment_triggers": [
+          "tracking is missing before any purchase",
+          "level 38 is far behind pace",
+          "Academy 25 has consumed speedups needed for level 60",
+          "level 60 is not visibly close before the final stretch"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_007",
+        "claim_008",
+        "claim_009",
+        "claim_015"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    }
+  ],
+  "navigation_plan": {
+    "top_nav": [
+      {
+        "label": "Payout",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout",
+        "required": true
+      },
+      {
+        "label": "Risk Bands",
+        "anchor_id": "risk-band-economics",
+        "section_type": "other",
+        "priority": 2,
+        "mobile_label": "Risk Bands",
+        "required": true
+      },
+      {
+        "label": "Setup",
+        "anchor_id": "before-you-start",
+        "section_type": "setup",
+        "priority": 3,
+        "mobile_label": "Setup",
+        "required": true
+      },
+      {
+        "label": "Systems",
+        "anchor_id": "task-moving-game-systems",
+        "section_type": "game_system",
+        "priority": 4,
+        "mobile_label": "Systems",
+        "required": true
+      },
+      {
+        "label": "Task Route",
+        "anchor_id": "guided-task-route",
+        "section_type": "task_route",
+        "priority": 5,
+        "mobile_label": "Task Route",
+        "required": true
+      },
+      {
+        "label": "Support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 6,
+        "mobile_label": "Support",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 7,
+        "mobile_label": "FAQ",
+        "required": true
+      }
+    ],
+    "major_sections": [
+      {
+        "label": "Payout Table",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout Table",
+        "required": true
+      },
+      {
+        "label": "Risk Band Economics",
+        "anchor_id": "risk-band-economics",
+        "section_type": "other",
+        "priority": 2,
+        "mobile_label": "Risk Band Economic",
+        "required": true
+      },
+      {
+        "label": "Before You Start",
+        "anchor_id": "before-you-start",
+        "section_type": "setup",
+        "priority": 3,
+        "mobile_label": "Before You Start",
+        "required": true
+      },
+      {
+        "label": "Evidence Log",
+        "anchor_id": "evidence-log",
+        "section_type": "proof",
+        "priority": 4,
+        "mobile_label": "Evidence Log",
+        "required": true
+      },
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 5,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Task-Moving Game Systems",
+        "anchor_id": "task-moving-game-systems",
+        "section_type": "game_system",
+        "priority": 6,
+        "mobile_label": "Task-Moving Game S",
+        "required": true
+      },
+      {
+        "label": "Milestone Matrix",
+        "anchor_id": "milestone-matrix",
+        "section_type": "other",
+        "priority": 7,
+        "mobile_label": "Milestone Matrix",
+        "required": true
+      },
+      {
+        "label": "Purchase Economics",
+        "anchor_id": "purchase-economics",
+        "section_type": "other",
+        "priority": 8,
+        "mobile_label": "Purchase Economics",
+        "required": true
+      },
+      {
+        "label": "Random Reward Model",
+        "anchor_id": "random-reward-model",
+        "section_type": "other",
+        "priority": 9,
+        "mobile_label": "Random Reward Mode",
+        "required": true
+      },
+      {
+        "label": "Guided Task Route",
+        "anchor_id": "guided-task-route",
+        "section_type": "task_route",
+        "priority": 10,
+        "mobile_label": "Guided Task Route",
+        "required": true
+      },
+      {
+        "label": "Proof And Support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 11,
+        "mobile_label": "Proof And Support",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 12,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Compare More Offers",
+        "anchor_id": "compare-more-offers",
+        "section_type": "cta",
+        "priority": 13,
+        "mobile_label": "Compare More Offer",
+        "required": true
+      }
+    ],
+    "game_detail_sections": [
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Task-Moving Game Systems",
+        "anchor_id": "task-moving-game-systems",
+        "section_type": "game_system",
+        "priority": 2,
+        "mobile_label": "Task-Moving Game S",
+        "required": true
+      }
+    ],
+    "task_sections": [
+      {
+        "label": "Guided Task Route",
+        "anchor_id": "guided-task-route",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "Guided Task Route",
+        "required": true
+      }
+    ],
+    "support_sections": [
+      {
+        "label": "Proof And Support",
+        "anchor_id": "proof-and-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof And Support",
+        "required": true
+      }
+    ]
+  },
+  "original_value_block": {
+    "type": "stop-loss matrix",
+    "title": "Start, Spend, Stop Matrix",
+    "content_plan": "Classify every task by safe free, active grind, low spend, or high risk, with continue, reassess, and stop rules before the user spends."
+  },
+  "worth_it_score": {
+    "score": 63,
+    "verdict": "Worth starting for proof-safe early tasks; late value depends almost entirely on Academy 25 and Character level 60 pace.",
+    "drivers": [
+      "high listed upside",
+      "severe late EXP and Academy chain",
+      "purchase timing trap",
+      "CPAlead tracking risk"
+    ]
+  },
+  "questions_unanswered": [
+    {
+      "severity": "medium",
+      "question": "Exact current pack availability can vary by account and event state.",
+      "handling": "Tell reader to match the pack wording on screen before buying."
+    },
+    {
+      "severity": "high",
+      "question": "No official source guarantees Academy 25 or level 60 are realistic for every new player in the listed windows.",
+      "handling": "Use stop-loss and reassessment language."
+    }
+  ],
+  "do_not_claim": [
+    "CPAlead automatic approval is guaranteed phrase",
+    "New Kingdom before day 8 is safe phrase",
+    "Academy 25 is easy for all new players phrase",
+    "level 60 is guaranteed without spend phrase"
+  ],
+  "quality_gate": {
+    "status": "pass",
+    "score": 88,
+    "checks": [
+      {
+        "id": "official_or_app_store_source",
+        "result": "pass"
+      },
+      {
+        "id": "serp_top_10",
+        "result": "pass"
+      },
+      {
+        "id": "task_strategy_depth",
+        "result": "pass"
+      },
+      {
+        "id": "progression_routes",
+        "result": "pass"
+      },
+      {
+        "id": "professional_models",
+        "result": "pass"
+      }
+    ],
+    "blocking_reasons": []
+  }
+}

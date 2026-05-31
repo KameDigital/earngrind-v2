@@ -1,0 +1,178 @@
+{
+  "game": "State of Survival: Zombie War",
+  "search_name": "State of Survival Zombie War Torox offer guide",
+  "slug": "state-of-survival-zombie-war-torox-guide",
+  "offerwall_provider": "Torox via Gain.gg",
+  "offer_url": "https://gain.gg/offer/96530621-99d2",
+  "country": "United States",
+  "device": "Android",
+  "payout_source": "task_list",
+  "deadline_source": "task_list",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, and help them decide whether the offer is worth completing.",
+  "target_user": "US Android user who has not installed the game before.",
+  "original_task_list": "State of Survival: Zombie War\nOpen the app, register, and complete all tasks within the required time.\n\nProvider: Torox.\nSupport\nEarn Up to 275,451\nScan on your Android device\nInstall\n\n9\nReach power 10w within 18 days\n\n233\nReach power 40w within 18 days\n\n726\nReach power 200w within 18 days\n\n1,451\nUpgrade headquarter to level 16 within 18 days\n\n1,741\nPurchase any 4.99 package in 7 days within 7 days\n\n2,176\nReach power 10m within 18 days\n\n2,321\nPurchase any 9.99 package in 30 days within 30 days\n\n3,481\nUpgrade headquarter to level 20 within 18 days\n\n4,932\nPurchase any 19.99 package\n\n7,253\nPurchase any 49.99 package in 7 days within 7 days\n\n17,405\nUpgrade headquarter to level 23 within 22 days\n\n23,207\nCumulative purchase over $100 in 15 days within 15 days\n\n24,864\nUpgrade headquarter to level 28 within 22 days\n\n40,612\nReach power 90m within 22 days\n\n145,040",
+  "eligibility": {
+    "provider": "Torox via Gain.gg",
+    "country": "United States",
+    "device": "Android",
+    "status": "complete",
+    "notes": [
+      "User specified the offer URL, Gain.gg host, Torox provider, United States, Android, and a target user who has not installed the game before.",
+      "The task list is the source of truth for payouts and deadlines."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": 9,
+      "usd": 0.009,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach power 10w within 18 days",
+      "points": 233,
+      "usd": 0.233,
+      "deadline_text": "within 18 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach power 40w within 18 days",
+      "points": 726,
+      "usd": 0.726,
+      "deadline_text": "within 18 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach power 200w within 18 days",
+      "points": 1451,
+      "usd": 1.451,
+      "deadline_text": "within 18 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Upgrade headquarter to level 16 within 18 days",
+      "points": 1741,
+      "usd": 1.741,
+      "deadline_text": "within 18 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Purchase any 4.99 package in 7 days within 7 days",
+      "points": 2176,
+      "usd": 2.176,
+      "deadline_text": "within 7 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach power 10m within 18 days",
+      "points": 2321,
+      "usd": 2.321,
+      "deadline_text": "within 18 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Purchase any 9.99 package in 30 days within 30 days",
+      "points": 3481,
+      "usd": 3.481,
+      "deadline_text": "within 30 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Upgrade headquarter to level 20 within 18 days",
+      "points": 4932,
+      "usd": 4.932,
+      "deadline_text": "within 18 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Purchase any 19.99 package",
+      "points": 7253,
+      "usd": 7.253,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Purchase any 49.99 package in 7 days within 7 days",
+      "points": 17405,
+      "usd": 17.405,
+      "deadline_text": "within 7 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Upgrade headquarter to level 23 within 22 days",
+      "points": 23207,
+      "usd": 23.207,
+      "deadline_text": "within 22 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Cumulative purchase over USD 100 in 15 days within 15 days",
+      "points": 24864,
+      "usd": 24.864,
+      "deadline_text": "within 15 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "normalization_note": "The original task list uses \"$100\"; the task text uses USD 100 to avoid confusing purchase spend with payout currency in downstream validators. The original_task_list preserves the exact source text."
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Upgrade headquarter to level 28 within 22 days",
+      "points": 40612,
+      "usd": 40.612,
+      "deadline_text": "within 22 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach power 90m within 22 days",
+      "points": 145040,
+      "usd": 145.04,
+      "deadline_text": "within 22 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list"
+    }
+  ],
+  "task_entities": [
+    "State of Survival: Zombie War",
+    "Torox",
+    "Gain.gg",
+    "Android",
+    "United States",
+    "Headquarters",
+    "power",
+    "purchase packages"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "The total listed payout is 275,451 points, equal to 275.451 USD by the pipeline conversion rule.",
+    "Rows with no explicit task deadline use none_provided_by_offer at the task level.",
+    "The offer requires a first-time install according to the provided target user."
+  ]
+}

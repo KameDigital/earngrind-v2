@@ -1,0 +1,99 @@
+{
+  "game": "State of Survival: Zombie War",
+  "slug": "state-of-survival-zombie-war-torox-guide",
+  "date": "2026-05-30",
+  "result": "PASS",
+  "checks": [
+    {
+      "id": "word_count",
+      "result": "PASS",
+      "notes": "Draft body is about 2,946 words, above the 1,500-word minimum."
+    },
+    {
+      "id": "h1_keyword",
+      "result": "PASS",
+      "notes": "One H1 includes the primary keyword and task-focused intent."
+    },
+    {
+      "id": "meta_description",
+      "result": "PASS",
+      "notes": "Meta description is 150 characters and includes the primary keyword."
+    },
+    {
+      "id": "payout_safety",
+      "result": "PASS",
+      "notes": "Payouts match intake points and USD equivalents; purchase costs are labeled as requirements, not rewards."
+    },
+    {
+      "id": "deadline_safety",
+      "result": "PASS",
+      "notes": "Deadlines match the task list, and rows with no task deadline do not get invented deadlines."
+    },
+    {
+      "id": "claim_support",
+      "result": "PASS",
+      "notes": "Game, tracking, support, HQ, power, alliance, purchase, and caveat claims are supported by publishable claim ledger entries."
+    },
+    {
+      "id": "do_not_claim",
+      "result": "PASS",
+      "notes": "The draft avoids unsupported guarantee, easy-completion, free-completion, and automatic-credit claims."
+    },
+    {
+      "id": "task_guidance",
+      "result": "PASS",
+      "notes": "All 15 intake tasks are covered with exact task text, risk notes, and proof guidance."
+    },
+    {
+      "id": "game_systems",
+      "result": "PASS",
+      "notes": "The draft explains Headquarters, power growth, alliance support, and purchases/proof."
+    },
+    {
+      "id": "original_value_block",
+      "result": "PASS",
+      "notes": "The spend gate decision table appears before task-by-task guidance."
+    },
+    {
+      "id": "section_navigation",
+      "result": "PASS",
+      "notes": "Top navigation links to every major H2 section."
+    },
+    {
+      "id": "readable_structure",
+      "result": "PASS",
+      "notes": "The draft uses tables, bullets, checklists, and task subsections."
+    },
+    {
+      "id": "content_preservation",
+      "result": "PASS",
+      "notes": "The draft preserves payout table, setup, game overview, systems, original value block, task route, proof/support, FAQ, sources, and CTA."
+    },
+    {
+      "id": "offerwall_focus",
+      "result": "PASS",
+      "notes": "The guide is framed around Torox/Gain.gg task completion, tracking, and spend risk."
+    },
+    {
+      "id": "faq_usefulness",
+      "result": "PASS",
+      "notes": "FAQs address worth-it logic, spend, HQ/power feasibility, support, and task wording."
+    },
+    {
+      "id": "links_cta",
+      "result": "PASS",
+      "notes": "The draft includes the [INTERNAL: /offers] placeholder CTA."
+    },
+    {
+      "id": "prohibited_phrases",
+      "result": "PASS",
+      "notes": "No prohibited phrase from the rules reference appears."
+    },
+    {
+      "id": "voice",
+      "result": "PASS",
+      "notes": "Voice is direct, honest, and player-to-player."
+    }
+  ],
+  "required_fixes": []
+}

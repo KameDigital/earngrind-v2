@@ -1,0 +1,262 @@
+{
+  "game": "Lords Mobile: Kingdom Wars",
+  "search_name": "Lords Mobile Kingdom Wars CPAlead offer",
+  "slug": "lords-mobile-cpalead-offer-guide",
+  "offerwall_provider": "CPAlead",
+  "country": "US",
+  "device": "Android",
+  "platform": "Android and iOS",
+  "guide_type": "both",
+  "payout_source": "task_list",
+  "deadline_source": "task_list",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare realistic task value by risk band, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "New Lords Mobile player who has not installed the game before on this device",
+  "original_task_list": "Open and play the game - 148 points = $0.15\nCreate your account - 74 points = $0.07\nPlay the game for 2 days - 185 points = $0.19\nPurchase the winning start pack ($0.99) within the first 7 days - 1,110 points = $1.11\nPurchase the Newbie Special pack ($1.99) within the first 7 days - 2,220 points = $2.22\nReach Castle Level 5 - 148 points = $0.15\nMake any in-app purchase (can be repeated daily) - 1,110 points = $1.11\nComplete an attack on a random castle - 740 points = $0.74\nPurchase the Heroic Encounters pack ($4.99) - 6,660 points = $6.66\nReach Academy level 1 - 222 points = $0.22\nReach Character level 15 - 296 points = $0.30\nPurchase the New Kingdom pack ($29.99) - eligible only if purchased from 8th day - 25,900 points = $25.90\nReach Character level 33 - 1,480 points = $1.48\nReach Character level 38 - 2,960 points = $2.96\nReach Academy level 25 within 21 days - 44,400 points = $44.40\nReach Character level 60 in 25 days - 296,000 points = $296.00\n\nNotes:\n- The New Kingdom pack is only eligible if purchased from day 8 onwards. Buying before day 8 wastes USD 29.99 and does not credit.\n- Academy level 25 within 21 days and Character level 60 in 25 days are the make-or-break tasks.\n- Points conversion rate: 1000 points = USD 1.00.",
+  "eligibility": {
+    "provider": "CPAlead",
+    "country": "US",
+    "device": "Android",
+    "platform_note": "Game is available on Android and iOS, but this offer device is Android.",
+    "status": "complete",
+    "notes": [
+      "User supplied CPAlead, US, Android device, Android and iOS platform context, payout source task_list, and deadline source task_list."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Open and play the game",
+      "points": 148,
+      "usd": 0.15,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "risk_band": "safe_free_to_play"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Create your account",
+      "points": 74,
+      "usd": 0.07,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "support_proof_tracking"
+      ],
+      "risk_band": "safe_free_to_play"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Play the game for 2 days",
+      "points": 185,
+      "usd": 0.19,
+      "deadline_text": "for 2 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "support_proof_tracking"
+      ],
+      "risk_band": "safe_free_to_play"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Purchase the winning start pack (USD 0.99) within the first 7 days",
+      "points": 1110,
+      "usd": 1.11,
+      "deadline_text": "within the first 7 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "risk_band": "low_spend"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Purchase the Newbie Special pack (USD 1.99) within the first 7 days",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": "within the first 7 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "risk_band": "low_spend"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Reach Castle Level 5",
+      "points": 148,
+      "usd": 0.15,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "base_castle_hq_level"
+      ],
+      "risk_band": "safe_free_to_play"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Make any in-app purchase (can be repeated daily)",
+      "points": 1110,
+      "usd": 1.11,
+      "deadline_text": "can be repeated daily",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "risk_band": "low_spend"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Complete an attack on a random castle",
+      "points": 740,
+      "usd": 0.74,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "alliance_guild_social",
+        "support_proof_tracking"
+      ],
+      "risk_band": "active_grind"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Purchase the Heroic Encounters pack (USD 4.99)",
+      "points": 6660,
+      "usd": 6.66,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "risk_band": "low_spend"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach Academy level 1",
+      "points": 222,
+      "usd": 0.22,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "building",
+        "base_castle_hq_level"
+      ],
+      "risk_band": "safe_free_to_play"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Character level 15",
+      "points": 296,
+      "usd": 0.3,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "risk_band": "active_grind"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Purchase the New Kingdom pack (USD 29.99) - eligible only if purchased from 8th day",
+      "points": 25900,
+      "usd": 25.9,
+      "deadline_text": "eligible only if purchased from 8th day",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "risk_band": "high_risk_or_not_recommended"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Character level 33",
+      "points": 1480,
+      "usd": 1.48,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "risk_band": "active_grind"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach Character level 38",
+      "points": 2960,
+      "usd": 2.96,
+      "deadline_text": null,
+      "payout_source": "task_list",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "risk_band": "active_grind"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach Academy level 25 within 21 days",
+      "points": 44400,
+      "usd": 44.4,
+      "deadline_text": "within 21 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "suspected_archetypes": [
+        "building",
+        "research",
+        "base_castle_hq_level"
+      ],
+      "risk_band": "high_risk_or_not_recommended"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Reach Character level 60 in 25 days",
+      "points": 296000,
+      "usd": 296.0,
+      "deadline_text": "in 25 days",
+      "payout_source": "task_list",
+      "deadline_source": "task_list",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "risk_band": "high_risk_or_not_recommended"
+    }
+  ],
+  "task_entities": [
+    "Castle",
+    "Academy",
+    "Character level",
+    "Player EXP",
+    "Mall",
+    "packs",
+    "random castle attack",
+    "CPAlead tracking"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Purchase costs were normalized from dollar signs to USD notation in task rows to prevent payout validators from treating costs as rewards.",
+    "The user-provided task list is preserved verbatim in original_task_list.",
+    "The offered conversion rate is 1000 points per USD 1.00."
+  ]
+}

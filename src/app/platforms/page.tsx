@@ -37,6 +37,29 @@ interface ReviewSummary {
 
 const BASE_URL = getSiteUrl();
 
+const RELATED_PLATFORM_LINKS = [
+    {
+        href: "/best-gpt-sites",
+        label: "Best GPT Sites",
+        description: "Ranked platform comparison for payout strength, trust, and beginner fit.",
+    },
+    {
+        href: "/guides/best-gpt-sites",
+        label: "GPT Site Guides",
+        description: "Deep platform guides with screenshots, payout rules, and account setup notes.",
+    },
+    {
+        href: "/best-gain-gg-offers",
+        label: "Best Gain.gg Offers",
+        description: "Gain.gg-specific offer hub for provider and route comparison.",
+    },
+    {
+        href: "/best-freecash-games",
+        label: "Best Freecash Games",
+        description: "Editorial Freecash game guide with tracking risks and offer selection advice.",
+    },
+];
+
 async function getReviews(): Promise<ReviewSummary[]> {
     try {
         const res = await fetch(`${BASE_URL}/api/reviews`, {
@@ -180,6 +203,27 @@ export default async function PlatformsPage() {
                         </div>
                     </div>
                 </header>
+
+                <section aria-labelledby="platform-research-heading">
+                    <div className="mb-4">
+                        <p className="section-label mb-2">Related research</p>
+                        <h2 id="platform-research-heading" className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+                            Compare platforms before choosing a route
+                        </h2>
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                        {RELATED_PLATFORM_LINKS.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300"
+                            >
+                                <h3 className="font-extrabold text-[var(--brand-ink)]">{link.label}</h3>
+                                <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">{link.description}</p>
+                            </Link>
+                        ))}
+                    </div>
+                </section>
 
                 {reviewCount === 0 ? (
                     <div className="rounded-2xl border border-[var(--border-default)] bg-white p-12 text-center shadow-[var(--shadow-card)] sm:p-16">

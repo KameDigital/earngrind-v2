@@ -1,0 +1,92 @@
+{
+  "game": "State of Survival: Zombie War",
+  "slug": "state-of-survival-zombie-war-torox-guide",
+  "date": "2026-05-30",
+  "route": "http://localhost:3010/guides/state-of-survival-zombie-war-torox-guide",
+  "result": "BLOCKED",
+  "checks": [
+    {
+      "id": "route_200",
+      "result": "BLOCKED",
+      "notes": "A rendered local route now exists in code, but Next dev server startup is blocked by an unrelated existing route conflict: /sitemap.xml and /sitemap.xml[[...__metadata_id__]]."
+    },
+    {
+      "id": "no_noindex",
+      "result": "BLOCKED",
+      "notes": "Cannot inspect robots metadata because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "canonical",
+      "result": "BLOCKED",
+      "notes": "Cannot inspect canonical URL because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "one_h1",
+      "result": "BLOCKED",
+      "notes": "Cannot inspect rendered H1 count because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "title_meta",
+      "result": "BLOCKED",
+      "notes": "Cannot inspect rendered title or meta description because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "schema",
+      "result": "BLOCKED",
+      "notes": "Cannot inspect structured data because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "internal_links",
+      "result": "BLOCKED",
+      "notes": "Cannot verify internal links because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "cta_links",
+      "result": "BLOCKED",
+      "notes": "Cannot verify CTA links because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "images",
+      "result": "BLOCKED",
+      "notes": "Cannot verify rendered images or alt text because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "mobile_overflow",
+      "result": "BLOCKED",
+      "notes": "Cannot run mobile viewport checks because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "sitemap",
+      "result": "BLOCKED",
+      "notes": "The route is included in STATIC_GUIDES for sitemap output, but rendered sitemap verification is blocked by the unrelated sitemap.xml route conflict."
+    },
+    {
+      "id": "empty_offer_state",
+      "result": "BLOCKED",
+      "notes": "Static route does not depend on an offer-state fetch, but rendered verification is blocked by the unrelated sitemap.xml route conflict."
+    },
+    {
+      "id": "content_parity",
+      "result": "BLOCKED",
+      "notes": "Cannot compare rendered content with index.md in browser because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "section_navigation",
+      "result": "BLOCKED",
+      "notes": "Cannot verify visible rendered navigation because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "readable_rendered_structure",
+      "result": "BLOCKED",
+      "notes": "Cannot inspect desktop/mobile scannability because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    },
+    {
+      "id": "game_detail_sections",
+      "result": "BLOCKED",
+      "notes": "Cannot verify rendered game overview and system sections because the local app cannot start until the unrelated sitemap.xml route conflict is resolved."
+    }
+  ],
+  "required_fixes_or_blockers": [
+    "Resolve the unrelated src/app/sitemap.xml/ route conflict, then rerun local browser publish QA against http://localhost:3010/guides/state-of-survival-zombie-war-torox-guide."
+  ]
+}

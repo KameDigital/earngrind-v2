@@ -1,0 +1,164 @@
+{
+  "game": "Lords Mobile: Kingdom Wars",
+  "slug": "lords-mobile-cpalead-offer-guide",
+  "date": "2026-05-31",
+  "result": "PASS",
+  "checks": [
+    {
+      "id": "word_count",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "h1_keyword",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "meta_description",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "payout_safety",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "deadline_safety",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "claim_support",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "do_not_claim",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "task_guidance",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "task_archetype_coverage",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "risk_band_economics",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "purchase_economics",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "evidence_log_plan",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "support_state_model",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "mechanic_dossiers",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "milestone_matrix",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "random_reward_model",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "terminology_map",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "noise_removed",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "guided_task_depth",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "progression_route_depth",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "strategy_guide_depth",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "game_systems",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "original_value_block",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "section_navigation",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "readable_structure",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "content_preservation",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "offerwall_focus",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "faq_usefulness",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "links_cta",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "prohibited_phrases",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    },
+    {
+      "id": "voice",
+      "result": "PASS",
+      "notes": "Verified against intake, dossier, keyword map, and index.md."
+    }
+  ],
+  "required_fixes": []
+}

@@ -42,18 +42,21 @@ export function StaticGuideShell({
     return (
         <main className="min-h-screen overflow-x-hidden bg-[#f5f5f0] text-slate-950">
             <style>{`
-                .static-guide-prose{color:#334155;font-size:1.04rem;line-height:1.86;overflow-wrap:anywhere}
+                .static-guide-prose{color:#334155;font-size:1.03rem;line-height:1.76;overflow-wrap:anywhere}
                 .static-guide-prose h2,.static-guide-prose h3{color:#0f172a;font-weight:900;line-height:1.18;letter-spacing:0}
                 .static-guide-prose h2{font-size:clamp(1.65rem,2.25vw,2.1rem);margin:0 0 1rem}
-                .static-guide-prose h3{font-size:1.16rem;margin:2.15rem 0 .75rem;padding-top:1.05rem;border-top:1px solid #e2e8f0}
-                .static-guide-prose p{margin:1rem 0}
+                .static-guide-prose h3{font-size:1.18rem;margin:2rem 0 .8rem;padding:.95rem 1rem;border:1px solid #dbeafe;border-left:5px solid #10b981;border-radius:14px;background:#f8fafc}
+                .static-guide-prose p{margin:.72rem 0}
                 .static-guide-prose a{color:#047857;font-weight:800;text-decoration:underline;text-underline-offset:3px}
                 .static-guide-prose a:hover{color:#065f46}
-                .static-guide-prose ul,.static-guide-prose ol{margin:1rem 0;padding-left:1.35rem}
-                .static-guide-prose li{margin:.42rem 0;padding-left:.15rem}
+                .static-guide-prose ul,.static-guide-prose ol{margin:.65rem 0 1rem;padding-left:1.35rem}
+                .static-guide-prose li{margin:.22rem 0;padding-left:.15rem}
                 .static-guide-prose strong{color:#0f172a}
                 .static-guide-prose blockquote{border:1px solid #fde68a;border-left:5px solid #f59e0b;background:#fffbeb;margin:1.5rem 0;padding:1rem 1.1rem;color:#713f12;border-radius:14px;box-shadow:0 12px 28px rgba(120,53,15,.08)}
                 .static-guide-prose hr{border:0;border-top:1px solid #e2e8f0;margin:2rem 0}
+                .static-guide-prose .guide-field-label{margin:1.15rem 0 .35rem;color:#0f766e;font-size:.82rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+                .static-guide-prose .guide-key-line{margin:.75rem 0;border-left:3px solid #a7f3d0;background:#f0fdfa;padding:.65rem .85rem;border-radius:10px}
+                .static-guide-prose .guide-key-line strong{color:#065f46}
                 .static-guide-prose table{display:block;width:100%;max-width:100%;overflow-x:auto;border-collapse:separate;border-spacing:0;margin:1.25rem 0;border:1px solid #dbe3ea;border-radius:14px;background:white;box-shadow:0 10px 28px rgba(15,23,42,.05)}
                 .static-guide-prose thead{background:#ecfeff}
                 .static-guide-prose th,.static-guide-prose td{min-width:150px;border-right:1px solid #dbe3ea;border-bottom:1px solid #dbe3ea;padding:.75rem .8rem;text-align:left;vertical-align:top}
@@ -68,6 +71,7 @@ export function StaticGuideShell({
                 .static-guide-preamble ul:first-of-type a:hover{border-color:#99f6e4;background:#f0fdfa}
                 @media (max-width: 640px){
                     .static-guide-prose{font-size:.98rem;line-height:1.76}
+                    .static-guide-prose h3{padding:.85rem .9rem}
                     .static-guide-prose table{display:block;overflow:visible;border:0;border-radius:0;background:transparent}
                     .static-guide-prose thead{display:none}
                     .static-guide-prose tbody{display:grid;gap:.85rem}
@@ -83,7 +87,7 @@ export function StaticGuideShell({
 
             <section className="relative border-b border-slate-200 bg-white">
                 <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#10b981,#22d3ee,#f59e0b)]" />
-                <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+                <div className="mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
                     <div className="min-w-0">
                         <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-bold text-slate-500" aria-label="Breadcrumb">
                             <Link href="/" className="transition-colors hover:text-emerald-700">Home</Link>
@@ -102,7 +106,7 @@ export function StaticGuideShell({
                         </div>
 
                         <p className="text-sm font-black uppercase tracking-[0.16em] text-cyan-700">{eyebrow}</p>
-                        <h1 className="mt-3 max-w-6xl text-3xl font-black leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                        <h1 className="mt-3 max-w-7xl text-3xl font-black leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
                             {title}
                         </h1>
                         <p className="mt-5 max-w-4xl text-base leading-8 text-slate-700 sm:text-lg">
@@ -129,8 +133,9 @@ export function StaticGuideShell({
                 </div>
             </section>
 
-            <div className="mx-auto grid max-w-[1500px] gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[230px_minmax(0,820px)_300px] lg:px-8 lg:py-10 xl:grid-cols-[260px_minmax(0,880px)_330px]">
-                <aside className="order-2 lg:order-none lg:sticky lg:top-24 lg:self-start">
+            <section className="mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+            <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)_320px] xl:grid-cols-[260px_minmax(0,1fr)_340px]">
+                <aside className="order-3 min-w-0 lg:order-none lg:sticky lg:top-24 lg:self-start">
                     <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">On This Page</p>
                         <nav className="mt-3 max-h-[calc(100vh-160px)] space-y-1 overflow-y-auto pr-1" aria-label="Guide sections">
@@ -147,7 +152,7 @@ export function StaticGuideShell({
                     </div>
                 </aside>
 
-                <article className="order-3 min-w-0 rounded-2xl border border-slate-200 bg-white shadow-sm lg:order-none">
+                <article className="order-2 min-w-0 rounded-2xl border border-slate-200 bg-white shadow-sm lg:order-none">
                     {preamble ? (
                         <section className="static-guide-prose static-guide-preamble border-b border-slate-200 p-5 sm:p-8" dangerouslySetInnerHTML={{ __html: preamble }} />
                     ) : null}
@@ -172,7 +177,7 @@ export function StaticGuideShell({
                     ))}
                 </article>
 
-                <aside className="order-1 space-y-4 lg:order-none lg:sticky lg:top-24 lg:self-start">
+                <aside className="order-1 min-w-0 space-y-4 lg:order-none lg:sticky lg:top-24 lg:self-start">
                     <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5 shadow-[0_18px_50px_rgba(15,23,42,.08)]">
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Offer Snapshot</p>
                         <dl className="mt-4 grid gap-3">
@@ -217,6 +222,7 @@ export function StaticGuideShell({
                     </div>
                 </aside>
             </div>
+            </section>
         </main>
     );
 }

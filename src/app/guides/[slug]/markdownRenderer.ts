@@ -86,7 +86,7 @@ export function sanitizeGuideHtml(html: string): string {
             img: ["src", "alt", "title", "width", "height", "loading", "class"],
             video: ["src", "title", "width", "height", "controls", "preload", "poster", "class"],
             source: ["src", "type"],
-            p: ["style"],
+            p: ["style", "class"],
             span: ["style"],
             div: ["class"],
             figure: ["class"],
@@ -206,6 +206,16 @@ function markdownToHtml(md: string): string {
         return value.replace(/<[^>]+>/g, "").replace(/"/g, "&quot;");
     }
 
+    function formatParagraph(value: string) {
+        const keyLine = value.match(/^(What it means|Mechanic|Route|Resources and bottlenecks|Tracking risk|Deadline|Payout|Important|Progression route|Proof and stop rule):\s*(.*)$/i);
+        if (!keyLine) return `<p>${inlineMarkdown(value)}</p>`;
+
+        const label = formatDisplayLabel(keyLine[1]);
+        const rest = keyLine[2] ?? "";
+        const className = rest.trim() ? "guide-key-line" : "guide-field-label";
+        return `<p class="${className}"><strong>${label}:</strong>${rest.trim() ? ` ${inlineMarkdown(rest.trim())}` : ""}</p>`;
+    }
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         const trimmed = line.trim();
@@ -287,7 +297,7 @@ function markdownToHtml(md: string): string {
 
         if (inList) { out.push("</ul>"); inList = false; }
         if (inOList) { out.push("</ol>"); inOList = false; }
-        out.push(`<p>${inlineMarkdown(trimmed)}</p>`);
+        out.push(formatParagraph(trimmed));
     }
 
     if (inList) out.push("</ul>");

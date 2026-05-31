@@ -9,10 +9,16 @@ function read(path) {
   return readFileSync(resolve(process.cwd(), path), "utf8");
 }
 
-const sitemapSource = read("src/app/sitemap.ts");
+const sitemapSource = read("src/lib/sitemap-builder.ts");
 const auditSource = read("scripts/audit-sitemap-quality.mjs");
 const adminSitemapSource = read("src/app/app/admin/seo/sitemap/page.tsx");
 const gainGallerySource = read("src/lib/gain-gallery.ts");
+const gemslootProvidersSource = read("src/lib/gemsloot-providers.ts");
+const gemslootCountryPageSource = read("src/components/offers/GemslootCountryOffersPage.tsx");
+const gemslootDynamicPageSource = read("src/app/offers/gemsloot/us/[provider]/page.tsx");
+const sitemapFiltersSource = read("src/lib/sitemap-filters.ts");
+const sitemapIndexSource = read("src/app/sitemap.xml/route.ts");
+const sitemapShardRouteSource = read("src/app/sitemap/[id]/route.ts");
 const offersPageSource = read("src/app/offers/page.tsx");
 const gainCountryPageSource = read("src/components/offers/GainCountryOffersPage.tsx");
 
@@ -36,6 +42,30 @@ assert(
   sitemapSource.includes("PUBLIC_GAIN_WALLS.map"),
   "sitemap should build Gain wall routes from PUBLIC_GAIN_WALLS",
 );
+
+assert(
+  gemslootProvidersSource.includes("GEMSLOOT_PUBLIC_PROVIDERS"),
+  "gemsloot-providers should export a shared GEMSLOOT_PUBLIC_PROVIDERS list",
+);
+for (const provider of ["gemsloot", "torox", "revu", "bitlabs", "tyrads", "adscendmedia", "hangmyads"]) {
+  assert(
+    gemslootProvidersSource.includes(`"${provider}"`),
+    `GEMSLOOT_PUBLIC_PROVIDERS should include ${provider}`,
+  );
+}
+assert(
+  gemslootCountryPageSource.includes("@/lib/gemsloot-providers"),
+  "Gemsloot country page should import providers from the shared Gemsloot provider module",
+);
+assert(
+  gemslootDynamicPageSource.includes("@/lib/gemsloot-providers"),
+  "Gemsloot dynamic route should import providers from the shared Gemsloot provider module",
+);
+assert(
+  sitemapSource.includes("GEMSLOOT_PUBLIC_PROVIDERS.map"),
+  "sitemap should build Gemsloot provider routes from GEMSLOOT_PUBLIC_PROVIDERS",
+);
+
 assert(
   offersPageSource.includes("PUBLIC_GAIN_WALLS"),
   "offers page should build Gain links from PUBLIC_GAIN_WALLS",
@@ -71,6 +101,33 @@ assert(
 assert(
   adminSitemapSource.includes("PUBLIC_GAIN_WALLS.map"),
   "admin sitemap preview should build Gain wall rows from PUBLIC_GAIN_WALLS",
+);
+assert(
+  adminSitemapSource.includes("GEMSLOOT_PUBLIC_PROVIDERS.map"),
+  "admin sitemap preview should build Gemsloot rows from GEMSLOOT_PUBLIC_PROVIDERS",
+);
+for (const filterName of [
+  "shouldIncludeGuideInSitemap",
+  "shouldIncludeOfferPageInSitemap",
+  "shouldIncludeGameInSitemap",
+  "shouldIncludeGeneratedHowToEarnInSitemap",
+]) {
+  assert(sitemapFiltersSource.includes(`function ${filterName}`), `sitemap-filters should define ${filterName}`);
+  assert(sitemapSource.includes("@/lib/sitemap-filters"), "sitemap should import filters from sitemap-filters");
+  assert(adminSitemapSource.includes(filterName), `admin sitemap preview should apply ${filterName}`);
+}
+assert(
+  sitemapSource.includes("getSitemapShardIds") && sitemapShardRouteSource.includes("generateStaticParams"),
+  "custom sitemap shard route should expose generated shard params",
+);
+for (const shardId of ["guides", "offers-0", "offers-1", "games-0", "games-1", "how-to-earn-0", "how-to-earn-1"]) {
+  assert(sitemapSource.includes(`"${shardId}"`), `sitemap shards should include ${shardId}`);
+}
+assert(sitemapSource.includes("/sitemap/") && sitemapSource.includes(".xml"), "sitemap shard URL helper should link to shard XML routes");
+assert(sitemapIndexSource.includes("getSitemapShardUrls"), "root sitemap index should use the sitemap shard URL helper");
+assert(
+  sitemapShardRouteSource.includes("buildSitemapShard") && sitemapShardRouteSource.includes("sitemapEntriesToXml"),
+  "sitemap shard route should render shard XML from the shared builder",
 );
 for (const path of ["/games", "/legal/privacy", "/legal/terms", "/legal/disclosure"]) {
   assert(adminSitemapSource.includes(path), `admin sitemap static preview should include ${path}`);

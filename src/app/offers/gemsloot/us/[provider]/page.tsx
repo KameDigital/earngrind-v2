@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import GemslootCountryOffersPage, {
+import GemslootCountryOffersPage from "@/components/offers/GemslootCountryOffersPage";
+import {
     GEMSLOOT_PUBLIC_PROVIDERS,
     type GemslootProviderSlug,
-} from "@/components/offers/GemslootCountryOffersPage";
+} from "@/lib/gemsloot-providers";
 
 type PageProps = {
     params: {

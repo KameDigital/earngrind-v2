@@ -1,6 +1,10 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import {
+    GEMSLOOT_PUBLIC_PROVIDERS,
+    type GemslootProviderSlug,
+} from "@/lib/gemsloot-providers";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { createClient } from "@/lib/supabase/server";
@@ -21,18 +25,6 @@ type GemslootOfferRow = {
     game: { name: string | null; slug: string | null; category: string | null } | { name: string | null; slug: string | null; category: string | null }[] | null;
     tasks: { id: string }[] | null;
 };
-
-export const GEMSLOOT_PUBLIC_PROVIDERS = [
-    { slug: "gemsloot", label: "Gemsloot" },
-    { slug: "torox", label: "ToroX" },
-    { slug: "revu", label: "Revenue Universe" },
-    { slug: "bitlabs", label: "BitLabs" },
-    { slug: "tyrads", label: "TyrAds" },
-    { slug: "adscendmedia", label: "AdscendMedia" },
-    { slug: "hangmyads", label: "HangMyAds" },
-] as const;
-
-export type GemslootProviderSlug = typeof GEMSLOOT_PUBLIC_PROVIDERS[number]["slug"];
 
 export default async function GemslootCountryOffersPage({
     countryCode,

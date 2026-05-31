@@ -73,7 +73,7 @@ export function sanitizeGuideHtml(html: string): string {
             details: ["class", "open"],
             summary: ["class"],
             th: ["colspan", "rowspan"],
-            td: ["colspan", "rowspan"],
+            td: ["colspan", "rowspan", "data-label"],
             h2: ["id", "style"],
             h3: ["id", "style"],
         },
@@ -157,6 +157,35 @@ function markdownToHtml(md: string): string {
     let inList = false;
     let inOList = false;
 
+    function isTableDivider(value: string) {
+        const cells = value
+            .trim()
+            .replace(/^\|/, "")
+            .replace(/\|$/, "")
+            .split("|")
+            .map((cell) => cell.trim());
+
+        return cells.length > 1 && cells.every((cell) => /^:?-{3,}:?$/.test(cell));
+    }
+
+    function isTableRow(value: string) {
+        const trimmedValue = value.trim();
+        return trimmedValue.includes("|") && !trimmedValue.startsWith("| ---") && trimmedValue.split("|").length > 2;
+    }
+
+    function parseTableCells(value: string) {
+        return value
+            .trim()
+            .replace(/^\|/, "")
+            .replace(/\|$/, "")
+            .split("|")
+            .map((cell) => inlineMarkdown(cell.trim()));
+    }
+
+    function tableLabel(value: string) {
+        return value.replace(/<[^>]+>/g, "").replace(/"/g, "&quot;");
+    }
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         const trimmed = line.trim();
@@ -165,6 +194,33 @@ function markdownToHtml(md: string): string {
             if (inList) { out.push("</ul>"); inList = false; }
             if (inOList) { out.push("</ol>"); inOList = false; }
             out.push("<hr />");
+            continue;
+        }
+
+        if (isTableRow(line) && i + 1 < lines.length && isTableDivider(lines[i + 1])) {
+            if (inList) { out.push("</ul>"); inList = false; }
+            if (inOList) { out.push("</ol>"); inOList = false; }
+
+            const headers = parseTableCells(line);
+            i += 2;
+            const rows: string[][] = [];
+
+            while (i < lines.length && isTableRow(lines[i])) {
+                rows.push(parseTableCells(lines[i]));
+                i++;
+            }
+
+            i--;
+            out.push("<table>");
+            out.push("<thead>");
+            out.push(`<tr>${headers.map((cell) => `<th>${cell}</th>`).join("")}</tr>`);
+            out.push("</thead>");
+            out.push("<tbody>");
+            rows.forEach((row) => {
+                out.push(`<tr>${row.map((cell, cellIndex) => `<td data-label="${tableLabel(headers[cellIndex] ?? "")}">${cell}</td>`).join("")}</tr>`);
+            });
+            out.push("</tbody>");
+            out.push("</table>");
             continue;
         }
 

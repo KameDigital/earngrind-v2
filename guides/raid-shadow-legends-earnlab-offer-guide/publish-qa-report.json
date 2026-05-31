@@ -1,0 +1,105 @@
+{
+  "game": "Raid: Shadow Legends",
+  "slug": "raid-shadow-legends-earnlab-offer-guide",
+  "date": "2026-05-31",
+  "route": "/guides/raid-shadow-legends-earnlab-offer-guide",
+  "result": "PASS",
+  "checks": [
+    {
+      "id": "route_200",
+      "result": "PASS",
+      "notes": "Local rendered route returned HTTP 200 at http://127.0.0.1:3001/guides/raid-shadow-legends-earnlab-offer-guide."
+    },
+    {
+      "id": "no_noindex",
+      "result": "PASS",
+      "notes": "Rendered metadata uses index, follow and local HTML contains no noindex."
+    },
+    {
+      "id": "canonical",
+      "result": "PASS",
+      "notes": "Rendered canonical is https://earngrind.com/guides/raid-shadow-legends-earnlab-offer-guide."
+    },
+    {
+      "id": "one_h1",
+      "result": "PASS",
+      "notes": "Rendered page has exactly one H1: Raid Shadow Legends EarnLab Offer Guide."
+    },
+    {
+      "id": "title_meta",
+      "result": "PASS",
+      "notes": "Rendered title and meta description match the regenerated guide metadata."
+    },
+    {
+      "id": "schema",
+      "result": "PASS",
+      "notes": "Rendered page includes JSON-LD covering Article, BreadcrumbList, and FAQPage."
+    },
+    {
+      "id": "internal_links",
+      "result": "PASS",
+      "notes": "Guide navigation anchors and breadcrumb/internal links render."
+    },
+    {
+      "id": "cta_links",
+      "result": "PASS",
+      "notes": "The /offers CTA resolves locally with HTTP 200."
+    },
+    {
+      "id": "images",
+      "result": "PASS",
+      "notes": "No raster images are required on this rendered route; lucide icons render as inline SVG."
+    },
+    {
+      "id": "mobile_overflow",
+      "result": "PASS",
+      "notes": "Playwright mobile viewport check reported document scrollWidth equal to clientWidth."
+    },
+    {
+      "id": "sitemap",
+      "result": "PASS",
+      "notes": "Local /sitemap/guides.xml includes /guides/raid-shadow-legends-earnlab-offer-guide."
+    },
+    {
+      "id": "empty_offer_state",
+      "result": "PASS",
+      "notes": "Rendered page shows the full guide and no empty offer state."
+    },
+    {
+      "id": "content_parity",
+      "result": "PASS",
+      "notes": "Rendered route matches the corrected canonical task total of 372,716 points and preserves every major professional guide section."
+    },
+    {
+      "id": "section_navigation",
+      "result": "PASS",
+      "notes": "Visible section navigation links to the major rendered sections."
+    },
+    {
+      "id": "risk_bands_render",
+      "result": "PASS",
+      "notes": "Risk-band economics table renders in the offer snapshot section."
+    },
+    {
+      "id": "evidence_support_render",
+      "result": "PASS",
+      "notes": "Evidence log plan and support-state model both render."
+    },
+    {
+      "id": "conditional_models_render",
+      "result": "PASS",
+      "notes": "Purchase economics, milestone matrix, random reward model, and terminology map all render."
+    },
+    {
+      "id": "readable_rendered_structure",
+      "result": "PASS",
+      "notes": "Desktop and mobile layouts remain scannable; tables wrap on mobile without document overflow."
+    },
+    {
+      "id": "game_detail_sections",
+      "result": "PASS",
+      "notes": "Game overview, game systems, and mechanic dossiers render."
+    }
+  ],
+  "required_fixes_or_blockers": []
+}

@@ -1,0 +1,4739 @@
+{
+  "game": "Raid: Shadow Legends",
+  "slug": "raid-shadow-legends-earnlab-offer-guide",
+  "research_date": "2026-05-31",
+  "intake": {
+    "provider": "EarnLab",
+    "country": "United States",
+    "device": "Android",
+    "target_user": "US Android user who has not installed the game before.",
+    "payout_source": "task_list",
+    "deadline_source": "task_list"
+  },
+  "eligibility": {
+    "provider": "EarnLab",
+    "country": "United States",
+    "device": "Android",
+    "status": "complete",
+    "target_user": "US Android user who has not installed the game before.",
+    "new_user_requirement": "Must be a new Raid: Shadow Legends install from the EarnLab Android tracking path."
+  },
+  "research_brief": {
+    "objective": "Create a detailed professional EarnLab offerwall task guide that explains every task, game systems, realistic completion bands, payout math, tracking setup, support proof, purchase economics, Sacred Shard uncertainty, whether the offer is worth attempting, and stop or reassess points for a new US Android player.",
+    "editorial_style": "professional operator memo",
+    "task_count": 23,
+    "total_points": 372716,
+    "total_usd": 372.72
+  },
+  "source_log": [
+    {
+      "source_id": "src_001",
+      "source_type": "task_list",
+      "title": "User-provided EarnLab task list",
+      "url": "user-provided EarnLab task list",
+      "captured_date": "2026-05-31",
+      "notes": "Payout and deadline source of record."
+    },
+    {
+      "source_id": "src_002",
+      "source_type": "app_store",
+      "title": "Google Play Raid: Shadow Legends",
+      "url": "https://play.google.com/store/apps/details?id=com.plarium.raidlegends",
+      "captured_date": "2026-05-31",
+      "notes": "Android availability and publisher."
+    },
+    {
+      "source_id": "src_003",
+      "source_type": "publisher_support",
+      "title": "Raid support: The Tavern",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "captured_date": "2026-05-31",
+      "notes": "Champion development and rank path."
+    },
+    {
+      "source_id": "src_004",
+      "source_type": "publisher_support",
+      "title": "Raid support: Shards",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014657020-Guide-Shards",
+      "captured_date": "2026-05-31",
+      "notes": "Shard terminology and Portal model."
+    },
+    {
+      "source_id": "src_005",
+      "source_type": "publisher_support",
+      "title": "Raid support: Multi-Battle",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014658840-Guide-Multi-Battle",
+      "captured_date": "2026-05-31",
+      "notes": "Repeated farming feature."
+    },
+    {
+      "source_id": "src_006",
+      "source_type": "offerwall_support",
+      "title": "EarnLab missing offer tracking help",
+      "url": "https://help.earnlab.com/en/article/my-offer-didnt-track-what-should-i-do-osd5a1/",
+      "captured_date": "2026-05-31",
+      "notes": "Support workflow reference."
+    }
+  ],
+  "source_freshness": {
+    "captured_date": "2026-05-31",
+    "notes": "Public sources were checked for current game and provider support context; payout and deadlines come only from the task list."
+  },
+  "serp_top_10": [
+    {
+      "rank": 1,
+      "title": "Raid: Shadow Legends Google Play",
+      "url": "https://play.google.com/store/apps/details?id=com.plarium.raidlegends",
+      "intent": "official app"
+    },
+    {
+      "rank": 2,
+      "title": "Raid official site",
+      "url": "https://raidshadowlegends.com/",
+      "intent": "publisher"
+    },
+    {
+      "rank": 3,
+      "title": "Raid support Tavern",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "intent": "mechanic"
+    },
+    {
+      "rank": 4,
+      "title": "Raid support Multi-Battle",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014658840-Guide-Multi-Battle",
+      "intent": "mechanic"
+    },
+    {
+      "rank": 5,
+      "title": "Raid support Shards",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014657020-Guide-Shards",
+      "intent": "mechanic"
+    },
+    {
+      "rank": 6,
+      "title": "EarnLab help",
+      "url": "https://help.earnlab.com/",
+      "intent": "provider support"
+    },
+    {
+      "rank": 7,
+      "title": "EarnLab missing tracking help",
+      "url": "https://help.earnlab.com/en/article/my-offer-didnt-track-what-should-i-do-osd5a1/",
+      "intent": "support"
+    },
+    {
+      "rank": 8,
+      "title": "Raid mobile purchase support",
+      "url": "https://raid-support.plarium.com/hc/en-us/articles/360014097979-I-cannot-make-a-purchase-what-can-I-do-Mobile",
+      "intent": "purchase support"
+    },
+    {
+      "rank": 9,
+      "title": "Raid community beginner guides",
+      "url": "https://hellhades.com/",
+      "intent": "competitor gameplay"
+    },
+    {
+      "rank": 10,
+      "title": "Offerwall game guide SERP result",
+      "url": "https://www.reddit.com/search/?q=Raid%20Shadow%20Legends%20offerwall",
+      "intent": "user pain points"
+    }
+  ],
+  "competitor_gaps": [
+    "Most public walkthroughs discuss generic beginner progression but do not map every EarnLab task to payout, deadline, proof, and stop logic.",
+    "Offerwall discussions often mention Sacred Shards without separating controllable shard openings from random champion outcomes.",
+    "Purchase-heavy tasks are often listed without net economics, receipt proof, Day 7 or Day 30 timing, and missing-credit support states."
+  ],
+  "keyword_research": {
+    "primary_keyword": "Raid Shadow Legends EarnLab offer guide",
+    "secondary_keywords": [
+      "Raid Shadow Legends EarnLab tasks",
+      "Raid Shadow Legends offerwall guide",
+      "Raid EarnLab Sacred Shards",
+      "Raid Shadow Legends level 70 offer",
+      "Raid Shadow Legends 6 star hero offer"
+    ],
+    "entity_terms": [
+      "EarnLab",
+      "Raid: Shadow Legends",
+      "Plarium",
+      "Google Play",
+      "Android",
+      "Sacred Shards",
+      "Tavern",
+      "Campaign",
+      "Portal"
+    ],
+    "game_mechanics": [
+      "Campaign farming",
+      "Tavern rank upgrades",
+      "food champions",
+      "energy",
+      "XP boosts",
+      "Sacred Shards",
+      "Portal"
+    ],
+    "offerwall_terms": [
+      "task list",
+      "tracking",
+      "missing credit",
+      "support ticket",
+      "proof screenshots",
+      "payout points"
+    ],
+    "user_problem_terms": [
+      "is it worth it",
+      "when to stop",
+      "purchase risk",
+      "Sacred Shard cost",
+      "level deadline"
+    ]
+  },
+  "claim_ledger": [
+    {
+      "claim_id": "claim_001",
+      "claim": "The EarnLab task list supplies the payout points, task names, and listed deadlines for every canonical task in this guide.",
+      "claim_type": "payout",
+      "source_url": "user-provided EarnLab task list",
+      "source_type": "task_list",
+      "confidence": "high",
+      "evidence_summary": "The provided list names 23 tasks with point values and deadlines where present.",
+      "used_in_sections": [
+        "Full canonical task table",
+        "Guided task route"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_002",
+      "claim": "Raid: Shadow Legends is available for Android through Google Play and is published by Plarium Global Ltd.",
+      "claim_type": "device",
+      "source_url": "https://play.google.com/store/apps/details?id=com.plarium.raidlegends",
+      "source_type": "app_store",
+      "confidence": "high",
+      "evidence_summary": "Google Play listing confirms Android availability and publisher.",
+      "used_in_sections": [
+        "Tracking setup",
+        "Sources"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_003",
+      "claim": "The Tavern is the system used to level, upgrade rank, ascend, and improve champions, making it central to 5-star and 6-star hero tasks.",
+      "claim_type": "mechanic",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014648380-The-Tavern",
+      "source_type": "publisher_support",
+      "confidence": "high",
+      "evidence_summary": "Plarium support describes Tavern champion development functions.",
+      "used_in_sections": [
+        "Mechanic dossiers",
+        "Guided task route"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_004",
+      "claim": "Sacred Shards are opened in the Portal and are distinct from other shard types, so Sacred or Yellow Shard tasks require the correct inventory item.",
+      "claim_type": "mechanic",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014657020-Guide-Shards",
+      "source_type": "publisher_support",
+      "confidence": "medium",
+      "evidence_summary": "Raid support materials describe shard types and summoning through the Portal.",
+      "used_in_sections": [
+        "Sacred Shard model",
+        "Task route"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_005",
+      "claim": "Multi-Battle can automate repeated battles after unlocks and available attempts, which can help campaign farming but does not replace tracking proof.",
+      "claim_type": "game_system",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014658840-Guide-Multi-Battle",
+      "source_type": "publisher_support",
+      "confidence": "medium",
+      "evidence_summary": "Plarium support describes Multi-Battle as a repeated battle feature.",
+      "used_in_sections": [
+        "Game systems",
+        "Day-by-day route"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_006",
+      "claim": "EarnLab missing-credit support requires waiting for tracking and then submitting proof when an offer does not track.",
+      "claim_type": "support",
+      "source_url": "https://help.earnlab.com/en/article/my-offer-didnt-track-what-should-i-do-osd5a1/",
+      "source_type": "offerwall_support",
+      "confidence": "medium",
+      "evidence_summary": "EarnLab help content covers what to do when an offer does not track.",
+      "used_in_sections": [
+        "Support-state model",
+        "Proof workflow"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_007",
+      "claim": "Offerwall credit depends on eligibility, correct start path, and task terms; this guide treats early credit as a gating signal before spend.",
+      "claim_type": "tracking",
+      "source_url": "https://help.earnlab.com/",
+      "source_type": "offerwall_support",
+      "confidence": "medium",
+      "evidence_summary": "Provider help pages frame support around offer tracking and reward issues.",
+      "used_in_sections": [
+        "Tracking setup",
+        "Risk bands"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_008",
+      "claim": "Mobile purchase support and receipts matter because paid Raid tasks can require proof of the exact in-app purchase.",
+      "claim_type": "support",
+      "source_url": "https://raid-support.plarium.com/hc/en-us/articles/360014097979-I-cannot-make-a-purchase-what-can-I-do-Mobile",
+      "source_type": "publisher_support",
+      "confidence": "medium",
+      "evidence_summary": "Plarium support covers mobile purchase troubleshooting.",
+      "used_in_sections": [
+        "Purchase economics",
+        "Proof workflow"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_009",
+      "claim": "The target reader must be a US Android user who has not installed Raid: Shadow Legends before.",
+      "claim_type": "eligibility",
+      "source_url": "user-provided EarnLab brief",
+      "source_type": "task_list",
+      "confidence": "high",
+      "evidence_summary": "The user-provided brief defines target eligibility.",
+      "used_in_sections": [
+        "Tracking setup",
+        "FAQ"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    },
+    {
+      "claim_id": "claim_010",
+      "claim": "The guide must not present late level, shard, or purchase tasks as guaranteed profit because task credit, resources, and spend outcomes are conditional.",
+      "claim_type": "strategy",
+      "source_url": "professional offer-guide framework",
+      "source_type": "other",
+      "confidence": "high",
+      "evidence_summary": "Editorial framework requires stop and reassess logic for high-risk offer tasks.",
+      "used_in_sections": [
+        "Risk bands",
+        "Day route",
+        "FAQ"
+      ],
+      "captured_date": "2026-05-31",
+      "source_published_date": null,
+      "last_verified": "2026-05-31",
+      "conflicts": [],
+      "caveats": [],
+      "publishable": true
+    }
+  ],
+  "game_overview": {
+    "summary": "Raid: Shadow Legends is a champion-collection RPG where campaign farming, Tavern rank upgrades, and shard openings map directly to this EarnLab offer.",
+    "source_claim_ids": [
+      "claim_002",
+      "claim_003",
+      "claim_004"
+    ]
+  },
+  "game_systems": [
+    {
+      "system_name": "Campaign farming for account XP",
+      "explanation": "Campaign clears are the repeatable loop that moves account level tasks while also leveling food champions.",
+      "why_it_matters": "It overlaps Level 15, Level 30, Level 50, Level 60, Level 70, 5-star, and 6-star tasks.",
+      "source_claim_ids": [
+        "claim_005"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Tavern champion rank upgrades",
+      "explanation": "The Tavern converts leveled food champions into higher star ranks.",
+      "why_it_matters": "It is the core mechanic behind every 5-star and 6-star hero task.",
+      "source_claim_ids": [
+        "claim_003"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Energy refill timing and XP boosts",
+      "explanation": "Energy gates campaign farming and XP boosts make the same energy more valuable.",
+      "why_it_matters": "Energy shortages create most deadline misses after the early account levels.",
+      "source_claim_ids": [
+        "claim_005"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Portal Sacred Shard opening",
+      "explanation": "Sacred or Yellow Shards must be opened in the Portal and are not interchangeable with cheaper shard types.",
+      "why_it_matters": "The shard tasks require a specific random reward inventory item and proof before and after opening.",
+      "source_claim_ids": [
+        "claim_004"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "system_name": "Android purchase receipt flow",
+      "explanation": "Paid tasks need the exact in-game purchase, Google Play receipt, and task-state evidence.",
+      "why_it_matters": "Purchase tasks create the biggest mismatch between listed payout and cash outlay.",
+      "source_claim_ids": [
+        "claim_008"
+      ],
+      "include_in_guide": true
+    }
+  ],
+  "task_archetype_map": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Register and start playing the game",
+      "primary_archetype": "install_open_tracking",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Register and start playing the game is best handled through install_open_tracking because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab clicked offer page",
+        "Android install session",
+        "tutorial or battle counter screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Complete the tutorial",
+      "primary_archetype": "install_open_tracking",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Complete the tutorial is best handled through install_open_tracking because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab clicked offer page",
+        "Android install session",
+        "tutorial or battle counter screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Fight 20 Battles within 24 Hours",
+      "primary_archetype": "chapter_stage_campaign",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Fight 20 Battles within 24 Hours is best handled through chapter_stage_campaign because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab clicked offer page",
+        "Android install session",
+        "tutorial or battle counter screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Reach level 15 within 3 Days",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Reach level 15 within 3 Days is best handled through account_player_level because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "Upgrade a hero to 5 stars within 3 days",
+      "primary_archetype": "character_hero_rank",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Upgrade a hero to 5 stars within 3 days is best handled through character_hero_rank because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Level 30 within 4 days",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Reach Level 30 within 4 days is best handled through account_player_level because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "Upgrade 3 heroes to 5 stars within 5 days",
+      "primary_archetype": "character_hero_rank",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Upgrade 3 heroes to 5 stars within 5 days is best handled through character_hero_rank because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Upgrade a hero to 6 stars within 10 days",
+      "primary_archetype": "character_hero_rank",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Upgrade a hero to 6 stars within 10 days is best handled through character_hero_rank because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Upgrade 5 heroes to 5 stars within 14 days",
+      "primary_archetype": "character_hero_rank",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Upgrade 5 heroes to 5 stars within 14 days is best handled through character_hero_rank because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Upgrade 3 heroes to 6 stars within 21 days",
+      "primary_archetype": "character_hero_rank",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Upgrade 3 heroes to 6 stars within 21 days is best handled through character_hero_rank because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Make any purchase. Can be repeated daily, 1 time per 24 hours",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Make any purchase. Can be repeated daily, 1 time per 24 hours is best handled through purchase_recharge_subscription because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Purchase Silver 500k pack for USD 9.99",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Purchase Silver 500k pack for USD 9.99 is best handled through purchase_recharge_subscription because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "Purchase the Daily Gem Pack for USD 9.99",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Purchase the Daily Gem Pack for USD 9.99 is best handled through purchase_recharge_subscription because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "Purchase a Sacred Daily Pack for USD 29.99",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Purchase a Sacred Daily Pack for USD 29.99 is best handled through purchase_recharge_subscription because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "Purchase the Beginner Progress Pack for USD 49.99. Eligible only if purchased after Day 7",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Purchase the Beginner Progress Pack for USD 49.99. Eligible only if purchased after Day 7 is best handled through purchase_recharge_subscription because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Purchase Box of Gems for USD 29.99. Eligible only if purchased after Day 30",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Purchase Box of Gems for USD 29.99. Eligible only if purchased after Day 30 is best handled through purchase_recharge_subscription because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_017",
+      "exact_task_text": "Open 2 Sacred / Yellow Shards",
+      "primary_archetype": "random_reward_gacha",
+      "secondary_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Open 2 Sacred / Yellow Shards is best handled through random_reward_gacha because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_018",
+      "exact_task_text": "Open 4 Sacred / Yellow Shards",
+      "primary_archetype": "random_reward_gacha",
+      "secondary_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Open 4 Sacred / Yellow Shards is best handled through random_reward_gacha because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_019",
+      "exact_task_text": "Open 6 Sacred / Yellow Shards",
+      "primary_archetype": "random_reward_gacha",
+      "secondary_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Open 6 Sacred / Yellow Shards is best handled through random_reward_gacha because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_020",
+      "exact_task_text": "Open 8 Sacred / Yellow Shards",
+      "primary_archetype": "random_reward_gacha",
+      "secondary_archetypes": [
+        "purchase_recharge_subscription",
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Open 8 Sacred / Yellow Shards is best handled through random_reward_gacha because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_021",
+      "exact_task_text": "Reach Level 50 within 21 days",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Reach Level 50 within 21 days is best handled through account_player_level because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_022",
+      "exact_task_text": "Reach Level 60 within 35 days",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Reach Level 60 within 35 days is best handled through account_player_level because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    },
+    {
+      "task_id": "task_023",
+      "exact_task_text": "Reach Level 70 within 60 days",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof_tracking"
+      ],
+      "why_this_mapping": "Reach Level 70 within 60 days is best handled through account_player_level because completion depends on the named game system plus proof that EarnLab tracked it.",
+      "required_sections": [
+        "canonical task table",
+        "guided task-by-task route",
+        "evidence log plan",
+        "support-state model"
+      ],
+      "required_proof": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "risk_band": "high_risk_or_not_recommended",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_009"
+      ]
+    }
+  ],
+  "risk_band_economics": [
+    {
+      "band": "safe_free_to_play",
+      "task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006"
+      ],
+      "listed_reward_value": "1.23 in listed payout",
+      "main_tracking_support_risk": "Low cash risk, but early no-credit is a hard warning.",
+      "continue_reassess_stop_rule": "Continue if register, tutorial, 20 battles, Level 15, first 5-star, and Level 30 are on pace and at least some early credit appears.",
+      "editorial_treatment": "Recommend as the basic test band for eligible new Android users."
+    },
+    {
+      "band": "active_grind",
+      "task_ids": [
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_021"
+      ],
+      "listed_reward_value": "24.42 in listed payout",
+      "main_tracking_support_risk": "Time and energy risk rise; missed midpoint progress makes late rank tasks inefficient.",
+      "continue_reassess_stop_rule": "Continue only if the food pipeline, campaign farmer, and Level 50 pace are visible by the midpoint.",
+      "editorial_treatment": "Explain as a grinder band, not a casual route."
+    },
+    {
+      "band": "low_spend",
+      "task_ids": [
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_017",
+        "task_018"
+      ],
+      "listed_reward_value": "102.86 in listed payout before costs",
+      "main_tracking_support_risk": "Receipt and pack-name mismatch risk; shard supply can force more spend.",
+      "continue_reassess_stop_rule": "Only spend after free tracking has credited and the exact purchase or Sacred Shard tier is visible.",
+      "editorial_treatment": "Use neutral economics; never frame spend as required for everyone."
+    },
+    {
+      "band": "high_risk_or_not_recommended",
+      "task_ids": [
+        "task_016",
+        "task_019",
+        "task_020",
+        "task_022",
+        "task_023"
+      ],
+      "listed_reward_value": "244.20 in listed payout before costs",
+      "main_tracking_support_risk": "Long deadlines, high level targets, scarce shards, and Day 30 timing create high missing-credit and opportunity-cost risk.",
+      "continue_reassess_stop_rule": "Stop by default unless earlier tiers credited, resources are already secured, and the user can document every step.",
+      "editorial_treatment": "Mark as stop or specialist-only goals for most readers."
+    }
+  ],
+  "purchase_economics": [
+    {
+      "task_id": "task_011",
+      "pack_or_action": "Make any purchase. Can be repeated daily, 1 time per 24 hours",
+      "listed_reward_value": "2.22 per credited daily purchase",
+      "listed_cost": "Variable",
+      "net_before_tax": "Depends on the cheapest visible eligible purchase",
+      "support_risk": "Repeat cadence can be misunderstood; screenshot each 24-hour reset.",
+      "recommendation": "Only use after early tracking credits; do not stack repeated purchases without observed credit."
+    },
+    {
+      "task_id": "task_012",
+      "pack_or_action": "Purchase Silver 500k pack for USD 9.99",
+      "listed_reward_value": "11.10",
+      "listed_cost": "USD 9.99 before tax",
+      "net_before_tax": "About 1.11 before tax",
+      "support_risk": "Pack name must match the task closely.",
+      "recommendation": "Small positive listed spread, but only if exact pack is visible and early tracking credited."
+    },
+    {
+      "task_id": "task_013",
+      "pack_or_action": "Purchase the Daily Gem Pack for USD 9.99",
+      "listed_reward_value": "11.10",
+      "listed_cost": "USD 9.99 before tax",
+      "net_before_tax": "About 1.11 before tax",
+      "support_risk": "Subscription-style or timed pack wording may complicate proof.",
+      "recommendation": "Capture task, checkout, receipt, and in-game delivery screens."
+    },
+    {
+      "task_id": "task_014",
+      "pack_or_action": "Purchase a Sacred Daily Pack for USD 29.99",
+      "listed_reward_value": "25.90",
+      "listed_cost": "USD 29.99 before tax",
+      "net_before_tax": "About negative 4.09 before tax",
+      "support_risk": "May only make sense if it also supplies Sacred Shards needed for tiers.",
+      "recommendation": "Do not buy for payout alone; treat as shard supply only after support proof is ready."
+    },
+    {
+      "task_id": "task_015",
+      "pack_or_action": "Purchase the Beginner Progress Pack for USD 49.99. Eligible only if purchased after Day 7",
+      "listed_reward_value": "44.40",
+      "listed_cost": "USD 49.99 before tax",
+      "net_before_tax": "About negative 5.59 before tax",
+      "support_risk": "Day 7 eligibility is a timing trap.",
+      "recommendation": "Wait until after Day 7 and only continue if earlier spend credited."
+    },
+    {
+      "task_id": "task_016",
+      "pack_or_action": "Purchase Box of Gems for USD 29.99. Eligible only if purchased after Day 30",
+      "listed_reward_value": "37.00",
+      "listed_cost": "USD 29.99 before tax",
+      "net_before_tax": "About 7.01 before tax",
+      "support_risk": "Day 30 delay means a long tracking window before purchase.",
+      "recommendation": "High-risk timing; only for users still actively progressing with a clean credit record."
+    }
+  ],
+  "evidence_log_plan": {
+    "offer_proof": [
+      "EarnLab offer page before install",
+      "canonical task table with deadlines",
+      "credited, pending, or missing state after each task"
+    ],
+    "game_proof": [
+      "account profile level",
+      "Tavern rank screens",
+      "Sacred Shard inventory and Portal opening",
+      "purchase delivery screens"
+    ],
+    "support_proof": [
+      "Android device model",
+      "Raid player ID",
+      "Google Play receipts for paid tasks",
+      "timestamps and screenshots in order"
+    ]
+  },
+  "support_state_model": {
+    "provider": "EarnLab",
+    "states": [
+      "not_started",
+      "clicked_installed",
+      "in_progress",
+      "credited",
+      "pending",
+      "missing_credit",
+      "support_submitted",
+      "denied_or_unresolved"
+    ],
+    "support_packet_fields": [
+      "EarnLab user/account identifier",
+      "offer name",
+      "task name",
+      "points",
+      "completion time",
+      "Raid player ID",
+      "screenshots",
+      "receipts when paid"
+    ],
+    "risk_triggers": [
+      "early install or tutorial does not credit",
+      "purchase made before task visibility",
+      "Day 7 or Day 30 timing missed",
+      "Sacred Shard tier opened without before screenshot"
+    ]
+  },
+  "mechanic_dossiers": [
+    {
+      "mechanic_name": "Campaign farming for account XP",
+      "plain_english_explanation": "Spend energy on repeatable campaign battles so account XP rises while food champions gain levels.",
+      "task_ids_affected": [
+        "task_004",
+        "task_006",
+        "task_021",
+        "task_022",
+        "task_023",
+        "task_003"
+      ],
+      "bottlenecks_and_conflicts": "Energy, XP boost timing, and the temptation to farm inefficient stages.",
+      "proof_screens": [
+        "profile level",
+        "campaign stage",
+        "EarnLab task state"
+      ]
+    },
+    {
+      "mechanic_name": "Tavern champion rank upgrades",
+      "plain_english_explanation": "Use leveled food champions in the Tavern to increase a target champion from 4-star to 5-star or 5-star to 6-star.",
+      "task_ids_affected": [
+        "task_005",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010"
+      ],
+      "bottlenecks_and_conflicts": "Food inventory, silver, champion lock mistakes, and short deadlines.",
+      "proof_screens": [
+        "Tavern rank screen",
+        "champion roster star count",
+        "EarnLab task state"
+      ]
+    },
+    {
+      "mechanic_name": "Energy refill timing and XP boosts",
+      "plain_english_explanation": "Energy controls how many campaign runs are possible; XP boosts increase the value of each run.",
+      "task_ids_affected": [
+        "task_004",
+        "task_006",
+        "task_021",
+        "task_022",
+        "task_023",
+        "task_005",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010"
+      ],
+      "bottlenecks_and_conflicts": "Spending gems too early can leave no reserve for high-value checkpoints.",
+      "proof_screens": [
+        "energy count",
+        "XP boost timer",
+        "daily mission screen"
+      ]
+    },
+    {
+      "mechanic_name": "Portal Sacred Shard opening",
+      "plain_english_explanation": "Open the exact Sacred or Yellow Shard in the Portal; other shard colors do not satisfy these tasks.",
+      "task_ids_affected": [
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020"
+      ],
+      "bottlenecks_and_conflicts": "Sacred Shards are scarce and paid sources can erase payout value.",
+      "proof_screens": [
+        "Sacred Shard inventory",
+        "Portal result",
+        "EarnLab tier state"
+      ]
+    },
+    {
+      "mechanic_name": "Android purchase receipt flow",
+      "plain_english_explanation": "Paid tasks need an in-game purchase from the tracked Android install and a Google Play receipt.",
+      "task_ids_affected": [
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016"
+      ],
+      "bottlenecks_and_conflicts": "Task wording, Day 7 and Day 30 restrictions, tax, and missing-credit support.",
+      "proof_screens": [
+        "offer task before purchase",
+        "Google Play receipt",
+        "in-game delivery",
+        "EarnLab credit state"
+      ]
+    }
+  ],
+  "milestone_matrix": [
+    {
+      "milestone": "Day 0 tracking checkpoint",
+      "task_ids": [
+        "task_001",
+        "task_002",
+        "task_003"
+      ],
+      "checkpoint": "Register, tutorial, and 20 battles should be completed from the same EarnLab Android session.",
+      "continue_rule": "Continue if early task state is credited or clearly pending.",
+      "reassess_rule": "Reassess if no early task moves after a normal tracking wait.",
+      "stop_rule": "Stop before purchases if install or tutorial never tracks."
+    },
+    {
+      "milestone": "Day 3 to Day 5 early growth checkpoint",
+      "task_ids": [
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007"
+      ],
+      "checkpoint": "Level 15, first 5-star, Level 30, and three 5-stars test whether the campaign and Tavern loop is working.",
+      "continue_rule": "Continue if food inventory and account level are both moving.",
+      "reassess_rule": "Reassess if Level 30 or three 5-stars are behind pace.",
+      "stop_rule": "Stop rank chasing if no food pipeline exists by the midpoint."
+    },
+    {
+      "milestone": "Day 10 to Day 21 active grind checkpoint",
+      "task_ids": [
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_021"
+      ],
+      "checkpoint": "First 6-star, five 5-stars, three 6-stars, and Level 50 require consistent energy and food planning.",
+      "continue_rule": "Continue if a 6-star chain is already built and Level 50 pace is visible.",
+      "reassess_rule": "Reassess if energy or silver shortage blocks daily farming.",
+      "stop_rule": "Stop before buying resources to rescue a missed rank deadline."
+    },
+    {
+      "milestone": "Day 30 to Day 60 late checkpoint",
+      "task_ids": [
+        "task_016",
+        "task_022",
+        "task_023"
+      ],
+      "checkpoint": "Day 30 Box of Gems, Level 60, and Level 70 are long-window tasks with tracking exposure.",
+      "continue_rule": "Continue only with a clean credit record and daily progress ahead of pace.",
+      "reassess_rule": "Reassess if level gain slows or support evidence is incomplete.",
+      "stop_rule": "Stop for most users before Level 70 unless already close without new spend."
+    },
+    {
+      "milestone": "Sacred Shard tier checkpoint",
+      "task_ids": [
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020"
+      ],
+      "checkpoint": "Two, four, six, and eight Sacred Shard openings should be treated as escalating inventory tiers.",
+      "continue_rule": "Continue from two to four only after the earlier tier credits.",
+      "reassess_rule": "Reassess if the next tier requires paid shards not already planned.",
+      "stop_rule": "Stop before six or eight if cost exceeds value or proof is weak."
+    }
+  ],
+  "random_reward_model": [
+    {
+      "task_ids": [
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020"
+      ],
+      "reward_object": "Sacred / Yellow Shards",
+      "what_is_measured": "The task measures opening the correct shard type, not receiving a specific champion.",
+      "guaranteed_part": "If a Sacred Shard is already in inventory, opening it is controllable and can be documented.",
+      "random_part": "The champion pull is random and should not be treated as the value driver.",
+      "paid_paths": "Sacred Daily Pack or other targeted packs may supply shards but can make the net value negative.",
+      "proof_plan": "Screenshot shard inventory before opening, Portal result after opening, and EarnLab tier state.",
+      "stop_rule": "Stop if the next tier requires unplanned paid shards or if the first Sacred tier fails to credit."
+    }
+  ],
+  "terminology_map": [
+    {
+      "offer_wording": "hero",
+      "game_wording": "champion",
+      "why_it_matters": "Raid commonly calls playable units champions, while the task list says hero."
+    },
+    {
+      "offer_wording": "5 stars / 6 stars",
+      "game_wording": "rank in the Tavern",
+      "why_it_matters": "Star count means rank, not ordinary champion level."
+    },
+    {
+      "offer_wording": "Sacred / Yellow Shards",
+      "game_wording": "Sacred Shards in the Portal",
+      "why_it_matters": "Other shard colors should not be counted toward Sacred tasks."
+    },
+    {
+      "offer_wording": "Reach Level",
+      "game_wording": "account/player level",
+      "why_it_matters": "The level tasks are account progress tasks, not champion level tasks."
+    },
+    {
+      "offer_wording": "Make any purchase",
+      "game_wording": "in-app purchase through Android / Google Play",
+      "why_it_matters": "Receipt and exact session proof matter for support."
+    }
+  ],
+  "strategy_guide_sections": [
+    {
+      "section_title": "Offer snapshot and realistic payout bands",
+      "section_type": "offer_planning",
+      "why_it_matters_for_offer": "Readers need to separate the large headline total from realistic free, grind, low-spend, and high-risk bands.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020",
+        "task_021",
+        "task_022",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_010"
+      ],
+      "tables_or_checklists": [
+        "risk band economics table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Tracking setup and evidence log checklist",
+      "section_type": "completion_checklist",
+      "why_it_matters_for_offer": "Support proof determines whether missing-credit cases are even arguable.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020",
+        "task_021",
+        "task_022",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_006",
+        "claim_007"
+      ],
+      "tables_or_checklists": [
+        "evidence log plan"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Campaign, Tavern, and Sacred Shard mechanic dossiers",
+      "section_type": "resources",
+      "why_it_matters_for_offer": "These systems actually move level, rank, purchase, and shard tasks.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020",
+        "task_021",
+        "task_022",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_003",
+        "claim_004",
+        "claim_005"
+      ],
+      "tables_or_checklists": [
+        "mechanic dossiers",
+        "terminology map"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Day-by-day continue, reassess, and stop route",
+      "section_type": "early_route",
+      "why_it_matters_for_offer": "The route prevents users from chasing late tasks after failed tracking or missed checkpoints.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020",
+        "task_021",
+        "task_022",
+        "task_023"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_010"
+      ],
+      "tables_or_checklists": [
+        "milestone matrix"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Purchase economics and Sacred Shard model",
+      "section_type": "purchase_timing",
+      "why_it_matters_for_offer": "Paid tasks and shard tiers need net-value math and proof steps.",
+      "supported_task_ids": [
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018",
+        "task_019",
+        "task_020"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_004",
+        "claim_008"
+      ],
+      "tables_or_checklists": [
+        "purchase economics table",
+        "random reward model"
+      ],
+      "include_in_guide": true
+    }
+  ],
+  "task_strategy": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Register and start playing the game",
+      "points": 370,
+      "usd": 0.37,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "offer click attribution",
+        "Android install session",
+        "tutorial checkpoint",
+        "battle counter proof"
+      ],
+      "task_goal_plain_english": "Register and start playing the game means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Early tasks are attribution checks. Registering, tutorial completion, and the first 20 battles should prove tracking before the player treats deeper goals as worth pursuing.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Start from the EarnLab offer link on the same Android device.",
+        "Complete the visible early requirement, then check EarnLab before pushing deeper.",
+        "Take screenshots of the task list, in-game state, and any completion screen."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "EarnLab clicked offer page",
+        "Android install session",
+        "tutorial or battle counter screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": "tracking completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Complete the tutorial",
+      "points": 37,
+      "usd": 0.04,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "offer click attribution",
+        "Android install session",
+        "tutorial checkpoint",
+        "battle counter proof"
+      ],
+      "task_goal_plain_english": "Complete the tutorial means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Early tasks are attribution checks. Registering, tutorial completion, and the first 20 battles should prove tracking before the player treats deeper goals as worth pursuing.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Start from the EarnLab offer link on the same Android device.",
+        "Complete the visible early requirement, then check EarnLab before pushing deeper.",
+        "Take screenshots of the task list, in-game state, and any completion screen."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "EarnLab clicked offer page",
+        "Android install session",
+        "tutorial or battle counter screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": "tracking completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Fight 20 Battles within 24 Hours",
+      "points": 89,
+      "usd": 0.09,
+      "deadline_text": "within 24 Hours",
+      "mechanics_needed": [
+        "offer click attribution",
+        "Android install session",
+        "tutorial checkpoint",
+        "battle counter proof"
+      ],
+      "task_goal_plain_english": "Fight 20 Battles within 24 Hours means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Early tasks are attribution checks. Registering, tutorial completion, and the first 20 battles should prove tracking before the player treats deeper goals as worth pursuing.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Start from the EarnLab offer link on the same Android device.",
+        "Complete the visible early requirement, then check EarnLab before pushing deeper.",
+        "Take screenshots of the task list, in-game state, and any completion screen."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "EarnLab clicked offer page",
+        "Android install session",
+        "tutorial or battle counter screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": "tracking completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Reach level 15 within 3 Days",
+      "points": 111,
+      "usd": 0.11,
+      "deadline_text": "within 3 Days",
+      "mechanics_needed": [
+        "account level progression",
+        "Campaign farming for account XP",
+        "energy refill timing",
+        "daily quests and mission rewards"
+      ],
+      "task_goal_plain_english": "Reach level 15 within 3 Days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Account level tasks move through repeated campaign clears, daily quests, missions, energy use, and XP boosts; the guide treats Level 50, Level 60, and Level 70 as checkpoint-based decisions.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Farm campaign stages while completing daily quests and missions so account XP rises with useful hero progress.",
+        "Compare the level target against the milestone matrix, then continue only when the daily checkpoint is on pace.",
+        "Keep a screenshot of the profile level before and after the target credits."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "15",
+        "progression_systems_to_cover": [
+          "Campaign farming for account XP",
+          "daily quests and mission rewards",
+          "energy refill timing and XP boosts"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign stage clears",
+          "daily and weekly missions",
+          "login rewards, event rewards, and energy refills"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy on campaign stages",
+          "claim daily quests and missions",
+          "upgrade starter champion and food while account XP rises"
+        ],
+        "priority_order": [
+          "clear tutorial and campaign unlocks",
+          "farm the highest reliable campaign stage",
+          "use multi-battle only after screenshots and tracking checks"
+        ],
+        "milestone_route": [
+          "Level 15 checkpoint: tutorial, campaign farming, and first daily loop complete",
+          "Level 30 checkpoint: early progression is still fast but requires consistent energy use",
+          "Level 50 checkpoint: continue only if several 5-star and 6-star rank tasks are also moving",
+          "Level 60 checkpoint: reassess if progress has slowed below a daily level target",
+          "Level 70 checkpoint: stop for most players unless already far ahead with strong tracked progress"
+        ],
+        "gates_and_unlocks": [
+          "campaign access",
+          "tavern access",
+          "daily quests",
+          "energy refills"
+        ],
+        "resource_plan": [
+          "save gems for energy only when the payout band justifies it",
+          "avoid spending premium currency on summons before the shard plan is clear",
+          "keep screenshots at each level milestone"
+        ],
+        "accelerators": [
+          "XP boosts",
+          "multi-battle",
+          "campaign farming",
+          "daily missions"
+        ],
+        "what_to_ignore": [
+          "arena optimization",
+          "deep gear min-maxing",
+          "champion collection detours that do not improve campaign clears"
+        ],
+        "tables_or_checklists_needed": [
+          "milestone matrix",
+          "daily route checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "account XP slows sharply after early levels",
+          "energy becomes the limiting input",
+          "Level 60 and Level 70 are late goals with high time risk"
+        ],
+        "reassessment_triggers": [
+          "missed deadline checkpoint",
+          "no tracking credit on early tasks",
+          "energy shortage without overlapping rank progress"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_005"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "Upgrade a hero to 5 stars within 3 days",
+      "points": 185,
+      "usd": 0.18,
+      "deadline_text": "within 3 days",
+      "mechanics_needed": [
+        "Tavern champion rank upgrades",
+        "food champion leveling",
+        "campaign farming for food XP",
+        "silver for Tavern upgrades"
+      ],
+      "task_goal_plain_english": "Upgrade a hero to 5 stars within 3 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Hero rank tasks move through the Tavern rank ladder. A 5-star needs leveled food, and a 6-star requires a much larger food chain, so the guide focuses on food inventory and silver bottlenecks.",
+      "prerequisites": [
+        "Tavern unlocked",
+        "starter champion selected",
+        "food champions available"
+      ],
+      "step_by_step_route": [
+        "Use the Tavern rank ladder: level food champions in campaign, rank them up, then feed them into the target champion.",
+        "Build one reliable campaign farmer before spreading resources across several heroes.",
+        "Stop if the food inventory cannot support the next 5-star or 6-star deadline without unplanned spending."
+      ],
+      "resource_requirements": [
+        "energy",
+        "food champions",
+        "silver",
+        "Tavern access"
+      ],
+      "resource_bottlenecks": [
+        "food champion count",
+        "silver",
+        "energy",
+        "deadline pressure"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "food inventory count",
+        "Tavern rank result",
+        "deadline midpoint check"
+      ],
+      "proof_screenshots": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "5-star hero rank",
+        "progression_systems_to_cover": [
+          "Tavern champion rank upgrades",
+          "food champion leveling",
+          "campaign farming for food XP"
+        ],
+        "xp_or_progress_sources": [
+          "campaign XP on food champions",
+          "brews and chickens when earned",
+          "starter champion farming loop"
+        ],
+        "daily_repeatable_loop": [
+          "level food champions",
+          "rank food in Tavern",
+          "return upgraded food to campaign farming"
+        ],
+        "priority_order": [
+          "rank one campaign farmer first",
+          "build 5-star food before pushing multiple projects",
+          "attempt 6-star goals only after food inventory proves the route"
+        ],
+        "milestone_route": [
+          "first 5-star checkpoint: starter champion and enough food ready",
+          "three 5-stars checkpoint: food pipeline must be stable",
+          "first 6-star checkpoint: five 5-star food champions required",
+          "three 6-stars checkpoint: stop unless resources are already banked"
+        ],
+        "gates_and_unlocks": [
+          "Tavern unlocked after tutorial",
+          "enough duplicate or food champions",
+          "silver for Tavern upgrades"
+        ],
+        "resource_plan": [
+          "preserve low-value champions as food",
+          "reserve silver for rank upgrades",
+          "do not sacrifice core campaign carry champions"
+        ],
+        "accelerators": [
+          "brews",
+          "chickens",
+          "XP boosts",
+          "multi-battle farming"
+        ],
+        "what_to_ignore": [
+          "ranking every rare champion",
+          "gear perfection before campaign farming works",
+          "summon spending without a shard task reason"
+        ],
+        "tables_or_checklists_needed": [
+          "hero rank ladder",
+          "food inventory checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "6-star rank requires a large food chain",
+          "silver and champion inventory become friction",
+          "multiple 6-stars inside short windows are high-risk"
+        ],
+        "reassessment_triggers": [
+          "not enough 4-star or 5-star food by the midpoint",
+          "campaign farmer cannot clear farm stage reliably",
+          "early rank credits fail to track"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_003"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Level 30 within 4 days",
+      "points": 444,
+      "usd": 0.44,
+      "deadline_text": "within 4 days",
+      "mechanics_needed": [
+        "account level progression",
+        "Campaign farming for account XP",
+        "energy refill timing",
+        "daily quests and mission rewards"
+      ],
+      "task_goal_plain_english": "Reach Level 30 within 4 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Account level tasks move through repeated campaign clears, daily quests, missions, energy use, and XP boosts; the guide treats Level 50, Level 60, and Level 70 as checkpoint-based decisions.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Farm campaign stages while completing daily quests and missions so account XP rises with useful hero progress.",
+        "Compare the level target against the milestone matrix, then continue only when the daily checkpoint is on pace.",
+        "Keep a screenshot of the profile level before and after the target credits."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "30",
+        "progression_systems_to_cover": [
+          "Campaign farming for account XP",
+          "daily quests and mission rewards",
+          "energy refill timing and XP boosts"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign stage clears",
+          "daily and weekly missions",
+          "login rewards, event rewards, and energy refills"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy on campaign stages",
+          "claim daily quests and missions",
+          "upgrade starter champion and food while account XP rises"
+        ],
+        "priority_order": [
+          "clear tutorial and campaign unlocks",
+          "farm the highest reliable campaign stage",
+          "use multi-battle only after screenshots and tracking checks"
+        ],
+        "milestone_route": [
+          "Level 15 checkpoint: tutorial, campaign farming, and first daily loop complete",
+          "Level 30 checkpoint: early progression is still fast but requires consistent energy use",
+          "Level 50 checkpoint: continue only if several 5-star and 6-star rank tasks are also moving",
+          "Level 60 checkpoint: reassess if progress has slowed below a daily level target",
+          "Level 70 checkpoint: stop for most players unless already far ahead with strong tracked progress"
+        ],
+        "gates_and_unlocks": [
+          "campaign access",
+          "tavern access",
+          "daily quests",
+          "energy refills"
+        ],
+        "resource_plan": [
+          "save gems for energy only when the payout band justifies it",
+          "avoid spending premium currency on summons before the shard plan is clear",
+          "keep screenshots at each level milestone"
+        ],
+        "accelerators": [
+          "XP boosts",
+          "multi-battle",
+          "campaign farming",
+          "daily missions"
+        ],
+        "what_to_ignore": [
+          "arena optimization",
+          "deep gear min-maxing",
+          "champion collection detours that do not improve campaign clears"
+        ],
+        "tables_or_checklists_needed": [
+          "milestone matrix",
+          "daily route checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "account XP slows sharply after early levels",
+          "energy becomes the limiting input",
+          "Level 60 and Level 70 are late goals with high time risk"
+        ],
+        "reassessment_triggers": [
+          "missed deadline checkpoint",
+          "no tracking credit on early tasks",
+          "energy shortage without overlapping rank progress"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_005"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "Upgrade 3 heroes to 5 stars within 5 days",
+      "points": 740,
+      "usd": 0.74,
+      "deadline_text": "within 5 days",
+      "mechanics_needed": [
+        "Tavern champion rank upgrades",
+        "food champion leveling",
+        "campaign farming for food XP",
+        "silver for Tavern upgrades"
+      ],
+      "task_goal_plain_english": "Upgrade 3 heroes to 5 stars within 5 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Hero rank tasks move through the Tavern rank ladder. A 5-star needs leveled food, and a 6-star requires a much larger food chain, so the guide focuses on food inventory and silver bottlenecks.",
+      "prerequisites": [
+        "Tavern unlocked",
+        "starter champion selected",
+        "food champions available"
+      ],
+      "step_by_step_route": [
+        "Use the Tavern rank ladder: level food champions in campaign, rank them up, then feed them into the target champion.",
+        "Build one reliable campaign farmer before spreading resources across several heroes.",
+        "Stop if the food inventory cannot support the next 5-star or 6-star deadline without unplanned spending."
+      ],
+      "resource_requirements": [
+        "energy",
+        "food champions",
+        "silver",
+        "Tavern access"
+      ],
+      "resource_bottlenecks": [
+        "food champion count",
+        "silver",
+        "energy",
+        "deadline pressure"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "food inventory count",
+        "Tavern rank result",
+        "deadline midpoint check"
+      ],
+      "proof_screenshots": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "5-star hero rank",
+        "progression_systems_to_cover": [
+          "Tavern champion rank upgrades",
+          "food champion leveling",
+          "campaign farming for food XP"
+        ],
+        "xp_or_progress_sources": [
+          "campaign XP on food champions",
+          "brews and chickens when earned",
+          "starter champion farming loop"
+        ],
+        "daily_repeatable_loop": [
+          "level food champions",
+          "rank food in Tavern",
+          "return upgraded food to campaign farming"
+        ],
+        "priority_order": [
+          "rank one campaign farmer first",
+          "build 5-star food before pushing multiple projects",
+          "attempt 6-star goals only after food inventory proves the route"
+        ],
+        "milestone_route": [
+          "first 5-star checkpoint: starter champion and enough food ready",
+          "three 5-stars checkpoint: food pipeline must be stable",
+          "first 6-star checkpoint: five 5-star food champions required",
+          "three 6-stars checkpoint: stop unless resources are already banked"
+        ],
+        "gates_and_unlocks": [
+          "Tavern unlocked after tutorial",
+          "enough duplicate or food champions",
+          "silver for Tavern upgrades"
+        ],
+        "resource_plan": [
+          "preserve low-value champions as food",
+          "reserve silver for rank upgrades",
+          "do not sacrifice core campaign carry champions"
+        ],
+        "accelerators": [
+          "brews",
+          "chickens",
+          "XP boosts",
+          "multi-battle farming"
+        ],
+        "what_to_ignore": [
+          "ranking every rare champion",
+          "gear perfection before campaign farming works",
+          "summon spending without a shard task reason"
+        ],
+        "tables_or_checklists_needed": [
+          "hero rank ladder",
+          "food inventory checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "6-star rank requires a large food chain",
+          "silver and champion inventory become friction",
+          "multiple 6-stars inside short windows are high-risk"
+        ],
+        "reassessment_triggers": [
+          "not enough 4-star or 5-star food by the midpoint",
+          "campaign farmer cannot clear farm stage reliably",
+          "early rank credits fail to track"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_003"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Upgrade a hero to 6 stars within 10 days",
+      "points": 1110,
+      "usd": 1.11,
+      "deadline_text": "within 10 days",
+      "mechanics_needed": [
+        "Tavern champion rank upgrades",
+        "food champion leveling",
+        "campaign farming for food XP",
+        "silver for Tavern upgrades"
+      ],
+      "task_goal_plain_english": "Upgrade a hero to 6 stars within 10 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Hero rank tasks move through the Tavern rank ladder. A 5-star needs leveled food, and a 6-star requires a much larger food chain, so the guide focuses on food inventory and silver bottlenecks.",
+      "prerequisites": [
+        "Tavern unlocked",
+        "starter champion selected",
+        "food champions available"
+      ],
+      "step_by_step_route": [
+        "Use the Tavern rank ladder: level food champions in campaign, rank them up, then feed them into the target champion.",
+        "Build one reliable campaign farmer before spreading resources across several heroes.",
+        "Stop if the food inventory cannot support the next 5-star or 6-star deadline without unplanned spending."
+      ],
+      "resource_requirements": [
+        "energy",
+        "food champions",
+        "silver",
+        "Tavern access"
+      ],
+      "resource_bottlenecks": [
+        "food champion count",
+        "silver",
+        "energy",
+        "deadline pressure"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "food inventory count",
+        "Tavern rank result",
+        "deadline midpoint check"
+      ],
+      "proof_screenshots": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "6-star hero rank",
+        "progression_systems_to_cover": [
+          "Tavern champion rank upgrades",
+          "food champion leveling",
+          "campaign farming for food XP"
+        ],
+        "xp_or_progress_sources": [
+          "campaign XP on food champions",
+          "brews and chickens when earned",
+          "starter champion farming loop"
+        ],
+        "daily_repeatable_loop": [
+          "level food champions",
+          "rank food in Tavern",
+          "return upgraded food to campaign farming"
+        ],
+        "priority_order": [
+          "rank one campaign farmer first",
+          "build 5-star food before pushing multiple projects",
+          "attempt 6-star goals only after food inventory proves the route"
+        ],
+        "milestone_route": [
+          "first 5-star checkpoint: starter champion and enough food ready",
+          "three 5-stars checkpoint: food pipeline must be stable",
+          "first 6-star checkpoint: five 5-star food champions required",
+          "three 6-stars checkpoint: stop unless resources are already banked"
+        ],
+        "gates_and_unlocks": [
+          "Tavern unlocked after tutorial",
+          "enough duplicate or food champions",
+          "silver for Tavern upgrades"
+        ],
+        "resource_plan": [
+          "preserve low-value champions as food",
+          "reserve silver for rank upgrades",
+          "do not sacrifice core campaign carry champions"
+        ],
+        "accelerators": [
+          "brews",
+          "chickens",
+          "XP boosts",
+          "multi-battle farming"
+        ],
+        "what_to_ignore": [
+          "ranking every rare champion",
+          "gear perfection before campaign farming works",
+          "summon spending without a shard task reason"
+        ],
+        "tables_or_checklists_needed": [
+          "hero rank ladder",
+          "food inventory checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "6-star rank requires a large food chain",
+          "silver and champion inventory become friction",
+          "multiple 6-stars inside short windows are high-risk"
+        ],
+        "reassessment_triggers": [
+          "not enough 4-star or 5-star food by the midpoint",
+          "campaign farmer cannot clear farm stage reliably",
+          "early rank credits fail to track"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_003"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Upgrade 5 heroes to 5 stars within 14 days",
+      "points": 1850,
+      "usd": 1.85,
+      "deadline_text": "within 14 days",
+      "mechanics_needed": [
+        "Tavern champion rank upgrades",
+        "food champion leveling",
+        "campaign farming for food XP",
+        "silver for Tavern upgrades"
+      ],
+      "task_goal_plain_english": "Upgrade 5 heroes to 5 stars within 14 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Hero rank tasks move through the Tavern rank ladder. A 5-star needs leveled food, and a 6-star requires a much larger food chain, so the guide focuses on food inventory and silver bottlenecks.",
+      "prerequisites": [
+        "Tavern unlocked",
+        "starter champion selected",
+        "food champions available"
+      ],
+      "step_by_step_route": [
+        "Use the Tavern rank ladder: level food champions in campaign, rank them up, then feed them into the target champion.",
+        "Build one reliable campaign farmer before spreading resources across several heroes.",
+        "Stop if the food inventory cannot support the next 5-star or 6-star deadline without unplanned spending."
+      ],
+      "resource_requirements": [
+        "energy",
+        "food champions",
+        "silver",
+        "Tavern access"
+      ],
+      "resource_bottlenecks": [
+        "food champion count",
+        "silver",
+        "energy",
+        "deadline pressure"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "food inventory count",
+        "Tavern rank result",
+        "deadline midpoint check"
+      ],
+      "proof_screenshots": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "5-star hero rank",
+        "progression_systems_to_cover": [
+          "Tavern champion rank upgrades",
+          "food champion leveling",
+          "campaign farming for food XP"
+        ],
+        "xp_or_progress_sources": [
+          "campaign XP on food champions",
+          "brews and chickens when earned",
+          "starter champion farming loop"
+        ],
+        "daily_repeatable_loop": [
+          "level food champions",
+          "rank food in Tavern",
+          "return upgraded food to campaign farming"
+        ],
+        "priority_order": [
+          "rank one campaign farmer first",
+          "build 5-star food before pushing multiple projects",
+          "attempt 6-star goals only after food inventory proves the route"
+        ],
+        "milestone_route": [
+          "first 5-star checkpoint: starter champion and enough food ready",
+          "three 5-stars checkpoint: food pipeline must be stable",
+          "first 6-star checkpoint: five 5-star food champions required",
+          "three 6-stars checkpoint: stop unless resources are already banked"
+        ],
+        "gates_and_unlocks": [
+          "Tavern unlocked after tutorial",
+          "enough duplicate or food champions",
+          "silver for Tavern upgrades"
+        ],
+        "resource_plan": [
+          "preserve low-value champions as food",
+          "reserve silver for rank upgrades",
+          "do not sacrifice core campaign carry champions"
+        ],
+        "accelerators": [
+          "brews",
+          "chickens",
+          "XP boosts",
+          "multi-battle farming"
+        ],
+        "what_to_ignore": [
+          "ranking every rare champion",
+          "gear perfection before campaign farming works",
+          "summon spending without a shard task reason"
+        ],
+        "tables_or_checklists_needed": [
+          "hero rank ladder",
+          "food inventory checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "6-star rank requires a large food chain",
+          "silver and champion inventory become friction",
+          "multiple 6-stars inside short windows are high-risk"
+        ],
+        "reassessment_triggers": [
+          "not enough 4-star or 5-star food by the midpoint",
+          "campaign farmer cannot clear farm stage reliably",
+          "early rank credits fail to track"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_003"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Upgrade 3 heroes to 6 stars within 21 days",
+      "points": 5920,
+      "usd": 5.92,
+      "deadline_text": "within 21 days",
+      "mechanics_needed": [
+        "Tavern champion rank upgrades",
+        "food champion leveling",
+        "campaign farming for food XP",
+        "silver for Tavern upgrades"
+      ],
+      "task_goal_plain_english": "Upgrade 3 heroes to 6 stars within 21 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Hero rank tasks move through the Tavern rank ladder. A 5-star needs leveled food, and a 6-star requires a much larger food chain, so the guide focuses on food inventory and silver bottlenecks.",
+      "prerequisites": [
+        "Tavern unlocked",
+        "starter champion selected",
+        "food champions available"
+      ],
+      "step_by_step_route": [
+        "Use the Tavern rank ladder: level food champions in campaign, rank them up, then feed them into the target champion.",
+        "Build one reliable campaign farmer before spreading resources across several heroes.",
+        "Stop if the food inventory cannot support the next 5-star or 6-star deadline without unplanned spending."
+      ],
+      "resource_requirements": [
+        "energy",
+        "food champions",
+        "silver",
+        "Tavern access"
+      ],
+      "resource_bottlenecks": [
+        "food champion count",
+        "silver",
+        "energy",
+        "deadline pressure"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "food inventory count",
+        "Tavern rank result",
+        "deadline midpoint check"
+      ],
+      "proof_screenshots": [
+        "Tavern rank screen",
+        "champion roster showing star rank",
+        "profile/account screen",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": "6-star hero rank",
+        "progression_systems_to_cover": [
+          "Tavern champion rank upgrades",
+          "food champion leveling",
+          "campaign farming for food XP"
+        ],
+        "xp_or_progress_sources": [
+          "campaign XP on food champions",
+          "brews and chickens when earned",
+          "starter champion farming loop"
+        ],
+        "daily_repeatable_loop": [
+          "level food champions",
+          "rank food in Tavern",
+          "return upgraded food to campaign farming"
+        ],
+        "priority_order": [
+          "rank one campaign farmer first",
+          "build 5-star food before pushing multiple projects",
+          "attempt 6-star goals only after food inventory proves the route"
+        ],
+        "milestone_route": [
+          "first 5-star checkpoint: starter champion and enough food ready",
+          "three 5-stars checkpoint: food pipeline must be stable",
+          "first 6-star checkpoint: five 5-star food champions required",
+          "three 6-stars checkpoint: stop unless resources are already banked"
+        ],
+        "gates_and_unlocks": [
+          "Tavern unlocked after tutorial",
+          "enough duplicate or food champions",
+          "silver for Tavern upgrades"
+        ],
+        "resource_plan": [
+          "preserve low-value champions as food",
+          "reserve silver for rank upgrades",
+          "do not sacrifice core campaign carry champions"
+        ],
+        "accelerators": [
+          "brews",
+          "chickens",
+          "XP boosts",
+          "multi-battle farming"
+        ],
+        "what_to_ignore": [
+          "ranking every rare champion",
+          "gear perfection before campaign farming works",
+          "summon spending without a shard task reason"
+        ],
+        "tables_or_checklists_needed": [
+          "hero rank ladder",
+          "food inventory checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "6-star rank requires a large food chain",
+          "silver and champion inventory become friction",
+          "multiple 6-stars inside short windows are high-risk"
+        ],
+        "reassessment_triggers": [
+          "not enough 4-star or 5-star food by the midpoint",
+          "campaign farmer cannot clear farm stage reliably",
+          "early rank credits fail to track"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_003"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Make any purchase. Can be repeated daily, 1 time per 24 hours",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": "1 time per 24 hours",
+      "mechanics_needed": [
+        "purchase receipt proof",
+        "Google Play purchase flow",
+        "offer task visibility",
+        "support packet"
+      ],
+      "task_goal_plain_english": "Make any purchase. Can be repeated daily, 1 time per 24 hours means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Purchase tasks are economics and proof tasks. The player needs the exact pack, visible task state, Android receipt, and a stop rule if earlier tracking did not credit.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "exact purchase task visible",
+        "Google Play payments available"
+      ],
+      "step_by_step_route": [
+        "Confirm the exact EarnLab purchase task is visible before buying.",
+        "Buy only from the tracked Android game session and keep the Google Play receipt.",
+        "Wait for the purchase task or earlier tracking tasks to credit before stacking additional paid tasks."
+      ],
+      "resource_requirements": [
+        "purchase cost",
+        "receipt",
+        "tracked session"
+      ],
+      "resource_bottlenecks": [
+        "cash outlay can exceed net value",
+        "duplicate purchase tasks may not align with cooldowns",
+        "receipt wording may differ from offer wording"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "task visible before purchase",
+        "receipt saved",
+        "credit or pending state after purchase"
+      ],
+      "proof_screenshots": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "when_to_stop_or_skip": "Continue only after early free tasks credit and the purchase or shard source has a clear positive reason beyond speculation.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "purchase completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_008"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Purchase Silver 500k pack for USD 9.99",
+      "points": 11100,
+      "usd": 11.1,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "purchase receipt proof",
+        "Google Play purchase flow",
+        "offer task visibility",
+        "support packet"
+      ],
+      "task_goal_plain_english": "Purchase Silver 500k pack for USD 9.99 means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Purchase tasks are economics and proof tasks. The player needs the exact pack, visible task state, Android receipt, and a stop rule if earlier tracking did not credit.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "exact purchase task visible",
+        "Google Play payments available"
+      ],
+      "step_by_step_route": [
+        "Confirm the exact EarnLab purchase task is visible before buying.",
+        "Buy only from the tracked Android game session and keep the Google Play receipt.",
+        "Wait for the purchase task or earlier tracking tasks to credit before stacking additional paid tasks."
+      ],
+      "resource_requirements": [
+        "purchase cost",
+        "receipt",
+        "tracked session"
+      ],
+      "resource_bottlenecks": [
+        "cash outlay can exceed net value",
+        "duplicate purchase tasks may not align with cooldowns",
+        "receipt wording may differ from offer wording"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "task visible before purchase",
+        "receipt saved",
+        "credit or pending state after purchase"
+      ],
+      "proof_screenshots": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "when_to_stop_or_skip": "Continue only after early free tasks credit and the purchase or shard source has a clear positive reason beyond speculation.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "purchase completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_008"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "Purchase the Daily Gem Pack for USD 9.99",
+      "points": 11100,
+      "usd": 11.1,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "purchase receipt proof",
+        "Google Play purchase flow",
+        "offer task visibility",
+        "support packet"
+      ],
+      "task_goal_plain_english": "Purchase the Daily Gem Pack for USD 9.99 means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Purchase tasks are economics and proof tasks. The player needs the exact pack, visible task state, Android receipt, and a stop rule if earlier tracking did not credit.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "exact purchase task visible",
+        "Google Play payments available"
+      ],
+      "step_by_step_route": [
+        "Confirm the exact EarnLab purchase task is visible before buying.",
+        "Buy only from the tracked Android game session and keep the Google Play receipt.",
+        "Wait for the purchase task or earlier tracking tasks to credit before stacking additional paid tasks."
+      ],
+      "resource_requirements": [
+        "purchase cost",
+        "receipt",
+        "tracked session"
+      ],
+      "resource_bottlenecks": [
+        "cash outlay can exceed net value",
+        "duplicate purchase tasks may not align with cooldowns",
+        "receipt wording may differ from offer wording"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "task visible before purchase",
+        "receipt saved",
+        "credit or pending state after purchase"
+      ],
+      "proof_screenshots": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "when_to_stop_or_skip": "Continue only after early free tasks credit and the purchase or shard source has a clear positive reason beyond speculation.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "purchase completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_008"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "Purchase a Sacred Daily Pack for USD 29.99",
+      "points": 25900,
+      "usd": 25.9,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "purchase receipt proof",
+        "Google Play purchase flow",
+        "offer task visibility",
+        "support packet"
+      ],
+      "task_goal_plain_english": "Purchase a Sacred Daily Pack for USD 29.99 means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Purchase tasks are economics and proof tasks. The player needs the exact pack, visible task state, Android receipt, and a stop rule if earlier tracking did not credit.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "exact purchase task visible",
+        "Google Play payments available"
+      ],
+      "step_by_step_route": [
+        "Confirm the exact EarnLab purchase task is visible before buying.",
+        "Buy only from the tracked Android game session and keep the Google Play receipt.",
+        "Wait for the purchase task or earlier tracking tasks to credit before stacking additional paid tasks."
+      ],
+      "resource_requirements": [
+        "purchase cost",
+        "receipt",
+        "tracked session"
+      ],
+      "resource_bottlenecks": [
+        "cash outlay can exceed net value",
+        "duplicate purchase tasks may not align with cooldowns",
+        "receipt wording may differ from offer wording"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "task visible before purchase",
+        "receipt saved",
+        "credit or pending state after purchase"
+      ],
+      "proof_screenshots": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "when_to_stop_or_skip": "Continue only after early free tasks credit and the purchase or shard source has a clear positive reason beyond speculation.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "purchase completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_008"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "Purchase the Beginner Progress Pack for USD 49.99. Eligible only if purchased after Day 7",
+      "points": 44400,
+      "usd": 44.4,
+      "deadline_text": "after Day 7",
+      "mechanics_needed": [
+        "purchase receipt proof",
+        "Google Play purchase flow",
+        "offer task visibility",
+        "support packet"
+      ],
+      "task_goal_plain_english": "Purchase the Beginner Progress Pack for USD 49.99. Eligible only if purchased after Day 7 means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Purchase tasks are economics and proof tasks. The player needs the exact pack, visible task state, Android receipt, and a stop rule if earlier tracking did not credit.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "exact purchase task visible",
+        "Google Play payments available"
+      ],
+      "step_by_step_route": [
+        "Confirm the exact EarnLab purchase task is visible before buying.",
+        "Buy only from the tracked Android game session and keep the Google Play receipt.",
+        "Wait for the purchase task or earlier tracking tasks to credit before stacking additional paid tasks."
+      ],
+      "resource_requirements": [
+        "purchase cost",
+        "receipt",
+        "tracked session"
+      ],
+      "resource_bottlenecks": [
+        "cash outlay can exceed net value",
+        "duplicate purchase tasks may not align with cooldowns",
+        "receipt wording may differ from offer wording"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "task visible before purchase",
+        "receipt saved",
+        "credit or pending state after purchase"
+      ],
+      "proof_screenshots": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "when_to_stop_or_skip": "Continue only after early free tasks credit and the purchase or shard source has a clear positive reason beyond speculation.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "purchase completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_008"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Purchase Box of Gems for USD 29.99. Eligible only if purchased after Day 30",
+      "points": 37000,
+      "usd": 37,
+      "deadline_text": "after Day 30",
+      "mechanics_needed": [
+        "purchase receipt proof",
+        "Google Play purchase flow",
+        "offer task visibility",
+        "support packet"
+      ],
+      "task_goal_plain_english": "Purchase Box of Gems for USD 29.99. Eligible only if purchased after Day 30 means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Purchase tasks are economics and proof tasks. The player needs the exact pack, visible task state, Android receipt, and a stop rule if earlier tracking did not credit.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "exact purchase task visible",
+        "Google Play payments available"
+      ],
+      "step_by_step_route": [
+        "Confirm the exact EarnLab purchase task is visible before buying.",
+        "Buy only from the tracked Android game session and keep the Google Play receipt.",
+        "Wait for the purchase task or earlier tracking tasks to credit before stacking additional paid tasks."
+      ],
+      "resource_requirements": [
+        "purchase cost",
+        "receipt",
+        "tracked session"
+      ],
+      "resource_bottlenecks": [
+        "cash outlay can exceed net value",
+        "duplicate purchase tasks may not align with cooldowns",
+        "receipt wording may differ from offer wording"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "task visible before purchase",
+        "receipt saved",
+        "credit or pending state after purchase"
+      ],
+      "proof_screenshots": [
+        "EarnLab task screenshot before purchase",
+        "Google Play receipt",
+        "in-game purchase confirmation",
+        "EarnLab credited or pending state"
+      ],
+      "when_to_stop_or_skip": "Treat this as a stop-first task. Continue only if earlier tasks credited, the needed resources are already secured, and the expected cost or time still makes sense.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": "purchase completion",
+        "progression_systems_to_cover": [
+          "offer click attribution",
+          "Android install session",
+          "in-game completion screen"
+        ],
+        "xp_or_progress_sources": [
+          "tracked install",
+          "tutorial and campaign battle completion",
+          "purchase receipt when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "check EarnLab task state",
+          "take screenshots before and after completion",
+          "pause if early credit fails"
+        ],
+        "priority_order": [
+          "start from EarnLab link",
+          "finish the visible requirement",
+          "wait for credit before stacking spend"
+        ],
+        "milestone_route": [
+          "install checkpoint",
+          "tutorial checkpoint",
+          "20 battle checkpoint",
+          "purchase proof checkpoint"
+        ],
+        "gates_and_unlocks": [
+          "new install eligibility",
+          "tutorial access",
+          "Google Play receipt for purchases"
+        ],
+        "resource_plan": [
+          "keep device and account unchanged",
+          "keep receipts",
+          "do not reinstall or switch devices mid-offer"
+        ],
+        "accelerators": [
+          "stable Wi-Fi",
+          "single Google Play account",
+          "early screenshots"
+        ],
+        "what_to_ignore": [
+          "VPNs",
+          "alternate app stores",
+          "untracked reinstall attempts"
+        ],
+        "tables_or_checklists_needed": [
+          "tracking setup checklist",
+          "evidence log plan"
+        ],
+        "late_stage_bottlenecks": [
+          "missing early credit is a warning sign",
+          "purchase tasks add support risk if early tasks did not track"
+        ],
+        "reassessment_triggers": [
+          "install or tutorial does not credit",
+          "task timer is unclear",
+          "receipt name differs from offer wording"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_008"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_017",
+      "exact_task_text": "Open 2 Sacred / Yellow Shards",
+      "points": 2220,
+      "usd": 2.22,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "Portal shard opening",
+        "Sacred Shard inventory proof",
+        "random reward model",
+        "paid pack timing"
+      ],
+      "task_goal_plain_english": "Open 2 Sacred / Yellow Shards means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Sacred Shard tasks are random reward and inventory tasks. The shard opening itself is measurable, but shard supply is scarce and late tiers can require paid sources.",
+      "prerequisites": [
+        "Portal access",
+        "Sacred Shard inventory or targeted source",
+        "early tracking confidence"
+      ],
+      "step_by_step_route": [
+        "Verify the task asks for Sacred or Yellow Shards, not Ancient, Void, or Mystery Shards.",
+        "Document the shard inventory before opening and the Portal result after opening.",
+        "Do not chase later shard tiers unless the earlier Sacred Shard tier credited and the shard source is already secured."
+      ],
+      "resource_requirements": [
+        "Sacred Shards",
+        "Portal access",
+        "screenshot proof"
+      ],
+      "resource_bottlenecks": [
+        "Sacred Shards are scarce",
+        "paid packs may be expensive",
+        "later tiers are not realistic without a plan"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "shard count before opening",
+        "tier credit after opening",
+        "remaining shard source identified"
+      ],
+      "proof_screenshots": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "when_to_stop_or_skip": "Continue only after early free tasks credit and the purchase or shard source has a clear positive reason beyond speculation.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "2 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Portal shard opening",
+          "Sacred Shard inventory proof",
+          "paid pack timing"
+        ],
+        "xp_or_progress_sources": [
+          "purchased Sacred packs",
+          "earned one-time game rewards when available",
+          "event or login rewards only if visible in the account"
+        ],
+        "daily_repeatable_loop": [
+          "check shard inventory",
+          "document source of each Sacred Shard",
+          "open shards only when the offer task is visible and tracking is healthy"
+        ],
+        "priority_order": [
+          "prove the first two opens before chasing four",
+          "avoid six and eight unless shards are already secured",
+          "do not buy random packs hoping for enough Sacred Shards"
+        ],
+        "milestone_route": [
+          "2 Sacred Shards: possible through a targeted paid or earned source",
+          "4 Sacred Shards: reassess cost and evidence",
+          "6 Sacred Shards: high risk without confirmed inventory",
+          "8 Sacred Shards: stop unless the net economics and tracking history are strong"
+        ],
+        "gates_and_unlocks": [
+          "Portal access",
+          "Sacred Shard inventory",
+          "offer task visibility"
+        ],
+        "resource_plan": [
+          "record each shard source",
+          "avoid mystery or ancient shard detours",
+          "keep screenshots before and after every open"
+        ],
+        "accelerators": [
+          "targeted Sacred packs",
+          "visible event rewards",
+          "campaign or mission reward only when already reachable"
+        ],
+        "what_to_ignore": [
+          "non-Sacred shards",
+          "legendary pull odds",
+          "champion chase detours"
+        ],
+        "tables_or_checklists_needed": [
+          "Sacred Shard random reward model",
+          "purchase economics table"
+        ],
+        "late_stage_bottlenecks": [
+          "Sacred Shards are scarce",
+          "paid sources can exceed the listed payout",
+          "random rewards do not guarantee tracking credit"
+        ],
+        "reassessment_triggers": [
+          "task does not credit after the first shard tier",
+          "required shards would need unplanned purchases",
+          "support proof is incomplete"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_004"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_018",
+      "exact_task_text": "Open 4 Sacred / Yellow Shards",
+      "points": 5920,
+      "usd": 5.92,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "Portal shard opening",
+        "Sacred Shard inventory proof",
+        "random reward model",
+        "paid pack timing"
+      ],
+      "task_goal_plain_english": "Open 4 Sacred / Yellow Shards means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Sacred Shard tasks are random reward and inventory tasks. The shard opening itself is measurable, but shard supply is scarce and late tiers can require paid sources.",
+      "prerequisites": [
+        "Portal access",
+        "Sacred Shard inventory or targeted source",
+        "early tracking confidence"
+      ],
+      "step_by_step_route": [
+        "Verify the task asks for Sacred or Yellow Shards, not Ancient, Void, or Mystery Shards.",
+        "Document the shard inventory before opening and the Portal result after opening.",
+        "Do not chase later shard tiers unless the earlier Sacred Shard tier credited and the shard source is already secured."
+      ],
+      "resource_requirements": [
+        "Sacred Shards",
+        "Portal access",
+        "screenshot proof"
+      ],
+      "resource_bottlenecks": [
+        "Sacred Shards are scarce",
+        "paid packs may be expensive",
+        "later tiers are not realistic without a plan"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "shard count before opening",
+        "tier credit after opening",
+        "remaining shard source identified"
+      ],
+      "proof_screenshots": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "when_to_stop_or_skip": "Continue only after early free tasks credit and the purchase or shard source has a clear positive reason beyond speculation.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "4 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Portal shard opening",
+          "Sacred Shard inventory proof",
+          "paid pack timing"
+        ],
+        "xp_or_progress_sources": [
+          "purchased Sacred packs",
+          "earned one-time game rewards when available",
+          "event or login rewards only if visible in the account"
+        ],
+        "daily_repeatable_loop": [
+          "check shard inventory",
+          "document source of each Sacred Shard",
+          "open shards only when the offer task is visible and tracking is healthy"
+        ],
+        "priority_order": [
+          "prove the first two opens before chasing four",
+          "avoid six and eight unless shards are already secured",
+          "do not buy random packs hoping for enough Sacred Shards"
+        ],
+        "milestone_route": [
+          "2 Sacred Shards: possible through a targeted paid or earned source",
+          "4 Sacred Shards: reassess cost and evidence",
+          "6 Sacred Shards: high risk without confirmed inventory",
+          "8 Sacred Shards: stop unless the net economics and tracking history are strong"
+        ],
+        "gates_and_unlocks": [
+          "Portal access",
+          "Sacred Shard inventory",
+          "offer task visibility"
+        ],
+        "resource_plan": [
+          "record each shard source",
+          "avoid mystery or ancient shard detours",
+          "keep screenshots before and after every open"
+        ],
+        "accelerators": [
+          "targeted Sacred packs",
+          "visible event rewards",
+          "campaign or mission reward only when already reachable"
+        ],
+        "what_to_ignore": [
+          "non-Sacred shards",
+          "legendary pull odds",
+          "champion chase detours"
+        ],
+        "tables_or_checklists_needed": [
+          "Sacred Shard random reward model",
+          "purchase economics table"
+        ],
+        "late_stage_bottlenecks": [
+          "Sacred Shards are scarce",
+          "paid sources can exceed the listed payout",
+          "random rewards do not guarantee tracking credit"
+        ],
+        "reassessment_triggers": [
+          "task does not credit after the first shard tier",
+          "required shards would need unplanned purchases",
+          "support proof is incomplete"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_004"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_019",
+      "exact_task_text": "Open 6 Sacred / Yellow Shards",
+      "points": 16280,
+      "usd": 16.28,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "Portal shard opening",
+        "Sacred Shard inventory proof",
+        "random reward model",
+        "paid pack timing"
+      ],
+      "task_goal_plain_english": "Open 6 Sacred / Yellow Shards means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Sacred Shard tasks are random reward and inventory tasks. The shard opening itself is measurable, but shard supply is scarce and late tiers can require paid sources.",
+      "prerequisites": [
+        "Portal access",
+        "Sacred Shard inventory or targeted source",
+        "early tracking confidence"
+      ],
+      "step_by_step_route": [
+        "Verify the task asks for Sacred or Yellow Shards, not Ancient, Void, or Mystery Shards.",
+        "Document the shard inventory before opening and the Portal result after opening.",
+        "Do not chase later shard tiers unless the earlier Sacred Shard tier credited and the shard source is already secured."
+      ],
+      "resource_requirements": [
+        "Sacred Shards",
+        "Portal access",
+        "screenshot proof"
+      ],
+      "resource_bottlenecks": [
+        "Sacred Shards are scarce",
+        "paid packs may be expensive",
+        "later tiers are not realistic without a plan"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "shard count before opening",
+        "tier credit after opening",
+        "remaining shard source identified"
+      ],
+      "proof_screenshots": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "when_to_stop_or_skip": "Treat this as a stop-first task. Continue only if earlier tasks credited, the needed resources are already secured, and the expected cost or time still makes sense.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "6 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Portal shard opening",
+          "Sacred Shard inventory proof",
+          "paid pack timing"
+        ],
+        "xp_or_progress_sources": [
+          "purchased Sacred packs",
+          "earned one-time game rewards when available",
+          "event or login rewards only if visible in the account"
+        ],
+        "daily_repeatable_loop": [
+          "check shard inventory",
+          "document source of each Sacred Shard",
+          "open shards only when the offer task is visible and tracking is healthy"
+        ],
+        "priority_order": [
+          "prove the first two opens before chasing four",
+          "avoid six and eight unless shards are already secured",
+          "do not buy random packs hoping for enough Sacred Shards"
+        ],
+        "milestone_route": [
+          "2 Sacred Shards: possible through a targeted paid or earned source",
+          "4 Sacred Shards: reassess cost and evidence",
+          "6 Sacred Shards: high risk without confirmed inventory",
+          "8 Sacred Shards: stop unless the net economics and tracking history are strong"
+        ],
+        "gates_and_unlocks": [
+          "Portal access",
+          "Sacred Shard inventory",
+          "offer task visibility"
+        ],
+        "resource_plan": [
+          "record each shard source",
+          "avoid mystery or ancient shard detours",
+          "keep screenshots before and after every open"
+        ],
+        "accelerators": [
+          "targeted Sacred packs",
+          "visible event rewards",
+          "campaign or mission reward only when already reachable"
+        ],
+        "what_to_ignore": [
+          "non-Sacred shards",
+          "legendary pull odds",
+          "champion chase detours"
+        ],
+        "tables_or_checklists_needed": [
+          "Sacred Shard random reward model",
+          "purchase economics table"
+        ],
+        "late_stage_bottlenecks": [
+          "Sacred Shards are scarce",
+          "paid sources can exceed the listed payout",
+          "random rewards do not guarantee tracking credit"
+        ],
+        "reassessment_triggers": [
+          "task does not credit after the first shard tier",
+          "required shards would need unplanned purchases",
+          "support proof is incomplete"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_004"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_020",
+      "exact_task_text": "Open 8 Sacred / Yellow Shards",
+      "points": 28120,
+      "usd": 28.12,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "Portal shard opening",
+        "Sacred Shard inventory proof",
+        "random reward model",
+        "paid pack timing"
+      ],
+      "task_goal_plain_english": "Open 8 Sacred / Yellow Shards means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Sacred Shard tasks are random reward and inventory tasks. The shard opening itself is measurable, but shard supply is scarce and late tiers can require paid sources.",
+      "prerequisites": [
+        "Portal access",
+        "Sacred Shard inventory or targeted source",
+        "early tracking confidence"
+      ],
+      "step_by_step_route": [
+        "Verify the task asks for Sacred or Yellow Shards, not Ancient, Void, or Mystery Shards.",
+        "Document the shard inventory before opening and the Portal result after opening.",
+        "Do not chase later shard tiers unless the earlier Sacred Shard tier credited and the shard source is already secured."
+      ],
+      "resource_requirements": [
+        "Sacred Shards",
+        "Portal access",
+        "screenshot proof"
+      ],
+      "resource_bottlenecks": [
+        "Sacred Shards are scarce",
+        "paid packs may be expensive",
+        "later tiers are not realistic without a plan"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "shard count before opening",
+        "tier credit after opening",
+        "remaining shard source identified"
+      ],
+      "proof_screenshots": [
+        "Sacred Shard inventory before opening",
+        "Portal screen after opening",
+        "EarnLab task state",
+        "timestamped account profile"
+      ],
+      "when_to_stop_or_skip": "Treat this as a stop-first task. Continue only if earlier tasks credited, the needed resources are already secured, and the expected cost or time still makes sense.",
+      "progression_route": {
+        "target_type": "collection",
+        "target_value": "8 Sacred / Yellow Shards",
+        "progression_systems_to_cover": [
+          "Portal shard opening",
+          "Sacred Shard inventory proof",
+          "paid pack timing"
+        ],
+        "xp_or_progress_sources": [
+          "purchased Sacred packs",
+          "earned one-time game rewards when available",
+          "event or login rewards only if visible in the account"
+        ],
+        "daily_repeatable_loop": [
+          "check shard inventory",
+          "document source of each Sacred Shard",
+          "open shards only when the offer task is visible and tracking is healthy"
+        ],
+        "priority_order": [
+          "prove the first two opens before chasing four",
+          "avoid six and eight unless shards are already secured",
+          "do not buy random packs hoping for enough Sacred Shards"
+        ],
+        "milestone_route": [
+          "2 Sacred Shards: possible through a targeted paid or earned source",
+          "4 Sacred Shards: reassess cost and evidence",
+          "6 Sacred Shards: high risk without confirmed inventory",
+          "8 Sacred Shards: stop unless the net economics and tracking history are strong"
+        ],
+        "gates_and_unlocks": [
+          "Portal access",
+          "Sacred Shard inventory",
+          "offer task visibility"
+        ],
+        "resource_plan": [
+          "record each shard source",
+          "avoid mystery or ancient shard detours",
+          "keep screenshots before and after every open"
+        ],
+        "accelerators": [
+          "targeted Sacred packs",
+          "visible event rewards",
+          "campaign or mission reward only when already reachable"
+        ],
+        "what_to_ignore": [
+          "non-Sacred shards",
+          "legendary pull odds",
+          "champion chase detours"
+        ],
+        "tables_or_checklists_needed": [
+          "Sacred Shard random reward model",
+          "purchase economics table"
+        ],
+        "late_stage_bottlenecks": [
+          "Sacred Shards are scarce",
+          "paid sources can exceed the listed payout",
+          "random rewards do not guarantee tracking credit"
+        ],
+        "reassessment_triggers": [
+          "task does not credit after the first shard tier",
+          "required shards would need unplanned purchases",
+          "support proof is incomplete"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_004"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_021",
+      "exact_task_text": "Reach Level 50 within 21 days",
+      "points": 14800,
+      "usd": 14.8,
+      "deadline_text": "within 21 days",
+      "mechanics_needed": [
+        "account level progression",
+        "Campaign farming for account XP",
+        "energy refill timing",
+        "daily quests and mission rewards"
+      ],
+      "task_goal_plain_english": "Reach Level 50 within 21 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Account level tasks move through repeated campaign clears, daily quests, missions, energy use, and XP boosts; the guide treats Level 50, Level 60, and Level 70 as checkpoint-based decisions.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Farm campaign stages while completing daily quests and missions so account XP rises with useful hero progress.",
+        "Compare the level target against the milestone matrix, then continue only when the daily checkpoint is on pace.",
+        "Keep a screenshot of the profile level before and after the target credits."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Continue while tracking is healthy and the deadline checkpoint is on pace; reassess immediately if early credit fails.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "50",
+        "progression_systems_to_cover": [
+          "Campaign farming for account XP",
+          "daily quests and mission rewards",
+          "energy refill timing and XP boosts"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign stage clears",
+          "daily and weekly missions",
+          "login rewards, event rewards, and energy refills"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy on campaign stages",
+          "claim daily quests and missions",
+          "upgrade starter champion and food while account XP rises"
+        ],
+        "priority_order": [
+          "clear tutorial and campaign unlocks",
+          "farm the highest reliable campaign stage",
+          "use multi-battle only after screenshots and tracking checks"
+        ],
+        "milestone_route": [
+          "Level 15 checkpoint: tutorial, campaign farming, and first daily loop complete",
+          "Level 30 checkpoint: early progression is still fast but requires consistent energy use",
+          "Level 50 checkpoint: continue only if several 5-star and 6-star rank tasks are also moving",
+          "Level 60 checkpoint: reassess if progress has slowed below a daily level target",
+          "Level 70 checkpoint: stop for most players unless already far ahead with strong tracked progress"
+        ],
+        "gates_and_unlocks": [
+          "campaign access",
+          "tavern access",
+          "daily quests",
+          "energy refills"
+        ],
+        "resource_plan": [
+          "save gems for energy only when the payout band justifies it",
+          "avoid spending premium currency on summons before the shard plan is clear",
+          "keep screenshots at each level milestone"
+        ],
+        "accelerators": [
+          "XP boosts",
+          "multi-battle",
+          "campaign farming",
+          "daily missions"
+        ],
+        "what_to_ignore": [
+          "arena optimization",
+          "deep gear min-maxing",
+          "champion collection detours that do not improve campaign clears"
+        ],
+        "tables_or_checklists_needed": [
+          "milestone matrix",
+          "daily route checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "account XP slows sharply after early levels",
+          "energy becomes the limiting input",
+          "Level 60 and Level 70 are late goals with high time risk"
+        ],
+        "reassessment_triggers": [
+          "missed deadline checkpoint",
+          "no tracking credit on early tasks",
+          "energy shortage without overlapping rank progress"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_005"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_022",
+      "exact_task_text": "Reach Level 60 within 35 days",
+      "points": 37000,
+      "usd": 37,
+      "deadline_text": "within 35 days",
+      "mechanics_needed": [
+        "account level progression",
+        "Campaign farming for account XP",
+        "energy refill timing",
+        "daily quests and mission rewards"
+      ],
+      "task_goal_plain_english": "Reach Level 60 within 35 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Account level tasks move through repeated campaign clears, daily quests, missions, energy use, and XP boosts; the guide treats Level 50, Level 60, and Level 70 as checkpoint-based decisions.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Farm campaign stages while completing daily quests and missions so account XP rises with useful hero progress.",
+        "Compare the level target against the milestone matrix, then continue only when the daily checkpoint is on pace.",
+        "Keep a screenshot of the profile level before and after the target credits."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Treat this as a stop-first task. Continue only if earlier tasks credited, the needed resources are already secured, and the expected cost or time still makes sense.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "60",
+        "progression_systems_to_cover": [
+          "Campaign farming for account XP",
+          "daily quests and mission rewards",
+          "energy refill timing and XP boosts"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign stage clears",
+          "daily and weekly missions",
+          "login rewards, event rewards, and energy refills"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy on campaign stages",
+          "claim daily quests and missions",
+          "upgrade starter champion and food while account XP rises"
+        ],
+        "priority_order": [
+          "clear tutorial and campaign unlocks",
+          "farm the highest reliable campaign stage",
+          "use multi-battle only after screenshots and tracking checks"
+        ],
+        "milestone_route": [
+          "Level 15 checkpoint: tutorial, campaign farming, and first daily loop complete",
+          "Level 30 checkpoint: early progression is still fast but requires consistent energy use",
+          "Level 50 checkpoint: continue only if several 5-star and 6-star rank tasks are also moving",
+          "Level 60 checkpoint: reassess if progress has slowed below a daily level target",
+          "Level 70 checkpoint: stop for most players unless already far ahead with strong tracked progress"
+        ],
+        "gates_and_unlocks": [
+          "campaign access",
+          "tavern access",
+          "daily quests",
+          "energy refills"
+        ],
+        "resource_plan": [
+          "save gems for energy only when the payout band justifies it",
+          "avoid spending premium currency on summons before the shard plan is clear",
+          "keep screenshots at each level milestone"
+        ],
+        "accelerators": [
+          "XP boosts",
+          "multi-battle",
+          "campaign farming",
+          "daily missions"
+        ],
+        "what_to_ignore": [
+          "arena optimization",
+          "deep gear min-maxing",
+          "champion collection detours that do not improve campaign clears"
+        ],
+        "tables_or_checklists_needed": [
+          "milestone matrix",
+          "daily route checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "account XP slows sharply after early levels",
+          "energy becomes the limiting input",
+          "Level 60 and Level 70 are late goals with high time risk"
+        ],
+        "reassessment_triggers": [
+          "missed deadline checkpoint",
+          "no tracking credit on early tasks",
+          "energy shortage without overlapping rank progress"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_005"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_023",
+      "exact_task_text": "Reach Level 70 within 60 days",
+      "points": 125800,
+      "usd": 125.8,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account level progression",
+        "Campaign farming for account XP",
+        "energy refill timing",
+        "daily quests and mission rewards"
+      ],
+      "task_goal_plain_english": "Reach Level 70 within 60 days means the player should complete this specific EarnLab-visible condition and then confirm credit before increasing time or spend.",
+      "mechanic_deep_dive": "Account level tasks move through repeated campaign clears, daily quests, missions, energy use, and XP boosts; the guide treats Level 50, Level 60, and Level 70 as checkpoint-based decisions.",
+      "prerequisites": [
+        "eligible Android install from EarnLab",
+        "same device and account",
+        "stable connection"
+      ],
+      "step_by_step_route": [
+        "Farm campaign stages while completing daily quests and missions so account XP rises with useful hero progress.",
+        "Compare the level target against the milestone matrix, then continue only when the daily checkpoint is on pace.",
+        "Keep a screenshot of the profile level before and after the target credits."
+      ],
+      "resource_requirements": [
+        "energy",
+        "campaign access",
+        "daily play time"
+      ],
+      "resource_bottlenecks": [
+        "energy",
+        "time",
+        "missing early credit"
+      ],
+      "task_conflicts": [
+        "spending before proving tracking",
+        "using resources on goals that do not overlap with account level or rank progress"
+      ],
+      "common_mistakes": [
+        "starting outside EarnLab",
+        "switching devices",
+        "missing proof screenshots",
+        "pursuing late goals after early credit fails"
+      ],
+      "progress_checkpoints": [
+        "profile level or battle count",
+        "daily progress pace",
+        "EarnLab credit state"
+      ],
+      "proof_screenshots": [
+        "account profile level screen",
+        "campaign progress screen",
+        "daily quest completion if used",
+        "EarnLab task state"
+      ],
+      "when_to_stop_or_skip": "Treat this as a stop-first task. Continue only if earlier tasks credited, the needed resources are already secured, and the expected cost or time still makes sense.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "70",
+        "progression_systems_to_cover": [
+          "Campaign farming for account XP",
+          "daily quests and mission rewards",
+          "energy refill timing and XP boosts"
+        ],
+        "xp_or_progress_sources": [
+          "Campaign stage clears",
+          "daily and weekly missions",
+          "login rewards, event rewards, and energy refills"
+        ],
+        "daily_repeatable_loop": [
+          "spend energy on campaign stages",
+          "claim daily quests and missions",
+          "upgrade starter champion and food while account XP rises"
+        ],
+        "priority_order": [
+          "clear tutorial and campaign unlocks",
+          "farm the highest reliable campaign stage",
+          "use multi-battle only after screenshots and tracking checks"
+        ],
+        "milestone_route": [
+          "Level 15 checkpoint: tutorial, campaign farming, and first daily loop complete",
+          "Level 30 checkpoint: early progression is still fast but requires consistent energy use",
+          "Level 50 checkpoint: continue only if several 5-star and 6-star rank tasks are also moving",
+          "Level 60 checkpoint: reassess if progress has slowed below a daily level target",
+          "Level 70 checkpoint: stop for most players unless already far ahead with strong tracked progress"
+        ],
+        "gates_and_unlocks": [
+          "campaign access",
+          "tavern access",
+          "daily quests",
+          "energy refills"
+        ],
+        "resource_plan": [
+          "save gems for energy only when the payout band justifies it",
+          "avoid spending premium currency on summons before the shard plan is clear",
+          "keep screenshots at each level milestone"
+        ],
+        "accelerators": [
+          "XP boosts",
+          "multi-battle",
+          "campaign farming",
+          "daily missions"
+        ],
+        "what_to_ignore": [
+          "arena optimization",
+          "deep gear min-maxing",
+          "champion collection detours that do not improve campaign clears"
+        ],
+        "tables_or_checklists_needed": [
+          "milestone matrix",
+          "daily route checklist"
+        ],
+        "late_stage_bottlenecks": [
+          "account XP slows sharply after early levels",
+          "energy becomes the limiting input",
+          "Level 60 and Level 70 are late goals with high time risk"
+        ],
+        "reassessment_triggers": [
+          "missed deadline checkpoint",
+          "no tracking credit on early tasks",
+          "energy shortage without overlapping rank progress"
+        ]
+      },
+      "completion_estimate_from_sources": "Task-specific payout and deadline values come from the provided task list; game mechanics come from official Raid support and app store sources.",
+      "claim_ids": [
+        "claim_001",
+        "claim_005"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    }
+  ],
+  "navigation_plan": {
+    "top_nav": [
+      {
+        "label": "Snapshot",
+        "anchor_id": "offer-snapshot-and-realistic-payout-bands",
+        "section_type": "payout",
+        "required": true
+      },
+      {
+        "label": "Tasks",
+        "anchor_id": "full-canonical-task-table",
+        "section_type": "payout",
+        "required": true
+      },
+      {
+        "label": "Systems",
+        "anchor_id": "game-systems-that-actually-move-task-progress",
+        "section_type": "game_system",
+        "required": true
+      },
+      {
+        "label": "Route",
+        "anchor_id": "guided-task-by-task-route",
+        "section_type": "task_route",
+        "required": true
+      },
+      {
+        "label": "Support",
+        "anchor_id": "support-state-model",
+        "section_type": "support",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "required": true
+      }
+    ],
+    "major_sections": [
+      {
+        "label": "Offer Snapshot And Realistic Payout Bands",
+        "anchor_id": "offer-snapshot-and-realistic-payout-bands",
+        "section_type": "payout",
+        "required": true
+      },
+      {
+        "label": "Full Canonical Task Table",
+        "anchor_id": "full-canonical-task-table",
+        "section_type": "payout",
+        "required": true
+      },
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "required": true
+      },
+      {
+        "label": "Game Systems",
+        "anchor_id": "game-systems-that-actually-move-task-progress",
+        "section_type": "game_system",
+        "required": true
+      },
+      {
+        "label": "Guided Route",
+        "anchor_id": "guided-task-by-task-route",
+        "section_type": "task_route",
+        "required": true
+      },
+      {
+        "label": "Support",
+        "anchor_id": "support-state-model",
+        "section_type": "support",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "required": true
+      },
+      {
+        "label": "Next Step",
+        "anchor_id": "next-step",
+        "section_type": "cta",
+        "required": true
+      }
+    ],
+    "game_detail_sections": [
+      {
+        "label": "Mechanic Dossiers",
+        "anchor_id": "mechanic-dossiers",
+        "section_type": "game_system",
+        "required": true
+      },
+      {
+        "label": "Milestone Matrix",
+        "anchor_id": "milestone-matrix",
+        "section_type": "task_route",
+        "required": true
+      },
+      {
+        "label": "Sacred Shard Random Reward Model",
+        "anchor_id": "sacred-shard-random-reward-model",
+        "section_type": "game_system",
+        "required": true
+      }
+    ],
+    "task_sections": [
+      {
+        "label": "Task Archetype Map",
+        "anchor_id": "task-archetype-map",
+        "section_type": "task_route",
+        "required": true
+      },
+      {
+        "label": "Day Route",
+        "anchor_id": "day-by-day-route-with-continue-reassess-stop-rules",
+        "section_type": "task_route",
+        "required": true
+      },
+      {
+        "label": "Purchase Economics",
+        "anchor_id": "purchase-economics-table",
+        "section_type": "payout",
+        "required": true
+      }
+    ],
+    "support_sections": [
+      {
+        "label": "Tracking Setup",
+        "anchor_id": "tracking-setup-and-eligibility",
+        "section_type": "support",
+        "required": true
+      },
+      {
+        "label": "Evidence Log Plan",
+        "anchor_id": "evidence-log-plan",
+        "section_type": "support",
+        "required": true
+      },
+      {
+        "label": "Proof Workflow",
+        "anchor_id": "proof-and-missing-credit-workflow",
+        "section_type": "support",
+        "required": true
+      }
+    ]
+  },
+  "original_value_block": {
+    "type": "operator decision matrix",
+    "title": "Continue, reassess, or stop matrix",
+    "content_plan": "Combine payout band, progress checkpoint, proof state, purchase cost, and shard inventory into a single decision framework."
+  },
+  "worth_it_score": {
+    "score": 62,
+    "verdict": "Worth testing through the free early band for eligible new Android users; worth grinding only for players who can document steady account level and Tavern progress; high-risk late tasks should be stop-first."
+  },
+  "questions_unanswered": [
+    "EarnLab does not provide public confirmation for this exact user-specific offer instance beyond the supplied task list.",
+    "Pack availability may vary by account and time."
+  ],
+  "do_not_claim": [],
+  "quality_gate": {
+    "status": "pass",
+    "score": 92,
+    "checks": [
+      "all intake tasks mapped",
+      "professional models present",
+      "source-backed mechanics included",
+      "stop and reassess logic present"
+    ],
+    "blocking_reasons": []
+  }
+}

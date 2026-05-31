@@ -10,16 +10,16 @@ import { buildGoHref, formatMoney, gameKeyFromParts, getHomepageData } from "@/l
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+  title: "EarnGrind | GPT Offer Discovery, Game Guides, and Platform Research",
   description:
-    "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
+    "Use EarnGrind to discover GPT offer paths, compare live payout routes on /offers, browse game hubs, read completion guides, and research trusted GPT sites.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+    title: "EarnGrind | GPT Offer Discovery, Game Guides, and Platform Research",
     description:
-      "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
+      "Use EarnGrind to discover GPT offer paths, compare live payout routes on /offers, browse game hubs, read completion guides, and research trusted GPT sites.",
     url: "https://earngrind.com",
     siteName: "EarnGrind",
     images: [
@@ -27,16 +27,16 @@ export const metadata: Metadata = {
         url: "/og-earngrind.png",
         width: 1200,
         height: 630,
-        alt: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+        alt: "EarnGrind GPT offer discovery, game guides, and platform research",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
+    title: "EarnGrind | GPT Offer Discovery, Game Guides, and Platform Research",
     description:
-      "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
+      "Use EarnGrind to discover GPT offer paths, compare live payout routes on /offers, browse game hubs, read completion guides, and research trusted GPT sites.",
     images: ["/og-earngrind.png"],
   },
 };
@@ -61,22 +61,34 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
 const START_HERE_ITEMS = [
   {
+    name: "Compare Offers",
+    href: "/offers",
+    badge: "Canonical search",
+    desc: "Search, filter, sort, and compare live payout routes when you already know you want the full offer database.",
+  },
+  {
+    name: "Browse Games",
+    href: "/games",
+    badge: "Game discovery",
+    desc: "Start with game hubs when you want payout snapshots, guide coverage, provider count, and related games.",
+  },
+  {
     name: "Best GPT Sites",
     href: "/best-gpt-sites",
     badge: "Platform intel",
     desc: "See which GPT sites are trusted, competitive on payout, and worth joining before you commit your time.",
   },
   {
-    name: "Highest Paying GPT Offers",
-    href: "/offers",
-    badge: "Live payouts",
-    desc: "Find the best-paying live tasks first so you stop wasting clicks on low-value offers.",
-  },
-  {
     name: "Game Guides",
     href: "/guides",
     badge: "Completion help",
     desc: "Use proven walkthroughs to finish milestones faster, avoid mistakes, and reach payout checkpoints sooner.",
+  },
+  {
+    name: "Platform Reviews",
+    href: "/platforms",
+    badge: "Trust checks",
+    desc: "Research individual GPT sites before you join, then move into offers with clearer expectations.",
   },
 ] as const;
 
@@ -251,11 +263,11 @@ export default async function HomePage() {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold text-white leading-[1.05] tracking-tight mb-4">
-              Earn More From GPT Offers
+              EarnGrind GPT Offer Discovery
             </h1>
 
             <p className="text-base sm:text-lg text-white/55 leading-relaxed mb-8 max-w-2xl">
-              Compare live GPT offers across trusted platforms, use guides to finish faster, and choose the best partner payout route before you start.
+              Find the right path before you click: compare live routes in Offers, browse game hubs, read completion guides, and research GPT sites by trust.
             </p>
 
             <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -304,6 +316,12 @@ export default async function HomePage() {
               >
                 Best GPT Sites
               </Link>
+              <Link
+                href="/games"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
+              >
+                Browse Games
+              </Link>
             </div>
           </div>
         </div>
@@ -314,59 +332,27 @@ export default async function HomePage() {
           <div className="mb-8 max-w-3xl">
             <p className="section-label mb-3">Choose your path</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--brand-ink)]">
-              Browse freely by offer or by guide
+              Choose the hub that matches your next step
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-              EarnGrind keeps public offer discovery open so you can compare platforms, payouts, and completion paths without creating an account.
+              EarnGrind keeps discovery, comparison, walkthroughs, and platform research separate so each page has a clear job.
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-2">
-            <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-sm">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                  No signup required
-                </span>
-              </div>
-              <h3 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">Compare GPT Offers</h3>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-                Compare live offers, guides, partner sites, and partner payouts without creating an EarnGrind account.
-              </p>
-              <ul className="mt-5 space-y-2 text-sm font-semibold text-[var(--text-secondary)]">
-                <li>Browse /offers, /games, /guides, and /best-gpt-sites.</li>
-                <li>Normal partner redirects stay ungated.</li>
-                <li>Partner GPT sites pay directly for partner offers.</li>
-              </ul>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {START_HERE_ITEMS.map((item) => (
               <Link
-                href="/offers"
-                className="mt-6 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2.5 text-sm font-extrabold text-white transition-colors hover:bg-[var(--brand-ink)]/90"
+                key={item.href}
+                href={item.href}
+                className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300"
               >
-                Browse Offers
-              </Link>
-            </div>
-
-            <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-sm">
-              <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                  Completion help
+                  {item.badge}
                 </span>
-              </div>
-              <h3 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">Use Game Guides</h3>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-                Read walkthroughs before starting high-value game offers so you understand milestones, timing, and common mistakes.
-              </p>
-              <ul className="mt-5 space-y-2 text-sm font-semibold text-[var(--text-secondary)]">
-                <li>Find route-specific tips before clicking out.</li>
-                <li>Compare milestones across platforms when multiple routes exist.</li>
-                <li>Use guides alongside live payout discovery.</li>
-              </ul>
-              <Link
-                href="/guides"
-                className="mt-6 inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2.5 text-sm font-extrabold text-white transition-colors hover:bg-[var(--brand-ink)]/90"
-              >
-                Browse Guides
+                <h3 className="mt-5 text-lg font-extrabold text-[var(--brand-ink)]">{item.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">{item.desc}</p>
               </Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -439,7 +425,7 @@ export default async function HomePage() {
             <div className="mt-8 rounded-2xl border border-[var(--border-default)] bg-white px-4 py-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
               <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go straight to <span className="font-bold text-[var(--brand-ink)]">Offers</span> for payout discovery or <span className="font-bold text-[var(--brand-ink)]">Guides</span> for faster completion.
+                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go to <Link href="/offers" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Offers</Link> for search and filters, <Link href="/games" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Games</Link> for game discovery, or <Link href="/guides" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Guides</Link> for faster completion.
               </p>
             </div>
           </div>
@@ -550,7 +536,7 @@ export default async function HomePage() {
             Ready to earn your first dollar online?
           </h2>
           <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
-            Start with the highest paying GPT offers, use game guides to finish faster, and compare partner payout routes before you click.
+            Start with discovery, move into the offer comparison page when you need filters, and verify partner terms before you click out.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link

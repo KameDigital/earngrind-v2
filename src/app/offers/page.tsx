@@ -131,6 +131,9 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                     <p className="text-sm sm:text-lg text-[var(--text-secondary)] max-w-3xl leading-relaxed">
                         Scan current payouts, compare platforms, and open the best route into each game or offer before you waste time on lower-value tasks.
                     </p>
+                    <p className="mt-3 max-w-3xl rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-xs font-semibold leading-relaxed text-[var(--text-secondary)] shadow-[var(--shadow-card)]">
+                        EarnGrind is the comparison layer. Partner GPT sites and offerwalls handle eligibility, tracking, approval, and payouts after you click out.
+                    </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                         {[
                             "Sorted for faster payout discovery",

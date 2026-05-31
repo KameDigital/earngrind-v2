@@ -433,7 +433,7 @@ export default function WoodokuBlastOfferGuidePage() {
                             <SectionHeading eyebrow="Purchase and midgame" title="Woodoku Blast offer guide: Purchase and Midgame Levels" />
                             <div className="space-y-4 text-base leading-8 text-slate-700">
                                 <p>
-                                    The purchase task says "Make a Purchase Of At Least $4.99" and pays 7,400 points, which is $7.40. Public app-store data shows a $4.99 pack exists for Woodoku Blast. That makes the purchase potentially net-positive, but only if tracking works and taxes or a higher product choice do not erase the margin.
+                                    The purchase task says &quot;Make a Purchase Of At Least $4.99&quot; and pays 7,400 points, which is $7.40. Public app-store data shows a $4.99 pack exists for Woodoku Blast. That makes the purchase potentially net-positive, but only if tracking works and taxes or a higher product choice do not erase the margin.
                                 </p>
                                 <p>
                                     Before buying, screenshot the Torox task, the in-app product page showing the $4.99 price, and your account or profile if the app shows one. After buying, keep the Google Play receipt and capture the app state after the purchase.
@@ -481,7 +481,7 @@ export default function WoodokuBlastOfferGuidePage() {
                                     Gather the Torox offer page, failed milestone name, Journey screenshot, account or profile details, Android device model, Google Play receipt for the $4.99 purchase, and the date/time you completed the task.
                                 </p>
                                 <p>
-                                    When you contact support, be specific. "Clear Level 1200 in Journey mode in 15 Days did not credit" is better than "my game did not pay." If this route becomes unreliable, <Link href="/offers" className="font-bold text-lime-700 underline">compare current offer options on EarnGrind</Link>.
+                                    When you contact support, be specific. &quot;Clear Level 1200 in Journey mode in 15 Days did not credit&quot; is better than &quot;my game did not pay.&quot; If this route becomes unreliable, <Link href="/offers" className="font-bold text-lime-700 underline">compare current offer options on EarnGrind</Link>.
                                 </p>
                             </div>
                         </section>

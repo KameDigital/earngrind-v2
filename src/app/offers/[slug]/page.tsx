@@ -10,6 +10,12 @@ import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
 import ProviderLogo from '@/components/providers/ProviderLogo';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
 import { formatPayoutFreshness } from '@/lib/payout-freshness';
+import {
+    buildOfferRouteSeoDescription,
+    buildOfferRouteSeoTitle,
+    gameHubPath,
+    offerRoutePath,
+} from '@/lib/route-intent-policy';
 import { absoluteUrl, getSiteUrl } from '@/lib/site-url';
 import { robotsForIndexability, noindexFollowRobots } from '@/lib/seo-metadata';
 import { EarnLabCountryOffersPage } from '@/components/offers/EarnLabCountryOffersPage';
@@ -155,18 +161,25 @@ export async function generateMetadata(
         };
     }
     const { game, summary } = data;
-    const canonical = absoluteUrl(`/offers/${params.slug}`);
+    const canonical = absoluteUrl(offerRoutePath(game.slug));
     const indexable = summary.offer_count > 0;
+    const title = buildOfferRouteSeoTitle(game.name);
+    const description = buildOfferRouteSeoDescription({
+        gameName: game.name,
+        offerCount: summary.offer_count,
+        maxPayoutUsd: summary.max_payout_usd,
+        fallbackDescription: game.description,
+    });
     return {
-        title: `${game.name} Offers: Payouts and Provider Routes | EarnGrind`,
-        description: `Compare ${summary.offer_count} ${game.name} offer${summary.offer_count !== 1 ? 's' : ''} across platforms. Max payout: $${summary.max_payout_usd.toFixed(2)}. ${game.description ?? ''}`.trim(),
+        title,
+        description,
         alternates: {
             canonical,
         },
         robots: robotsForIndexability(indexable),
         openGraph: {
-            title: `${game.name} Offers | EarnGrind`,
-            description: `Compare current ${game.name} payouts and routes across GPT platforms before clicking out.`,
+            title,
+            description: `Compare current ${game.name} payout routes across GPT platforms before clicking out.`,
             url: canonical,
         },
     };
@@ -661,7 +674,7 @@ export default async function GameOffersPage({
                         <div className="min-w-0 flex-1">
                             <div className="flex flex-wrap items-start gap-2 mb-2">
                                 <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--brand-ink)] tracking-tight">
-                                    Best {game.name} payout routes
+                                    Compare {game.name} payout routes
                                 </h1>
                                 {game.category && (
                                     <span className="mt-1 px-2.5 py-0.5 bg-[var(--surface-muted)] text-[var(--text-secondary)] text-xs font-semibold rounded-full border border-[var(--border-default)]">
@@ -729,7 +742,7 @@ export default async function GameOffersPage({
                                     </Link>
                                 )}
                                 <Link
-                                    href={`/games/${game.slug}`}
+                                    href={gameHubPath(game.slug)}
                                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
                                 >
                                     View Game Page

@@ -44,6 +44,16 @@ const nextConfig = {
         })),
     },
 
+    async redirects() {
+        return [
+            {
+                source: "/reviews",
+                destination: "/platforms",
+                permanent: true,
+            },
+        ];
+    },
+
     // ---------------------------------------------------------------
     // SECURITY HEADERS
     // Applied to every page/route response.

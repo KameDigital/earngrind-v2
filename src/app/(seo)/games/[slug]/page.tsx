@@ -4,6 +4,12 @@ import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import { isPublicPayoutEligible } from "@/lib/offer-quality";
+import {
+  buildGameHubSeoDescription,
+  buildGameHubSeoTitle,
+  gameHubPath,
+  offerRoutePath,
+} from "@/lib/route-intent-policy";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "../../components/FAQSection";
 import GameHeader from "../../components/GameHeader";
@@ -32,7 +38,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return buildSeoMetadata({
       title: "Game Offers Not Found | EarnGrind",
       description: "The requested game page could not be found.",
-      path: `/games/${params.slug}`,
+      path: gameHubPath(params.slug),
       indexable: false,
     });
   }
@@ -48,9 +54,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     (data.game.description?.trim().length ?? 0) >= 80;
 
   return buildSeoMetadata({
-    title: `Best ${data.game.name} Offers: Payouts and Routes (${new Date().getFullYear()})`,
-    description: `Compare ${data.game.name} offers by provider, payout, and task milestones. Track top payout opportunities in one place.`,
-    path: `/games/${data.game.slug}`,
+    title: buildGameHubSeoTitle(data.game.name),
+    description: buildGameHubSeoDescription(data.game.name),
+    path: gameHubPath(data.game.slug),
     indexable,
   });
 }
@@ -110,17 +116,17 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
     },
   ];
 
-  const intro = `Use this page to compare ${data.game.name} payouts across ${providerGroups.size} providers, spot the best current route, and decide whether to use a guide before you click out.`;
+  const intro = `Use this game hub to understand ${data.game.name}, check guide coverage, see the strongest payout snapshot, and move into the full route comparison when you are ready to compare every provider.`;
   const schemas = [
     buildBreadcrumbList([
       { name: "Home", path: "/" },
       { name: "Games", path: "/games" },
-      { name: data.game.name, path: `/games/${data.game.slug}` },
+      { name: data.game.name, path: gameHubPath(data.game.slug) },
     ]),
     buildItemList(
       rows.slice(0, 20).map((row) => ({
         name: `${row.providerName} on ${row.platformName}`,
-        path: `/offers/${data.game.slug}`,
+        path: offerRoutePath(data.game.slug),
         description: `${formatMoney(row.totalPayoutUsd)} total payout for ${data.game.name}.`,
       })),
     ),
@@ -232,10 +238,10 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
               <p className="section-label">Next links</p>
               <div className="mt-3 grid gap-2">
                 <Link
-                  href="#all-provider-offers"
+                  href={offerRoutePath(data.game.slug)}
                   className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
-                  Compare all routes
+                  Full route comparison
                 </Link>
                 <Link
                   href={primaryGuide ? `/guides/${primaryGuide.slug}` : "/guides"}

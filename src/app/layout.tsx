@@ -12,10 +12,11 @@ const defaultSocialImage = "/og-earngrind.png";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "EarnGrind — Find the Highest-Paying Offerwall Game Offers",
-    template: "%s | EarnGrind"
+    default: "EarnGrind | GPT Offer Discovery, Guides, and Platform Research",
+    template: "%s | EarnGrind",
   },
-  description: "EarnGrind tracks hundreds of mobile game offers across every major GPT site. Find and compare the highest payouts on Swagbucks, Freecash, InboxDollars, and more.",
+  description:
+    "EarnGrind helps users discover GPT offer paths, compare payout routes, browse game hubs, read completion guides, and research GPT platform trust.",
   keywords: ["offerwall", "GPT sites", "earn money online", "mobile game offers", "Swagbucks offers", "Freecash offers", "game guides"],
   icons: {
     icon: [
@@ -26,8 +27,9 @@ export const metadata: Metadata = {
     apple: "/favicon-earngrind.png?v=2",
   },
   openGraph: {
-    title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
-    description: "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
+    title: "EarnGrind | GPT Offer Discovery, Guides, and Platform Research",
+    description:
+      "Discover GPT offer paths, compare payout routes, browse game hubs, read guides, and research platform trust.",
     url: baseUrl,
     siteName: "EarnGrind",
     images: [
@@ -35,16 +37,17 @@ export const metadata: Metadata = {
         url: defaultSocialImage,
         width: 1200,
         height: 630,
-        alt: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
-      }
+        alt: "EarnGrind GPT offer discovery, guides, and platform research",
+      },
     ],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Highest Paying GPT Offers, Game Guides, and Best GPT Sites",
-    description: "Compare the highest paying GPT offers, browse game guides, and discover the best GPT sites with SEO-friendly internal links across offers, games, and guides.",
+    title: "EarnGrind | GPT Offer Discovery, Guides, and Platform Research",
+    description:
+      "Discover GPT offer paths, compare payout routes, browse game hubs, read guides, and research platform trust.",
     images: [defaultSocialImage],
     creator: "@earngrind",
   },

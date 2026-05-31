@@ -291,7 +291,7 @@ export default function SolitaireStashOfferGuidePage() {
                             <SectionHeader eyebrow="Tournament wins" title="Solitaire Stash cash tournaments: what counts as a win" />
                             <div className="space-y-4 text-base leading-8 text-slate-700">
                                 <p>
-                                    The biggest wording issue is simple: the task says win cash tournaments, not play cash tournaments. Solitaire Stash's official site says top players can win in head-to-head or multiplayer tournaments, and app review material describes cash tournaments where score depends on speed, moves, efficiency, and clearing the deck. A Reddit thread about a similar Solitaire Stash offer shows the real risk: people were unsure whether a win meant first place or whether paid placement counted.
+                                    The biggest wording issue is simple: the task says win cash tournaments, not play cash tournaments. Solitaire Stash&apos;s official site says top players can win in head-to-head or multiplayer tournaments, and app review material describes cash tournaments where score depends on speed, moves, efficiency, and clearing the deck. A Reddit thread about a similar Solitaire Stash offer shows the real risk: people were unsure whether a win meant first place or whether paid placement counted.
                                 </p>
                                 <p>
                                     Treat win as the strictest version until your own tracking proves otherwise. If first place credits and second or third place does not, you need to know that near the 3 or 5-win tier, not near 700 wins. If a top-3 placement credits, document it with the tournament result screen and the matching Lootably progress change.
@@ -307,7 +307,7 @@ export default function SolitaireStashOfferGuidePage() {
                                 The offer rewards wins, while cash tournaments can cost entry fees. Track wins, losses, deposits, withdrawals, bonus cash, and real cash separately so the reward does not hide a negative net result.
                             </Warning>
                             <p className="text-base leading-8 text-slate-700">
-                                Build a simple session log. Record the date, tournament type, entry cost, result, whether it counted as a win, and the visible Lootably milestone before and after the session. This gives you a way to spot broken tracking before a support ticket. It also prevents the common mistake of relying on the app's balance screen when the offerwall needs milestone proof.
+                                Build a simple session log. Record the date, tournament type, entry cost, result, whether it counted as a win, and the visible Lootably milestone before and after the session. This gives you a way to spot broken tracking before a support ticket. It also prevents the common mistake of relying on the app&apos;s balance screen when the offerwall needs milestone proof.
                             </p>
                         </section>
 
@@ -352,7 +352,7 @@ export default function SolitaireStashOfferGuidePage() {
                             </Warning>
                             <div className="space-y-4 text-base leading-8 text-slate-700">
                                 <p>
-                                    Lootably's public documentation explains why support proof matters. Postbacks can include the offer name, goal name, reward, revenue, user ID, and multistep completion percentage. That is useful when everything works, but it also means a missing goal may be invisible to EarnGrind or the platform until Lootably or the advertiser confirms it.
+                                    Lootably&apos;s public documentation explains why support proof matters. Postbacks can include the offer name, goal name, reward, revenue, user ID, and multistep completion percentage. That is useful when everything works, but it also means a missing goal may be invisible to EarnGrind or the platform until Lootably or the advertiser confirms it.
                                 </p>
                                 <p>
                                     If Solitaire Stash is not crediting, wait long enough for normal delayed credit, then use the Lootably support path. Support references for offerwalls point users to the Lootably wall, the Support option, and support@lootably.com. Send the offer name, provider, device, app account details, screenshots, receipts, and the exact milestone that failed. Keep the request specific. Win 500 Cash Tournaments did not credit is better than my offer is broken.

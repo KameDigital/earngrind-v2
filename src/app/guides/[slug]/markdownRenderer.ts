@@ -12,6 +12,26 @@ function slugifyHeading(value: string) {
         .replace(/^-+|-+$/g, "");
 }
 
+function titleCaseLabel(value: string) {
+    return value
+        .split("_")
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+}
+
+function formatDisplayLabel(value: string) {
+    return value
+        .split(/(https?:\/\/\S+)/g)
+        .map((part) => {
+            if (/^https?:\/\//.test(part)) return part;
+            return part
+                .replace(/\btask_0*(\d+)\b/gi, (_match, taskNumber) => `Task ${Number(taskNumber)}`)
+                .replace(/\b[a-z][a-z0-9]+(?:_[a-z0-9]+)+\b/g, (match) => titleCaseLabel(match));
+        })
+        .join("");
+}
+
 function addHeadingIds(html: string) {
     return html.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h\1>/gi, (_match, level, attrs, inner) => {
         const hasId = /\sid=/.test(attrs);
@@ -133,7 +153,7 @@ export function sanitizeGuideHtml(html: string): string {
 }
 
 function inlineMarkdown(text: string): string {
-    return text
+    return formatDisplayLabel(text)
         .replace(/`([^`]+)`/g, "<code>$1</code>")
         .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
         .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")

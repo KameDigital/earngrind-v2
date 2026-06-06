@@ -360,7 +360,9 @@ export default async function GuidesPage({
     const page      = Math.max(1, parseInt(searchParams.page ?? "1") || 1);
     const from      = (page - 1) * PAGE_SIZE;
     const to        = from + PAGE_SIZE - 1;
-    const gameGuideStaticGuides = STATIC_GUIDES.filter((guide) => guide.contentType === "game_guide" || guide.contentType === "offer_guide");
+    const gameGuideStaticGuides = STATIC_GUIDES
+        .filter((guide) => guide.contentType === "game_guide" || guide.contentType === "offer_guide")
+        .sort((a, b) => b.lastModified.localeCompare(a.lastModified));
     const staticGuideGameSlugs = Array.from(new Set(
         gameGuideStaticGuides
             .map((guide) => guide.gameSlug ?? guide.slug)

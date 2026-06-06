@@ -11,6 +11,8 @@ function assert(condition, message) {
 
 const guideRoute = "src/app/guides/fanduel-sportsbook-referral-bonus/page.tsx";
 const registry = read("src/lib/static-guides.ts");
+const guidesIndex = read("src/app/guides/page.tsx");
+const nextConfig = read("next.config.mjs");
 const registryEntry = registry.match(/\{\s*title: "FanDuel Sportsbook Referral Bonus Guide",[\s\S]*?sitemapPriority: 0\.8,\s*\}/)?.[0] ?? "";
 
 assert(existsSync(resolve(process.cwd(), guideRoute)), "FanDuel referral guide route should exist under /guides");
@@ -28,6 +30,15 @@ assert(
 assert(
   registryEntry.includes('contentType: "offer_guide"'),
   "FanDuel referral guide should be classified as an offer guide so it appears on /guides",
+);
+assert(
+  guidesIndex.includes(".sort((a, b) => b.lastModified.localeCompare(a.lastModified))"),
+  "Static guide cards should sort newest-first so the FanDuel guide is visible near the top of /guides",
+);
+assert(
+  nextConfig.includes('source: "/offers/fanduel-sportsbook-referral-bonus"') &&
+    nextConfig.includes('destination: "/guides/fanduel-sportsbook-referral-bonus"'),
+  "Offer-style FanDuel referral URL should redirect to the guide route",
 );
 assert(
   guideSource.includes("https://fndl.co/yeio8rw"),

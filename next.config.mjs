@@ -47,6 +47,21 @@ const nextConfig = {
     async redirects() {
         return [
             {
+                source: "/offers/fanduel-sportsbook-referral-bonus",
+                destination: "/guides/fanduel-sportsbook-referral-bonus",
+                permanent: false,
+            },
+            {
+                source: "/offers/fanduel-sportsbook-referral",
+                destination: "/guides/fanduel-sportsbook-referral-bonus",
+                permanent: false,
+            },
+            {
+                source: "/offers/fanduel-referral-bonus",
+                destination: "/guides/fanduel-sportsbook-referral-bonus",
+                permanent: false,
+            },
+            {
                 source: "/reviews",
                 destination: "/best-gpt-sites",
                 permanent: true,

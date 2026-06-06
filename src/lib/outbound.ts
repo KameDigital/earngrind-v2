@@ -60,10 +60,14 @@ const PLATFORM_FALLBACK_URLS: Record<string, string> = {
     earnlab: EARNLAB_AFFILIATE_URL,
     gaingg: GAIN_AFFILIATE_URL,
     gain: GAIN_AFFILIATE_URL,
-    gemsloot: "https://gemsloot.com",
+    gemsloot: GEMSLOOT_AFFILIATE_URL,
     freecash: "https://freecash.com",
-    swagbucks: "https://www.swagbucks.com",
-    inboxdollars: "https://www.inboxdollars.com",
+    swagbucks: SWAGBUCKS_AFFILIATE_URL,
+    kashkick: KASHKICK_AFFILIATE_URL,
+    inboxdollars: INBOXDOLLARS_AFFILIATE_URL,
+    mypoints: MYPOINTS_AFFILIATE_URL,
+    prizerebel: PRIZEREBEL_AFFILIATE_URL,
+    scrambly: SCRAMBLY_URL,
 };
 
 function getPlatformKeys(platform: PlatformRedirectTarget | null | undefined): string[] {

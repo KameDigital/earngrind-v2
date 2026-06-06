@@ -1,16 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import ProviderLogo from "@/components/providers/ProviderLogo";
 import {
   ArrowRight,
   BadgeCheck,
   BarChart3,
   Clock3,
   Compass,
-  Gamepad2,
-  Search,
   ShieldCheck,
-  Sparkles,
   Star,
   Target,
   Trophy,
@@ -20,64 +19,20 @@ import {
 } from "lucide-react";
 import { type LucideIcon } from "lucide-react";
 import { useMemo, useState } from "react";
+import type { GamesIndexItem, GamesIndexSummary } from "@/lib/games-index-data";
 import { formatPayoutFreshness } from "@/lib/payout-freshness";
-
-export type GamesIndexItem = {
-  id: string;
-  slug: string;
-  name: string;
-  thumbnailUrl: string | null;
-  gameThumbnailUrl?: string | null;
-  offerImageUrl?: string | null;
-  platformLogoUrl?: string | null;
-  providerLogoUrl?: string | null;
-  topPayout: number;
-  guideCount: number;
-  guideSlug?: string | null;
-  offerCount: number;
-  bestProvider: string;
-  bestPlatform: string;
-  category: string;
-  updatedAt: string | null;
-  providerCount: number;
-  platformCount: number;
-};
-
-type GamesIndexSummary = {
-  totalGames: number;
-  highestPayout: number;
-  guidesAvailable: number;
-  trackedOffers: number;
-  providersTracked: number;
-};
 
 type SortOption = "top-payout" | "most-offers" | "has-guide" | "name";
 type QuickFilter =
   | "all"
   | "highest-paying"
-  | "beginner-friendly"
-  | "has-guide"
-  | "multiple-providers"
-  | "android"
-  | "ios"
-  | "desktop";
+  | "beginner-friendly";
 type ThumbnailVariant = "card" | "featured" | "hero";
 type BadgeTone = "lime" | "amber" | "blue" | "purple" | "orange" | "slate";
 
 const SEA_OF_CONQUEST_GUIDE_MAP: Record<string, string> = {
   "sea-of-conquest-pirate-war": "sea-of-conquest-flagship-level-30-guide",
 };
-
-const filterLabels: Array<{ id: QuickFilter; label: string; icon: LucideIcon }> = [
-  { id: "all", label: "All", icon: Sparkles },
-  { id: "highest-paying", label: "Highest paying", icon: TrendingUp },
-  { id: "beginner-friendly", label: "Beginner friendly", icon: ShieldCheck },
-  { id: "has-guide", label: "Has guide", icon: BadgeCheck },
-  { id: "multiple-providers", label: "Multiple providers", icon: Users },
-  { id: "android", label: "Android", icon: Gamepad2 },
-  { id: "ios", label: "iOS", icon: Gamepad2 },
-  { id: "desktop", label: "Desktop", icon: BarChart3 },
-];
 
 function money(value: number) {
   return `$${Number(value || 0).toFixed(2)}`;
@@ -158,10 +113,10 @@ function GameThumbnail({
   const [hasError, setHasError] = useState(false);
   const sizeClass =
     variant === "hero"
-      ? "h-16 w-16 rounded-2xl"
+      ? "h-14 w-14 rounded-none"
       : variant === "featured"
-        ? "h-36 w-full rounded-[1.35rem]"
-        : "h-14 w-14 rounded-2xl";
+        ? "aspect-square w-full rounded-none"
+        : "h-14 w-14 rounded-none";
   const textClass = variant === "featured" ? "text-3xl" : "text-base";
   const fallbackLabel = category || platform || "Game offer";
 
@@ -171,11 +126,11 @@ function GameThumbnail({
         className={`${sizeClass} relative flex shrink-0 items-center justify-center overflow-hidden border border-lime-200 bg-[radial-gradient(circle_at_30%_20%,#ecfccb,#dcfce7_42%,#f8fafc)] shadow-sm`}
         aria-label={`${title} game offer icon fallback`}
       >
-        <div className="absolute -right-4 -top-4 h-14 w-14 rounded-full bg-lime-300/30" />
-        <div className="absolute -bottom-5 -left-3 h-16 w-16 rounded-full bg-emerald-300/20" />
+        <div className="absolute -right-4 -top-4 h-14 w-14 rounded-none bg-lime-300/30" />
+        <div className="absolute -bottom-5 -left-3 h-16 w-16 rounded-none bg-emerald-300/20" />
         <span className={`${textClass} relative font-black tracking-tight text-lime-900`}>{initials(title)}</span>
         {variant !== "card" ? (
-          <span className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-white/85 px-2 py-0.5 text-[10px] font-bold text-slate-700 shadow-sm">
+          <span className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-none bg-white/85 px-2 py-0.5 text-[10px] font-bold text-slate-700 shadow-sm">
             {fallbackLabel}
           </span>
         ) : null}
@@ -199,9 +154,35 @@ function GameThumbnail({
   );
 }
 
+function PlatformLogoPill({
+  name,
+  logoUrl,
+  compact = false,
+}: {
+  name: string;
+  logoUrl?: string | null;
+  compact?: boolean;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center justify-center gap-2 rounded-none border border-slate-700 bg-[var(--brand-ink)] px-2 py-1 shadow-sm ${compact ? "h-8" : "h-9"}`}
+      aria-label={`${name} platform`}
+      title={name}
+    >
+      {logoUrl ? (
+        // Platform logos may be stored as external URLs in the database.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={logoUrl} alt="" className={`${compact ? "h-5 max-w-[4.25rem]" : "h-6 max-w-[7rem]"} w-auto object-contain`} loading="lazy" referrerPolicy="no-referrer" />
+      ) : (
+        <span className="max-w-[7rem] truncate text-xs font-black text-[var(--brand-lime)]">{name}</span>
+      )}
+    </span>
+  );
+}
+
 function Badge({ icon: Icon, label, tone }: { icon: LucideIcon; label: string; tone: BadgeTone }) {
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide ${badgeClass(tone)}`}>
+    <span className={`inline-flex items-center gap-1 rounded-none border px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide ${badgeClass(tone)}`}>
       <Icon className="h-3 w-3" aria-hidden="true" />
       {label}
     </span>
@@ -263,7 +244,7 @@ function AdvancedLink({
   className?: string;
 }) {
   const base =
-    "group/cta inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-extrabold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500";
+    "group/cta inline-flex items-center justify-center gap-2 rounded-none px-4 py-2 text-sm font-extrabold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500";
   const styles = {
     primary: "bg-slate-950 text-lime-300 shadow-lg shadow-lime-900/10 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-lime-900/15",
     secondary: "border border-lime-300 bg-lime-50 text-slate-950 hover:-translate-y-0.5 hover:bg-lime-100 hover:shadow-md",
@@ -307,13 +288,19 @@ function pickFeaturedGames(games: GamesIndexItem[]) {
 export default function GamesIndexClient({
   games,
   summary,
+  variant = "standalone",
+  sectionId = "all-games",
 }: {
   games: GamesIndexItem[];
   summary: GamesIndexSummary;
+  variant?: "standalone" | "embedded";
+  sectionId?: string;
 }) {
-  const [query, setQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("top-payout");
   const [quickFilter, setQuickFilter] = useState<QuickFilter>("all");
+  const searchParams = useSearchParams();
+  const terminalQuery = searchParams.get("q")?.trim() ?? "";
+  const terminalDevice = searchParams.get("device") ?? "";
 
   const latestUpdatedAt = useMemo(
     () =>
@@ -327,18 +314,18 @@ export default function GamesIndexClient({
   const featuredPicks = useMemo(() => pickFeaturedGames(games), [games]);
   const topHeroGames = games.slice(0, 3);
   const categories = useMemo(() => Array.from(new Set(games.map((game) => game.category).filter(Boolean))).slice(0, 7), [games]);
+  const TitleTag = variant === "standalone" ? "h1" : "h2";
+  const browseTarget = `#${sectionId}`;
 
   const visibleGames = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const normalizedQuery = terminalQuery.toLowerCase();
     return [...games]
       .filter((game) => {
         if (quickFilter === "highest-paying" && game.topPayout < 100) return false;
         if (quickFilter === "beginner-friendly" && !isBeginnerFriendly(game)) return false;
-        if (quickFilter === "has-guide" && !getGuideSlug(game)) return false;
-        if (quickFilter === "multiple-providers" && game.providerCount < 3) return false;
-        if (quickFilter === "android" && !supportsPlatform(game, "android")) return false;
-        if (quickFilter === "ios" && !supportsPlatform(game, "ios")) return false;
-        if (quickFilter === "desktop" && !supportsPlatform(game, "desktop")) return false;
+        if (terminalDevice === "android" && !supportsPlatform(game, "android")) return false;
+        if (terminalDevice === "ios" && !supportsPlatform(game, "ios")) return false;
+        if (terminalDevice === "pc" && !supportsPlatform(game, "desktop")) return false;
         if (!normalizedQuery) return true;
         return [game.name, game.bestProvider, game.bestPlatform, game.category]
           .join(" ")
@@ -351,11 +338,11 @@ export default function GamesIndexClient({
         if (sortBy === "name") return a.name.localeCompare(b.name);
         return b.topPayout - a.topPayout || b.offerCount - a.offerCount;
       });
-  }, [games, quickFilter, query, sortBy]);
+  }, [games, quickFilter, sortBy, terminalDevice, terminalQuery]);
 
   if (games.length === 0) {
     return (
-      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-12 text-center shadow-[var(--shadow-card)]">
+      <div className="rounded-none border border-[var(--border-default)] bg-white p-12 text-center shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)]">
         <h1 className="text-xl font-bold text-[var(--brand-ink)]">No games available</h1>
         <p className="mt-2 text-sm text-[var(--text-secondary)]">No tracked games are available yet.</p>
       </div>
@@ -363,100 +350,106 @@ export default function GamesIndexClient({
   }
 
   return (
-    <div className="space-y-8">
-      <header className="overflow-hidden rounded-[2rem] border border-lime-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
-        <div className="grid gap-8 p-5 sm:p-7 lg:grid-cols-[minmax(0,1fr)_26rem] lg:items-center">
-          <div>
-            <p className="section-label mb-3">Game offer discovery</p>
-            <h1 className="max-w-3xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
-              Find the highest-paying game offers
-            </h1>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
-              Compare payouts, difficulty, providers, deadlines, and tracking risk before you start.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setQuickFilter("highest-paying");
-                  setSortBy("top-payout");
-                }}
-                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-extrabold text-lime-300 shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500"
-              >
-                <Trophy className="h-4 w-4" aria-hidden="true" />
-                Highest payout
-              </button>
-              <button
-                type="button"
-                onClick={() => setQuickFilter("beginner-friendly")}
-                className="inline-flex items-center gap-2 rounded-full border border-lime-300 bg-lime-50 px-4 py-2 text-sm font-extrabold text-slate-950 transition-all hover:-translate-y-0.5 hover:bg-lime-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500"
-              >
-                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                Beginner-friendly
-              </button>
-              <button
-                type="button"
-                onClick={() => setSortBy("most-offers")}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-extrabold text-slate-800 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500"
-              >
-                <Zap className="h-4 w-4" aria-hidden="true" />
-                Fastest completion
-              </button>
-            </div>
-
-            <div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Games tracked</p>
-                <p className="mt-1 text-3xl font-black text-slate-950">{summary.totalGames}</p>
-              </div>
-              <div className="rounded-2xl border border-lime-200 bg-lime-50 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-lime-800">Highest payout</p>
-                <p className="mt-1 text-3xl font-black text-slate-950">{money(summary.highestPayout)}</p>
-              </div>
-              <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-sky-800">Available offers</p>
-                <p className="mt-1 text-3xl font-black text-slate-950">{summary.trackedOffers}</p>
-              </div>
-              <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-violet-800">Providers tracked</p>
-                <p className="mt-1 text-3xl font-black text-slate-950">{summary.providersTracked}</p>
-              </div>
-            </div>
-            {latestUpdatedAt ? (
-              <p className="mt-3 text-xs font-semibold text-slate-500">Freshness signal: {formatPayoutFreshness(latestUpdatedAt)}</p>
-            ) : null}
-          </div>
-
-          <div className="rounded-[1.75rem] border border-slate-200 bg-slate-950 p-4 text-white shadow-2xl shadow-slate-900/20">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wide text-lime-300">Top payout today</p>
-                <p className="mt-1 text-3xl font-black">{money(summary.highestPayout)}</p>
-              </div>
-              <div className="rounded-2xl bg-lime-300 p-3 text-slate-950">
-                <BarChart3 className="h-6 w-6" aria-hidden="true" />
-              </div>
-            </div>
-            <div className="mt-5 grid gap-3">
-              {topHeroGames.map((game, index) => (
-                <Link
-                  key={game.id}
-                  href={`/games/${game.slug}`}
-                  className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/8 p-3 transition-all hover:-translate-y-0.5 hover:border-lime-300/70 hover:bg-white/12"
+    <div className={variant === "embedded" ? "space-y-6" : "space-y-8"}>
+      {variant === "standalone" ? (
+        <header className="overflow-hidden rounded-none border border-lime-200 bg-white shadow-[0_20px_65px_rgba(15,23,42,0.08)] transition-all hover:border-lime-300 hover:shadow-[0_24px_70px_rgba(15,23,42,0.12)]">
+          <div className="grid gap-6 p-4 sm:p-6 lg:grid-cols-[minmax(0,1fr)_26rem] lg:items-center">
+            <div>
+              <p className="section-label mb-3">Game offer discovery</p>
+              <TitleTag className="max-w-3xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
+                Find the highest-paying game offers
+              </TitleTag>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                Compare payouts, difficulty, providers, deadlines, and tracking risk before you start.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setQuickFilter("highest-paying");
+                    setSortBy("top-payout");
+                  }}
+                  className="inline-flex items-center gap-2 rounded-none bg-slate-950 px-4 py-2 text-sm font-extrabold text-lime-300 shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500"
                 >
-                  <GameThumbnail title={game.name} imageUrl={getGameImageUrl(game)} category={game.category} platform={game.bestPlatform} variant="hero" priority={index === 0} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400">Featured route</p>
-                    <p className="truncate font-black text-white">{game.name}</p>
-                    <p className="text-xs text-slate-300">{game.providerCount || 1} provider route{game.providerCount !== 1 ? "s" : ""}</p>
-                  </div>
-                  <p className="text-lg font-black text-lime-300">{money(game.topPayout)}</p>
-                </Link>
-              ))}
+                  <Trophy className="h-4 w-4" aria-hidden="true" />
+                  Highest payout
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setQuickFilter("beginner-friendly")}
+                  className="inline-flex items-center gap-2 rounded-none border border-lime-300 bg-lime-50 px-4 py-2 text-sm font-extrabold text-slate-950 transition-all hover:-translate-y-0.5 hover:bg-lime-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500"
+                >
+                  <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+                  Beginner-friendly
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSortBy("most-offers")}
+                  className="inline-flex items-center gap-2 rounded-none border border-slate-200 bg-white px-4 py-2 text-sm font-extrabold text-slate-800 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-lime-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500"
+                >
+                  <Zap className="h-4 w-4" aria-hidden="true" />
+                  Fastest completion
+                </button>
+              </div>
+
+              <div className="mt-7 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-4 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Games tracked</p>
+                  <p className="mt-1 text-3xl font-black text-slate-950">{summary.totalGames}</p>
+                </div>
+                <div className="rounded-none border border-lime-200 bg-lime-50 p-4 transition-all hover:-translate-y-0.5 hover:border-lime-400 hover:bg-white hover:shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-lime-800">Highest payout</p>
+                  <p className="mt-1 text-3xl font-black text-slate-950">{money(summary.highestPayout)}</p>
+                </div>
+                <div className="rounded-none border border-sky-200 bg-sky-50 p-4 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-sky-800">Available offers</p>
+                  <p className="mt-1 text-3xl font-black text-slate-950">{summary.trackedOffers}</p>
+                </div>
+                <div className="rounded-none border border-violet-200 bg-violet-50 p-4 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-violet-800">Providers tracked</p>
+                  <p className="mt-1 text-3xl font-black text-slate-950">{summary.providersTracked}</p>
+                </div>
+              </div>
+              {latestUpdatedAt ? (
+                <p className="mt-3 text-xs font-semibold text-slate-500">Freshness signal: {formatPayoutFreshness(latestUpdatedAt)}</p>
+              ) : null}
+            </div>
+
+            <div className="overflow-hidden rounded-none border border-slate-200 bg-slate-950 p-4 text-white shadow-2xl shadow-slate-900/20 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_24px_70px_rgba(15,23,42,0.25)]">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-lime-300">Top payout today</p>
+                  <p className="mt-1 text-3xl font-black">{money(summary.highestPayout)}</p>
+                </div>
+                <div className="rounded-none bg-lime-300 p-3 text-slate-950">
+                  <BarChart3 className="h-6 w-6" aria-hidden="true" />
+                </div>
+              </div>
+              <div className="mt-5 grid gap-2">
+                {topHeroGames.map((game, index) => (
+                  <Link
+                    key={game.id}
+                    href={`/games/${game.slug}`}
+                    className="group grid grid-cols-[3.5rem_minmax(0,1fr)] gap-3 overflow-hidden rounded-none border border-white/10 bg-white/8 p-3 transition-all hover:-translate-y-0.5 hover:border-lime-300/70 hover:bg-white/12 hover:shadow-[0_16px_40px_rgba(132,204,22,0.18)]"
+                  >
+                    <GameThumbnail title={game.name} imageUrl={getGameImageUrl(game)} category={game.category} platform={game.bestPlatform} variant="hero" priority={index === 0} />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400">Featured route</p>
+                      <p className="line-clamp-1 font-black leading-tight text-white">{game.name}</p>
+                      <div className="mt-1 flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-slate-300">{game.providerCount || 1} provider route{game.providerCount !== 1 ? "s" : ""}</span>
+                        <span className="inline-flex border border-lime-300/30 bg-lime-300/10 px-2 py-0.5 text-xs font-black text-lime-300">
+                          Top payout {money(game.topPayout)}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      ) : null}
 
       <section className="space-y-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -465,59 +458,59 @@ export default function GamesIndexClient({
             <h2 className="mt-2 text-2xl font-black text-slate-950">Best game offers right now</h2>
             <p className="mt-1 text-sm text-slate-600">Dynamic picks from the current tracked game data.</p>
           </div>
-          <AdvancedLink href="#all-games" variant="ghost">
+          <AdvancedLink href={browseTarget} variant="ghost">
             Browse games <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </AdvancedLink>
         </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-3">
           {featuredPicks.map((pick, index) => {
             const guideSlug = getGuideSlug(pick.game);
             const Icon = pick.icon;
             return (
               <article
                 key={`${pick.key}-${pick.game.id}`}
-                className="group relative flex min-h-[28rem] flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-[0_20px_60px_rgba(15,23,42,0.08)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_26px_80px_rgba(15,23,42,0.13)] focus-within:border-lime-400"
+                className="group relative grid grid-cols-[5.5rem_minmax(0,1fr)] gap-3 overflow-hidden rounded-none border border-slate-200 bg-white p-3 shadow-[0_10px_28px_rgba(15,23,42,0.055)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:ring-2 hover:ring-lime-300/35 hover:shadow-[0_16px_40px_rgba(15,23,42,0.09)] focus-within:border-lime-400 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-4 lg:grid-cols-[7rem_minmax(0,1fr)_9rem_7rem_7.25rem_13rem] lg:items-center"
               >
-                <Link href={`/games/${pick.game.slug}`} className="absolute inset-0 rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500" aria-label={`Compare ${pick.game.name} offers`} />
-                <Link href={`/games/${pick.game.slug}`} className="relative z-10 block">
+                <Link href={`/games/${pick.game.slug}`} className="absolute inset-0 rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500" aria-label={`Compare ${pick.game.name} offers`} />
+                <Link href={`/games/${pick.game.slug}`} className="relative z-10 block self-start">
                   <GameThumbnail title={pick.game.name} imageUrl={getGameImageUrl(pick.game)} category={pick.game.category} platform={pick.game.bestPlatform} variant="featured" priority={index < 2} />
                 </Link>
-                <div className="relative z-10 mt-4 flex items-start justify-between gap-3">
-                  <div>
-                    <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-black uppercase tracking-wide ${badgeClass(pick.key === "highest" ? "amber" : pick.key === "providers" ? "blue" : pick.key === "guide" ? "purple" : "lime")}`}>
-                      <Icon className="h-3 w-3" aria-hidden="true" />
-                      {pick.label}
-                    </span>
-                    <h3 className="mt-3 line-clamp-2 text-lg font-black leading-tight text-slate-950">
-                      <Link href={`/games/${pick.game.slug}`} className="relative z-10 hover:text-lime-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">
-                        {pick.game.name}
-                      </Link>
-                    </h3>
+                <div className="relative z-10 min-w-0">
+                  <span className={`inline-flex items-center gap-1 rounded-none border px-2.5 py-1 text-[11px] font-black uppercase tracking-wide ${badgeClass(pick.key === "highest" ? "amber" : pick.key === "providers" ? "blue" : pick.key === "guide" ? "purple" : "lime")}`}>
+                    <Icon className="h-3 w-3" aria-hidden="true" />
+                    {pick.label}
+                  </span>
+                  <h3 className="mt-2 line-clamp-2 text-lg font-black leading-tight text-slate-950 sm:text-xl">
+                    <Link href={`/games/${pick.game.slug}`} className="relative z-10 hover:text-lime-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500">
+                      {pick.game.name}
+                    </Link>
+                  </h3>
+                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-600">
+                    {pick.reason}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    <DifficultyBadge game={pick.game} />
+                    {guideSlug ? <Badge icon={BadgeCheck} label="Guide available" tone="purple" /> : null}
                   </div>
                 </div>
-                <div className="relative z-10 mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3">
-                    <p className="text-xs font-bold uppercase tracking-wide text-amber-800">Max payout</p>
-                    <p className="mt-1 text-3xl font-black text-slate-950">{money(pick.game.topPayout)}</p>
-                  </div>
-                  <div className="rounded-2xl border border-sky-200 bg-sky-50 p-3">
-                    <p className="text-xs font-bold uppercase tracking-wide text-sky-800">Providers</p>
-                    <p className="mt-1 text-3xl font-black text-slate-950">{pick.game.providerCount || 1}</p>
-                  </div>
+                <div className="relative z-10 col-span-2 rounded-none border border-amber-200 bg-amber-50 p-3 transition-all group-hover:border-amber-300 group-hover:bg-white sm:col-span-1">
+                  <p className="text-[11px] font-black uppercase tracking-wide text-amber-800">Max payout</p>
+                  <p className="mt-1 text-2xl font-black text-slate-950">{money(pick.game.topPayout)}</p>
                 </div>
-                <p className="relative z-10 mt-3 text-sm leading-relaxed text-slate-600">
-                  {pick.reason} {pick.game.bestProvider ? `Top route currently appears via ${pick.game.bestProvider}.` : ""}
-                </p>
-                <div className="relative z-10 mt-3 flex flex-wrap gap-1.5">
-                  <DifficultyBadge game={pick.game} />
-                  {guideSlug ? <Badge icon={BadgeCheck} label="Guide available" tone="purple" /> : null}
+                <div className="relative z-10 rounded-none border border-sky-200 bg-sky-50 p-3 transition-all group-hover:border-sky-300 group-hover:bg-white">
+                  <p className="text-[11px] font-black uppercase tracking-wide text-sky-800">Providers</p>
+                  <p className="mt-1 text-2xl font-black text-slate-950">{pick.game.providerCount || 1}</p>
                 </div>
-                <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-5">
-                  <AdvancedLink href={`/games/${pick.game.slug}`} className="flex-1 min-w-[8.5rem]">
+                <div className="relative z-10 flex flex-col gap-2">
+                  <ProviderLogo name={pick.game.bestProvider} src={pick.game.providerLogoUrl} compact className="h-8 w-full max-w-none" />
+                  <PlatformLogoPill name={pick.game.bestPlatform} logoUrl={pick.game.platformLogoUrl} compact />
+                </div>
+                <div className="relative z-10 col-span-2 flex flex-wrap gap-2 lg:col-span-1 lg:flex-col">
+                  <AdvancedLink href={`/games/${pick.game.slug}`} className="min-w-[8.5rem] flex-1">
                     Compare offers <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-0.5" aria-hidden="true" />
                   </AdvancedLink>
                   {guideSlug ? (
-                    <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="flex-1 min-w-[7.5rem]">
+                    <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="min-w-[7.5rem] flex-1">
                       View guide
                     </AdvancedLink>
                   ) : null}
@@ -528,15 +521,16 @@ export default function GamesIndexClient({
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-[var(--shadow-card)]">
-        <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
+      <section className="rounded-none border border-slate-200 bg-white p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)]">
+        <div className="flex flex-col gap-4">
+          <div className="max-w-5xl">
             <p className="section-label">How EarnGrind ranks game offers</p>
-            <p className="mt-2 max-w-4xl text-sm leading-relaxed text-slate-600">
+            <h2 className="mt-2 text-xl font-black text-slate-950">Payout strength, route choice, and tracking risk</h2>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">
               EarnGrind compares available payout, provider count, difficulty, platform availability, guide coverage, and tracking risk signals where available. Always verify the live offer terms before starting because payouts and requirements can change.
             </p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 md:grid-cols-3">
             {[
               { icon: TrendingUp, title: "Compare payout", text: "Start with the strongest tracked route." },
               { icon: Users, title: "Check providers", text: "Look for multiple options before clicking out." },
@@ -544,10 +538,14 @@ export default function GamesIndexClient({
             ].map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                  <Icon className="h-5 w-5 text-lime-700" aria-hidden="true" />
-                  <h3 className="mt-2 text-sm font-black text-slate-950">{item.title}</h3>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-600">{item.text}</p>
+                <div key={item.title} className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3 rounded-none border border-slate-200 bg-slate-50 p-3 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]">
+                  <div className="flex h-9 w-9 items-center justify-center border border-lime-200 bg-lime-50 text-lime-700">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-black text-slate-950">{item.title}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-600">{item.text}</p>
+                  </div>
                 </div>
               );
             })}
@@ -555,125 +553,80 @@ export default function GamesIndexClient({
         </div>
       </section>
 
-      <section id="all-games" className="space-y-4">
-        <div className="sticky top-16 z-20 rounded-3xl border border-slate-200 bg-white/95 p-4 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
-          <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+      <section id={sectionId} className="space-y-4">
+        <div className="rounded-none border border-slate-200 bg-white p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)]">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="section-label">Offer finder</p>
-              <h2 className="text-2xl font-black text-slate-950">Find your next game offer</h2>
+              <p className="section-label">Terminal matched games</p>
+              <h2 className="text-2xl font-black text-slate-950">Game routes from the offer search</h2>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">
+                {terminalQuery
+                  ? `The game list is filtered by "${terminalQuery}" from the Offer search terminal above.`
+                  : "Use the Offer search terminal above to narrow offers; matching game routes stay in this section."}
+              </p>
             </div>
             <p className="text-sm font-semibold text-slate-500">
-              Showing {visibleGames.length} games sorted by {sortBy === "top-payout" ? "highest payout" : sortBy === "most-offers" ? "most offers" : sortBy === "has-guide" ? "guide coverage" : "A to Z"}
+              Showing {visibleGames.length} games sorted by {sortBy === "most-offers" ? "most offers" : "highest payout"}
             </p>
-          </div>
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_13rem]">
-            <label className="relative text-sm font-semibold text-slate-950">
-              <span className="mb-1 block text-xs uppercase tracking-wide text-slate-500">Search games</span>
-              <Search className="pointer-events-none absolute bottom-2.5 left-3 h-4 w-4 text-slate-400" aria-hidden="true" />
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search by game, provider, platform..."
-                className="w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-10 pr-3 text-sm outline-none transition focus:border-lime-400 focus:ring-2 focus:ring-lime-200"
-              />
-            </label>
-            <label className="text-sm font-semibold text-slate-950">
-              <span className="mb-1 block text-xs uppercase tracking-wide text-slate-500">Sort by</span>
-              <select
-                value={sortBy}
-                onChange={(event) => setSortBy(event.target.value as SortOption)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-lime-400 focus:ring-2 focus:ring-lime-200"
-              >
-                <option value="top-payout">Highest payout</option>
-                <option value="most-offers">Most offers</option>
-                <option value="has-guide">Guide available</option>
-                <option value="name">A to Z</option>
-              </select>
-            </label>
-          </div>
-          <p className="mt-3 text-xs font-semibold leading-relaxed text-slate-500">
-            Rankings use tracked max payout, provider count, difficulty, and guide coverage where available. Always verify live offer terms before starting.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {filterLabels.map((filter) => {
-              const Icon = filter.icon;
-              const active = quickFilter === filter.id;
-              return (
-                <button
-                  key={filter.id}
-                  type="button"
-                  onClick={() => setQuickFilter(filter.id)}
-                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-black uppercase tracking-wide transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500 ${
-                    active
-                      ? "border-slate-950 bg-slate-950 text-lime-300 shadow-md"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-lime-300 hover:bg-lime-50"
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-                  {filter.label}
-                </button>
-              );
-            })}
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-3 xl:grid-cols-2">
           {visibleGames.map((game) => {
             const guideSlug = getGuideSlug(game);
             const highlightBadges = getGridHighlightBadges(game);
             return (
               <article
                 key={game.id}
-                className="group relative flex min-h-[18rem] flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.06)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_22px_60px_rgba(15,23,42,0.1)] focus-within:border-lime-400"
+                className="group relative grid gap-3 overflow-hidden rounded-none border border-slate-200 bg-white p-3 shadow-[0_10px_28px_rgba(15,23,42,0.055)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:ring-2 hover:ring-lime-300/35 hover:shadow-[0_16px_40px_rgba(15,23,42,0.09)] focus-within:border-lime-400 sm:grid-cols-[minmax(0,1fr)_9.75rem] sm:items-stretch"
               >
-                <Link href={`/games/${game.slug}`} className="absolute inset-0 rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500" aria-label={`Compare ${game.name} offers`} />
-                <Link href={`/games/${game.slug}`} className="relative z-10 flex items-start gap-3">
-                  <GameThumbnail title={game.name} imageUrl={getGameImageUrl(game)} category={game.category} platform={game.bestPlatform} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-bold uppercase tracking-wide text-slate-500">{game.category || "Game offer"}</p>
-                    <h2 className="mt-1 line-clamp-2 text-lg font-black leading-tight text-slate-950 group-hover:text-lime-700">{game.name}</h2>
-                  </div>
-                  <ArrowRight className="mt-1 h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-lime-700" aria-hidden="true" />
-                </Link>
+                <Link href={`/games/${game.slug}`} className="absolute inset-0 rounded-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-500" aria-label={`Compare ${game.name} offers`} />
+                <div className="relative z-10 flex min-w-0 flex-col justify-between gap-3">
+                  <Link href={`/games/${game.slug}`} className="flex items-start gap-3">
+                    <GameThumbnail title={game.name} imageUrl={getGameImageUrl(game)} category={game.category} platform={game.bestPlatform} />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-bold uppercase tracking-wide text-slate-500">{game.category || "Game offer"}</p>
+                      <h2 className="mt-1 line-clamp-2 text-base font-black leading-tight text-slate-950 group-hover:text-lime-700">{game.name}</h2>
+                      <p className="mt-1 text-[11px] font-semibold leading-tight text-slate-500">{formatPayoutFreshness(game.updatedAt)}</p>
+                    </div>
+                    <ArrowRight className="mt-1 h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-lime-700" aria-hidden="true" />
+                  </Link>
 
-                <div className="relative z-10 mt-4 flex flex-wrap gap-1.5">
-                  {highlightBadges.length > 0 ? (
-                    highlightBadges.slice(0, 3).map((badge) => <Badge key={badge.label} {...badge} />)
-                  ) : (
-                    <GameBadges game={game} compact />
-                  )}
-                </div>
-
-                <div className="relative z-10 mt-5 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3">
-                    <p className="text-xs font-bold uppercase tracking-wide text-amber-800">Max payout</p>
-                    <p className="mt-1 text-2xl font-black text-slate-950">{money(game.topPayout)}</p>
-                  </div>
-                  <div className="rounded-2xl border border-sky-200 bg-sky-50 p-3">
-                    <p className="text-xs font-bold uppercase tracking-wide text-sky-800">Providers</p>
-                    <p className="mt-1 text-2xl font-black text-slate-950">{game.providerCount || 1}</p>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <div className="flex flex-wrap gap-1.5">
+                      {highlightBadges.length > 0 ? (
+                        highlightBadges.slice(0, 2).map((badge) => <Badge key={badge.label} {...badge} />)
+                      ) : (
+                        <GameBadges game={game} compact />
+                      )}
+                    </div>
+                    <ProviderLogo name={game.bestProvider} src={game.providerLogoUrl} compact className="h-7 w-[6.5rem] max-w-full" />
+                    <PlatformLogoPill name={game.bestPlatform} logoUrl={game.platformLogoUrl} compact />
                   </div>
                 </div>
 
-                <div className="relative z-10 mt-4 space-y-1 text-sm text-slate-600">
-                  <p>
-                    Best provider: <span className="font-bold text-slate-950">{game.bestProvider}</span>
-                  </p>
-                  <p>
-                    Platform route: <span className="font-bold text-slate-950">{game.bestPlatform}</span>
-                  </p>
-                  <p className="text-xs font-semibold text-slate-500">{formatPayoutFreshness(game.updatedAt)}</p>
-                </div>
-
-                <div className="relative z-10 mt-auto flex flex-wrap gap-2 pt-5">
-                  <AdvancedLink href={`/games/${game.slug}`} className="flex-1 min-w-[8.5rem]">
-                    Compare offers <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-0.5" aria-hidden="true" />
-                  </AdvancedLink>
-                  {guideSlug ? (
-                    <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="flex-1 min-w-[7.5rem]">
-                      View guide
+                <div className="relative z-10 grid border border-slate-900 bg-slate-950 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                  <div className="border-b border-white/10 p-2.5">
+                    <p className="text-[10px] font-black uppercase tracking-wide text-lime-300">Max payout</p>
+                    <p className="mt-1 text-xl font-black leading-none text-white">{money(game.topPayout)}</p>
+                  </div>
+                  <div className="grid grid-cols-[1fr_auto] items-center gap-2 border-b border-white/10 px-2.5 py-2">
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-wide text-sky-200">Providers</p>
+                      <p className="text-lg font-black leading-none text-white">{game.providerCount || 1}</p>
+                    </div>
+                    {guideSlug ? <span className="border border-lime-300/60 px-2 py-1 text-[10px] font-black uppercase tracking-wide text-lime-200">Guide</span> : null}
+                  </div>
+                  <div className="grid gap-2 p-1.5">
+                    <AdvancedLink href={`/games/${game.slug}`} className="min-h-8 px-3 py-1.5 text-xs">
+                      Compare <ArrowRight className="h-4 w-4 transition-transform group-hover/cta:translate-x-0.5" aria-hidden="true" />
                     </AdvancedLink>
-                  ) : null}
+                    {guideSlug ? (
+                      <AdvancedLink href={`/guides/${guideSlug}`} variant="secondary" className="min-h-8 border-white/40 bg-white px-3 py-1.5 text-xs text-slate-950 hover:bg-lime-50">
+                        View guide
+                      </AdvancedLink>
+                    ) : null}
+                  </div>
                 </div>
               </article>
             );
@@ -681,14 +634,14 @@ export default function GamesIndexClient({
         </div>
 
         {visibleGames.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--border-default)] bg-white p-8 text-center shadow-[var(--shadow-card)]">
+          <div className="rounded-none border border-[var(--border-default)] bg-white p-8 text-center shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)]">
             <h2 className="text-lg font-extrabold text-[var(--brand-ink)]">No games match those filters</h2>
             <p className="mt-2 text-sm text-[var(--text-secondary)]">Clear the search or try another quick filter.</p>
           </div>
         ) : null}
       </section>
 
-      <section className="overflow-hidden rounded-[2rem] border border-lime-200 bg-[linear-gradient(135deg,#f7fee7,#ffffff_52%,#ecfeff)] p-6 shadow-[0_22px_70px_rgba(15,23,42,0.08)] sm:p-8">
+      <section className="overflow-hidden rounded-none border border-lime-200 bg-[linear-gradient(135deg,#f7fee7,#ffffff_52%,#ecfeff)] p-6 shadow-[0_22px_70px_rgba(15,23,42,0.08)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_26px_80px_rgba(15,23,42,0.12)] sm:p-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <p className="section-label">Next step</p>
@@ -697,7 +650,7 @@ export default function GamesIndexClient({
               Compare the highest-paying games, check tracking basics, and read route guides before spending time or money.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <AdvancedLink href="#all-games">
+              <AdvancedLink href={browseTarget}>
                 Browse highest-paying games <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </AdvancedLink>
               <AdvancedLink href="/guides" variant="secondary">
@@ -709,15 +662,15 @@ export default function GamesIndexClient({
             </div>
           </div>
           <div className="grid grid-cols-3 gap-3 text-center">
-            <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
+            <div className="rounded-none border border-white/70 bg-white/80 p-4 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]">
               <p className="text-2xl font-black text-slate-950">{summary.totalGames}</p>
               <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Games</p>
             </div>
-            <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
+            <div className="rounded-none border border-white/70 bg-white/80 p-4 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]">
               <p className="text-2xl font-black text-slate-950">{summary.trackedOffers}</p>
               <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Offers</p>
             </div>
-            <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
+            <div className="rounded-none border border-white/70 bg-white/80 p-4 transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]">
               <p className="text-2xl font-black text-slate-950">{summary.guidesAvailable}</p>
               <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Guides</p>
             </div>
@@ -726,7 +679,7 @@ export default function GamesIndexClient({
         {categories.length > 0 ? (
           <div className="mt-6 flex flex-wrap gap-2">
             {categories.map((category) => (
-              <span key={category} className="rounded-full border border-lime-200 bg-white/80 px-3 py-1 text-xs font-bold text-slate-600">
+              <span key={category} className="rounded-none border border-lime-200 bg-white/80 px-3 py-1 text-xs font-bold text-slate-600">
                 {category}
               </span>
             ))}

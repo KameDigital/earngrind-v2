@@ -66,7 +66,7 @@ async function buildCandidateUrls(currentSitemapUrls) {
     "/guides",
     "/guides/how-to-earn",
     "/blog",
-    "/platforms",
+    "/best-gpt-sites",
   ]) {
     urls.add(`${siteUrl}${path === "/" ? "" : path}`);
   }

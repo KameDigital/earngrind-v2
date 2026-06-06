@@ -1,10 +1,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import React, { Suspense } from 'react';
+import GamesIndexClient from '@/app/(seo)/games/GamesIndexClient';
 import OfferSearchEngine from '@/components/offers/OfferSearchEngine';
 import Container from '@/components/layout/Container';
 import { canonicalAlternates } from '@/lib/seo-metadata';
 import { EARNLAB_COUNTRY_NAMES, EARNLAB_GALLERY_COUNTRIES } from '@/lib/earnlab-countries';
+import { getGamesIndexData } from '@/lib/games-index-data';
 import { fetchPublicOffers, publicOfferFiltersFromSearchParams } from '@/lib/public-offer-search';
 import { PUBLIC_GAIN_WALLS, type GainGalleryWall } from '@/lib/gain-gallery';
 import { GEMSLOOT_PUBLIC_PROVIDERS } from '@/lib/gemsloot-providers';
@@ -12,12 +14,12 @@ import { GEMSLOOT_PUBLIC_PROVIDERS } from '@/lib/gemsloot-providers';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-    title: 'Compare High-Paying Offers | EarnGrind',
-    description: 'Compare current payouts, filter live offer opportunities, and find the best-paying games, signup routes, and tasks faster.',
+    title: 'Compare High-Paying Offers and Games | EarnGrind',
+    description: 'Compare current offer payouts, search live GPT opportunities, and browse the highest-paying game offers from one EarnGrind hub.',
     alternates: canonicalAlternates('/offers'),
     openGraph: {
-        title: 'Compare High-Paying Offers | EarnGrind',
-        description: 'Compare current payouts, filter live offer opportunities, and find the best-paying games, signup routes, and tasks faster.',
+        title: 'Compare High-Paying Offers and Games | EarnGrind',
+        description: 'Compare current offer payouts, search live GPT opportunities, and browse the highest-paying game offers from one EarnGrind hub.',
         url: 'https://earngrind.com/offers',
         siteName: 'EarnGrind',
         images: [
@@ -32,8 +34,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Compare High-Paying Offers | EarnGrind',
-        description: 'Compare current payouts, filter live offer opportunities, and find the best-paying games, signup routes, and tasks faster.',
+        title: 'Compare High-Paying Offers and Games | EarnGrind',
+        description: 'Compare current offer payouts, search live GPT opportunities, and browse the highest-paying game offers from one EarnGrind hub.',
         images: ['/og-earngrind.png'],
     },
 };
@@ -61,6 +63,7 @@ function initialOfferQueryString(searchParams: URLSearchParams): string {
     if (!params.has("country")) params.set("country", "US");
     if (!params.has("sort")) params.set("sort", "payout_desc");
     if (!params.has("page")) params.set("page", "1");
+    if (!params.has("per_page")) params.set("per_page", "4");
     return params.toString();
 }
 
@@ -114,24 +117,27 @@ const POPULAR_OFFER_ROUTE_LINKS = [
 export default async function OffersPage({ searchParams }: OffersPageProps) {
     const initialSearchParams = pageSearchParamsToUrlSearchParams(searchParams);
     const initialQueryString = initialOfferQueryString(initialSearchParams);
-    const initialOffers = await fetchPublicOffers({
-        ...publicOfferFiltersFromSearchParams(new URLSearchParams(initialQueryString)),
-        country: initialSearchParams.get("country") ?? "US",
-    });
+    const [initialOffers, gamesIndex] = await Promise.all([
+        fetchPublicOffers({
+            ...publicOfferFiltersFromSearchParams(new URLSearchParams(initialQueryString)),
+            country: initialSearchParams.get("country") ?? "US",
+        }),
+        getGamesIndexData(),
+    ]);
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-6 sm:pt-10">
             <Container>
                 {/* Page Header */}
-                <div className="mb-5 sm:mb-8">
+                <div className="mb-5">
                     <p className="section-label mb-2">Offers</p>
                     <h1 className="text-2xl sm:text-4xl font-extrabold text-[var(--brand-ink)] tracking-tight mb-2">
-                        Compare high-paying offers faster
+                        Compare high-paying offers and games faster
                     </h1>
                     <p className="text-sm sm:text-lg text-[var(--text-secondary)] max-w-3xl leading-relaxed">
-                        Scan current payouts, compare platforms, and open the best route into each game or offer before you waste time on lower-value tasks.
+                        Search live GPT offers, scan current payouts, compare platforms, and browse game routes from one consolidated EarnGrind hub.
                     </p>
-                    <p className="mt-3 max-w-3xl rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-xs font-semibold leading-relaxed text-[var(--text-secondary)] shadow-[var(--shadow-card)]">
+                    <p className="mt-3 max-w-3xl rounded-none border border-[var(--border-default)] bg-white px-4 py-2.5 text-xs font-semibold leading-relaxed text-[var(--text-secondary)] shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]">
                         EarnGrind is the comparison layer. Partner GPT sites and offerwalls handle eligibility, tracking, approval, and payouts after you click out.
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
@@ -142,13 +148,43 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                         ].map((item) => (
                             <span
                                 key={item}
-                                className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] shadow-[var(--shadow-card)]"
+                                className="inline-flex items-center rounded-none border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] shadow-[var(--shadow-card)]"
                             >
                                 {item}
                             </span>
                         ))}
                     </div>
                 </div>
+
+                <section id="offer-search" className="mb-8 scroll-mt-24" aria-labelledby="offer-search-heading">
+                    <div className="mb-3 max-w-4xl">
+                        <p className="section-label mb-2">Offer search terminal</p>
+                        <h2 id="offer-search-heading" className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-2xl">
+                            Search live offers by payout, site, source, device, and country
+                        </h2>
+                        <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                            Use this offer search terminal to compare current GPT offer payouts, filter games and tasks by device or country, and find the strongest route before opening a partner site.
+                        </p>
+                    </div>
+                    <Suspense fallback={null}>
+                        <OfferSearchEngine
+                            initialOffers={initialOffers.data}
+                            initialMeta={initialOffers.meta}
+                            initialQueryString={initialQueryString}
+                        />
+                    </Suspense>
+                </section>
+
+                <section id="games" className="mb-8 scroll-mt-24">
+                    <div>
+                        <GamesIndexClient
+                            games={gamesIndex.games}
+                            summary={gamesIndex.summary}
+                            variant="embedded"
+                            sectionId="games-list"
+                        />
+                    </div>
+                </section>
 
                 <section
                     className="mb-6 sm:mb-8"
@@ -165,7 +201,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                     </div>
 
                     <div className="mt-5 grid gap-4 lg:grid-cols-3">
-                        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                        <div className="group rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] p-4 transition-all hover:-translate-y-1 hover:border-lime-300 hover:bg-white hover:ring-2 hover:ring-lime-300/35 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)]">
                             <div className="flex items-start justify-between gap-3">
                                 <div>
                                     <h3 className="font-extrabold text-[var(--brand-ink)]">Gain.gg offers</h3>
@@ -182,7 +218,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                                     <Link
                                         key={link.href}
                                         href={link.href}
-                                        className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                        className="inline-flex items-center rounded-none border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
                                     >
                                         {link.label}
                                     </Link>
@@ -190,7 +226,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                             </div>
                         </div>
 
-                        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                        <div className="group rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] p-4 transition-all hover:-translate-y-1 hover:border-lime-300 hover:bg-white hover:ring-2 hover:ring-lime-300/35 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)]">
                             <div className="flex items-start justify-between gap-3">
                                 <div>
                                     <h3 className="font-extrabold text-[var(--brand-ink)]">Gemsloot providers</h3>
@@ -207,7 +243,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                                     <Link
                                         key={link.href}
                                         href={link.href}
-                                        className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                        className="inline-flex items-center rounded-none border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
                                     >
                                         {link.label}
                                     </Link>
@@ -215,7 +251,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                             </div>
                         </div>
 
-                        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                        <div className="group rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] p-4 transition-all hover:-translate-y-1 hover:border-lime-300 hover:bg-white hover:ring-2 hover:ring-lime-300/35 hover:shadow-[0_18px_45px_rgba(15,23,42,0.1)]">
                             <div className="flex items-start justify-between gap-3">
                                 <div>
                                     <h3 className="font-extrabold text-[var(--brand-ink)]">EarnLab countries</h3>
@@ -232,7 +268,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                                     <Link
                                         key={link.href}
                                         href={link.href}
-                                        className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                        className="inline-flex items-center rounded-none border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
                                     >
                                         {link.label}
                                     </Link>
@@ -250,7 +286,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="inline-flex items-center rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
+                                    className="inline-flex items-center rounded-none border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] transition-colors hover:border-[var(--brand-lime)]/50 hover:bg-[var(--brand-lime)]/10 hover:text-[var(--brand-ink)]"
                                 >
                                     {link.label}
                                 </Link>
@@ -258,15 +294,6 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                         </div>
                     </div>
                 </section>
-
-                {/* Main Client UI */}
-                <Suspense fallback={null}>
-                    <OfferSearchEngine
-                        initialOffers={initialOffers.data}
-                        initialMeta={initialOffers.meta}
-                        initialQueryString={initialQueryString}
-                    />
-                </Suspense>
             </Container>
         </main>
     );

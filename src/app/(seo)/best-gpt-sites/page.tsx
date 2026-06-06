@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeDollarSign, BookOpen, CheckCircle2, Search, ShieldCheck, SlidersHorizontal, Trophy } from "lucide-react";
+import { ArrowRight, BadgeDollarSign, Search, SlidersHorizontal } from "lucide-react";
 import Container from "@/components/layout/Container";
+import Card from "@/components/ui/Card";
+import RatingPill from "@/components/ui/RatingPill";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
-import FAQSection from "../components/FAQSection";
-import OfferTable from "../components/OfferTable";
-import ProviderComparison from "../components/ProviderComparison";
 import { getBestPageData, getBestPageMetadata } from "../_lib/best-pages";
 import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
 import { GPT_SITE_GUIDES } from "@/lib/gpt-site-guides";
+import { getSiteUrl } from "@/lib/site-url";
+import { STATIC_GUIDES } from "@/lib/static-guides";
 
 export const revalidate = 3600;
 
@@ -27,12 +28,32 @@ export const metadata: Metadata = getBestPageMetadata(config);
 type PlatformCard = (typeof GPT_AFFILIATE_PLATFORMS)[number];
 type GptGuide = (typeof GPT_SITE_GUIDES)[number];
 
+interface ReviewPlatform {
+  id: string;
+  name: string;
+  slug: string;
+  logo_url: string | null;
+  platform_kind: string;
+}
+
+interface ReviewSummary {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  rating_overall: number | null;
+  rating_payout: number | null;
+  rating_ux: number | null;
+  rating_trust: number | null;
+  platforms: ReviewPlatform | null;
+}
+
+const BASE_URL = getSiteUrl();
+
 const anchorLinks = [
   { href: "#best-sites", label: "Best Sites" },
+  { href: "#platform-reviews", label: "Reviews" },
   { href: "#site-guides", label: "Site Guides" },
-  { href: "#live-payouts", label: "Live Offers" },
-  { href: "#provider-comparison", label: "Provider Comparison" },
-  { href: "#faq", label: "FAQ" },
 ];
 
 const platformLabels: Record<string, string> = {
@@ -57,6 +78,25 @@ function getPublishedPlatformGuide(platform: PlatformCard, guides: GptGuide[]) {
 
 function getPlatformImage(platform: PlatformCard) {
   return getPlatformGuide(platform)?.screenshot ?? `/images/guides/gpt-sites/${platform.slug}.png`;
+}
+
+async function getReviews(): Promise<ReviewSummary[]> {
+  try {
+    const res = await fetch(`${BASE_URL}/api/reviews`, {
+      next: { revalidate: 120 },
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return json.data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+function ratingLabel(review: ReviewSummary) {
+  if ((review.rating_trust ?? 0) >= 4) return "Strong trust signal";
+  if ((review.rating_payout ?? 0) >= 4) return "Strong payout signal";
+  return "Read review before starting";
 }
 
 function StatCard({ label, value, detail }: { label: string; value: string; detail: string }) {
@@ -87,6 +127,67 @@ function TrustBox() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+function ReferralCtaRail({ platforms }: { platforms: PlatformCard[] }) {
+  if (platforms.length === 0) return null;
+
+  return (
+    <div className="mt-5 grid gap-2 sm:grid-cols-3">
+      {platforms.slice(0, 3).map((platform) => (
+        <Link
+          key={platform.id}
+          href={buildTrackedPlatformHref(platform, "best_gpt_sites_hero_referral_rail")}
+          prefetch={false}
+          className="group flex min-h-[86px] flex-col justify-between rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-left transition hover:-translate-y-px hover:border-lime-400 hover:bg-lime-100"
+        >
+          <span className="text-[10px] font-extrabold uppercase tracking-wide text-lime-800">
+            Tracked referral
+          </span>
+          <span className="mt-1 flex items-center justify-between gap-3 text-sm font-extrabold text-[var(--brand-ink)]">
+            {platform.cta}
+            <ArrowRight className="h-4 w-4 flex-none transition group-hover:translate-x-0.5" aria-hidden="true" />
+          </span>
+          <span className="mt-1 text-xs font-semibold leading-relaxed text-[var(--text-secondary)]">
+            {platform.bestFor}
+          </span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function StickyReferralBar({ platform }: { platform: PlatformCard | null }) {
+  if (!platform) return null;
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-lime-200 bg-white/95 px-4 py-3 shadow-[0_-8px_28px_rgba(15,23,42,0.08)] backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-[10px] font-extrabold uppercase tracking-wide text-lime-700">Ready to start?</p>
+          <p className="truncate text-sm font-extrabold text-[var(--brand-ink)]">
+            Join {platform.name} with EarnGrind tracking
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-none">
+          <Link
+            href="#best-sites"
+            className="inline-flex items-center justify-center rounded-xl border border-[var(--border-default)] bg-white px-3 py-2 text-xs font-extrabold text-[var(--brand-ink)] transition hover:border-lime-300"
+          >
+            Compare first
+          </Link>
+          <Link
+            href={buildTrackedPlatformHref(platform, "best_gpt_sites_sticky_signup")}
+            prefetch={false}
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[var(--brand-ink)] px-3 py-2 text-xs font-extrabold text-[var(--brand-lime)] transition hover:-translate-y-px"
+          >
+            {platform.cta}
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
@@ -207,6 +308,93 @@ function GptGuideCard({ guide }: { guide: GptGuide }) {
   );
 }
 
+function PlatformReviewCard({ review }: { review: ReviewSummary }) {
+  const platform = review.platforms;
+
+  return (
+    <Card className="flex flex-col gap-4 transition-transform hover:-translate-y-0.5">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
+          {platform?.logo_url ? (
+            <Image
+              src={platform.logo_url}
+              alt={platform.name}
+              width={36}
+              height={36}
+              className="h-9 w-9 flex-shrink-0 rounded-lg border border-[var(--border-default)] object-cover"
+            />
+          ) : (
+            <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)]">
+              <span className="text-[10px] font-bold text-[var(--text-tertiary)]">
+                {platform?.name.substring(0, 2) ?? "PR"}
+              </span>
+            </div>
+          )}
+          <div className="min-w-0">
+            <h3 className="truncate font-extrabold text-[var(--brand-ink)]">
+              {platform?.name ?? review.title}
+            </h3>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-tertiary)]">
+              Platform review
+            </p>
+          </div>
+        </div>
+        {review.rating_overall != null ? <RatingPill rating={review.rating_overall} /> : null}
+      </div>
+
+      <div className="flex-1">
+        <p className="text-sm font-bold text-[var(--brand-ink)]">{ratingLabel(review)}</p>
+        {review.excerpt ? (
+          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+            {review.excerpt}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 border-y border-[var(--border-default)] py-3 text-center text-xs">
+        <div>
+          <p className="font-bold text-[var(--brand-ink)]">{review.rating_payout?.toFixed(1) ?? "?"}</p>
+          <p className="text-[var(--text-tertiary)]">Payout</p>
+        </div>
+        <div>
+          <p className="font-bold text-[var(--brand-ink)]">{review.rating_ux?.toFixed(1) ?? "?"}</p>
+          <p className="text-[var(--text-tertiary)]">UX</p>
+        </div>
+        <div>
+          <p className="font-bold text-[var(--brand-ink)]">{review.rating_trust?.toFixed(1) ?? "?"}</p>
+          <p className="text-[var(--text-tertiary)]">Trust</p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3 text-sm">
+        <Link href={`/review/${review.slug}`} className="font-bold text-lime-600 hover:text-lime-700">
+          Read full review
+        </Link>
+        {platform ? (
+          <Link href={`/offers?q=${encodeURIComponent(platform.name)}`} className="font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)]">
+            View offers
+          </Link>
+        ) : null}
+      </div>
+    </Card>
+  );
+}
+
+function StaticPlatformReviewCard({ guide }: { guide: (typeof STATIC_GUIDES)[number] }) {
+  return (
+    <Card className="flex flex-col gap-4 transition-transform hover:-translate-y-0.5">
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-tertiary)]">Platform review</p>
+        <h3 className="mt-1 font-extrabold text-[var(--brand-ink)]">{guide.title}</h3>
+      </div>
+      <p className="flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">{guide.description}</p>
+      <Link href={guide.href} className="font-bold text-lime-600 hover:text-lime-700">
+        {guide.ctaLabel}
+      </Link>
+    </Card>
+  );
+}
+
 function ComparisonTable({ platforms, guides }: { platforms: PlatformCard[]; guides: GptGuide[] }) {
   return (
     <section className="space-y-4 rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
@@ -264,27 +452,21 @@ function ComparisonTable({ platforms, guides }: { platforms: PlatformCard[]; gui
 }
 
 export default async function BestGptSitesPage() {
-  const { rows, providerRows } = await getBestPageData(config);
+  const [{ rows }, reviews] = await Promise.all([
+    getBestPageData(config),
+    getReviews(),
+  ]);
   const primaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "primary");
   const secondaryPlatforms = GPT_AFFILIATE_PLATFORMS.filter((platform) => platform.priority === "secondary");
   const recommendedPlatforms = [...primaryPlatforms, ...secondaryPlatforms];
   const publishedGuides = GPT_SITE_GUIDES.filter((guide) => guide.status !== "draft");
+  const staticPlatformReviews = STATIC_GUIDES.filter((guide) => guide.contentType === "platform_review");
+  const reviewCount = reviews.length + staticPlatformReviews.length;
+  const topReviewed = [...reviews]
+    .filter((review) => review.rating_overall != null)
+    .sort((a, b) => (b.rating_overall ?? 0) - (a.rating_overall ?? 0))[0] ?? null;
   const heroPlatform = primaryPlatforms[0] ?? null;
 
-  const faqItems = [
-    {
-      question: "What makes a GPT site worth joining?",
-      answer: "Start with payout strength, then check review coverage, trust signals, and whether the site consistently shows strong live offers for the games you want.",
-    },
-    {
-      question: "Should I read a review before clicking into offers?",
-      answer: "If you are new to a platform, yes. Reviews help you sanity-check payout quality, trust, and user experience before you commit time to that site.",
-    },
-    {
-      question: "Does the best site stay the same?",
-      answer: "No. Offer values move, so the best route can change. Use this page to compare current payout strength before you choose where to start.",
-    },
-  ];
   const schemas = [
     buildBreadcrumbList([
       { name: "Home", path: "/" },
@@ -305,6 +487,7 @@ export default async function BestGptSitesPage() {
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
       <JsonLd data={schemas} />
+      <StickyReferralBar platform={heroPlatform} />
       <Container className="space-y-8">
         <section className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
           <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]" aria-label="Breadcrumb">
@@ -321,9 +504,10 @@ export default async function BestGptSitesPage() {
               <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--text-secondary)]">
                 EarnGrind compares payout quality, trust signals, live offer inventory, and redemption fit so you can pick a GPT site before committing time to a task.
               </p>
+              <ReferralCtaRail platforms={primaryPlatforms} />
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link
-                  href="#live-payouts"
+                  href="/offers"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                 >
                   Find GPT offers <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -361,8 +545,8 @@ export default async function BestGptSitesPage() {
             />
             <StatCard
               label="Reviewed platforms"
-              value={String(recommendedPlatforms.length)}
-              detail="Curated GPT platforms with guide, trust, and payout context."
+              value={String(Math.max(reviewCount, recommendedPlatforms.length))}
+              detail={topReviewed?.platforms?.name ? `Top reviewed: ${topReviewed.platforms.name}.` : "Curated GPT platforms with guide, trust, and payout context."}
             />
             <StatCard
               label="Guides available"
@@ -392,7 +576,7 @@ export default async function BestGptSitesPage() {
             title="Recommended GPT sites"
             copy="These tracked outbound links may earn EarnGrind a commission. Use them after checking payout freshness, country eligibility, and reward fit."
             action={
-              <Link href="/platforms" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400">
+              <Link href="#platform-reviews" className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400">
                 Browse Platform Reviews
               </Link>
             }
@@ -407,6 +591,29 @@ export default async function BestGptSitesPage() {
               <RecommendedPlatformCard key={platform.id} platform={platform} />
             ))}
           </div>
+        </section>
+
+        <section id="platform-reviews" className="space-y-5 scroll-mt-24">
+          <SectionHeader
+            eyebrow="Platform reviews"
+            title="Individual GPT site ratings and trust summaries"
+            copy="Use these cards when you want a review-level look at payout quality, UX, and trust before choosing a recommended GPT site or live offer route."
+          />
+          {reviewCount === 0 ? (
+            <div className="rounded-2xl border border-[var(--border-default)] bg-white p-12 text-center shadow-[var(--shadow-card)] sm:p-16">
+              <h2 className="mb-2 text-lg font-bold text-[var(--brand-ink)]">No platform reviews yet</h2>
+              <p className="text-[var(--text-tertiary)]">Check back soon. Platform reviews are added as they are published.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {staticPlatformReviews.map((guide) => (
+                <StaticPlatformReviewCard key={guide.slug} guide={guide} />
+              ))}
+              {reviews.map((review) => (
+                <PlatformReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          )}
         </section>
 
         <section id="site-guides" className="space-y-5 scroll-mt-24">
@@ -427,70 +634,20 @@ export default async function BestGptSitesPage() {
           </div>
         </section>
 
-        <section id="live-payouts" className="space-y-4 scroll-mt-24">
-          <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
-            <div className="grid gap-5 lg:grid-cols-[1fr_280px] lg:items-center">
-              <div>
-                <p className="section-label">Compare live payouts</p>
-                <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">Top GPT site routes and live offers</h2>
-                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)]">
-                  Offer values are dynamic and can vary by provider, country, device, account history, and task terms. Start with the strongest visible routes, then expand provider sections when you need more depth.
-                </p>
-              </div>
-              <div className="grid gap-2 rounded-xl border border-lime-200 bg-lime-50 p-4 text-sm">
-                <div className="flex items-center gap-2 font-extrabold text-[var(--brand-ink)]">
-                  <Trophy className="h-4 w-4 text-lime-700" aria-hidden="true" />
-                  Top offers stay visible first
-                </div>
-                <div className="flex items-center gap-2 font-extrabold text-[var(--brand-ink)]">
-                  <CheckCircle2 className="h-4 w-4 text-lime-700" aria-hidden="true" />
-                  Provider groups stay collapsible
-                </div>
-                <div className="flex items-center gap-2 font-extrabold text-[var(--brand-ink)]">
-                  <ShieldCheck className="h-4 w-4 text-lime-700" aria-hidden="true" />
-                  Tracking links are preserved
-                </div>
-              </div>
-            </div>
+        <section className="space-y-4">
+          <SectionHeader
+            eyebrow="More routes"
+            title="Keep comparing high-intent offer pages"
+            copy="Use these focused pages when you want to compare live payout routes before joining a platform or starting a game offer."
+          />
+          <div className="flex flex-wrap gap-2 text-sm">
+            <Link className="rounded-lg border border-[var(--border-default)] bg-white px-3 py-1.5 font-bold text-[var(--brand-ink)] hover:border-lime-300 hover:bg-lime-50" href="/best-freecash-games">Best Freecash Games</Link>
+            <Link className="rounded-lg border border-[var(--border-default)] bg-white px-3 py-1.5 font-bold text-[var(--brand-ink)] hover:border-lime-300 hover:bg-lime-50" href="/best-gain-gg-offers">Best Gain.gg Offers</Link>
+            <Link className="rounded-lg border border-[var(--border-default)] bg-white px-3 py-1.5 font-bold text-[var(--brand-ink)] hover:border-lime-300 hover:bg-lime-50" href="/highest-paying-gpt-games">Highest Paying GPT Games</Link>
+            <Link className="rounded-lg border border-[var(--border-default)] bg-white px-3 py-1.5 font-bold text-[var(--brand-ink)] hover:border-lime-300 hover:bg-lime-50" href="/offers">All Live Offers</Link>
           </div>
-          <OfferTable rows={rows} />
         </section>
 
-        <section id="provider-comparison" className="space-y-4 scroll-mt-24">
-          <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-            <SectionHeader
-              eyebrow="Provider comparison"
-              title="Compare the offer providers behind each route"
-              copy="Use this snapshot to see which providers surface strong GPT payouts, then use the live route table above to choose your entry point."
-            />
-          </div>
-          <ProviderComparison rows={providerRows} />
-        </section>
-
-        <section id="faq" className="scroll-mt-24">
-          <FAQSection items={faqItems} />
-        </section>
-
-        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-          <div className="flex items-start gap-3">
-            <BookOpen className="mt-1 h-5 w-5 flex-none text-lime-700" aria-hidden="true" />
-            <div>
-              <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Keep exploring</h2>
-              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                Use these pages if you want to go deeper into platform trust, live offers, or game-level payout decisions before you start.
-              </p>
-            </div>
-          </div>
-          <div className="mt-4 flex flex-wrap gap-2 text-sm">
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/platforms">Platform Reviews</Link>
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/offers">All Offers</Link>
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/guides">Game Guides</Link>
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/highest-paying-gpt-games">Highest Paying GPT Games</Link>
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/best-money-making-games">Best Money-Making Games</Link>
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/best-freecash-games">Best Freecash Games</Link>
-            <Link className="rounded-lg border border-[var(--border-default)] px-3 py-1.5 hover:bg-[var(--surface-muted)]" href="/best-gain-gg-offers">Best Gain.gg Offers</Link>
-          </div>
-        </section>
       </Container>
     </main>
   );

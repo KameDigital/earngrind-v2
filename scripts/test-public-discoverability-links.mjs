@@ -11,6 +11,7 @@ function read(path) {
 
 const offersPageSource = read("src/app/offers/page.tsx");
 const guidesPageSource = read("src/app/guides/page.tsx");
+const bestGptSitesPageSource = read("src/app/(seo)/best-gpt-sites/page.tsx");
 const platformsPageSource = read("src/app/platforms/page.tsx");
 const footerSource = read("src/components/layout/Footer.tsx");
 
@@ -34,15 +35,29 @@ for (const href of [
   assert(offersPageSource.includes(href), `offers hub should link ${href}`);
 }
 
-for (const href of ["/guides/how-to-earn", "/guides/best-gpt-sites", "/best-gpt-sites", "/platforms"]) {
+for (const href of ["/guides/how-to-earn", "/guides/best-gpt-sites", "/best-gpt-sites"]) {
   assert(guidesPageSource.includes(href), `guides hub should link ${href}`);
 }
 
-for (const href of ["/best-gpt-sites", "/guides/best-gpt-sites", "/best-gain-gg-offers", "/best-freecash-games"]) {
-  assert(platformsPageSource.includes(href), `platforms hub should link ${href}`);
+assert(
+  guidesPageSource.includes("/best-gpt-sites#platform-reviews"),
+  "guides hub should link the combined platform reviews section",
+);
+
+assert(
+  platformsPageSource.includes('permanentRedirect("/best-gpt-sites")'),
+  "platforms route should redirect to the combined Best GPT Sites page",
+);
+
+for (const href of ["/guides/best-gpt-sites", "#platform-reviews"]) {
+  assert(bestGptSitesPageSource.includes(href), `best GPT sites page should link ${href}`);
 }
 
-for (const href of ["/best-gpt-sites", "/guides/how-to-earn"]) {
+for (const removedHref of ["#live-payouts", "#provider-comparison", "#faq"]) {
+  assert(!bestGptSitesPageSource.includes(removedHref), `best GPT sites page should not link removed section ${removedHref}`);
+}
+
+for (const href of ["/best-gpt-sites", "/best-gpt-sites#platform-reviews", "/guides/how-to-earn"]) {
   assert(footerSource.includes(href), `footer should expose evergreen hub ${href}`);
 }
 

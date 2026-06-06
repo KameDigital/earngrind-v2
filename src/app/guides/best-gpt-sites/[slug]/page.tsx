@@ -154,6 +154,7 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
     const featureAudits = getGptSiteFeatureAudits(guide.slug);
     const navigationAudit = getGptSiteNavigationAudit(guide.slug);
     const readerInterests = getGptSiteReaderInterests(guide.slug);
+    const bottomSignupHref = getGptSiteTrackedHref(guide, `gpt_site_guide_${guide.slug}_bottom_recap`);
 
     return (
         <main className="min-h-screen overflow-x-hidden bg-[var(--surface-muted)] pb-24 pt-8 sm:pt-10">
@@ -479,6 +480,36 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
                                         <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{item.answer}</p>
                                     </details>
                                 ))}
+                            </div>
+                        </section>
+
+                        <section className={`rounded-2xl border ${accent.border} ${accent.soft} p-5 shadow-[var(--shadow-card)] sm:p-6`}>
+                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                <div>
+                                    <p className="section-label">Ready to try it?</p>
+                                    <h2 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
+                                        Join {guide.name} after checking the terms
+                                    </h2>
+                                    <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
+                                        Use the tracked EarnGrind route so signup clicks, platform choice, and guide context stay connected.
+                                    </p>
+                                </div>
+                                <div className="grid gap-2 sm:grid-cols-2 md:flex md:flex-none">
+                                    <Link
+                                        href="/best-gpt-sites"
+                                        className="inline-flex items-center justify-center rounded-xl border border-white/80 bg-white px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition hover:border-lime-400"
+                                    >
+                                        Compare first
+                                    </Link>
+                                    <Link
+                                        href={bottomSignupHref}
+                                        prefetch={false}
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition hover:-translate-y-0.5"
+                                    >
+                                        Join {guide.name}
+                                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                                    </Link>
+                                </div>
                             </div>
                         </section>
 

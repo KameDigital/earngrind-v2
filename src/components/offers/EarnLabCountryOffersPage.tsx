@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- EarnLab offer thumbnails come from arbitrary provider hosts. */
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -319,6 +320,10 @@ function OfferImage({ offer }: { offer: CountryOffer }) {
     );
 }
 
+function getTrackedOfferHref(offer: CountryOffer): string {
+    return offer.startUrl;
+}
+
 function OfferCard({ offer }: { offer: CountryOffer }) {
     const platformLabel = offer.platform.join(", ");
     const requirement = offer.shortDescription ?? offer.requirements[0] ?? "Open EarnLab to review the current task rules before starting.";
@@ -365,7 +370,7 @@ function OfferCard({ offer }: { offer: CountryOffer }) {
 
                 <div className="mt-4 flex items-center gap-2">
                     <TrackedOutboundLink
-                        href={offer.trackingUrl ?? offer.startUrl}
+                        href={getTrackedOfferHref(offer)}
                         eventLabel="earnlab-country-offer-cta"
                         offerId={offer.id}
                         offerTitle={offer.title}

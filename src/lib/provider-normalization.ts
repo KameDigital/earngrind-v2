@@ -14,8 +14,10 @@ const PROVIDER_DISPLAY_NAMES: Record<string, string> = {
     ayetstudios: "Aye-T Studios",
     "aye t studios": "Aye-T Studios",
     besitos: "Besitos",
+    bitlabs: "BitLabs",
     "earn lab": "EarnLab",
     earnlab: "EarnLab",
+    gemsloot: "Gemsloot",
     "hang my ads": "Hang My Ads",
     hangmyads: "Hang My Ads",
     lootably: "Lootably",
@@ -35,6 +37,7 @@ const PROVIDER_DISPLAY_NAMES: Record<string, string> = {
     toroxio: "Torox",
     "tyr game center": "Tyr Game Center",
     tyrgamecenter: "Tyr Game Center",
+    tyrads: "TyrAds",
 };
 
 export function normalizeProviderDisplayName(value: string | null | undefined): string {

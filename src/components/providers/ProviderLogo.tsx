@@ -2,6 +2,7 @@ import { normalizeProviderDisplayName, providerDisplayKey } from "@/lib/provider
 
 type ProviderLogoProps = {
   name: string | null | undefined;
+  src?: string | null;
   className?: string;
   compact?: boolean;
 };
@@ -34,18 +35,55 @@ const PROVIDER_LOGOS: Record<string, ProviderLogoTheme> = {
   "tyr-game-center": { label: "Tyr", sub: "GAME CENTER", mark: "T", accent: "#38bdf8", bg: "#121827", fg: "#f8fafc" },
 };
 
+const PROVIDER_LOGO_IMAGES: Record<string, string> = {
+  adscendmedia: "/providers/AdscendMedia.webp",
+  besitos: "/providers/besitos.png",
+  bitlabs: "/providers/bitlabs_games.svg",
+  gemsloot: "/providers/Gemsloot.png",
+  mychips: "/providers/mychips.webp",
+  "prime-earn": "/providers/PrimeEarn.png",
+  revu: "/providers/revu.svg",
+  torox: "/providers/torox.svg",
+  tyrads: "/providers/TyrAds.png",
+  "tyr-game-center": "/providers/TyrAds.png",
+};
+
 export function hasProviderLogo(name: string | null | undefined): boolean {
-  return Boolean(PROVIDER_LOGOS[providerDisplayKey(name)]);
+  const key = providerDisplayKey(name);
+  return Boolean(PROVIDER_LOGO_IMAGES[key] || PROVIDER_LOGOS[key]);
 }
 
-export default function ProviderLogo({ name, className = "", compact = false }: ProviderLogoProps) {
+export default function ProviderLogo({ name, src, className = "", compact = false }: ProviderLogoProps) {
   const displayName = normalizeProviderDisplayName(name);
-  const theme = PROVIDER_LOGOS[providerDisplayKey(displayName)];
+  const key = providerDisplayKey(displayName);
+  const imageSrc = src || PROVIDER_LOGO_IMAGES[key];
+  const theme = PROVIDER_LOGOS[key];
+
+  if (imageSrc) {
+    return (
+      <span
+        className={`inline-flex items-center justify-center gap-2 rounded-none border border-slate-700 bg-[var(--brand-ink)] px-2 py-1 shadow-sm ${className}`}
+        aria-label={`${displayName} logo`}
+        title={displayName}
+      >
+        {/* Provider logos can come from local assets or external database URLs. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imageSrc}
+          alt=""
+          className={`${compact ? "h-5 max-w-[4.25rem]" : "h-6 max-w-[7rem]"} w-auto object-contain`}
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
+        {compact ? null : <span className="sr-only">{displayName}</span>}
+      </span>
+    );
+  }
 
   if (!theme) {
     return (
       <span
-        className={`inline-flex items-center justify-center rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1 text-xs font-extrabold text-[var(--brand-ink)] ${className}`}
+        className={`inline-flex items-center justify-center rounded-none border border-slate-700 bg-[var(--brand-ink)] px-2.5 py-1 text-xs font-extrabold text-[var(--brand-lime)] ${className}`}
         aria-label={displayName}
       >
         {displayName.slice(0, compact ? 2 : 10)}
@@ -55,12 +93,12 @@ export default function ProviderLogo({ name, className = "", compact = false }: 
 
   return (
     <span
-      className={`inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 shadow-sm ${className}`}
+      className={`inline-flex items-center gap-2 rounded-none px-2.5 py-1.5 shadow-sm ${className}`}
       style={{ backgroundColor: theme.bg, color: theme.fg }}
       aria-label={`${displayName} logo`}
       title={displayName}
     >
-      <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-sm font-black" style={{ color: theme.accent }}>
+      <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-none text-sm font-black" style={{ color: theme.accent }}>
         {theme.mark}
       </span>
       {compact ? null : (

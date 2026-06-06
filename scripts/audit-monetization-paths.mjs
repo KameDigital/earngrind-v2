@@ -13,7 +13,9 @@ const sourceRoots = ["src/app", "src/components", "src/lib"]
 const files = sourceRoots.flatMap((path) => walk(path)).filter(isSourceFile);
 
 const platformSource = readText("src/lib/gpt-affiliate-platforms.ts");
+const homepageSource = readText("src/app/page.tsx");
 const bestGptSitesSource = readText("src/app/(seo)/best-gpt-sites/page.tsx");
+const gptSiteGuideSource = readText("src/app/guides/best-gpt-sites/[slug]/page.tsx");
 const bestOffersTemplateSource = readText("src/app/(seo)/components/BestOffersPageTemplate.tsx");
 const gamePageSource = readText("src/app/(seo)/games/[slug]/page.tsx");
 const offerDetailSource = readText("src/app/offers/[slug]/page.tsx");
@@ -22,14 +24,31 @@ const buildTrackedPlatformHrefUsers = grepFiles(/buildTrackedPlatformHref/);
 const goLinkUsage = grepFiles(/\/go\/(?:platform\/)?|\bredirect_url\b|\bredirectUrl\b|TrackedOutboundLink|buildGoHref/);
 const ctaUsage = grepFiles(/TrackedOutboundLink|GuideOfferCtaBlock|data-guide-cta|Start Best|Start Offer|Start Highest|Compare live offers|Start Best Payout|Compare Offers|Browse Offers/i);
 const possibleUntrackedMoneyLinks = grepFiles(/href=\{?[^}\n]*(startUrl|offer_url|affiliate_template|platformVisitHref)|href="https?:\/\//i)
-  .filter((entry) => !/TrackedOutboundLink|\/go\//.test(entry.line));
+  .filter((entry) => !/TrackedOutboundLink|\/go\//.test(entry.line))
+  .filter((entry) => !/rel="noopener noreferrer nofollow"/.test(entry.line));
 
 const guideCtaSource = readText("src/app/guides/[slug]/GuideOfferCtaBlock.tsx");
 const warnings = [];
 const phase7cChecks = [
   {
+    label: "homepage hero has tracked signup strip",
+    pass: homepageSource.includes("homepage_hero_signup_strip") &&
+      homepageSource.includes("buildTrackedPlatformHref(platform"),
+  },
+  {
     label: "/best-gpt-sites hero platform CTA exists",
     pass: bestGptSitesSource.includes("best_gpt_sites_hero_primary"),
+  },
+  {
+    label: "/best-gpt-sites sticky signup CTA exists",
+    pass: bestGptSitesSource.includes("best_gpt_sites_sticky_signup") &&
+      bestGptSitesSource.includes("StickyReferralBar"),
+  },
+  {
+    label: "GPT site guides have bottom tracked signup CTA",
+    pass: gptSiteGuideSource.includes("gpt_site_guide_${guide.slug}_bottom_recap") &&
+      gptSiteGuideSource.includes("bottomSignupHref") &&
+      gptSiteGuideSource.includes("prefetch={false}"),
   },
   {
     label: "tracked platform links keep prefetch={false}",

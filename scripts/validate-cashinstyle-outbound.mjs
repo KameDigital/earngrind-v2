@@ -29,6 +29,8 @@ vm.runInNewContext(compiled, sandbox, { filename: sourcePath });
 const {
     buildCashInStyleOutboundUrl,
     buildOutboundRedirectUrl,
+    buildPlatformAffiliateUrl,
+    getPlatformFallbackUrl,
 } = sandbox.module.exports;
 
 assert.equal(
@@ -68,6 +70,46 @@ assert.equal(
         destinationUrl: "https://example.com/direct",
     }),
     "https://example.com/direct",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({ platform: { name: "Gemsloot", slug: "gemsloot" } }),
+    "https://gemsloot.com/?aff=kamedev",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({ platform: { name: "Gain.gg", slug: "gain-gg" } }),
+    "https://gain.gg/r/macko",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({ platform: { name: "EarnLab", slug: "earnlab" } }),
+    "https://earnlab.com/r/mac",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({ platform: { name: "KashKick", slug: "kashkick" } }),
+    "https://app.kashkick.com?ref=MEF2ucEjcbtH",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({ platform: { name: "Swagbucks", slug: "swagbucks" } }),
+    "https://www.swagbucks.com/profile/r_158565078?rp=1",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({ platform: { name: "InboxDollars", slug: "inboxdollars" } }),
+    "https://www.inboxdollars.com?rb=193664312",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({ platform: { name: "PrizeRebel", slug: "prizerebel" } }),
+    "https://www.prizerebel.com/index.php?r=16580973",
+);
+
+assert.equal(
+    getPlatformFallbackUrl({ name: "Gemsloot", slug: "gemsloot" }),
+    "https://gemsloot.com/?aff=kamedev",
 );
 
 console.log("CashInStyle outbound validation passed");

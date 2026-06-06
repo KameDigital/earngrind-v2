@@ -50,7 +50,7 @@ const GUIDE_HUB_LINKS = [
         description: "Ranked comparison hub for choosing a platform before starting a game offer.",
     },
     {
-        href: "/platforms",
+        href: "/best-gpt-sites#platform-reviews",
         label: "Platform reviews",
         description: "Review index for payout, UX, and trust summaries across rewards platforms.",
     },

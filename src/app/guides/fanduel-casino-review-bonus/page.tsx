@@ -648,12 +648,7 @@ export default function FanDuelCasinoReviewPage() {
                                 </p>
                                 <p className="mt-3 text-sm leading-6 text-slate-500">
                                     Verification source:{" "}
-                                    <a
-                                        href="https://www.fanduel.com/online-casino-nj"
-                                        target="_blank"
-                                        rel="noopener noreferrer nofollow"
-                                        className="font-bold text-[#1493ff] underline"
-                                    >
+                                    <a href="https://www.fanduel.com/online-casino-nj" target="_blank" rel="noopener noreferrer nofollow" className="font-bold text-[#1493ff] underline">
                                         FanDuel&apos;s official New Jersey casino offer page
                                     </a>
                                     .

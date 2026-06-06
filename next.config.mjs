@@ -48,7 +48,12 @@ const nextConfig = {
         return [
             {
                 source: "/reviews",
-                destination: "/platforms",
+                destination: "/best-gpt-sites",
+                permanent: true,
+            },
+            {
+                source: "/platforms",
+                destination: "/best-gpt-sites",
                 permanent: true,
             },
         ];

@@ -4,6 +4,7 @@ import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import HomepageLinkCard from "@/components/home/HomepageLinkCard";
 import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
+import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
 import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
 import { buildGoHref, formatMoney, gameKeyFromParts, getHomepageData } from "@/lib/homepage-data";
 
@@ -68,7 +69,7 @@ const START_HERE_ITEMS = [
   },
   {
     name: "Browse Games",
-    href: "/games",
+    href: "/offers#games",
     badge: "Game discovery",
     desc: "Start with game hubs when you want payout snapshots, guide coverage, provider count, and related games.",
   },
@@ -86,7 +87,7 @@ const START_HERE_ITEMS = [
   },
   {
     name: "Platform Reviews",
-    href: "/platforms",
+    href: "/best-gpt-sites#platform-reviews",
     badge: "Trust checks",
     desc: "Research individual GPT sites before you join, then move into offers with clearer expectations.",
   },
@@ -109,6 +110,34 @@ const HOW_IT_WORKS_STEPS = [
     desc: "Partner GPT offers pay through the partner platform. EarnGrind helps you compare routes before you leave for the partner site.",
   },
 ] as const;
+
+const HERO_SIGNUP_PLATFORMS = GPT_AFFILIATE_PLATFORMS
+  .filter((platform) => platform.priority === "primary")
+  .slice(0, 3);
+
+function HeroSignupStrip() {
+  return (
+    <div className="mt-5 grid gap-2 sm:grid-cols-3">
+      {HERO_SIGNUP_PLATFORMS.map((platform) => (
+        <Link
+          key={platform.slug}
+          href={buildTrackedPlatformHref(platform, "homepage_hero_signup_strip")}
+          prefetch={false}
+          className="group flex min-h-[78px] flex-col justify-between rounded-xl border border-white/12 bg-white/10 px-4 py-3 text-left backdrop-blur-sm transition hover:-translate-y-px hover:border-[var(--brand-lime)]/50 hover:bg-white/15"
+        >
+          <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--brand-lime)]/85">
+            Tracked signup
+          </span>
+          <span className="mt-1 flex items-center justify-between gap-3 text-sm font-extrabold text-white">
+            {platform.cta}
+            <span className="text-[var(--brand-lime)] transition group-hover:translate-x-0.5" aria-hidden="true">&rarr;</span>
+          </span>
+          <span className="mt-1 text-xs font-semibold leading-relaxed text-white/55">{platform.bestFor}</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
 
 export default async function HomePage() {
   const {
@@ -317,12 +346,14 @@ export default async function HomePage() {
                 Best GPT Sites
               </Link>
               <Link
-                href="/games"
+                href="/offers#games"
                 className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 text-white font-bold text-sm rounded-xl border border-white/20 hover:bg-white/15 transition-all"
               >
                 Browse Games
               </Link>
             </div>
+
+            <HeroSignupStrip />
           </div>
         </div>
       </section>
@@ -425,7 +456,7 @@ export default async function HomePage() {
             <div className="mt-8 rounded-2xl border border-[var(--border-default)] bg-white px-4 py-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">Best first click</p>
               <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
-                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go to <Link href="/offers" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Offers</Link> for search and filters, <Link href="/games" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Games</Link> for game discovery, or <Link href="/guides" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Guides</Link> for faster completion.
+                New visitors should start with <Link href="/best-gpt-sites" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Best GPT Sites</Link>, then read the <Link href="/guides/best-gpt-sites-to-make-money" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">full GPT site guide</Link>. If you already trust the platform, go to <Link href="/offers" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Offers</Link> for search and filters, <Link href="/offers#games" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Games</Link> for game discovery, or <Link href="/guides" className="font-bold text-[var(--brand-ink)] underline decoration-lime-400 underline-offset-4">Guides</Link> for faster completion.
               </p>
             </div>
           </div>

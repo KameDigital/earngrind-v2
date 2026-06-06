@@ -157,7 +157,7 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
         month: "long",
         day: "numeric",
     });
-    const platformVisitHref = platform && buildPlatformAffiliateUrl({ platform })
+    const trackedPlatformHref = platform && buildPlatformAffiliateUrl({ platform })
         ? `/go/platform/${platform.id}`
         : null;
     const offersHref = platform
@@ -170,7 +170,7 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
     const schemas = [
         buildBreadcrumbList([
             { name: "Home", path: "/" },
-            { name: "Platforms", path: "/platforms" },
+            { name: "Best GPT Sites", path: "/best-gpt-sites" },
             { name: platformName, path: `/review/${review.slug}` },
         ]),
         platformSchema,
@@ -192,7 +192,7 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
                 <nav className="mb-8 flex items-center gap-2 text-sm font-medium text-[var(--text-tertiary)]" aria-label="Breadcrumb">
                     <Link href="/" className="transition-colors hover:text-lime-700">Home</Link>
                     <span>/</span>
-                    <Link href="/platforms" className="transition-colors hover:text-lime-700">Platforms</Link>
+                    <Link href="/best-gpt-sites#platform-reviews" className="transition-colors hover:text-lime-700">Best GPT Sites</Link>
                     <span>/</span>
                     <span className="truncate text-[var(--text-secondary)]">{platformName}</span>
                 </nav>
@@ -381,9 +381,9 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
                                 </div>
 
                                 <div className="space-y-2">
-                                    {platformVisitHref ? (
+                                    {trackedPlatformHref ? (
                                         <TrackedOutboundLink
-                                            href={platformVisitHref}
+                                            href={trackedPlatformHref}
                                             className="block w-full rounded-xl bg-[var(--brand-ink)] py-3.5 text-center text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                                             eventLabel="review-platform-visit"
                                             offerTitle={platformName}

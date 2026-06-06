@@ -129,7 +129,6 @@ export default async function AdminSitemapPage({
     { url: `${baseUrl}/guides`, label: "Guides", priority: "0.8", frequency: "weekly" },
     { url: `${baseUrl}/guides/how-to-earn`, label: "How to earn", priority: "0.8", frequency: "weekly" },
     { url: `${baseUrl}/blog`, label: "Blog", priority: "0.7", frequency: "weekly" },
-    { url: `${baseUrl}/platforms`, label: "Platforms", priority: "0.72", frequency: "weekly" },
     { url: `${baseUrl}/best-gpt-sites`, label: "Best GPT sites", priority: "0.85", frequency: "daily" },
     { url: `${baseUrl}/highest-paying-gpt-games`, label: "Highest paying GPT games", priority: "0.85", frequency: "daily" },
     { url: `${baseUrl}/best-freecash-games`, label: "Best Freecash games", priority: "0.8", frequency: "daily" },

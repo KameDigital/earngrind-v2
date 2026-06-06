@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import ProviderLogo from "@/components/providers/ProviderLogo";
 
 // ---------------------------------------------------------------
 // TYPES — mirrors /api/offers response exactly
@@ -232,6 +233,7 @@ function buildQueryString(filters: FilterState, debouncedQ: string): string {
     if (filters.min_payout > 0) params.set("min_payout", String(filters.min_payout));
     params.set("sort", filters.sort);
     params.set("page", String(filters.page));
+    params.set("per_page", "4");
     return params.toString();
 }
 
@@ -254,7 +256,7 @@ const badgeStyles: Record<BadgeProps["variant"], string> = {
 
 function Badge({ label, variant }: BadgeProps) {
     return (
-        <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider leading-none ${badgeStyles[variant]}`}>
+        <span className={`inline-flex items-center px-2 py-0.5 rounded-none text-[10px] font-extrabold uppercase tracking-wider leading-none ${badgeStyles[variant]}`}>
             {label}
         </span>
     );
@@ -318,7 +320,7 @@ function OfferRow({
 
     return (
         <div
-            className={`px-4 py-4 border-b border-[var(--border-default)] last:border-0 transition-colors group cursor-pointer ${
+            className={`px-3 py-3 sm:px-4 border-b border-[var(--border-default)] last:border-0 transition-all group cursor-pointer hover:shadow-[inset_0_0_0_1px_rgba(132,204,22,0.35)] ${
                 isBestPayout
                     ? "bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]"
                     : "hover:bg-[var(--surface-muted)]"
@@ -327,7 +329,7 @@ function OfferRow({
             tabIndex={0}
         >
             <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center group-hover:border-lime-300 transition-colors">
+                <div className="flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-none overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center group-hover:border-lime-300 transition-colors">
                     <OfferThumbnail
                         src={thumbnailUrl}
                         alt={gameName}
@@ -348,7 +350,7 @@ function OfferRow({
                         </span>
                         {isBestPayout && <Badge label="TOP PAYOUT" variant="best" />}
                         {offer.source === "manual" && (
-                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider leading-none bg-indigo-50 text-indigo-700 border border-indigo-200">
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-none text-[10px] font-extrabold uppercase tracking-wider leading-none bg-indigo-50 text-indigo-700 border border-indigo-200">
                                 Curated
                             </span>
                         )}
@@ -358,21 +360,20 @@ function OfferRow({
                         {offer.is_boosted && <Badge label="BOOSTED" variant="boosted" />}
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)] flex-wrap">
-                        <span className="flex items-center gap-1 font-semibold text-[var(--brand-ink)]">
+                        <span className="flex h-7 items-center gap-1 rounded-none border border-slate-700 bg-[var(--brand-ink)] px-2 font-semibold text-[var(--brand-lime)] shadow-sm">
                             {offer.platform.logo_url && (
-                                <Image src={offer.platform.logo_url} alt={platformName} width={12} height={12} className="w-3 h-3 rounded-sm object-cover" />
+                                <Image src={offer.platform.logo_url} alt="" width={44} height={20} className="max-h-5 w-auto max-w-[4.5rem] object-contain" />
                             )}
-                            {platformName}
+                            {!offer.platform.logo_url ? platformName : <span className="sr-only">{platformName}</span>}
                         </span>
-                        <span className="text-[var(--border-strong)]">/</span>
-                        <span>{providerName}</span>
+                        <ProviderLogo name={providerName} compact className="h-7 max-w-[5rem]" />
                         <span className="text-[var(--border-strong)]">/</span>
                         <span className="flex items-center gap-0.5">
                             {offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}
                         </span>
                         {offer.heat_score > 50 && <span className="text-orange-500 font-semibold">Hot</span>}
                     </div>
-                    <p className="mt-1 text-xs text-[var(--text-secondary)] line-clamp-2">{routeSummary}</p>
+                    <p className="mt-1 hidden text-xs text-[var(--text-secondary)] sm:block sm:line-clamp-1">{routeSummary}</p>
                 </div>
 
                 <div className="flex-shrink-0 text-right ml-auto pl-2">
@@ -385,12 +386,12 @@ function OfferRow({
                 </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
+            <div className="flex flex-wrap items-center gap-2 mt-2" onClick={(e) => e.stopPropagation()}>
                 <button
                     onClick={(e) => { e.stopPropagation(); onPin(offer); }}
                     title={isPinned ? "Remove from comparison" : "Add to comparison"}
                     aria-label={isPinned ? "Remove from comparison" : "Add to comparison"}
-                    className={`flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-xl border text-sm font-bold transition-colors ${isPinned
+                    className={`flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-none border text-sm font-bold transition-colors ${isPinned
                         ? "bg-[var(--brand-lime)] border-lime-300 text-[var(--brand-ink)]"
                         : "bg-white border-[var(--border-default)] text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700 hover:bg-[var(--brand-lime)]/10"
                     }`}
@@ -402,12 +403,12 @@ function OfferRow({
                     <Link
                         href={gameHref}
                         onClick={(e) => e.stopPropagation()}
-                        className="min-w-[7rem] flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 text-[var(--brand-ink)] text-sm font-bold rounded-xl transition-all whitespace-nowrap"
+                        className="min-w-[7rem] flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:-translate-y-0.5 hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 hover:shadow-[0_10px_24px_rgba(15,23,42,0.08)] text-[var(--brand-ink)] text-sm font-bold rounded-none transition-all whitespace-nowrap"
                     >
                         View Route
                     </Link>
                 ) : (
-                    <span className="flex-1 sm:flex-none text-center px-3 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-xl whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
+                    <span className="flex-1 sm:flex-none text-center px-3 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-none whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
                         No Details
                     </span>
                 )}
@@ -425,23 +426,23 @@ function OfferRow({
                         payoutUsd={offer.payout_usd}
                         location={ctaLocation}
                         sourceContext={ctaSourceContext}
-                        className="min-w-[9rem] flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all whitespace-nowrap shadow-sm"
+                        className="min-w-[9rem] flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--brand-ink)] hover:-translate-y-0.5 hover:bg-[var(--brand-ink)]/90 hover:shadow-[0_12px_28px_rgba(15,23,42,0.16)] text-[var(--brand-lime)] text-sm font-extrabold rounded-none transition-all whitespace-nowrap shadow-sm"
                     >
                         {offer.source === "manual" ? "Open Payout Site" : isBestPayout ? "Start Best Payout" : "Start Offer"}
                     </TrackedOutboundLink>
                 ) : (
-                    <span className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-xl whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
+                    <span className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-none whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
                         No Link
                     </span>
                 )}
             </div>
-            <div className="mt-2 text-[11px] text-[var(--text-tertiary)]">
+            <div className="mt-2 hidden text-[11px] text-[var(--text-tertiary)] sm:block">
                 {gameHref
                     ? "Check route details first. Start buttons go through EarnGrind tracking, and some links may be affiliate links."
                     : "Start buttons go through EarnGrind tracking, and some links may be affiliate links."}
             </div>
             {extraRoutesCount > 0 && onToggleExtraRoutes ? (
-                <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-[var(--border-default)] bg-white px-3 py-2">
+                <div className="mt-3 flex items-center justify-between gap-3 rounded-none border border-[var(--border-default)] bg-white px-3 py-2 transition-all hover:border-lime-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.08)]">
                     <div className="min-w-0 text-xs text-[var(--text-secondary)]">
                         <span className="font-bold text-[var(--brand-ink)]">{extraRoutesCount} more site{extraRoutesCount !== 1 ? "s" : ""}</span>
                         {extraSitesLabel ? ` available: ${extraSitesLabel}` : "."}
@@ -452,7 +453,7 @@ function OfferRow({
                             e.stopPropagation();
                             onToggleExtraRoutes();
                         }}
-                        className="flex-shrink-0 rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                        className="flex-shrink-0 rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                     >
                         {extraRoutesOpen ? "Hide sites" : "Show sites"}
                     </button>
@@ -473,7 +474,7 @@ interface SearchBarProps {
 function SearchBar({ value, onChange }: SearchBarProps) {
     return (
         <div className="relative group">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-tertiary)] group-focus-within:text-lime-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)] group-focus-within:text-lime-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
@@ -481,7 +482,7 @@ function SearchBar({ value, onChange }: SearchBarProps) {
                 placeholder="Search games, platforms, categories..."
                 value={value}
                 onChange={e => onChange(e.target.value)}
-                className="w-full pl-12 pr-4 py-3.5 bg-white rounded-xl border border-[var(--border-default)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-lime)]/20 focus:border-lime-400 shadow-[var(--shadow-card)] text-[var(--brand-ink)] placeholder:text-[var(--text-tertiary)] text-base transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-white rounded-none border border-[var(--border-default)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-lime)]/20 focus:border-lime-400 shadow-[var(--shadow-card)] text-[var(--brand-ink)] placeholder:text-[var(--text-tertiary)] text-sm transition-all"
             />
         </div>
     );
@@ -508,10 +509,10 @@ function FilterBar({ filters, dispatch, platforms, selectedPlatformName }: Filte
         { key: "is_boosted", label: "BOOSTED", variant: "boosted" },
     ];
 
-    const selectClass = "px-3.5 py-2 rounded-xl border border-[var(--border-default)] text-sm font-semibold text-[var(--brand-ink)] bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30 focus:border-lime-400 hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)] cursor-pointer appearance-none pr-8";
+    const selectClass = "px-3 py-1.5 rounded-none border border-[var(--border-default)] text-xs font-semibold text-[var(--brand-ink)] bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30 focus:border-lime-400 hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)] cursor-pointer appearance-none pr-8";
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2.5">
             {/* Row 1: horizontally scrollable dropdowns on mobile */}
             <div className="flex gap-2 items-center overflow-x-auto pb-1 hide-scrollbar -mx-1 px-1">
                 <div className="relative flex-shrink-0">
@@ -568,12 +569,12 @@ function FilterBar({ filters, dispatch, platforms, selectedPlatformName }: Filte
                 </div>
 
                 {/* Country toggle */}
-                <div className="flex-shrink-0 flex rounded-xl border border-[var(--border-default)] overflow-hidden text-sm shadow-[var(--shadow-card)] bg-[var(--surface-muted)] p-0.5 gap-0.5">
+                <div className="flex-shrink-0 flex rounded-none border border-[var(--border-default)] overflow-hidden text-sm shadow-[var(--shadow-card)] bg-[var(--surface-muted)] p-0.5 gap-0.5">
                     {(["US", "UK", ""] as const).map(c => (
                         <button
                             key={c || "global"}
                             onClick={() => set("country", c)}
-                            className={`px-3 py-1.5 transition-all font-bold rounded-lg text-sm ${filters.country === c
+                            className={`px-3 py-1.5 transition-all font-bold rounded-none text-xs ${filters.country === c
                                 ? "bg-white text-[var(--brand-ink)] shadow-sm"
                                 : "text-[var(--text-secondary)] hover:text-[var(--brand-ink)] hover:bg-white/60"
                             }`}
@@ -585,7 +586,7 @@ function FilterBar({ filters, dispatch, platforms, selectedPlatformName }: Filte
 
                 <button
                     onClick={() => dispatch({ type: "RESET" })}
-                    className="flex-shrink-0 px-3.5 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-xl bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
+                    className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-none bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
                 >
                     Clear
                 </button>
@@ -598,7 +599,7 @@ function FilterBar({ filters, dispatch, platforms, selectedPlatformName }: Filte
                     <button
                         key={key}
                         onClick={() => set(key, !filters[key])}
-                        className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-extrabold uppercase tracking-wide transition-all ${filters[key]
+                        className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-none border text-[11px] font-extrabold uppercase tracking-wide transition-all ${filters[key]
                             ? `${badgeStyles[variant]} border-transparent shadow-sm scale-[1.02]`
                             : "bg-white border-[var(--border-default)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--brand-ink)]"
                         }`}
@@ -626,15 +627,15 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-[var(--border-default)] shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.12)] p-4">
             <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-4">
                 <div className="text-sm font-extrabold text-[var(--brand-ink)] whitespace-nowrap flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-[var(--brand-lime)] text-[var(--brand-ink)] flex items-center justify-center text-xs font-extrabold">
+                    <div className="w-6 h-6 rounded-none bg-[var(--brand-lime)] text-[var(--brand-ink)] flex items-center justify-center text-xs font-extrabold">
                         {pinned.length}
                     </div>
                     Comparing
                 </div>
                 <div className="flex-1 flex gap-2 overflow-x-auto w-full pb-2 sm:pb-0 hide-scrollbar">
                     {pinned.map(offer => (
-                        <div key={offer.id} className="flex-shrink-0 flex items-center gap-3 bg-[var(--surface-muted)] rounded-xl px-3 py-2 border border-[var(--border-default)] min-w-[200px] relative">
-                            <div className="w-8 h-8 flex-shrink-0 overflow-hidden rounded-lg border border-[var(--border-default)] flex items-center justify-center bg-white">
+                        <div key={offer.id} className="flex-shrink-0 flex items-center gap-3 bg-[var(--surface-muted)] rounded-none px-3 py-2 border border-[var(--border-default)] min-w-[200px] relative">
+                            <div className="w-8 h-8 flex-shrink-0 overflow-hidden rounded-none border border-[var(--border-default)] flex items-center justify-center bg-white">
                                 <OfferThumbnail
                                     src={offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game.thumbnail_url}
                                     alt={offer.game?.name ?? offer.title}
@@ -650,7 +651,7 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
                         </div>
                     ))}
                     {pinned.length < 3 && (
-                        <div className="flex-shrink-0 flex items-center justify-center bg-[var(--surface-muted)] border border-[var(--border-default)] border-dashed rounded-xl px-4 py-2 min-w-[180px] text-xs font-semibold text-[var(--text-tertiary)]">
+                        <div className="flex-shrink-0 flex items-center justify-center bg-[var(--surface-muted)] border border-[var(--border-default)] border-dashed rounded-none px-4 py-2 min-w-[180px] text-xs font-semibold text-[var(--text-tertiary)]">
                             + {3 - pinned.length} more
                         </div>
                     )}
@@ -659,7 +660,7 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
                     <button onClick={onClear} className="px-3.5 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] transition-colors">Clear</button>
                     <a
                         href={`/tools/compare?offers=${pinned.map(o => o.id).join(",")}`}
-                        className="px-5 py-2.5 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-xl transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                        className="px-5 py-2.5 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-none transition-all hover:-translate-y-0.5 flex items-center gap-2"
                     >
                         Compare Now →
                     </a>
@@ -702,11 +703,11 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
     }, [offers]);
     if (loading) {
         return (
-            <div className="bg-white rounded-2xl border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
+            <div className="bg-white rounded-none border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
                 {Array.from({ length: 5 }).map((_, i) => (
                     <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-5 border-b border-[var(--border-default)] last:border-0 animate-pulse">
                         <div className="flex items-center gap-4 flex-1">
-                            <div className="w-12 h-12 bg-[var(--surface-muted)] rounded-xl" />
+                            <div className="w-12 h-12 bg-[var(--surface-muted)] rounded-none" />
                             <div className="flex-1 space-y-2">
                                 <div className="h-4 bg-[var(--surface-muted)] rounded w-1/3" />
                                 <div className="h-3 bg-[var(--surface-muted)] rounded w-1/5" />
@@ -714,7 +715,7 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
                         </div>
                         <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-auto w-full pt-3 sm:pt-0">
                             <div className="w-20 h-8 bg-[var(--surface-muted)] rounded" />
-                            <div className="w-28 h-10 bg-[var(--surface-muted)] rounded-xl" />
+                            <div className="w-28 h-10 bg-[var(--surface-muted)] rounded-none" />
                         </div>
                     </div>
                 ))}
@@ -724,8 +725,8 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
 
     if (offers.length === 0) {
         return (
-            <div className="bg-white rounded-2xl border border-[var(--border-default)] p-16 text-center shadow-[var(--shadow-card)]">
-                <div className="w-16 h-16 bg-[var(--surface-muted)] rounded-2xl flex items-center justify-center text-2xl mb-4 mx-auto">
+            <div className="bg-white rounded-none border border-[var(--border-default)] p-16 text-center shadow-[var(--shadow-card)]">
+                <div className="w-16 h-16 bg-[var(--surface-muted)] rounded-none flex items-center justify-center text-2xl mb-4 mx-auto">
                     🔍
                 </div>
                 <h3 className="text-lg font-bold text-[var(--brand-ink)] mb-2">No offers found</h3>
@@ -736,7 +737,7 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
 
     return (
         <div>
-            <div className="bg-white rounded-2xl border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
+            <div className="bg-white rounded-none border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
                 {groupedOffers.map(({ key, primary, alternatives }) => {
                     const extraSitesLabel = Array.from(
                         new Set(alternatives.map((offer) => offer.platform?.name).filter(Boolean)),
@@ -782,15 +783,15 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
             {/* Pagination */}
             {meta && meta.total_pages > 1 && (
                 <div className="flex flex-col sm:flex-row items-center justify-between mt-8 gap-4 px-1">
-                    <div className="text-sm font-semibold text-[var(--text-secondary)] bg-white px-3.5 py-1.5 rounded-xl border border-[var(--border-default)] shadow-[var(--shadow-card)]">
+                    <div className="text-sm font-semibold text-[var(--text-secondary)] bg-white px-3.5 py-1.5 rounded-none border border-[var(--border-default)] shadow-[var(--shadow-card)]">
                         <span className="text-[var(--brand-ink)]">{((page - 1) * meta.per_page) + 1}–{Math.min(page * meta.per_page, meta.total)}</span>{" "}
                         of <span className="text-[var(--brand-ink)]">{meta.total.toLocaleString()}</span> offers
                     </div>
-                    <div className="flex gap-1 bg-white rounded-xl shadow-[var(--shadow-card)] border border-[var(--border-default)] p-1">
+                    <div className="flex gap-1 bg-white rounded-none shadow-[var(--shadow-card)] border border-[var(--border-default)] p-1">
                         <button
                             onClick={() => onPageChange(page - 1)}
                             disabled={page === 1}
-                            className="px-4 py-1.5 rounded-lg text-sm font-bold disabled:text-[var(--text-tertiary)] text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
+                            className="px-4 py-1.5 rounded-none text-sm font-bold disabled:text-[var(--text-tertiary)] text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
                         >
                             ← Previous
                         </button>
@@ -798,7 +799,7 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }
                         <button
                             onClick={() => onPageChange(page + 1)}
                             disabled={page >= meta.total_pages}
-                            className="px-4 py-1.5 rounded-lg text-sm font-bold disabled:text-[var(--text-tertiary)] text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
+                            className="px-4 py-1.5 rounded-none text-sm font-bold disabled:text-[var(--text-tertiary)] text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
                         >
                             Next →
                         </button>
@@ -913,9 +914,9 @@ export default function OfferSearchEngine({
     };
 
     return (
-        <div className="space-y-5">
+        <div className="space-y-4">
             {hasPlatformFilter && !initialGameSlug && (
-                <div className="rounded-2xl border border-lime-200 bg-[var(--brand-lime)]/10 p-4 text-sm shadow-[var(--shadow-card)]">
+                <div className="rounded-none border border-lime-200 bg-[var(--brand-lime)]/10 p-4 text-sm shadow-[var(--shadow-card)]">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <div className="font-extrabold text-[var(--brand-ink)]">
@@ -929,7 +930,7 @@ export default function OfferSearchEngine({
                         </div>
                         <Link
                             href="/offers"
-                            className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
+                            className="inline-flex rounded-none border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
                         >
                             Clear Platform Filter
                         </Link>
@@ -937,7 +938,7 @@ export default function OfferSearchEngine({
                 </div>
             )}
 
-            <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] space-y-5">
+            <div className="bg-white p-3 sm:p-4 rounded-none border border-[var(--border-default)] shadow-[var(--shadow-card)] space-y-3">
                 <SearchBar value={filters.q} onChange={v => dispatch({ type: "SET", key: "q", value: v })} />
                 <div className="h-px bg-[var(--border-default)]" />
                 <FilterBar
@@ -964,7 +965,7 @@ export default function OfferSearchEngine({
                     </p>
                 </div>
                 {meta && !loading && (
-                    <div className="text-sm font-bold text-[var(--text-secondary)] bg-[var(--surface-muted)] px-3 py-1 rounded-lg border border-[var(--border-default)] whitespace-nowrap">
+                    <div className="text-sm font-bold text-[var(--text-secondary)] bg-[var(--surface-muted)] px-3 py-1 rounded-none border border-[var(--border-default)] whitespace-nowrap">
                         {meta.total.toLocaleString()} results
                     </div>
                 )}

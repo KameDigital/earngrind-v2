@@ -8,7 +8,6 @@ const requiredRoutes = [
   "/games",
   "/guides",
   "/best-gpt-sites",
-  "/platforms",
   "/offers/us",
   "/offers/gain/us/native",
   "/offers/gemsloot/us/tyrads",
@@ -38,13 +37,15 @@ try {
     }
   }
 
-  const reviewResponse = await page.goto(`${baseUrl}/reviews`, {
-    waitUntil: "domcontentloaded",
-    timeout: 45_000,
-  });
-  console.log(`/reviews status=${reviewResponse?.status() ?? 0} final=${page.url()}`);
-  if (!page.url().endsWith("/platforms")) {
-    throw new Error("/reviews did not redirect to /platforms");
+  for (const route of ["/platforms", "/reviews"]) {
+    const redirectResponse = await page.goto(`${baseUrl}${route}`, {
+      waitUntil: "domcontentloaded",
+      timeout: 45_000,
+    });
+    console.log(`${route} status=${redirectResponse?.status() ?? 0} final=${page.url()}`);
+    if (!page.url().endsWith("/best-gpt-sites")) {
+      throw new Error(`${route} did not redirect to /best-gpt-sites`);
+    }
   }
 
   await page.setViewportSize({ width: 1366, height: 768 });
@@ -54,7 +55,7 @@ try {
     "a[href='/games']",
     "a[href='/guides']",
     "a[href='/best-gpt-sites']",
-    "a[href='/platforms']",
+    "a[href='/best-gpt-sites#platform-reviews']",
   ].join(", ")).count();
   console.log(`home hub CTA count=${homeHubCtas}`);
   if (homeHubCtas < 5) {

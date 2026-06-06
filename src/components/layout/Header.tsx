@@ -7,11 +7,10 @@ import { Menu, X, Search } from "lucide-react";
 
 const NAV_LINKS = [
     { href: "/offers", label: "Offers" },
-    { href: "/games", label: "Games" },
+    { href: "/offers#games", label: "Games", activePrefixes: ["/games"] },
     { href: "/guides", label: "Guides", excludePrefixes: ["/guides/best-gpt-sites", "/guides/fanduel-casino-review-bonus"] },
-    { href: "/best-gpt-sites", label: "Best GPT Sites", activePrefixes: ["/guides/best-gpt-sites"] },
+    { href: "/best-gpt-sites", label: "Best GPT Sites", activePrefixes: ["/guides/best-gpt-sites", "/review", "/reviews", "/platforms", "/guides/fanduel-casino-review-bonus"] },
     ...(process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true" ? [{ href: "/earn", label: "Earn Rewards" }] : []),
-    { href: "/platforms", label: "Platforms", activePrefixes: ["/review", "/reviews", "/guides/fanduel-casino-review-bonus"] },
     { href: "/blog", label: "Blog" },
 ];
 

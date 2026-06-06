@@ -18,7 +18,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Best beginner cash path",
         rewardNote: "Cash-first rewards for eligible U.S. users.",
         trustNote: "Check country, age, and payout-account fit before starting.",
-        cta: "Start KashKick",
+        cta: "Join KashKick",
         priority: "primary",
     },
     {
@@ -28,7 +28,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Best mainstream rewards site",
         rewardNote: "Broad reward ecosystem with PayPal and gift-card style redemptions.",
         trustNote: "Good for steady rewards, but compare time-to-payout before each offer.",
-        cta: "Start Swagbucks",
+        cta: "Join Swagbucks",
         priority: "primary",
     },
     {
@@ -38,7 +38,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Best cash-style backup",
         rewardNote: "Dollar-based reward tracking with PayPal, Visa, and gift-card options.",
         trustNote: "Read trial and processing terms before completing cash offers.",
-        cta: "Start InboxDollars",
+        cta: "Join InboxDollars",
         priority: "primary",
     },
     {
@@ -48,7 +48,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Best shopping rewards backup",
         rewardNote: "Useful for shopping, surveys, email, videos, points, and gift cards.",
         trustNote: "Better for routine rewards than high-upside game routes.",
-        cta: "Start MyPoints",
+        cta: "Join MyPoints",
         priority: "secondary",
     },
     {
@@ -58,7 +58,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Best survey backup",
         rewardNote: "Survey-heavy GPT option with PayPal, Bitcoin, and gift-card style rewards.",
         trustNote: "Survey disqualifications are normal, so protect your time.",
-        cta: "Start PrizeRebel",
+        cta: "Join PrizeRebel",
         priority: "secondary",
     },
     {
@@ -68,7 +68,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Best newer game/app option",
         rewardNote: "Game and app discovery with reward options that can vary by account.",
         trustNote: "Use code 3P5OXUA and verify current app/cashout terms before committing.",
-        cta: "Open Scrambly",
+        cta: "Join Scrambly",
         priority: "secondary",
         disclosure: "Referral code: 3P5OXUA",
     },
@@ -79,7 +79,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "High-payout offerwall backup",
         rewardNote: "Useful when you want another offerwall route to compare against GPT sites.",
         trustNote: "Compare live provider terms and track each milestone.",
-        cta: "Open Gain.gg",
+        cta: "Join Gain.gg",
         priority: "secondary",
     },
     {
@@ -89,7 +89,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Gaming offerwall backup",
         rewardNote: "Useful for checking alternate game payout routes.",
         trustNote: "Verify payout freshness, country fit, and milestone wording.",
-        cta: "Open GemLoot",
+        cta: "Join GemLoot",
         priority: "secondary",
     },
     {
@@ -99,7 +99,7 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         bestFor: "Best gamified GPT experience",
         rewardNote: "Offerwalls, surveys, races, boxes, Mines, Keno, and reward-store style cashouts.",
         trustNote: "Verify game rules, wager risk, and withdrawal methods before using original games.",
-        cta: "Open EarnLab",
+        cta: "Join EarnLab",
         priority: "secondary",
     },
 ];

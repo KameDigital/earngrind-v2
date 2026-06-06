@@ -358,7 +358,7 @@ export default function SolitaireStashOfferGuidePage() {
                                     If Solitaire Stash is not crediting, wait long enough for normal delayed credit, then use the Lootably support path. Support references for offerwalls point users to the Lootably wall, the Support option, and support@lootably.com. Send the offer name, provider, device, app account details, screenshots, receipts, and the exact milestone that failed. Keep the request specific. Win 500 Cash Tournaments did not credit is better than my offer is broken.
                                 </p>
                                 <p>
-                                    The final check is whether this offer is worth continuing. The visible steps add to $604.91, while the headline says $607.02. That is not a reason to reject the offer by itself, but it is a reason to stay precise. If the current live offer changes, use the live task list as the payout source of truth and compare it against other platform options on <Link href="/platforms" className="font-bold text-emerald-700 underline">EarnGrind platforms</Link>.
+                                    The final check is whether this offer is worth continuing. The visible steps add to $604.91, while the headline says $607.02. That is not a reason to reject the offer by itself, but it is a reason to stay precise. If the current live offer changes, use the live task list as the payout source of truth and compare it against other platform options on <Link href="/best-gpt-sites" className="font-bold text-emerald-700 underline">EarnGrind GPT sites</Link>.
                                 </p>
                             </div>
                         </section>

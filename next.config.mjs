@@ -82,7 +82,7 @@ const nextConfig = {
         const ContentSecurityPolicy = [
             "default-src 'self'",
             // Next.js inline scripts + Supabase JS
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co https://www.googletagmanager.com https://va.vercel-scripts.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co https://www.googletagmanager.com https://pagead2.googlesyndication.com https://va.vercel-scripts.com",
             // Styles — Next.js injects inline
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             // Fonts

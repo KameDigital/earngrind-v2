@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useReducer, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
@@ -79,6 +78,7 @@ function OfferThumbnail({
     }
 
     return (
+        // eslint-disable-next-line @next/next/no-img-element -- Imported offer thumbnails come from volatile third-party URLs.
         <img
             src={src}
             alt={alt}
@@ -87,6 +87,35 @@ function OfferThumbnail({
             referrerPolicy="no-referrer"
             onError={() => setFailed(true)}
         />
+    );
+}
+
+function PlatformLogoImage({
+    src,
+    name,
+}: {
+    src: string | null;
+    name: string;
+}) {
+    const [failed, setFailed] = React.useState(false);
+
+    if (!src || failed) {
+        return <span>{name}</span>;
+    }
+
+    return (
+        <>
+            {/* eslint-disable-next-line @next/next/no-img-element -- Platform logos come from volatile third-party URLs. */}
+            <img
+                src={src}
+                alt=""
+                className="max-h-5 w-auto max-w-[4.5rem] object-contain"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                onError={() => setFailed(true)}
+            />
+            <span className="sr-only">{name}</span>
+        </>
     );
 }
 
@@ -361,10 +390,7 @@ function OfferRow({
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)] flex-wrap">
                         <span className="flex h-7 items-center gap-1 rounded-none border border-slate-700 bg-[var(--brand-ink)] px-2 font-semibold text-[var(--brand-lime)] shadow-sm">
-                            {offer.platform.logo_url && (
-                                <Image src={offer.platform.logo_url} alt="" width={44} height={20} className="max-h-5 w-auto max-w-[4.5rem] object-contain" />
-                            )}
-                            {!offer.platform.logo_url ? platformName : <span className="sr-only">{platformName}</span>}
+                            <PlatformLogoImage src={offer.platform.logo_url} name={platformName} />
                         </span>
                         <ProviderLogo name={providerName} compact className="h-7 max-w-[5rem]" />
                         <span className="text-[var(--border-strong)]">/</span>
@@ -836,6 +862,7 @@ export default function OfferSearchEngine({
     const [pinned, setPinned] = React.useState<Offer[]>([]);
     const abortRef = useRef<AbortController | null>(null);
     const hasRenderedInitialOffers = useRef(initialOffers !== undefined && !initialGameSlug);
+    const filtersRef = useRef(filters);
 
     const debouncedQ = useDebounce(filters.q, 300);
     const reviewPlatformName = searchParams.get("platform_name") ?? "";
@@ -853,6 +880,8 @@ export default function OfferSearchEngine({
     }, [offers]);
 
     const fetchOffers = useCallback(async () => {
+        if (filters.q !== debouncedQ) return;
+
         const qs = buildQueryString(filters, debouncedQ);
         if (hasRenderedInitialOffers.current && qs === initialQueryString) {
             hasRenderedInitialOffers.current = false;
@@ -883,8 +912,12 @@ export default function OfferSearchEngine({
     useEffect(() => { fetchOffers(); }, [fetchOffers]);
 
     useEffect(() => {
-        const nextFilters = buildFiltersFromSearchParams(searchParams);
-        if (serializeFilterState(nextFilters) !== serializeFilterState(filters)) {
+        filtersRef.current = filters;
+    }, [filters]);
+
+    useEffect(() => {
+        const nextFilters = buildFiltersFromSearchParams(new URLSearchParams(searchParamsString));
+        if (serializeFilterState(nextFilters) !== serializeFilterState(filtersRef.current)) {
             dispatch({ type: "HYDRATE", filters: nextFilters });
         }
     }, [searchParamsString]);
@@ -892,7 +925,9 @@ export default function OfferSearchEngine({
     useEffect(() => {
         if (initialGameSlug) return;
 
-        const nextParams = buildShareableSearchParams(filters, {
+        if (filters.q !== debouncedQ) return;
+
+        const nextParams = buildShareableSearchParams({ ...filters, q: debouncedQ }, {
             platformName: filters.platform_id ? reviewPlatformName : undefined,
             fromReview: filters.platform_id ? isReviewScoped : false,
         });
@@ -902,7 +937,7 @@ export default function OfferSearchEngine({
         if (nextQuery !== currentQuery) {
             router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
         }
-    }, [filters, pathname, router, reviewPlatformName, isReviewScoped, initialGameSlug, searchParamsString]);
+    }, [filters, debouncedQ, pathname, router, reviewPlatformName, isReviewScoped, initialGameSlug, searchParams, searchParamsString]);
 
     const handlePin = (offer: Offer) => {
         setPinned(prev => {

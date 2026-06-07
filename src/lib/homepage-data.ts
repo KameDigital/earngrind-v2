@@ -27,16 +27,16 @@ const FEATURED_GAME_NAMES = [
   "Hero Wars: Alliance",
 ] as const;
 
-const FEATURED_EARNLAB_TASK_GROUPS = [
+const FEATURED_EARNLAB_GAME_GROUPS = [
+  ["Call of Dragons"],
   ["DesignVille: Merge & Design", "DesignVille"],
   ["Rise of Kingdoms: Lost Crusade", "Rise of Kingdoms"],
   ["Palmon: Survival", "Palmon"],
-  ["Crazy Fox"],
-  ["Call of Dragons"],
+  ["Puzzles & Chaos: Frozen Castle", "Puzzles & Chaos"],
   ["Woodoku Blast"],
 ] as const;
 
-const FEATURED_CASHINSTYLE_TASK_GROUPS = [
+const FEATURED_CASHINSTYLE_GAME_GROUPS = [
   ["Palmon: Survival", "Palmon"],
   ["Woodoku Blast", "Woodoku"],
   ["Rock N' Cash Casino-Slots Game", "Rock N' Cash"],
@@ -312,10 +312,10 @@ async function loadFeaturedGameCandidates() {
     .limit(200);
 }
 
-// EarnLab candidates: curated task groups for the visible EarnLab rail.
+// EarnLab candidates: curated game groups for the visible EarnLab rail.
 async function loadEarnLabCandidates() {
   const featuredEarnLabTaskFilters = buildHomepageIlikeFilters(
-    FEATURED_EARNLAB_TASK_GROUPS,
+    FEATURED_EARNLAB_GAME_GROUPS,
     ["game_name", "title"],
   );
 
@@ -331,7 +331,7 @@ async function loadEarnLabCandidates() {
 // CashInStyle candidates: visible homepage rail for imported CashInStyle offers.
 async function loadCashInStyleCandidates() {
   const featuredCashInStyleTaskFilters = buildHomepageIlikeFilters(
-    FEATURED_CASHINSTYLE_TASK_GROUPS,
+    FEATURED_CASHINSTYLE_GAME_GROUPS,
     ["game_name", "title"],
   );
 
@@ -484,7 +484,7 @@ function buildEarnLabFeaturedOffers({
     }))
     .filter((row) => row.game_slug || row.game_name);
 
-  const earnLabFeaturedOfferRows: OfferRow[] = FEATURED_EARNLAB_TASK_GROUPS
+  const earnLabFeaturedOfferRows: OfferRow[] = FEATURED_EARNLAB_GAME_GROUPS
     .map((aliases) =>
       featuredEarnLabTaskRows
         .filter((row) => {
@@ -543,7 +543,7 @@ function buildCashInStyleFeaturedOffers({
 }: {
   featuredCashInStyleTaskRows: OfferRow[];
 }) {
-  const cashInStyleFeaturedOfferRows: OfferRow[] = FEATURED_CASHINSTYLE_TASK_GROUPS
+  const cashInStyleFeaturedOfferRows: OfferRow[] = FEATURED_CASHINSTYLE_GAME_GROUPS
     .map((aliases) =>
       featuredCashInStyleTaskRows
         .filter((row) => {

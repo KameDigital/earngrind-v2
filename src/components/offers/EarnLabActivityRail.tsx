@@ -55,7 +55,7 @@ function Avatar({ activity }: { activity: EarnLabActivity }) {
             <img
                 src={activity.avatarUrl}
                 alt={activity.username}
-                className="h-8 w-8 rounded-full object-cover"
+                className="h-7 w-7 rounded-full object-cover"
                 loading="lazy"
                 referrerPolicy="no-referrer"
                 onError={() => setImageFailed(true)}
@@ -64,7 +64,7 @@ function Avatar({ activity }: { activity: EarnLabActivity }) {
     }
 
     return (
-        <div className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/10 text-xs font-extrabold uppercase text-white/85">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-white/10 text-[11px] font-extrabold uppercase text-white/85">
             {getAvatarFallback(activity)}
         </div>
     );
@@ -75,19 +75,19 @@ function ActivityCard({ activity }: { activity: EarnLabActivity }) {
     const amount = formatAmount(activity.amountUsd);
 
     return (
-        <div className="flex h-14 w-[236px] flex-shrink-0 snap-start items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-3 text-left transition-colors hover:border-[var(--brand-lime)]/35 hover:bg-white/[0.09] sm:w-[260px]">
+        <div className="flex h-11 w-[210px] flex-shrink-0 snap-start items-center gap-2.5 rounded-sm border border-white/10 bg-white/[0.06] px-3 text-left transition-colors hover:border-[var(--brand-lime)]/35 hover:bg-white/[0.09] sm:w-[230px]">
             <Avatar activity={activity} />
             <div className="min-w-0 flex-1">
-                <div className="truncate text-[13px] font-extrabold text-white">
+                <div className="truncate text-[12px] font-extrabold text-white">
                     {activity.title}
                 </div>
-                <div className="truncate text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+                <div className="truncate text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                     {secondaryLabel}
                 </div>
             </div>
             {amount ? (
                 <div className="min-w-[56px] text-right">
-                    <div className="text-[13px] font-extrabold text-[var(--brand-lime)]">{amount}</div>
+                    <div className="text-[12px] font-extrabold text-[var(--brand-lime)]">{amount}</div>
                 </div>
             ) : null}
         </div>
@@ -203,7 +203,7 @@ export default function EarnLabActivityRail() {
             return Array.from({ length: 6 }, (_, index) => (
                 <div
                     key={`earnlab-activity-skeleton-${index}`}
-                    className="h-14 w-[236px] flex-shrink-0 animate-pulse rounded-xl border border-white/8 bg-white/5 sm:w-[260px]"
+                    className="h-11 w-[210px] flex-shrink-0 animate-pulse rounded-sm border border-white/8 bg-white/5 sm:w-[230px]"
                 />
             ));
         }
@@ -223,10 +223,10 @@ export default function EarnLabActivityRail() {
 
     return (
         <section className="overflow-hidden border-y border-white/10 bg-[#070b16] text-white">
-            <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+            <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-2 sm:px-6 lg:flex-row lg:items-center lg:px-8">
                 <div className="flex min-w-[176px] items-center justify-between gap-3 lg:block">
                     <div>
-                        <h2 className="text-sm font-extrabold tracking-tight text-white">
+                        <h2 className="text-xs font-extrabold tracking-tight text-white">
                             Recently completed
                         </h2>
                     </div>
@@ -236,7 +236,7 @@ export default function EarnLabActivityRail() {
                 </div>
 
                 <div className="-mx-4 min-w-0 flex-1 overflow-hidden px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
-                    <div className={shouldAnimate ? "activity-marquee flex min-h-14 w-max gap-3" : "flex min-h-14 gap-3"}>
+                    <div className={shouldAnimate ? "activity-marquee flex min-h-11 w-max gap-3" : "flex min-h-11 gap-3"}>
                         <div className="flex gap-3">
                             {marqueeItems}
                         </div>

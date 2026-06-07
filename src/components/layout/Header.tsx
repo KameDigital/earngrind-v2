@@ -6,8 +6,7 @@ import { useState } from "react";
 import { Menu, X, Search } from "lucide-react";
 
 const NAV_LINKS = [
-    { href: "/offers", label: "Offers" },
-    { href: "/offers#games", label: "Games", activePrefixes: ["/games"] },
+    { href: "/offers", label: "Offers & Games", activePrefixes: ["/games"] },
     { href: "/guides", label: "Guides", excludePrefixes: ["/guides/best-gpt-sites", "/guides/fanduel-casino-review-bonus"] },
     { href: "/best-gpt-sites", label: "Best GPT Sites", activePrefixes: ["/guides/best-gpt-sites", "/review", "/reviews", "/platforms", "/guides/fanduel-casino-review-bonus"] },
     ...(process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true" ? [{ href: "/earn", label: "Earn Rewards" }] : []),
@@ -41,7 +40,7 @@ export default function Header() {
             style={{ boxShadow: "0 1px 0 0 var(--border-default)" }}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center h-16 gap-8">
+                <div className="flex h-12 items-center gap-8">
 
                     {/* Logo */}
                     <Link
@@ -50,10 +49,10 @@ export default function Header() {
                         aria-label="EarnGrind home"
                     >
                         <span
-                            className="w-2.5 h-2.5 rounded-full bg-[var(--brand-lime)] ring-2 ring-[var(--brand-lime)]/30 group-hover:scale-110 transition-transform"
+                            className="w-2 h-2 rounded-full bg-[var(--brand-lime)] ring-2 ring-[var(--brand-lime)]/30 group-hover:scale-110 transition-transform"
                             aria-hidden="true"
                         />
-                        <span className="text-[var(--brand-ink)] font-extrabold text-lg tracking-tight leading-none">
+                        <span className="text-[var(--brand-ink)] font-extrabold text-sm tracking-tight leading-none">
                             Earn<span className="text-[color:hsl(84,93%,36%)]">Grind</span>
                         </span>
                     </Link>
@@ -67,7 +66,7 @@ export default function Header() {
                                     key={href}
                                     href={href}
                                     className={`
-                                        relative px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors
+                                        relative px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors
                                         ${active
                                             ? "text-[var(--brand-ink)] bg-[var(--surface-muted)]"
                                             : "text-[var(--text-secondary)] hover:text-[var(--brand-ink)] hover:bg-[var(--surface-muted)]"
@@ -94,13 +93,13 @@ export default function Header() {
                         <Link
                             href="/offers"
                             aria-label="Search offers"
-                            className="w-9 h-9 flex items-center justify-center rounded-lg text-[var(--text-tertiary)] hover:text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
+                            className="w-8 h-8 flex items-center justify-center rounded-lg text-[var(--text-tertiary)] hover:text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
                         >
                             <Search size={17} />
                         </Link>
                         <Link
                             href="/offers"
-                            className="flex items-center gap-1.5 px-4 py-2 bg-[var(--brand-ink)] text-white text-sm font-bold rounded-xl hover:bg-[var(--brand-ink)]/90 transition-all hover:-translate-y-px active:translate-y-0 shadow-sm"
+                            className="flex items-center gap-1.5 rounded-lg bg-[var(--brand-ink)] px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/90 active:translate-y-0"
                         >
                             Find Offers
                             <span aria-hidden="true" className="text-[var(--brand-lime)]">-&gt;</span>

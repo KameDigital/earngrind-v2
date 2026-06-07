@@ -300,19 +300,61 @@ export default async function HomePage() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {START_HERE_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300"
-              >
-                <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                  {item.badge}
-                </span>
-                <h3 className="mt-4 text-base font-extrabold text-[var(--brand-ink)]">{item.name}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">{item.desc}</p>
-              </Link>
-            ))}
+            {START_HERE_ITEMS.map((item, index) =>
+              index === 0 ? (
+                <Link
+                  key={item.href}
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+                  href="/offers"
+                >
+                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
+                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
+
+                  <div
+                    className="pointer-events-none absolute bottom-2 right-1 block h-28 w-28 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
+                    aria-hidden="true"
+                  >
+                    <picture className="block h-full w-full">
+                      <source
+                        srcSet="/images/compare-offers-scale-transparent.webp"
+                        type="image/webp"
+                      />
+                      <img
+                        src="/images/compare-offers-scale-transparent.png"
+                        alt=""
+                        className="h-full w-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                    Canonical search
+                  </span>
+
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
+                    Compare Offers
+                  </h3>
+
+                  <p className="relative z-10 mt-2 max-w-[8.25rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+                    Compare live payout routes.
+                  </p>
+                </Link>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300"
+                >
+                  <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                    {item.badge}
+                  </span>
+                  <h3 className="mt-4 text-base font-extrabold text-[var(--brand-ink)]">{item.name}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">{item.desc}</p>
+                </Link>
+              ),
+            )}
           </div>
         </div>
       </section>

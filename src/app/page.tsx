@@ -105,6 +105,7 @@ export default async function HomePage() {
     cashInStyleFeaturedOffers,
     earnLabFeaturedOffers,
     gainFeaturedOffers,
+    gemsLootFeaturedOffers,
     guideHrefByGameKey,
     modalRoutesByGameKey,
   } = await getHomepageData();
@@ -169,6 +170,60 @@ export default async function HomePage() {
       },
     }),
   );
+
+  const gemsLootFeaturedOfferRail: FeaturedOfferRailItem[] =
+    gemsLootFeaturedOffers.map((offer) => {
+      const hasTrackedRoute = !offer.id.startsWith("gemsloot-featured-");
+      const offerHref = hasTrackedRoute
+        ? buildGoHref(offer, "homepage_gemsloot_featured_offer")
+        : offer.fallback_href;
+      const payout = formatMoney(offer.total_payout_usd ?? offer.payout_usd);
+
+      return {
+        id: `gemsloot-featured-${offer.requested_offer_name}`,
+        href: offerHref,
+        title: offer.title?.trim() || offer.game_name || "GemsLoot offer",
+        badge: offer.badge,
+        provider: offer.platform_name,
+        platform: offer.provider_name,
+        payout,
+        secondaryValue: offer.goal_text ? offer.goal_text : null,
+        imageUrl: offer.image_url,
+        preview: {
+          title: offer.title?.trim() || offer.game_name || "GemsLoot offer",
+          description: `Open the GemsLoot offer detail for ${
+            offer.game_name ?? offer.title ?? offer.requested_offer_name
+          } and verify the live requirements before starting.`,
+          imageUrl: offer.image_url,
+          gameHref: offer.game_slug
+            ? `/games/${offer.game_slug}`
+            : "/offers/gemsloot/us",
+          guideHref: guideHrefForGame(
+            offer.game_slug,
+            gameKeyFromParts(offer.game_slug, offer.game_name),
+          ),
+          routes: [
+            {
+              offerId: offer.id,
+              href: offerHref,
+              providerName: offer.provider_name,
+              platformName: offer.platform_name,
+              payout,
+              payoutValue: offer.total_payout_usd ?? offer.payout_usd,
+              taskCount: offer.goal_text ? 1 : 0,
+              tasks: offer.goal_text
+                ? [
+                    {
+                      title: offer.goal_text,
+                      rewardDisplay: payout,
+                    },
+                  ]
+                : [],
+            },
+          ],
+        },
+      };
+    });
 
   const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map(
     (offer) => {
@@ -436,6 +491,86 @@ export default async function HomePage() {
                     and related games.
                   </p>
                 </Link>
+              ) : index === 2 ? (
+                <Link
+                  key={item.href}
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+                  href="/best-gpt-sites"
+                >
+                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
+                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
+
+                  <div
+                    className="pointer-events-none absolute bottom-2 right-2 block h-24 w-24 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
+                    aria-hidden="true"
+                  >
+                    <picture className="block h-full w-full">
+                      <source
+                        srcSet="/images/best-gpt-sites-trophy-transparent.webp"
+                        type="image/webp"
+                      />
+                      <img
+                        src="/images/best-gpt-sites-trophy-transparent.png"
+                        alt=""
+                        className="h-full w-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                    Platform intel
+                  </span>
+
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
+                    Best GPT Sites
+                  </h3>
+
+                  <p className="relative z-10 mt-2 max-w-[8rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+                    Find trusted GPT sites with competitive payouts.
+                  </p>
+                </Link>
+              ) : index === 3 ? (
+                <Link
+                  key={item.href}
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+                  href="/guides"
+                >
+                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
+                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
+
+                  <div
+                    className="pointer-events-none absolute bottom-2 -right-3 block h-20 w-32 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
+                    aria-hidden="true"
+                  >
+                    <picture className="block h-full w-full">
+                      <source
+                        srcSet="/images/game-guides-route-transparent.webp"
+                        type="image/webp"
+                      />
+                      <img
+                        src="/images/game-guides-route-transparent.png"
+                        alt=""
+                        className="h-full w-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                    Completion help
+                  </span>
+
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
+                    Game Guides
+                  </h3>
+
+                  <p className="relative z-10 mt-2 max-w-[7.25rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+                    Finish milestones faster.
+                  </p>
+                </Link>
               ) : (
                 <Link
                   key={item.href}
@@ -464,6 +599,11 @@ export default async function HomePage() {
             eyebrow="Games & Offers"
             title="Featured Games by Site"
             description="Compare featured game picks from each partner site, preview routes, and open a game page before starting."
+          />
+          <FeaturedOfferRail
+            items={gemsLootFeaturedOfferRail}
+            title="Featured Game Offers"
+            description="Curated GemsLoot game offers. Open a preview, then start the exact GemsLoot offer detail modal through the tracked route when available."
           />
           <FeaturedOfferRail
             items={earnLabOfferRail}

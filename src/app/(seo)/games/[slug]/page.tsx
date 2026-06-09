@@ -14,9 +14,7 @@ import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "../../components/FAQSection";
 import GameHeader from "../../components/GameHeader";
 import OfferTable from "../../components/OfferTable";
-import ProviderComparison from "../../components/ProviderComparison";
 import {
-  buildProviderComparison,
   buildSeoMetadata,
   formatMoney,
   getGameSeoData,
@@ -80,7 +78,6 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
     acc.get(key)!.push(row);
     return acc;
   }, new Map<string, typeof rows>());
-  const providerRows = buildProviderComparison(rows);
 
   const relatedSeed = await getTopOffers({
     q: data.game.category ?? data.game.name,
@@ -148,7 +145,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
 
         <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
           <div className="space-y-6">
-            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+            <section className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
                   <p className="section-label">Best route</p>
@@ -185,18 +182,12 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
             </section>
 
             <section id="all-provider-offers" className="space-y-3">
-              <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-                <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Compare all available routes</h2>
-                <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                  Use this table to check payout spread, provider context, and task ladders before choosing a route.
-                </p>
-              </div>
-              <OfferTable rows={rows} showTasks compact showBestSummary={false} />
+              <OfferTable rows={rows} title={`Compare ${data.game.name} routes`} showTasks compact showBestSummary={false} />
             </section>
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-20">
-            <section className="rounded-2xl border border-lime-300 bg-lime-50 p-4 shadow-[var(--shadow-card)]">
+            <section className="rounded-none border border-lime-300 bg-lime-50 p-4 shadow-[var(--shadow-card)]">
               <p className="text-xs font-extrabold uppercase tracking-wide text-lime-800">Recommended action</p>
               <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
                 {bestOffer ? "Start the highest payout" : "Compare latest payouts"}
@@ -216,14 +207,14 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
                   payoutUsd={bestOffer.totalPayoutUsd}
                   location="game-page-sticky-best-route"
                   sourceContext="game-page"
-                  className="mt-4 inline-flex w-full justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                  className="mt-4 inline-flex w-full justify-center rounded-none bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                 >
                   Start Highest Payout
                 </TrackedOutboundLink>
               ) : (
                 <Link
                   href="/offers"
-                  className="mt-4 inline-flex w-full justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                  className="mt-4 inline-flex w-full justify-center rounded-none bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                 >
                   Browse Offers
                 </Link>
@@ -234,24 +225,24 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
               </div>
             </section>
 
-            <section className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+            <section className="rounded-none border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
               <p className="section-label">Next links</p>
               <div className="mt-3 grid gap-2">
                 <Link
                   href={offerRoutePath(data.game.slug)}
-                  className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                  className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
                   Full route comparison
                 </Link>
                 <Link
                   href={primaryGuide ? `/guides/${primaryGuide.slug}` : "/guides"}
-                  className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                  className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
                   {primaryGuide ? "Open guide" : "Browse guides"}
                 </Link>
                 <Link
                   href={`/best-gpt-sites${bestOffer ? `?provider=${encodeURIComponent(bestOffer.providerName)}` : ""}`}
-                  className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                  className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
                   Check provider trust
                 </Link>
@@ -260,17 +251,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
           </aside>
         </section>
 
-        <section className="space-y-3">
-          <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-            <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Provider Snapshot</h2>
-            <p className="mt-2 text-sm text-[var(--text-secondary)]">
-              Use this provider-level view to spot who is consistently paying more before you drop into the full route list.
-            </p>
-          </div>
-          <ProviderComparison rows={providerRows} />
-        </section>
-
-        <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+        <section className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
           <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Keep Exploring</h2>
           <p className="mt-2 text-sm text-[var(--text-secondary)]">
             Use these links if you want a better payout route, a guide-first completion path, or more context before you commit to a provider.
@@ -323,7 +304,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
         </section>
 
         {bestEligibleOffer ? (
-          <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+          <section className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="section-label">Best available route</p>
@@ -345,7 +326,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
                 payoutUsd={bestEligibleOffer.totalPayoutUsd}
                 location="game_bottom_recap"
                 sourceContext="game_page"
-                className="inline-flex rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                className="inline-flex rounded-none bg-[var(--brand-ink)] px-4 py-2 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
               >
                 Start highest payout
               </TrackedOutboundLink>

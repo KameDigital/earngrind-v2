@@ -8,9 +8,11 @@ import {
 import { createClient } from "@/lib/supabase/server";
 import {
     buildCashInStyleOutboundUrl,
+    buildGemslootOfferModalUrl,
     buildOutboundRedirectUrl,
     getPlatformAffiliateOverride,
     getPlatformFallbackUrl,
+    isGemslootTarget,
 } from "@/lib/outbound";
 import { buildGainOfferDeepLink, buildGainOfferDeepLinkFromSiteOffer } from "@/lib/gain-deeplinks";
 import { buildCanonicalOutboundRecord } from "@/lib/outbound-reporting";
@@ -346,6 +348,12 @@ export async function GET(
         site,
         provider,
     });
+    const gemslootOfferModalUrl = isGemslootTarget(site)
+        ? buildGemslootOfferModalUrl({
+            externalId: siteOffer.external_id,
+            offerUrl: siteOffer.offer_url,
+        })
+        : null;
     const directSiteOfferUrl = buildOutboundRedirectUrl({
         affiliateTemplate: null,
         destinationUrl: siteOffer.offer_url,
@@ -357,7 +365,7 @@ export async function GET(
         : directSiteOfferUrl;
     // EarnLab gallery rows intentionally have no direct per-offer URL today.
     // When offer_url is missing, keep CTAs working through the platform affiliate fallback.
-    const outboundUrl = cashInStyleOutboundUrl ?? currentGainNativeDeepLink ?? effectiveDirectSiteOfferUrl ?? gainNativeDeepLink ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
+    const outboundUrl = cashInStyleOutboundUrl ?? currentGainNativeDeepLink ?? gemslootOfferModalUrl ?? effectiveDirectSiteOfferUrl ?? gainNativeDeepLink ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: getPlatformFallbackUrl(site),
@@ -387,6 +395,8 @@ export async function GET(
             ? "cashinstyle-deeplink"
             : currentGainNativeDeepLink
             ? "gain-current-deeplink"
+            : gemslootOfferModalUrl
+            ? "gemsloot-modal"
             : effectiveDirectSiteOfferUrl
             ? "direct"
             : gainNativeDeepLink

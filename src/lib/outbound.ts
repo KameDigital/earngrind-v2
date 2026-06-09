@@ -55,6 +55,7 @@ const INBOXDOLLARS_AFFILIATE_URL = "https://www.inboxdollars.com?rb=193664312";
 const MYPOINTS_AFFILIATE_URL = "https://www.mypoints.com?rb=233983902";
 const PRIZEREBEL_AFFILIATE_URL = "https://www.prizerebel.com/index.php?r=16580973";
 const SCRAMBLY_URL = "https://scrambly.io/";
+const GEMSLOOT_OFFER_URL = "https://gemsloot.com/transactions?modal=offer_3";
 const PLATFORM_FALLBACK_URLS: Record<string, string> = {
     cashinstyle: CASHINSTYLE_AFFILIATE_URL,
     earnlab: EARNLAB_AFFILIATE_URL,
@@ -139,6 +140,37 @@ export function isCashInStyleTarget(
 ): boolean {
     return [...getPlatformKeys(platform), ...getPlatformKeys(provider)]
         .some((candidate) => candidate === "cashinstyle" || candidate === "cashinstyles");
+}
+
+export function isGemslootTarget(platform: PlatformRedirectTarget | null | undefined): boolean {
+    return getPlatformKeys(platform)
+        .some((candidate) => candidate === "gemsloot" || candidate.includes("gemsloot"));
+}
+
+export function extractGemslootOfferName(value: string | null | undefined): string | null {
+    const normalized = value?.trim() ?? "";
+    if (!normalized) return null;
+
+    const directMatch = normalized.match(/([A-Za-z][A-Za-z0-9]*__[A-Za-z0-9_-]+)/);
+    return directMatch?.[1]?.replace(/-[A-Z]{2}$/i, "") ?? null;
+}
+
+export function buildGemslootOfferModalUrl({
+    externalId,
+    offerUrl,
+}: {
+    externalId?: string | null;
+    offerUrl?: string | null;
+}): string | null {
+    const offerName =
+        extractGemslootOfferName(externalId) ??
+        extractGemslootOfferName(offerUrl);
+    if (!offerName) return null;
+
+    const url = new URL(GEMSLOOT_OFFER_URL);
+    url.searchParams.set("name", offerName);
+    url.searchParams.set("aff", "kamedev");
+    return url.toString();
 }
 
 export function extractCashInStyleOfferId({

@@ -20,7 +20,7 @@ export default function ProviderComparison({ rows }: { rows: ProviderRow[] }) {
       <h2 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">Provider Comparison</h2>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {rows.slice(0, 9).map((row) => (
-          <article key={row.providerName} className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+          <article key={row.providerName} className="rounded-none border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
             <div className="flex items-center gap-3">
               <ProviderLogo name={row.providerName} className="h-10 max-w-[180px]" />
               <h3 className="min-w-0 text-sm font-extrabold text-[var(--brand-ink)]">{row.providerName}</h3>

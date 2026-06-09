@@ -2,6 +2,7 @@ import {
     GemslootGalleryOffer,
     getGemslootGalleryOffers,
     normalizeGemslootCountryCode,
+    normalizeGemslootOfferIds,
     normalizeGemslootProvider,
 } from "@/lib/gemsloot-gallery";
 import {
@@ -38,6 +39,7 @@ export async function POST(req: NextRequest) {
     const provider = normalizeGemslootProvider(typeof body.provider === "string" ? body.provider : null);
     const device = typeof body.device === "string" ? body.device : null;
     const search = typeof body.search === "string" ? body.search : null;
+    const offerIds = normalizeGemslootOfferIds(body.offerIds);
     const sort = body.sort === "completed" ? "completed" : "epc";
     const limit = Math.min(GEMSLOOT_CONFIG.maxImportLimit, Math.max(1, Number(body.limit ?? 120) || 120));
     const refresh = body.refresh !== false;
@@ -48,8 +50,9 @@ export async function POST(req: NextRequest) {
             provider,
             device,
             search,
+            offerIds,
             sort,
-            limit,
+            limit: offerIds.length > 0 ? offerIds.length : limit,
             refresh,
         });
         const result = await runProviderGalleryAdminImport({

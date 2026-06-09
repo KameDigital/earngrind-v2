@@ -30,7 +30,7 @@ export default function Footer() {
                     {/* Brand column */}
                     <div className="col-span-2 md:col-span-2">
                         <Link href="/" className="flex items-center gap-2 mb-4 group w-fit">
-                            <span className="w-2 h-2 rounded-full bg-[var(--brand-lime)]" />
+                            <span className="h-2 w-2 rounded-none bg-[var(--brand-lime)]" />
                             <span className="text-lg font-bold tracking-tight text-[var(--brand-ink)]">
                                 Earn<span className="text-lime-500">Grind</span>
                             </span>

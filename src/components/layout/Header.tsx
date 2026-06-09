@@ -49,7 +49,7 @@ export default function Header() {
                         aria-label="EarnGrind home"
                     >
                         <span
-                            className="w-2 h-2 rounded-full bg-[var(--brand-lime)] ring-2 ring-[var(--brand-lime)]/30 group-hover:scale-110 transition-transform"
+                            className="h-2 w-2 rounded-none bg-[var(--brand-lime)] ring-2 ring-[var(--brand-lime)]/30 group-hover:scale-110 transition-transform"
                             aria-hidden="true"
                         />
                         <span className="text-[var(--brand-ink)] font-extrabold text-sm tracking-tight leading-none">
@@ -66,7 +66,7 @@ export default function Header() {
                                     key={href}
                                     href={href}
                                     className={`
-                                        relative px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors
+                                        relative rounded-none px-3.5 py-2 text-xs font-semibold transition-colors
                                         ${active
                                             ? "text-[var(--brand-ink)] bg-[var(--surface-muted)]"
                                             : "text-[var(--text-secondary)] hover:text-[var(--brand-ink)] hover:bg-[var(--surface-muted)]"
@@ -76,7 +76,7 @@ export default function Header() {
                                     {label}
                                     {active && (
                                         <span
-                                            className="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-full bg-[var(--brand-lime)]"
+                                            className="absolute bottom-0 left-3.5 right-3.5 h-0.5 rounded-none bg-[var(--brand-lime)]"
                                             aria-hidden="true"
                                         />
                                     )}
@@ -93,13 +93,13 @@ export default function Header() {
                         <Link
                             href="/offers"
                             aria-label="Search offers"
-                            className="w-8 h-8 flex items-center justify-center rounded-lg text-[var(--text-tertiary)] hover:text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
+                            className="flex h-8 w-8 items-center justify-center rounded-none text-[var(--text-tertiary)] transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--brand-ink)]"
                         >
                             <Search size={17} />
                         </Link>
                         <Link
                             href="/offers"
-                            className="flex items-center gap-1.5 rounded-lg bg-[var(--brand-ink)] px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/90 active:translate-y-0"
+                            className="flex items-center gap-1.5 rounded-none bg-[var(--brand-ink)] px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/90 active:translate-y-0"
                         >
                             Find Offers
                             <span aria-hidden="true" className="text-[var(--brand-lime)]">-&gt;</span>
@@ -110,14 +110,14 @@ export default function Header() {
                     <div className="lg:hidden flex items-center gap-2">
                         <Link
                             href="/offers"
-                            className="px-3.5 py-1.5 bg-[var(--brand-ink)] text-white text-xs font-bold rounded-lg"
+                            className="rounded-none bg-[var(--brand-ink)] px-3.5 py-1.5 text-xs font-bold text-white"
                         >
                             Find Offers
                         </Link>
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
                             aria-label={mobileOpen ? "Close menu" : "Open menu"}
-                            className="w-9 h-9 flex items-center justify-center rounded-lg text-[var(--text-secondary)] hover:bg-[var(--surface-muted)] transition-colors"
+                            className="flex h-9 w-9 items-center justify-center rounded-none text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-muted)]"
                         >
                             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
@@ -136,14 +136,14 @@ export default function Header() {
                                     key={href}
                                     href={href}
                                     onClick={() => setMobileOpen(false)}
-                                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${active
+                                    className={`flex items-center justify-between rounded-none px-4 py-3 text-sm font-semibold transition-colors ${active
                                         ? "bg-[var(--surface-muted)] text-[var(--brand-ink)]"
                                         : "text-[var(--text-secondary)] hover:bg-[var(--surface-muted)] hover:text-[var(--brand-ink)]"
                                         }`}
                                 >
                                     {label}
                                     {active && (
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-lime)]" />
+                                        <span className="h-1.5 w-1.5 rounded-none bg-[var(--brand-lime)]" />
                                     )}
                                 </Link>
                             );

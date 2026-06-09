@@ -3,11 +3,19 @@ import "server-only";
 const GEMSLOOT_LIST_URL = process.env.GEMSLOOT_LIST_URL?.trim() || "https://gemsloot.com/_api/offer/list";
 const GEMSLOOT_PROVIDERS_URL = process.env.GEMSLOOT_PROVIDERS_URL?.trim() || "https://gemsloot.com/_api/offer/providers";
 const GEMSLOOT_DETAIL_URL = process.env.GEMSLOOT_DETAIL_URL?.trim() || "https://gemsloot.com/_api/offer/get_offer";
-const GEMSLOOT_SITE_URL = process.env.GEMSLOOT_SITE_URL?.trim() || "https://gemsloot.com/earn";
+const GEMSLOOT_SITE_URL = process.env.GEMSLOOT_SITE_URL?.trim() || "https://gemsloot.com/transactions";
 const DEFAULT_LIMIT = 120;
 const MAX_LIMIT = 300;
 const PAGE_SIZE = 30;
 const CACHE_SECONDS = 60 * 30;
+
+export const FEATURED_GEMSLOOT_OFFER_IDS = [
+    "TyrAds__5553",
+    "HangMyAds__82544",
+    "TyrAds__4884",
+    "TyrAds__4922",
+    "WaxRewards__10-4513",
+] as const;
 
 export type GemslootGalleryOffer = {
     id: string;
@@ -137,6 +145,21 @@ export function normalizeGemslootProvider(value: string | null | undefined): str
     return normalized;
 }
 
+export function normalizeGemslootOfferIds(value: unknown): string[] {
+    const rawValues = Array.isArray(value)
+        ? value
+        : typeof value === "string"
+            ? value.split(/[\s,]+/)
+            : [];
+    return Array.from(
+        new Set(
+            rawValues
+                .map((item) => cleanText(String(item ?? "")))
+                .filter((item) => /^[A-Za-z][A-Za-z0-9]*__[A-Za-z0-9_-]+$/.test(item)),
+        ),
+    );
+}
+
 export async function getGemslootGalleryOffers(options: {
     country?: string | null;
     provider?: string | null;
@@ -144,40 +167,38 @@ export async function getGemslootGalleryOffers(options: {
     refresh?: boolean;
     search?: string | null;
     device?: string | null;
+    offerIds?: string[];
     sort?: "epc" | "completed";
 } = {}): Promise<GemslootGalleryResult> {
     const countryCode = normalizeGemslootCountryCode(options.country) ?? "US";
     const limit = normalizeLimit(options.limit);
     const refresh = options.refresh === true;
-    const providers = await getGemslootProviders(refresh);
+    const offerIds = normalizeGemslootOfferIds(options.offerIds);
+    const providers = offerIds.length > 0 ? [] : await getGemslootProviders(refresh);
     const provider = normalizeGemslootProvider(options.provider);
     const providerNames = provider ? [provider] : providers.map((item) => item.name);
-    const listRows = await fetchListRows({
-        providerNames,
-        search: options.search,
-        device: options.device,
-        limit,
-        refresh,
-    });
-
-    const detailRows = await mapWithConcurrency(listRows.slice(0, limit), 8, async (entry) => {
-        const detail = await fetchOfferDetail(entry.offer.id, refresh).catch((error) => {
-            console.warn("[gemsloot-gallery] detail fetch failed", {
-                offerId: entry.offer.id,
-                message: error instanceof Error ? error.message : String(error),
-            });
-            return null;
-        });
-        return normalizeGemslootOffer(entry.offer, detail, {
+    const detailRows = offerIds.length > 0
+        ? await loadExactOfferDetails({
+            offerIds: offerIds.slice(0, limit),
             countryCode,
-            completionCount: entry.completionCount,
+            refresh,
+        })
+        : await loadListOfferDetails({
+            providerNames,
+            search: options.search,
+            device: options.device,
+            limit,
+            countryCode,
+            refresh,
         });
-    });
 
     const offers = detailRows
         .filter((offer): offer is GemslootGalleryOffer => Boolean(offer))
         .filter((offer) => offer.countryCode === countryCode)
         .sort((left, right) => {
+            if (offerIds.length > 0) {
+                return offerIds.indexOf(left.id) - offerIds.indexOf(right.id);
+            }
             if (options.sort === "completed") {
                 return (right.completionCount ?? 0) - (left.completionCount ?? 0);
             }
@@ -193,9 +214,71 @@ export async function getGemslootGalleryOffers(options: {
         meta: {
             limit,
             cacheSeconds: refresh ? 0 : CACHE_SECONDS,
-            upstreamCount: listRows.length,
+            upstreamCount: detailRows.length,
         },
     };
+}
+
+async function loadExactOfferDetails({
+    offerIds,
+    countryCode,
+    refresh,
+}: {
+    offerIds: string[];
+    countryCode: string;
+    refresh: boolean;
+}) {
+    return mapWithConcurrency(offerIds, 5, async (offerId) => {
+        const detail = await fetchOfferDetail(offerId, refresh).catch((error) => {
+            console.warn("[gemsloot-gallery] exact detail fetch failed", {
+                offerId,
+                message: error instanceof Error ? error.message : String(error),
+            });
+            return null;
+        });
+        return normalizeGemslootOffer(detailToListNode(detail, offerId), detail, {
+            countryCode,
+            completionCount: null,
+        });
+    });
+}
+
+async function loadListOfferDetails({
+    providerNames,
+    search,
+    device,
+    limit,
+    countryCode,
+    refresh,
+}: {
+    providerNames: string[];
+    search?: string | null;
+    device?: string | null;
+    limit: number;
+    countryCode: string;
+    refresh: boolean;
+}) {
+    const listRows = await fetchListRows({
+        providerNames,
+        search,
+        device,
+        limit,
+        refresh,
+    });
+
+    return mapWithConcurrency(listRows.slice(0, limit), 8, async (entry) => {
+        const detail = await fetchOfferDetail(entry.offer.id, refresh).catch((error) => {
+            console.warn("[gemsloot-gallery] detail fetch failed", {
+                offerId: entry.offer.id,
+                message: error instanceof Error ? error.message : String(error),
+            });
+            return null;
+        });
+        return normalizeGemslootOffer(entry.offer, detail, {
+            countryCode,
+            completionCount: entry.completionCount,
+        });
+    });
 }
 
 async function getGemslootProviders(refresh: boolean): Promise<Array<{ name: string; count: number | null; bonus: number | null }>> {
@@ -293,7 +376,7 @@ function normalizeGemslootOffer(
 
     if (!id || !title || totalPayout <= 0) return null;
 
-    const modalUrl = `${GEMSLOOT_SITE_URL}?modal=offer_2&name=${encodeURIComponent(id)}`;
+    const modalUrl = buildGemslootOfferModalUrl(id);
 
     return {
         id,
@@ -327,6 +410,27 @@ function normalizeGemslootOffer(
             advertiserUrlTemplate: normalizeHttpUrl(detail?.url ?? "")?.includes("CLICKID") ? detail?.url ?? null : null,
         },
     };
+}
+
+function detailToListNode(detail: GemslootDetailPayload | null, fallbackId: string): GemslootListNode {
+    return {
+        id: detail?.id ?? fallbackId,
+        provider: detail?.provider,
+        points: detail?.points,
+        img: detail?.img,
+        video: detail?.video,
+        name: detail?.name,
+        os: detail?.os,
+        category: detail?.my_category,
+    };
+}
+
+function buildGemslootOfferModalUrl(offerId: string): string {
+    const url = new URL(GEMSLOOT_SITE_URL);
+    url.searchParams.set("modal", "offer_3");
+    url.searchParams.set("name", offerId);
+    url.searchParams.set("aff", "kamedev");
+    return url.toString();
 }
 
 function normalizeTasks(steps: GemslootDetailStep[] | null | undefined): GemslootGalleryTaskStep[] {

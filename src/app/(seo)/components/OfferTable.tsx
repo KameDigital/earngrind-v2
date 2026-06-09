@@ -27,11 +27,11 @@ type ProviderGroup = {
 };
 
 const DEFAULT_VISIBLE_COUNT = 3;
-const DEFAULT_EXPANDED_PROVIDERS = 2;
+const DEFAULT_EXPANDED_PROVIDERS = 0;
 const PRIMARY_CTA_CLASS =
-  "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-3.5 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95 active:translate-y-0";
+  "inline-flex min-h-10 items-center justify-center gap-2 rounded-none bg-[var(--brand-ink)] px-3.5 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95 active:translate-y-0";
 const SECONDARY_BUTTON_CLASS =
-  "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-lg border border-[var(--border-default)] bg-white px-3 py-2 text-xs font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-400 hover:bg-lime-50";
+  "inline-flex min-h-9 items-center justify-center gap-1.5 rounded-none border border-[var(--border-default)] bg-white px-3 py-2 text-xs font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-400 hover:bg-lime-50";
 const DEVICE_LABELS: Record<DeviceFilter, string> = {
   all: "All devices",
   ios: "iOS",
@@ -137,7 +137,7 @@ function OfferCard({
 
   return (
     <article
-      className={`group relative overflow-hidden rounded-xl border p-3 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-md ${
+      className={`group relative overflow-hidden rounded-none border p-3 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:shadow-md ${
         isBest
           ? "border-lime-400 bg-lime-50/70 ring-1 ring-lime-200"
           : "border-[var(--border-default)] bg-white"
@@ -148,7 +148,7 @@ function OfferCard({
         <div className="relative h-28 overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)] sm:h-32">
           <OfferArtwork src={row.imageUrl} title={row.gameName} />
           {isBest ? (
-            <div className="absolute left-2 top-2 rounded-full border border-white/15 bg-[rgba(15,23,15,0.82)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-[var(--brand-lime)] backdrop-blur-sm">
+            <div className="absolute left-2 top-2 rounded-none border border-white/15 bg-[rgba(15,23,15,0.82)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-[var(--brand-lime)] backdrop-blur-sm">
               Best route
             </div>
           ) : null}
@@ -176,19 +176,19 @@ function OfferCard({
       <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">{routeSummary}</p>
 
       <div className="mt-2.5 flex flex-wrap gap-1.5 text-[11px] font-semibold text-[var(--text-tertiary)]">
-        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+        <span className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
           {deviceSummary}
         </span>
-        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+        <span className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
           {row.platformName}
         </span>
-        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+        <span className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
           {milestoneCount > 1 ? "Multi-step" : "Single-step"}
         </span>
-        <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+        <span className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
           {milestoneCount} milestone{milestoneCount !== 1 ? "s" : ""}
         </span>
-        <span className="min-w-0 max-w-full rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
+        <span className="min-w-0 max-w-full rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-2 py-1">
           <Link href={`/games/${row.gameSlug}`} className="block max-w-[12rem] truncate hover:text-lime-700 hover:underline">
             {row.gameName}
           </Link>
@@ -201,7 +201,7 @@ function OfferCard({
           className={`col-span-2 ${
             isBest
               ? PRIMARY_CTA_CLASS
-              : "inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-[var(--brand-ink)] bg-[var(--brand-ink)] px-3.5 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+              : "inline-flex min-h-10 items-center justify-center gap-2 rounded-none border border-[var(--brand-ink)] bg-[var(--brand-ink)] px-3.5 py-2.5 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
           }`}
           eventLabel="seo-offer-table-cta"
           offerId={row.id}
@@ -226,7 +226,7 @@ function OfferCard({
         <button
           type="button"
           onClick={onToggleSelect}
-          className={`inline-flex min-h-9 items-center justify-center rounded-lg border px-3 py-2 text-xs font-bold ${
+          className={`inline-flex min-h-9 items-center justify-center rounded-none border px-3 py-2 text-xs font-bold ${
             isSelected
               ? "border-[var(--brand-ink)] bg-[var(--brand-ink)] text-[var(--brand-lime)]"
               : "border-[var(--border-default)] bg-white text-[var(--brand-ink)] hover:border-lime-400"
@@ -241,7 +241,7 @@ function OfferCard({
       </p>
 
       {expanded && showTasks && milestoneCount > 0 ? (
-        <div className="mt-3 rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-2.5">
+        <div className="mt-3 rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] p-2.5">
           <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Milestone breakdown</div>
           <ol className="mt-2 space-y-1.5">
             {visibleTasks.map((task) => (
@@ -320,8 +320,11 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
     return acc;
   }, []), [visibleRows]);
 
+  const openProviderGroups = groupedProviders.filter(
+    (group, index) => expandedProviders[group.providerName] ?? index < DEFAULT_EXPANDED_PROVIDERS,
+  );
   const selectedRows = rows.filter((row) => selectedOffers.includes(row.id)).slice(0, 3);
-  const topGridRows = visibleRows.slice(0, 3);
+  const topGridRows = visibleRows.slice(0, 6);
 
   useEffect(() => {
     setExpandedProviders((current) => {
@@ -372,7 +375,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
 
   if (rows.length === 0) {
     return (
-      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 text-sm text-[var(--text-secondary)]">
+      <div className="rounded-none border border-[var(--border-default)] bg-white p-6 text-sm text-[var(--text-secondary)]">
         No offers found for this section.
       </div>
     );
@@ -380,24 +383,8 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
 
   return (
     <section className="space-y-4">
-      {title ? (
-        <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-          <div className="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <h2 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">{title}</h2>
-              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                Compare the strongest routes first, then expand providers only when you need more depth.
-              </p>
-            </div>
-            <div className="text-sm text-[var(--text-tertiary)]">
-              {visibleRows.length} visible offer{visibleRows.length !== 1 ? "s" : ""} across {groupedProviders.length} provider{groupedProviders.length !== 1 ? "s" : ""}
-            </div>
-          </div>
-        </div>
-      ) : null}
-
       {showBestSummary ? (
-      <div className="overflow-hidden rounded-2xl border border-[var(--brand-ink)] bg-[var(--brand-ink)] p-5 text-white shadow-[var(--shadow-card)]">
+      <div className="overflow-hidden rounded-none border border-[var(--brand-ink)] bg-[var(--brand-ink)] p-5 text-white shadow-[var(--shadow-card)]">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--brand-lime)]">Best Offer</p>
@@ -416,7 +403,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
           {bestOverall ? (
             <TrackedOutboundLink
               href={bestOverall.redirectUrl}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-lime)] px-5 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
+              className="inline-flex items-center justify-center gap-2 rounded-none bg-[var(--brand-lime)] px-5 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
               eventLabel="seo-best-offer-cta"
               offerId={bestOverall.id}
               offerTitle={bestOverall.title}
@@ -434,13 +421,18 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
       </div>
       ) : null}
 
-      <div className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+      <div className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="section-label">Controls</p>
-            <h3 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">Top Paying Offers</h3>
+            {title ? (
+              <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">{title}</h2>
+            ) : null}
+            <p className={title ? "section-label mt-3" : "section-label"}>Compare routes</p>
+            <h3 className="mt-2 text-2xl font-extrabold text-[var(--brand-ink)]">
+              {visibleRows.length} offer{visibleRows.length !== 1 ? "s" : ""} across {groupedProviders.length} provider{groupedProviders.length !== 1 ? "s" : ""}
+            </h3>
             <p className="mt-2 text-sm text-[var(--text-secondary)]">
-              Change sort and filters without losing the provider grouping.
+              Sort once, then scan the top offers and provider rail without jumping between sections.
             </p>
           </div>
           <label className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--brand-ink)]">
@@ -460,7 +452,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
             <select
               value={sortBy}
               onChange={(event) => setSortBy(event.target.value as SortOption)}
-              className="w-full rounded-xl border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
+              className="w-full rounded-none border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
             >
               <option value="highest-payout">Highest payout</option>
               <option value="fastest-completion">Fastest completion</option>
@@ -473,7 +465,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
             <select
               value={deviceFilter}
               onChange={(event) => setDeviceFilter(event.target.value as DeviceFilter)}
-              className="w-full rounded-xl border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
+              className="w-full rounded-none border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
             >
               {Object.entries(DEVICE_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>
@@ -488,7 +480,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
             <select
               value={taskFilter}
               onChange={(event) => setTaskFilter(event.target.value as TaskFilter)}
-              className="w-full rounded-xl border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
+              className="w-full rounded-none border border-[var(--border-default)] bg-white px-3 py-2 text-sm"
             >
               <option value="all">All tasks</option>
               <option value="multi-step">Multi-step</option>
@@ -496,12 +488,19 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
             </select>
           </label>
         </div>
-      </div>
 
-      {topGridRows.length > 0 ? (
-        <div className="space-y-3">
-          <h3 className="text-xl font-extrabold text-[var(--brand-ink)]">Top Paying Offers</h3>
-          <div className="grid gap-4 xl:grid-cols-3 md:grid-cols-2">
+        {topGridRows.length > 0 ? (
+          <div className="mt-5 border-t border-[var(--border-default)] pt-4">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h4 className="text-lg font-extrabold text-[var(--brand-ink)]">Top paying offer rail</h4>
+                <p className="mt-1 text-xs text-[var(--text-tertiary)]">Swipe or scroll sideways to compare the highest visible routes.</p>
+              </div>
+              <div className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">
+                Sorted by {sortBy.replaceAll("-", " ")}
+              </div>
+            </div>
+            <div className="mt-3 grid auto-cols-[minmax(18rem,1fr)] grid-flow-col gap-4 overflow-x-auto pb-2 md:auto-cols-[minmax(20rem,24rem)]">
             {topGridRows.map((row, index) => (
               <OfferCard
                 key={row.id}
@@ -515,27 +514,89 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
                 onToggleExpand={() => toggleExpandedOffer(row.id)}
               />
             ))}
-          </div>
-        </div>
-      ) : null}
-
-      <div className="space-y-3">
-        <h3 className="text-xl font-extrabold text-[var(--brand-ink)]">Compare by Platform</h3>
-        {groupedProviders.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 text-sm text-[var(--text-secondary)]">
-            No offers match the current filters.
+            </div>
           </div>
         ) : null}
 
-        {groupedProviders.map((group, index) => {
-          const isOpen = expandedProviders[group.providerName] ?? index < DEFAULT_EXPANDED_PROVIDERS;
+        {groupedProviders.length > 0 ? (
+          <div className="mt-5 border-t border-[var(--border-default)] pt-4">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h4 className="text-lg font-extrabold text-[var(--brand-ink)]">Provider rail</h4>
+                <p className="mt-1 text-xs text-[var(--text-tertiary)]">Use this as the compact provider snapshot; select a provider to open its route group below.</p>
+              </div>
+              <div className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">
+                {groupedProviders.length} provider{groupedProviders.length !== 1 ? "s" : ""}
+              </div>
+            </div>
+            <div className="mt-3 flex gap-3 overflow-x-auto pb-2">
+              {groupedProviders.map((group, index) => {
+                const isOpen = expandedProviders[group.providerName] ?? index < DEFAULT_EXPANDED_PROVIDERS;
+
+                return (
+                  <button
+                    key={group.providerName}
+                    type="button"
+                    onClick={() => toggleProvider(group.providerName)}
+                    aria-expanded={isOpen}
+                    className={`min-w-[14.5rem] border p-3 text-left transition-colors ${
+                      isOpen
+                        ? "border-[var(--brand-ink)] bg-[var(--brand-ink)] text-white"
+                        : "border-[var(--border-default)] bg-[var(--surface-muted)] text-[var(--brand-ink)] hover:border-lime-400 hover:bg-lime-50"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <ProviderLogo name={group.providerName} compact className="h-8 max-w-[130px] shrink-0" />
+                      <div className="min-w-0">
+                        <div className="truncate text-sm font-extrabold">{group.providerName}</div>
+                        <div className={isOpen ? "text-xs text-white/65" : "text-xs text-[var(--text-tertiary)]"}>
+                          {group.offers.length} offer{group.offers.length !== 1 ? "s" : ""}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-3 flex items-end justify-between gap-3">
+                      <div>
+                        <div className={isOpen ? "text-[10px] font-bold uppercase tracking-wide text-white/55" : "text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]"}>
+                          Best payout
+                        </div>
+                        <div className={isOpen ? "text-xl font-black text-[var(--brand-lime)]" : "text-xl font-black text-[var(--brand-ink)]"}>
+                          {formatMoney(group.bestOffer.totalPayoutUsd)}
+                        </div>
+                      </div>
+                      <div className={isOpen ? "text-xs font-bold text-[var(--brand-lime)]" : "text-xs font-bold text-lime-700"}>
+                        {isOpen ? "Open" : "View"}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      {groupedProviders.length === 0 ? (
+        <div className="rounded-none border border-[var(--border-default)] bg-white p-6 text-sm text-[var(--text-secondary)]">
+          No offers match the current filters.
+        </div>
+      ) : null}
+
+      {openProviderGroups.length > 0 ? (
+      <div className="space-y-3">
+        <div>
+          <h3 className="text-xl font-extrabold text-[var(--brand-ink)]">Provider details</h3>
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">Only selected providers appear here, keeping the default view focused on the rails.</p>
+        </div>
+
+        {openProviderGroups.map((group) => {
+          const isOpen = true;
           const visibleCount = providerVisibleCounts[group.providerName] ?? DEFAULT_VISIBLE_COUNT;
           const providerOffers = group.offers.slice(0, isOpen ? visibleCount : 0);
 
           return (
             <section
               key={group.providerName}
-              className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]"
+              className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]"
             >
               <button
                 type="button"
@@ -546,17 +607,12 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
                   <div className="flex flex-wrap items-center gap-2">
                     <ProviderLogo name={group.providerName} className="h-10 max-w-[180px]" />
                     <h4 className="text-xl font-extrabold text-[var(--brand-ink)]">{group.providerName}</h4>
-                    {index < 2 ? (
-                      <span className="rounded-full border border-lime-300 bg-lime-50 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-lime-800">
-                        Top provider
-                      </span>
-                    ) : null}
                   </div>
                   <p className="mt-2 text-sm text-[var(--text-secondary)]">
                     Best payout {formatMoney(group.bestOffer.totalPayoutUsd)} across {group.offers.length} offer{group.offers.length !== 1 ? "s" : ""}.
                   </p>
                 </div>
-                <span className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)]">
+                <span className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)]">
                   {isOpen ? "Collapse" : "Expand"}
                 </span>
               </button>
@@ -583,7 +639,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
                     <button
                       type="button"
                       onClick={() => showMore(group.providerName, group.offers.length)}
-                      className="inline-flex rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400 hover:bg-lime-50"
+                      className="inline-flex rounded-none border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400 hover:bg-lime-50"
                     >
                       Show more
                     </button>
@@ -594,9 +650,10 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
           );
         })}
       </div>
+      ) : null}
 
       {selectedRows.length > 0 ? (
-        <aside className="fixed bottom-4 left-1/2 z-30 w-[min(1100px,calc(100%-1rem))] -translate-x-1/2 rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+        <aside className="fixed bottom-4 left-1/2 z-30 w-[min(1100px,calc(100%-1rem))] -translate-x-1/2 rounded-none border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Selected offers</div>
@@ -606,7 +663,7 @@ export default function OfferTable({ rows, title, showTasks = false, compact = f
             </div>
             <div className="grid gap-2 md:grid-cols-3">
               {selectedRows.map((row) => (
-                <div key={row.id} className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2">
+                <div key={row.id} className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2">
                   <div className="flex items-center gap-2">
                     <ProviderLogo name={row.providerName} compact className="h-8" />
                     <div className="text-sm font-bold text-[var(--brand-ink)]">{row.providerName}</div>

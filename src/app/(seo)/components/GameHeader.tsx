@@ -33,7 +33,7 @@ export default function GameHeader({
   bestOffer = null,
 }: GameHeaderProps) {
   return (
-    <header className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
+    <header className="overflow-hidden rounded-none border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
       <div className="grid gap-0 lg:grid-cols-[1fr_22rem]">
         <div className="p-5 sm:p-6">
           <p className="section-label">Game Offer Comparison</p>
@@ -44,7 +44,7 @@ export default function GameHeader({
         </div>
 
         <div className="bg-[var(--brand-ink)] p-5 text-white lg:p-6">
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[var(--brand-lime)]">
+          <p className="inline-flex items-center gap-2 rounded-none border border-white/10 bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[var(--brand-lime)]">
             <Trophy aria-hidden className="h-3.5 w-3.5" />
             Highest current payout
           </p>
@@ -58,7 +58,7 @@ export default function GameHeader({
             <p className="mt-2 text-sm text-white/70">No active route available</p>
           )}
           {bestOffer ? (
-            <div className={`mt-3 rounded-xl border px-3 py-2 text-xs font-bold ${
+            <div className={`mt-3 rounded-none border px-3 py-2 text-xs font-bold ${
               payoutFreshnessIsStale(bestOffer.updatedAt)
                 ? "border-amber-200 bg-amber-50 text-amber-700"
                 : "border-lime-200 bg-white/70 text-lime-800"
@@ -78,7 +78,7 @@ export default function GameHeader({
               payoutUsd={bestOffer.totalPayoutUsd}
               location="game-header-best-route"
               sourceContext="game-page"
-              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand-lime)] px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
+              className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-none bg-[var(--brand-lime)] px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
             >
               Start Highest Payout <ArrowRight aria-hidden className="h-4 w-4" />
             </TrackedOutboundLink>
@@ -90,15 +90,15 @@ export default function GameHeader({
       </div>
 
       <div className="grid gap-3 border-t border-[var(--border-default)] bg-[var(--surface-muted)]/50 p-5 sm:grid-cols-3 sm:p-6">
-        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+        <div className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
           <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Tracked offers</p>
           <p className="text-xl font-extrabold text-[var(--brand-ink)]">{offerCount}</p>
         </div>
-        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+        <div className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
           <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Providers</p>
           <p className="text-xl font-extrabold text-[var(--brand-ink)]">{providerCount}</p>
         </div>
-        <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+        <div className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
           <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Category</p>
           <p className="text-xl font-extrabold text-[var(--brand-ink)]">{category ?? "General"}</p>
         </div>

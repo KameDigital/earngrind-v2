@@ -61,14 +61,30 @@ const FEATURED_CASHINSTYLE_GAME_GROUPS = [
   ["Tile Mahjong Classic", "Tile Mahjong"],
 ] as const;
 
+const FEATURED_GEMSLOOT_OFFER_NAMES = [
+  "TyrAds__5553",
+  "HangMyAds__82544",
+  "TyrAds__4884",
+  "TyrAds__4922",
+  "WaxRewards__10-4513",
+] as const;
+
 const OFFER_SELECT =
   "id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text";
+
+const SITE_OFFER_SELECT = `
+  id, external_id, title, payout_usd, total_payout_usd, goal_text, image_url, offer_url,
+  game:games(id, name, slug, thumbnail_url),
+  site:platforms(name),
+  provider:providers(name)
+`;
 
 const GUIDE_SELECT =
   "id, title, slug, excerpt, difficulty, estimated_time, max_payout_usd, published_at, games(id, name, slug, thumbnail_url)";
 
 export type OfferRow = {
   id: string;
+  external_id?: string | null;
   source: string | null;
   title: string | null;
   game_id: string | null;
@@ -76,6 +92,7 @@ export type OfferRow = {
   game_slug: string | null;
   game_thumbnail: string | null;
   image_url?: string | null;
+  offer_url?: string | null;
   provider_name: string | null;
   platform_name: string | null;
   platform_logo?: string | null;
@@ -134,13 +151,52 @@ type RelatedGuideRow = {
   game_id: string | null;
 };
 
+type RawSiteOfferRow = {
+  id: string;
+  external_id: string | null;
+  title: string | null;
+  payout_usd: number | null;
+  total_payout_usd: number | null;
+  goal_text: string | null;
+  image_url: string | null;
+  offer_url: string | null;
+  game:
+    | {
+        id: string;
+        name: string | null;
+        slug: string | null;
+        thumbnail_url: string | null;
+      }
+    | Array<{
+        id: string;
+        name: string | null;
+        slug: string | null;
+        thumbnail_url: string | null;
+      }>
+    | null;
+  site:
+    | { name: string | null }
+    | Array<{ name: string | null }>
+    | null;
+  provider:
+    | { name: string | null }
+    | Array<{ name: string | null }>
+    | null;
+};
+
 export type HomepageRailOffer = OfferRow & {
   badge: string;
   image_url: string | null;
 };
 
+export type FeaturedGemslootOffer = HomepageRailOffer & {
+  requested_offer_name: (typeof FEATURED_GEMSLOOT_OFFER_NAMES)[number];
+  fallback_href: string;
+};
+
 export type HomepageData = {
   featuredGames: FeaturedGame[];
+  gemsLootFeaturedOffers: FeaturedGemslootOffer[];
   earnLabFeaturedOffers: HomepageRailOffer[];
   cashInStyleFeaturedOffers: HomepageRailOffer[];
   gainFeaturedOffers: GainGalleryOffer[];
@@ -170,6 +226,14 @@ function formatRewardDisplay(value: string | null | undefined, fallbackAmount: n
   const trimmed = value?.trim();
   if (trimmed) return trimmed.replace(/^\$+/, "$");
   return formatMoney(fallbackAmount);
+}
+
+export function buildGemslootFeaturedOfferHref(offerName: string) {
+  const params = new URLSearchParams();
+  params.set("modal", "offer_3");
+  params.set("name", offerName);
+  params.set("aff", "kamedev");
+  return `https://gemsloot.com/transactions?${params.toString()}`;
 }
 
 export function gameKeyFromParts(slug: string | null | undefined, name: string | null | undefined) {
@@ -278,7 +342,9 @@ function normalizePublicOfferRows(rows: OfferRow[]) {
         total_payout_usd: totalPayoutUsd,
       };
     })
-    .filter((row) => isPublicPayoutEligible(row.payout_usd, row.total_payout_usd));
+    .filter((row) =>
+      isPublicPayoutEligible(row.payout_usd, row.total_payout_usd ?? row.payout_usd),
+    );
 }
 
 function normalizeGuides(rows: RawGuideRow[] | null | undefined): GuideRow[] {
@@ -286,6 +352,46 @@ function normalizeGuides(rows: RawGuideRow[] | null | undefined): GuideRow[] {
     ...row,
     games: Array.isArray(row.games) ? row.games[0] ?? null : row.games,
   }));
+}
+
+function firstRelated<T>(value: T | T[] | null | undefined): T | null {
+  return Array.isArray(value) ? value[0] ?? null : value ?? null;
+}
+
+function normalizeSiteOfferRows(rows: RawSiteOfferRow[]) {
+  return rows
+    .map((row): OfferRow => {
+      const game = firstRelated(row.game);
+      const site = firstRelated(row.site);
+      const provider = firstRelated(row.provider);
+      const payoutUsd = Number(row.payout_usd ?? 0);
+      const totalPayoutUsd = normalizeTotalPayout(
+        payoutUsd,
+        Number(row.total_payout_usd ?? payoutUsd),
+      );
+
+      return {
+        id: row.id,
+        external_id: row.external_id,
+        source: "site_offers",
+        title: row.title,
+        game_id: game?.id ?? null,
+        game_name: game?.name ?? row.title,
+        game_slug: game?.slug ?? null,
+        game_thumbnail: game?.thumbnail_url ?? null,
+        image_url: row.image_url ?? game?.thumbnail_url ?? null,
+        offer_url: row.offer_url,
+        provider_name: normalizeProviderDisplayName(provider?.name),
+        platform_name: site?.name === "GemLoot" ? "Gemsloot" : site?.name ?? null,
+        platform_logo: null,
+        payout_usd: payoutUsd,
+        total_payout_usd: totalPayoutUsd,
+        goal_text: row.goal_text,
+      };
+    })
+    .filter((row) =>
+      isPublicPayoutEligible(row.payout_usd ?? 0, row.total_payout_usd ?? row.payout_usd ?? 0),
+    );
 }
 
 // Base offer rows: high-payout cards shown or used as rail fallback.
@@ -342,6 +448,19 @@ async function loadCashInStyleCandidates() {
     .or(featuredCashInStyleTaskFilters)
     .order("total_payout_usd", { ascending: false })
     .limit(120);
+}
+
+async function loadGemslootFeaturedCandidates() {
+  const filters = FEATURED_GEMSLOOT_OFFER_NAMES
+    .map((offerName) => `external_id.ilike.%${offerName}%`)
+    .join(",");
+
+  return publicSupabase
+    .from("site_offers")
+    .select(SITE_OFFER_SELECT)
+    .in("status", ["active", "boosted"])
+    .or(filters)
+    .limit(FEATURED_GEMSLOOT_OFFER_NAMES.length * 3);
 }
 
 async function loadPopularGuides() {
@@ -578,6 +697,66 @@ function buildCashInStyleFeaturedOffers({
     .slice(0, 12);
 }
 
+function providerNameFromGemslootOfferName(offerName: string) {
+  const providerKey = offerName.split("__")[0] ?? "Gemsloot";
+  return providerKey.replace(/([a-z])([A-Z])/g, "$1 $2");
+}
+
+function fallbackTitleFromGemslootOfferName(offerName: string) {
+  const [providerKey, sourceId] = offerName.split("__");
+  const providerName = providerKey
+    ? providerKey.replace(/([a-z])([A-Z])/g, "$1 $2")
+    : "GemsLoot";
+  return sourceId
+    ? `${providerName} ${sourceId} game offer`
+    : `${providerName} game offer`;
+}
+
+function buildGemslootFeaturedOffers({
+  featuredGemslootRows,
+}: {
+  featuredGemslootRows: OfferRow[];
+}): FeaturedGemslootOffer[] {
+  return FEATURED_GEMSLOOT_OFFER_NAMES.map((offerName) => {
+    const matchingRow =
+      featuredGemslootRows.find((row) => row.external_id?.includes(offerName)) ??
+      null;
+    const fallbackHref = buildGemslootFeaturedOfferHref(offerName);
+
+    return {
+      id: matchingRow?.id ?? `gemsloot-featured-${offerName}`,
+      external_id: matchingRow?.external_id ?? offerName,
+      requested_offer_name: offerName,
+      fallback_href: fallbackHref,
+      source: matchingRow?.source ?? "gemsloot",
+      title:
+        matchingRow?.title?.trim() ||
+        matchingRow?.game_name ||
+        fallbackTitleFromGemslootOfferName(offerName),
+      game_id: matchingRow?.game_id ?? null,
+      game_name: matchingRow?.game_name ?? fallbackTitleFromGemslootOfferName(offerName),
+      game_slug: matchingRow?.game_slug ?? null,
+      game_thumbnail: matchingRow?.game_thumbnail ?? null,
+      image_url:
+        matchingRow?.image_url ??
+        matchingRow?.game_thumbnail ??
+        matchingRow?.platform_logo ??
+        null,
+      offer_url: matchingRow?.offer_url ?? fallbackHref,
+      provider_name:
+        matchingRow?.provider_name ?? providerNameFromGemslootOfferName(offerName),
+      platform_name: matchingRow?.platform_name ?? "Gemsloot",
+      platform_logo: matchingRow?.platform_logo ?? null,
+      payout_usd: matchingRow?.payout_usd ?? null,
+      total_payout_usd: matchingRow?.total_payout_usd ?? matchingRow?.payout_usd ?? null,
+      goal_text:
+        matchingRow?.goal_text ??
+        "Open the GemsLoot offer detail modal and verify live requirements before starting.",
+      badge: "GemsLoot featured",
+    };
+  });
+}
+
 function getModalRouteRows({
   allOfferRows,
   featuredGames,
@@ -720,6 +899,7 @@ export async function getHomepageData(): Promise<HomepageData> {
     featuredGameOffersResult,
     featuredEarnLabTasksResult,
     featuredCashInStyleTasksResult,
+    featuredGemslootOffersResult,
     gainFeaturedOffersResult,
   ] = await Promise.all([
     loadBaseOfferRows(),
@@ -728,6 +908,7 @@ export async function getHomepageData(): Promise<HomepageData> {
     loadFeaturedGameCandidates(),
     loadEarnLabCandidates(),
     loadCashInStyleCandidates(),
+    loadGemslootFeaturedCandidates(),
     loadGainFeaturedData(),
   ]);
 
@@ -737,6 +918,9 @@ export async function getHomepageData(): Promise<HomepageData> {
   const featuredCashInStyleTaskRows = normalizePublicOfferRows(
     (featuredCashInStyleTasksResult.data ?? []) as OfferRow[],
   );
+  const featuredGemslootRows = normalizeSiteOfferRows(
+    (featuredGemslootOffersResult.data ?? []) as RawSiteOfferRow[],
+  );
 
   const allOfferRows = Array.from(
     new Map(
@@ -745,6 +929,7 @@ export async function getHomepageData(): Promise<HomepageData> {
         ...featuredGameOfferRows,
         ...featuredEarnLabTaskRows,
         ...featuredCashInStyleTaskRows,
+        ...featuredGemslootRows,
       ].map((row) => [row.id, row]),
     ).values(),
   );
@@ -762,11 +947,18 @@ export async function getHomepageData(): Promise<HomepageData> {
   const cashInStyleFeaturedOffers = buildCashInStyleFeaturedOffers({
     featuredCashInStyleTaskRows,
   });
+  const gemsLootFeaturedOffers = buildGemslootFeaturedOffers({
+    featuredGemslootRows,
+  });
 
   const modalRouteRows = getModalRouteRows({
     allOfferRows,
     featuredGames,
-    visibleRailOffers: [...earnLabFeaturedOffers, ...cashInStyleFeaturedOffers],
+    visibleRailOffers: [
+      ...gemsLootFeaturedOffers,
+      ...earnLabFeaturedOffers,
+      ...cashInStyleFeaturedOffers,
+    ],
   });
   const modalOfferIds = Array.from(new Set(modalRouteRows.map((row) => row.id)));
   const modalGameIds = Array.from(new Set(modalRouteRows.map((row) => row.game_id).filter(Boolean))) as string[];
@@ -802,6 +994,7 @@ export async function getHomepageData(): Promise<HomepageData> {
 
   return {
     featuredGames,
+    gemsLootFeaturedOffers,
     earnLabFeaturedOffers,
     cashInStyleFeaturedOffers,
     gainFeaturedOffers,
@@ -818,7 +1011,8 @@ export async function getHomepageData(): Promise<HomepageData> {
         offerRows.length +
         featuredGameOfferRows.length +
         featuredEarnLabTaskRows.length +
-        featuredCashInStyleTaskRows.length,
+        featuredCashInStyleTaskRows.length +
+        featuredGemslootRows.length,
       uniqueOfferIds: allOfferRows.length,
       modalTaskOfferIds: modalOfferIds.length,
       manualTaskRows: manualTasks.length,

@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import FeaturedOfferRail, { type FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
+import FeaturedOfferRail, {
+  type FeaturedOfferRailItem,
+} from "@/components/home/FeaturedOfferRail";
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
 import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
-import { buildGoHref, formatMoney, gameKeyFromParts, getHomepageData } from "@/lib/homepage-data";
+import {
+  buildGoHref,
+  formatMoney,
+  gameKeyFromParts,
+  getHomepageData,
+} from "@/lib/homepage-data";
 
 export const revalidate = 300;
 
@@ -16,7 +23,8 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "EarnGrind | GPT Offer Discovery, Game Guides, and Platform Research",
+    title:
+      "EarnGrind | GPT Offer Discovery, Game Guides, and Platform Research",
     description:
       "Use EarnGrind to discover GPT offer paths, compare live payout routes on /offers, browse game hubs, read completion guides, and research trusted GPT sites.",
     url: "https://earngrind.com",
@@ -33,7 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "EarnGrind | GPT Offer Discovery, Game Guides, and Platform Research",
+    title:
+      "EarnGrind | GPT Offer Discovery, Game Guides, and Platform Research",
     description:
       "Use EarnGrind to discover GPT offer paths, compare live payout routes on /offers, browse game hubs, read completion guides, and research trusted GPT sites.",
     images: ["/og-earngrind.png"],
@@ -100,121 +109,160 @@ export default async function HomePage() {
     modalRoutesByGameKey,
   } = await getHomepageData();
 
-  const guideHrefForGame = (slug: string | null | undefined, fallbackKey?: string) => {
-    if (!slug) return fallbackKey ? guideHrefByGameKey[fallbackKey] ?? null : null;
-    return guideHrefByGameKey[slug] ?? (modalRoutesByGameKey[slug]?.length ? `/guides/how-to-earn/${slug}` : null);
+  const guideHrefForGame = (
+    slug: string | null | undefined,
+    fallbackKey?: string,
+  ) => {
+    if (!slug)
+      return fallbackKey ? (guideHrefByGameKey[fallbackKey] ?? null) : null;
+    return (
+      guideHrefByGameKey[slug] ??
+      (modalRoutesByGameKey[slug]?.length
+        ? `/guides/how-to-earn/${slug}`
+        : null)
+    );
   };
 
-  const earnLabOfferRail: FeaturedOfferRailItem[] = earnLabFeaturedOffers.map((offer) => ({
-    id: `offer-${offer.id}`,
-    href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-    title: offer.title?.trim() || offer.game_name || "Offer",
-    badge: offer.badge,
-    provider: offer.platform_name,
-    platform: offer.provider_name,
-    payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
-    secondaryValue: offer.goal_text ? offer.goal_text : null,
-    imageUrl: offer.image_url,
-    preview: {
+  const earnLabOfferRail: FeaturedOfferRailItem[] = earnLabFeaturedOffers.map(
+    (offer) => ({
+      id: `offer-${offer.id}`,
+      href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
       title: offer.title?.trim() || offer.game_name || "Offer",
-      description: `Compare available routes for ${offer.game_name ?? offer.title ?? "this offer"} before choosing where to start.`,
+      badge: offer.badge,
+      provider: offer.platform_name,
+      platform: offer.provider_name,
+      payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
+      secondaryValue: offer.goal_text ? offer.goal_text : null,
       imageUrl: offer.image_url,
-      gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-      guideHref: guideHrefForGame(offer.game_slug, gameKeyFromParts(offer.game_slug, offer.game_name)),
-      routes: modalRoutesByGameKey[gameKeyFromParts(offer.game_slug, offer.game_name)] ?? [
-        {
-          offerId: offer.id,
-          href: buildGoHref(offer, "homepage_modal_single_route"),
-          providerName: offer.provider_name,
-          platformName: offer.platform_name,
-          payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
-          payoutValue: offer.total_payout_usd ?? offer.payout_usd,
-          taskCount: offer.goal_text ? 1 : 0,
-          tasks: offer.goal_text
-            ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.total_payout_usd ?? offer.payout_usd) }]
-            : [],
-        },
-      ],
-    },
-  }));
-
-  const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map((offer) => {
-    const gainHref = offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) ?? offer.startUrl;
-
-    return {
-      id: `gain-featured-${offer.wall}-${offer.id}`,
-      href: gainHref,
-      title: offer.title,
-      badge: "Gain featured",
-      provider: "Gain.gg",
-      platform: offer.providerName,
-      payout: formatMoney(offer.totalPayout ?? offer.payout) ?? null,
-      secondaryValue:
-        offer.tasks.length > 0
-          ? `${offer.tasks.length} milestones available`
-          : offer.shortDescription ?? null,
-      imageUrl: offer.imageUrl,
       preview: {
-        title: offer.title,
-        description:
-          offer.shortDescription ??
-          `Preview the featured Gain.gg route for ${offer.title} before opening the full wall.`,
-        imageUrl: offer.imageUrl,
-        gameHref: "/offers/gain/us/native",
-        guideHref: null,
-        routes: [
+        title: offer.title?.trim() || offer.game_name || "Offer",
+        description: `Compare available routes for ${offer.game_name ?? offer.title ?? "this offer"} before choosing where to start.`,
+        imageUrl: offer.image_url,
+        gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
+        guideHref: guideHrefForGame(
+          offer.game_slug,
+          gameKeyFromParts(offer.game_slug, offer.game_name),
+        ),
+        routes: modalRoutesByGameKey[
+          gameKeyFromParts(offer.game_slug, offer.game_name)
+        ] ?? [
           {
             offerId: offer.id,
-            href: gainHref,
-            providerName: offer.providerName,
-            platformName: "Gain.gg",
-            payout: formatMoney(offer.totalPayout ?? offer.payout),
-            payoutValue: offer.totalPayout ?? offer.payout,
-            taskCount: offer.tasks.length,
-            tasks: offer.tasks.slice(0, 6).map((task) => ({
-              title: task.title,
-              rewardDisplay: task.rewardDisplay,
-            })),
+            href: buildGoHref(offer, "homepage_modal_single_route"),
+            providerName: offer.provider_name,
+            platformName: offer.platform_name,
+            payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
+            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
+            taskCount: offer.goal_text ? 1 : 0,
+            tasks: offer.goal_text
+              ? [
+                  {
+                    title: offer.goal_text,
+                    rewardDisplay: formatMoney(
+                      offer.total_payout_usd ?? offer.payout_usd,
+                    ),
+                  },
+                ]
+              : [],
           },
         ],
       },
-    };
-  });
+    }),
+  );
 
-  const cashInStyleOfferRail: FeaturedOfferRailItem[] = cashInStyleFeaturedOffers.map((offer) => ({
-    id: `cashinstyle-featured-${offer.id}`,
-    href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-    title: offer.title?.trim() || offer.game_name || "Offer",
-    badge: offer.badge,
-    provider: offer.platform_name,
-    platform: offer.provider_name,
-    payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
-    secondaryValue: offer.goal_text ? offer.goal_text : null,
-    imageUrl: offer.image_url,
-    preview: {
-      title: offer.title?.trim() || offer.game_name || "Offer",
-      description: `Preview the CashInStyle route for ${
-        offer.game_name ?? offer.title ?? "this offer"
-      } before starting.`,
-      imageUrl: offer.image_url,
-      gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-      guideHref: guideHrefForGame(offer.game_slug, gameKeyFromParts(offer.game_slug, offer.game_name)),
-      routes: modalRoutesByGameKey[gameKeyFromParts(offer.game_slug, offer.game_name)] ?? [
-        {
-          offerId: offer.id,
-          href: buildGoHref(offer, "homepage_cashinstyle_modal_single_route"),
-          providerName: offer.provider_name,
-          platformName: offer.platform_name,
-          payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
-          payoutValue: offer.total_payout_usd ?? offer.payout_usd,
-          taskCount: offer.goal_text ? 1 : 0,
-          tasks: offer.goal_text
-            ? [{ title: offer.goal_text, rewardDisplay: formatMoney(offer.total_payout_usd ?? offer.payout_usd) }]
-            : [],
+  const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map(
+    (offer) => {
+      const gainHref =
+        offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) ?? offer.startUrl;
+
+      return {
+        id: `gain-featured-${offer.wall}-${offer.id}`,
+        href: gainHref,
+        title: offer.title,
+        badge: "Gain featured",
+        provider: "Gain.gg",
+        platform: offer.providerName,
+        payout: formatMoney(offer.totalPayout ?? offer.payout) ?? null,
+        secondaryValue:
+          offer.tasks.length > 0
+            ? `${offer.tasks.length} milestones available`
+            : (offer.shortDescription ?? null),
+        imageUrl: offer.imageUrl,
+        preview: {
+          title: offer.title,
+          description:
+            offer.shortDescription ??
+            `Preview the featured Gain.gg route for ${offer.title} before opening the full wall.`,
+          imageUrl: offer.imageUrl,
+          gameHref: "/offers/gain/us/native",
+          guideHref: null,
+          routes: [
+            {
+              offerId: offer.id,
+              href: gainHref,
+              providerName: offer.providerName,
+              platformName: "Gain.gg",
+              payout: formatMoney(offer.totalPayout ?? offer.payout),
+              payoutValue: offer.totalPayout ?? offer.payout,
+              taskCount: offer.tasks.length,
+              tasks: offer.tasks.slice(0, 6).map((task) => ({
+                title: task.title,
+                rewardDisplay: task.rewardDisplay,
+              })),
+            },
+          ],
         },
-      ],
+      };
     },
-  }));
+  );
+
+  const cashInStyleOfferRail: FeaturedOfferRailItem[] =
+    cashInStyleFeaturedOffers.map((offer) => ({
+      id: `cashinstyle-featured-${offer.id}`,
+      href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
+      title: offer.title?.trim() || offer.game_name || "Offer",
+      badge: offer.badge,
+      provider: offer.platform_name,
+      platform: offer.provider_name,
+      payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
+      secondaryValue: offer.goal_text ? offer.goal_text : null,
+      imageUrl: offer.image_url,
+      preview: {
+        title: offer.title?.trim() || offer.game_name || "Offer",
+        description: `Preview the CashInStyle route for ${
+          offer.game_name ?? offer.title ?? "this offer"
+        } before starting.`,
+        imageUrl: offer.image_url,
+        gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
+        guideHref: guideHrefForGame(
+          offer.game_slug,
+          gameKeyFromParts(offer.game_slug, offer.game_name),
+        ),
+        routes: modalRoutesByGameKey[
+          gameKeyFromParts(offer.game_slug, offer.game_name)
+        ] ?? [
+          {
+            offerId: offer.id,
+            href: buildGoHref(offer, "homepage_cashinstyle_modal_single_route"),
+            providerName: offer.provider_name,
+            platformName: offer.platform_name,
+            payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
+            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
+            taskCount: offer.goal_text ? 1 : 0,
+            tasks: offer.goal_text
+              ? [
+                  {
+                    title: offer.goal_text,
+                    rewardDisplay: formatMoney(
+                      offer.total_payout_usd ?? offer.payout_usd,
+                    ),
+                  },
+                ]
+              : [],
+          },
+        ],
+      },
+    }));
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)]">
@@ -247,11 +295,17 @@ export default async function HomePage() {
             </h1>
 
             <p className="mb-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-              Find the right path before you click: compare live routes in Offers, browse game hubs, read completion guides, and research GPT sites by trust.
+              Find the right path before you click: compare live routes in
+              Offers, browse game hubs, read completion guides, and research GPT
+              sites by trust.
             </p>
 
             <div className="mb-6 flex flex-wrap items-center justify-start gap-2.5">
-              {["Browse without signup", "Partner payouts stay ungated", "Compare before you click"].map((item) => (
+              {[
+                "Browse without signup",
+                "Partner payouts stay ungated",
+                "Compare before you click",
+              ].map((item) => (
                 <span
                   key={item}
                   className="inline-flex items-center rounded-full border border-white/25 bg-black/35 px-3 py-1.5 text-xs font-bold text-white/90"
@@ -282,7 +336,6 @@ export default async function HomePage() {
                 Browse Games
               </Link>
             </div>
-
           </div>
         </div>
       </section>
@@ -295,7 +348,8 @@ export default async function HomePage() {
               Choose the hub that matches your next step
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-              EarnGrind keeps discovery, comparison, walkthroughs, and platform research separate so each page has a clear job.
+              EarnGrind keeps discovery, comparison, walkthroughs, and platform
+              research separate so each page has a clear job.
             </p>
           </div>
 
@@ -341,6 +395,47 @@ export default async function HomePage() {
                     Compare live payout routes.
                   </p>
                 </Link>
+              ) : index === 1 ? (
+                <Link
+                  key={item.href}
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+                  href="/offers#games"
+                >
+                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
+                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
+
+                  <div
+                    className="pointer-events-none absolute bottom-2 right-1 block h-20 w-20 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
+                    aria-hidden="true"
+                  >
+                    <picture className="block h-full w-full">
+                      <source
+                        srcSet="/images/browse-games-phone-search-transparent.webp"
+                        type="image/webp"
+                      />
+                      <img
+                        src="/images/browse-games-phone-search-transparent.png"
+                        alt=""
+                        className="h-full w-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
+                    Game discovery
+                  </span>
+
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
+                    Browse Games
+                  </h3>
+
+                  <p className="relative z-10 mt-2 max-w-[8.75rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+                    Start with game hubs for payout snapshots, guide coverage,
+                    and related games.
+                  </p>
+                </Link>
               ) : (
                 <Link
                   key={item.href}
@@ -350,8 +445,12 @@ export default async function HomePage() {
                   <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     {item.badge}
                   </span>
-                  <h3 className="mt-4 text-base font-extrabold text-[var(--brand-ink)]">{item.name}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">{item.desc}</p>
+                  <h3 className="mt-4 text-base font-extrabold text-[var(--brand-ink)]">
+                    {item.name}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+                    {item.desc}
+                  </p>
                 </Link>
               ),
             )}
@@ -417,7 +516,8 @@ export default async function HomePage() {
       <section
         className="px-4 py-20 sm:px-6 lg:px-8"
         style={{
-          background: "linear-gradient(160deg, #0d0d12 0%, #1a1a2e 50%, #0d0d12 100%)",
+          background:
+            "linear-gradient(160deg, #0d0d12 0%, #1a1a2e 50%, #0d0d12 100%)",
         }}
       >
         <div className="mx-auto max-w-3xl text-center">
@@ -425,7 +525,8 @@ export default async function HomePage() {
             Ready to earn your first dollar online?
           </h2>
           <p className="mx-auto mb-10 max-w-xl text-lg text-white/50">
-            Start with discovery, move into the offer comparison page when you need filters, and verify partner terms before you click out.
+            Start with discovery, move into the offer comparison page when you
+            need filters, and verify partner terms before you click out.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link
@@ -438,7 +539,8 @@ export default async function HomePage() {
           </div>
 
           <p className="mt-5 text-xs font-medium text-white/30">
-            No sign-up required to browse EarnGrind. Partner platforms may require accounts for their own offers.
+            No sign-up required to browse EarnGrind. Partner platforms may
+            require accounts for their own offers.
           </p>
         </div>
       </section>

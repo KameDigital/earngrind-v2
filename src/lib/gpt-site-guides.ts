@@ -1,4 +1,5 @@
 import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
+import { EARNLAB_CONTEXTUAL_ARTICLE_HTML } from "@/lib/earnlab-contextual-guide";
 
 export type GptSiteGuide = {
     slug: string;
@@ -30,6 +31,7 @@ export type GptSiteGuide = {
         callout?: string;
         cta?: { label: string; href: string };
     }>;
+    contextualArticleHtml?: string;
     compactEvidence?: boolean;
     evidenceTitle?: string;
     evidenceIntro?: string;
@@ -672,13 +674,13 @@ export const GPT_SITE_GUIDES: GptSiteGuide[] = [
         slug: "earnlab",
         platformSlug: "earnlab",
         name: "EarnLab",
-        title: "EarnLab Guide: Boxes, Mines, Keno, Races, Offerwalls, and Rewards",
+        title: "EarnLab Guide for Offers Plus Original Games",
         description:
             "A deep EarnLab guide covering its earning side, dual wallet system, offerwall comparison workflow, surveys, races, mystery boxes, Mines, Keno, rewards, and withdrawals.",
         bestFor: "Gamified GPT users who want offers plus original games",
         verdict:
-            "EarnLab is two products stitched together: a GPT earning platform where users earn Coins from offerwalls, surveys, tasks, referrals, and videos, and a separate games wallet for Boxes, Case Battles, Keno, Mines, and other coin-based games. The best user flow is to earn on the main side first, verify withdrawals, then treat the games section as a separate entertainment budget instead of mixing it with offer earnings.",
-        screenshot: "/images/guides/gpt-sites/earnlab.png",
+            "Use EarnLab as an offerwall-first GPT site with optional game-style features. The strongest workflow is to compare offerwalls, complete tasks cleanly, test a baseline withdrawal, and only then put a fixed entertainment budget toward Boxes, Mines, Keno, or races.",
+        screenshot: "/images/guides/gpt-sites/earnlab-contextual/earnlab-guide-hero.jpg",
         accent: "teal",
         updatedAt: UPDATED_AT,
         payoutStyle: "Coins earned from tasks, surveys, offers, referrals, and game-wallet activity",
@@ -723,6 +725,8 @@ export const GPT_SITE_GUIDES: GptSiteGuide[] = [
             },
         ],
         sources: [
+            { label: "EarnLab official site", href: "https://earnlab.com/" },
+            { label: "EarnLab help center", href: "https://help.earnlab.com/" },
             { label: "EarnLab Mines", href: "https://earnlab.com/mines" },
             { label: "EarnLab Keno", href: "https://earnlab.com/keno" },
             { label: "EarnLab Boxes", href: "https://earnlab.com/boxes" },
@@ -730,6 +734,8 @@ export const GPT_SITE_GUIDES: GptSiteGuide[] = [
             { label: "EarnLab Rewards", href: "https://earnlab.com/rewards" },
             { label: "EarnLab mystery box guide", href: "https://earnlab.com/blog/best-mystery-box-sites" },
         ],
+        contextualArticleHtml: EARNLAB_CONTEXTUAL_ARTICLE_HTML,
+        sourcesPlacement: "bottom",
     },
 ];
 

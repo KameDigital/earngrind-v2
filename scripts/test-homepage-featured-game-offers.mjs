@@ -11,6 +11,7 @@ function assert(condition, message) {
 
 const pageSource = read("src/app/page.tsx");
 const dataSource = read("src/lib/homepage-data.ts");
+const modalSource = read("src/components/home/GamePreviewModal.tsx");
 
 const offerIds = [
   "TyrAds__5553",
@@ -41,8 +42,23 @@ assert(
 );
 
 assert(
-  dataSource.includes("gemsLootFeaturedOffers"),
-  "homepage data should expose GemsLoot featured offers",
+  pageSource.includes("importedRoute") &&
+    pageSource.includes("modalRoutesByGameKey[gameKey]") &&
+    pageSource.includes("route.offerId === offer.id") &&
+    pageSource.includes("const exactTasks = offer.tasks.length") &&
+    pageSource.includes("tasks: exactTasks"),
+  "GemsLoot featured previews should prefer the exact backend task list for the matched offer",
+);
+
+assert(
+  dataSource.includes("gemsLootFeaturedOffers") &&
+    dataSource.includes("tasks: RailPreviewTask[]") &&
+    dataSource.includes("attachGemslootFeaturedTasks") &&
+    dataSource.includes("gemsLootFeaturedOfferIds") &&
+    dataSource.includes("manualTaskMap.get(offer.id)") &&
+    dataSource.includes("MANUAL_TASK_QUERY_CHUNK_SIZE") &&
+    dataSource.includes(".range(0, MANUAL_TASK_QUERY_RANGE_END)"),
+  "homepage data should expose GemsLoot featured offers with exact site_offer_tasks",
 );
 
 assert(
@@ -62,6 +78,13 @@ assert(
   dataSource.includes('params.set("modal", "offer_3")') &&
     dataSource.includes('params.set("aff", "kamedev")'),
   "GemsLoot fallback href should preserve modal=offer_3 and aff=kamedev",
+);
+
+assert(
+  modalSource.includes("Expand all") &&
+    modalSource.includes("Show less") &&
+    modalSource.includes("Show {visibleTasks.length - displayedTasks.length} more"),
+  "preview modal should include an expand/collapse control for long imported task lists",
 );
 
 console.log("homepage Featured Game Offers rail wiring looks correct");

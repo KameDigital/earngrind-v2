@@ -178,6 +178,39 @@ export default async function HomePage() {
         ? buildGoHref(offer, "homepage_gemsloot_featured_offer")
         : offer.fallback_href;
       const payout = formatMoney(offer.total_payout_usd ?? offer.payout_usd);
+      const gameKey = gameKeyFromParts(offer.game_slug, offer.game_name);
+      const importedRoute = modalRoutesByGameKey[gameKey]?.find(
+        (route) => route.offerId === offer.id,
+      );
+      const exactTasks = offer.tasks.length
+        ? offer.tasks
+        : importedRoute?.tasks ?? [];
+      const previewRoute = importedRoute
+        ? {
+            ...importedRoute,
+            href: offerHref,
+            taskCount: exactTasks.length,
+            tasks: exactTasks,
+          }
+        : {
+            offerId: offer.id,
+            href: offerHref,
+            providerName: offer.provider_name,
+            platformName: offer.platform_name,
+            payout,
+            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
+            taskCount: exactTasks.length || (offer.goal_text ? 1 : 0),
+            tasks: exactTasks.length
+              ? exactTasks
+              : offer.goal_text
+              ? [
+                  {
+                    title: offer.goal_text,
+                    rewardDisplay: payout,
+                  },
+                ]
+              : [],
+          };
 
       return {
         id: `gemsloot-featured-${offer.requested_offer_name}`,
@@ -202,25 +235,7 @@ export default async function HomePage() {
             offer.game_slug,
             gameKeyFromParts(offer.game_slug, offer.game_name),
           ),
-          routes: [
-            {
-              offerId: offer.id,
-              href: offerHref,
-              providerName: offer.provider_name,
-              platformName: offer.platform_name,
-              payout,
-              payoutValue: offer.total_payout_usd ?? offer.payout_usd,
-              taskCount: offer.goal_text ? 1 : 0,
-              tasks: offer.goal_text
-                ? [
-                    {
-                      title: offer.goal_text,
-                      rewardDisplay: payout,
-                    },
-                  ]
-                : [],
-            },
-          ],
+          routes: [previewRoute],
         },
       };
     });

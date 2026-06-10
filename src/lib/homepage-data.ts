@@ -69,6 +69,9 @@ const FEATURED_GEMSLOOT_OFFER_NAMES = [
   "WaxRewards__10-4513",
 ] as const;
 
+const MANUAL_TASK_QUERY_CHUNK_SIZE = 50;
+const MANUAL_TASK_QUERY_RANGE_END = 4999;
+
 const OFFER_SELECT =
   "id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text";
 
@@ -192,6 +195,7 @@ export type HomepageRailOffer = OfferRow & {
 export type FeaturedGemslootOffer = HomepageRailOffer & {
   requested_offer_name: (typeof FEATURED_GEMSLOOT_OFFER_NAMES)[number];
   fallback_href: string;
+  tasks: RailPreviewTask[];
 };
 
 export type HomepageData = {
@@ -488,13 +492,30 @@ async function loadGainFeaturedData() {
 }
 
 async function loadManualTasks(offerIds: string[]) {
-  return offerIds.length
-    ? publicSupabase
+  const uniqueOfferIds = Array.from(new Set(offerIds));
+  if (!uniqueOfferIds.length) return { data: [] as SiteOfferTaskRow[] };
+
+  const chunks: string[][] = [];
+  for (let index = 0; index < uniqueOfferIds.length; index += MANUAL_TASK_QUERY_CHUNK_SIZE) {
+    chunks.push(uniqueOfferIds.slice(index, index + MANUAL_TASK_QUERY_CHUNK_SIZE));
+  }
+
+  const results = await Promise.all(
+    chunks.map((chunk) =>
+      publicSupabase
         .from("site_offer_tasks")
         .select("site_offer_id, title, reward_amount, reward_display, time_limit_text, sort_order")
-        .in("site_offer_id", offerIds)
+        .in("site_offer_id", chunk)
         .order("sort_order", { ascending: true })
-    : Promise.resolve({ data: [] as SiteOfferTaskRow[] });
+        .range(0, MANUAL_TASK_QUERY_RANGE_END),
+    ),
+  );
+  const firstError = results.find((result) => result.error)?.error ?? null;
+
+  return {
+    data: results.flatMap((result) => (result.data ?? []) as SiteOfferTaskRow[]),
+    error: firstError,
+  };
 }
 
 async function loadRelatedGuides(gameIds: string[]) {
@@ -753,8 +774,22 @@ function buildGemslootFeaturedOffers({
         matchingRow?.goal_text ??
         "Open the GemsLoot offer detail modal and verify live requirements before starting.",
       badge: "GemsLoot featured",
+      tasks: [],
     };
   });
+}
+
+function attachGemslootFeaturedTasks({
+  gemsLootFeaturedOffers,
+  manualTaskMap,
+}: {
+  gemsLootFeaturedOffers: FeaturedGemslootOffer[];
+  manualTaskMap: Map<string, RailPreviewTask[]>;
+}) {
+  return gemsLootFeaturedOffers.map((offer) => ({
+    ...offer,
+    tasks: manualTaskMap.get(offer.id) ?? [],
+  }));
 }
 
 function getModalRouteRows({
@@ -960,7 +995,15 @@ export async function getHomepageData(): Promise<HomepageData> {
       ...cashInStyleFeaturedOffers,
     ],
   });
-  const modalOfferIds = Array.from(new Set(modalRouteRows.map((row) => row.id)));
+  const gemsLootFeaturedOfferIds = gemsLootFeaturedOffers
+    .filter((offer) => !offer.id.startsWith("gemsloot-featured-"))
+    .map((offer) => offer.id);
+  const modalOfferIds = Array.from(
+    new Set([
+      ...modalRouteRows.map((row) => row.id),
+      ...gemsLootFeaturedOfferIds,
+    ]),
+  );
   const modalGameIds = Array.from(new Set(modalRouteRows.map((row) => row.game_id).filter(Boolean))) as string[];
 
   const [manualOfferTasksResult, relatedGuidesResult] = await Promise.all([
@@ -972,6 +1015,10 @@ export async function getHomepageData(): Promise<HomepageData> {
   const relatedGuides = (relatedGuidesResult.data ?? []) as RelatedGuideRow[];
   const manualTaskMap = buildManualTaskMap(manualTasks);
   const guideHrefByGameId = buildRelatedGuideMap(relatedGuides);
+  const gemsLootFeaturedOffersWithTasks = attachGemslootFeaturedTasks({
+    gemsLootFeaturedOffers,
+    manualTaskMap,
+  });
 
   const modalRoutesByGameKey = buildModalRoutes({
     modalRouteRows,
@@ -994,7 +1041,7 @@ export async function getHomepageData(): Promise<HomepageData> {
 
   return {
     featuredGames,
-    gemsLootFeaturedOffers,
+    gemsLootFeaturedOffers: gemsLootFeaturedOffersWithTasks,
     earnLabFeaturedOffers,
     cashInStyleFeaturedOffers,
     gainFeaturedOffers,

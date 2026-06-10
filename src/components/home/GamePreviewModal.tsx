@@ -33,17 +33,35 @@ export type RailPreviewData = {
 
 function TaskListPanel({ tasks }: { tasks: RailPreviewTask[] }) {
   const visibleTasks = tasks.length > 0 ? tasks : [{ title: "Review the live offer requirements before starting." }];
+  const [expanded, setExpanded] = useState(false);
+  const initialVisibleCount = 5;
+  const shouldCollapse = visibleTasks.length > initialVisibleCount;
+  const displayedTasks = shouldCollapse && !expanded
+    ? visibleTasks.slice(0, initialVisibleCount)
+    : visibleTasks;
 
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-white">
       <div className="flex items-center justify-between gap-3 border-b border-[var(--border-default)] px-4 py-3">
         <div>
           <div className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">Milestones</div>
-          <div className="text-sm font-bold text-[var(--brand-ink)]">{visibleTasks.length} task{visibleTasks.length === 1 ? "" : "s"} shown</div>
+          <div className="text-sm font-bold text-[var(--brand-ink)]">
+            {visibleTasks.length} task{visibleTasks.length === 1 ? "" : "s"} available
+          </div>
         </div>
+        {shouldCollapse ? (
+          <button
+            type="button"
+            onClick={() => setExpanded((current) => !current)}
+            className="rounded-xl border border-[var(--border-default)] bg-white px-3 py-2 text-xs font-extrabold text-[var(--brand-ink)] hover:border-lime-300 hover:bg-lime-50"
+            aria-expanded={expanded}
+          >
+            {expanded ? "Show less" : `Expand all ${visibleTasks.length}`}
+          </button>
+        ) : null}
       </div>
       <div className="max-h-72 overflow-y-auto p-2">
-        {visibleTasks.map((task, index) => (
+        {displayedTasks.map((task, index) => (
           <div key={`${task.title}-${index}`} className="grid grid-cols-[auto_1fr] gap-3 rounded-xl px-3 py-2.5 hover:bg-[var(--surface-muted)]">
             <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-lime-100 text-xs font-extrabold text-lime-800">
               {index + 1}
@@ -57,6 +75,16 @@ function TaskListPanel({ tasks }: { tasks: RailPreviewTask[] }) {
             </div>
           </div>
         ))}
+        {shouldCollapse && !expanded ? (
+          <button
+            type="button"
+            onClick={() => setExpanded(true)}
+            className="mt-1 w-full rounded-xl border border-dashed border-lime-300 bg-lime-50 px-3 py-2.5 text-sm font-extrabold text-lime-800 hover:bg-lime-100"
+            aria-expanded={expanded}
+          >
+            Show {visibleTasks.length - displayedTasks.length} more milestone{visibleTasks.length - displayedTasks.length === 1 ? "" : "s"}
+          </button>
+        ) : null}
       </div>
     </div>
   );

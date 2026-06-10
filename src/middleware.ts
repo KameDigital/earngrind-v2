@@ -36,8 +36,14 @@ export async function middleware(request: NextRequest) {
 
     const { data: { user } } = await supabase.auth.getUser();
 
+    const isAdminRoute = request.nextUrl.pathname.startsWith('/app/admin');
     const isAppRoute = request.nextUrl.pathname.startsWith('/app');
     const isLoginRoute = request.nextUrl.pathname === '/login';
+
+    // Explicit admin protection. Keep this in addition to the broader /app guard and robots exclusions.
+    if (isAdminRoute && !user) {
+        return NextResponse.redirect(new URL('/login', request.url));
+    }
 
     // Protect /app/* routes
     if (isAppRoute && !user) {

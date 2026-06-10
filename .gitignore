@@ -29,6 +29,8 @@ error.log
 # env files — never commit secrets
 .env
 .env.*
+.env.local
+.env.production
 !.env.example
 
 # vercel

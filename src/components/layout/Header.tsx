@@ -4,14 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, Search } from "lucide-react";
+import DiscordIcon from "@/components/icons/DiscordIcon";
 
 const NAV_LINKS = [
     { href: "/offers", label: "Offers & Games", activePrefixes: ["/games"] },
+    { href: "/find-offers", label: "Find Offers" },
     { href: "/guides", label: "Guides", excludePrefixes: ["/guides/best-gpt-sites", "/guides/fanduel-casino-review-bonus"] },
     { href: "/best-gpt-sites", label: "Best GPT Sites", activePrefixes: ["/guides/best-gpt-sites", "/review", "/reviews", "/platforms", "/guides/fanduel-casino-review-bonus"] },
-    ...(process.env.NEXT_PUBLIC_EARN_REWARDS_ENTRY_ENABLED === "true" ? [{ href: "/earn", label: "Earn Rewards" }] : []),
+    // TODO: Re-enable when onboarding flow, terms display, and status dashboard are complete.
     { href: "/blog", label: "Blog" },
 ];
+
+const DISCORD_URL = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
 
 function isActivePath(
     pathname: string,
@@ -90,6 +94,17 @@ export default function Header() {
 
                     {/* Right side */}
                     <div className="hidden lg:flex items-center gap-2">
+                        {DISCORD_URL ? (
+                            <a
+                                href={DISCORD_URL}
+                                aria-label="Join EarnGrind on Discord"
+                                className="flex h-8 w-8 items-center justify-center rounded-none text-[var(--text-tertiary)] transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--brand-ink)]"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <DiscordIcon className="ti ti-brand-discord h-[17px] w-[17px]" />
+                            </a>
+                        ) : null}
                         <Link
                             href="/offers"
                             aria-label="Search offers"
@@ -98,18 +113,29 @@ export default function Header() {
                             <Search size={17} />
                         </Link>
                         <Link
-                            href="/offers"
+                            href="/find-offers"
                             className="flex items-center gap-1.5 rounded-none bg-[var(--brand-ink)] px-4 py-2 text-xs font-bold text-white shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/90 active:translate-y-0"
                         >
                             Find Offers
-                            <span aria-hidden="true" className="text-[var(--brand-lime)]">-&gt;</span>
+                            <span aria-hidden="true" className="text-[var(--brand-lime)]">→</span>
                         </Link>
                     </div>
 
                     {/* Mobile controls */}
                     <div className="lg:hidden flex items-center gap-2">
+                        {DISCORD_URL ? (
+                            <a
+                                href={DISCORD_URL}
+                                aria-label="Join EarnGrind on Discord"
+                                className="flex h-9 w-9 items-center justify-center rounded-none text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--brand-ink)]"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <DiscordIcon className="ti ti-brand-discord h-[17px] w-[17px]" />
+                            </a>
+                        ) : null}
                         <Link
-                            href="/offers"
+                            href="/find-offers"
                             className="rounded-none bg-[var(--brand-ink)] px-3.5 py-1.5 text-xs font-bold text-white"
                         >
                             Find Offers

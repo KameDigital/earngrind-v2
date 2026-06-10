@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "./Container";
+import DiscordIcon from "@/components/icons/DiscordIcon";
 
 const EXPLORE = [
     { href: "/offers", label: "All Offers" },
@@ -18,6 +19,7 @@ const COMPANY = [
     { href: "/legal/disclosure",   label: "Affiliate Disclosure" },
 ];
 
+const DISCORD_URL = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
 
 export default function Footer() {
     const year = new Date().getFullYear();
@@ -38,6 +40,17 @@ export default function Footer() {
                         <p className="text-sm text-[var(--text-tertiary)] max-w-xs leading-relaxed">
                             The smartest way to find, compare, and complete high-paying offerwall tasks — fully transparent, no bias.
                         </p>
+                        {DISCORD_URL ? (
+                            <a
+                                href={DISCORD_URL}
+                                className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:text-lime-700"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <DiscordIcon className="ti ti-brand-discord h-4 w-4" />
+                                Discord
+                            </a>
+                        ) : null}
                     </div>
 
                     {/* Explore */}

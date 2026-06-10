@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import EmailCapture from "@/components/EmailCapture";
 import FeaturedOfferRail, {
   type FeaturedOfferRailItem,
 } from "@/components/home/FeaturedOfferRail";
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
+import TabbedOfferRail, { type OfferRailTab } from "@/components/home/TabbedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
 import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
 import {
@@ -12,6 +14,9 @@ import {
   gameKeyFromParts,
   getHomepageData,
 } from "@/lib/homepage-data";
+import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
+import { JsonLd, buildWebsiteSearchAction } from "@/lib/seo-schema";
+import { createClient } from "@/lib/supabase/server";
 
 export const revalidate = 300;
 
@@ -100,6 +105,61 @@ const START_HERE_ITEMS = [
   },
 ] as const;
 
+const PARTNER_LOGOS = [
+  {
+    name: "Swagbucks",
+    image: "/images/guides/gpt-sites/swagbucks.png",
+  },
+  {
+    name: "Freecash",
+    image: "/images/guides/gpt-sites/freecash.svg",
+  },
+  {
+    name: "Gain.gg",
+    image: "/images/guides/gpt-sites/gain-gg.png",
+  },
+  {
+    name: "InboxDollars",
+    image: "/images/guides/gpt-sites/inboxdollars.png",
+  },
+  {
+    name: "EarnLab",
+    image: "/images/guides/gpt-sites/earnlab.png",
+  },
+] as const;
+
+type FeaturedPost = {
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  published_at: string | null;
+};
+
+async function getFeaturedPost(): Promise<FeaturedPost | null> {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("blog_posts")
+    .select("slug, title, excerpt, published_at")
+    .eq("status", "published")
+    .order("published_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error || !data?.slug || !data.title) return null;
+  return data as FeaturedPost;
+}
+
+function formatPostDate(value: string | null) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+}
+
 export default async function HomePage() {
   const {
     cashInStyleFeaturedOffers,
@@ -109,6 +169,9 @@ export default async function HomePage() {
     guideHrefByGameKey,
     modalRoutesByGameKey,
   } = await getHomepageData();
+  const featuredPost = await getFeaturedPost();
+  const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
+  const websiteJsonLd = buildWebsiteSearchAction();
 
   const guideHrefForGame = (
     slug: string | null | undefined,
@@ -133,6 +196,7 @@ export default async function HomePage() {
       provider: offer.platform_name,
       platform: offer.provider_name,
       payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
+      dataRefreshed: formatDataRefreshedLabel(offer.updated_at, new Date()),
       secondaryValue: offer.goal_text ? offer.goal_text : null,
       imageUrl: offer.image_url,
       preview: {
@@ -220,6 +284,7 @@ export default async function HomePage() {
         provider: offer.platform_name,
         platform: offer.provider_name,
         payout,
+        dataRefreshed: formatDataRefreshedLabel(offer.updated_at, new Date()),
         secondaryValue: offer.goal_text ? offer.goal_text : null,
         imageUrl: offer.image_url,
         preview: {
@@ -253,6 +318,7 @@ export default async function HomePage() {
         provider: "Gain.gg",
         platform: offer.providerName,
         payout: formatMoney(offer.totalPayout ?? offer.payout) ?? null,
+        dataRefreshed: formatDataRefreshedLabel(null, new Date()),
         secondaryValue:
           offer.tasks.length > 0
             ? `${offer.tasks.length} milestones available`
@@ -295,6 +361,7 @@ export default async function HomePage() {
       provider: offer.platform_name,
       platform: offer.provider_name,
       payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
+      dataRefreshed: formatDataRefreshedLabel(offer.updated_at, new Date()),
       secondaryValue: offer.goal_text ? offer.goal_text : null,
       imageUrl: offer.image_url,
       preview: {
@@ -334,8 +401,30 @@ export default async function HomePage() {
       },
     }));
 
+  const OFFER_RAIL_TABS: OfferRailTab[] = [
+    {
+      id: "earnlab",
+      label: "EarnLab",
+      description: "EarnLab game picks matched to active EarnGrind routes. Open a preview to compare milestones before clicking out.",
+      items: earnLabOfferRail,
+    },
+    {
+      id: "gain",
+      label: "Gain.gg",
+      description: "Current game offers from Gain.gg's native wall. Review milestones and payout before opening the Gain wall.",
+      items: gainOfferRail,
+    },
+    {
+      id: "cashinstyle",
+      label: "CashInStyle",
+      description: "Current CashInStyle game offers from EarnGrind's imported feed. Start buttons use the tracked CashInStyle deeplink flow.",
+      items: cashInStyleOfferRail,
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-[var(--surface-muted)]">
+      <JsonLd data={websiteJsonLd} />
       <EarnLabActivityRail />
 
       <section
@@ -361,13 +450,12 @@ export default async function HomePage() {
             </div>
 
             <h1 className="mb-4 max-w-[680px] text-4xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-6xl">
-              EarnGrind GPT Offer Discovery
+              Find the Highest-Paying Version of Any Mobile Game Offer
             </h1>
 
             <p className="mb-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-              Find the right path before you click: compare live routes in
-              Offers, browse game hubs, read completion guides, and research GPT
-              sites by trust.
+              Before you grind, check EarnGrind — we compare payouts across
+              every major rewards site so you earn more for the same time.
             </p>
 
             <div className="mb-6 flex flex-wrap items-center justify-start gap-2.5">
@@ -391,13 +479,7 @@ export default async function HomePage() {
                 className="inline-flex items-center gap-2 rounded-lg bg-[var(--brand-lime)] px-6 py-3.5 text-sm font-extrabold text-[var(--brand-ink)] shadow-lg shadow-[var(--brand-lime)]/20 transition-all hover:-translate-y-px hover:bg-[color:hsl(84,93%,72%)] active:translate-y-0"
               >
                 Compare Live Offers
-                <span aria-hidden="true">-&gt;</span>
-              </Link>
-              <Link
-                href="/best-gpt-sites"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/25 bg-black/35 px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-white/15"
-              >
-                Best GPT Sites
+                <span aria-hidden="true">→</span>
               </Link>
               <Link
                 href="/offers#games"
@@ -406,6 +488,41 @@ export default async function HomePage() {
                 Browse Games
               </Link>
             </div>
+            {discordUrl ? (
+              <a
+                href={discordUrl}
+                className="inline-flex items-center gap-2 text-sm font-bold text-white/80 transition-colors hover:text-[var(--brand-lime)]"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Join the community →
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[var(--border-default)] bg-white px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <p className="mb-4 text-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-tertiary)] sm:text-left">
+            Tracks offers from:
+          </p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {PARTNER_LOGOS.map((partner) => (
+              <div
+                key={partner.name}
+                className="flex h-16 items-center justify-center rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 transition hover:border-lime-300 hover:bg-white"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element -- Partner logo strip needs CSS grayscale filters on plain img tags. */}
+                <img
+                  src={partner.image}
+                  alt={`${partner.name} logo`}
+                  className="max-h-9 max-w-[8rem] object-contain grayscale opacity-60 transition duration-200 hover:grayscale-0 hover:opacity-100"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -620,23 +737,43 @@ export default async function HomePage() {
             title="Featured Game Offers"
             description="Curated GemsLoot game offers. Open a preview, then start the exact GemsLoot offer detail modal through the tracked route when available."
           />
-          <FeaturedOfferRail
-            items={earnLabOfferRail}
-            title="Featured EarnLab games"
-            description="EarnLab game picks matched to active EarnGrind routes. Open a preview to compare milestones before clicking out."
-          />
-          <FeaturedOfferRail
-            items={gainOfferRail}
-            title="Featured Gain.gg games"
-            description="Current game offers from Gain.gg's native wall. Review milestones and payout before opening the Gain wall."
-          />
-          <FeaturedOfferRail
-            items={cashInStyleOfferRail}
-            title="Featured CashInStyle games"
-            description="Current CashInStyle game offers from EarnGrind's imported feed. Start buttons use the tracked CashInStyle deeplink flow."
-          />
+          <EmailCapture variant="inline" />
+          <TabbedOfferRail tabs={OFFER_RAIL_TABS} />
         </div>
       </section>
+
+      {featuredPost ? (
+        <section className="bg-[var(--surface-muted)] px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <article className="eg-card p-6 sm:p-7">
+              <p className="section-label mb-3">Featured this week</p>
+              <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+                <div>
+                  <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+                    {featuredPost.title}
+                  </h2>
+                  {featuredPost.excerpt ? (
+                    <p className="mt-2 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)]">
+                      {featuredPost.excerpt}
+                    </p>
+                  ) : null}
+                  {formatPostDate(featuredPost.published_at) ? (
+                    <p className="mt-3 text-xs font-semibold text-[var(--text-tertiary)]">
+                      {formatPostDate(featuredPost.published_at)}
+                    </p>
+                  ) : null}
+                </div>
+                <Link
+                  href={`/blog/${featuredPost.slug}`}
+                  className="inline-flex items-center justify-center rounded-lg border border-[var(--border-default)] bg-white px-4 py-2.5 text-sm font-extrabold text-[var(--brand-ink)] transition hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
+                >
+                  Read more →
+                </Link>
+              </div>
+            </article>
+          </div>
+        </section>
+      ) : null}
 
       <section className="bg-[var(--surface-muted)] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl">
@@ -649,20 +786,20 @@ export default async function HomePage() {
 
           <div className="space-y-3">
             <FaqItem
-              question="Is this actually real? Can I really earn money?"
-              answer="Yes. EarnGrind helps you compare offers from partner GPT sites. When you click out to a partner platform, that partner owns the offer completion, approval, and payout process."
+              question="Which platform is best for beginners?"
+              answer="Start with the Best GPT Sites page. It compares beginner-friendly platforms by trust, payout options, and offer quality so you can pick a site before choosing a specific task."
             />
             <FaqItem
-              question="How much can I earn?"
-              answer="It depends on the offers you choose. Simple tasks may pay a few dollars, while high-value game milestones can pay significantly more. Use the highest paying GPT offers and guide sections to prioritize better routes."
+              question="How do I actually get paid?"
+              answer="Choose an offer on EarnGrind, open the partner platform, complete the task under that platform's rules, then cash out through the platform's own payout system after approval."
             />
             <FaqItem
-              question="Do I need to pay anything to start?"
-              answer="No. No signup is required to browse offers, guides, and GPT comparisons. Some partner platforms may require their own account before you can complete offers there."
+              question="What's the difference between EarnGrind and Swagbucks?"
+              answer="Swagbucks is a rewards platform where you complete offers and cash out. EarnGrind is a comparison tool that helps you find which platform has the better payout before you start."
             />
             <FaqItem
-              question="Why are there so many internal pages?"
-              answer="Game pages, comparison pages, and guides serve different search intents. Linking them together helps users discover the right route faster and helps search engines understand site structure."
+              question="Is EarnGrind free to use?"
+              answer="Yes. No account needed to browse EarnGrind. We show comparison data first; partner sites may ask you to create an account only after you click out to complete an offer."
             />
           </div>
         </div>
@@ -680,8 +817,7 @@ export default async function HomePage() {
             Ready to earn your first dollar online?
           </h2>
           <p className="mx-auto mb-10 max-w-xl text-lg text-white/50">
-            Start with discovery, move into the offer comparison page when you
-            need filters, and verify partner terms before you click out.
+            No account needed to browse. We just show you where the money is.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link
@@ -689,7 +825,7 @@ export default async function HomePage() {
               className="inline-flex items-center gap-2 rounded-lg bg-[var(--brand-lime)] px-8 py-4 text-base font-extrabold text-[var(--brand-ink)] shadow-lg shadow-[var(--brand-lime)]/20 transition-all hover:-translate-y-px hover:bg-[color:hsl(84,93%,72%)]"
             >
               Browse Offers - It&apos;s Free
-              <span aria-hidden="true">-&gt;</span>
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
 

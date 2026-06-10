@@ -6,6 +6,7 @@ import {
     type GemslootProviderSlug,
 } from "@/lib/gemsloot-providers";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
+import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 import { createClient } from "@/lib/supabase/server";
 
@@ -156,6 +157,9 @@ function OfferCard({ offer, countryCode }: { offer: GemslootOfferRow; countryCod
                     <div>
                         <div className="text-[10px] font-black uppercase tracking-wider text-gray-400">Total payout</div>
                         <div className="text-xl font-black text-gray-950">${payout.toFixed(2)}</div>
+                        <div className="mt-1 text-[11px] font-semibold text-gray-400">
+                            {formatDataRefreshedLabel(offer.updated_at)}
+                        </div>
                     </div>
                     <div className="text-right text-xs font-semibold text-gray-500">
                         {providerName}

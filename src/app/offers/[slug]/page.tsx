@@ -9,7 +9,7 @@ import type { Offer } from '@/components/offers/OfferSearchEngine';
 import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
 import ProviderLogo from '@/components/providers/ProviderLogo';
 import SiteOffersComparison, { type SiteOffer } from './SiteOffersComparison';
-import { formatPayoutFreshness } from '@/lib/payout-freshness';
+import { formatDataRefreshedLabel, formatPayoutFreshness } from '@/lib/payout-freshness';
 import {
     buildOfferRouteSeoDescription,
     buildOfferRouteSeoTitle,
@@ -515,6 +515,9 @@ function ComparisonRow({ offer, isBest, rank }: { offer: Offer; isBest: boolean;
                     <div className={`text-xl font-extrabold leading-tight ${isBest ? 'text-[color:hsl(84,93%,25%)]' : 'text-[var(--brand-ink)]'}`}>
                         ${offer.payout_usd.toFixed(2)}
                     </div>
+                    <div className="mt-1 text-[11px] font-medium text-[var(--text-tertiary)]">
+                        {formatDataRefreshedLabel(offer.updated_at)}
+                    </div>
                 </div>
                 <TrackedOutboundLink
                     href={offer.redirect_url ?? "#"}
@@ -703,6 +706,9 @@ export default async function GameOffersPage({
                                         Best route now: {bestOffer.platform.name} at ${bestOffer.payout_usd.toFixed(2)}
                                     </span>
                                 )}
+                                <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                    {formatDataRefreshedLabel(bestOffer?.updated_at, new Date())}
+                                </span>
                                 {primaryGuide && (
                                     <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
                                         Guide available

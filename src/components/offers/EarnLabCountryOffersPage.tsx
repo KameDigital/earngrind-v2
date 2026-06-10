@@ -11,6 +11,7 @@ import {
 } from "@/lib/earnlab-countries";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
+import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
 
 const COUNTRY_LINKS = EARNLAB_GALLERY_COUNTRIES.slice(0, 8);
@@ -361,6 +362,9 @@ function OfferCard({ offer }: { offer: CountryOffer }) {
                     <div className="rounded-xl bg-[var(--surface-muted)] px-3 py-2">
                         <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-tertiary)]">Reward</div>
                         <div className="text-lg font-black text-[color:hsl(84,93%,25%)]">{formatMoney(offer.payout)}</div>
+                        <div className="mt-1 text-[11px] font-medium text-[var(--text-tertiary)]">
+                            {formatDataRefreshedLabel(offer.updatedAt ?? offer.importedAt)}
+                        </div>
                     </div>
                     <div className="rounded-xl bg-[var(--surface-muted)] px-3 py-2">
                         <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-tertiary)]">Difficulty</div>

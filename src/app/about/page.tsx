@@ -38,6 +38,8 @@ const PILLARS = [
     },
 ];
 
+const FOUNDER_TWITTER_URL = process.env.NEXT_PUBLIC_FOUNDER_TWITTER?.trim() || "#";
+
 export default function AboutPage() {
     return (
         <div className="bg-[var(--surface-muted)] min-h-screen">
@@ -60,6 +62,35 @@ export default function AboutPage() {
                             We test each platform personally and update payout data daily — so you spend
                             less time hunting and more time earning.
                         </p>
+                        <section className="mt-8 eg-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
+                            <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)]">
+                                <picture className="block h-full w-full">
+                                    <source srcSet="/Logo_No_Text.png" type="image/png" />
+                                    <img
+                                        src="/Logo_No_Text.png"
+                                        alt="Kame, founder of EarnGrind"
+                                        className="h-full w-full object-cover"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                </picture>
+                            </div>
+                            <div className="min-w-0">
+                                <p className="section-label mb-1">Founder / Author</p>
+                                <h2 className="text-lg font-extrabold text-[var(--brand-ink)]">Kame</h2>
+                                <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                                    Kame built EarnGrind after comparing mobile game offers across GPT sites and seeing how often the same task paid differently by platform. The goal is to make offer discovery more transparent, practical, and easier to verify before users spend time on a grind.
+                                </p>
+                                <a
+                                    href={FOUNDER_TWITTER_URL}
+                                    className="mt-3 inline-flex text-xs font-extrabold text-lime-700 hover:text-lime-800"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    Founder profile →
+                                </a>
+                            </div>
+                        </section>
                     </div>
                 </Container>
             </section>

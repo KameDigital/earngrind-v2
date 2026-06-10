@@ -458,7 +458,7 @@ function printExamples(label, items) {
   }
   for (const item of items.slice(0, 10)) {
     const reason = item.reasons.length ? ` :: ${item.reasons.join(" | ")}` : "";
-    console.log(`  ${item.url} -> ${item.canonical}${reason}`);
+    console.log(`  ${item.url} → ${item.canonical}${reason}`);
   }
 }
 
@@ -468,7 +468,7 @@ function printCanonicalExamples(items) {
     return;
   }
   for (const item of items.slice(0, 10)) {
-    console.log(`  ${item.url} canonical -> ${item.canonical}`);
+    console.log(`  ${item.url} canonical → ${item.canonical}`);
   }
 }
 

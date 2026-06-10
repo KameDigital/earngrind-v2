@@ -13,6 +13,22 @@ export function formatPayoutFreshness(value?: string | null) {
     return "Payout may need rechecking";
 }
 
+export function formatDataRefreshedLabel(value?: string | null, fallbackValue?: string | Date | null) {
+    const label = formatDataRefreshedDate(value) ?? formatDataRefreshedDate(fallbackValue);
+    return `Data refreshed: ${label ?? "date unavailable"}`;
+}
+
+function formatDataRefreshedDate(value?: string | Date | null) {
+    if (!value) return null;
+    const date = value instanceof Date ? value : new Date(value);
+    if (Number.isNaN(date.getTime())) return null;
+    return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day:   "numeric",
+        year:  "numeric",
+    }).format(date);
+}
+
 export function payoutFreshnessIsStale(value?: string | null) {
     if (!value) return true;
     const timestamp = new Date(value).getTime();

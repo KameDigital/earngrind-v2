@@ -14,6 +14,7 @@ export interface FeaturedOfferRailItem {
   provider?: string | null;
   platform?: string | null;
   payout?: string | null;
+  dataRefreshed?: string | null;
   secondaryValue?: string | null;
   imageUrl?: string | null;
   preview?: RailPreviewData | null;
@@ -77,6 +78,11 @@ function RailCardContent({ item }: { item: FeaturedOfferRailItem }) {
             <h4 className="line-clamp-2 text-[13px] font-extrabold leading-tight text-[var(--brand-ink)] transition-colors group-hover:text-[color:hsl(84,93%,32%)]">
               {item.title}
             </h4>
+            {item.dataRefreshed ? (
+              <p className="mt-1 text-[10px] font-semibold text-[var(--text-tertiary)]">
+                {item.dataRefreshed}
+              </p>
+            ) : null}
           </div>
           <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--brand-ink)] transition-transform duration-200 group-hover:translate-x-0.5" />
         </div>

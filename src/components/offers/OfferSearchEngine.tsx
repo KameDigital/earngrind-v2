@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import ProviderLogo from "@/components/providers/ProviderLogo";
+import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 
 // ---------------------------------------------------------------
 // TYPES — mirrors /api/offers response exactly
@@ -408,6 +409,9 @@ function OfferRow({
                     </div>
                     <div className={`text-xl sm:text-2xl font-extrabold leading-none ${isBestPayout ? 'text-[color:hsl(84,93%,25%)]' : 'text-[color:hsl(84,93%,30%)]'}`}>
                         ${offer.payout_usd.toFixed(2)}
+                    </div>
+                    <div className="mt-1 text-[11px] font-medium text-[var(--text-tertiary)]">
+                        {formatDataRefreshedLabel(offer.updated_at)}
                     </div>
                 </div>
             </div>

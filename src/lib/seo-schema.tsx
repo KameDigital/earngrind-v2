@@ -95,6 +95,23 @@ export function buildOrganization(name: string, path?: string, logoUrl?: string 
   };
 }
 
+export function buildWebsiteSearchAction() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "EarnGrind",
+    url: absoluteUrl("/"),
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: absoluteUrl("/offers?q={search_term_string}"),
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
 export function buildReviewSchema(input: {
   title: string;
   path: string;

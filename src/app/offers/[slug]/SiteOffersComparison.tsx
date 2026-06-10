@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import ProviderLogo from "@/components/providers/ProviderLogo";
-import { formatPayoutFreshness } from "@/lib/payout-freshness";
+import { formatDataRefreshedLabel, formatPayoutFreshness } from "@/lib/payout-freshness";
 
 export interface SiteOfferTask {
   id: string;
@@ -173,6 +173,9 @@ function OfferCard({
           <div className="text-[10px] font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Total payout</div>
           <div className="text-2xl font-extrabold text-[var(--brand-ink)]">{formatUsd(row.total_payout_usd)}</div>
           <div className="text-xs text-[var(--text-tertiary)]">Best step {formatUsd(row.payout_usd)}</div>
+          <div className="mt-1 text-[11px] font-medium text-[var(--text-tertiary)]">
+            {formatDataRefreshedLabel(row.updated_at)}
+          </div>
         </div>
       </div>
 

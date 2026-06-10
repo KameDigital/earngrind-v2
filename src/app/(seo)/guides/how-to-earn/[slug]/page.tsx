@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import EmailCapture from "@/components/EmailCapture";
 import Container from "@/components/layout/Container";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import { isPublicPayoutEligible } from "@/lib/offer-quality";
@@ -213,6 +214,11 @@ export default async function GameGuidePage({ params }: { params: { slug: string
         </section>
 
         <FAQSection items={faqItems} />
+
+        <section>
+          <p className="section-label mb-3">Stay updated</p>
+          <EmailCapture variant="stacked" />
+        </section>
       </Container>
     </main>
   );

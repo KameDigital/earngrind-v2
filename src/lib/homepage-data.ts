@@ -73,7 +73,7 @@ const MANUAL_TASK_QUERY_CHUNK_SIZE = 50;
 const MANUAL_TASK_QUERY_RANGE_END = 4999;
 
 const OFFER_SELECT =
-  "id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text";
+  "id, source, title, game_id, game_name, game_slug, game_thumbnail, image_url, provider_name, platform_name, platform_logo, payout_usd, total_payout_usd, goal_text, updated_at";
 
 const SITE_OFFER_SELECT = `
   id, external_id, title, payout_usd, total_payout_usd, goal_text, image_url, offer_url,
@@ -102,6 +102,7 @@ export type OfferRow = {
   payout_usd: number | null;
   total_payout_usd?: number | null;
   goal_text: string | null;
+  updated_at?: string | null;
 };
 
 export type GuideRow = {

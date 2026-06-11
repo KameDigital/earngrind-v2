@@ -428,80 +428,43 @@ export default async function HomePage() {
       <EarnLabActivityRail />
 
       <section
-        className="relative overflow-hidden px-4 pb-12 pt-12 sm:px-6 sm:pb-14 sm:pt-14 lg:px-8"
+        className="relative flex min-h-[285px] items-center overflow-hidden border-b border-black/20 px-4 py-10 sm:px-6 lg:min-h-[330px] lg:px-8"
         style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(7,9,12,0.93) 0%, rgba(7,9,12,0.78) 38%, rgba(7,9,12,0.54) 62%, rgba(7,9,12,0.78) 100%),
-            linear-gradient(to bottom, rgba(7,9,12,0.62) 0%, rgba(7,9,12,0.18) 54%, rgba(7,9,12,0.9) 100%),
+            radial-gradient(circle at 50% 36%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.62) 46%, rgba(0,0,0,0.38) 100%),
+            linear-gradient(90deg, rgba(5,8,13,0.16) 0%, rgba(5,8,13,0.58) 32%, rgba(5,8,13,0.7) 50%, rgba(5,8,13,0.5) 68%, rgba(5,8,13,0.16) 100%),
             url("/hero-home.png")
           `,
-          backgroundPosition: "center top",
+          backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}
       >
-        <div className="relative mx-auto max-w-7xl">
-          <div className="max-w-[760px] text-left">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--brand-lime)]/35 bg-black/55 px-3 py-1.5 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--brand-lime)]" />
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand-lime)]">
-                Live payout discovery
-              </span>
-            </div>
+        <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center text-center">
+          <h1 className="text-[clamp(4rem,11vw,9rem)] font-black leading-[0.82] text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.65)]">
+            Earn<span className="text-[color:hsl(84,93%,38%)]">Grind</span>
+          </h1>
 
-            <h1 className="mb-4 max-w-[680px] text-4xl font-extrabold leading-[0.98] tracking-tight text-white sm:text-6xl">
-              Find the Highest-Paying Version of Any Mobile Game Offer
-            </h1>
+          <p className="mt-5 max-w-3xl text-balance text-lg font-semibold leading-tight text-white/78 drop-shadow-[0_2px_5px_rgba(0,0,0,0.85)] sm:text-2xl">
+            Find the best Get Paid To (GPT) platforms where you can earn
+            rewards by playing games on Mobile and Desktop or Completing
+            Surveys, and much more. All tested and reviewed for you by a
+            seasoned Grinder with Weekly updates on the best and highest
+            rewarded offers to save you time and fill your pockets!
+          </p>
 
-            <p className="mb-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-              Before you grind, check EarnGrind — we compare payouts across
-              every major rewards site so you earn more for the same time.
-            </p>
-
-            <div className="mb-6 flex flex-wrap items-center justify-start gap-2.5">
-              {[
-                "Browse without signup",
-                "Partner payouts stay ungated",
-                "Compare before you click",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center rounded-full border border-white/25 bg-black/35 px-3 py-1.5 text-xs font-bold text-white/90"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-
-            <div className="mb-5 flex flex-wrap items-center justify-start gap-3">
-              <Link
-                href="/offers"
-                className="inline-flex items-center gap-2 rounded-lg bg-[var(--brand-lime)] px-6 py-3.5 text-sm font-extrabold text-[var(--brand-ink)] shadow-lg shadow-[var(--brand-lime)]/20 transition-all hover:-translate-y-px hover:bg-[color:hsl(84,93%,72%)] active:translate-y-0"
-              >
-                Compare Live Offers
-                <span aria-hidden="true">→</span>
-              </Link>
-              <Link
-                href="/offers#games"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/25 bg-black/35 px-6 py-3.5 text-sm font-bold text-white transition-all hover:bg-white/15"
-              >
-                Browse Games
-              </Link>
-            </div>
-            {discordUrl ? (
-              <a
-                href={discordUrl}
-                className="inline-flex items-center gap-2 text-sm font-bold text-white/80 transition-colors hover:text-[var(--brand-lime)]"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Join the community →
-              </a>
-            ) : null}
-          </div>
+          {discordUrl ? (
+            <a
+              href={discordUrl}
+              className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-white/80 transition-colors hover:text-[var(--brand-lime)]"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Join the community →
+            </a>
+          ) : null}
         </div>
       </section>
-
       <section className="border-b border-[var(--border-default)] bg-white px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <p className="mb-4 text-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-tertiary)] sm:text-left">

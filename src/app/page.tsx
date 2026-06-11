@@ -431,11 +431,11 @@ export default async function HomePage() {
         className="relative flex min-h-[285px] items-center overflow-hidden border-b border-black/20 px-4 py-10 sm:px-6 lg:min-h-[330px] lg:px-8"
         style={{
           backgroundImage: `
-            radial-gradient(circle at 50% 36%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.62) 46%, rgba(0,0,0,0.38) 100%),
-            linear-gradient(90deg, rgba(5,8,13,0.16) 0%, rgba(5,8,13,0.58) 32%, rgba(5,8,13,0.7) 50%, rgba(5,8,13,0.5) 68%, rgba(5,8,13,0.16) 100%),
+            radial-gradient(circle at 50% 36%, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.48) 46%, rgba(0,0,0,0.28) 100%),
+            linear-gradient(90deg, rgba(5,8,13,0.12) 0%, rgba(5,8,13,0.42) 32%, rgba(5,8,13,0.56) 50%, rgba(5,8,13,0.38) 68%, rgba(5,8,13,0.12) 100%),
             url("/hero-home.png")
           `,
-          backgroundPosition: "center center",
+          backgroundPosition: "center 24%",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}
@@ -445,7 +445,7 @@ export default async function HomePage() {
             Earn<span className="text-[color:hsl(84,93%,38%)]">Grind</span>
           </h1>
 
-          <p className="mt-5 max-w-3xl text-balance text-lg font-semibold leading-tight text-white/78 drop-shadow-[0_2px_5px_rgba(0,0,0,0.85)] sm:text-2xl">
+          <p className="mt-5 max-w-3xl text-balance text-lg font-semibold leading-tight text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)] sm:text-2xl">
             Find the best Get Paid To (GPT) platforms where you can earn
             rewards by playing games on Mobile and Desktop or Completing
             Surveys, and much more. All tested and reviewed for you by a

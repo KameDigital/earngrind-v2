@@ -2,15 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import { firstNonEmpty, isPublicOfferRowEligible, shapePublicOffer } from "@/lib/public-offers";
 import { NextRequest, NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 120;
 
 export async function GET(
     req: NextRequest,
     { params }: { params: { slug: string } }
 ) {
-    console.log("API FIX ACTIVE /api/offers/game/[slug]");
-
     const supabase = createClient();
     const { slug } = params;
     const comparisonSort = req.nextUrl.searchParams.get("comparison_sort") ?? "payout_desc";
@@ -137,17 +134,8 @@ export async function GET(
         min_payout_usd: payoutValues.length ? Math.min(...payoutValues) : 0,
     };
 
-    if (offerRows?.[0]) {
-        console.log("[/api/offers/game/[slug]] debug row", {
-            id: offerRows[0].id,
-            offer_url: typeof offerRows[0].offer_url === "string" ? offerRows[0].offer_url : null,
-            image_url: shapedOffers[0]?.image_url ?? null,
-            redirect_url: shapedOffers[0]?.redirect_url ?? null,
-        });
-    }
-
     const responseHeaders: Record<string, string> = {
-        "Cache-Control": "no-store, max-age=0",
+        "Cache-Control": "public, s-maxage=120, stale-while-revalidate=600",
     };
 
     if (process.env.NODE_ENV !== "production" && shapedOffers[0]) {

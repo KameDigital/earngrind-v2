@@ -83,6 +83,22 @@ assert.equal(
 );
 
 assert.equal(
+    buildPlatformAffiliateUrl({
+        platform: { name: "Gain.gg", slug: "gain-gg" },
+        destinationUrl: "https://gain.gg/offer/12345-abcd?ref=macko",
+    }),
+    "https://gain.gg/offer/12345-abcd?ref=macko",
+);
+
+assert.equal(
+    buildPlatformAffiliateUrl({
+        platform: { name: "Gain.gg", slug: "gain-gg" },
+        destinationUrl: "https://example.com/not-gain",
+    }),
+    "https://gain.gg/r/macko",
+);
+
+assert.equal(
     buildPlatformAffiliateUrl({ platform: { name: "EarnLab", slug: "earnlab" } }),
     "https://earnlab.com/r/mac",
 );

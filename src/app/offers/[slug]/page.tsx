@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight, BookOpen, ShieldCheck, Trophy } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
+import { RevenuePageView } from '@/components/analytics/RevenueEventTracker';
 import { buildBreadcrumbList, buildItemList, JsonLd } from '@/lib/seo-schema';
 import type { Offer } from '@/components/offers/OfferSearchEngine';
 import TrackedOutboundLink from '@/components/offers/TrackedOutboundLink';
@@ -642,6 +643,16 @@ export default async function GameOffersPage({
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+            <RevenuePageView
+                routePath={offerRoutePath(game.slug)}
+                routeGroup="offer"
+                entityType="game"
+                entityId={game.id}
+                entitySlug={game.slug}
+                gameId={game.id}
+                gameSlug={game.slug}
+                sourceContext="offer_detail"
+            />
             <JsonLd data={schemas} />
             <div className="mx-auto max-w-6xl space-y-6 px-4 sm:px-6 lg:px-8">
 

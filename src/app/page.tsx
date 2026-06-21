@@ -7,6 +7,7 @@ import FeaturedOfferRail, {
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import TabbedOfferRail, { type OfferRailTab } from "@/components/home/TabbedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
+import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
 import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
 import {
   buildGoHref,
@@ -53,6 +54,29 @@ export const metadata: Metadata = {
     images: ["/og-earngrind.png"],
   },
 };
+
+function buildGainFeaturedGoHref(params: {
+  offerId: string;
+  offerTitle: string;
+  providerName?: string | null;
+  payoutUsd?: number | null;
+  destinationUrl: string;
+  clickLocation: string;
+}) {
+  const searchParams = new URLSearchParams({
+    click_location: params.clickLocation,
+    source_context: "homepage_rail_modal",
+    platform_name: "Gain.gg",
+    offer_title: params.offerTitle,
+    destination_url: params.destinationUrl,
+  });
+
+  if (params.providerName) searchParams.set("provider_name", params.providerName);
+  if (typeof params.payoutUsd === "number") searchParams.set("payout_usd", String(params.payoutUsd));
+  searchParams.set("gain_offer_id", params.offerId);
+
+  return `/go/platform/gain-gg?${searchParams.toString()}`;
+}
 
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   return (
@@ -307,12 +331,28 @@ export default async function HomePage() {
 
   const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map(
     (offer) => {
-      const gainHref =
+      const gainDestinationUrl =
         offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) ?? offer.startUrl;
+      const gainCardHref = buildGainFeaturedGoHref({
+        offerId: offer.id,
+        offerTitle: offer.title,
+        providerName: offer.providerName,
+        payoutUsd: offer.totalPayout ?? offer.payout,
+        destinationUrl: gainDestinationUrl,
+        clickLocation: "homepage_gain_featured_offer",
+      });
+      const gainModalHref = buildGainFeaturedGoHref({
+        offerId: offer.id,
+        offerTitle: offer.title,
+        providerName: offer.providerName,
+        payoutUsd: offer.totalPayout ?? offer.payout,
+        destinationUrl: gainDestinationUrl,
+        clickLocation: "homepage_gain_modal_single_route",
+      });
 
       return {
         id: `gain-featured-${offer.wall}-${offer.id}`,
-        href: gainHref,
+        href: gainCardHref,
         title: offer.title,
         badge: "Gain featured",
         provider: "Gain.gg",
@@ -335,7 +375,7 @@ export default async function HomePage() {
           routes: [
             {
               offerId: offer.id,
-              href: gainHref,
+              href: gainModalHref,
               providerName: offer.providerName,
               platformName: "Gain.gg",
               payout: formatMoney(offer.totalPayout ?? offer.payout),
@@ -424,6 +464,7 @@ export default async function HomePage() {
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)]">
+      <RevenuePageView routePath="/" routeGroup="homepage" sourceContext="homepage" />
       <JsonLd data={websiteJsonLd} />
       <EarnLabActivityRail />
 

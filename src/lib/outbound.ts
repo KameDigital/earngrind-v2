@@ -205,10 +205,15 @@ export function buildCashInStyleOutboundUrl(target: CashInStyleOfferTarget): str
 export function buildPlatformAffiliateUrl({
     platform,
     customParam = "earngrind",
+    destinationUrl,
 }: {
     platform: PlatformRedirectTarget | null | undefined;
     customParam?: string;
+    destinationUrl?: string | null | undefined;
 }): string | null {
+    const platformDestination = getPlatformOwnedDestination(platform, destinationUrl);
+    if (platformDestination) return platformDestination;
+
     const override = getPlatformAffiliateOverride(platform);
     if (override) return override;
 
@@ -222,6 +227,26 @@ export function buildPlatformAffiliateUrl({
         destinationUrl: null,
         fallbackUrl: getPlatformFallbackUrl(platform),
     });
+}
+
+function getPlatformOwnedDestination(
+    platform: PlatformRedirectTarget | null | undefined,
+    destinationUrl: string | null | undefined,
+): string | null {
+    const destination = sanitizeRedirectTarget(destinationUrl);
+    if (!destination) return null;
+
+    const platformHosts = [
+        getPlatformAffiliateOverride(platform),
+        getPlatformFallbackUrl(platform),
+    ]
+        .map((value) => hostnameFromUrl(value))
+        .filter((value): value is string => Boolean(value));
+
+    const destinationHost = hostnameFromUrl(destination);
+    if (!destinationHost || !platformHosts.includes(destinationHost)) return null;
+
+    return destination;
 }
 
 function sanitizeRedirectTarget(value: string | null | undefined): string | null {
@@ -272,6 +297,15 @@ function isSafeHttpUrl(value: string): boolean {
         return url.protocol === "https:" || url.protocol === "http:";
     } catch {
         return false;
+    }
+}
+
+function hostnameFromUrl(value: string | null | undefined): string | null {
+    if (!value) return null;
+    try {
+        return new URL(value).hostname.replace(/^www\./i, "").toLowerCase();
+    } catch {
+        return null;
     }
 }
 

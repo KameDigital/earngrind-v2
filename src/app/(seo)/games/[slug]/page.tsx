@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
+import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import { isPublicPayoutEligible } from "@/lib/offer-quality";
 import {
@@ -131,6 +132,16 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+      <RevenuePageView
+        routePath={gameHubPath(data.game.slug)}
+        routeGroup="game"
+        entityType="game"
+        entityId={data.game.id}
+        entitySlug={data.game.slug}
+        gameId={data.game.id}
+        gameSlug={data.game.slug}
+        sourceContext="game_page"
+      />
       <JsonLd data={schemas} />
       <Container className="space-y-6">
         <GameHeader

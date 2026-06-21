@@ -19,6 +19,9 @@ const gptSiteGuideSource = readText("src/app/guides/best-gpt-sites/[slug]/page.t
 const bestOffersTemplateSource = readText("src/app/(seo)/components/BestOffersPageTemplate.tsx");
 const gamePageSource = readText("src/app/(seo)/games/[slug]/page.tsx");
 const offerDetailSource = readText("src/app/offers/[slug]/page.tsx");
+const revenueEventsSource = readText("src/lib/revenue-events.ts");
+const revenueTrackerSource = readText("src/components/analytics/RevenueEventTracker.tsx");
+const revenueAdminSource = readText("src/app/app/admin/revenue-intelligence/page.tsx");
 const trackedPlatformCount = countPlatformEntries(platformSource);
 const buildTrackedPlatformHrefUsers = grepFiles(/buildTrackedPlatformHref/);
 const goLinkUsage = grepFiles(/\/go\/(?:platform\/)?|\bredirect_url\b|\bredirectUrl\b|TrackedOutboundLink|buildGoHref/);
@@ -30,6 +33,13 @@ const possibleUntrackedMoneyLinks = grepFiles(/href=\{?[^}\n]*(startUrl|offer_ur
 const guideCtaSource = readText("src/app/guides/[slug]/GuideOfferCtaBlock.tsx");
 const warnings = [];
 const phase7cChecks = [
+  {
+    label: "homepage Gain featured modal starts use tracked platform go links",
+    pass: homepageSource.includes("buildGainFeaturedGoHref") &&
+      homepageSource.includes("/go/platform/gain-gg") &&
+      homepageSource.includes("homepage_gain_modal_single_route") &&
+      homepageSource.includes("destination_url"),
+  },
   {
     label: "homepage hero has tracked signup strip",
     pass: homepageSource.includes("homepage_hero_signup_strip") &&
@@ -51,9 +61,10 @@ const phase7cChecks = [
       gptSiteGuideSource.includes("prefetch={false}"),
   },
   {
-    label: "tracked platform links keep prefetch={false}",
-    pass: (bestGptSitesSource.match(/href=\{buildTrackedPlatformHref/g) ?? []).length > 0 &&
-      (bestGptSitesSource.match(/prefetch=\{false\}/g) ?? []).length >= (bestGptSitesSource.match(/href=\{buildTrackedPlatformHref/g) ?? []).length,
+    label: "/best-gpt-sites platform CTAs use TrackedOutboundLink wrapper",
+    pass: bestGptSitesSource.includes("function PlatformTrackedLink") &&
+      bestGptSitesSource.includes("TrackedOutboundLink") &&
+      (bestGptSitesSource.match(/<PlatformTrackedLink/g) ?? []).length >= 5,
   },
   {
     label: "shared SEO pages have bottom recap CTA",
@@ -67,6 +78,17 @@ const phase7cChecks = [
   {
     label: "/offers/[slug] has bottom recap CTA",
     pass: offerDetailSource.includes("offer_detail_bottom_recap"),
+  },
+  {
+    label: "Revenue Intelligence event taxonomy and client tracker exist",
+    pass: revenueEventsSource.includes("REVENUE_EVENT_NAMES") &&
+      revenueEventsSource.includes("cta_impression") &&
+      revenueTrackerSource.includes("trackRevenueEvent"),
+  },
+  {
+    label: "Revenue Intelligence admin QA page exists",
+    pass: revenueAdminSource.includes("Recent revenue events") &&
+      revenueAdminSource.includes("CTR by route group"),
   },
   {
     label: "related SEO links include /best-freecash-games",

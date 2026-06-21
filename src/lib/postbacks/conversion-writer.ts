@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { ConversionStatus } from "@/lib/earn-rewards";
+import { recordRevenueEvent } from "@/lib/revenue-events-server";
 import { evaluateLifecycleTransition, mergeReviewState } from "./status";
 import type { ConversionWriteInput, ConversionWriteResult, ReviewStatus } from "./types";
 
@@ -165,6 +166,29 @@ export async function writeConversionAndLedger(input: ConversionWriteInput): Pro
         console.error("[postbacks/conversion-writer] conversion upsert failed", conversionError);
         throw new ConversionWriteError(500, "conversion_upsert_failed");
     }
+
+    await recordRevenueEvent(db, {
+        event_name: "conversion_postback",
+        route_path: "/api/postbacks/provider",
+        route_group: "postback",
+        entity_type: "offer",
+        entity_id: offer.id,
+        offer_id: offer.id,
+        source_context: "provider_postback",
+        conversion_event_id: conversion.id,
+        user_id: click.user_id,
+        metadata: {
+            click_id: click.click_id,
+            offer_title: offer.title,
+            offer_partner_id: click.offer_partner_id,
+            provider_config_id: input.providerConfigId ?? "",
+            external_transaction_id: input.externalTransactionId,
+            status: effectiveStatus,
+            gross_revenue_cents: input.grossRevenueCents,
+            user_reward_cents: userRewardCents,
+            currency,
+        },
+    });
 
     let ledger = null;
     if (click.user_id && userRewardCents > 0) {

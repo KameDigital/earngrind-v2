@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import FAQSection from "./FAQSection";
@@ -66,6 +67,7 @@ export default function BestOffersPageTemplate({
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+      <RevenuePageView routePath={pathname} routeGroup="seo_best_offers" sourceContext={sourceContext} />
       <JsonLd data={schemas} />
       <Container className="space-y-6">
         <header className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">

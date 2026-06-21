@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { trackRevenueEvent } from "@/components/analytics/RevenueEventTracker";
 
 type GuideEventType =
     | "view"
@@ -101,6 +102,68 @@ export default function GuidePerformanceTracker({
             eventType: "view",
             metadata: { source: "guide_page" },
         });
+        trackRevenueEvent({
+            eventName: "page_view",
+            routePath: `/guides/${guideSlug}`,
+            routeGroup: "guide",
+            entityType: "guide",
+            entityId: guideId,
+            entitySlug: guideSlug,
+            guideId,
+            guideSlug,
+            sourceContext: "guide_page",
+        });
+
+        const trackedCtas = Array.from(document.querySelectorAll("a[data-guide-cta='true']"))
+            .filter((element): element is HTMLAnchorElement => element instanceof HTMLAnchorElement);
+        const impressionObserver = "IntersectionObserver" in window
+            ? new IntersectionObserver((entries) => {
+                for (const entry of entries) {
+                    if (!entry.isIntersecting || !(entry.target instanceof HTMLAnchorElement)) continue;
+                    const anchor = entry.target;
+                    trackRevenueEvent({
+                        eventName: "cta_impression",
+                        routePath: `/guides/${guideSlug}`,
+                        routeGroup: "guide",
+                        entityType: "guide",
+                        entityId: guideId,
+                        entitySlug: guideSlug,
+                        guideId,
+                        guideSlug,
+                        offerId: anchor.dataset.offerId || undefined,
+                        platformId: anchor.dataset.platformId || undefined,
+                        ctaLocation: `guide_${anchor.dataset.ctaPlacement ?? anchor.dataset.placement ?? "unknown"}_cta`,
+                        sourceContext: "guide_page",
+                        targetUrl: normalizeHref(anchor),
+                        metadata: ctaMetadata(anchor) as Record<string, string | number | boolean>,
+                    });
+                    impressionObserver?.unobserve(anchor);
+                }
+            }, { threshold: 0.2 })
+            : null;
+
+        for (const anchor of trackedCtas) {
+            if (impressionObserver) {
+                impressionObserver.observe(anchor);
+            } else {
+                trackRevenueEvent({
+                    eventName: "cta_impression",
+                    routePath: `/guides/${guideSlug}`,
+                    routeGroup: "guide",
+                    entityType: "guide",
+                    entityId: guideId,
+                    entitySlug: guideSlug,
+                    guideId,
+                    guideSlug,
+                    offerId: anchor.dataset.offerId || undefined,
+                    platformId: anchor.dataset.platformId || undefined,
+                    ctaLocation: `guide_${anchor.dataset.ctaPlacement ?? anchor.dataset.placement ?? "unknown"}_cta`,
+                    sourceContext: "guide_page",
+                    targetUrl: normalizeHref(anchor),
+                    metadata: ctaMetadata(anchor) as Record<string, string | number | boolean>,
+                });
+            }
+        }
 
         const onClick = (event: MouseEvent) => {
             const target = event.target instanceof Element ? event.target : null;
@@ -117,10 +180,32 @@ export default function GuidePerformanceTracker({
                 targetUrl: normalizeHref(anchor),
                 metadata: ctaMetadata(anchor),
             });
+
+            if (anchor.dataset.guideCta === "true") {
+                trackRevenueEvent({
+                    eventName: "cta_click",
+                    routePath: `/guides/${guideSlug}`,
+                    routeGroup: "guide",
+                    entityType: "guide",
+                    entityId: guideId,
+                    entitySlug: guideSlug,
+                    guideId,
+                    guideSlug,
+                    offerId: anchor.dataset.offerId || undefined,
+                    platformId: anchor.dataset.platformId || undefined,
+                    ctaLocation: `guide_${anchor.dataset.ctaPlacement ?? anchor.dataset.placement ?? "unknown"}_cta`,
+                    sourceContext: "guide_page",
+                    targetUrl: normalizeHref(anchor),
+                    metadata: ctaMetadata(anchor) as Record<string, string | number | boolean>,
+                });
+            }
         };
 
         document.addEventListener("click", onClick, { capture: true });
-        return () => document.removeEventListener("click", onClick, { capture: true });
+        return () => {
+            document.removeEventListener("click", onClick, { capture: true });
+            impressionObserver?.disconnect();
+        };
     }, [guideId, guideSlug]);
 
     return null;

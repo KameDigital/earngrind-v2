@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BadgeDollarSign, Search, SlidersHorizontal } from "lucide-react";
 import Container from "@/components/layout/Container";
+import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
+import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import Card from "@/components/ui/Card";
 import RatingPill from "@/components/ui/RatingPill";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
@@ -27,6 +29,32 @@ export const metadata: Metadata = getBestPageMetadata(config);
 
 type PlatformCard = (typeof GPT_AFFILIATE_PLATFORMS)[number];
 type GptGuide = (typeof GPT_SITE_GUIDES)[number];
+
+function PlatformTrackedLink({
+  platform,
+  location,
+  className,
+  children,
+}: {
+  platform: PlatformCard;
+  location: string;
+  className: string;
+  children: ReactNode;
+}) {
+  return (
+    <TrackedOutboundLink
+      href={buildTrackedPlatformHref(platform, location)}
+      eventLabel={`best_gpt_sites_${platform.slug}_${location}`}
+      platformName={platform.name}
+      location={location}
+      sourceContext="best_gpt_sites_monetization"
+      target="_self"
+      className={className}
+    >
+      {children}
+    </TrackedOutboundLink>
+  );
+}
 
 interface ReviewPlatform {
   id: string;
@@ -137,10 +165,10 @@ function ReferralCtaRail({ platforms }: { platforms: PlatformCard[] }) {
   return (
     <div className="mt-5 grid gap-2 sm:grid-cols-3">
       {platforms.slice(0, 3).map((platform) => (
-        <Link
+        <PlatformTrackedLink
           key={platform.id}
-          href={buildTrackedPlatformHref(platform, "best_gpt_sites_hero_referral_rail")}
-          prefetch={false}
+          platform={platform}
+          location="best_gpt_sites_hero_referral_rail"
           className="group flex min-h-[86px] flex-col justify-between rounded-xl border border-lime-200 bg-lime-50 px-4 py-3 text-left transition hover:-translate-y-px hover:border-lime-400 hover:bg-lime-100"
         >
           <span className="text-[10px] font-extrabold uppercase tracking-wide text-lime-800">
@@ -153,7 +181,7 @@ function ReferralCtaRail({ platforms }: { platforms: PlatformCard[] }) {
           <span className="mt-1 text-xs font-semibold leading-relaxed text-[var(--text-secondary)]">
             {platform.bestFor}
           </span>
-        </Link>
+        </PlatformTrackedLink>
       ))}
     </div>
   );
@@ -178,14 +206,14 @@ function StickyReferralBar({ platform }: { platform: PlatformCard | null }) {
           >
             Compare first
           </Link>
-          <Link
-            href={buildTrackedPlatformHref(platform, "best_gpt_sites_sticky_signup")}
-            prefetch={false}
+          <PlatformTrackedLink
+            platform={platform}
+            location="best_gpt_sites_sticky_signup"
             className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[var(--brand-ink)] px-3 py-2 text-xs font-extrabold text-[var(--brand-lime)] transition hover:-translate-y-px"
           >
             {platform.cta}
             <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-          </Link>
+          </PlatformTrackedLink>
         </div>
       </div>
     </div>
@@ -269,13 +297,13 @@ function RecommendedPlatformCard({
         <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{platform.rewardNote}</p>
         <p className="mt-2 text-xs font-semibold leading-relaxed text-[var(--text-tertiary)]">{platform.trustNote}</p>
         {platform.disclosure ? <p className="mt-2 text-xs font-bold text-lime-700">{platform.disclosure}</p> : null}
-        <Link
-          href={buildTrackedPlatformHref(platform, featured ? "best_gpt_sites_primary_card" : "best_gpt_sites_secondary_card")}
-          prefetch={false}
+        <PlatformTrackedLink
+          platform={platform}
+          location={featured ? "best_gpt_sites_primary_card" : "best_gpt_sites_secondary_card"}
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
         >
           {platform.cta} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
+        </PlatformTrackedLink>
       </div>
     </article>
   );
@@ -433,13 +461,13 @@ function ComparisonTable({ platforms, guides }: { platforms: PlatformCard[]; gui
                   <td className="px-4 py-4 text-[var(--text-secondary)]">{rewards}</td>
                   <td className="px-4 py-4 text-[var(--text-secondary)]">{fit}</td>
                   <td className="px-4 py-4">
-                    <Link
-                      href={buildTrackedPlatformHref(platform, "best_gpt_sites_comparison_table")}
-                      prefetch={false}
+                    <PlatformTrackedLink
+                      platform={platform}
+                      location="best_gpt_sites_comparison_table"
                       className="inline-flex whitespace-nowrap rounded-xl bg-[var(--brand-ink)] px-3 py-2 text-xs font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                     >
                       {platform.cta}
-                    </Link>
+                    </PlatformTrackedLink>
                   </td>
                 </tr>
               );
@@ -486,6 +514,7 @@ export default async function BestGptSitesPage() {
 
   return (
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+      <RevenuePageView routePath="/best-gpt-sites" routeGroup="best_gpt_sites" sourceContext="best_gpt_sites" />
       <JsonLd data={schemas} />
       <StickyReferralBar platform={heroPlatform} />
       <Container className="space-y-8">
@@ -519,13 +548,13 @@ export default async function BestGptSitesPage() {
                   Read site guides
                 </Link>
                 {heroPlatform ? (
-                  <Link
-                    href={buildTrackedPlatformHref(heroPlatform, "best_gpt_sites_hero_primary")}
-                    prefetch={false}
+                  <PlatformTrackedLink
+                    platform={heroPlatform}
+                    location="best_gpt_sites_hero_primary"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-lime-300 bg-lime-50 px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
                   >
                     Start with {heroPlatform.name}
-                  </Link>
+                  </PlatformTrackedLink>
                 ) : null}
               </div>
             </div>

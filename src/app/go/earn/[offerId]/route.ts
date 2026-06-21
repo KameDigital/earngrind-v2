@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdminOrEditor } from "@/lib/admin-auth";
+import { recordRevenueEvent } from "@/lib/revenue-events-server";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -140,7 +141,7 @@ export async function GET(
         return NextResponse.json({ error: "missing_destination" }, { status: 404 });
     }
 
-    const { error: clickError } = await supabase.from("offer_clicks").insert({
+    const { data: clickRow, error: clickError } = await supabase.from("offer_clicks").insert({
         click_id: clickId,
         earn_offer_id: offer.id,
         offer_partner_id: offer.partner_id,
@@ -160,7 +161,7 @@ export async function GET(
         country: req.headers.get("x-vercel-ip-country"),
         user_agent: req.headers.get("user-agent"),
         client_hints: getClientHints(req),
-    });
+    }).select("id").maybeSingle<{ id: string }>();
 
     if (clickError) {
         console.error("[go/earn] failed to create offer_click", {
@@ -169,6 +170,29 @@ export async function GET(
         });
         return NextResponse.json({ error: "click_not_recorded" }, { status: 500 });
     }
+
+    await recordRevenueEvent(supabase, {
+        event_name: "outbound_click",
+        route_path: req.nextUrl.pathname,
+        route_group: "earn_go",
+        entity_type: "offer",
+        entity_id: offer.id,
+        offer_id: offer.id,
+        provider_name: "EarnGrind",
+        cta_location: req.nextUrl.searchParams.get("click_location") ?? null,
+        source_context: req.nextUrl.searchParams.get("source_context") ?? "earn_offer",
+        target_url: outboundUrl,
+        referrer_path: req.headers.get("referer"),
+        outbound_click_table: "offer_clicks",
+        outbound_click_id: clickRow?.id ?? null,
+        user_id: userId,
+        metadata: {
+            click_id: clickId,
+            offer_title: offer.title,
+            affiliate_mode: "earn-offer",
+            reward_allowed: offer.reward_allowed,
+        },
+    });
 
     return NextResponse.redirect(outboundUrl, { status: 302 });
 }

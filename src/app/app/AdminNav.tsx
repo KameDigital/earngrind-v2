@@ -47,6 +47,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
         links: [
             { href: "/app/admin", label: "Admin Home", icon: Home },
             { href: "/app/admin/monetization", label: "Monetization", icon: DollarSign },
+            { href: "/app/admin/revenue-intelligence", label: "Revenue Intelligence", icon: BarChart3 },
             { href: "/app/admin/seo/action-plan", label: "SEO Action Plan", icon: Compass },
             { href: "/app/admin/content-queue", label: "Content Queue", icon: ClipboardList },
         ],

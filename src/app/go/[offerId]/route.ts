@@ -16,6 +16,7 @@ import {
 } from "@/lib/outbound";
 import { buildGainOfferDeepLink, buildGainOfferDeepLinkFromSiteOffer } from "@/lib/gain-deeplinks";
 import { buildCanonicalOutboundRecord } from "@/lib/outbound-reporting";
+import { recordRevenueEvent } from "@/lib/revenue-events-server";
 
 export const dynamic = "force-dynamic";
 
@@ -158,7 +159,7 @@ async function logOfferClick(params: {
     req: NextRequest;
     userId: string | null;
     attribution: Partial<RedirectAttribution>;
-}) {
+}): Promise<string | null> {
     const { supabase, table, column, offerId, platformId, req, userId, attribution } = params;
     const normalized = normalizeRedirectAttribution(attribution);
 
@@ -183,10 +184,12 @@ async function logOfferClick(params: {
         user_id: userId,
     };
 
-    const { error } = await supabase.from(table).insert(payload);
+    const { data, error } = await supabase.from(table).insert(payload).select("id").maybeSingle<{ id: string }>();
     if (error) {
         console.error(`[go] failed to log ${table} click`, { offerId, message: error.message });
+        return null;
     }
+    return data?.id ?? null;
 }
 
 export async function GET(
@@ -272,7 +275,7 @@ export async function GET(
                         : "direct",
         });
 
-        await logOfferClick({
+        const outboundClickId = await logOfferClick({
             supabase,
             table: "offer_clicks",
             column: "offer_id",
@@ -281,6 +284,29 @@ export async function GET(
             req,
             userId: user?.id ?? null,
             attribution,
+        });
+        await recordRevenueEvent(supabase, {
+            event_name: "outbound_click",
+            route_path: req.nextUrl.pathname,
+            route_group: "offer_go",
+            entity_type: "offer",
+            entity_id: offer.id,
+            offer_id: offer.id,
+            platform_id: platform?.id ?? null,
+            provider_name: attribution.provider_name,
+            cta_location: attribution.click_location,
+            source_context: attribution.source_context,
+            target_url: outboundUrl,
+            referrer_path: req.headers.get("referer"),
+            outbound_click_table: "offer_clicks",
+            outbound_click_id: outboundClickId,
+            user_id: user?.id ?? null,
+            metadata: {
+                offer_title: attribution.offer_title ?? "",
+                game_title: attribution.game_title ?? "",
+                platform_name: attribution.platform_name ?? "",
+                affiliate_mode: attribution.affiliate_mode ?? "",
+            },
         });
 
         logRedirectAttribution({
@@ -410,7 +436,7 @@ export async function GET(
                     : "direct",
     });
 
-    await logOfferClick({
+    const outboundClickId = await logOfferClick({
         supabase,
         table: "site_offer_clicks",
         column: "site_offer_id",
@@ -419,6 +445,29 @@ export async function GET(
         req,
         userId: user?.id ?? null,
         attribution,
+    });
+    await recordRevenueEvent(supabase, {
+        event_name: "outbound_click",
+        route_path: req.nextUrl.pathname,
+        route_group: "offer_go",
+        entity_type: "offer",
+        entity_id: siteOffer.id,
+        offer_id: siteOffer.id,
+        platform_id: site?.id ?? null,
+        provider_name: attribution.provider_name,
+        cta_location: attribution.click_location,
+        source_context: attribution.source_context,
+        target_url: outboundUrl,
+        referrer_path: req.headers.get("referer"),
+        outbound_click_table: "site_offer_clicks",
+        outbound_click_id: outboundClickId,
+        user_id: user?.id ?? null,
+        metadata: {
+            offer_title: attribution.offer_title ?? "",
+            game_title: attribution.game_title ?? "",
+            platform_name: attribution.platform_name ?? "",
+            affiliate_mode: attribution.affiliate_mode ?? "",
+        },
     });
 
     logRedirectAttribution({

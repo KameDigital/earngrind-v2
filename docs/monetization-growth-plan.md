@@ -79,9 +79,9 @@ Money paths:
 - Secondary hero CTA: `/guides`.
 - "Best first click" internal text: `/best-gpt-sites` and `/guides/best-gpt-sites-to-make-money`; offers/guides are mentioned but not linked in the final sentence.
 - EarnLab rail: card href goes to `/games/[slug]`; modal routes use `buildGoHref(offer, "homepage_modal_platform_choice")` or `homepage_modal_single_route`, producing `/go/[offerId]?source_context=homepage_rail_modal`.
-- Gain rail: card href goes to `/offers/gain/us/native`; modal route `href` is `offer.startUrl`, which may bypass EarnGrind `/go` tracking depending on the Gain data source.
+- Gain rail: card/modal routes use `/go/platform/gain-gg` with `source_context=homepage_rail_modal`, Gain offer metadata, and a constrained `destination_url` for exact Gain offer starts when the destination host belongs to Gain.
 - Bottom CTA: `/offers`.
-- Assessment: homepage intentionally routes most visible traffic to offer/game/guide pages. The EarnLab modal path is tracked; Gain featured modal routes are a possible untracked money-link risk if `offer.startUrl` is external or not a `/go` URL.
+- Assessment: homepage intentionally routes most visible traffic to offer/game/guide pages. EarnLab modal paths are tracked through `/go/[offerId]`; Gain featured modal starts are tracked through `/go/platform/gain-gg` with useful route attribution.
 
 ## Current Tracking Map
 
@@ -150,7 +150,7 @@ Tracked fields:
 - `GoogleAnalytics` renders raw `gtag.js` when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is present.
 - `@vercel/analytics/react` is mounted in the root layout.
 - `TrackedOutboundLink` sends GA events `offer_click` and `outbound_redirect` with offer, game, platform, provider, payout, destination, `click_location`, and `source_context`.
-- Gap: direct `Link` CTAs to `/go/platform/...` in `/best-gpt-sites` do not use `TrackedOutboundLink`, so they get database tracking through `/go/platform`, but not the client-side GA `offer_click`/`outbound_redirect` events.
+- `/best-gpt-sites` platform CTAs use `TrackedOutboundLink` around `/go/platform/...` hrefs, so they get database tracking through `/go/platform` plus client-side GA `offer_click`/`outbound_redirect` events.
 
 ### Guide event tracking
 
@@ -192,10 +192,75 @@ Useful metadata:
 - Page-level view tracking for `/best-gpt-sites`, `/highest-paying-gpt-games`, `/best-money-making-games`, `/best-freecash-games`, `/best-gain-gg-offers`, `/games/[slug]`, `/offers/[slug]`, `/offers`, and homepage in first-party tables. Vercel/GA may have page views, but no Supabase table joins page views to outbound clicks outside guide pages.
 - CTA impression tracking. Current DB tracking records clicks, not whether a CTA was rendered or seen.
 - Non-guide internal-link click tracking. Guide pages track internal clicks, but SEO pages, homepage rails, game pages, offer pages, reviews, and nav/footer do not.
-- Platform CTA client-side GA tracking on `/best-gpt-sites` because direct `Link` is used instead of `TrackedOutboundLink`.
 - Revenue/conversion postback events. Clicks are tracked, but there is no confirmed signup, conversion, chargeback, EPC, RPM, or provider revenue table in this audit.
 - Session-level anonymous visitor ID. `ip_hash`, `user_agent`, and `user_id` exist, but there is no first-party anonymous session ID that connects page view -> CTA click -> outbound click across pages.
 - Experiment exposure events for CTA variants outside guides.
+
+## Revenue Intelligence First Slice
+
+New event stream:
+
+- `public.revenue_events` stores forward-looking first-party events for `page_view`, `cta_impression`, `cta_click`, `outbound_click`, and `conversion_postback`.
+- The table is intentionally append-only for this slice. Backfill is out of scope.
+- Existing `guide_events`, `offer_clicks`, `site_offer_clicks`, `platform_clicks`, and `conversion_events` remain the source-specific tables.
+
+Wired surfaces:
+
+- Homepage page views.
+- `/best-gpt-sites` page views and tracked platform CTAs.
+- Shared SEO best-offer pages rendered through `BestOffersPageTemplate`.
+- `/games/[slug]` page views and existing tracked outbound CTAs.
+- `/offers/[slug]` page views and existing tracked outbound CTAs.
+- Guide CTA blocks through `GuidePerformanceTracker`.
+- `/go/[offerId]`, `/go/platform/[platformId]`, and `/go/earn/[offerId]` record best-effort `outbound_click` events after existing click-table inserts.
+- Successful provider postback conversion writes record best-effort `conversion_postback` diagnostics.
+
+Captured fields:
+
+- `route_path`, `route_group`, `entity_type`, entity ids/slugs when known.
+- Guide/game/offer/platform/provider identifiers where already available.
+- `cta_location`, `source_context`, `target_url`, referrer path, anonymous session key, anonymous visitor key, coarse user agent family, outbound click table/id, and conversion event id.
+
+Privacy boundaries:
+
+- Do not store raw IP addresses in `revenue_events`.
+- Do not store full user agents in `revenue_events`.
+- Browser events use anonymous `eg_session_id` in `sessionStorage` and `eg_visitor_id` in `localStorage`.
+- Retention cleanup is not automated yet; the table is indexed by `occurred_at` so a future cleanup job can delete old rows by date.
+
+Resilience:
+
+- Public tracking uses `/api/revenue-events`; malformed payloads return `400`.
+- Browser tracking catches failures and never blocks page render or CTA navigation.
+- `/go` revenue events are best-effort after existing click inserts; redirect behavior remains unchanged if revenue event recording fails.
+- Production tracking failures are silent. Development logs diagnostics.
+- CTA impressions dedupe in `sessionStorage` by event, route, CTA location, target, and entity.
+
+Environment/config:
+
+- Browser/API tracking uses `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` through the existing server Supabase client.
+- Server-side `/go` hooks reuse the current request Supabase client.
+- Postback conversion hooks use the existing admin Supabase client already used by postback conversion writes.
+- If Supabase public env is missing locally, `/api/revenue-events` returns an accepted skipped response and logs in development.
+
+Admin QA:
+
+- `/app/admin/revenue-intelligence` shows page views, CTA impressions/clicks, outbound clicks, conversion postbacks, CTR by route group and CTA location, provider/platform breakdowns, and a recent event table.
+- `node scripts/audit-revenue-intelligence-tracking.mjs` checks route/source_context/click_location wiring.
+- `node scripts/test-revenue-event-normalization.mjs` checks event payload normalization and invalid payload rejection.
+
+Rollback:
+
+- Drop-only rollback for this slice: `drop table public.revenue_events;`.
+- No existing sitemap, canonical, robots, indexability, click, or conversion table is changed by the new migration.
+- If data preservation is required before rollback, export `public.revenue_events` first.
+
+Known gaps:
+
+- No historical page-view or CTA-impression backfill.
+- Anonymous session keys are client-generated and are not yet joined to existing click tables unless a `/go` event carries enough source context.
+- Postback joins are limited to existing `offer_clicks.click_id` conversion flows.
+- Revenue calculations still depend on provider postbacks being configured and firing reliably.
 - Funnel-stage tracking for homepage modal opens, offer preview opens, compare-selection actions, filter changes, and "show more" expansions.
 - Destination health tracking. Missing destination, direct fallback, platform override, and external URL quality are only observable through redirect logs/click rows after click.
 

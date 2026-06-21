@@ -10,6 +10,7 @@ import {
     getPlatformAffiliateOverride,
 } from "@/lib/outbound";
 import { buildCanonicalOutboundRecord } from "@/lib/outbound-reporting";
+import { recordRevenueEvent } from "@/lib/revenue-events-server";
 import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -49,7 +50,7 @@ async function logPlatformClick(params: {
     req: NextRequest;
     userId: string | null;
     attribution: Partial<RedirectAttribution>;
-}) {
+}): Promise<string | null> {
     const { supabase, platformId, req, userId, attribution } = params;
     const normalized = normalizeRedirectAttribution(attribution);
 
@@ -73,13 +74,16 @@ async function logPlatformClick(params: {
         user_id: userId,
     };
 
-    const { error } = await supabase.from("platform_clicks").insert(payload);
+    const { data, error } = await supabase.from("platform_clicks").insert(payload).select("id").maybeSingle<{ id: string }>();
     if (error) {
         console.error("[go/platform] failed to log platform click", {
             platformId,
             message: error.message,
         });
+        return null;
     }
+
+    return data?.id ?? null;
 }
 
 function logPlatformRedirect(params: {
@@ -133,7 +137,10 @@ export async function GET(
         return NextResponse.json({ error: "not_found" }, { status: 404 });
     }
 
-    const outboundUrl = buildPlatformAffiliateUrl({ platform });
+    const outboundUrl = buildPlatformAffiliateUrl({
+        platform,
+        destinationUrl: requestAttribution.destination_url,
+    });
     if (!outboundUrl) {
         return NextResponse.json({ error: "missing_destination" }, { status: 404 });
     }
@@ -148,7 +155,9 @@ export async function GET(
         click_location: requestAttribution.click_location,
         source_context: requestAttribution.source_context,
         destination_url: outboundUrl,
-        affiliate_mode: getPlatformAffiliateOverride(platform)
+        affiliate_mode: requestAttribution.destination_url && outboundUrl === requestAttribution.destination_url
+            ? "platform-destination-override"
+            : getPlatformAffiliateOverride(platform)
             ? "platform-override"
             : platform.affiliate_template?.includes("{custom_param}")
                 ? "custom-param-template"
@@ -159,12 +168,36 @@ export async function GET(
                         : "direct",
     });
 
-    await logPlatformClick({
+    const outboundClickId = await logPlatformClick({
         supabase,
         platformId: platform.id,
         req,
         userId: user?.id ?? null,
         attribution,
+    });
+    await recordRevenueEvent(supabase, {
+        event_name: "outbound_click",
+        route_path: req.nextUrl.pathname,
+        route_group: "platform_go",
+        entity_type: "platform",
+        entity_id: platform.id,
+        entity_slug: platform.slug,
+        platform_id: platform.id,
+        platform_slug: platform.slug,
+        provider_name: attribution.provider_name,
+        cta_location: attribution.click_location,
+        source_context: attribution.source_context,
+        target_url: outboundUrl,
+        referrer_path: req.headers.get("referer"),
+        outbound_click_table: "platform_clicks",
+        outbound_click_id: outboundClickId,
+        user_id: user?.id ?? null,
+        metadata: {
+            offer_title: attribution.offer_title ?? "",
+            game_title: attribution.game_title ?? "",
+            platform_name: attribution.platform_name ?? "",
+            affiliate_mode: attribution.affiliate_mode ?? "",
+        },
     });
 
     logPlatformRedirect({

@@ -11,9 +11,13 @@ interface BlogJsonLdProps {
         published_at: string | null;
         updated_at: string;
     };
+    faqs?: Array<{
+        question: string;
+        answer: string;
+    }>;
 }
 
-export default function BlogJsonLd({ post }: BlogJsonLdProps) {
+export default function BlogJsonLd({ post, faqs = [] }: BlogJsonLdProps) {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://earngrind.com";
     const url     = `${baseUrl}/blog/${post.slug}`;
 
@@ -62,6 +66,21 @@ export default function BlogJsonLd({ post }: BlogJsonLdProps) {
         ],
     };
 
+    const faqSchema = faqs.length > 0
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map((faq) => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer,
+                },
+            })),
+        }
+        : null;
+
     return (
         <>
             <script
@@ -72,6 +91,12 @@ export default function BlogJsonLd({ post }: BlogJsonLdProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
             />
+            {faqSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            )}
         </>
     );
 }

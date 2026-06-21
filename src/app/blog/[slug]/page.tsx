@@ -34,6 +34,11 @@ interface RecentPost {
     published_at: string | null;
 }
 
+interface BlogFaq {
+    question: string;
+    answer: string;
+}
+
 // ---------------------------------------------------------------
 // METADATA
 // ---------------------------------------------------------------
@@ -111,17 +116,51 @@ function renderMarkdown(md: string): string {
         },
         allowedSchemes: ["http", "https", "mailto"],
         transformTags: {
-            a: (_tagName, attribs) => ({
-                tagName: "a",
-                attribs: {
-                    href: attribs.href ?? "#",
-                    class: attribs.class ?? "text-lime-700 hover:underline font-medium",
-                    target: "_blank",
-                    rel: "noopener noreferrer nofollow",
-                },
-            }),
+            a: (_tagName, attribs) => {
+                const href = attribs.href ?? "#";
+                const isInternal = href.startsWith("/") || href.startsWith("#");
+                const isSponsoredRedirect = href.startsWith("/go/");
+
+                return {
+                    tagName: "a",
+                    attribs: {
+                        href,
+                        class: attribs.class ?? "text-lime-700 hover:underline font-medium",
+                        ...(isInternal ? {} : { target: "_blank", rel: "noopener noreferrer nofollow" }),
+                        ...(isSponsoredRedirect ? { rel: "sponsored nofollow" } : {}),
+                    },
+                };
+            },
         },
     });
+}
+
+function stripMarkdown(value: string): string {
+    return value
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/[*_`>#-]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function extractFaqsFromMarkdown(md: string): BlogFaq[] {
+    const faqStart = md.search(/^##\s+FAQ\s*$/im);
+    if (faqStart === -1) return [];
+
+    const faqBlock = md
+        .slice(faqStart)
+        .replace(/^##\s+FAQ\s*$/im, "")
+        .split(/\n##\s+/)[0];
+
+    const matches = Array.from(faqBlock.matchAll(/^###\s+(.+?)\s*\n([\s\S]*?)(?=\n###\s+|\s*$)/gm));
+
+    return matches
+        .map((match) => ({
+            question: stripMarkdown(match[1] ?? ""),
+            answer: stripMarkdown(match[2] ?? ""),
+        }))
+        .filter((faq) => faq.question.length > 0 && faq.answer.length > 0)
+        .slice(0, 6);
 }
 
 // ---------------------------------------------------------------
@@ -160,6 +199,7 @@ export default async function BlogDetail({ params }: { params: { slug: string } 
     });
 
     const renderedBody = renderMarkdown(typedPost.body_md ?? "");
+    const faqs = extractFaqsFromMarkdown(typedPost.body_md ?? "");
 
     return (
         <div className="min-h-screen bg-[#f5f5f0]">
@@ -174,7 +214,7 @@ export default async function BlogDetail({ params }: { params: { slug: string } 
                 featured_image: typedPost.featured_image,
                 published_at:  typedPost.published_at,
                 updated_at:    typedPost.updated_at,
-            }} />
+            }} faqs={faqs} />
 
             {/* Compact Header */}
             <div className="bg-white border-b border-gray-200 shadow-sm">

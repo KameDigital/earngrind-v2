@@ -61,6 +61,7 @@ export type GptSiteNavigationAudit = {
 };
 
 const UPDATED_AT = "2026-05-13";
+const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev";
 
 const platformBySlug = new Map(GPT_AFFILIATE_PLATFORMS.map((platform) => [platform.slug, platform]));
 
@@ -664,10 +665,10 @@ export const GPT_SITE_GUIDES: GptSiteGuide[] = [
             },
         ],
         sources: [
-            { label: "GemLoot official site", href: "https://gemsloot.com/" },
-            { label: "GemLoot Lobby", href: "https://gemsloot.com/lobby" },
-            { label: "GemLoot Rewards", href: "https://gemsloot.com/rewards" },
-            { label: "GemLoot VIP information", href: "https://gemsloot.com/vip/info" },
+            { label: "GemLoot official site", href: GEMSLOOT_AFFILIATE_URL },
+            { label: "GemLoot Lobby", href: GEMSLOOT_AFFILIATE_URL },
+            { label: "GemLoot Rewards", href: GEMSLOOT_AFFILIATE_URL },
+            { label: "GemLoot VIP information", href: GEMSLOOT_AFFILIATE_URL },
         ],
     },
     {

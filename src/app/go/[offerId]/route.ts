@@ -1,4 +1,4 @@
-import { createHash } from "crypto";
+import { createHash, randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import {
     normalizeRedirectAttribution,
@@ -162,8 +162,10 @@ async function logOfferClick(params: {
 }): Promise<string | null> {
     const { supabase, table, column, offerId, platformId, req, userId, attribution } = params;
     const normalized = normalizeRedirectAttribution(attribution);
+    const clickId = randomUUID();
 
     const payload = {
+        id: clickId,
         [column]: offerId,
         platform_id: platformId,
         offer_title: normalized.offer_title ?? null,
@@ -184,12 +186,12 @@ async function logOfferClick(params: {
         user_id: userId,
     };
 
-    const { data, error } = await supabase.from(table).insert(payload).select("id").maybeSingle<{ id: string }>();
+    const { error } = await supabase.from(table).insert(payload);
     if (error) {
         console.error(`[go] failed to log ${table} click`, { offerId, message: error.message });
         return null;
     }
-    return data?.id ?? null;
+    return clickId;
 }
 
 export async function GET(

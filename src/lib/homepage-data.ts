@@ -69,6 +69,7 @@ const FEATURED_GEMSLOOT_OFFER_NAMES = [
   "WaxRewards__10-4513",
 ] as const;
 
+const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev";
 const MANUAL_TASK_QUERY_CHUNK_SIZE = 50;
 const MANUAL_TASK_QUERY_RANGE_END = 4999;
 
@@ -234,11 +235,7 @@ function formatRewardDisplay(value: string | null | undefined, fallbackAmount: n
 }
 
 export function buildGemslootFeaturedOfferHref(offerName: string) {
-  const params = new URLSearchParams();
-  params.set("modal", "offer_3");
-  params.set("name", offerName);
-  params.set("aff", "kamedev");
-  return `https://gemsloot.com/transactions?${params.toString()}`;
+  return GEMSLOOT_AFFILIATE_URL;
 }
 
 export function gameKeyFromParts(slug: string | null | undefined, name: string | null | undefined) {

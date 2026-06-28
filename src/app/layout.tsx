@@ -70,12 +70,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <GoogleAnalytics />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5653008366366331"
           crossOrigin="anonymous"
         />
-        <GoogleAnalytics />
       </head>
       <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
         <div className="min-h-screen flex flex-col">

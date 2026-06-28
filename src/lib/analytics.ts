@@ -1,5 +1,7 @@
 "use client";
 
+import { getGaMeasurementId as getConfiguredGaMeasurementId } from "@/lib/google-analytics";
+
 declare global {
     interface Window {
         dataLayer?: unknown[];
@@ -8,8 +10,7 @@ declare global {
 }
 
 export function getGaMeasurementId(): string | null {
-    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
-    return measurementId ? measurementId : null;
+    return getConfiguredGaMeasurementId();
 }
 
 export function isGaEnabled(): boolean {

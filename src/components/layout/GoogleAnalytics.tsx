@@ -1,9 +1,7 @@
-export default function GoogleAnalytics() {
-    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+import { getGaMeasurementId } from "@/lib/google-analytics";
 
-    if (!measurementId) {
-        return null;
-    }
+export default function GoogleAnalytics() {
+    const measurementId = getGaMeasurementId();
 
     return (
         <>

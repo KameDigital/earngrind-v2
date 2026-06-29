@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/layout/Container";
 import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import { getGameEditorialContent, type GameEditorialContent } from "@/lib/game-editorial-content";
 import { isPublicPayoutEligible } from "@/lib/offer-quality";
+import { getSiteUrl } from "@/lib/site-url";
 import {
   buildGameHubSeoDescription,
   buildGameHubSeoTitle,
@@ -26,6 +29,57 @@ import {
 
 export const revalidate = 1800;
 
+const SITE_URL = getSiteUrl().replace(/\/$/, "");
+const MOCHI_FALL_GUIDE_PATH = "/guides/how-to-earn/mochi-fall-android";
+
+function absoluteUrl(pathOrUrl: string): string {
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  return `${SITE_URL}${pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`}`;
+}
+
+function canonicalPathFromUrl(value: string | undefined, fallback: string): string {
+  if (!value) return fallback;
+  try {
+    const url = new URL(value);
+    return `${url.pathname}${url.search}`;
+  } catch {
+    return value.startsWith("/") ? value : fallback;
+  }
+}
+
+function buildArticleJsonLd(content: GameEditorialContent) {
+  const imageUrl = absoluteUrl(content.image ?? "/og-earngrind.png");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": content.schemaType || "Article",
+    headline: content.title,
+    description: content.description ?? content.metaDescription,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": content.canonical ?? absoluteUrl(gameHubPath(content.slug)),
+    },
+    author: {
+      "@type": "Organization",
+      name: "EarnGrind",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "EarnGrind",
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/logo.png"),
+      },
+    },
+    datePublished: content.dateModified,
+    dateModified: content.dateModified,
+    image: [imageUrl],
+    articleSection: "Game Offers",
+    inLanguage: "en-US",
+    keywords: [content.primaryKeyword, ...content.secondaryKeywords].filter(Boolean),
+  };
+}
+
 export async function generateStaticParams() {
   const slugs = await getStaticGameSlugs(160);
   return slugs.map((slug) => ({ slug }));
@@ -33,6 +87,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const data = await getGameSeoData(params.slug);
+  const editorialContent = await getGameEditorialContent(params.slug);
   if (!data) {
     return buildSeoMetadata({
       title: "Game Offers Not Found | EarnGrind",
@@ -52,17 +107,26 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     data.guides.length > 0 ||
     (data.game.description?.trim().length ?? 0) >= 80;
 
-  return buildSeoMetadata({
-    title: buildGameHubSeoTitle(data.game.name),
-    description: buildGameHubSeoDescription(data.game.name),
+  const metadata = buildSeoMetadata({
+    title: editorialContent?.seoTitle ?? buildGameHubSeoTitle(data.game.name),
+    description: editorialContent?.metaDescription ?? buildGameHubSeoDescription(data.game.name),
     path: gameHubPath(data.game.slug),
+    canonicalPath: canonicalPathFromUrl(editorialContent?.canonical, gameHubPath(data.game.slug)),
+    imagePath: editorialContent?.image,
     indexable,
   });
+
+  if (editorialContent?.seoTitle) {
+    metadata.title = { absolute: editorialContent.seoTitle };
+  }
+
+  return metadata;
 }
 
 export default async function SeoGamePage({ params }: { params: { slug: string } }) {
   const data = await getGameSeoData(params.slug);
   if (!data) notFound();
+  const editorialContent = await getGameEditorialContent(params.slug);
 
   const rows = mapComparisonToSeoRows(data.comparison.offers, {
     name: data.game.name,
@@ -128,6 +192,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
         description: `${formatMoney(row.totalPayoutUsd)} total payout for ${data.game.name}.`,
       })),
     ),
+    ...(editorialContent ? [buildArticleJsonLd(editorialContent)] : []),
   ];
 
   return (
@@ -145,9 +210,10 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
       <JsonLd data={schemas} />
       <Container className="space-y-6">
         <GameHeader
+          heading={editorialContent?.title}
           gameName={data.game.name}
           maxPayoutUsd={data.comparison.summary.best_total_payout_usd || data.summary.max_payout_usd || 0}
-          intro={intro}
+          intro={editorialContent?.description ?? intro}
           offerCount={rows.length}
           providerCount={providerGroups.size}
           category={data.game.category}
@@ -156,6 +222,41 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
 
         <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
           <div className="space-y-6">
+            {editorialContent ? (
+              <article className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)] sm:p-6">
+                {editorialContent.image ? (
+                  <Image
+                    src={editorialContent.image}
+                    alt={editorialContent.imageAlt ?? editorialContent.title}
+                    width={1400}
+                    height={640}
+                    className="mb-5 aspect-[16/7] w-full rounded-none border border-[var(--border-default)] object-cover"
+                  />
+                ) : null}
+                <div
+                  className="prose prose-slate max-w-none prose-headings:text-[var(--brand-ink)] prose-a:font-bold prose-a:text-lime-700 prose-a:underline"
+                  dangerouslySetInnerHTML={{ __html: editorialContent.html }}
+                />
+                <nav aria-label="Mochi Fall Android related links" className="mt-6 grid gap-2 border-t border-[var(--border-default)] pt-5 sm:grid-cols-2">
+                  <Link className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400" href="/offers/mochi-fall-android">
+                    Compare Mochi Fall Android offers
+                  </Link>
+                  <Link className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400" href={MOCHI_FALL_GUIDE_PATH}>
+                    Read the Mochi Fall Android guide
+                  </Link>
+                  <Link className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400" href="/best-gpt-sites">
+                    Compare GPT platforms
+                  </Link>
+                  <Link className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400" href="/highest-paying-gpt-games">
+                    See highest-paying GPT games
+                  </Link>
+                  <Link className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-bold text-[var(--brand-ink)] hover:border-lime-400" href="/offers">
+                    Browse all offers
+                  </Link>
+                </nav>
+              </article>
+            ) : null}
+
             <section className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
               <div className="grid gap-4 md:grid-cols-3">
                 <div>
@@ -172,12 +273,18 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
                 <div>
                   <p className="section-label">Guide support</p>
                   <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
-                    {primaryGuide ? "Guide available" : "Guide coming soon"}
+                    {primaryGuide || editorialContent ? "Guide available" : "Guide coming soon"}
                   </h2>
                   <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                    {primaryGuide
-                      ? "Open the guide before starting if you want milestone order and completion tips."
-                      : "Use the comparison table until a full guide is published."}
+                    {primaryGuide ? (
+                      "Open the guide before starting if you want milestone order and completion tips."
+                    ) : editorialContent ? (
+                      <Link className="font-bold text-lime-700 underline" href={MOCHI_FALL_GUIDE_PATH}>
+                        Read the step-by-step Mochi Fall Android guide before you start.
+                      </Link>
+                    ) : (
+                      "Use the comparison table until a full guide is published."
+                    )}
                   </p>
                 </div>
                 <div>
@@ -246,10 +353,10 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
                   Full route comparison
                 </Link>
                 <Link
-                  href={primaryGuide ? `/guides/${primaryGuide.slug}` : "/guides"}
+                  href={primaryGuide ? `/guides/${primaryGuide.slug}` : editorialContent ? MOCHI_FALL_GUIDE_PATH : "/guides"}
                   className="rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
                 >
-                  {primaryGuide ? "Open guide" : "Browse guides"}
+                  {primaryGuide || editorialContent ? "Open guide" : "Browse guides"}
                 </Link>
                 <Link
                   href={`/best-gpt-sites${bestOffer ? `?provider=${encodeURIComponent(bestOffer.providerName)}` : ""}`}
@@ -285,7 +392,14 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
             <div>
               <h3 className="text-sm font-bold text-[var(--brand-ink)]">Related Guides</h3>
               <ul className="mt-2 space-y-1 text-sm">
-                {data.guides.length === 0 ? <li className="text-[var(--text-tertiary)]">No guides published yet.</li> : null}
+                {data.guides.length === 0 && editorialContent ? (
+                  <li>
+                    <Link className="text-[var(--text-secondary)] hover:text-lime-700 hover:underline" href={MOCHI_FALL_GUIDE_PATH}>
+                      Mochi Fall Android guide
+                    </Link>
+                  </li>
+                ) : null}
+                {data.guides.length === 0 && !editorialContent ? <li className="text-[var(--text-tertiary)]">No guides published yet.</li> : null}
                 {data.guides.map((guide) => (
                   <li key={guide.id}>
                     <Link className="text-[var(--text-secondary)] hover:text-lime-700 hover:underline" href={`/guides/${guide.slug}`}>

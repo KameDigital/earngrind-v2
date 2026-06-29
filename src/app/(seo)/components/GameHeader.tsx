@@ -5,6 +5,7 @@ import ProviderLogo from "@/components/providers/ProviderLogo";
 import { formatPayoutFreshness, payoutFreshnessIsStale } from "@/lib/payout-freshness";
 
 type GameHeaderProps = {
+  heading?: string;
   gameName: string;
   maxPayoutUsd: number;
   intro: string;
@@ -24,6 +25,7 @@ type GameHeaderProps = {
 };
 
 export default function GameHeader({
+  heading,
   gameName,
   maxPayoutUsd,
   intro,
@@ -38,7 +40,7 @@ export default function GameHeader({
         <div className="p-5 sm:p-6">
           <p className="section-label">Game Offer Comparison</p>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-4xl">
-            Best {gameName} offers
+            {heading ?? `Best ${gameName} offers`}
           </h1>
           <p className="mt-3 max-w-3xl text-[var(--text-secondary)]">{intro}</p>
         </div>

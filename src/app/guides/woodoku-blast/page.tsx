@@ -349,8 +349,8 @@ export default function WoodokuBlastOfferGuidePage() {
             </section>
 
             <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-                <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-                    <article className="space-y-10">
+                <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+                    <article className="min-w-0 space-y-10">
                         <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
                             <SectionHeading eyebrow="Payout table" title="Woodoku Blast Torox rewards">
                                 Payout values come from the submitted Torox task list only, with points converted at points / 1000.

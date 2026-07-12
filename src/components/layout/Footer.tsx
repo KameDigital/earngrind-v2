@@ -25,7 +25,7 @@ export default function Footer() {
     const year = new Date().getFullYear();
 
     return (
-        <footer className="border-t border-[var(--border-default)] bg-[var(--surface-muted)]">
+        <footer className="border-t border-slate-800 bg-[var(--surface-dark)] text-slate-300">
             <Container>
                 {/* Top grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-14">
@@ -33,17 +33,17 @@ export default function Footer() {
                     <div className="col-span-2 md:col-span-2">
                         <Link href="/" className="flex items-center gap-2 mb-4 group w-fit">
                             <span className="h-2 w-2 rounded-none bg-[var(--brand-lime)]" />
-                            <span className="text-lg font-bold tracking-tight text-[var(--brand-ink)]">
-                                Earn<span className="text-lime-500">Grind</span>
+                            <span className="text-lg font-bold tracking-tight text-white">
+                                Earn<span className="text-[var(--brand-lime)]">Grind</span>
                             </span>
                         </Link>
-                        <p className="text-sm text-[var(--text-tertiary)] max-w-xs leading-relaxed">
+                        <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
                             The smartest way to find, compare, and complete high-paying offerwall tasks — fully transparent, no bias.
                         </p>
                         {DISCORD_URL ? (
                             <a
                                 href={DISCORD_URL}
-                                className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:text-lime-700"
+                                className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-white transition-colors hover:text-[var(--brand-lime)]"
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -55,11 +55,11 @@ export default function Footer() {
 
                     {/* Explore */}
                     <div>
-                        <h3 className="section-label mb-5">Explore</h3>
+                        <h3 className="mb-5 text-xs font-bold uppercase tracking-widest text-slate-500">Explore</h3>
                         <ul className="space-y-3">
                             {EXPLORE.map(({ href, label }) => (
                                 <li key={href}>
-                                    <Link href={href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--brand-ink)] transition-colors">
+                                    <Link href={href} className="text-sm text-slate-400 hover:text-white transition-colors">
                                         {label}
                                     </Link>
                                 </li>
@@ -69,11 +69,11 @@ export default function Footer() {
 
                     {/* Company */}
                     <div>
-                        <h3 className="section-label mb-5">Company</h3>
+                        <h3 className="mb-5 text-xs font-bold uppercase tracking-widest text-slate-500">Company</h3>
                         <ul className="space-y-3">
                             {COMPANY.map(({ href, label }) => (
                                 <li key={href}>
-                                    <Link href={href} className="text-sm text-[var(--text-secondary)] hover:text-[var(--brand-ink)] transition-colors">
+                                    <Link href={href} className="text-sm text-slate-400 hover:text-white transition-colors">
                                         {label}
                                     </Link>
                                 </li>
@@ -83,11 +83,11 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom bar */}
-                <div className="border-t border-[var(--border-default)] py-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-                    <p className="text-xs text-[var(--text-tertiary)]">
+                <div className="border-t border-slate-800 py-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+                    <p className="text-xs text-slate-500">
                         © {year} EarnGrind. All rights reserved.
                     </p>
-                    <p className="text-xs text-[var(--text-tertiary)] text-center sm:text-right max-w-sm">
+                    <p className="text-xs text-slate-500 text-center sm:text-right max-w-sm">
                         Some links are affiliate links — we may earn a commission at no cost to you.
                     </p>
                 </div>

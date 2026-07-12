@@ -469,7 +469,7 @@ export default async function HomePage() {
       <EarnLabActivityRail />
 
       <section
-        className="relative flex min-h-[285px] items-center overflow-hidden border-b border-black/20 px-4 py-10 sm:px-6 lg:min-h-[330px] lg:px-8"
+        className="relative flex min-h-[390px] items-center overflow-hidden border-b border-black/20 px-4 py-16 sm:px-6 lg:min-h-[450px] lg:px-8"
         style={{
           backgroundImage: `
             radial-gradient(circle at 50% 36%, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.48) 46%, rgba(0,0,0,0.28) 100%),
@@ -482,17 +482,25 @@ export default async function HomePage() {
         }}
       >
         <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center text-center">
-          <h1 className="text-[clamp(4rem,11vw,9rem)] font-black leading-[0.82] text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.65)]">
-            Earn<span className="text-[color:hsl(84,93%,38%)]">Grind</span>
+          <p className="mb-5 border border-white/20 bg-slate-950/35 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--brand-lime)] backdrop-blur-sm">
+            GPT offer comparison hub
+          </p>
+          <h1 className="text-[clamp(3.5rem,10vw,7.5rem)] font-black leading-[0.82] text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.65)]">
+            Earn<span className="text-[var(--brand-lime)]">Grind</span>
           </h1>
 
-          <p className="mt-5 max-w-3xl text-balance text-lg font-semibold leading-tight text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)] sm:text-2xl">
-            Find the best Get Paid To (GPT) platforms where you can earn
-            rewards by playing games on Mobile and Desktop or Completing
-            Surveys, and much more. All tested and reviewed for you by a
-            seasoned Grinder with Weekly updates on the best and highest
-            rewarded offers to save you time and fill your pockets!
+          <p className="mt-5 max-w-3xl text-balance text-base font-semibold leading-relaxed text-white/90 drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)] sm:text-xl">
+            Compare real GPT offer routes, payouts, platforms, and completion guides before you commit your time. Find the clearest route, then start with the partner site that fits.
           </p>
+
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link href="/offers" className="inline-flex items-center justify-center bg-[var(--brand-lime)] px-5 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition hover:bg-[#9aeb42]">
+              Compare live offers <span aria-hidden="true" className="ml-2">&rarr;</span>
+            </Link>
+            <Link href="/guides" className="inline-flex items-center justify-center border border-white/35 bg-slate-950/30 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-sm transition hover:border-white hover:bg-slate-950/55">
+              Browse game guides
+            </Link>
+          </div>
 
           {discordUrl ? (
             <a

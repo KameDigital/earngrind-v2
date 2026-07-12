@@ -44,7 +44,7 @@ export default function Header() {
             style={{ boxShadow: "0 1px 0 0 var(--border-default)" }}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex h-12 items-center gap-8">
+                <div className="flex h-14 items-center gap-4 xl:gap-8">
 
                     {/* Logo */}
                     <Link
@@ -62,7 +62,7 @@ export default function Header() {
                     </Link>
 
                     {/* Desktop nav */}
-                    <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
+                    <nav className="hidden xl:flex items-center gap-1" aria-label="Main navigation">
                         {NAV_LINKS.map(({ href, label, activePrefixes, excludePrefixes }) => {
                             const active = isActivePath(pathname, { href, activePrefixes, excludePrefixes });
                             return (
@@ -93,7 +93,7 @@ export default function Header() {
                     <div className="flex-1" />
 
                     {/* Right side */}
-                    <div className="hidden lg:flex items-center gap-2">
+                    <div className="hidden xl:flex items-center gap-2">
                         {DISCORD_URL ? (
                             <a
                                 href={DISCORD_URL}
@@ -122,7 +122,7 @@ export default function Header() {
                     </div>
 
                     {/* Mobile controls */}
-                    <div className="lg:hidden flex items-center gap-2">
+                    <div className="xl:hidden flex items-center gap-2">
                         {DISCORD_URL ? (
                             <a
                                 href={DISCORD_URL}
@@ -143,6 +143,8 @@ export default function Header() {
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
                             aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                            aria-expanded={mobileOpen}
+                            aria-controls="mobile-navigation"
                             className="flex h-9 w-9 items-center justify-center rounded-none text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-muted)]"
                         >
                             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -153,8 +155,8 @@ export default function Header() {
 
             {/* Mobile drawer */}
             {mobileOpen && (
-                <div className="lg:hidden border-t border-[var(--border-default)] bg-white">
-                    <nav className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
+                <div id="mobile-navigation" className="xl:hidden border-t border-[var(--border-default)] bg-white">
+                    <nav className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1" aria-label="Mobile navigation">
                         {NAV_LINKS.map(({ href, label, activePrefixes, excludePrefixes }) => {
                             const active = isActivePath(pathname, { href, activePrefixes, excludePrefixes });
                             return (

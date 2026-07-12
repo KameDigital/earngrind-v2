@@ -12,6 +12,7 @@ export function isUsablePublicArtworkUrl(value?: string | null) {
   if (/\.svg(?:$|[?#])/i.test(url)) return false;
   if (/(?:pixel|tracking|impression|beacon|1x1|spacer|transparent)\b/i.test(url)) return false;
   if (/(?:placeholder|no[-_]?image|missing[-_]?image)/i.test(url)) return false;
+  if (/appbrain\.com\/stats\/libraries\/image\//i.test(url)) return false;
   if (/(?:^|[\\/])0x0\.(?:png|jpe?g|webp|gif|avif)(?:$|[?#])/i.test(url)) return false;
   if (/(?:logo|brand|provider)[-_/.]/i.test(url) && !/(?:icon|thumb|offer|creative|campaign|package|image)/i.test(url)) {
     return false;

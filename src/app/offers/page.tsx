@@ -119,10 +119,10 @@ const POPULAR_OFFER_ROUTE_LINKS = [
 ];
 
 export default async function OffersPage({ searchParams }: OffersPageProps) {
-    const countryResolution = resolveRequestOfferCountry();
+    const initialSearchParams = pageSearchParamsToUrlSearchParams(searchParams);
+    const countryResolution = resolveRequestOfferCountry(initialSearchParams.get("country"));
     const effectiveCountry = countryResolution.country;
     const supportedCountries = getSupportedPublicOfferCountries();
-    const initialSearchParams = pageSearchParamsToUrlSearchParams(searchParams);
     const initialQueryString = initialOfferQueryString(initialSearchParams, effectiveCountry.code);
     const [initialOffers, gamesIndex] = await Promise.all([
         fetchPublicOffers({

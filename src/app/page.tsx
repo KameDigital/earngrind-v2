@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Suspense } from "react";
 import EmailCapture from "@/components/EmailCapture";
 import type { FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import TabbedOfferRail, { type OfferRailTab } from "@/components/home/TabbedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
-import OfferSearchEngine from "@/components/offers/OfferSearchEngine";
+import WeeklyTopGames from "@/components/home/WeeklyTopGames";
 import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
 import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
 import {
@@ -17,6 +16,7 @@ import {
 } from "@/lib/homepage-data";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import { JsonLd, buildWebsiteSearchAction } from "@/lib/seo-schema";
+import { getHomepageFeaturedOffers } from "@/lib/homepage-featured";
 
 export const revalidate = 300;
 
@@ -187,21 +187,11 @@ const HOME_LINK_GROUPS = [
   },
 ] as const;
 
-function buildHomepageOfferQueryString(countryCode: string) {
-  const params = new URLSearchParams();
-  params.set("country", countryCode);
-  params.set("sort", "payout_desc");
-  params.set("page", "1");
-  params.set("per_page", "12");
-  return params.toString();
-}
-
 function formatPostDate(_value: string | null) {
   return null;
 }
 
 export default async function HomePage() {
-  const initialOfferQueryString = buildHomepageOfferQueryString("US");
   const {
     cashInStyleFeaturedOffers,
     earnLabFeaturedOffers,
@@ -209,6 +199,7 @@ export default async function HomePage() {
     guideHrefByGameKey,
     modalRoutesByGameKey,
   } = await getHomepageData();
+  const weeklyTopGames = await getHomepageFeaturedOffers();
   const featuredPost: any = null;
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
   const websiteJsonLd = buildWebsiteSearchAction();
@@ -526,19 +517,15 @@ export default async function HomePage() {
       <section className="border-y border-[var(--border-default)] bg-white px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-6 max-w-4xl">
-            <p className="section-label mb-2">Full offer browser</p>
+            <p className="section-label mb-2">Editor&apos;s picks</p>
             <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
-              Search offers by payout, site, source, device, &amp; country
+              Weekly Top Paying Games
             </h2>
             <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-              Compare GPT offer payouts, filter games and tasks by device, and discover the highest-paying route before opening a partner site.
+              Discover this week&apos;s highest-paying GPT offers, hand-picked from supported reward sites. Compare payouts instantly and find the best place to complete each game before you start.
             </p>
           </div>
-          <Suspense fallback={null}>
-            <OfferSearchEngine
-              initialQueryString={initialOfferQueryString}
-            />
-          </Suspense>
+          <WeeklyTopGames initialOffers={weeklyTopGames.data} />
         </div>
       </section>
 

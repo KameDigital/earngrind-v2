@@ -150,6 +150,11 @@ export default async function AdminHomePage() {
                             description="Create drafts from games, offers, and keyword opportunities."
                         />
                         <WorkflowLink
+                            href="/app/admin/homepage-featured"
+                            title="Curate Weekly Top Games"
+                            description="Choose the exact games and offers promoted on the homepage."
+                        />
+                        <WorkflowLink
                             href="/app/admin/research/opportunities"
                             title="Find research targets"
                             description="Prioritize high-payout games, platforms, and offer research."

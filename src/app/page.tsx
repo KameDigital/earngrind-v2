@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import EmailCapture from "@/components/EmailCapture";
 import FeaturedOfferRail, {
   type FeaturedOfferRailItem,
@@ -7,6 +8,7 @@ import FeaturedOfferRail, {
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import TabbedOfferRail, { type OfferRailTab } from "@/components/home/TabbedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
+import OfferSearchEngine from "@/components/offers/OfferSearchEngine";
 import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
 import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
 import {
@@ -17,7 +19,6 @@ import {
 } from "@/lib/homepage-data";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import { JsonLd, buildWebsiteSearchAction } from "@/lib/seo-schema";
-import { createClient } from "@/lib/supabase/server";
 
 export const revalidate = 300;
 
@@ -129,62 +130,80 @@ const START_HERE_ITEMS = [
   },
 ] as const;
 
-const PARTNER_LOGOS = [
+const HERO_SITE_TAGS = ["Freecash", "Gemsloot", "Gain.gg", "EarnLab", "KashKick", "Swagbucks"] as const;
+
+const TRACKED_BROKERS = [
+  { name: "Torox", status: "Active tracking", desc: "High-volume mobile and CPA offer paths." },
+  { name: "AdGate Media", status: "Active tracking", desc: "Survey, app install, and rewarded action offers." },
+  { name: "EarnLab", status: "Imported routes", desc: "Regional game and mobile app payout routes." },
+  { name: "RevU", status: "Platform routes", desc: "Survey and app routes inside partner platforms." },
+  { name: "Lootably", status: "Platform routes", desc: "Offerwall inventory used across rewards platforms." },
+] as const;
+
+const PARTNER_SITE_ROWS = [
+  { name: "Freecash", rating: "4.9/5", href: "/review/freecash-review" },
+  { name: "Gain.gg", rating: "4.8/5", href: "/review/gain-gg-review" },
+  { name: "ySense", rating: "4.6/5", href: "/best-gpt-sites#platform-reviews" },
+  { name: "Swagbucks", rating: "4.6/5", href: "/review/swagbucks-review" },
+  { name: "Reward XP", rating: "4.5/5", href: "/best-gpt-sites#platform-reviews" },
+  { name: "EarnLab", rating: "4.3/5", href: "/best-gpt-sites#platform-reviews" },
+  { name: "Lootup", rating: "4.2/5", href: "/best-gpt-sites#platform-reviews" },
+] as const;
+
+const HOME_LINK_GROUPS = [
   {
-    name: "Swagbucks",
-    image: "/images/guides/gpt-sites/swagbucks.png",
+    title: "Popular game offer categories",
+    links: [
+      { href: "/best-gain-gg-offers", label: "Gain.gg offers" },
+      { href: "/best-freecash-games", label: "Best Freecash games" },
+      { href: "/highest-paying-gpt-games", label: "Highest-paying GPT games" },
+      { href: "/best-money-making-games", label: "Money-making games" },
+    ],
   },
   {
-    name: "Freecash",
-    image: "/images/guides/gpt-sites/freecash.svg",
+    title: "Offerwall providers",
+    links: [
+      { href: "/offers/gain/us/torox", label: "Torox offers" },
+      { href: "/offers/gain/us/adgate", label: "AdGate Media" },
+      { href: "/offers/gain/us/revu", label: "RevU offers" },
+      { href: "/offers/gain/us/lootably", label: "Lootably offers" },
+    ],
   },
   {
-    name: "Gain.gg",
-    image: "/images/guides/gpt-sites/gain-gg.png",
+    title: "EarnLab countries",
+    links: [
+      { href: "/offers/us", label: "United States offers" },
+      { href: "/offers/gb", label: "United Kingdom offers" },
+      { href: "/offers/ca", label: "Canada offers" },
+      { href: "/offers/au", label: "Australia offers" },
+    ],
   },
   {
-    name: "InboxDollars",
-    image: "/images/guides/gpt-sites/inboxdollars.png",
-  },
-  {
-    name: "EarnLab",
-    image: "/images/guides/gpt-sites/earnlab.png",
+    title: "Popular hubs",
+    links: [
+      { href: "/guides/how-to-earn", label: "How-to-earn guides" },
+      { href: "/guides/woodoku-blast", label: "Woodoku Blast guide" },
+      { href: "/best-gpt-sites", label: "Best GPT sites" },
+      { href: "/review/swagbucks-review", label: "Swagbucks review" },
+    ],
   },
 ] as const;
 
-type FeaturedPost = {
-  slug: string;
-  title: string;
-  excerpt: string | null;
-  published_at: string | null;
-};
-
-async function getFeaturedPost(): Promise<FeaturedPost | null> {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("blog_posts")
-    .select("slug, title, excerpt, published_at")
-    .eq("status", "published")
-    .order("published_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (error || !data?.slug || !data.title) return null;
-  return data as FeaturedPost;
+function buildHomepageOfferQueryString(countryCode: string) {
+  const params = new URLSearchParams();
+  params.set("country", countryCode);
+  params.set("sort", "payout_desc");
+  params.set("page", "1");
+  params.set("per_page", "12");
+  return params.toString();
 }
 
-function formatPostDate(value: string | null) {
-  if (!value) return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
+function formatPostDate(_value: string | null) {
+  return null;
 }
 
 export default async function HomePage() {
+  const initialOfferQueryString = buildHomepageOfferQueryString("US");
   const {
     cashInStyleFeaturedOffers,
     earnLabFeaturedOffers,
@@ -193,7 +212,7 @@ export default async function HomePage() {
     guideHrefByGameKey,
     modalRoutesByGameKey,
   } = await getHomepageData();
-  const featuredPost = await getFeaturedPost();
+  const featuredPost: any = null;
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
   const websiteJsonLd = buildWebsiteSearchAction();
 
@@ -469,11 +488,11 @@ export default async function HomePage() {
       <EarnLabActivityRail />
 
       <section
-        className="relative flex min-h-[285px] items-center overflow-hidden border-b border-black/20 px-4 py-10 sm:px-6 lg:min-h-[330px] lg:px-8"
+        className="relative flex min-h-[430px] items-center overflow-hidden border-b border-black/20 px-4 py-16 sm:px-6 lg:min-h-[500px] lg:px-8"
         style={{
           backgroundImage: `
-            radial-gradient(circle at 50% 36%, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.48) 46%, rgba(0,0,0,0.28) 100%),
-            linear-gradient(90deg, rgba(5,8,13,0.12) 0%, rgba(5,8,13,0.42) 32%, rgba(5,8,13,0.56) 50%, rgba(5,8,13,0.38) 68%, rgba(5,8,13,0.12) 100%),
+            radial-gradient(circle at 50% 30%, rgba(4,8,18,0.14) 0%, rgba(5,9,20,0.34) 42%, rgba(3,7,18,0.62) 100%),
+            linear-gradient(90deg, rgba(3,7,18,0.58) 0%, rgba(3,7,18,0.28) 28%, rgba(3,7,18,0.16) 50%, rgba(3,7,18,0.32) 72%, rgba(3,7,18,0.62) 100%),
             url("/hero-home.png")
           `,
           backgroundPosition: "center 24%",
@@ -481,18 +500,41 @@ export default async function HomePage() {
           backgroundSize: "cover",
         }}
       >
-        <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center text-center">
-          <h1 className="text-[clamp(4rem,11vw,9rem)] font-black leading-[0.82] text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.65)]">
-            Earn<span className="text-[color:hsl(84,93%,38%)]">Grind</span>
+        <div className="relative mx-auto flex w-full max-w-4xl flex-col items-center text-center">
+          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-lime-300/20 bg-slate-950/55 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--brand-lime)] backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-lime)]" aria-hidden="true" />
+            Direct GPT offer affiliate links
+          </p>
+          <h1 className="text-[clamp(3.25rem,8vw,6rem)] font-black leading-[0.84] text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.65)]">
+            Earn<span className="text-[var(--brand-lime)]">Grind</span>
           </h1>
 
-          <p className="mt-5 max-w-3xl text-balance text-lg font-semibold leading-tight text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)] sm:text-2xl">
-            Find the best Get Paid To (GPT) platforms where you can earn
-            rewards by playing games on Mobile and Desktop or Completing
-            Surveys, and much more. All tested and reviewed for you by a
-            seasoned Grinder with Weekly updates on the best and highest
-            rewarded offers to save you time and fill your pockets!
+          <p className="mt-5 max-w-2xl text-balance text-sm font-semibold leading-relaxed text-white/80 drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)] sm:text-base">
+            Find the best Get Paid To offer platforms where you can earn rewards by playing games on Mobile and Desktop or Completing Surveys, and much more. All tested and reviewed for you by a seasoned Grinder with Weekly updates on the best and highest rewarded offers to save you time and fill your pockets!
           </p>
+
+          <Link
+            href="/offers"
+            className="mt-6 inline-flex items-center justify-center rounded-sm bg-[var(--brand-lime)] px-5 py-2.5 text-xs font-extrabold text-[var(--brand-ink)] shadow-[0_12px_40px_rgba(130,223,22,0.2)] transition hover:bg-[#9aeb42]"
+          >
+            Browse verified offers <span aria-hidden="true" className="ml-2">&rarr;</span>
+          </Link>
+
+          <div className="mt-8">
+            <p className="mb-3 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/35">
+              Offers tracked from
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {HERO_SITE_TAGS.map((tag) => (
+                <span
+                  key={tag}
+                  className="border border-white/10 bg-slate-950/35 px-3 py-1.5 text-[11px] font-bold text-white/65 backdrop-blur-sm"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
 
           {discordUrl ? (
             <a
@@ -506,225 +548,38 @@ export default async function HomePage() {
           ) : null}
         </div>
       </section>
-      <section className="border-b border-[var(--border-default)] bg-white px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <p className="mb-4 text-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-tertiary)] sm:text-left">
-            Tracks offers from:
-          </p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {PARTNER_LOGOS.map((partner) => (
-              <div
-                key={partner.name}
-                className="flex h-16 items-center justify-center rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 transition hover:border-lime-300 hover:bg-white"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element -- Partner logo strip needs CSS grayscale filters on plain img tags. */}
-                <img
-                  src={partner.image}
-                  alt={`${partner.name} logo`}
-                  className="max-h-9 max-w-[8rem] object-contain grayscale opacity-60 transition duration-200 hover:grayscale-0 hover:opacity-100"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="border-b border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 max-w-3xl">
+      <section className="border-b border-[var(--border-default)] bg-white px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-8 text-center">
             <p className="section-label mb-3">Choose your path</p>
-            <h2 className="text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-4xl">
+            <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
               Choose the hub that matches your next step
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
               EarnGrind keeps discovery, comparison, walkthroughs, and platform
               research separate so each page has a clear job.
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {START_HERE_ITEMS.map((item, index) =>
-              index === 0 ? (
-                <Link
-                  key={item.href}
-                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
-                  href="/offers"
-                >
-                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
-                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
-
-                  <div
-                    className="pointer-events-none absolute bottom-2 right-1 block h-28 w-28 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
-                    aria-hidden="true"
-                  >
-                    <picture className="block h-full w-full">
-                      <source
-                        srcSet="/images/compare-offers-scale-transparent.webp"
-                        type="image/webp"
-                      />
-                      <img
-                        src="/images/compare-offers-scale-transparent.png"
-                        alt=""
-                        className="h-full w-full object-contain"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-
-                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                    Canonical search
-                  </span>
-
-                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
-                    Compare Offers
-                  </h3>
-
-                  <p className="relative z-10 mt-2 max-w-[8.25rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
-                    Compare live payout routes.
-                  </p>
-                </Link>
-              ) : index === 1 ? (
-                <Link
-                  key={item.href}
-                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
-                  href="/offers#games"
-                >
-                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
-                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
-
-                  <div
-                    className="pointer-events-none absolute bottom-2 right-1 block h-20 w-20 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
-                    aria-hidden="true"
-                  >
-                    <picture className="block h-full w-full">
-                      <source
-                        srcSet="/images/browse-games-phone-search-transparent.webp"
-                        type="image/webp"
-                      />
-                      <img
-                        src="/images/browse-games-phone-search-transparent.png"
-                        alt=""
-                        className="h-full w-full object-contain"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-
-                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                    Game discovery
-                  </span>
-
-                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
-                    Browse Games
-                  </h3>
-
-                  <p className="relative z-10 mt-2 max-w-[8.75rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
-                    Start with game hubs for payout snapshots, guide coverage,
-                    and related games.
-                  </p>
-                </Link>
-              ) : index === 2 ? (
-                <Link
-                  key={item.href}
-                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
-                  href="/best-gpt-sites"
-                >
-                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
-                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
-
-                  <div
-                    className="pointer-events-none absolute bottom-2 right-2 block h-24 w-24 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
-                    aria-hidden="true"
-                  >
-                    <picture className="block h-full w-full">
-                      <source
-                        srcSet="/images/best-gpt-sites-trophy-transparent.webp"
-                        type="image/webp"
-                      />
-                      <img
-                        src="/images/best-gpt-sites-trophy-transparent.png"
-                        alt=""
-                        className="h-full w-full object-contain"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-
-                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                    Platform intel
-                  </span>
-
-                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
-                    Best GPT Sites
-                  </h3>
-
-                  <p className="relative z-10 mt-2 max-w-[8rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
-                    Find trusted GPT sites with competitive payouts.
-                  </p>
-                </Link>
-              ) : index === 3 ? (
-                <Link
-                  key={item.href}
-                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
-                  href="/guides"
-                >
-                  <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
-                  <div className="pointer-events-none absolute -bottom-8 right-2 h-32 w-32 rounded-full bg-amber-50/70" />
-
-                  <div
-                    className="pointer-events-none absolute bottom-2 -right-3 block h-20 w-32 drop-shadow-[0_10px_18px_rgba(15,23,42,0.16)] transition-transform duration-200 group-hover:scale-105"
-                    aria-hidden="true"
-                  >
-                    <picture className="block h-full w-full">
-                      <source
-                        srcSet="/images/game-guides-route-transparent.webp"
-                        type="image/webp"
-                      />
-                      <img
-                        src="/images/game-guides-route-transparent.png"
-                        alt=""
-                        className="h-full w-full object-contain"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
-                  </div>
-
-                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                    Completion help
-                  </span>
-
-                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
-                    Game Guides
-                  </h3>
-
-                  <p className="relative z-10 mt-2 max-w-[7.25rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
-                    Finish milestones faster.
-                  </p>
-                </Link>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300"
-                >
-                  <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
-                    {item.badge}
-                  </span>
-                  <h3 className="mt-4 text-base font-extrabold text-[var(--brand-ink)]">
-                    {item.name}
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
-                    {item.desc}
-                  </p>
-                </Link>
-              ),
-            )}
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {START_HERE_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group border border-[var(--border-default)] bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_14px_30px_rgba(15,23,42,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+              >
+                <span className="text-[9px] font-extrabold uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
+                  {item.badge}
+                </span>
+                <h3 className="mt-3 text-sm font-extrabold text-[var(--brand-ink)]">
+                  {item.name}
+                </h3>
+                <p className="mt-1.5 text-[11px] leading-relaxed text-[var(--text-secondary)]">
+                  {item.desc}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -743,6 +598,73 @@ export default async function HomePage() {
           />
           <EmailCapture variant="inline" />
           <TabbedOfferRail tabs={OFFER_RAIL_TABS} />
+        </div>
+      </section>
+
+      <section className="border-y border-[var(--border-default)] bg-white px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 max-w-4xl">
+            <p className="section-label mb-2">Full offer browser</p>
+            <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
+              Search offers by payout, site, source, device, &amp; country
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+              Compare GPT offer payouts, filter games and tasks by device, and discover the highest-paying route before opening a partner site.
+            </p>
+          </div>
+          <Suspense fallback={null}>
+            <OfferSearchEngine
+              initialQueryString={initialOfferQueryString}
+            />
+          </Suspense>
+        </div>
+      </section>
+
+      <section className="bg-[var(--surface-muted)] px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2">
+          <div>
+            <p className="section-label mb-2">Tracked offerwall brokers</p>
+            <h2 className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+              The offer walls EarnGrind watches for payout changes
+            </h2>
+            <div className="mt-5 space-y-3">
+              {TRACKED_BROKERS.map((broker) => (
+                <div key={broker.name} className="border border-[var(--border-default)] bg-white p-4 shadow-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h3 className="text-sm font-extrabold text-[var(--brand-ink)]">{broker.name}</h3>
+                    <span className="bg-lime-50 px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-lime-700">
+                      {broker.status}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">{broker.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="section-label mb-2">Best paying GPT partner sites</p>
+            <h2 className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+              Sites to compare before you start an offer
+            </h2>
+            <div className="mt-5 space-y-3">
+              {PARTNER_SITE_ROWS.map((site) => (
+                <Link
+                  key={site.name}
+                  href={site.href}
+                  className="flex items-center justify-between gap-4 border border-[var(--border-default)] bg-white p-4 text-sm shadow-sm transition hover:border-lime-300 hover:shadow-[0_14px_30px_rgba(15,23,42,0.08)]"
+                >
+                  <span>
+                    <span className="block font-extrabold text-[var(--brand-ink)]">{site.name}</span>
+                    <span className="mt-0.5 block text-xs font-semibold text-[var(--text-tertiary)]">{site.rating}</span>
+                  </span>
+                  <span className="border border-[var(--border-default)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)]">
+                    Visit platform
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -782,9 +704,9 @@ export default async function HomePage() {
       <section className="bg-[var(--surface-muted)] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl">
           <div className="mb-10 text-center">
-            <p className="section-label mb-3">FAQ</p>
+            <p className="section-label mb-3">Knowledgebase</p>
             <h2 className="text-3xl font-extrabold tracking-tight text-[var(--brand-ink)]">
-              Common questions from beginners
+              GPT Industry FAQ &amp; SEO Knowledgebase
             </h2>
           </div>
 
@@ -809,8 +731,32 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <section className="border-t border-[var(--border-default)] bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {HOME_LINK_GROUPS.map((group) => (
+            <div key={group.title}>
+              <h2 className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
+                {group.title}
+              </h2>
+              <ul className="mt-3 space-y-2">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-xs font-semibold text-[var(--text-secondary)] transition hover:text-[var(--brand-ink)]"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section
-        className="px-4 py-20 sm:px-6 lg:px-8"
+        className="hidden px-4 py-20 sm:px-6 lg:px-8"
         style={{
           background:
             "linear-gradient(160deg, #0d0d12 0%, #1a1a2e 50%, #0d0d12 100%)",

@@ -222,7 +222,7 @@ export default function EarnLabActivityRail() {
     const shouldAnimate = !loading && activities.length > 0;
 
     return (
-        <section className="overflow-hidden border-y border-white/10 bg-[#070b16] text-white">
+        <section className="max-w-full overflow-hidden border-y border-white/10 bg-[#070b16] text-white [contain:paint]">
             <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-2 sm:px-6 lg:flex-row lg:items-center lg:px-8">
                 <div className="flex min-w-[176px] items-center justify-between gap-3 lg:block">
                     <div>
@@ -253,6 +253,8 @@ export default function EarnLabActivityRail() {
             <style jsx>{`
                 .activity-marquee {
                     animation: earnlab-activity-marquee 48s linear infinite;
+                    max-width: 100%;
+                    overflow: clip;
                 }
 
                 .activity-marquee:hover {

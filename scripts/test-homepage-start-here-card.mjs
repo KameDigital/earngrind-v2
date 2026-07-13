@@ -99,7 +99,7 @@ const guidesCardSource = sectionSource.slice(
 const normalizedGuidesCardSource = guidesCardSource.replace(/\s+/g, " ");
 
 const requiredGameCardSnippets = [
-  "min-h-[186px]",
+  "eg-market-card",
   'srcSet="/images/browse-games-phone-search-transparent.webp"',
   'src="/images/browse-games-phone-search-transparent.png"',
   'alt=""',
@@ -111,8 +111,7 @@ const requiredGameCardSnippets = [
 ];
 
 const requiredPlatformCardSnippets = [
-  "min-h-[186px]",
-  "bottom-2 right-2 block h-24 w-24",
+  "eg-market-card",
   'srcSet="/images/best-gpt-sites-trophy-transparent.webp"',
   'src="/images/best-gpt-sites-trophy-transparent.png"',
   'alt=""',
@@ -124,7 +123,7 @@ const requiredPlatformCardSnippets = [
 ];
 
 const requiredGuidesCardSnippets = [
-  "min-h-[186px]",
+  "eg-market-card",
   "bottom-2 -right-3 block h-20 w-32",
   'srcSet="/images/game-guides-route-transparent.webp"',
   'src="/images/game-guides-route-transparent.png"',

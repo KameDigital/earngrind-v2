@@ -733,8 +733,8 @@ function OfferGridCard({
     const thumbnailUrl = offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game?.thumbnail_url ?? null;
 
     return (
-        <article className="group flex min-h-[22rem] flex-col overflow-hidden border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[var(--shadow-hover)]">
-            <div className="relative flex h-36 items-center justify-center overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)]">
+        <article className="group flex min-h-[27rem] flex-col overflow-hidden border border-slate-950/10 bg-white shadow-[0_24px_70px_rgba(7,11,18,0.12)] transition hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_34px_90px_rgba(7,11,18,0.18)]">
+            <div className="relative flex h-48 items-center justify-center overflow-hidden bg-slate-950">
                 <OfferThumbnail src={thumbnailUrl} alt={gameName} fallbackText={gameName.slice(0, 2)} className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
                 <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
                     {offer.is_new ? <Badge label="NEW" variant="new" /> : null}
@@ -742,33 +742,39 @@ function OfferGridCard({
                     {offer.is_boosted ? <Badge label="BOOSTED" variant="boosted" /> : null}
                     {offer.is_ath ? <Badge label="ATH" variant="ath" /> : null}
                 </div>
-                <div className="absolute bottom-3 right-3 border border-white/20 bg-[var(--brand-ink)] px-2.5 py-1 text-right shadow-sm">
-                    <div className="text-[9px] font-bold uppercase tracking-widest text-white/60">Best payout</div>
-                    <div className="text-xl font-black leading-none text-[var(--brand-lime)]">${offer.payout_usd.toFixed(2)}</div>
+                <div className="absolute bottom-3 right-3 bg-[var(--brand-lime)] px-3 py-2 text-right shadow-[0_12px_34px_rgba(156,255,36,0.24)]">
+                    <div className="text-[9px] font-black uppercase tracking-widest text-slate-950/60">Best payout</div>
+                    <div className="text-2xl font-black leading-none text-slate-950">${offer.payout_usd.toFixed(2)}</div>
                 </div>
             </div>
-            <div className="flex flex-1 flex-col p-4">
+            <div className="flex flex-1 flex-col p-5">
                 <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                        <div className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">{offer.source === "manual" ? "Curated route" : "Live offer"}</div>
-                        <h3 className="mt-1 line-clamp-2 text-base font-extrabold leading-tight text-[var(--brand-ink)]">{gameName}</h3>
+                        <div className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500">{offer.source === "manual" ? "Curated route" : "Live offer"}</div>
+                        <h3 className="mt-2 line-clamp-2 text-xl font-black leading-tight tracking-[-0.035em] text-[var(--brand-ink)]">{gameName}</h3>
                     </div>
                     <button type="button" onClick={() => onPin(offer)} aria-label={isPinned ? "Remove from comparison" : "Add to comparison"} className={`flex h-8 w-8 shrink-0 items-center justify-center border text-sm font-extrabold ${isPinned ? "border-lime-300 bg-[var(--brand-lime)] text-[var(--brand-ink)]" : "border-[var(--border-default)] bg-white text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700"}`}>
                         {isPinned ? "−" : "+"}
                     </button>
                 </div>
-                <div className="mt-3 flex flex-wrap items-center gap-2">
+                <div className="mt-4 grid grid-cols-2 gap-2">
                     <span className="inline-flex h-7 items-center gap-1 border border-slate-700 bg-[var(--brand-ink)] px-2 text-xs font-semibold text-[var(--brand-lime)]"><PlatformLogoImage src={offer.platform?.logo_url ?? null} name={platformName} /></span>
                     <ProviderLogo name={providerName} compact className="h-7 max-w-[5rem]" />
                 </div>
-                <div className="mt-3 flex items-center justify-between gap-3 text-xs text-[var(--text-tertiary)]">
-                    <span className="flex items-center gap-1">{offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}</span>
-                    <span>{formatDataRefreshedLabel(offer.updated_at)}</span>
+                <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+                    <div className="border border-slate-200 bg-slate-50 p-2">
+                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400">Device</div>
+                        <div className="mt-1 flex items-center gap-1 text-slate-700">{offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}</div>
+                    </div>
+                    <div className="border border-slate-200 bg-slate-50 p-2">
+                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400">Refreshed</div>
+                        <div className="mt-1 font-bold text-slate-700">{formatDataRefreshedLabel(offer.updated_at)}</div>
+                    </div>
                 </div>
                 <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">{offer.goal_text ?? `Compare this ${platformName} route before starting.`}</p>
                 <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
-                    {gameHref ? <Link href={gameHref} className="inline-flex items-center justify-center border border-[var(--border-default)] px-3 py-2 text-xs font-extrabold text-[var(--brand-ink)] transition hover:border-lime-300 hover:bg-lime-50">Compare</Link> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No details</span>}
-                    {offer.redirect_url ? <TrackedOutboundLink href={offer.redirect_url} eventLabel={offer.source === "manual" ? "manual-offer-grid-cta" : "offer-search-grid-cta"} offerId={offer.id} offerTitle={gameName} gameTitle={gameName} platformName={platformName} providerName={offer.provider_name} payoutUsd={offer.payout_usd} location="offers-search-grid" sourceContext="offers-search" className="inline-flex items-center justify-center bg-[var(--brand-ink)] px-3 py-2 text-xs font-extrabold text-[var(--brand-lime)] transition hover:bg-slate-800">Start offer</TrackedOutboundLink> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No link</span>}
+                    {gameHref ? <Link href={gameHref} className="inline-flex min-h-11 items-center justify-center border border-slate-950/10 px-3 py-2 text-xs font-black uppercase tracking-[0.1em] text-[var(--brand-ink)] transition hover:border-lime-300 hover:bg-lime-50">Compare</Link> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No details</span>}
+                    {offer.redirect_url ? <TrackedOutboundLink href={offer.redirect_url} eventLabel={offer.source === "manual" ? "manual-offer-grid-cta" : "offer-search-grid-cta"} offerId={offer.id} offerTitle={gameName} gameTitle={gameName} platformName={platformName} providerName={offer.provider_name} payoutUsd={offer.payout_usd} location="offers-search-grid" sourceContext="offers-search" className="inline-flex min-h-11 items-center justify-center bg-[var(--brand-ink)] px-3 py-2 text-xs font-black uppercase tracking-[0.1em] text-[var(--brand-lime)] transition hover:bg-slate-800">Start offer</TrackedOutboundLink> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No link</span>}
                 </div>
             </div>
         </article>
@@ -841,7 +847,7 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned, 
     return (
         <div>
             {viewMode === "grid" ? (
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     {offers.map((offer) => <OfferGridCard key={offer.id} offer={offer} onPin={onPin} isPinned={pinned.some((p) => p.id === offer.id)} />)}
                 </div>
             ) : (
@@ -1047,7 +1053,7 @@ export default function OfferSearchEngine({
         .filter(Boolean).length + [filters.is_new, filters.is_hot, filters.is_ath, filters.is_boosted].filter(Boolean).length;
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             {hasPlatformFilter && !initialGameSlug && (
                 <div className="rounded-none border border-lime-200 bg-[var(--brand-lime)]/10 p-4 text-sm shadow-[var(--shadow-card)]">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -1071,25 +1077,25 @@ export default function OfferSearchEngine({
                 </div>
             )}
 
-            <div className="border border-slate-700 bg-[var(--brand-ink)] p-3 shadow-[var(--shadow-card)] sm:p-4">
-                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[var(--brand-lime)]">Search terminal</p>
+            <div className="eg-terminal p-4 sm:p-5">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--brand-lime)]">Search terminal</p>
                     <span className="text-xs font-semibold text-white/60">{selectedCountry} market</span>
                 </div>
                 <SearchBar value={filters.q} onChange={v => dispatch({ type: "SET", key: "q", value: v })} />
-                <div className="mt-3 border-t border-white/10 pt-3"><FilterBar filters={filters} dispatch={dispatch} platforms={visiblePlatforms} countries={countries} selectedPlatformName={reviewPlatformName || undefined} /></div>
+                <div className="mt-4 border-t border-white/10 pt-4"><FilterBar filters={filters} dispatch={dispatch} platforms={visiblePlatforms} countries={countries} selectedPlatformName={reviewPlatformName || undefined} /></div>
             </div>
 
-            <div className="flex flex-col gap-3 border-b border-[var(--border-default)] px-1 pb-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex flex-col gap-3 border border-slate-950/10 bg-white px-4 py-4 shadow-[0_18px_50px_rgba(7,11,18,0.08)] sm:flex-row sm:items-end sm:justify-between">
                 <div>
-                    <h2 className="text-xl font-extrabold text-[var(--brand-ink)] tracking-tight">
+                    <h2 className="text-2xl font-black tracking-[-0.04em] text-[var(--brand-ink)]">
                         {initialGameSlug
                             ? "Available Offers"
                             : hasPlatformFilter && reviewPlatformName
                                 ? `${reviewPlatformName} Offers`
                                 : "All Offers"}
                     </h2>
-                    <p className="mt-1 text-xs text-[var(--text-tertiary)]">
+                    <p className="mt-1 max-w-3xl text-xs font-semibold leading-6 text-[var(--text-tertiary)]">
                         {hasPlatformFilter && reviewPlatformName
                             ? `These are offers currently filtered to ${reviewPlatformName}. Compare routes here after using the review to decide the platform is worth your time.`
                             : "Offers are sorted to help you identify stronger payout opportunities quickly. Open a route for detail, or start the offer directly."}

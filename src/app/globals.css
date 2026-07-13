@@ -10,25 +10,25 @@
 ────────────────────────────────────────────────────────────────────────── */
 :root {
   /* Brand colours */
-  --brand-ink: #0f172a;
+  --brand-ink: #070b12;
   /* near-black — headlines, logo, CTAs */
-  --brand-lime: #82df16;
+  --brand-lime: #9cff24;
   /* electric lime — primary accent */
   --brand-lime-dark: #71cb0f;
   /* deeper lime for hover states */
-  --brand-mid: #172033;
+  --brand-mid: #101827;
   /* deep navy for secondary surfaces */
 
   /* Surfaces */
   --surface-base: #ffffff;
-  --surface-muted: #f5f7fa;
+  --surface-muted: #eef3ef;
   /* very light cool-white for section alternation */
   --surface-card: #ffffff;
-  --surface-dark: #0f172a;
+  --surface-dark: #070b12;
 
   /* Borders */
-  --border-default: #dbe1e8;
-  --border-strong: #b8c2cf;
+  --border-default: #d8dfd8;
+  --border-strong: #94a394;
 
   /* Text */
   --text-primary: #0d0d12;
@@ -46,9 +46,9 @@
   --danger: #ef4444;
 
   /* Elevation shadows */
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
-  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-float: 0 16px 48px rgba(0, 0, 0, 0.14);
+  --shadow-card: 0 14px 34px rgba(7, 11, 18, 0.08);
+  --shadow-hover: 0 24px 70px rgba(7, 11, 18, 0.16);
+  --shadow-float: 0 34px 90px rgba(7, 11, 18, 0.28);
 
   /* Radius scale */
   --radius-sm: 2px;
@@ -67,11 +67,17 @@
   html {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     scroll-behavior: smooth;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   body {
     @apply antialiased;
-    background-color: var(--surface-base);
+    max-width: 100%;
+    overflow-x: clip;
+    background:
+      radial-gradient(circle at 8% 0%, rgba(156, 255, 36, 0.08), transparent 24rem),
+      linear-gradient(180deg, #f6f8f3 0%, #eef3ef 100%);
     color: var(--text-primary);
   }
 
@@ -119,8 +125,8 @@
 
   /* ── Universal card base ── */
   .eg-card {
-    @apply relative overflow-hidden rounded-md bg-white;
-    border: 1px solid var(--border-default);
+    @apply relative overflow-hidden bg-white;
+    border: 1px solid rgba(7, 11, 18, 0.12);
     box-shadow: var(--shadow-card);
     transition: box-shadow var(--duration) var(--ease-out),
       transform var(--duration) var(--ease-out),
@@ -129,8 +135,76 @@
 
   .eg-card:hover {
     box-shadow: var(--shadow-hover);
-    border-color: var(--border-strong);
-    transform: translateY(-2px);
+    border-color: rgba(156, 255, 36, 0.45);
+    transform: translateY(-3px);
+  }
+
+  .eg-visual-frame {
+    @apply relative overflow-hidden border border-white/10 bg-[#070b12] text-white;
+    box-shadow: 0 34px 110px rgba(7, 11, 18, 0.35);
+  }
+
+  .eg-visual-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 8%, rgba(156, 255, 36, 0.18), transparent 24rem),
+      radial-gradient(circle at 88% 22%, rgba(34, 211, 238, 0.12), transparent 22rem),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: auto, auto, 42px 42px, 42px 42px;
+  }
+
+  .eg-terminal {
+    @apply border border-white/10 bg-slate-950/80 text-white backdrop-blur;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 20px 70px rgba(0,0,0,0.35);
+  }
+
+  .eg-kicker {
+    @apply inline-flex items-center gap-2 border border-lime-300/30 bg-lime-300/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--brand-lime)];
+  }
+
+  .eg-section-shell {
+    @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .eg-market-card {
+    @apply relative overflow-hidden border border-slate-900/10 bg-white shadow-[0_24px_70px_rgba(7,11,18,0.10)] transition duration-200 hover:-translate-y-1 hover:border-lime-300;
+  }
+
+  .eg-market-card::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-lime), transparent);
+    opacity: 0.75;
+  }
+
+  .eg-editorial-prose {
+    @apply text-base leading-8 text-slate-700;
+  }
+
+  .eg-editorial-prose h2 {
+    @apply mt-10 text-3xl font-black tracking-tight text-slate-950;
+  }
+
+  .eg-editorial-prose h3 {
+    @apply mt-8 border-l-4 border-lime-400 bg-slate-50 px-4 py-3 text-xl font-black text-slate-950;
+  }
+
+  .eg-editorial-prose table {
+    @apply my-6 w-full overflow-hidden border border-slate-200 bg-white text-sm shadow-[0_18px_50px_rgba(7,11,18,0.08)];
+  }
+
+  .eg-editorial-prose th {
+    @apply bg-slate-950 px-4 py-3 text-left text-xs font-black uppercase tracking-widest text-lime-200;
+  }
+
+  .eg-editorial-prose td {
+    @apply border-t border-slate-200 px-4 py-3 align-top;
   }
 
   /* ── Payout display ── */

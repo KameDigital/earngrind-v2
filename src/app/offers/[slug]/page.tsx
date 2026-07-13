@@ -642,7 +642,7 @@ export default async function GameOffersPage({
     ];
 
     return (
-        <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+        <main className="min-h-screen bg-[#e9efe8] pb-24">
             <RevenuePageView
                 routePath={offerRoutePath(game.slug)}
                 routeGroup="offer"
@@ -654,27 +654,31 @@ export default async function GameOffersPage({
                 sourceContext="offer_detail"
             />
             <JsonLd data={schemas} />
-            <div className="mx-auto max-w-6xl space-y-6 px-4 sm:px-6 lg:px-8">
+            <section className="eg-visual-frame px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+            <div className="relative z-10 mx-auto max-w-[1440px] space-y-6">
 
                 {/* ── Breadcrumb ── */}
-                <nav className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] font-medium" aria-label="Breadcrumb">
-                    <Link href="/offers" className="hover:text-lime-700 transition-colors">Offers</Link>
+                <nav className="flex items-center gap-2 text-sm font-medium text-white/55" aria-label="Breadcrumb">
+                    <Link href="/offers" className="transition-colors hover:text-[var(--brand-lime)]">Offers</Link>
                     <span>/</span>
-                    <span className="text-[var(--text-secondary)] truncate">{game.name}</span>
+                    <span className="truncate text-white">{game.name}</span>
                 </nav>
 
                 {/* ── Game Hero ── */}
-                <div className="overflow-hidden border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
-                    <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_22rem]">
-                        <div className="flex flex-col gap-5 p-5 sm:flex-row sm:p-6">
+                <div className="overflow-hidden border border-white/10 bg-white/[0.04] shadow-[0_34px_110px_rgba(0,0,0,0.34)]">
+                    <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_28rem]">
+                        <div className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[220px_minmax(0,1fr)]">
                         {/* Thumbnail */}
-                        <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden border border-[var(--border-default)] bg-[var(--surface-muted)] sm:h-28 sm:w-28">
+                        <div className="relative flex aspect-square w-full max-w-[220px] flex-shrink-0 items-center justify-center overflow-hidden border border-white/10 bg-slate-950 shadow-[0_24px_70px_rgba(0,0,0,0.32)]">
                             {heroImageUrl ? (
-                                <img
+                                <Image
                                     src={heroImageUrl}
                                     alt={game.name}
-                                    className="w-full h-full object-cover"
-                                    loading="eager"
+                                    fill
+                                    sizes="220px"
+                                    className="object-cover"
+                                    priority
+                                    unoptimized
                                     referrerPolicy="no-referrer"
                                 />
                             ) : (
@@ -687,24 +691,24 @@ export default async function GameOffersPage({
                         {/* Game info */}
                         <div className="min-w-0 flex-1">
                             <div className="flex flex-wrap items-start gap-2 mb-2">
-                                <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--brand-ink)] tracking-tight">
+                                <h1 className="text-4xl font-black leading-[0.96] tracking-[-0.06em] text-white sm:text-6xl">
                                     Compare {game.name} payout routes
                                 </h1>
                                 {game.category && (
-                                    <span className="mt-1 border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-0.5 text-xs font-semibold text-[var(--text-secondary)]">
+                                    <span className="mt-1 border border-lime-300/30 bg-lime-300/10 px-2.5 py-0.5 text-xs font-bold text-[var(--brand-lime)]">
                                         {game.category}
                                     </span>
                                 )}
                             </div>
 
-                            <p className="mb-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+                            <p className="mb-4 max-w-2xl text-base font-semibold leading-8 text-white/68">
                                 {game.description ?? `Compare current ${game.name} payouts across providers, pick the highest route, and open the strongest tracked offer first.`}
                             </p>
 
                             {game.devices && game.devices.length > 0 && (
                                 <div className="flex flex-wrap gap-2">
                                     {game.devices.map((d: string) => (
-                                        <span key={d} className="inline-flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] bg-[var(--surface-muted)] border border-[var(--border-default)] rounded-lg px-2.5 py-1">
+                                        <span key={d} className="inline-flex items-center gap-1 border border-white/10 bg-white/8 px-2.5 py-1 text-xs font-bold text-white/75">
                                             {DEVICE_LABELS[d] ?? d}
                                         </span>
                                     ))}
@@ -713,20 +717,20 @@ export default async function GameOffersPage({
 
                             <div className="mt-4 flex flex-wrap gap-2">
                                 {bestOffer && (
-                                    <span className="inline-flex items-center gap-1 border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 px-3 py-1.5 text-xs font-bold text-[color:hsl(84,93%,25%)]">
+                                    <span className="inline-flex items-center gap-1 border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 px-3 py-1.5 text-xs font-bold text-[var(--brand-lime)]">
                                         Best route now: {bestOffer.platform.name} at ${bestOffer.payout_usd.toFixed(2)}
                                     </span>
                                 )}
-                                <span className="inline-flex items-center gap-1 border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                <span className="inline-flex items-center gap-1 border border-white/10 bg-white/8 px-3 py-1.5 text-xs font-bold text-white/65">
                                     {formatDataRefreshedLabel(bestOffer?.updated_at, new Date())}
                                 </span>
                                 {primaryGuide && (
-                                    <span className="inline-flex items-center gap-1 border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                    <span className="inline-flex items-center gap-1 border border-white/10 bg-white/8 px-3 py-1.5 text-xs font-bold text-white/65">
                                         Guide available
                                     </span>
                                 )}
                                 {bestReview && (
-                                    <span className="inline-flex items-center gap-1 border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                    <span className="inline-flex items-center gap-1 border border-white/10 bg-white/8 px-3 py-1.5 text-xs font-bold text-white/65">
                                         Reviewed platform
                                     </span>
                                 )}
@@ -745,7 +749,7 @@ export default async function GameOffersPage({
                                         payoutUsd={bestOffer.payout_usd}
                                         location="offer-detail-hero"
                                         sourceContext="offer-detail"
-                                        className="inline-flex items-center justify-center gap-2 bg-[var(--brand-ink)] px-5 py-3 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95"
+                                        className="inline-flex min-h-12 items-center justify-center gap-2 bg-[var(--brand-lime)] px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-slate-950 shadow-[0_0_34px_rgba(156,255,36,0.24)] transition-all hover:-translate-y-px hover:bg-lime-200"
                                     >
                                         Start Best Payout <ArrowRight aria-hidden className="h-4 w-4" />
                                     </TrackedOutboundLink>
@@ -753,41 +757,41 @@ export default async function GameOffersPage({
                                 {primaryGuide && (
                                     <Link
                                         href={`/guides/${primaryGuide.slug}`}
-                                        className="inline-flex items-center justify-center gap-2 border border-[var(--brand-lime)]/20 bg-[var(--brand-lime)]/10 px-4 py-3 text-sm font-extrabold text-[color:hsl(84,93%,25%)] transition-colors hover:bg-[var(--brand-lime)]/15"
+                                        className="inline-flex min-h-12 items-center justify-center gap-2 border border-lime-300/30 bg-lime-300/10 px-4 py-3 text-sm font-black uppercase tracking-[0.12em] text-[var(--brand-lime)] transition-colors hover:bg-lime-300/15"
                                     >
                                         <BookOpen aria-hidden className="h-4 w-4" /> Use Guide First
                                     </Link>
                                 )}
                                 <Link
                                     href={gameHubPath(game.slug)}
-                                    className="inline-flex items-center justify-center gap-2 border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
+                                    className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/15 bg-white/8 px-4 py-3 text-sm font-black uppercase tracking-[0.12em] text-white transition-colors hover:border-lime-300/40 hover:text-[var(--brand-lime)]"
                                 >
                                     View Game Page
                                 </Link>
                                 {bestReview && (
                                     <Link
                                         href={`/review/${bestReview.slug}`}
-                                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
+                                        className="inline-flex min-h-12 items-center justify-center gap-2 border border-white/15 bg-white/8 px-4 py-3 text-sm font-black uppercase tracking-[0.12em] text-white transition-colors hover:border-lime-300/40 hover:text-[var(--brand-lime)]"
                                     >
                                         Read Platform Review
                                     </Link>
                                 )}
                             </div>
 
-                            <p className="mt-3 text-xs text-[var(--text-tertiary)] leading-relaxed max-w-2xl">
+                            <p className="mt-3 max-w-2xl text-xs leading-relaxed text-white/45">
                                 {bestOffer ? `${formatPayoutFreshness(bestOffer.updated_at)}. ` : ""}Start Best Payout sends you through EarnGrind tracking to the payout platform. Payouts can vary by device, country, and provider rules. Some links may be affiliate links.
                             </p>
                         </div>
                         </div>
 
-                        <aside className="border-t border-[var(--border-default)] bg-[var(--brand-ink)] p-5 text-white lg:border-l lg:border-t-0 lg:p-6">
+                        <aside className="border-t border-white/10 bg-slate-950/80 p-5 text-white lg:border-l lg:border-t-0 lg:p-6">
                             <div className="flex h-full flex-col justify-between gap-5">
                                 <div>
                                     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[var(--brand-lime)]">
                                         <Trophy aria-hidden className="h-3.5 w-3.5" />
                                         Highest route
                                     </div>
-                                    <div className="mt-4 text-5xl font-black tracking-tight text-[var(--brand-lime)]">
+                                    <div className="mt-4 text-6xl font-black tracking-[-0.08em] text-[var(--brand-lime)]">
                                         {comparison.summary.best_total_payout_usd > 0 ? `$${comparison.summary.best_total_payout_usd.toFixed(2)}` : bestOffer ? `$${bestOffer.payout_usd.toFixed(2)}` : "-"}
                                     </div>
                                     <p className="mt-2 text-sm font-semibold text-white">
@@ -835,7 +839,7 @@ export default async function GameOffersPage({
                     </div>
 
                     {/* Stats bar */}
-                    <div className="border-t border-[var(--border-default)] px-5 sm:px-6 py-4 bg-[var(--surface-muted)]/50">
+                    <div className="border-t border-white/10 bg-white/[0.04] px-5 py-4 sm:px-6">
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                             <StatCard label="Routes" value={String(comparison.offers.length)} />
                             <StatCard label="Best Route" value={comparison.summary.best_total_payout_usd > 0 ? `$${comparison.summary.best_total_payout_usd.toFixed(2)}` : "-"} accent />
@@ -960,6 +964,7 @@ export default async function GameOffersPage({
                 </div>
 
             </div>
+            </section>
         </main>
     );
 }

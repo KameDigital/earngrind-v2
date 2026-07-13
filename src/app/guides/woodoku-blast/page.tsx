@@ -287,48 +287,46 @@ function RouteVisual() {
 
 export default function WoodokuBlastOfferGuidePage() {
     return (
-        <main className="min-h-screen bg-[#f8fbf4] text-slate-900">
+        <main className="min-h-screen bg-[#e9efe8] text-slate-900">
             <JsonLd />
 
-            <section className="border-b border-lime-200 bg-lime-50">
+            <section className="eg-visual-frame">
                 <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-                    <nav className="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-600" aria-label="Breadcrumb">
-                        <Link href="/" className="hover:text-slate-950">Home</Link>
+                    <nav className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white/55" aria-label="Breadcrumb">
+                        <Link href="/" className="hover:text-white">Home</Link>
                         <span>/</span>
-                        <Link href="/guides" className="hover:text-slate-950">Guides</Link>
+                        <Link href="/guides" className="hover:text-white">Guides</Link>
                         <span>/</span>
-                        <span className="text-slate-950">Woodoku Blast</span>
+                        <span className="text-white">Woodoku Blast</span>
                     </nav>
                 </div>
-            </section>
 
-            <section className="bg-white">
-                <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-14">
+                <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 pb-12 pt-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:pb-16">
                     <div>
-                        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-lime-50 px-3 py-1 text-xs font-extrabold uppercase text-lime-700 ring-1 ring-lime-200">
+                        <div className="mb-4 inline-flex items-center gap-2 border border-lime-300/35 bg-lime-300/10 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--brand-lime)]">
                             <Trophy className="h-4 w-4" aria-hidden="true" />
                             Torox Android Journey offer
                         </div>
-                        <h1 className="max-w-4xl text-4xl font-black text-slate-950 sm:text-5xl">
+                        <h1 className="max-w-4xl text-5xl font-black leading-[0.92] tracking-[-0.07em] text-white sm:text-7xl">
                             Woodoku Blast offer guide: Journey Level Route
                         </h1>
-                        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-700">
+                        <p className="mt-6 max-w-3xl text-lg font-semibold leading-8 text-white/68">
                             Up to $293.71 is available in this Woodoku Blast offer guide if every Torox Journey milestone tracks correctly. The task list is simple on paper: install on Android, play daily, make a $4.99 purchase, and push Journey mode from Level 1 to Level 2000 inside the submitted deadlines.
                         </p>
                         <div className="mt-6 flex flex-wrap gap-3">
-                            <Link href="/offers" className="inline-flex items-center gap-2 rounded-lg bg-slate-950 px-5 py-3 text-sm font-extrabold text-lime-200">
+                            <Link href="/offers" className="inline-flex items-center gap-2 bg-[var(--brand-lime)] px-5 py-3 text-sm font-extrabold text-slate-950">
                                 Compare Woodoku offers
                                 <ExternalLink className="h-4 w-4" aria-hidden="true" />
                             </Link>
-                            <Link href="/best-gpt-sites" className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-extrabold text-slate-900">
+                            <Link href="/best-gpt-sites" className="inline-flex items-center gap-2 border border-white/15 bg-white/5 px-5 py-3 text-sm font-extrabold text-white">
                                 Compare GPT sites
                             </Link>
                         </div>
                     </div>
 
-                    <aside className="rounded-lg border border-lime-200 bg-slate-950 p-5 text-white shadow-sm">
+                    <aside className="border border-lime-300/30 bg-white/[0.06] p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-lime-300 text-slate-950">
+                            <div className="flex h-12 w-12 items-center justify-center bg-lime-300 text-slate-950">
                                 <BadgeDollarSign className="h-7 w-7" aria-hidden="true" />
                             </div>
                             <div>
@@ -351,7 +349,7 @@ export default function WoodokuBlastOfferGuidePage() {
             <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
                     <article className="min-w-0 space-y-10">
-                        <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                        <section className="border border-slate-200 bg-white p-5 shadow-[var(--shadow-card)]">
                             <SectionHeading eyebrow="Payout table" title="Woodoku Blast Torox rewards">
                                 Payout values come from the submitted Torox task list only, with points converted at points / 1000.
                             </SectionHeading>
@@ -486,7 +484,7 @@ export default function WoodokuBlastOfferGuidePage() {
                             </div>
                         </section>
 
-                        <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                        <section className="border border-slate-200 bg-white p-5 shadow-[var(--shadow-card)]">
                             <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
                             <div className="divide-y divide-slate-200">
                                 {faqs.map((item) => (
@@ -498,7 +496,7 @@ export default function WoodokuBlastOfferGuidePage() {
                             </div>
                         </section>
 
-                        <section className="rounded-lg border border-lime-200 bg-slate-950 p-6 text-white">
+                        <section className="border border-lime-200 bg-slate-950 p-6 text-white">
                             <h2 className="text-2xl font-black">Compare current Woodoku Blast payouts</h2>
                             <p className="mt-3 max-w-3xl text-base leading-7 text-lime-50">
                                 Ready to compare this route against other GPT offers? Use the live Torox task list as the payout source before you spend money or grind toward Level 2000.
@@ -513,7 +511,7 @@ export default function WoodokuBlastOfferGuidePage() {
                     <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
                         <RouteVisual />
 
-                        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                        <div className="border border-slate-200 bg-white p-5 shadow-[var(--shadow-card)]">
                             <div className="mb-3 flex items-center gap-2 text-sm font-extrabold uppercase text-lime-700">
                                 <ShieldCheck className="h-4 w-4" aria-hidden="true" />
                                 Proof checklist
@@ -528,7 +526,7 @@ export default function WoodokuBlastOfferGuidePage() {
                             </ul>
                         </div>
 
-                        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                        <div className="border border-slate-200 bg-white p-5 shadow-[var(--shadow-card)]">
                             <div className="mb-3 flex items-center gap-2 text-sm font-extrabold uppercase text-slate-700">
                                 <Receipt className="h-4 w-4" aria-hidden="true" />
                                 Sources

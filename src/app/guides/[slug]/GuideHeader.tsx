@@ -171,8 +171,8 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
     }
 
     return (
-        <header className="border-b border-slate-800 bg-[var(--brand-ink)] text-white">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <header className="eg-visual-frame">
+            <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-wrap items-center gap-1.5 py-4 text-xs font-medium text-white/55">
                     <Link href="/" className="transition-colors hover:text-[var(--brand-lime)]">Home</Link>
                     <span>/</span>
@@ -183,7 +183,7 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
                     <span className="text-white">{label}</span>
                 </div>
 
-                <div className="grid gap-5 border-b border-white/10 pb-6 lg:grid-cols-[1fr_360px] lg:items-center">
+                <div className="grid gap-7 border-b border-white/10 pb-8 lg:grid-cols-[1fr_420px] lg:items-center">
                     <div>
                         <div className="mb-2 flex items-center gap-2">
                             <span className="border border-[var(--brand-lime)]/35 bg-[var(--brand-lime)]/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-[var(--brand-lime)]">
@@ -191,12 +191,12 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
                             </span>
                         </div>
 
-                        <h1 className="mb-2 text-2xl font-extrabold leading-snug tracking-tight text-white sm:text-3xl">
+                        <h1 className="mb-4 text-4xl font-black leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl">
                             {guide.title}
                         </h1>
 
                         {guide.excerpt ? (
-                            <p className="mb-3 max-w-3xl text-sm leading-relaxed text-white/72">
+                            <p className="mb-4 max-w-3xl text-base font-semibold leading-8 text-white/68">
                                 {guide.excerpt}
                             </p>
                         ) : null}
@@ -225,7 +225,7 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
                     </div>
 
                     {heroImageUrl ? (
-                        <div className="relative aspect-[16/9] overflow-hidden border border-white/15 bg-slate-900 shadow-sm">
+                        <div className="relative aspect-[4/3] overflow-hidden border border-white/15 bg-slate-900 shadow-[0_28px_80px_rgba(0,0,0,0.36)]">
                             <Image
                                 src={heroImageUrl}
                                 alt={`${gameName} guide preview`}
@@ -242,7 +242,7 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
                 <div className="flex flex-wrap items-center gap-3 py-3">
                     <Link
                         href={`/games/${gameSlug}`}
-                        className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[var(--brand-lime)] px-4 py-2 text-xs font-extrabold text-[var(--brand-ink)] shadow-sm transition hover:bg-[#9aeb42]"
+                        className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[var(--brand-lime)] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-[var(--brand-ink)] shadow-sm transition hover:bg-[#9aeb42]"
                     >
                         Compare live offers for this game
                     </Link>

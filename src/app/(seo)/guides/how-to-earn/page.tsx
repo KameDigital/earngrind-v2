@@ -57,38 +57,44 @@ export default async function HowToEarnGuidesIndexPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+    <main className="min-h-screen bg-[#e9efe8] pb-24">
       <JsonLd data={schemas} />
-      <Container className="space-y-6">
-        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
-          <Link href="/" className="hover:text-lime-700">Home</Link>
-          <span aria-hidden="true">/</span>
-          <Link href="/guides" className="hover:text-lime-700">Guides</Link>
-          <span aria-hidden="true">/</span>
-          <span className="text-[var(--brand-ink)]">How to Earn</span>
-        </nav>
-        <header className="border border-slate-700 bg-[var(--brand-ink)] p-6 text-white shadow-[var(--shadow-card)]">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--brand-lime)]">Game offer learning hub</p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white">How to earn from game offers on GPT sites</h1>
-          <p className="mt-3 max-w-3xl text-white/72">
+      <section className="eg-visual-frame px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <div className="relative z-10 mx-auto max-w-[1440px]">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white/55">
+            <Link href="/" className="hover:text-white">Home</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/guides" className="hover:text-white">Guides</Link>
+            <span aria-hidden="true">/</span>
+            <span className="text-white">How to Earn</span>
+          </nav>
+          <header className="mt-10 max-w-5xl">
+            <p className="eg-kicker mb-4">Game offer learning hub</p>
+            <h1 className="text-5xl font-black leading-[0.92] tracking-[-0.07em] text-white sm:text-7xl">
+              How to earn from game offers on GPT sites
+            </h1>
+            <p className="mt-6 max-w-3xl text-lg font-semibold leading-8 text-white/68">
             Open a game guide to see payout breakdowns, milestone lists, tracked offer counts, and practical completion tips based on live offer data.
-          </p>
-        </header>
+            </p>
+          </header>
+        </div>
+      </section>
 
+      <Container className="-mt-8 space-y-8">
         <section className="grid gap-4 text-sm leading-relaxed text-[var(--text-secondary)] md:grid-cols-3" aria-label="Game offer guide context">
-          <div className="border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+          <div className="eg-market-card p-5">
             <h2 className="text-base font-extrabold text-[var(--brand-ink)]">What these guides are</h2>
             <p className="mt-2">
               These pages group live offer data by game so you can compare payout ceilings, available route count, and the likely task style before installing.
             </p>
           </div>
-          <div className="border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+          <div className="eg-market-card p-5">
             <h2 className="text-base font-extrabold text-[var(--brand-ink)]">How payouts work</h2>
             <p className="mt-2">
               Rewards depend on the GPT site, offerwall, country, device, and milestone rules. Always start from the chosen platform and keep proof of install and task completion.
             </p>
           </div>
-          <div className="border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">
+          <div className="eg-market-card p-5">
             <h2 className="text-base font-extrabold text-[var(--brand-ink)]">Which offers to compare first</h2>
             <p className="mt-2">
               Prioritize games with multiple tracked rows, early milestone rewards, clear deadlines, and a payout that still makes sense after expected time or optional spend.
@@ -101,7 +107,7 @@ export default async function HowToEarnGuidesIndexPage() {
             <Link
               key={game.slug}
               href={`/guides/how-to-earn/${game.slug}`}
-              className="border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)] hover:border-lime-400 hover:bg-lime-50"
+              className="eg-market-card p-5 hover:border-lime-400 hover:bg-lime-50"
             >
               <h2 className="text-lg font-extrabold text-[var(--brand-ink)]">{game.name}</h2>
               <p className="mt-1 text-xs text-[var(--text-tertiary)]">{game.offers} tracked offer rows</p>

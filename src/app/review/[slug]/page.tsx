@@ -199,7 +199,7 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
 
                 <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
                     <div className="space-y-5 lg:col-span-8">
-                        <div className="border border-slate-700 bg-[var(--brand-ink)] p-6 text-white shadow-[var(--shadow-card)] sm:p-8">
+                        <div className="eg-visual-frame p-6 text-white shadow-[var(--shadow-card)] sm:p-8">
                             {platform ? (
                                 <div className="mb-5 flex items-center gap-3">
                                     {platform.logo_url ? (

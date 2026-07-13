@@ -85,16 +85,15 @@ export function StaticGuideShell({
                 }
             ` }} />
 
-            <section className="relative border-b border-slate-200 bg-white">
-                <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#10b981,#22d3ee,#f59e0b)]" />
-                <div className="mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+            <section className="eg-visual-frame">
+                <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
                     <div className="min-w-0">
-                        <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-bold text-slate-500" aria-label="Breadcrumb">
-                            <Link href="/" className="transition-colors hover:text-emerald-700">Home</Link>
+                        <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-bold text-white/55" aria-label="Breadcrumb">
+                            <Link href="/" className="transition-colors hover:text-[var(--brand-lime)]">Home</Link>
                             <span>/</span>
-                            <Link href="/guides" className="transition-colors hover:text-emerald-700">Guides</Link>
+                            <Link href="/guides" className="transition-colors hover:text-[var(--brand-lime)]">Guides</Link>
                             <span>/</span>
-                            <span className="text-slate-800">{gameName}</span>
+                            <span className="text-white">{gameName}</span>
                         </nav>
 
                         <div className="mb-4 flex flex-wrap gap-2">
@@ -105,25 +104,25 @@ export function StaticGuideShell({
                             ))}
                         </div>
 
-                        <p className="text-sm font-black uppercase tracking-[0.16em] text-cyan-700">{eyebrow}</p>
-                        <h1 className="mt-3 max-w-7xl text-3xl font-black leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
+                        <p className="eg-kicker">{eyebrow}</p>
+                        <h1 className="mt-4 max-w-7xl text-4xl font-black leading-[0.92] tracking-[-0.065em] text-white sm:text-6xl lg:text-7xl">
                             {title}
                         </h1>
-                        <p className="mt-5 max-w-4xl text-base leading-8 text-slate-700 sm:text-lg">
+                        <p className="mt-5 max-w-4xl text-base font-semibold leading-8 text-white/68 sm:text-lg">
                             {description}
                         </p>
 
                         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                             <Link
                                 href={primaryCta.href}
-                                className="inline-flex min-h-12 items-center justify-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-black text-white shadow-[0_14px_34px_rgba(15,23,42,.18)] transition hover:bg-emerald-900 focus:outline-none focus:ring-4 focus:ring-emerald-200"
+                                className="inline-flex min-h-12 items-center justify-center bg-[var(--brand-lime)] px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-slate-950 shadow-[0_0_34px_rgba(156,255,36,0.24)] transition hover:bg-lime-200 focus:outline-none focus:ring-4 focus:ring-emerald-200"
                             >
                                 {primaryCta.label}
                             </Link>
                             {secondaryCta ? (
                                 <Link
                                     href={secondaryCta.href}
-                                    className="inline-flex min-h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-black text-slate-900 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+                                    className="inline-flex min-h-12 items-center justify-center border border-white/15 bg-white/8 px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-white shadow-sm transition hover:border-lime-300/40 hover:text-[var(--brand-lime)] focus:outline-none focus:ring-4 focus:ring-emerald-100"
                                 >
                                     {secondaryCta.label}
                                 </Link>
@@ -133,10 +132,10 @@ export function StaticGuideShell({
                 </div>
             </section>
 
-            <section className="mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+            <section className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
             <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)_320px] xl:grid-cols-[260px_minmax(0,1fr)_340px]">
                 <aside className="order-3 min-w-0 lg:order-none lg:sticky lg:top-24 lg:self-start">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="border border-slate-950/10 bg-white p-4 shadow-[0_18px_50px_rgba(7,11,18,.08)]">
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">On This Page</p>
                         <nav className="mt-3 max-h-[calc(100vh-160px)] space-y-1 overflow-y-auto pr-1" aria-label="Guide sections">
                             {sections.map((section) => (
@@ -152,7 +151,7 @@ export function StaticGuideShell({
                     </div>
                 </aside>
 
-                <article className="order-2 min-w-0 rounded-2xl border border-slate-200 bg-white shadow-sm lg:order-none">
+                <article className="order-2 min-w-0 border border-slate-950/10 bg-white shadow-[0_24px_70px_rgba(7,11,18,.10)] lg:order-none">
                     {preamble ? (
                         <section className="static-guide-prose static-guide-preamble border-b border-slate-200 p-5 sm:p-8" dangerouslySetInnerHTML={{ __html: preamble }} />
                     ) : null}
@@ -178,7 +177,7 @@ export function StaticGuideShell({
                 </article>
 
                 <aside className="order-1 min-w-0 space-y-4 lg:order-none lg:sticky lg:top-24 lg:self-start">
-                    <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5 shadow-[0_18px_50px_rgba(15,23,42,.08)]">
+                    <div className="border border-slate-950/10 bg-[#f8fafc] p-5 shadow-[0_18px_50px_rgba(15,23,42,.08)]">
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Offer Snapshot</p>
                         <dl className="mt-4 grid gap-3">
                             {facts.map((fact) => (
@@ -190,7 +189,7 @@ export function StaticGuideShell({
                         </dl>
                     </div>
 
-                    <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 shadow-sm">
+                    <div className="border border-amber-200 bg-amber-50 p-4 shadow-sm">
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">Important Notes</p>
                         <div className="mt-3 space-y-2">
                             {highlights.map((highlight) => (
@@ -201,7 +200,7 @@ export function StaticGuideShell({
                         </div>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200 bg-slate-950 p-4 text-white shadow-[0_18px_50px_rgba(15,23,42,.16)]">
+                    <div className="border border-slate-200 bg-slate-950 p-4 text-white shadow-[0_18px_50px_rgba(15,23,42,.16)]">
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-200">Next Step</p>
                         <div className="mt-4 grid gap-2">
                             <Link

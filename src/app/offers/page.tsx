@@ -150,23 +150,40 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
     ];
 
     return (
-        <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-6 sm:pt-10">
+        <main className="min-h-screen bg-[#e9efe8] pb-24">
             <JsonLd data={schemas} />
-            <Container>
+            <section className="eg-visual-frame px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+                <div className="relative z-10 mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
                 {/* Page Header */}
-                <div className="mb-6 overflow-hidden border border-slate-700 bg-[var(--brand-ink)] px-5 py-6 text-white shadow-[var(--shadow-card)] sm:px-7 sm:py-8">
+                <div>
                     <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-white/55">
                         <Link href="/" className="hover:text-[var(--brand-lime)]">Home</Link>
                         <span aria-hidden="true">/</span>
                         <span className="text-white">Offers</span>
                     </nav>
-                    <p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--brand-lime)]">Live offer discovery</p>
-                    <h1 className="mb-2 text-2xl font-extrabold tracking-tight text-white sm:text-4xl">
-                        Compare high-paying offers and games faster
+                    <p className="eg-kicker mb-4">Live offer discovery</p>
+                    <h1 className="mb-5 text-balance text-5xl font-black leading-[0.86] tracking-[-0.075em] text-white sm:text-7xl">
+                        Compare high-paying offers like a market terminal.
                     </h1>
-                    <p className="max-w-3xl text-sm leading-relaxed text-white/70 sm:text-lg">
+                    <p className="max-w-3xl text-lg font-semibold leading-8 text-white/68">
                         Search live GPT offers, scan current payouts, compare platforms, and browse game routes from one consolidated EarnGrind hub.
                     </p>
+                </div>
+                <div className="eg-terminal p-5">
+                    <div className="grid gap-3 sm:grid-cols-3">
+                        <div className="border border-white/10 bg-white/[0.06] p-4">
+                            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/40">Market</p>
+                            <p className="mt-2 text-xl font-black text-[var(--brand-lime)]">{effectiveCountry.name}</p>
+                        </div>
+                        <div className="border border-white/10 bg-white/[0.06] p-4">
+                            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/40">Initial rows</p>
+                            <p className="mt-2 text-xl font-black text-white">{initialOffers.meta.total.toLocaleString()}</p>
+                        </div>
+                        <div className="border border-white/10 bg-white/[0.06] p-4">
+                            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/40">Sort</p>
+                            <p className="mt-2 text-xl font-black text-white">Payout desc</p>
+                        </div>
+                    </div>
                     {countryResolution.fellBack && (
                         <p className="mt-3 max-w-3xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-xs font-semibold leading-relaxed text-amber-900">
                             Showing {effectiveCountry.name} offers because your country could not be matched to a supported market.
@@ -190,18 +207,22 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                         ))}
                     </div>
                 </div>
+                </div>
+            </section>
 
-                <section id="offer-search" className="mb-8 scroll-mt-24" aria-labelledby="offer-search-heading">
-                    <div className="mb-3 max-w-4xl">
-                        <p className="section-label mb-2">Offer search terminal</p>
-                        <h2 id="offer-search-heading" className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-2xl">
+            <Container>
+
+                <section id="offer-search" className="-mt-8 mb-10 scroll-mt-24" aria-labelledby="offer-search-heading">
+                    <div className="mb-4 border border-slate-950/10 bg-white p-5 shadow-[0_24px_70px_rgba(7,11,18,0.12)]">
+                        <p className="eg-kicker mb-3">Offer search terminal</p>
+                        <h2 id="offer-search-heading" className="text-3xl font-black tracking-[-0.04em] text-[var(--brand-ink)] sm:text-4xl">
                             Search offers for {effectiveCountry.name} by payout, site, source, and device
                         </h2>
-                        <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                        <p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-[var(--text-secondary)]">
                             Use this offer search terminal to compare current GPT offer payouts for {effectiveCountry.name}, filter games and tasks by device, and find the strongest route before opening a partner site.
                         </p>
+                        <CountrySelector activeCountryCode={effectiveCountry.code} className="mt-5 max-w-2xl" />
                     </div>
-                    <CountrySelector activeCountryCode={effectiveCountry.code} className="mb-4 max-w-2xl" />
                     <Suspense fallback={null}>
                         <OfferSearchEngine
                             initialOffers={initialOffers.data}
@@ -213,7 +234,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                     </Suspense>
                 </section>
 
-                <section id="games" className="mb-8 scroll-mt-24">
+                <section id="games" className="mb-10 scroll-mt-24 border border-slate-950/10 bg-white p-5 shadow-[0_24px_70px_rgba(7,11,18,0.08)] sm:p-6">
                     <div>
                         <GamesIndexClient
                             games={gamesIndex.games}
@@ -225,7 +246,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                 </section>
 
                 <section
-                    className="mb-6 sm:mb-8"
+                    className="mb-6 border border-slate-950/10 bg-white p-5 shadow-[0_24px_70px_rgba(7,11,18,0.08)] sm:mb-8 sm:p-6"
                     aria-labelledby="offerwall-route-heading"
                 >
                     <div className="max-w-3xl">

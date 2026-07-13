@@ -56,6 +56,40 @@ const GUIDE_HUB_LINKS = [
     },
 ];
 
+const GUIDE_EXPLAINER_CARDS = [
+    {
+        title: "What these guides cover",
+        description: "Each guide focuses on the actual offer path: required milestones, tracking risk, screenshots to keep, and the payout ceiling visible from current or researched routes.",
+    },
+    {
+        title: "How payouts work",
+        description: "GPT platforms and offerwalls set the reward, eligibility, and approval rules. EarnGrind compares those routes so you can choose the best platform before installing.",
+    },
+    {
+        title: "Common mistakes",
+        description: "Starting from the wrong country page, switching devices, skipping screenshot proof, missing timed milestones, or chasing a high payout with poor hourly value can all lower expected earnings.",
+    },
+];
+
+const GUIDE_DECISION_CARDS = [
+    {
+        title: "Which offers are easiest?",
+        description: "Easier offers usually have early milestones, lower level targets, clear tracking, and purchase dependency. Check each guide's difficulty, completion time, and no-spend notes before starting.",
+    },
+    {
+        title: "Which offers pay the most?",
+        description: "The highest headline payouts often require late-game progression or extreme playtimes. Compare them with the expected hourly value and the chance of finishing inside the deadline.",
+    },
+    {
+        title: "Can you finish without spending?",
+        description: "Some games are realistic no-spend routes, while others are only worth considering with a capped budget. Use the guide's task breakdown before committing time or money.",
+    },
+    {
+        title: "Where should beginners start?",
+        description: "Start with guides that show short deadlines, simple tasks, and multiple GPT site routes. Then compare alternatives in the offer search hub before clicking out.",
+    },
+];
+
 // ---------------------------------------------------------------
 // TYPES
 // ---------------------------------------------------------------
@@ -114,17 +148,47 @@ function getGameImageUrl(game: GuideGame | null) {
 // DIFFICULTY BADGE
 // ---------------------------------------------------------------
 const DIFFICULTY_STYLES: Record<string, string> = {
-    easy:   "bg-green-50 text-green-700 border-green-200",
-    medium: "bg-amber-50 text-amber-700 border-amber-200",
-    hard:   "bg-red-50 text-red-700 border-red-200",
+    easy:   "bg-lime-400 text-slate-950 border-lime-400",
+    medium: "bg-amber-400 text-slate-950 border-amber-400",
+    hard:   "bg-pink-500 text-white border-pink-500",
 };
 
 function DifficultyBadge({ difficulty }: { difficulty: string | null }) {
     if (!difficulty) return null;
     return (
-        <span className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider border ${DIFFICULTY_STYLES[difficulty] ?? "bg-gray-50 text-gray-600 border-gray-200"}`}>
+        <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.18em] border ${DIFFICULTY_STYLES[difficulty] ?? "bg-slate-900 text-white border-slate-900"}`}>
             {difficulty}
         </span>
+    );
+}
+
+function GuideArtwork({
+    imageUrl,
+    alt,
+    initials,
+}: {
+    imageUrl?: string | null;
+    alt: string;
+    initials: string;
+}) {
+    return (
+        <div className="relative aspect-[16/8.5] overflow-hidden bg-slate-950">
+            {imageUrl ? (
+                <Image
+                    src={imageUrl}
+                    alt={alt}
+                    fill
+                    sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                    unoptimized={isSvgUrl(imageUrl)}
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                />
+            ) : (
+                <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(132,204,22,0.32),transparent_35%),linear-gradient(135deg,#020617,#111827)] text-3xl font-black tracking-[0.22em] text-white">
+                    {initials}
+                </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/15 to-transparent" />
+        </div>
     );
 }
 
@@ -133,52 +197,45 @@ function DifficultyBadge({ difficulty }: { difficulty: string | null }) {
 // ---------------------------------------------------------------
 function GuideCard({ guide }: { guide: Guide }) {
     const gameImageUrl = getGameImageUrl(guide.games);
+    const gameName = guide.games?.name ?? "Game guide";
+    const initials = guide.games ? getInitials(guide.games.name) : "GG";
 
     return (
         <Link
             href={`/guides/${guide.slug}`}
-            className="group eg-card flex flex-col p-5 hover:-translate-y-0.5"
+            className="group flex min-h-full flex-col overflow-hidden border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.12)]"
         >
-            {guide.games && (
-                <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex-shrink-0 flex items-center justify-center">
-                        {gameImageUrl ? (
-                            <Image
-                                src={gameImageUrl}
-                                alt={guide.games.name}
-                                width={40}
-                                height={40}
-                                unoptimized={isSvgUrl(gameImageUrl)}
-                                className="w-full h-full object-cover"
-                            />
-                        ) : (
-                            <span className="text-xs font-bold text-[var(--text-tertiary)]">{getInitials(guide.games.name)}</span>
-                        )}
-                    </div>
-                    <span className="section-label">{guide.games.name}</span>
+            <div className="relative">
+                <GuideArtwork imageUrl={gameImageUrl} alt={gameName} initials={initials} />
+                <div className="absolute bottom-3 left-3 flex max-w-[calc(100%-1.5rem)] items-center gap-2">
+                    <span className="truncate bg-slate-950 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
+                        {gameName}
+                    </span>
+                    <DifficultyBadge difficulty={guide.difficulty} />
                 </div>
-            )}
+            </div>
 
-            <h2 className="font-bold text-[var(--brand-ink)] group-hover:text-lime-700 transition-colors leading-snug mb-2 flex-1">
-                {guide.title}
-            </h2>
+            <div className="flex flex-1 flex-col p-4">
+                <h2 className="text-base font-black uppercase leading-tight tracking-[-0.03em] text-[var(--brand-ink)] transition-colors group-hover:text-lime-700">
+                    {guide.title}
+                </h2>
 
             {guide.excerpt && (
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-3 line-clamp-2">
+                <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-[var(--text-secondary)]">
                     {guide.excerpt}
                 </p>
             )}
 
-            <div className="flex items-center gap-2 flex-wrap mt-auto pt-3 border-t border-[var(--border-default)]">
-                <DifficultyBadge difficulty={guide.difficulty} />
+            <div className="mt-auto flex items-center gap-3 border-t border-[var(--border-default)] pt-3 text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
                 {guide.estimated_time && (
-                    <span className="text-xs text-[var(--text-tertiary)] font-medium">⏱ {guide.estimated_time}</span>
+                    <span>{guide.estimated_time}</span>
                 )}
                 {guide.max_payout_usd && (
-                    <span className="ml-auto text-sm font-extrabold text-lime-600">
+                    <span className="ml-auto text-lime-700">
                         up to ${guide.max_payout_usd.toFixed(2)}
                     </span>
                 )}
+            </div>
             </div>
         </Link>
     );
@@ -208,44 +265,37 @@ function GuideIndexCard({
     return (
         <Link
             href={href}
-            className="group eg-card flex flex-col p-5 hover:-translate-y-0.5"
+            className="group flex min-h-full flex-col overflow-hidden border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.12)]"
         >
-            <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)]">
-                    {imageUrl ? (
-                        <Image
-                            src={imageUrl}
-                            alt={label}
-                            width={40}
-                            height={40}
-                            unoptimized={isSvgUrl(imageUrl)}
-                            className="h-full w-full object-cover"
-                        />
-                    ) : (
-                        <span className="text-xs font-bold text-[var(--text-tertiary)]">{initials}</span>
-                    )}
+            <div className="relative">
+                <GuideArtwork imageUrl={imageUrl} alt={label} initials={initials} />
+                <div className="absolute bottom-3 left-3 flex max-w-[calc(100%-1.5rem)] items-center gap-2">
+                    <span className="truncate bg-slate-950 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
+                        {label}
+                    </span>
+                    <DifficultyBadge difficulty={difficulty ?? null} />
                 </div>
-                <span className="section-label">{label}</span>
             </div>
 
-            <h2 className="mb-2 flex-1 font-bold leading-snug text-[var(--brand-ink)] transition-colors group-hover:text-lime-700">
-                {title}
-            </h2>
+            <div className="flex flex-1 flex-col p-4">
+                <h2 className="text-base font-black uppercase leading-tight tracking-[-0.03em] text-[var(--brand-ink)] transition-colors group-hover:text-lime-700">
+                    {title}
+                </h2>
 
-            <p className="mb-3 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">
+            <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-[var(--text-secondary)]">
                 {description}
             </p>
 
-            <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-[var(--border-default)] pt-3">
-                <DifficultyBadge difficulty={difficulty ?? null} />
+            <div className="mt-auto flex items-center gap-3 border-t border-[var(--border-default)] pt-3 text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
                 {estimatedTime && (
-                    <span className="text-xs font-medium text-[var(--text-tertiary)]">â± {estimatedTime}</span>
+                    <span>{estimatedTime}</span>
                 )}
                 {maxPayoutUsd != null && (
-                    <span className="ml-auto text-sm font-extrabold text-lime-600">
+                    <span className="ml-auto text-lime-700">
                         up to ${maxPayoutUsd.toFixed(2)}
                     </span>
                 )}
+            </div>
             </div>
         </Link>
     );
@@ -253,10 +303,10 @@ function GuideIndexCard({
 
 function PalmonGuideHub({ imageUrl }: { imageUrl: string | null }) {
     return (
-        <section className="eg-card overflow-hidden p-5 sm:col-span-2 sm:p-6 lg:col-span-3">
+        <section className="overflow-hidden border border-slate-800 bg-slate-950 p-5 text-white shadow-[0_22px_60px_rgba(2,6,23,0.24)] sm:col-span-2 sm:p-6 lg:col-span-3">
             <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-                    <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl border border-lime-200 bg-lime-50">
+                    <div className="h-16 w-16 flex-shrink-0 overflow-hidden border border-lime-400/30 bg-lime-400/10">
                         {imageUrl ? (
                             <Image
                                 src={imageUrl}
@@ -267,24 +317,24 @@ function PalmonGuideHub({ imageUrl }: { imageUrl: string | null }) {
                                 className="h-full w-full object-cover"
                             />
                         ) : (
-                            <div className="flex h-full w-full items-center justify-center text-lg font-extrabold text-lime-700">
+                            <div className="flex h-full w-full items-center justify-center text-lg font-extrabold text-lime-300">
                                 PS
                             </div>
                         )}
                     </div>
                     <div>
-                        <p className="section-label mb-2">Featured guide cluster</p>
-                        <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+                        <p className="mb-2 text-[10px] font-black uppercase tracking-[0.22em] text-lime-300">Featured guide cluster</p>
+                        <h2 className="text-2xl font-black uppercase tracking-[-0.04em] text-white">
                             Palmon: Survival Guide Hub
                         </h2>
-                        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+                        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-300">
                             Best payouts, Camp 30 strategy, no-spend tips, tracking help, and current Palmon offer routes.
                         </p>
                     </div>
                 </div>
                 <Link
                     href={`/games/${PALMON_GAME_SLUG}`}
-                    className="inline-flex w-full items-center justify-center rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] sm:w-auto"
+                    className="inline-flex w-full items-center justify-center bg-[var(--brand-lime)] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-slate-950 transition hover:bg-lime-300 sm:w-auto"
                 >
                     Compare current Palmon payouts →
                 </Link>
@@ -295,7 +345,7 @@ function PalmonGuideHub({ imageUrl }: { imageUrl: string | null }) {
                     <Link
                         key={guide.href}
                         href={guide.href}
-                        className="rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition hover:border-lime-300 hover:bg-lime-50"
+                        className="border border-slate-700 bg-slate-900 px-4 py-3 text-xs font-bold text-slate-200 transition hover:border-lime-300 hover:bg-lime-400/10 hover:text-lime-200"
                     >
                         {guide.label}
                     </Link>
@@ -453,29 +503,42 @@ export default async function GuidesPage({
     const displayedTotalCount = totalCount + gameGuideStaticGuides.length;
 
     return (
-        <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+        <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-8">
             <Container>
-                <div className="mb-10">
+                <div className="mb-8">
+                    <nav className="mb-6 flex items-center gap-2 text-[11px] font-bold text-[var(--text-tertiary)]" aria-label="Breadcrumb">
+                        <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
+                        <span>/</span>
+                        <span className="text-[var(--brand-ink)]">Guides</span>
+                    </nav>
                     <p className="section-label mb-3">Game Guides</p>
-                    <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--brand-ink)] tracking-tight mb-3">
-                        Game Guides
+                    <h1 className="max-w-4xl text-4xl font-black uppercase tracking-[-0.06em] text-[var(--brand-ink)] sm:text-5xl">
+                        Game offer guides for GPT sites
                     </h1>
-                    <p className="text-lg text-[var(--text-secondary)] max-w-2xl leading-relaxed">
-                        Step-by-step completion guides for the best-paying offerwall games.
-                        Every guide covers the fastest path to maximum payout.
+                    <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+                        Step-by-step completion guides for offerwall games on Freecash, Swagbucks, EarnLab, Gain.gg, and similar GPT sites. Use them to compare payout size, estimated time, difficulty, task deadlines, and whether a no-spend route looks realistic before starting.
                     </p>
                     {totalCount > 0 && (
-                        <p className="text-sm text-[var(--text-tertiary)] mt-2">
+                        <p className="mt-4 inline-flex bg-slate-950 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-white">
                             {displayedTotalCount} guide{displayedTotalCount !== 1 ? "s" : ""} available
                         </p>
                     )}
                 </div>
 
                 {page === 1 ? (
-                    <section className="mb-8" aria-labelledby="guide-hubs-heading">
-                        <div className="mb-4">
+                    <section className="mb-8 space-y-8" aria-labelledby="guide-hubs-heading">
+                        <div className="grid gap-4 md:grid-cols-3">
+                            {GUIDE_EXPLAINER_CARDS.map((card) => (
+                                <div key={card.title} className="border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+                                    <h2 className="text-sm font-black uppercase tracking-[-0.02em] text-[var(--brand-ink)]">{card.title}</h2>
+                                    <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">{card.description}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div>
                             <p className="section-label mb-2">Guide hubs</p>
-                            <h2 id="guide-hubs-heading" className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
+                            <h2 id="guide-hubs-heading" className="text-xl font-black uppercase tracking-[-0.04em] text-[var(--brand-ink)]">
                                 Browse by guide type
                             </h2>
                         </div>
@@ -484,9 +547,9 @@ export default async function GuidesPage({
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300"
+                                    className="border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300"
                                 >
-                                    <h3 className="font-extrabold text-[var(--brand-ink)]">{link.label}</h3>
+                                    <h3 className="text-sm font-black uppercase tracking-[-0.02em] text-[var(--brand-ink)]">{link.label}</h3>
                                     <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">{link.description}</p>
                                 </Link>
                             ))}
@@ -502,7 +565,13 @@ export default async function GuidesPage({
                     </div>
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div className="mb-5">
+                            <p className="section-label mb-2">Latest game guides</p>
+                            <h2 className="text-xl font-black uppercase tracking-[-0.04em] text-[var(--brand-ink)]">
+                                Step-by-step offer routes
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                             {page === 1 && gameGuideStaticGuides.map((guide) => (
                                 <GuideIndexCard
                                     key={guide.slug}
@@ -522,6 +591,21 @@ export default async function GuidesPage({
                                 <GuideCard key={guide.id} guide={guide} />
                             ))}
                         </div>
+                        {page === 1 && (
+                            <section className="mt-12 border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]" aria-labelledby="choosing-guide-heading">
+                                <h2 id="choosing-guide-heading" className="text-2xl font-black uppercase tracking-[-0.05em] text-[var(--brand-ink)]">
+                                    Choosing the right game offer
+                                </h2>
+                                <div className="mt-5 grid gap-5 md:grid-cols-2">
+                                    {GUIDE_DECISION_CARDS.map((card) => (
+                                        <div key={card.title}>
+                                            <h3 className="text-sm font-black uppercase tracking-[-0.02em] text-[var(--brand-ink)]">{card.title}</h3>
+                                            <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">{card.description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
                         <Pagination
                             page={page}
                             totalCount={totalCount}

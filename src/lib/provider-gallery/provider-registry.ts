@@ -27,7 +27,7 @@ export const PROVIDER_GALLERY_REGISTRY = {
         hasDirectOfferDeeplinks: true,
         preserveExistingOfferUrlOnMissingDeeplink: true,
         externalIdStrategy: (offer) => `gemsloot-${slugifyGalleryValue(offer.providerDisplayName)}-${offer.sourceOfferId}-${offer.countryCode}`,
-        genericFallbackUrl: "https://gemsloot.com/earn",
+        genericFallbackUrl: "https://gemsloot.com/?aff=kamedev",
     },
     "gain-gg": {
         key: "gain-gg",

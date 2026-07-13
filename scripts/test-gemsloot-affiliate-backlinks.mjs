@@ -6,6 +6,7 @@ const affiliateUrl = "https://gemsloot.com/?aff=kamedev";
 
 const guideSource = readFileSync(resolve(process.cwd(), "src/lib/gpt-site-guides.ts"), "utf8");
 const homepageSource = readFileSync(resolve(process.cwd(), "src/lib/homepage-data.ts"), "utf8");
+const publicOffersSource = readFileSync(resolve(process.cwd(), "src/lib/public-offers.ts"), "utf8");
 
 assert.ok(
   guideSource.includes(`const GEMSLOOT_AFFILIATE_URL = "${affiliateUrl}";`),
@@ -41,6 +42,15 @@ assert.ok(
 assert.ok(
   !homepageSource.includes("return `https://gemsloot.com/transactions?${params.toString()}`;"),
   "Gemsloot featured homepage fallback should not build a direct transaction URL",
+);
+
+assert.ok(
+  publicOffersSource.includes(`const GEMSLOOT_AFFILIATE_URL = "${affiliateUrl}";`),
+  "Public offer shaping should define the Gemsloot affiliate target",
+);
+assert.ok(
+  publicOffersSource.includes("return GEMSLOOT_AFFILIATE_URL;"),
+  "Public Gemsloot offer payloads should use the affiliate link instead of raw source URLs",
 );
 
 console.log("Gemsloot affiliate backlink validation passed");

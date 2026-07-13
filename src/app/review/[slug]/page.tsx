@@ -199,7 +199,7 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
 
                 <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-12">
                     <div className="space-y-5 lg:col-span-8">
-                        <div className="eg-visual-frame p-6 text-white shadow-[var(--shadow-card)] sm:p-8">
+                        <div className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)] sm:p-8">
                             {platform ? (
                                 <div className="mb-5 flex items-center gap-3">
                                     {platform.logo_url ? (
@@ -212,61 +212,61 @@ export default async function ReviewPage({ params }: { params: { slug: string } 
                                         />
                                     ) : null}
                                     <div>
-                                        <div className="text-xs font-bold uppercase tracking-wider text-white/50">
+                                        <div className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)]">
                                             {(platform.platform_kind || "platform").replace(/_/g, " ")}
                                         </div>
-                                        <div className="font-bold text-white">{platform.name}</div>
+                                        <div className="font-bold text-[var(--brand-ink)]">{platform.name}</div>
                                     </div>
                                 </div>
                             ) : null}
 
-                            <h1 className="mb-3 text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl">
+                            <h1 className="mb-3 text-2xl font-extrabold leading-tight tracking-tight text-[var(--brand-ink)] sm:text-3xl">
                                 {review.title}
                             </h1>
 
                             {review.excerpt ? (
-                                <p className="max-w-3xl text-base leading-relaxed text-white/72">
+                                <p className="max-w-3xl text-base leading-relaxed text-[var(--text-secondary)]">
                                     {review.excerpt}
                                 </p>
                             ) : null}
 
                             <div className="mt-5 grid gap-3 md:grid-cols-4">
-                                <div className="border border-white/10 bg-white/5 p-3">
-                                    <p className="text-xs uppercase tracking-wide text-white/50">Overall rating</p>
+                                <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+                                    <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Overall rating</p>
                                     <div className="mt-1">
                                         {review.rating_overall != null ? <RatingPill rating={review.rating_overall} /> : <span className="text-sm font-bold text-[var(--brand-ink)]">No rating yet</span>}
                                     </div>
                                 </div>
-                                <div className="border border-white/10 bg-white/5 p-3">
-                                    <p className="text-xs uppercase tracking-wide text-white/50">Trust takeaway</p>
-                                    <p className="mt-1 text-sm font-bold text-white">
+                                <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+                                    <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Trust takeaway</p>
+                                    <p className="mt-1 text-sm font-bold text-[var(--brand-ink)]">
                                         {(review.rating_trust ?? 0) >= 4 ? "Looks trustworthy" : "Read trust section first"}
                                     </p>
                                 </div>
-                                <div className="border border-white/10 bg-white/5 p-3">
-                                    <p className="text-xs uppercase tracking-wide text-white/50">Offer value</p>
-                                    <p className="mt-1 text-sm font-bold text-white">
+                                <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+                                    <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Offer value</p>
+                                    <p className="mt-1 text-sm font-bold text-[var(--brand-ink)]">
                                         {(review.rating_payout ?? 0) >= 4 ? "Worth checking offers" : "Compare with other platforms"}
                                     </p>
                                 </div>
-                                <div className="border border-white/10 bg-white/5 p-3">
-                                    <p className="text-xs uppercase tracking-wide text-white/50">Updated</p>
-                                    <p className="mt-1 text-sm font-bold text-white">{updatedDate}</p>
+                                <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-3">
+                                    <p className="text-xs uppercase tracking-wide text-[var(--text-tertiary)]">Updated</p>
+                                    <p className="mt-1 text-sm font-bold text-[var(--brand-ink)]">{updatedDate}</p>
                                 </div>
                             </div>
 
                             <div className="mt-5 grid gap-4 lg:grid-cols-3">
-                                <article className="border border-white/10 bg-white/5 p-4">
-                                    <p className="text-xs font-bold uppercase tracking-wide text-white/50">Trust and value</p>
-                                    <p className="mt-2 text-sm leading-relaxed text-white/72">{trustTakeaway}</p>
+                                <article className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                                    <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Trust and value</p>
+                                    <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{trustTakeaway}</p>
                                 </article>
-                                <article className="border border-white/10 bg-white/5 p-4">
-                                    <p className="text-xs font-bold uppercase tracking-wide text-white/50">Best for</p>
-                                    <p className="mt-2 text-sm leading-relaxed text-white/72">{bestFor}</p>
+                                <article className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                                    <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">Best for</p>
+                                    <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{bestFor}</p>
                                 </article>
-                                <article className="border border-white/10 bg-white/5 p-4">
-                                    <p className="text-xs font-bold uppercase tracking-wide text-white/50">What to do next</p>
-                                    <p className="mt-2 text-sm leading-relaxed text-white/72">{nextStep}</p>
+                                <article className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
+                                    <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">What to do next</p>
+                                    <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{nextStep}</p>
                                 </article>
                             </div>
 

@@ -12,7 +12,6 @@ export type UnifiedOfferRow = Record<string, unknown> & {
     title?: string | null;
     payout_usd?: number | string | null;
     total_payout_usd?: number | string | null;
-    completion_count?: number | string | null;
     payout_type?: string | null;
     devices?: string[] | null;
     countries?: string[] | null;
@@ -110,7 +109,6 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
         image_url: getUnifiedOfferImageUrl(row),
         payout_usd: payoutUsd,
         total_payout_usd: totalPayoutUsd,
-        completion_count: row.completion_count == null ? null : toNumber(row.completion_count, 0),
         payout_type: toPublicPayoutType(row.payout_type),
         devices: toPublicDevices(row.devices),
         countries: row.countries ?? [],

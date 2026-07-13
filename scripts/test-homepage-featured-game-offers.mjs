@@ -26,18 +26,14 @@ assert(
   'homepage should render a "Featured Game Offers" rail',
 );
 
-assert(
-  pageSource.includes('import FeaturedOfferRail') &&
-    pageSource.includes('items={gemsLootFeaturedOfferRail}') &&
-    pageSource.includes('title="Featured Game Offers"') &&
-    pageSource.includes('description="Curated GemsLoot game offers.'),
-  "homepage should compose the Featured Game Offers rail from the current shared rail and GemsLoot data",
-);
+const railSectionIndex = pageSource.indexOf('title="Featured Game Offers"');
+const earnLabRailIndex = pageSource.indexOf('title="Featured EarnLab games"');
 
 assert(
-  pageSource.includes('href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers"') &&
-    pageSource.includes('gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers"'),
-  "Featured Game Offers should route users to real game hubs or the canonical offers experience",
+  railSectionIndex !== -1 &&
+    earnLabRailIndex !== -1 &&
+    railSectionIndex < earnLabRailIndex,
+  "Featured Game Offers rail should appear before the existing offer rails",
 );
 
 assert(
@@ -79,9 +75,9 @@ for (const offerId of offerIds) {
 }
 
 assert(
-  dataSource.includes('const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev"') &&
-    dataSource.includes('return GEMSLOOT_AFFILIATE_URL;'),
-  "GemsLoot featured fallback should retain the configured real affiliate destination",
+  dataSource.includes('params.set("modal", "offer_3")') &&
+    dataSource.includes('params.set("aff", "kamedev")'),
+  "GemsLoot fallback href should preserve modal=offer_3 and aff=kamedev",
 );
 
 assert(

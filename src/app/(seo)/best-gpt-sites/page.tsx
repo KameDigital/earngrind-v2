@@ -129,10 +129,10 @@ function ratingLabel(review: ReviewSummary) {
 
 function StatCard({ label, value, detail }: { label: string; value: string; detail: string }) {
   return (
-    <div className="border border-white/10 bg-white/[0.06] p-4">
+    <div className="rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)] p-4">
       <p className="text-xs font-bold uppercase tracking-wide text-[var(--text-tertiary)]">{label}</p>
-      <p className="mt-1 text-xl font-black text-white">{value}</p>
-      <p className="mt-1 text-xs font-semibold leading-relaxed text-white/55">{detail}</p>
+      <p className="mt-1 text-xl font-extrabold text-[var(--brand-ink)]">{value}</p>
+      <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">{detail}</p>
     </div>
   );
 }
@@ -145,13 +145,13 @@ function TrustBox() {
   ] as const;
 
   return (
-    <div className="eg-terminal grid gap-3 p-4">
+    <div className="grid gap-3 rounded-xl border border-lime-200 bg-lime-50 p-4">
       {items.map(([Icon, title, copy]) => (
         <div key={title} className="flex gap-3">
-          <Icon className="mt-0.5 h-5 w-5 flex-none text-[var(--brand-lime)]" aria-hidden="true" />
+          <Icon className="mt-0.5 h-5 w-5 flex-none text-lime-700" aria-hidden="true" />
           <div>
-            <p className="font-black text-white">{title}</p>
-            <p className="text-sm font-semibold leading-relaxed text-white/60">{copy}</p>
+            <p className="font-extrabold text-[var(--brand-ink)]">{title}</p>
+            <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{copy}</p>
           </div>
         </div>
       ))}
@@ -513,37 +513,37 @@ export default async function BestGptSitesPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#e9efe8] pb-24">
+    <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
       <RevenuePageView routePath="/best-gpt-sites" routeGroup="best_gpt_sites" sourceContext="best_gpt_sites" />
       <JsonLd data={schemas} />
       <StickyReferralBar platform={heroPlatform} />
-      <section className="eg-visual-frame px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
-        <div className="relative z-10 mx-auto max-w-[1440px]">
-          <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-white/55" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-[var(--brand-lime)]">Home</Link>
+      <Container className="space-y-8">
+        <section className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
+          <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
             <span>/</span>
-            <span className="text-white">Best GPT Sites</span>
+            <span className="text-[var(--brand-ink)]">Best GPT Sites</span>
           </nav>
-          <div className="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
+          <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
             <div>
-              <p className="eg-kicker">Platform comparison</p>
-              <h1 className="mt-4 max-w-4xl text-5xl font-black leading-[0.88] tracking-[-0.075em] text-white sm:text-7xl">
-                Compare GPT sites like a payout analyst.
+              <p className="section-label">Best GPT Sites</p>
+              <h1 className="mt-2 max-w-4xl text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-4xl">
+                Compare the best GPT sites before you join
               </h1>
-              <p className="mt-5 max-w-3xl text-lg font-semibold leading-8 text-white/68">
+              <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--text-secondary)]">
                 EarnGrind compares payout quality, trust signals, live offer inventory, and redemption fit so you can pick a GPT site before committing time to a task.
               </p>
               <ReferralCtaRail platforms={primaryPlatforms} />
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link
                   href="/offers"
-                  className="inline-flex items-center justify-center gap-2 bg-[var(--brand-lime)] px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:bg-[#9aeb42]"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                 >
                   Find GPT offers <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/guides/best-gpt-sites"
-                  className="inline-flex items-center justify-center gap-2 border border-white/20 bg-white/5 px-4 py-3 text-sm font-extrabold text-white transition-all hover:-translate-y-px hover:border-white/45"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
                 >
                   Read site guides
                 </Link>
@@ -551,7 +551,7 @@ export default async function BestGptSitesPage() {
                   <PlatformTrackedLink
                     platform={heroPlatform}
                     location="best_gpt_sites_hero_primary"
-                    className="inline-flex items-center justify-center gap-2 border border-[var(--brand-lime)]/35 bg-[var(--brand-lime)]/10 px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-lime-300 bg-lime-50 px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
                   >
                     Start with {heroPlatform.name}
                   </PlatformTrackedLink>
@@ -561,7 +561,7 @@ export default async function BestGptSitesPage() {
             <TrustBox />
           </div>
 
-          <div className="mt-8 grid gap-3 md:grid-cols-4">
+          <div className="mt-6 grid gap-3 md:grid-cols-4">
             <StatCard
               label="Best beginner pick"
               value={heroPlatform?.name ?? "Review first"}
@@ -595,10 +595,7 @@ export default async function BestGptSitesPage() {
               </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      <Container className="space-y-8 pt-8">
+        </section>
 
         <ComparisonTable platforms={recommendedPlatforms} guides={publishedGuides} />
 

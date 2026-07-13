@@ -6,34 +6,12 @@ import Container from "@/components/layout/Container";
 import { STATIC_GUIDES } from "@/lib/static-guides";
 import { pickPublicArtworkUrl } from "@/lib/public-image-url";
 import { canonicalAlternates } from "@/lib/seo-metadata";
-import { buildBreadcrumbList, buildCollectionPage, buildItemList, buildOrganization, JsonLd } from "@/lib/seo-schema";
 import { PUBLIC_GUIDE_TYPES, shouldShowOnGameGuidesIndex } from "@/lib/content-routing";
 
 export const metadata: Metadata = {
-    title: "Game Offer Guides for Freecash, Swagbucks & GPT Sites",
-    description: "Browse game offer guides with payout context, completion difficulty, timing, no-spend notes, and route comparisons for major GPT and rewards sites.",
+    title: "Game Guides — Maximize Your Offerwall Earnings | EarnGrind",
+    description: "Step-by-step guides for the most popular offerwall game tasks. Learn the fastest routes to max payout on Coin Master, Bingo Blitz, and more.",
     alternates: canonicalAlternates("/guides"),
-    openGraph: {
-        title: "Game Offer Guides for Freecash, Swagbucks & GPT Sites",
-        description: "Browse game offer guides with payout context, completion difficulty, timing, no-spend notes, and route comparisons for major GPT and rewards sites.",
-        url: "https://earngrind.com/guides",
-        siteName: "EarnGrind",
-        images: [
-            {
-                url: "/og-earngrind.png",
-                width: 1200,
-                height: 630,
-                alt: "EarnGrind game offer guide hub",
-            },
-        ],
-        type: "website",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Game Offer Guides for Freecash, Swagbucks & GPT Sites",
-        description: "Compare payout, timing, difficulty, and no-spend strategy before starting a game offer.",
-        images: ["/og-earngrind.png"],
-    },
 };
 
 const PAGE_SIZE = 18;
@@ -159,11 +137,11 @@ function GuideCard({ guide }: { guide: Guide }) {
     return (
         <Link
             href={`/guides/${guide.slug}`}
-            className="group eg-market-card flex min-h-[250px] flex-col p-5"
+            className="group eg-card flex flex-col p-5 hover:-translate-y-0.5"
         >
             {guide.games && (
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden border border-slate-950/10 bg-slate-100">
+                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex-shrink-0 flex items-center justify-center">
                         {gameImageUrl ? (
                             <Image
                                 src={gameImageUrl}
@@ -181,12 +159,12 @@ function GuideCard({ guide }: { guide: Guide }) {
                 </div>
             )}
 
-            <h2 className="mb-2 flex-1 text-xl font-black leading-tight tracking-[-0.035em] text-[var(--brand-ink)] transition-colors group-hover:text-lime-700">
+            <h2 className="font-bold text-[var(--brand-ink)] group-hover:text-lime-700 transition-colors leading-snug mb-2 flex-1">
                 {guide.title}
             </h2>
 
             {guide.excerpt && (
-                <p className="mb-3 line-clamp-2 text-sm font-semibold leading-relaxed text-[var(--text-secondary)]">
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-3 line-clamp-2">
                     {guide.excerpt}
                 </p>
             )}
@@ -230,10 +208,10 @@ function GuideIndexCard({
     return (
         <Link
             href={href}
-            className="group eg-market-card flex min-h-[250px] flex-col p-5"
+            className="group eg-card flex flex-col p-5 hover:-translate-y-0.5"
         >
             <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden border border-slate-950/10 bg-slate-100">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[var(--border-default)] bg-[var(--surface-muted)]">
                     {imageUrl ? (
                         <Image
                             src={imageUrl}
@@ -250,11 +228,11 @@ function GuideIndexCard({
                 <span className="section-label">{label}</span>
             </div>
 
-            <h2 className="mb-2 flex-1 text-xl font-black leading-tight tracking-[-0.035em] text-[var(--brand-ink)] transition-colors group-hover:text-lime-700">
+            <h2 className="mb-2 flex-1 font-bold leading-snug text-[var(--brand-ink)] transition-colors group-hover:text-lime-700">
                 {title}
             </h2>
 
-            <p className="mb-3 line-clamp-2 text-sm font-semibold leading-relaxed text-[var(--text-secondary)]">
+            <p className="mb-3 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">
                 {description}
             </p>
 
@@ -473,102 +451,31 @@ export default async function GuidesPage({
         null;
     const totalCount = count ?? rawGuides.length;
     const displayedTotalCount = totalCount + gameGuideStaticGuides.length;
-    const itemList = buildItemList([
-        ...gameGuideStaticGuides.slice(0, 12).map((guide) => ({
-            name: guide.title,
-            path: guide.href,
-            description: guide.description,
-        })),
-        ...visibleGuides.slice(0, 12).map((guide) => ({
-            name: guide.title,
-            path: `/guides/${guide.slug}`,
-            description: guide.excerpt,
-        })),
-    ]);
-    const schemas = [
-        buildOrganization("EarnGrind", "/"),
-        buildBreadcrumbList([
-            { name: "Home", path: "/" },
-            { name: "Guides", path: "/guides" },
-        ]),
-        itemList,
-        buildCollectionPage({
-            name: "Game Offer Guides",
-            path: "/guides",
-            description: "Game offer guides with payout context, difficulty, timing, completion strategy, and partner route comparisons.",
-            mainEntity: itemList,
-        }),
-    ];
 
     return (
-        <main className="min-h-screen bg-[#e9efe8] pb-24">
-            <JsonLd data={schemas} />
-                <section className="eg-visual-frame px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
-                <div className="relative z-10 mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
-                <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-white/55">
-                    <Link href="/" className="hover:text-[var(--brand-lime)]">Home</Link>
-                    <span aria-hidden="true">/</span>
-                    <span className="text-white">Guides</span>
-                </nav>
-                <div>
-                    <p className="eg-kicker mb-4">Game guide library</p>
-                    <h1 className="mb-5 text-balance text-5xl font-black leading-[0.86] tracking-[-0.075em] text-white sm:text-7xl">
-                        Game offer guides built like field notes.
+        <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+            <Container>
+                <div className="mb-10">
+                    <p className="section-label mb-3">Game Guides</p>
+                    <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--brand-ink)] tracking-tight mb-3">
+                        Game Guides
                     </h1>
-                    <p className="max-w-3xl text-lg font-semibold leading-8 text-white/68">
-                        Step-by-step completion guides for offerwall games on Freecash, Swagbucks, EarnLab, Gain.gg, and similar GPT sites.
-                        Use them to compare payout size, estimated time, difficulty, task deadlines, and whether a no-spend route looks realistic before starting.
+                    <p className="text-lg text-[var(--text-secondary)] max-w-2xl leading-relaxed">
+                        Step-by-step completion guides for the best-paying offerwall games.
+                        Every guide covers the fastest path to maximum payout.
                     </p>
                     {totalCount > 0 && (
-                        <p className="mt-3 text-sm text-white/55">
+                        <p className="text-sm text-[var(--text-tertiary)] mt-2">
                             {displayedTotalCount} guide{displayedTotalCount !== 1 ? "s" : ""} available
                         </p>
                     )}
                 </div>
-                <div className="eg-terminal grid gap-3 p-5 sm:grid-cols-3">
-                    <div className="border border-white/10 bg-white/[0.06] p-4">
-                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/40">Guides</p>
-                        <p className="mt-2 text-2xl font-black text-[var(--brand-lime)]">{displayedTotalCount}</p>
-                    </div>
-                    <div className="border border-white/10 bg-white/[0.06] p-4">
-                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/40">Focus</p>
-                        <p className="mt-2 text-lg font-black text-white">Milestones</p>
-                    </div>
-                    <div className="border border-white/10 bg-white/[0.06] p-4">
-                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-white/40">Use before</p>
-                        <p className="mt-2 text-lg font-black text-white">Clickout</p>
-                    </div>
-                </div>
-                </div>
-                </section>
-            <Container>
-
-                <section className="-mt-8 mb-10 grid gap-4 text-sm font-semibold leading-relaxed text-[var(--text-secondary)] md:grid-cols-3" aria-label="How to use these game offer guides">
-                    <div className="border border-slate-950/10 bg-white p-5 shadow-[0_24px_70px_rgba(7,11,18,0.10)]">
-                        <h2 className="text-lg font-black tracking-[-0.03em] text-[var(--brand-ink)]">What these guides cover</h2>
-                        <p className="mt-2">
-                            Each guide focuses on the actual offer path: required milestones, tracking risk, screenshots to keep, and the payout ceiling visible from current or researched routes.
-                        </p>
-                    </div>
-                    <div className="border border-slate-950/10 bg-white p-5 shadow-[0_24px_70px_rgba(7,11,18,0.10)]">
-                        <h2 className="text-lg font-black tracking-[-0.03em] text-[var(--brand-ink)]">How payouts work</h2>
-                        <p className="mt-2">
-                            GPT platforms and offerwalls set the reward, eligibility, and approval rules. EarnGrind compares those routes so you can choose the best platform before installing.
-                        </p>
-                    </div>
-                    <div className="border border-slate-950/10 bg-white p-5 shadow-[0_24px_70px_rgba(7,11,18,0.10)]">
-                        <h2 className="text-lg font-black tracking-[-0.03em] text-[var(--brand-ink)]">Common mistakes</h2>
-                        <p className="mt-2">
-                            Starting from the wrong country page, switching devices, skipping screenshot proof, missing timed milestones, or chasing a high payout with poor hourly value can all lower expected earnings.
-                        </p>
-                    </div>
-                </section>
 
                 {page === 1 ? (
                     <section className="mb-8" aria-labelledby="guide-hubs-heading">
                         <div className="mb-4">
                             <p className="section-label mb-2">Guide hubs</p>
-                            <h2 id="guide-hubs-heading" className="text-3xl font-black tracking-[-0.04em] text-[var(--brand-ink)]">
+                            <h2 id="guide-hubs-heading" className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">
                                 Browse by guide type
                             </h2>
                         </div>
@@ -577,10 +484,10 @@ export default async function GuidesPage({
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="eg-market-card p-5"
+                                    className="rounded-2xl border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300"
                                 >
-                                    <h3 className="text-lg font-black tracking-[-0.03em] text-[var(--brand-ink)]">{link.label}</h3>
-                                    <p className="mt-2 text-xs font-semibold leading-relaxed text-[var(--text-secondary)]">{link.description}</p>
+                                    <h3 className="font-extrabold text-[var(--brand-ink)]">{link.label}</h3>
+                                    <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">{link.description}</p>
                                 </Link>
                             ))}
                         </div>
@@ -588,14 +495,14 @@ export default async function GuidesPage({
                 ) : null}
 
                 {visibleGuides.length === 0 && !shouldShowPalmonHub && page !== 1 ? (
-                    <div className="border border-[var(--border-default)] bg-white p-16 text-center shadow-[var(--shadow-card)]">
+                    <div className="bg-white rounded-2xl border border-[var(--border-default)] shadow-[var(--shadow-card)] p-16 text-center">
                         <div className="text-3xl mb-4">📖</div>
                         <h2 className="text-lg font-bold text-[var(--brand-ink)] mb-2">No guides published yet</h2>
                         <p className="text-[var(--text-tertiary)]">Check back soon — new guides are added weekly.</p>
                     </div>
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                             {page === 1 && gameGuideStaticGuides.map((guide) => (
                                 <GuideIndexCard
                                     key={guide.slug}
@@ -621,37 +528,6 @@ export default async function GuidesPage({
                             pageSize={PAGE_SIZE}
                             basePath="/guides"
                         />
-                        <section className="mt-12 border border-slate-950/10 bg-white p-6 shadow-[0_24px_70px_rgba(7,11,18,0.10)] sm:p-8" aria-labelledby="guide-faq-heading">
-                            <h2 id="guide-faq-heading" className="text-3xl font-black tracking-[-0.04em] text-[var(--brand-ink)]">
-                                Choosing the right game offer
-                            </h2>
-                            <div className="mt-5 grid gap-5 text-sm leading-relaxed text-[var(--text-secondary)] md:grid-cols-2">
-                                <div>
-                                    <h3 className="font-extrabold text-[var(--brand-ink)]">Which offers are easiest?</h3>
-                                    <p className="mt-2">
-                                        Easier offers usually have early milestones, lower level targets, clear tracking, and no purchase dependency. Check each guide&apos;s difficulty, completion time, and no-spend notes before starting.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h3 className="font-extrabold text-[var(--brand-ink)]">Which offers pay the most?</h3>
-                                    <p className="mt-2">
-                                        The highest headline payouts often require late-game progression or purchases. Compare them with the expected hourly value and the chance of finishing inside the deadline.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h3 className="font-extrabold text-[var(--brand-ink)]">Can you finish without spending?</h3>
-                                    <p className="mt-2">
-                                        Some games are realistic no-spend routes, while others are only worth considering with a capped budget. Use the guide&apos;s task breakdown before committing time or money.
-                                    </p>
-                                </div>
-                                <div>
-                                    <h3 className="font-extrabold text-[var(--brand-ink)]">Where should beginners start?</h3>
-                                    <p className="mt-2">
-                                        Start with guides that show short deadlines, simple tasks, and multiple GPT site routes. Then compare alternatives in the offer search hub before clicking out.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
                     </>
                 )}
             </Container>

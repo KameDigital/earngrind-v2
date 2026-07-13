@@ -3,11 +3,9 @@
 import React, { useReducer, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Grid2X2, List, Search, X } from "lucide-react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import ProviderLogo from "@/components/providers/ProviderLogo";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
-import type { PublicOfferCountry } from "@/lib/earnlab-countries";
 
 // ---------------------------------------------------------------
 // TYPES — mirrors /api/offers response exactly
@@ -34,7 +32,6 @@ export interface Offer {
     image_url: string | null;
     payout_usd: number;
     total_payout_usd: number;
-    completion_count: number | null;
     payout_type: "online_cashback" | "gift_card" | "points" | "crypto" | null;
     devices: ("ios" | "android" | "pc" | "web")[];
     countries: string[];
@@ -58,8 +55,6 @@ export interface OfferMeta {
     page: number;
     per_page: number;
     total_pages: number;
-    country?: string;
-    country_source?: string;
 }
 
 const isImageUrl = (url?: string | null) =>
@@ -145,26 +140,22 @@ interface FilterState {
     page: number;
 }
 
-function defaultFilterState(country = "US"): FilterState {
-    return {
-        q: "",
-        source: "",
-        platform_id: "",
-        platform_kind: "",
-        device: "",
-        country,
-        payout_type: "",
-        is_new: false,
-        is_hot: false,
-        is_ath: false,
-        is_boosted: false,
-        min_payout: 0,
-        sort: "payout_desc",
-        page: 1,
-    };
-}
-
-const defaultFilters: FilterState = defaultFilterState();
+const defaultFilters: FilterState = {
+    q: "",
+    source: "",
+    platform_id: "",
+    platform_kind: "",
+    device: "",
+    country: "US",
+    payout_type: "",
+    is_new: false,
+    is_hot: false,
+    is_ath: false,
+    is_boosted: false,
+    min_payout: 0,
+    sort: "payout_desc",
+    page: 1,
+};
 
 type FilterAction =
     | { type: "SET"; key: keyof FilterState; value: FilterState[keyof FilterState] }
@@ -513,16 +504,16 @@ interface SearchBarProps {
 function SearchBar({ value, onChange }: SearchBarProps) {
     return (
         <div className="relative group">
-            <Search aria-hidden className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)] transition-colors group-focus-within:text-lime-600" />
+            <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)] group-focus-within:text-lime-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
             <input
                 type="search"
-                aria-label="Search offers"
                 placeholder="Search games, platforms, categories..."
                 value={value}
                 onChange={e => onChange(e.target.value)}
-                className="h-12 w-full border border-[var(--border-default)] bg-[var(--surface-muted)] py-2.5 pl-10 pr-10 text-sm text-[var(--brand-ink)] placeholder:text-[var(--text-tertiary)] shadow-[var(--shadow-card)] transition-all focus:border-lime-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[var(--brand-lime)]/20"
+                className="w-full pl-10 pr-4 py-2.5 bg-white rounded-none border border-[var(--border-default)] focus:outline-none focus:ring-4 focus:ring-[var(--brand-lime)]/20 focus:border-lime-400 shadow-[var(--shadow-card)] text-[var(--brand-ink)] placeholder:text-[var(--text-tertiary)] text-sm transition-all"
             />
-            {value ? <button type="button" onClick={() => onChange("")} aria-label="Clear offer search" className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[var(--text-tertiary)] hover:text-[var(--brand-ink)]"><X className="h-4 w-4" /></button> : null}
         </div>
     );
 }
@@ -534,16 +525,12 @@ interface FilterBarProps {
     filters: FilterState;
     dispatch: React.Dispatch<FilterAction>;
     platforms: OfferPlatform[];
-    countries: PublicOfferCountry[];
     selectedPlatformName?: string;
 }
 
-function FilterBar({ filters, dispatch, platforms, countries, selectedPlatformName }: FilterBarProps) {
+function FilterBar({ filters, dispatch, platforms, selectedPlatformName }: FilterBarProps) {
     const set = (key: keyof FilterState, value: FilterState[keyof FilterState]) =>
         dispatch({ type: "SET", key, value });
-    const countryOptions = countries.length > 0
-        ? countries
-        : [{ code: "US", slug: "us", name: "United States", supported: true } as PublicOfferCountry];
 
     const badgeFilters: { key: "is_new" | "is_hot" | "is_ath" | "is_boosted"; label: string; variant: BadgeProps["variant"] }[] = [
         { key: "is_new", label: "NEW", variant: "new" },
@@ -552,14 +539,14 @@ function FilterBar({ filters, dispatch, platforms, countries, selectedPlatformNa
         { key: "is_boosted", label: "BOOSTED", variant: "boosted" },
     ];
 
-    const selectClass = "h-10 w-full appearance-none border border-[var(--border-default)] bg-white px-3 pr-8 text-xs font-semibold text-[var(--brand-ink)] shadow-[var(--shadow-card)] transition-colors hover:border-[var(--border-strong)] focus:border-lime-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30";
+    const selectClass = "px-3 py-1.5 rounded-none border border-[var(--border-default)] text-xs font-semibold text-[var(--brand-ink)] bg-white focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30 focus:border-lime-400 hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)] cursor-pointer appearance-none pr-8";
 
     return (
         <div className="flex flex-col gap-2.5">
-            {/* Filter controls remain visible instead of relying on horizontal scrolling. */}
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            {/* Row 1: horizontally scrollable dropdowns on mobile */}
+            <div className="flex gap-2 items-center overflow-x-auto pb-1 hide-scrollbar -mx-1 px-1">
                 <div className="relative flex-shrink-0">
-                    <select aria-label="Sort offers" value={filters.sort} onChange={e => set("sort", e.target.value as FilterState["sort"])} className={selectClass}>
+                    <select value={filters.sort} onChange={e => set("sort", e.target.value as FilterState["sort"])} className={selectClass}>
                         <option value="payout_desc">Highest Payout</option>
                         <option value="payout_asc">Lowest Payout</option>
                         <option value="heat_desc">Most Active</option>
@@ -569,7 +556,7 @@ function FilterBar({ filters, dispatch, platforms, countries, selectedPlatformNa
                 </div>
 
                 <div className="relative flex-shrink-0">
-                    <select aria-label="Filter by source" value={filters.source} onChange={e => set("source", e.target.value as FilterState["source"])} className={selectClass}>
+                    <select value={filters.source} onChange={e => set("source", e.target.value as FilterState["source"])} className={selectClass}>
                         <option value="">All Sources</option>
                         <option value="ingested">Automated</option>
                         <option value="manual">Curated</option>
@@ -580,7 +567,6 @@ function FilterBar({ filters, dispatch, platforms, countries, selectedPlatformNa
                 <div className="relative flex-shrink-0">
                     <select
                         value={filters.platform_id}
-                        aria-label="Filter by site"
                         onChange={e => {
                             set("platform_id", e.target.value);
                             if (e.target.value) {
@@ -603,7 +589,7 @@ function FilterBar({ filters, dispatch, platforms, countries, selectedPlatformNa
                 </div>
 
                 <div className="relative flex-shrink-0">
-                    <select aria-label="Filter by device" value={filters.device} onChange={e => set("device", e.target.value)} className={selectClass}>
+                    <select value={filters.device} onChange={e => set("device", e.target.value)} className={selectClass}>
                         <option value="">All Devices</option>
                         <option value="ios">🍏 iOS</option>
                         <option value="android">🤖 Android</option>
@@ -612,24 +598,24 @@ function FilterBar({ filters, dispatch, platforms, countries, selectedPlatformNa
                     <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                 </div>
 
-                <div className="relative flex-shrink-0">
-                    <select
-                        value={filters.country}
-                        onChange={e => set("country", e.target.value)}
-                        className={selectClass}
-                        aria-label="Filter offers by country"
-                    >
-                        {countryOptions.map((country) => (
-                            <option key={country.code} value={country.code}>
-                                {country.name}
-                            </option>
-                        ))}
-                    </select>
-                    <svg className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                {/* Country toggle */}
+                <div className="flex-shrink-0 flex rounded-none border border-[var(--border-default)] overflow-hidden text-sm shadow-[var(--shadow-card)] bg-[var(--surface-muted)] p-0.5 gap-0.5">
+                    {(["US", "UK", ""] as const).map(c => (
+                        <button
+                            key={c || "global"}
+                            onClick={() => set("country", c)}
+                            className={`px-3 py-1.5 transition-all font-bold rounded-none text-xs ${filters.country === c
+                                ? "bg-white text-[var(--brand-ink)] shadow-sm"
+                                : "text-[var(--text-secondary)] hover:text-[var(--brand-ink)] hover:bg-white/60"
+                            }`}
+                        >
+                            {c || "Global"}
+                        </button>
+                    ))}
                 </div>
 
                 <button
-                    onClick={() => dispatch({ type: "HYDRATE", filters: defaultFilterState(filters.country) })}
+                    onClick={() => dispatch({ type: "RESET" })}
                     className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-none bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
                 >
                     Clear
@@ -717,70 +703,6 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
 // ---------------------------------------------------------------
 // OFFER TABLE (list + pagination)
 // ---------------------------------------------------------------
-function OfferGridCard({
-    offer,
-    onPin,
-    isPinned,
-}: {
-    offer: Offer;
-    onPin: (offer: Offer) => void;
-    isPinned: boolean;
-}) {
-    const gameName = offer.game?.name ?? offer.title ?? "Offer";
-    const gameHref = offer.game?.slug ? `/offers/${offer.game.slug}` : null;
-    const platformName = offer.platform?.name ?? "Unknown platform";
-    const providerName = offer.provider_name ?? platformName;
-    const thumbnailUrl = offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game?.thumbnail_url ?? null;
-
-    return (
-        <article className="group flex min-h-[27rem] flex-col overflow-hidden border border-slate-950/10 bg-white shadow-[0_24px_70px_rgba(7,11,18,0.12)] transition hover:-translate-y-1 hover:border-lime-300 hover:shadow-[0_34px_90px_rgba(7,11,18,0.18)]">
-            <div className="relative flex h-48 items-center justify-center overflow-hidden bg-slate-950">
-                <OfferThumbnail src={thumbnailUrl} alt={gameName} fallbackText={gameName.slice(0, 2)} className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
-                <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-                    {offer.is_new ? <Badge label="NEW" variant="new" /> : null}
-                    {offer.is_hot ? <Badge label="HOT" variant="hot" /> : null}
-                    {offer.is_boosted ? <Badge label="BOOSTED" variant="boosted" /> : null}
-                    {offer.is_ath ? <Badge label="ATH" variant="ath" /> : null}
-                </div>
-                <div className="absolute bottom-3 right-3 bg-[var(--brand-lime)] px-3 py-2 text-right shadow-[0_12px_34px_rgba(156,255,36,0.24)]">
-                    <div className="text-[9px] font-black uppercase tracking-widest text-slate-950/60">Best payout</div>
-                    <div className="text-2xl font-black leading-none text-slate-950">${offer.payout_usd.toFixed(2)}</div>
-                </div>
-            </div>
-            <div className="flex flex-1 flex-col p-5">
-                <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                        <div className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500">{offer.source === "manual" ? "Curated route" : "Live offer"}</div>
-                        <h3 className="mt-2 line-clamp-2 text-xl font-black leading-tight tracking-[-0.035em] text-[var(--brand-ink)]">{gameName}</h3>
-                    </div>
-                    <button type="button" onClick={() => onPin(offer)} aria-label={isPinned ? "Remove from comparison" : "Add to comparison"} className={`flex h-8 w-8 shrink-0 items-center justify-center border text-sm font-extrabold ${isPinned ? "border-lime-300 bg-[var(--brand-lime)] text-[var(--brand-ink)]" : "border-[var(--border-default)] bg-white text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700"}`}>
-                        {isPinned ? "−" : "+"}
-                    </button>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                    <span className="inline-flex h-7 items-center gap-1 border border-slate-700 bg-[var(--brand-ink)] px-2 text-xs font-semibold text-[var(--brand-lime)]"><PlatformLogoImage src={offer.platform?.logo_url ?? null} name={platformName} /></span>
-                    <ProviderLogo name={providerName} compact className="h-7 max-w-[5rem]" />
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                    <div className="border border-slate-200 bg-slate-50 p-2">
-                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400">Device</div>
-                        <div className="mt-1 flex items-center gap-1 text-slate-700">{offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}</div>
-                    </div>
-                    <div className="border border-slate-200 bg-slate-50 p-2">
-                        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400">Refreshed</div>
-                        <div className="mt-1 font-bold text-slate-700">{formatDataRefreshedLabel(offer.updated_at)}</div>
-                    </div>
-                </div>
-                <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">{offer.goal_text ?? `Compare this ${platformName} route before starting.`}</p>
-                <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
-                    {gameHref ? <Link href={gameHref} className="inline-flex min-h-11 items-center justify-center border border-slate-950/10 px-3 py-2 text-xs font-black uppercase tracking-[0.1em] text-[var(--brand-ink)] transition hover:border-lime-300 hover:bg-lime-50">Compare</Link> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No details</span>}
-                    {offer.redirect_url ? <TrackedOutboundLink href={offer.redirect_url} eventLabel={offer.source === "manual" ? "manual-offer-grid-cta" : "offer-search-grid-cta"} offerId={offer.id} offerTitle={gameName} gameTitle={gameName} platformName={platformName} providerName={offer.provider_name} payoutUsd={offer.payout_usd} location="offers-search-grid" sourceContext="offers-search" className="inline-flex min-h-11 items-center justify-center bg-[var(--brand-ink)] px-3 py-2 text-xs font-black uppercase tracking-[0.1em] text-[var(--brand-lime)] transition hover:bg-slate-800">Start offer</TrackedOutboundLink> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No link</span>}
-                </div>
-            </div>
-        </article>
-    );
-}
-
 interface OfferTableProps {
     offers: Offer[];
     meta: OfferMeta | null;
@@ -789,10 +711,9 @@ interface OfferTableProps {
     onPageChange: (page: number) => void;
     onPin: (offer: Offer) => void;
     pinned: Offer[];
-    viewMode: "grid" | "list";
 }
 
-function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned, viewMode }: OfferTableProps) {
+function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned }: OfferTableProps) {
     const ctaLocation = meta ? "offers-search-list" : "game-offers-list";
     const ctaSourceContext = meta ? "offers-search" : "game-offers";
     const [openGroups, setOpenGroups] = React.useState<Record<string, boolean>>({});
@@ -846,11 +767,6 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned, 
 
     return (
         <div>
-            {viewMode === "grid" ? (
-                <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                    {offers.map((offer) => <OfferGridCard key={offer.id} offer={offer} onPin={onPin} isPinned={pinned.some((p) => p.id === offer.id)} />)}
-                </div>
-            ) : (
             <div className="bg-white rounded-none border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
                 {groupedOffers.map(({ key, primary, alternatives }) => {
                     const extraSitesLabel = Array.from(
@@ -893,7 +809,6 @@ function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned, 
                     );
                 })}
             </div>
-            )}
 
             {/* Pagination */}
             {meta && meta.total_pages > 1 && (
@@ -933,8 +848,6 @@ interface OfferSearchEngineProps {
     initialOffers?: Offer[];
     initialMeta?: OfferMeta | null;
     initialQueryString?: string;
-    initialCountry?: string;
-    countries?: PublicOfferCountry[];
 }
 
 export default function OfferSearchEngine({
@@ -942,21 +855,15 @@ export default function OfferSearchEngine({
     initialOffers,
     initialMeta,
     initialQueryString,
-    initialCountry = "US",
-    countries = [],
 }: OfferSearchEngineProps) {
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [filters, dispatch] = useReducer(filterReducer, searchParams, (params) => ({
-        ...buildFiltersFromSearchParams(params),
-        country: params.get("country") ?? initialCountry,
-    }));
+    const [filters, dispatch] = useReducer(filterReducer, searchParams, buildFiltersFromSearchParams);
     const [offers, setOffers] = React.useState<Offer[]>(() => initialOffers ?? []);
     const [meta, setMeta] = React.useState<OfferMeta | null>(() => initialMeta ?? null);
     const [loading, setLoading] = React.useState(initialOffers === undefined);
     const [pinned, setPinned] = React.useState<Offer[]>([]);
-    const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
     const abortRef = useRef<AbortController | null>(null);
     const hasRenderedInitialOffers = useRef(initialOffers !== undefined && !initialGameSlug);
     const filtersRef = useRef(filters);
@@ -966,7 +873,6 @@ export default function OfferSearchEngine({
     const isReviewScoped = searchParams.get("from_review") === "1" && !!filters.platform_id;
     const hasPlatformFilter = !!filters.platform_id;
     const searchParamsString = searchParams.toString();
-    const hydrationSearchParams = React.useMemo(() => new URLSearchParams(searchParamsString), [searchParamsString]);
     const visiblePlatforms = React.useMemo(() => {
         const byId = new Map<string, OfferPlatform>();
         for (const offer of offers) {
@@ -990,8 +896,6 @@ export default function OfferSearchEngine({
         abortRef.current?.abort();
         abortRef.current = new AbortController();
         setLoading(true);
-        setOffers([]);
-        setMeta(null);
         try {
             const endpoint = initialGameSlug
                 ? `/api/offers/game/${initialGameSlug}?${qs}`
@@ -1016,12 +920,11 @@ export default function OfferSearchEngine({
     }, [filters]);
 
     useEffect(() => {
-        const nextFilters = buildFiltersFromSearchParams(hydrationSearchParams);
-        nextFilters.country = hydrationSearchParams.get("country") ?? initialCountry;
+        const nextFilters = buildFiltersFromSearchParams(new URLSearchParams(searchParamsString));
         if (serializeFilterState(nextFilters) !== serializeFilterState(filtersRef.current)) {
             dispatch({ type: "HYDRATE", filters: nextFilters });
         }
-    }, [hydrationSearchParams, initialCountry]);
+    }, [searchParamsString]);
 
     useEffect(() => {
         if (initialGameSlug) return;
@@ -1048,12 +951,9 @@ export default function OfferSearchEngine({
             return [...prev, offer];
         });
     };
-    const selectedCountry = countries.find((country) => country.code === filters.country)?.name ?? filters.country;
-    const activeFilterCount = [filters.q, filters.source, filters.platform_id, filters.device, filters.payout_type]
-        .filter(Boolean).length + [filters.is_new, filters.is_hot, filters.is_ath, filters.is_boosted].filter(Boolean).length;
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             {hasPlatformFilter && !initialGameSlug && (
                 <div className="rounded-none border border-lime-200 bg-[var(--brand-lime)]/10 p-4 text-sm shadow-[var(--shadow-card)]">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -1077,39 +977,37 @@ export default function OfferSearchEngine({
                 </div>
             )}
 
-            <div className="eg-terminal p-4 sm:p-5">
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--brand-lime)]">Search terminal</p>
-                    <span className="text-xs font-semibold text-white/60">{selectedCountry} market</span>
-                </div>
+            <div className="bg-white p-3 sm:p-4 rounded-none border border-[var(--border-default)] shadow-[var(--shadow-card)] space-y-3">
                 <SearchBar value={filters.q} onChange={v => dispatch({ type: "SET", key: "q", value: v })} />
-                <div className="mt-4 border-t border-white/10 pt-4"><FilterBar filters={filters} dispatch={dispatch} platforms={visiblePlatforms} countries={countries} selectedPlatformName={reviewPlatformName || undefined} /></div>
+                <div className="h-px bg-[var(--border-default)]" />
+                <FilterBar
+                    filters={filters}
+                    dispatch={dispatch}
+                    platforms={visiblePlatforms}
+                    selectedPlatformName={reviewPlatformName || undefined}
+                />
             </div>
 
-            <div className="flex flex-col gap-3 border border-slate-950/10 bg-white px-4 py-4 shadow-[0_18px_50px_rgba(7,11,18,0.08)] sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex items-start justify-between gap-4 px-1">
                 <div>
-                    <h2 className="text-2xl font-black tracking-[-0.04em] text-[var(--brand-ink)]">
+                    <h2 className="text-xl font-extrabold text-[var(--brand-ink)] tracking-tight">
                         {initialGameSlug
                             ? "Available Offers"
                             : hasPlatformFilter && reviewPlatformName
                                 ? `${reviewPlatformName} Offers`
                                 : "All Offers"}
                     </h2>
-                    <p className="mt-1 max-w-3xl text-xs font-semibold leading-6 text-[var(--text-tertiary)]">
+                    <p className="mt-1 text-xs text-[var(--text-tertiary)]">
                         {hasPlatformFilter && reviewPlatformName
                             ? `These are offers currently filtered to ${reviewPlatformName}. Compare routes here after using the review to decide the platform is worth your time.`
                             : "Offers are sorted to help you identify stronger payout opportunities quickly. Open a route for detail, or start the offer directly."}
                     </p>
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
-                    {meta && !loading ? <span className="border border-[var(--border-default)] bg-white px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)]">{meta.total.toLocaleString()} results</span> : null}
-                    <span className="border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-bold text-[var(--text-secondary)]">{selectedCountry}</span>
-                    {activeFilterCount > 0 ? <span className="border border-lime-300 bg-lime-50 px-3 py-2 text-xs font-bold text-lime-800">{activeFilterCount} active filter{activeFilterCount === 1 ? "" : "s"}</span> : null}
-                    <div className="flex border border-[var(--border-default)] bg-white p-1" aria-label="Offer view mode">
-                        <button type="button" onClick={() => setViewMode("grid")} aria-label="Show offer cards" aria-pressed={viewMode === "grid"} className={`flex h-8 w-8 items-center justify-center ${viewMode === "grid" ? "bg-[var(--brand-ink)] text-[var(--brand-lime)]" : "text-[var(--text-tertiary)] hover:bg-[var(--surface-muted)]"}`}><Grid2X2 className="h-4 w-4" /></button>
-                        <button type="button" onClick={() => setViewMode("list")} aria-label="Show offer list" aria-pressed={viewMode === "list"} className={`flex h-8 w-8 items-center justify-center ${viewMode === "list" ? "bg-[var(--brand-ink)] text-[var(--brand-lime)]" : "text-[var(--text-tertiary)] hover:bg-[var(--surface-muted)]"}`}><List className="h-4 w-4" /></button>
+                {meta && !loading && (
+                    <div className="text-sm font-bold text-[var(--text-secondary)] bg-[var(--surface-muted)] px-3 py-1 rounded-none border border-[var(--border-default)] whitespace-nowrap">
+                        {meta.total.toLocaleString()} results
                     </div>
-                </div>
+                )}
             </div>
 
             <OfferTable
@@ -1120,7 +1018,6 @@ export default function OfferSearchEngine({
                 onPageChange={page => dispatch({ type: "SET_PAGE", page })}
                 onPin={handlePin}
                 pinned={pinned}
-                viewMode={viewMode}
             />
 
             <CompareDrawer

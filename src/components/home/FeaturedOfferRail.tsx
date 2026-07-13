@@ -54,48 +54,48 @@ function OfferImage({
 function RailCardContent({ item }: { item: FeaturedOfferRailItem }) {
   return (
     <>
-      <div className="relative aspect-[1.22/1] overflow-hidden bg-slate-950">
+      <div className="relative aspect-[1.12/1] overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)]">
         <OfferImage
           src={item.imageUrl}
           alt={item.title}
           fallback={item.title.slice(0, 2)}
         />
         {item.badge ? (
-          <div className="absolute left-2 top-2 border border-lime-300/30 bg-slate-950/82 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-[0.12em] text-[var(--brand-lime)] backdrop-blur-sm">
+          <div className="absolute left-2 top-2 rounded-full border border-white/15 bg-[rgba(15,23,15,0.82)] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-[0.12em] text-[var(--brand-lime)] backdrop-blur-sm">
             {item.badge}
-          </div>
-        ) : null}
-        {item.payout ? (
-          <div className="absolute bottom-2 right-2 bg-[var(--brand-lime)] px-2.5 py-1 text-sm font-black text-slate-950 shadow-[0_10px_30px_rgba(156,255,36,0.28)]">
-            {item.payout}
           </div>
         ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 px-3.5 py-3.5">
+      <div className="flex flex-1 flex-col gap-2 px-3 py-3">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             {item.provider || item.platform ? (
-              <div className="mb-1 truncate text-[9px] font-black uppercase tracking-[0.16em] text-slate-500">
+              <div className="mb-1 truncate text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
                 {[item.provider, item.platform].filter(Boolean).join(" / ")}
               </div>
             ) : null}
-            <h4 className="line-clamp-2 text-[15px] font-black leading-tight text-slate-950 transition-colors group-hover:text-lime-700">
+            <h4 className="line-clamp-2 text-[13px] font-extrabold leading-tight text-[var(--brand-ink)] transition-colors group-hover:text-[color:hsl(84,93%,32%)]">
               {item.title}
             </h4>
             {item.dataRefreshed ? (
-              <p className="mt-1 text-[10px] font-bold text-slate-400">
+              <p className="mt-1 text-[10px] font-semibold text-[var(--text-tertiary)]">
                 {item.dataRefreshed}
               </p>
             ) : null}
           </div>
-          <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-950 transition-transform duration-200 group-hover:translate-x-0.5" />
+          <ChevronRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-[var(--brand-ink)] transition-transform duration-200 group-hover:translate-x-0.5" />
         </div>
 
-        <div className="mt-auto border-t border-slate-200 pt-2">
+        <div className="mt-auto">
           {item.secondaryValue ? (
-            <div className="line-clamp-2 text-[9px] font-black uppercase tracking-[0.14em] text-slate-500">
+            <div className="line-clamp-2 text-[9px] font-semibold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
               {item.secondaryValue}
+            </div>
+          ) : null}
+          {item.payout ? (
+            <div className="text-base font-extrabold text-[color:hsl(84,93%,30%)]">
+              {item.payout}
             </div>
           ) : null}
         </div>
@@ -129,17 +129,17 @@ export default function FeaturedOfferRail({
     });
   }
 
-  const cardClassName = "group flex w-[196px] flex-shrink-0 snap-start flex-col overflow-hidden border border-slate-900/10 bg-white text-left shadow-[0_18px_44px_rgba(7,11,18,0.16)] transition-all duration-200 hover:-translate-y-1 hover:border-lime-300 sm:w-[220px] lg:w-[242px]";
+  const cardClassName = "group flex w-[164px] flex-shrink-0 snap-start flex-col overflow-hidden rounded-lg border border-[var(--border-default)] bg-white text-left shadow-[var(--shadow-card)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brand-lime)]/40 hover:shadow-[0_16px_36px_-20px_rgba(132,204,22,0.35)] sm:w-[184px] lg:w-[198px]";
 
   return (
     <div className="space-y-4">
       <div className="mb-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h3 className="text-xl font-black tracking-tight text-[var(--brand-ink)]">
+          <h3 className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)]">
             {title}
           </h3>
           {description ? (
-            <p className="mt-1 max-w-3xl text-xs font-medium leading-relaxed text-[var(--text-secondary)] sm:text-sm">
+            <p className="mt-1 max-w-3xl text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
               {description}
             </p>
           ) : null}
@@ -148,7 +148,7 @@ export default function FeaturedOfferRail({
           <button
             type="button"
             onClick={() => scrollRail("left")}
-            className="inline-flex h-9 w-9 items-center justify-center border border-slate-900/10 bg-white text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-lime-50"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-default)] bg-white text-[var(--brand-ink)] transition-colors hover:border-[var(--brand-lime)]/45 hover:bg-[var(--surface-muted)]"
             aria-label={`Scroll ${title} left`}
           >
             <ChevronLeft className="h-4 w-4" />
@@ -156,7 +156,7 @@ export default function FeaturedOfferRail({
           <button
             type="button"
             onClick={() => scrollRail("right")}
-            className="inline-flex h-9 w-9 items-center justify-center border border-slate-900/10 bg-white text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-lime-50"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-default)] bg-white text-[var(--brand-ink)] transition-colors hover:border-[var(--brand-lime)]/45 hover:bg-[var(--surface-muted)]"
             aria-label={`Scroll ${title} right`}
           >
             <ChevronRight className="h-4 w-4" />

@@ -469,7 +469,7 @@ export default async function HomePage() {
       <EarnLabActivityRail />
 
       <section
-        className="eg-visual-frame px-4 py-10 sm:px-6 lg:px-8 lg:py-16"
+        className="relative flex min-h-[285px] items-center overflow-hidden border-b border-black/20 px-4 py-10 sm:px-6 lg:min-h-[330px] lg:px-8"
         style={{
           backgroundImage: `
             radial-gradient(circle at 50% 36%, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.48) 46%, rgba(0,0,0,0.28) 100%),
@@ -481,94 +481,41 @@ export default async function HomePage() {
           backgroundSize: "cover",
         }}
       >
-        <div className="relative z-10 mx-auto grid w-full max-w-[1440px] gap-8 lg:grid-cols-[minmax(0,0.96fr)_minmax(520px,1.04fr)] lg:items-center">
-          <div className="max-w-3xl">
-          <p className="eg-kicker mb-5">
-            GPT offer comparison command center
-          </p>
-          <h1 className="text-balance text-[clamp(3.4rem,8vw,8.8rem)] font-black leading-[0.82] tracking-[-0.085em] text-white">
-            Stop guessing where a game pays best.
+        <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center text-center">
+          <h1 className="text-[clamp(4rem,11vw,9rem)] font-black leading-[0.82] text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.65)]">
+            Earn<span className="text-[color:hsl(84,93%,38%)]">Grind</span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-white/72 sm:text-xl">
-            EarnGrind compares real offer routes, provider payouts, game guides, and platform trust signals before you click into a rewards site.
+          <p className="mt-5 max-w-3xl text-balance text-lg font-semibold leading-tight text-white drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)] sm:text-2xl">
+            Find the best Get Paid To (GPT) platforms where you can earn
+            rewards by playing games on Mobile and Desktop or Completing
+            Surveys, and much more. All tested and reviewed for you by a
+            seasoned Grinder with Weekly updates on the best and highest
+            rewarded offers to save you time and fill your pockets!
           </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/offers" className="inline-flex min-h-14 items-center justify-center bg-[var(--brand-lime)] px-7 py-4 text-sm font-black uppercase tracking-[0.12em] text-slate-950 shadow-[0_0_34px_rgba(156,255,36,0.24)] transition hover:-translate-y-px hover:bg-lime-200">
-              Open comparison console <span aria-hidden="true" className="ml-2">&rarr;</span>
-            </Link>
-            <Link href="/guides" className="inline-flex min-h-14 items-center justify-center border border-white/15 bg-white/8 px-7 py-4 text-sm font-black uppercase tracking-[0.12em] text-white transition hover:border-lime-300/40 hover:text-[var(--brand-lime)]">
-              Read route guides
-            </Link>
-          </div>
 
           {discordUrl ? (
             <a
               href={discordUrl}
-              className="mt-5 inline-flex items-center gap-2 text-sm font-black uppercase tracking-[0.14em] text-white/45 transition-colors hover:text-[var(--brand-lime)]"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-white/80 transition-colors hover:text-[var(--brand-lime)]"
               target="_blank"
               rel="noreferrer"
             >
               Join the community →
             </a>
           ) : null}
-          </div>
-
-          <div className="eg-terminal relative grid gap-4 p-4 sm:p-5">
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--brand-lime)]">Live route scanner</p>
-                <h2 className="mt-1 text-2xl font-black tracking-tight text-white">Offer discovery terminal</h2>
-              </div>
-              <div className="hidden border border-lime-300/30 bg-lime-300/10 px-3 py-2 text-right sm:block">
-                <p className="text-[10px] font-black uppercase tracking-widest text-white/45">Mode</p>
-                <p className="text-sm font-black text-[var(--brand-lime)]">Compare</p>
-              </div>
-            </div>
-
-            <div className="grid gap-3 md:grid-cols-3">
-              {(earnLabOfferRail.length ? earnLabOfferRail : gemsLootFeaturedOfferRail).slice(0, 3).map((offer, index) => (
-                <Link key={offer.id} href={offer.href} className="group border border-white/10 bg-white/[0.06] p-3 transition hover:-translate-y-1 hover:border-lime-300/40 hover:bg-white/[0.09]">
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="text-[10px] font-black uppercase tracking-[0.16em] text-white/45">Route {String(index + 1).padStart(2, "0")}</span>
-                    <span className="bg-[var(--brand-lime)] px-2 py-0.5 text-[10px] font-black text-slate-950">{offer.payout ?? "Live"}</span>
-                  </div>
-                  <h3 className="line-clamp-2 min-h-10 text-sm font-black leading-tight text-white group-hover:text-[var(--brand-lime)]">{offer.title}</h3>
-                  <p className="mt-3 truncate text-[11px] font-bold uppercase tracking-[0.12em] text-white/45">
-                    {[offer.provider, offer.platform].filter(Boolean).join(" / ") || "Offer route"}
-                  </p>
-                </Link>
-              ))}
-            </div>
-
-            <div className="grid gap-3 border-t border-white/10 pt-4 sm:grid-cols-3">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/35">Use case</p>
-                <p className="mt-1 text-sm font-bold text-white">Compare payout spread</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/35">Data</p>
-                <p className="mt-1 text-sm font-bold text-white">Real routes and reviews</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/35">Next step</p>
-                <Link href="/offers" className="mt-1 inline-flex text-sm font-black text-[var(--brand-lime)]">Search offers →</Link>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
-      <section className="border-y border-slate-950/10 bg-[#e9efe8] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1440px]">
-          <p className="mb-4 text-center text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 sm:text-left">
+      <section className="border-b border-[var(--border-default)] bg-white px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <p className="mb-4 text-center text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-tertiary)] sm:text-left">
             Tracks offers from:
           </p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {PARTNER_LOGOS.map((partner) => (
               <div
                 key={partner.name}
-                className="flex h-20 items-center justify-center border border-slate-950/10 bg-white/75 px-4 shadow-[0_16px_40px_rgba(7,11,18,0.06)] transition hover:-translate-y-0.5 hover:border-lime-300 hover:bg-white"
+                className="flex h-16 items-center justify-center rounded-lg border border-[var(--border-default)] bg-[var(--surface-muted)] px-4 transition hover:border-lime-300 hover:bg-white"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element -- Partner logo strip needs CSS grayscale filters on plain img tags. */}
                 <img
@@ -584,16 +531,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1440px]">
-          <div className="mb-10 grid gap-5 lg:grid-cols-[0.75fr_1fr] lg:items-end">
-            <div>
-            <p className="eg-kicker mb-3">Choose your path</p>
-            <h2 className="text-4xl font-black tracking-[-0.06em] text-[var(--brand-ink)] sm:text-6xl">
-              Pick the correct earning workflow.
+      <section className="border-b border-[var(--border-default)] bg-[var(--surface-muted)] px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 max-w-3xl">
+            <p className="section-label mb-3">Choose your path</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-4xl">
+              Choose the hub that matches your next step
             </h2>
-            </div>
-            <p className="max-w-3xl text-base font-semibold leading-8 text-[var(--text-secondary)] lg:justify-self-end">
+            <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
               EarnGrind keeps discovery, comparison, walkthroughs, and platform
               research separate so each page has a clear job.
             </p>
@@ -604,7 +549,7 @@ export default async function HomePage() {
               index === 0 ? (
                 <Link
                   key={item.href}
-                  className="eg-market-card group min-h-[260px] p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400 lg:col-span-2"
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
                   href="/offers"
                 >
                   <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
@@ -629,22 +574,22 @@ export default async function HomePage() {
                     </picture>
                   </div>
 
-                  <span className="relative z-10 bg-slate-950 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--brand-lime)]">
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     Canonical search
                   </span>
 
-                  <h3 className="relative z-10 mt-6 max-w-[13rem] text-3xl font-black leading-none tracking-[-0.04em] text-[var(--brand-ink)]">
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
                     Compare Offers
                   </h3>
 
-                  <p className="relative z-10 mt-3 max-w-[13rem] text-sm font-semibold leading-relaxed text-[var(--text-secondary)]">
+                  <p className="relative z-10 mt-2 max-w-[8.25rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
                     Compare live payout routes.
                   </p>
                 </Link>
               ) : index === 1 ? (
                 <Link
                   key={item.href}
-                  className="eg-market-card group min-h-[260px] p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
                   href="/offers#games"
                 >
                   <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
@@ -669,15 +614,15 @@ export default async function HomePage() {
                     </picture>
                   </div>
 
-                  <span className="relative z-10 bg-slate-950 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--brand-lime)]">
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     Game discovery
                   </span>
 
-                  <h3 className="relative z-10 mt-6 max-w-[10rem] text-2xl font-black leading-none tracking-[-0.04em] text-[var(--brand-ink)]">
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
                     Browse Games
                   </h3>
 
-                  <p className="relative z-10 mt-3 max-w-[10rem] text-sm font-semibold leading-relaxed text-[var(--text-secondary)]">
+                  <p className="relative z-10 mt-2 max-w-[8.75rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
                     Start with game hubs for payout snapshots, guide coverage,
                     and related games.
                   </p>
@@ -685,7 +630,7 @@ export default async function HomePage() {
               ) : index === 2 ? (
                 <Link
                   key={item.href}
-                  className="eg-market-card group min-h-[260px] p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
                   href="/best-gpt-sites"
                 >
                   <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
@@ -710,22 +655,22 @@ export default async function HomePage() {
                     </picture>
                   </div>
 
-                  <span className="relative z-10 bg-slate-950 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--brand-lime)]">
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     Platform intel
                   </span>
 
-                  <h3 className="relative z-10 mt-6 max-w-[10rem] text-2xl font-black leading-none tracking-[-0.04em] text-[var(--brand-ink)]">
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
                     Best GPT Sites
                   </h3>
 
-                  <p className="relative z-10 mt-3 max-w-[10rem] text-sm font-semibold leading-relaxed text-[var(--text-secondary)]">
+                  <p className="relative z-10 mt-2 max-w-[8rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
                     Find trusted GPT sites with competitive payouts.
                   </p>
                 </Link>
               ) : index === 3 ? (
                 <Link
                   key={item.href}
-                  className="eg-market-card group min-h-[260px] p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
+                  className="group relative h-full min-h-[186px] overflow-hidden rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
                   href="/guides"
                 >
                   <div className="pointer-events-none absolute -bottom-10 -right-8 h-40 w-40 rounded-full bg-lime-100/60" />
@@ -750,15 +695,15 @@ export default async function HomePage() {
                     </picture>
                   </div>
 
-                  <span className="relative z-10 bg-slate-950 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--brand-lime)]">
+                  <span className="relative z-10 rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     Completion help
                   </span>
 
-                  <h3 className="relative z-10 mt-6 max-w-[10rem] text-2xl font-black leading-none tracking-[-0.04em] text-[var(--brand-ink)]">
+                  <h3 className="relative z-10 mt-4 max-w-[8.75rem] text-base font-extrabold text-[var(--brand-ink)]">
                     Game Guides
                   </h3>
 
-                  <p className="relative z-10 mt-3 max-w-[10rem] text-sm font-semibold leading-relaxed text-[var(--text-secondary)]">
+                  <p className="relative z-10 mt-2 max-w-[7.25rem] text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
                     Finish milestones faster.
                   </p>
                 </Link>
@@ -766,15 +711,15 @@ export default async function HomePage() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="eg-market-card min-h-[260px] p-5"
+                  className="rounded-lg border border-[var(--border-default)] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300"
                 >
-                  <span className="bg-slate-950 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--brand-lime)]">
+                  <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--text-tertiary)]">
                     {item.badge}
                   </span>
-                  <h3 className="mt-6 text-2xl font-black leading-none tracking-[-0.04em] text-[var(--brand-ink)]">
+                  <h3 className="mt-4 text-base font-extrabold text-[var(--brand-ink)]">
                     {item.name}
                   </h3>
-                  <p className="mt-3 text-sm font-semibold leading-relaxed text-[var(--text-secondary)]">
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
                     {item.desc}
                   </p>
                 </Link>
@@ -784,37 +729,20 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#070b12] px-4 py-20 text-white sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-[1440px] space-y-12">
-          <div className="grid gap-5 lg:grid-cols-[0.7fr_1fr] lg:items-end">
-            <div>
-              <p className="eg-kicker mb-3">Games & Offers</p>
-              <h2 className="text-4xl font-black tracking-[-0.06em] text-white sm:text-6xl">
-                Marketplace-style game cards with real payout routes.
-              </h2>
-            </div>
-            <p className="max-w-3xl text-base font-semibold leading-8 text-white/60 lg:justify-self-end">
-              Featured rails now sit inside a darker comparison workspace, matching the reference terminal rhythm while preserving live imported offers and tracked start paths.
-            </p>
-          </div>
+      <section className="bg-[var(--surface-muted)] px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl space-y-12">
           <HomepageSectionHeader
             eyebrow="Games & Offers"
             title="Featured Games by Site"
             description="Compare featured game picks from each partner site, preview routes, and open a game page before starting."
           />
-          <div className="border border-white/10 bg-white/[0.04] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:p-6">
-            <FeaturedOfferRail
-              items={gemsLootFeaturedOfferRail}
-              title="Featured Game Offers"
-              description="Curated GemsLoot game offers. Open a preview, then start the exact GemsLoot offer detail modal through the tracked route when available."
-            />
-          </div>
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:items-start">
-            <EmailCapture variant="inline" />
-            <div className="border border-white/10 bg-white/[0.04] p-4 shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:p-6">
-              <TabbedOfferRail tabs={OFFER_RAIL_TABS} />
-            </div>
-          </div>
+          <FeaturedOfferRail
+            items={gemsLootFeaturedOfferRail}
+            title="Featured Game Offers"
+            description="Curated GemsLoot game offers. Open a preview, then start the exact GemsLoot offer detail modal through the tracked route when available."
+          />
+          <EmailCapture variant="inline" />
+          <TabbedOfferRail tabs={OFFER_RAIL_TABS} />
         </div>
       </section>
 

@@ -67,51 +67,6 @@ export function buildItemList(items: ItemListEntry[]) {
   };
 }
 
-export function buildCollectionPage(input: {
-  name: string;
-  path: string;
-  description: string;
-  mainEntity?: Record<string, unknown> | null;
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: input.name,
-    url: absoluteUrl(input.path),
-    description: input.description,
-    ...(input.mainEntity ? { mainEntity: input.mainEntity } : {}),
-    isPartOf: {
-      "@type": "WebSite",
-      name: "EarnGrind",
-      url: absoluteUrl("/"),
-    },
-    publisher: buildOrganization("EarnGrind", "/"),
-  };
-}
-
-export function buildWebPage(input: {
-  name: string;
-  path: string;
-  description: string;
-  type?: "WebPage" | "AboutPage" | "ContactPage";
-  mainEntity?: Record<string, unknown> | null;
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": input.type ?? "WebPage",
-    name: input.name,
-    url: absoluteUrl(input.path),
-    description: input.description,
-    ...(input.mainEntity ? { mainEntity: input.mainEntity } : {}),
-    isPartOf: {
-      "@type": "WebSite",
-      name: "EarnGrind",
-      url: absoluteUrl("/"),
-    },
-    publisher: buildOrganization("EarnGrind", "/"),
-  };
-}
-
 export function buildFAQPage(items: FAQEntry[]) {
   const validItems = items.filter((item) => item.question.trim() && item.answer.trim());
   if (validItems.length === 0) return null;

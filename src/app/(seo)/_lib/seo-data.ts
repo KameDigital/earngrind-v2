@@ -239,7 +239,6 @@ export function buildSeoMetadata(input: {
   title: string;
   description: string;
   path: string;
-  type?: "article" | "website";
   imagePath?: string;
   canonicalPath?: string;
   indexable?: boolean;
@@ -257,7 +256,7 @@ export function buildSeoMetadata(input: {
       description: input.description,
       url: canonicalUrl,
       images: [{ url: image, width: 1200, height: 630, alt: input.title }],
-      type: input.type ?? "article",
+      type: "article",
     },
     twitter: {
       card: "summary_large_image",

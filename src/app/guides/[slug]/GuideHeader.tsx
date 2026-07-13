@@ -171,61 +171,61 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
     }
 
     return (
-        <header className="eg-visual-frame">
-            <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-wrap items-center gap-1.5 py-4 text-xs font-medium text-white/55">
-                    <Link href="/" className="transition-colors hover:text-[var(--brand-lime)]">Home</Link>
+        <header className="border-b border-gray-200 bg-white">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-wrap items-center gap-1.5 py-3 text-xs font-medium text-gray-400">
+                    <Link href="/" className="transition-colors hover:text-lime-700">Home</Link>
                     <span>/</span>
-                    <Link href="/guides" className="transition-colors hover:text-[var(--brand-lime)]">Guides</Link>
+                    <Link href="/guides" className="transition-colors hover:text-lime-700">Guides</Link>
                     <span>/</span>
-                    <Link href={`/games/${gameSlug}`} className="transition-colors hover:text-[var(--brand-lime)]">{gameName}</Link>
+                    <Link href={`/games/${gameSlug}`} className="transition-colors hover:text-lime-700">{gameName}</Link>
                     <span>/</span>
-                    <span className="text-white">{label}</span>
+                    <span className="text-gray-600">{label}</span>
                 </div>
 
-                <div className="grid gap-7 border-b border-white/10 pb-8 lg:grid-cols-[1fr_420px] lg:items-center">
+                <div className="grid gap-5 border-b border-gray-100 pb-5 lg:grid-cols-[1fr_360px] lg:items-center">
                     <div>
                         <div className="mb-2 flex items-center gap-2">
-                            <span className="border border-[var(--brand-lime)]/35 bg-[var(--brand-lime)]/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-[var(--brand-lime)]">
+                            <span className="rounded border border-lime-200 bg-lime-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-lime-700">
                                 {label}
                             </span>
                         </div>
 
-                        <h1 className="mb-4 text-4xl font-black leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl">
+                        <h1 className="mb-2 text-2xl font-extrabold leading-snug tracking-tight text-gray-900 sm:text-3xl">
                             {guide.title}
                         </h1>
 
                         {guide.excerpt ? (
-                            <p className="mb-4 max-w-3xl text-base font-semibold leading-8 text-white/68">
+                            <p className="mb-3 max-w-3xl text-sm leading-relaxed text-gray-600">
                                 {guide.excerpt}
                             </p>
                         ) : null}
 
                         <div className="flex flex-wrap items-center gap-2">
                             {guide.difficulty && diff ? (
-                                <span className={`inline-flex items-center gap-1.5 border px-2.5 py-1 text-xs font-bold uppercase ${diff.badge}`}>
+                                <span className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold uppercase ${diff.badge}`}>
                                     <span className={`h-1.5 w-1.5 rounded-full ${diff.bar}`} />
                                     {guide.difficulty}
                                 </span>
                             ) : null}
                             {guide.max_payout_usd != null ? (
-                                <span className="border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 px-2.5 py-1 text-xs font-extrabold text-[var(--brand-lime)]">
+                                <span className="rounded-lg border border-lime-200 bg-lime-50 px-2.5 py-1 text-xs font-extrabold text-lime-700">
                                     Up to ${guide.max_payout_usd.toFixed(2)}
                                 </span>
                             ) : null}
                             {guide.estimated_time ? (
-                                <span className="border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-semibold text-white/75">
+                                <span className="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-semibold text-gray-600">
                                     {guide.estimated_time}
                                 </span>
                             ) : null}
-                            <span className="border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-semibold text-white/65">
+                            <span className="rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-semibold text-gray-500">
                                 Last updated: {updatedDate}
                             </span>
                         </div>
                     </div>
 
                     {heroImageUrl ? (
-                        <div className="relative aspect-[4/3] overflow-hidden border border-white/15 bg-slate-900 shadow-[0_28px_80px_rgba(0,0,0,0.36)]">
+                        <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-gray-200 bg-gray-100 shadow-sm">
                             <Image
                                 src={heroImageUrl}
                                 alt={`${gameName} guide preview`}
@@ -242,19 +242,19 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
                 <div className="flex flex-wrap items-center gap-3 py-3">
                     <Link
                         href={`/games/${gameSlug}`}
-                        className="inline-flex items-center gap-1.5 whitespace-nowrap bg-[var(--brand-lime)] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-[var(--brand-ink)] shadow-sm transition hover:bg-[#9aeb42]"
+                        className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl bg-gray-900 px-4 py-2 text-xs font-extrabold text-white shadow-sm transition hover:bg-gray-800"
                     >
                         Compare live offers for this game
                     </Link>
                     <Link
                         href={`/offers/${gameSlug}`}
-                        className="inline-flex items-center gap-1.5 whitespace-nowrap border border-white/20 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:border-white/40"
+                        className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-xs font-semibold text-gray-700 transition hover:border-gray-300"
                     >
                         Check payout routes
                     </Link>
                     <Link
                         href="/guides"
-                        className="inline-flex items-center gap-1.5 whitespace-nowrap border border-white/20 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:border-white/40"
+                        className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-xs font-semibold text-gray-700 transition hover:border-gray-300"
                     >
                         All Guides
                     </Link>
@@ -270,23 +270,15 @@ export default function GuideHeader({ guide, gameName, gameSlug, heroImageUrl }:
                         </a>
                     ) : null}
 
-                    <div className="ml-auto flex items-center gap-3 text-xs text-white/55">
+                    <div className="ml-auto flex items-center gap-3 text-xs text-gray-400">
                         {tipCount > 0 ? <span>{tipCount} tip{tipCount !== 1 ? "s" : ""}</span> : null}
-                        <div className="hidden items-center gap-3 border-l border-white/15 pl-3 md:flex">
-                            <a href="#overview" className="transition-colors hover:text-white">Overview</a>
-                            <a href="#steps" className="transition-colors hover:text-white">Steps</a>
-                            {tipCount > 0 ? <a href="#tips" className="transition-colors hover:text-white">Tips</a> : null}
+                        <div className="hidden items-center gap-3 border-l border-gray-200 pl-3 md:flex">
+                            <a href="#overview" className="transition-colors hover:text-gray-700">Overview</a>
+                            <a href="#steps" className="transition-colors hover:text-gray-700">Steps</a>
+                            {tipCount > 0 ? <a href="#tips" className="transition-colors hover:text-gray-700">Tips</a> : null}
                         </div>
                     </div>
                 </div>
-                <details className="mb-4 border border-white/15 bg-white/5 p-3 md:hidden">
-                    <summary className="cursor-pointer text-xs font-extrabold uppercase tracking-widest text-[var(--brand-lime)]">Guide navigation</summary>
-                    <nav className="mt-3 grid grid-cols-2 gap-2 text-sm" aria-label="Guide sections">
-                        <a href="#overview" className="border border-white/15 px-3 py-2 font-semibold text-white">Overview</a>
-                        <a href="#steps" className="border border-white/15 px-3 py-2 font-semibold text-white">Steps</a>
-                        {tipCount > 0 ? <a href="#tips" className="border border-white/15 px-3 py-2 font-semibold text-white">Tips</a> : null}
-                    </nav>
-                </details>
             </div>
         </header>
     );

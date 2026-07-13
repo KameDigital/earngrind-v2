@@ -79,9 +79,6 @@ export default function RootLayout({
       </head>
       <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
         <div className="min-h-screen flex flex-col">
-          <a href="#main-content" className="sr-only fixed left-4 top-4 z-[100] bg-[var(--brand-lime)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] focus:not-sr-only">
-            Skip to main content
-          </a>
           <Header />
           <main id="main-content" className="flex-1 outline-none" tabIndex={-1}>
             {children}

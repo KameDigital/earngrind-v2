@@ -38,26 +38,38 @@ export async function middleware(request: NextRequest) {
 
     const isAdminRoute = request.nextUrl.pathname.startsWith('/app/admin');
     const isAppRoute = request.nextUrl.pathname.startsWith('/app');
+    const isAccountRoute = request.nextUrl.pathname === '/account' || request.nextUrl.pathname.startsWith('/account/');
     const isLoginRoute = request.nextUrl.pathname === '/login';
+    const isSignupRoute = request.nextUrl.pathname === '/signup';
 
     // Explicit admin protection. Keep this in addition to the broader /app guard and robots exclusions.
     if (isAdminRoute && !user) {
-        return NextResponse.redirect(new URL('/login', request.url));
+        const loginUrl = new URL('/login', request.url);
+        loginUrl.searchParams.set('next', `${request.nextUrl.pathname}${request.nextUrl.search}`);
+        return NextResponse.redirect(loginUrl);
     }
 
     // Protect /app/* routes
     if (isAppRoute && !user) {
-        return NextResponse.redirect(new URL('/login', request.url));
+        const loginUrl = new URL('/login', request.url);
+        loginUrl.searchParams.set('next', `${request.nextUrl.pathname}${request.nextUrl.search}`);
+        return NextResponse.redirect(loginUrl);
+    }
+
+    if (isAccountRoute && !user) {
+        const loginUrl = new URL('/login', request.url);
+        loginUrl.searchParams.set('next', `${request.nextUrl.pathname}${request.nextUrl.search}`);
+        return NextResponse.redirect(loginUrl);
     }
 
     // Redirect authenticated users away from the login page
-    if (isLoginRoute && user) {
-        return NextResponse.redirect(new URL('/app/dashboard', request.url));
+    if ((isLoginRoute || isSignupRoute) && user) {
+        return NextResponse.redirect(new URL('/account', request.url));
     }
 
     return response;
 }
 
 export const config = {
-    matcher: ['/app/:path*', '/login'],
+    matcher: ['/app/:path*', '/account', '/account/:path*', '/login', '/signup'],
 };

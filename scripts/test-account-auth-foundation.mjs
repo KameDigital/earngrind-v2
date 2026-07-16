@@ -1,0 +1,32 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
+const read = (file) => readFileSync(path.join(process.cwd(), file), "utf8");
+const validation = read("src/lib/account-validation.ts");
+const middleware = read("src/middleware.ts");
+const callback = read("src/app/auth/callback/route.ts");
+const actions = read("src/app/login/actions.ts");
+const settings = read("src/app/account/actions.ts");
+const migration = read("supabase/migrations/20260716145336_add_account_profile_preferences.sql");
+
+assert.match(validation, /decodeURIComponent\(path\)/, "return URL helper must decode encoded redirect variants before validating them");
+assert.match(validation, /path\.startsWith\("\/\/"\) \|\| path\.includes\("\\\\"\)/, "return URL helper must reject protocol-relative and backslash paths");
+assert.match(validation, /new URL\(path, "https:\/\/earngrind\.invalid"\)/, "return URL helper must keep redirects on the internal origin");
+assert.match(validation, /isSupportedEarnLabCountry/, "profile country validation must reuse the canonical registry");
+assert.match(validation, /PREFERRED_DEVICES = \["all", "android", "ios", "desktop"\]/, "device validation must be closed to the supported values");
+assert.match(validation, /USERNAME_PATTERN = \/\^\[a-z0-9\]\[a-z0-9_-\]\{1,28\}\[a-z0-9\]\$\//, "username validation must require 3-30 normalized characters");
+assert.match(actions, /signInWithPassword/, "login must use Supabase password auth");
+assert.match(actions, /signUp/, "signup must use Supabase password auth");
+assert.match(actions, /emailRedirectTo/, "signup must support email confirmation callbacks");
+assert.match(callback, /exchangeCodeForSession/, "confirmation callback must exchange the code server-side");
+assert.match(middleware, /isAccountRoute && !user/, "account routes must be protected in middleware");
+assert.match(settings, /supabase\.auth\.getUser\(\)/, "profile updates must establish the user server-side");
+assert.match(settings, /\.eq\("id", user\.id\)/, "profile updates must scope the row to the authenticated user");
+assert.doesNotMatch(migration, /disable row level security/i, "migration must not weaken existing profile RLS");
+assert.match(migration, /grant update \(username, display_name, avatar_url, country_code, preferred_device\) on public\.profiles to authenticated/, "authenticated users must not receive role-column update permission");
+assert.match(migration, /profiles_country_code_supported_check/, "database must constrain supported countries");
+assert.match(migration, /profiles_preferred_device_check/, "database must constrain preferred devices");
+assert.match(migration, /set search_path = public, pg_temp/, "auth profile trigger must pin its search path");
+assert.match(migration, /drop policy if exists "profiles: self insert"/, "profile creation must remain trigger-owned instead of browser-controlled");
+console.log("Account auth foundation guard passed");

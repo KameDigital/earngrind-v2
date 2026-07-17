@@ -10,7 +10,10 @@
     "earngrind-audit": "node tools/earngrind-audit/cli.mjs",
     "typecheck": "tsc --noEmit",
     "deploy:prod": "node scripts/deploy-prod.mjs",
-    "test:account-auth": "node scripts/test-account-auth-foundation.mjs"
+    "test:account-auth": "node scripts/test-account-auth-foundation.mjs",
+    "release:snapshot-usernames": "node scripts/release/export-profile-usernames.mjs",
+    "release:validate-snapshot-usernames": "node scripts/release/validate-profile-username-snapshot.mjs",
+    "test:release-snapshot-usernames": "node --test scripts/release/test-profile-username-snapshot.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.9.0",
@@ -44,6 +47,7 @@
     "@types/sanitize-html": "^2.16.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
+    "pg": "8.22.0",
     "playwright": "^1.59.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",

@@ -256,3 +256,294 @@ commit;
 If the preflight showed a nonstandard `profiles: self insert` policy or
 different constraint/privilege definitions, restore that exact recorded
 definition as part of the rollback; do not invent one during an incident.
+
+
+## Required release execution addendum
+
+This addendum supersedes the earlier generic migration-workflow and checkpoint
+references. It is required because the production project does not have managed
+scheduled backups or PITR.
+
+### Supabase CLI prerequisites
+
+The commands below were verified against Supabase CLI 2.101.0. Run them from
+the repository root immediately before the release window.
+
+~~~powershell
+supabase --version
+supabase projects list
+~~~
+
+The projects list verifies CLI authentication. If it fails, stop. Complete the
+interactive login and rerun the list. Never paste a personal access token into
+a command, script, issue, PR, or release record.
+
+~~~powershell
+supabase login
+supabase projects list
+~~~
+
+The checkout must be linked to the intended production project. The supported
+link verification command is supabase migration list --linked. If it reports
+that no project ref is configured, stop and link only after independently
+confirming the intended production project ref.
+
+~~~powershell
+supabase migration list --linked
+supabase link --project-ref <CONFIRMED_PRODUCTION_PROJECT_REF>
+supabase migration list --linked
+~~~
+
+The link command writes ignored local connection metadata; it does not migrate
+or modify the production database. Do not commit supabase/.temp, a database
+password, or any project credential.
+
+Stop immediately if CLI authentication fails, no project is linked, remote
+connectivity fails, local and remote migration history diverges, any remote
+migration is absent locally, or any unexpected local migration is pending.
+
+### Pending migration verification
+
+Inspect both columns from the linked migration listing. The only permitted
+pending local migration is:
+
+~~~text
+20260716145336_add_account_profile_preferences
+~~~
+
+Run the supported dry run:
+
+~~~powershell
+supabase migration list --linked
+supabase db push --linked --dry-run
+~~~
+
+Both commands must show only
+20260716145336_add_account_profile_preferences.sql as pending. Stop for any
+additional migration, timestamp mismatch, history divergence, authentication
+failure, or remote connectivity failure. Do not use migration repair during
+this release.
+
+### Protected username snapshot
+
+Run npm ci in the release checkout before using the Node snapshot tool. Store
+the output in an access-controlled directory outside this repository. The tool
+uses the explicitly supplied SUPABASE_DB_URL, starts BEGIN TRANSACTION READ
+ONLY, performs only a SELECT, and does not use a Supabase service-role HTTP key.
+
+In PowerShell, avoid command-history disclosure by reading the connection
+string as a secure value, using it only for the child process, and clearing the
+environment variable afterward:
+
+~~~powershell
+$secureDbUrl = Read-Host -AsSecureString "Supabase Postgres connection string"
+$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureDbUrl)
+try {
+  $env:SUPABASE_DB_URL = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
+  npm run release:snapshot-usernames -- --output-dir "C:\SecureRelease\earngrind-account-<UTC_TIMESTAMP>"
+} finally {
+  if ($bstr -ne [IntPtr]::Zero) { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }
+  Remove-Item Env:SUPABASE_DB_URL -ErrorAction SilentlyContinue
+}
+~~~
+
+Expected filename pattern:
+
+~~~text
+profile-usernames-YYYYMMDDTHHMMSSZ.csv
+~~~
+
+Expected CSV columns, in exact order:
+
+~~~text
+id,username,snapshot_at
+~~~
+
+The tool supports zero profile rows, refuses overwrite of an existing
+timestamped filename, and prints only its output path and row count. Validate
+the protected file immediately. The validator checks the header, parses CSV
+records, counts data rows, and emits a SHA-256 checksum without printing
+usernames.
+
+~~~powershell
+npm run release:validate-snapshot-usernames -- --file "C:\SecureRelease\earngrind-account-<UTC_TIMESTAMP>\profile-usernames-YYYYMMDDTHHMMSSZ.csv"
+~~~
+
+Confirm the ignore rule without creating a real snapshot in the worktree:
+
+~~~powershell
+git check-ignore -v -- "release-artifacts/profile-usernames-YYYYMMDDTHHMMSSZ.csv"
+~~~
+
+Never commit, upload, attach, or paste a snapshot into a PR, CI artifact, log,
+or ticket.
+
+### Minimum Free-plan recovery checkpoint
+
+This checkpoint is not equivalent to PITR or a managed database backup. The
+migration mutates public.profiles usernames, backfills profile rows, and
+changes public-schema profile constraints, grants, and the trigger function.
+It does not mutate auth.users data or the Auth-owned trigger itself.
+
+In addition to the protected username CSV, create a schema-only public dump, a
+conservative full data-only public-schema dump that includes public.profiles,
+migration-history capture, and a profile row-count capture. The installed CLI
+supports schema-scoped dumps but not a single-table data-only dump, so the full
+public-schema data export is required.
+
+~~~text
+DO NOT EXECUTE DURING DOCUMENTATION PREPARATION
+~~~
+
+~~~powershell
+supabase db dump --linked --schema public --file "C:\SecureRelease\earngrind-account-<UTC_TIMESTAMP>\account-release-public-schema-<UTC_TIMESTAMP>.sql"
+supabase db dump --linked --data-only --use-copy --schema public --file "C:\SecureRelease\earngrind-account-<UTC_TIMESTAMP>\account-release-public-data-<UTC_TIMESTAMP>.sql"
+supabase migration list --linked | Out-File -Encoding utf8 "C:\SecureRelease\earngrind-account-<UTC_TIMESTAMP>\migration-history-<UTC_TIMESTAMP>.txt"
+supabase db query --linked --output csv "select count(*) as profile_row_count from public.profiles;" | Out-File -Encoding utf8 "C:\SecureRelease\earngrind-account-<UTC_TIMESTAMP>\profile-row-count-<UTC_TIMESTAMP>.csv"
+Get-ChildItem "C:\SecureRelease\earngrind-account-<UTC_TIMESTAMP>" -File | ForEach-Object { Get-Content $_.FullName -TotalCount 1 | Out-Null; Get-FileHash $_.FullName -Algorithm SHA256 }
+~~~
+
+Record each protected filename, profile row count, and checksum in the
+access-controlled release record. Verify every export is readable before the
+migration window. Do not place recovery artifacts in the repository.
+
+### Exact linked-project migration command
+
+Confirm pending-migration verification and the protected checkpoint first.
+
+~~~text
+DO NOT EXECUTE DURING DOCUMENTATION PREPARATION
+DO NOT EXECUTE UNTIL THE RELEASE WINDOW
+~~~
+
+~~~powershell
+supabase db push --linked
+~~~
+
+Do not add --include-all, --include-seed, or --include-roles. If the command
+offers any migration other than
+20260716145336_add_account_profile_preferences.sql, cancel it and stop. After
+it completes, run the existing post-migration SQL checks before deploying the
+application.
+
+### Rollback separation
+
+Keep these three actions separate:
+
+1. Application rollback: redeploy the previously healthy application first for
+   an application failure. The migration is backward-compatible with it.
+2. Schema rollback: run the existing schema rollback SQL only after the new
+   application is no longer serving traffic and a schema rollback is required.
+3. Username data restoration: never restore usernames automatically. It is
+   independent of application and schema rollback and requires conflict review.
+
+### Username restoration
+
+Use this only after deciding to restore historical username data. If a
+historical invalid username must be restored, run the schema rollback first:
+the normalized-username constraint correctly rejects that old value. This
+procedure does not alter RLS, roles, or grants.
+
+Use a trusted PostgreSQL administrative client on the protected CSV. Do not
+upload the CSV to a public SQL editor and do not create a permanent production
+table. The staging table below is temporary and disappears at commit or
+rollback.
+
+~~~sql
+begin;
+
+create temporary table release_username_snapshot (
+  id uuid primary key,
+  username text,
+  snapshot_at timestamptz not null,
+  approved_for_restore boolean not null default false
+) on commit drop;
+
+-- In psql, load the protected local file without creating a permanent table:
+-- \copy release_username_snapshot (id, username, snapshot_at) from '<PROTECTED_CSV_PATH>' with (format csv, header true)
+
+-- Stop if any snapshot profile id no longer exists.
+select snapshot.id
+from release_username_snapshot as snapshot
+left join public.profiles as profiles on profiles.id = snapshot.id
+where profiles.id is null;
+
+-- Stop and manually resolve historical case-insensitive duplicates.
+select lower(username) as username_key, count(*) as duplicate_count
+from release_username_snapshot
+where username is not null
+group by lower(username)
+having count(*) > 1;
+
+-- Stop and review rows changed after the migration's predictable result.
+with duplicate_keys as (
+  select lower(username) as username_key
+  from release_username_snapshot
+  where username is not null
+  group by lower(username)
+  having count(*) > 1
+), candidates as (
+  select
+    snapshot.id,
+    snapshot.username as snapshot_username,
+    profiles.username as current_username,
+    case
+      when snapshot.username is null then null
+      when snapshot.username ~ '^[a-zA-Z0-9][a-zA-Z0-9_-]{1,28}[a-zA-Z0-9]$'
+        then lower(snapshot.username)
+      else null
+    end as expected_after_migration,
+    exists (
+      select 1
+      from duplicate_keys
+      where duplicate_keys.username_key = lower(snapshot.username)
+    ) as source_duplicate
+  from release_username_snapshot as snapshot
+  join public.profiles as profiles on profiles.id = snapshot.id
+)
+select *
+from candidates
+where source_duplicate
+   or current_username is distinct from expected_after_migration;
+
+-- Do not mass-approve rows. After reviewing conflict reports, approve only
+-- individually reviewed profile ids:
+-- update release_username_snapshot set approved_for_restore = true where id in ('<reviewed-profile-id>');
+
+-- Approved values must not collide with another profile under lower(username).
+select snapshot.id, snapshot.username, other_profiles.id as conflicting_profile_id
+from release_username_snapshot as snapshot
+join public.profiles as other_profiles
+  on other_profiles.id <> snapshot.id
+ and snapshot.username is not null
+ and other_profiles.username is not null
+ and lower(other_profiles.username) = lower(snapshot.username)
+where snapshot.approved_for_restore;
+
+-- Run only after every conflict query is empty and every id is approved.
+update public.profiles as profiles
+set username = snapshot.username
+from release_username_snapshot as snapshot
+where snapshot.approved_for_restore
+  and profiles.id = snapshot.id
+  and profiles.username is distinct from snapshot.username
+  and profiles.username is not distinct from case
+    when snapshot.username is null then null
+    when snapshot.username ~ '^[a-zA-Z0-9][a-zA-Z0-9_-]{1,28}[a-zA-Z0-9]$'
+      then lower(snapshot.username)
+    else null
+  end;
+
+-- Case-insensitive uniqueness must still hold after the approved update.
+select lower(username) as username_key, count(*) as duplicate_count
+from public.profiles
+where username is not null
+group by lower(username)
+having count(*) > 1;
+
+commit;
+~~~
+
+If any pre-update or final uniqueness query returns rows, execute rollback and
+escalate for operator review. Do not weaken RLS, change roles, relax grants, or
+bypass conflict checks to force a restoration.

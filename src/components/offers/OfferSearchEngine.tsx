@@ -4,6 +4,8 @@ import React, { useReducer, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import OfferSaveControls from "@/components/offers/OfferSaveControls";
+import { recordOfferView } from "@/app/account/offer-actions";
 import ProviderLogo from "@/components/providers/ProviderLogo";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 
@@ -347,6 +349,8 @@ function OfferRow({
         (gameHref
             ? `Open the offer route to compare payouts and details for ${gameName}.`
             : `Go directly to ${platformName} for this offer.`);
+    const savedOfferPath = gameHref ?? (offer.redirect_url?.startsWith("/") ? offer.redirect_url : null);
+    const savedOffer = savedOfferPath ? { source: offer.source, offerId: offer.id, title: gameName, imageUrl: thumbnailUrl, payoutUsd: offer.payout_usd, platformName, countryCode: offer.countries[0] ?? null, devices: offer.devices, offerPath: savedOfferPath } : null;
 
     return (
         <div
@@ -429,10 +433,12 @@ function OfferRow({
                     {isPinned ? "-" : "+"}
                 </button>
 
+                {savedOffer ? <OfferSaveControls offer={savedOffer} /> : null}
+
                 {gameHref ? (
                     <Link
                         href={gameHref}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => { e.stopPropagation(); if (savedOffer) void recordOfferView(savedOffer); }}
                         className="min-w-[7rem] flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:-translate-y-0.5 hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 hover:shadow-[0_10px_24px_rgba(15,23,42,0.08)] text-[var(--brand-ink)] text-sm font-bold rounded-none transition-all whitespace-nowrap"
                     >
                         View Route

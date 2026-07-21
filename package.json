@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit",
     "deploy:prod": "node scripts/deploy-prod.mjs",
     "test:account-auth": "node scripts/test-account-auth-foundation.mjs",
+    "test:account-dashboard-integration": "node scripts/test-account-dashboard-integration.mjs",
+    "test:account-dashboard-browser": "node scripts/test-account-dashboard-browser.mjs",
     "release:snapshot-usernames": "node scripts/release/export-profile-usernames.mjs",
     "release:validate-snapshot-usernames": "node scripts/release/validate-profile-username-snapshot.mjs",
     "test:release-snapshot-usernames": "node --test scripts/release/test-profile-username-snapshot.mjs"

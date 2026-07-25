@@ -104,10 +104,10 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
     },
 ];
 
-export function buildTrackedPlatformHref(platform: GptAffiliatePlatform, clickLocation: string) {
+export function buildTrackedPlatformHref(platform: GptAffiliatePlatform, clickLocation: string, sourceContext = "best_gpt_sites_monetization") {
     const params = new URLSearchParams({
         click_location: clickLocation,
-        source_context: "best_gpt_sites_monetization",
+        source_context: sourceContext,
         platform_name: platform.name,
     });
     return `/go/platform/${platform.slug}?${params.toString()}`;

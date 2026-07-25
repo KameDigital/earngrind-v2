@@ -86,6 +86,15 @@ async function logPlatformClick(params: {
     return data?.id ?? null;
 }
 
+async function recordPartnerSignupClick(params: { supabase: ReturnType<typeof createClient>; platformId: string; userId: string | null }) {
+    const { supabase, platformId, userId } = params;
+    if (!userId) return;
+    const { error } = await supabase.from("user_gpt_partner_accounts").upsert(
+        { user_id: userId, platform_id: platformId, last_signup_click_at: new Date().toISOString() },
+        { onConflict: "user_id,platform_id" },
+    );
+    if (error) console.error("[go/platform] failed to record partner signup click", { platformId, message: error.message });
+}
 function logPlatformRedirect(params: {
     platformId: string;
     req: NextRequest;
@@ -175,6 +184,9 @@ export async function GET(
         userId: user?.id ?? null,
         attribution,
     });
+    if (["kashkick", "swagbucks", "inboxdollars", "mypoints", "prizerebel", "scrambly", "gain-gg", "gemsloot", "earnlab"].includes(platform.slug)) {
+        await recordPartnerSignupClick({ supabase, platformId: platform.id, userId: user?.id ?? null });
+    }
     await recordRevenueEvent(supabase, {
         event_name: "outbound_click",
         route_path: req.nextUrl.pathname,

@@ -13,6 +13,8 @@
     "test:account-auth": "node scripts/test-account-auth-foundation.mjs",
     "test:account-dashboard-integration": "node scripts/test-account-dashboard-integration.mjs",
     "test:account-dashboard-browser": "node scripts/test-account-dashboard-browser.mjs",
+    "test:account-partner-sites": "node scripts/test-account-partner-sites.mjs",
+    "test:account-partner-sites-integration": "node scripts/test-account-partner-sites-integration.mjs",
     "release:snapshot-usernames": "node scripts/release/export-profile-usernames.mjs",
     "release:validate-snapshot-usernames": "node scripts/release/validate-profile-username-snapshot.mjs",
     "test:release-snapshot-usernames": "node --test scripts/release/test-profile-username-snapshot.mjs"

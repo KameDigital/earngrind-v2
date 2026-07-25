@@ -5,6 +5,7 @@ import {
     GEMSLOOT_PUBLIC_PROVIDERS,
     type GemslootProviderSlug,
 } from "@/lib/gemsloot-providers";
+import type { GemslootPublicCountry } from "@/lib/gemsloot-countries";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
@@ -28,17 +29,17 @@ type GemslootOfferRow = {
 };
 
 export default async function GemslootCountryOffersPage({
-    countryCode,
+    country,
     provider,
 }: {
-    countryCode: "US";
+    country: GemslootPublicCountry;
     provider?: GemslootProviderSlug;
 }) {
-    const offers = await getImportedGemslootOffers(countryCode, provider);
+    const offers = await getImportedGemslootOffers(country.code, provider);
     const providerLabel = provider ? GEMSLOOT_PUBLIC_PROVIDERS.find((item) => item.slug === provider)?.label ?? provider : null;
-    const title = providerLabel ? `${providerLabel} Gemsloot offers` : "Best Gemsloot offers in the United States";
+    const title = providerLabel ? `${providerLabel} Gemsloot offers` : `Best Gemsloot offers in ${country.name}`;
     const intro = providerLabel
-        ? `Browse imported ${providerLabel} offers available through Gemsloot for ${countryCode}.`
+        ? `Browse imported ${providerLabel} offers available through Gemsloot for ${country.name}.`
         : "Browse imported Gemsloot offers across Gemsloot, ToroX, Revenue Universe, BitLabs, TyrAds, and other providers.";
 
     return (
@@ -46,14 +47,14 @@ export default async function GemslootCountryOffersPage({
             <section className="border-b border-gray-200 bg-white">
                 <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
                     <div className="max-w-3xl">
-                        <p className="text-xs font-black uppercase tracking-[0.28em] text-emerald-700">Gemsloot offers / {countryCode}</p>
+                        <p className="text-xs font-black uppercase tracking-[0.28em] text-emerald-700">Gemsloot offers / {country.shortName}</p>
                         <h1 className="mt-3 text-3xl font-black tracking-tight text-gray-950 sm:text-5xl">{title}</h1>
                         <p className="mt-4 text-base leading-7 text-gray-600">{intro} Payouts, availability, and tasks can change, so compare the live Gemsloot page before starting.</p>
                     </div>
                     <div className="mt-6 flex flex-wrap gap-2">
-                        <PillLink href="/offers/gemsloot/us" active={!provider}>All Gemsloot</PillLink>
+                        <PillLink href={`/offers/gemsloot/${country.slug}`} active={!provider}>All Gemsloot</PillLink>
                         {GEMSLOOT_PUBLIC_PROVIDERS.map((item) => (
-                            <PillLink key={item.slug} href={`/offers/gemsloot/us/${item.slug}`} active={provider === item.slug}>
+                            <PillLink key={item.slug} href={`/offers/gemsloot/${country.slug}/${item.slug}`} active={provider === item.slug}>
                                 {item.label}
                             </PillLink>
                         ))}
@@ -65,7 +66,7 @@ export default async function GemslootCountryOffersPage({
                 {offers.length > 0 ? (
                     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                         {offers.map((offer) => (
-                            <OfferCard key={offer.id} offer={offer} countryCode={countryCode} />
+                            <OfferCard key={offer.id} offer={offer} countryCode={country.code} />
                         ))}
                     </div>
                 ) : (

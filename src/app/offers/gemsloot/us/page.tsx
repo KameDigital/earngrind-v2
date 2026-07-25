@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GemslootCountryOffersPage from "@/components/offers/GemslootCountryOffersPage";
+import { getGemslootPublicCountry } from "@/lib/gemsloot-countries";
 
 export const dynamic = "force-dynamic";
 
@@ -12,5 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-    return <GemslootCountryOffersPage countryCode="US" />;
+    const country = getGemslootPublicCountry("us");
+    if (!country) throw new Error("Gemsloot US country registry entry is missing");
+    return <GemslootCountryOffersPage country={country} />;
 }

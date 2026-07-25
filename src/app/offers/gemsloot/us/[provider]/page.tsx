@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import GemslootCountryOffersPage from "@/components/offers/GemslootCountryOffersPage";
+import { getGemslootPublicCountry } from "@/lib/gemsloot-countries";
 import {
     GEMSLOOT_PUBLIC_PROVIDERS,
     type GemslootProviderSlug,
@@ -33,7 +34,9 @@ export function generateMetadata({ params }: PageProps): Metadata {
 export default function Page({ params }: PageProps) {
     const provider = getProvider(params.provider);
     if (!provider) notFound();
-    return <GemslootCountryOffersPage countryCode="US" provider={provider.slug} />;
+    const country = getGemslootPublicCountry("us");
+    if (!country) throw new Error("Gemsloot US country registry entry is missing");
+    return <GemslootCountryOffersPage country={country} provider={provider.slug} />;
 }
 
 function getProvider(value: string): { slug: GemslootProviderSlug; label: string } | null {

@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit",
     "deploy:prod": "node scripts/deploy-prod.mjs",
     "test:account-auth": "node scripts/test-account-auth-foundation.mjs",
+    "test:community-chat-auth": "node scripts/test-community-chat-authorization.mjs",
+    "test:community-chat-realtime": "node scripts/test-community-chat-realtime.mjs",
     "test:account-dashboard-integration": "node scripts/test-account-dashboard-integration.mjs",
     "test:account-dashboard-browser": "node scripts/test-account-dashboard-browser.mjs",
     "test:account-partner-sites": "node scripts/test-account-partner-sites.mjs",

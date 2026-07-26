@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getPublicOfferCountryByCode } from "@/lib/earnlab-countries";
+import { getEarnLabCountryName, isSupportedEarnLabCountry } from "@/lib/earnlab-countries";
 import AccountOfferDashboard from "@/components/account/AccountOfferDashboard";
 import AccountPartnerSites from "@/components/account/AccountPartnerSites";
 import { savedOfferFromRow } from "@/lib/account-offers";
@@ -28,7 +28,7 @@ export default async function AccountPage() {
             ? [{ slug: platform.slug, connectedAt: row.connected_at, lastSignupClickAt: row.last_signup_click_at }]
             : [];
     });
-    const country = getPublicOfferCountryByCode(profile?.country_code);
+    const country = profile?.country_code && isSupportedEarnLabCountry(profile.country_code) ? getEarnLabCountryName(profile.country_code) : "Not set";
     const accountName = profile?.display_name || profile?.username || user.email;
     const favoriteRows = (favorites.data ?? []).map((row) => savedOfferFromRow(row));
     const viewRows = (views.data ?? []).map((row) => savedOfferFromRow(row));
@@ -48,7 +48,7 @@ export default async function AccountPage() {
                     </div>
                     <div className="mt-6 border-t border-[var(--border-default)] pt-4"><p className="text-xs text-[var(--text-secondary)]"><span className="font-bold text-[var(--brand-ink)]">Personalize your experience.</span> Choose a country and device to tailor the routes you browse.</p></div>
                 </section>
-                <section className="grid gap-4 md:grid-cols-2"><PreferenceCard label="Country preference" value={country?.name ?? "Not set"} detail="Used to help you compare country-appropriate routes." /><PreferenceCard label="Preferred device" value={formatDevice(profile?.preferred_device)} detail="Used to surface routes that match how you play." /></section>
+                <section className="grid gap-4 md:grid-cols-2"><PreferenceCard label="Country preference" value={country} detail="Used to help you compare country-appropriate routes." /><PreferenceCard label="Preferred device" value={formatDevice(profile?.preferred_device)} detail="Used to surface routes that match how you play." /></section>
                 <AccountOfferDashboard favorites={favoriteRows} views={viewRows} tracking={trackingRows} counts={{ favorites: favorites.count ?? favoriteRows.length, views: views.count ?? viewRows.length, tracking: tracking.count ?? trackingRows.length }} />
                 <AccountPartnerSites connections={partnerConnections} />
             </div>

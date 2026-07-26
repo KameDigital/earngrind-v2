@@ -10,6 +10,7 @@ import { getGamesIndexData } from '@/lib/games-index-data';
 import { fetchPublicOffers, publicOfferFiltersFromSearchParams } from '@/lib/public-offer-search';
 import { PUBLIC_GAIN_WALLS, type GainGalleryWall } from '@/lib/gain-gallery';
 import { GEMSLOOT_PUBLIC_PROVIDERS } from '@/lib/gemsloot-providers';
+import { GEMSLOOT_PUBLIC_COUNTRIES } from '@/lib/gemsloot-countries';
 
 export const dynamic = 'force-dynamic';
 
@@ -93,13 +94,13 @@ const GAIN_OFFERWALL_LINKS = [
     })),
 ];
 
-const GEMSLOOT_OFFERWALL_LINKS = [
-    { href: "/offers/gemsloot/us", label: "All Gemsloot" },
+const GEMSLOOT_OFFERWALL_LINKS = GEMSLOOT_PUBLIC_COUNTRIES.flatMap((country) => [
+    { href: `/offers/gemsloot/${country.slug}`, label: `All Gemsloot (${country.shortName})` },
     ...GEMSLOOT_PUBLIC_PROVIDERS.map((provider) => ({
-        href: `/offers/gemsloot/us/${provider.slug}`,
-        label: provider.label,
+        href: `/offers/gemsloot/${country.slug}/${provider.slug}`,
+        label: `${provider.label} (${country.shortName})`,
     })),
-];
+]);
 
 const EARNLAB_COUNTRY_LINKS = EARNLAB_GALLERY_COUNTRIES.slice(0, 8).map((countryCode) => ({
     href: `/offers/${countryCode.toLowerCase()}`,

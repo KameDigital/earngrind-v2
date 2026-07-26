@@ -37,7 +37,7 @@ export default async function GemslootCountryOffersPage({
 }) {
     const offers = await getImportedGemslootOffers(country.code, provider);
     const providerLabel = provider ? GEMSLOOT_PUBLIC_PROVIDERS.find((item) => item.slug === provider)?.label ?? provider : null;
-    const title = providerLabel ? `${providerLabel} Gemsloot offers` : `Best Gemsloot offers in ${country.name}`;
+    const title = providerLabel ? (providerLabel === "Gemsloot" ? "Gemsloot offers" : `${providerLabel} Gemsloot offers`) : `Best Gemsloot offers in ${country.name}`;
     const intro = providerLabel
         ? `Browse imported ${providerLabel} offers available through Gemsloot for ${country.name}.`
         : "Browse imported Gemsloot offers across Gemsloot, ToroX, Revenue Universe, BitLabs, TyrAds, and other providers.";

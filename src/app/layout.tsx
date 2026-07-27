@@ -79,7 +79,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
-        <div className="min-h-screen flex flex-col">
+        <div id="site-shell" className="min-h-screen flex flex-col transition-[padding] duration-200 motion-reduce:transition-none">
           <Header />
           <main id="main-content" className="flex-1 outline-none" tabIndex={-1}>
             {children}

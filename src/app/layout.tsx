@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
+import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
+import CommunityChatLauncher from "@/components/community-chat/CommunityChatLauncher";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -60,7 +62,6 @@ export const metadata: Metadata = {
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
 
 export default function RootLayout({
   children,
@@ -85,6 +86,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
+        <CommunityChatLauncher />
         <Analytics />
       </body>
     </html>

@@ -210,3 +210,8 @@
     background-image: linear-gradient(135deg, #84cc16 0%, #bef264 60%);
   }
 }
+@media (min-width: 640px) {
+  body.community-chat-open #site-shell {
+    padding-right: 25rem;
+  }
+}

@@ -17,6 +17,8 @@ try {
  const a = await makeUser("chat-a"), b = await makeUser("chat-b"), moderator = await makeUser("chat-mod"), suspended = await makeUser("chat-suspended");
  const database = new pg.Client({ connectionString: env.DB_URL }); await database.connect();
  await database.query("update public.profiles set role = 'editor' where id = $1", [moderator.id]);
+ await database.query("update public.profiles set username = 'chat_alpha', display_name = 'Private display name', avatar_url = 'https://images.example.test/chat-alpha.png' where id = $1", [a.id]);
+ await database.query("update public.profiles set username = null, display_name = 'Legacy private display', avatar_url = null where id = $1", [b.id]);
  await database.query("insert into public.community_chat_moderation (user_id, suspended_by, reason) values ($1, $2, 'test')", [suspended.id, moderator.id]); await database.end();
  assert.ok((await anon.from("community_chat_messages").insert({ user_id: a.id, body: "x", client_message_id: crypto.randomUUID() })).error, "anon direct insert denied");
  assert.ok((await a.client.from("community_chat_messages").insert({ user_id: b.id, body: "x", client_message_id: crypto.randomUUID() })).error, "auth direct insert denied");
@@ -25,6 +27,10 @@ try {
  const replay = crypto.randomUUID(); const first = await rpc(a.client, "  hello <script>x</script>  ", replay); assert.equal(first.error, null, "A posts"); assert.equal(first.data.body, "hello <script>x</script>", "body trimmed"); const second = await rpc(a.client, "ignored", replay); assert.equal(second.error, null, "replay is idempotent"); assert.equal(second.data.id, first.data.id, "replay returns original");
  assert.equal((await rpc(b.client, "B says hi")).error, null, "B posts"); assert.ok((await rpc(suspended.client, "blocked")).error, "suspension enforced");
  const publicRows = await anon.rpc("list_community_chat_messages", { p_before: null, p_limit: 999 }); assert.equal(publicRows.error, null, "public read"); assert.ok(publicRows.data.every(row => !("user_id" in row) && !("email" in row)), "public response omits private identity"); assert.ok(publicRows.data.length <= 101, "RPC sentinel cap");
+ const publicA = publicRows.data.find(row => row.id === first.data.id); const publicB = publicRows.data.find(row => row.body === "B says hi"); assert.ok(publicA, "first public message is present"); assert.ok(publicB, "legacy public message is present");
+ assert.deepEqual(Object.keys(publicA).sort(), ["body", "can_delete", "created_at", "id", "sender_avatar_url", "sender_name"], "public chat payload contains only approved fields");
+ assert.equal(publicA.sender_name, "chat_alpha", "public chat prefers username over display name"); assert.equal(publicA.sender_avatar_url, "https://images.example.test/chat-alpha.png", "public chat returns approved avatar URL");
+ assert.equal(publicB.sender_name, "EarnGrind member", "legacy profile without username uses safe fallback"); assert.equal(publicB.sender_avatar_url, null, "missing avatar remains null");
  assert.ok((await b.client.rpc("delete_community_chat_message", { p_message_id: first.data.id })).error, "cross-user delete denied"); assert.equal((await a.client.rpc("delete_community_chat_message", { p_message_id: first.data.id })).error, null, "own delete"); assert.equal((await anon.rpc("list_community_chat_messages", { p_before: null, p_limit: 50 })).data.some(row => row.id === first.data.id), false, "deleted hidden");
  const target = await rpc(a.client, "moderate me"); assert.equal(target.error, null, "moderation target"); assert.equal((await moderator.client.rpc("delete_community_chat_message", { p_message_id: target.data.id })).error, null, "editor moderation");
  const sends = await Promise.all(Array.from({ length: 8 }, (_, i) => rpc(b.client, `burst ${i}`))); assert.ok(sends.filter(x => !x.error).length <= 5, "atomic per-user rate limit");

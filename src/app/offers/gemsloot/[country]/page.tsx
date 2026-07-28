@@ -13,7 +13,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: PageProps): Metadata {
   const country = getGemslootPublicCountry(params.country);
   if (!country) return {};
-  return { title: `Best Gemsloot Offers in ${country.name} | EarnGrind`, description: `Browse imported Gemsloot offers available in ${country.name}. Compare rewards, providers, tasks, and start through Gemsloot.`, alternates: { canonical: `/offers/gemsloot/${country.slug}` } };
+  return { title: `Best Gemsloot Offers in ${country.name}`, description: `Browse imported Gemsloot offers available in ${country.name}. Compare rewards, providers, tasks, and start through Gemsloot.`, alternates: { canonical: `/offers/gemsloot/${country.slug}` } };
 }
 
 export default function Page({ params }: PageProps) {

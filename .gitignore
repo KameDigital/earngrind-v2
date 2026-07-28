@@ -54,10 +54,3 @@ previews/
 reports/
 supabase/.temp/
 research/
-
-# Account-release recovery artifacts ? store real files outside the repository.
-/release-artifacts/
-profile-usernames-*.csv
-account-release-*.sql
-migration-history-*.txt
-profile-row-count-*.csv

@@ -1,5 +1,6 @@
 import type { ProviderGalleryConfig } from "./types";
 import { slugifyGalleryValue } from "./normalize";
+import { EARNLAB_GALLERY_COUNTRIES } from "@/lib/earnlab-countries";
 
 export const PROVIDER_GALLERY_REGISTRY = {
     earnlab: {
@@ -8,7 +9,7 @@ export const PROVIDER_GALLERY_REGISTRY = {
         platformName: "EarnLab",
         platformKind: "gpt_site",
         affiliateTemplate: "https://earnlab.com/r/mac",
-        supportedCountries: ["US", "GB", "CA", "AU"],
+        supportedCountries: [...EARNLAB_GALLERY_COUNTRIES],
         maxImportLimit: 75,
         defaultSort: "POPULARITY",
         hasDirectOfferDeeplinks: false,
@@ -22,12 +23,13 @@ export const PROVIDER_GALLERY_REGISTRY = {
         platformName: "Gemsloot",
         platformKind: "gpt_site",
         affiliateTemplate: "https://gemsloot.com/?aff=kamedev",
+        supportedCountries: ["US", "GB"],
         maxImportLimit: 300,
         defaultSort: "epc",
         hasDirectOfferDeeplinks: true,
         preserveExistingOfferUrlOnMissingDeeplink: true,
-        externalIdStrategy: (offer) => `gemsloot-${slugifyGalleryValue(offer.providerDisplayName)}-${offer.sourceOfferId}-${offer.countryCode}`,
-        genericFallbackUrl: "https://gemsloot.com/?aff=kamedev",
+        externalIdStrategy: (offer) => `gemsloot-${slugifyGalleryValue(offer.providerDisplayName)}-${offer.sourceOfferId}`,
+        genericFallbackUrl: "https://gemsloot.com/earn",
     },
     "gain-gg": {
         key: "gain-gg",

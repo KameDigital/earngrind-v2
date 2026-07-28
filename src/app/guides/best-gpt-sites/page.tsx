@@ -17,6 +17,15 @@ export const metadata: Metadata = {
 
 function JsonLd() {
     const guides = getPublishedGptSiteGuides();
+    const breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+            { "@type": "ListItem", position: 2, name: "Best GPT Sites", item: absoluteUrl("/best-gpt-sites") },
+            { "@type": "ListItem", position: 3, name: "Site Guides", item: absoluteUrl(PAGE_PATH) },
+        ],
+    };
     const itemList = {
         "@context": "https://schema.org",
         "@type": "ItemList",
@@ -30,10 +39,15 @@ function JsonLd() {
     };
 
     return (
-        <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
-        />
+        <>
+            {[breadcrumb, itemList].map((schema, index) => (
+                <script
+                    key={index}
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+                />
+            ))}
+        </>
     );
 }
 
@@ -45,7 +59,7 @@ export default function BestGptSiteGuidesHubPage() {
             <JsonLd />
             <Container className="space-y-6">
                 <section className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
-                    <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
+                    <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
                         <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
                         <span>/</span>
                         <Link href="/best-gpt-sites" className="hover:text-[var(--brand-ink)]">Best GPT Sites</Link>

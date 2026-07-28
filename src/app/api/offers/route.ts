@@ -1,5 +1,8 @@
 import { fetchPublicOffers, publicOfferFiltersFromSearchParams } from "@/lib/public-offer-search";
+import { getPublicOfferCountryByCode } from "@/lib/earnlab-countries";
+import { OFFER_COUNTRY_COOKIE, resolvePublicOfferCountry } from "@/lib/offer-country";
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 export const revalidate = 60;
 
@@ -43,9 +46,46 @@ export async function GET(req: NextRequest) {
         );
     }
 
+    const rawCountryQuery = req.nextUrl.searchParams.get("country");
+    const explicitCountry = rawCountryQuery ? getPublicOfferCountryByCode(rawCountryQuery) : null;
+    if (rawCountryQuery && !explicitCountry) {
+        return NextResponse.json(
+            { error: "invalid_country", message: "country must be one of the supported public offer countries" },
+            {
+                status: 400,
+                headers: {
+                    "Cache-Control": "no-store",
+                },
+            },
+        );
+    }
+
+    const selectedCountryCookie = req.cookies.get(OFFER_COUNTRY_COOKIE)?.value ?? null;
+    let profileCountry: string | null = null;
+    if (!explicitCountry && !selectedCountryCookie) {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+            const { data: profile } = await supabase.from("profiles").select("country_code").eq("id", user.id).maybeSingle();
+            profileCountry = profile?.country_code ?? null;
+        }
+    }
+
+    const requestedFilters = publicOfferFiltersFromSearchParams(req.nextUrl.searchParams);
+    const countryResolution = resolvePublicOfferCountry({
+        explicitCountry: explicitCountry?.code ?? null,
+        selectedCountryCookie,
+        profileCountry,
+        requestHeaders: req.headers,
+    });
+    const filters = {
+        ...requestedFilters,
+        country: countryResolution.country.code,
+    };
+
     let result;
     try {
-        result = await fetchPublicOffers(publicOfferFiltersFromSearchParams(req.nextUrl.searchParams));
+        result = await fetchPublicOffers(filters);
     } catch (error) {
         console.error("[GET /api/offers]", error);
         return NextResponse.json(
@@ -54,9 +94,17 @@ export async function GET(req: NextRequest) {
         );
     }
 
-    const responseHeaders: Record<string, string> = {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
-    };
+    const hasExplicitCountryParam = Boolean(req.nextUrl.searchParams.get("country"));
+    const responseHeaders: Record<string, string> = hasExplicitCountryParam
+        ? {
+            "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+            "Vary": "Accept-Encoding",
+        }
+        : {
+            "Cache-Control": "private, no-store",
+            "Vary": "Cookie, x-vercel-ip-country",
+        };
+    responseHeaders["x-offer-country"] = countryResolution.country.code;
 
     if (process.env.NODE_ENV !== "production" && result.data[0]) {
         responseHeaders["x-api-offers-route"] = "route.ts";
@@ -66,7 +114,11 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
         data: result.data,
-        meta: result.meta,
+        meta: {
+            ...result.meta,
+            country: countryResolution.country.code,
+            country_source: countryResolution.source,
+        },
     }, {
         headers: responseHeaders,
     });

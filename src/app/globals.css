@@ -10,25 +10,25 @@
 ────────────────────────────────────────────────────────────────────────── */
 :root {
   /* Brand colours */
-  --brand-ink: #0d0d12;
+  --brand-ink: #0f172a;
   /* near-black — headlines, logo, CTAs */
-  --brand-lime: #bef264;
+  --brand-lime: #82df16;
   /* electric lime — primary accent */
-  --brand-lime-dark: #a3e635;
+  --brand-lime-dark: #71cb0f;
   /* deeper lime for hover states */
-  --brand-mid: #1a1a2e;
+  --brand-mid: #172033;
   /* deep navy for secondary surfaces */
 
   /* Surfaces */
   --surface-base: #ffffff;
-  --surface-muted: #f8f8fb;
+  --surface-muted: #f5f7fa;
   /* very light cool-white for section alternation */
   --surface-card: #ffffff;
-  --surface-dark: #0d0d12;
+  --surface-dark: #0f172a;
 
   /* Borders */
-  --border-default: #e8e8f0;
-  --border-strong: #d0d0e0;
+  --border-default: #dbe1e8;
+  --border-strong: #b8c2cf;
 
   /* Text */
   --text-primary: #0d0d12;
@@ -51,11 +51,11 @@
   --shadow-float: 0 16px 48px rgba(0, 0, 0, 0.14);
 
   /* Radius scale */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 10px;
 
   /* Transitions */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -73,6 +73,11 @@
     @apply antialiased;
     background-color: var(--surface-base);
     color: var(--text-primary);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--brand-lime);
+    outline-offset: 3px;
   }
 
   /* Better text selection */
@@ -101,7 +106,7 @@
 
   /* ── Accent pill / label used across pages ── */
   .accent-pill {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-sm text-xs font-semibold tracking-wide;
     background-color: var(--brand-lime);
     color: var(--brand-ink);
   }
@@ -114,7 +119,7 @@
 
   /* ── Universal card base ── */
   .eg-card {
-    @apply relative overflow-hidden rounded-2xl bg-white;
+    @apply relative overflow-hidden rounded-md bg-white;
     border: 1px solid var(--border-default);
     box-shadow: var(--shadow-card);
     transition: box-shadow var(--duration) var(--ease-out),
@@ -141,19 +146,19 @@
 
   /* ── Hot badge ── */
   .badge-hot {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-xs font-bold;
     background: linear-gradient(135deg, #ff4500 0%, #ff8c00 100%);
     color: #fff;
   }
 
   .badge-new {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-xs font-bold;
     background-color: var(--brand-lime);
     color: var(--brand-ink);
   }
 
   .badge-ath {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-xs font-bold;
     background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
     color: #fff;
   }
@@ -167,7 +172,7 @@
 
   /* ── Lime CTA bar accent ── */
   .lime-bar {
-    @apply inline-block w-8 h-1 rounded-full;
+    @apply inline-block w-8 h-1 rounded-sm;
     background-color: var(--brand-lime);
   }
 }
@@ -208,5 +213,19 @@
   .text-gradient-lime {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, #84cc16 0%, #bef264 60%);
+  }
+}
+
+/* Account workspace: a route-scoped app shell. */
+body:has(.account-app-shell) > div > header,
+body:has(.account-app-shell) > div > footer,
+body:has(.account-app-shell) > div > a[href="#main-content"] { display: none; }
+body:has(.account-app-shell) { background: #f8f9fb; }
+.account-surface { border: 1px solid #dfe3e8; border-radius: 4px; background: #fff; box-shadow: 0 1px 2px rgba(15, 23, 42, .025); }
+@media (max-width: 1023px) { .account-canvas { padding-bottom: 3rem; } }
+
+@media (min-width: 640px) {
+  body.community-chat-open #site-shell {
+    padding-right: 25rem;
   }
 }

@@ -42,3 +42,10 @@ npm run lint
 ```
 
 For documentation-only workflow changes, report that code validation was not run because no runtime code changed.
+
+## Repository Identity and Local Execution
+
+- Before each command group, verify `git rev-parse --show-toplevel` resolves to `C:/Users/kamed/Dev/earn-terminal-v2/earngrind-v2`.
+- Do not run Supabase, MCP, or other remote-service commands unless the user explicitly authorizes a verified target environment.
+- Use visible foreground processes only. Do not use hidden PowerShell, generated launch scripts, ExecutionPolicy Bypass, or background server orchestration.
+- Treat temporary worktrees as preservation-only unless the user explicitly scopes them for work.

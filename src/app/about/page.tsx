@@ -1,10 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import { canonicalAlternates } from "@/lib/seo-metadata";
+import { buildBreadcrumbList, buildWebPage, JsonLd } from "@/lib/seo-schema";
 
 export const metadata: Metadata = {
     title: "About EarnGrind — The Offerwall Intelligence Platform",
     description: "EarnGrind tracks hundreds of mobile game offers across every major GPT site. We test every platform personally so you can find the highest payouts without the guesswork.",
+    alternates: canonicalAlternates("/about"),
     robots: { index: true, follow: true },
 };
 
@@ -41,13 +44,27 @@ const PILLARS = [
 const FOUNDER_TWITTER_URL = process.env.NEXT_PUBLIC_FOUNDER_TWITTER?.trim() || "#";
 
 export default function AboutPage() {
+    const schemas = [
+        buildWebPage({
+            name: "About EarnGrind",
+            path: "/about",
+            description: metadata.description as string,
+            type: "AboutPage",
+        }),
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "About", path: "/about" },
+        ]),
+    ];
+
     return (
         <div className="bg-[var(--surface-muted)] min-h-screen">
+            <JsonLd data={schemas} />
 
             {/* ── Hero ── */}
             <section className="bg-white border-b border-[var(--border-default)] py-16 sm:py-20">
                 <Container>
-                    <nav className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] font-medium mb-8">
+                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] font-medium mb-8">
                         <Link href="/" className="hover:text-lime-700 transition-colors">Home</Link>
                         <span>/</span>
                         <span>About</span>

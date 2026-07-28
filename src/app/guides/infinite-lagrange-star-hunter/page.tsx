@@ -236,6 +236,13 @@ export default function InfiniteLagrangeStarHunterPage() {
     return (
         <main className="min-h-screen bg-[#f7fbfc] text-slate-900">
             <JsonLd />
+            <nav aria-label="Breadcrumb" className="mx-auto flex max-w-6xl flex-wrap items-center gap-2 px-4 py-4 text-sm font-bold text-slate-500 sm:px-6">
+                <Link href="/" className="hover:text-cyan-700">Home</Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/guides" className="hover:text-cyan-700">Guides</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-slate-800">Infinite Lagrange</span>
+            </nav>
 
             <section className="border-b border-cyan-200 bg-[#eaffff]">
                 <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:py-14">

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 const read = (file) => readFileSync(path.join(process.cwd(), file), "utf8");
-const migration = read("supabase/migrations/20260725152119_add_user_gpt_partner_accounts.sql");
+const migration = read("supabase/migrations/20260721230048_add_user_gpt_partner_accounts.sql");
 const redirect = read("src/app/go/platform/[platformId]/route.ts");
 const account = read("src/app/account/page.tsx");
 const partners = read("src/components/account/AccountPartnerSites.tsx");

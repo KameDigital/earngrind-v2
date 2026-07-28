@@ -129,10 +129,6 @@ type TopOfferOptions = {
   minPayoutUsd?: number;
 };
 
-function isJsonResponse(response: Response) {
-  return response.headers.get("content-type")?.toLowerCase().includes("application/json") ?? false;
-}
-
 function buildOffersUrl({
   q,
   page = 1,
@@ -152,27 +148,17 @@ export async function getTopOffers(options: TopOfferOptions = {}): Promise<Offer
   const res = await fetch(buildOffersUrl(options), {
     next: { revalidate: 1800, tags: ["seo", "offers"] },
   });
-  if (!res.ok || !isJsonResponse(res)) return [];
-
-  try {
-    const json = (await res.json()) as OffersApiResponse;
-    return Array.isArray(json.data) ? json.data : [];
-  } catch {
-    return [];
-  }
+  if (!res.ok) return [];
+  const json = (await res.json()) as OffersApiResponse;
+  return Array.isArray(json.data) ? json.data : [];
 }
 
 export async function getGameSeoData(slug: string): Promise<GameSeoData | null> {
   const res = await fetch(`${SITE_URL}/api/offers/game/${slug}`, {
     next: { revalidate: 1800, tags: [`seo-game-${slug}`] },
   });
-  if (res.status === 404 || !res.ok || !isJsonResponse(res)) return null;
-
-  try {
-    return (await res.json()) as GameSeoData;
-  } catch {
-    return null;
-  }
+  if (res.status === 404 || !res.ok) return null;
+  return (await res.json()) as GameSeoData;
 }
 
 export function toSeoOfferRows(rows: OfferApiRow[]): SeoOfferRow[] {
@@ -256,6 +242,7 @@ export function buildSeoMetadata(input: {
   imagePath?: string;
   canonicalPath?: string;
   indexable?: boolean;
+  type?: "website" | "article";
 }): Metadata {
   const image = input.imagePath ?? "/og-earngrind.png";
   const canonicalPath = input.canonicalPath ?? input.path;
@@ -270,7 +257,7 @@ export function buildSeoMetadata(input: {
       description: input.description,
       url: canonicalUrl,
       images: [{ url: image, width: 1200, height: 630, alt: input.title }],
-      type: "article",
+      type: input.type ?? "website",
     },
     twitter: {
       card: "summary_large_image",

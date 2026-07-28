@@ -40,6 +40,26 @@ export default function GuideInternalLinks({ gameName, gameSlug, relatedGuides }
                 </Link>
             </div>
 
+            <div className="mt-4 border-t border-gray-100 pt-4">
+                <div className="mb-2 text-[11px] font-extrabold uppercase tracking-widest text-gray-400">Research next</div>
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                    {[
+                        { href: "/guides/how-to-earn", label: "Similar game offers" },
+                        { href: "/best-freecash-games", label: "Easier Freecash games" },
+                        { href: "/highest-paying-gpt-games", label: "Higher paying alternatives" },
+                        { href: "/guides/best-gpt-sites", label: "Beginner GPT site guides" },
+                    ].map((link) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className="rounded-xl border border-gray-100 px-3 py-2 text-sm font-semibold text-gray-700 transition hover:border-lime-300 hover:bg-lime-50 hover:text-lime-700"
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
             {relatedGuides.length > 0 ? (
                 <div className="mt-4 border-t border-gray-100 pt-4">
                     <div className="mb-2 text-[11px] font-extrabold uppercase tracking-widest text-gray-400">Related guides</div>

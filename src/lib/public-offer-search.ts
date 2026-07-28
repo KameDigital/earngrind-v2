@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase/public";
 import { isPublicOfferRowEligible, shapePublicOffer } from "@/lib/public-offers";
 import { getPublicOfferMinPayout } from "@/lib/offer-quality";
+import { normalizeOfferCountryCode } from "@/lib/offer-country";
 
 export type PublicOfferSort = "payout_desc" | "payout_asc" | "heat_desc" | "newest";
 export type PublicOfferSource = "" | "ingested" | "manual";
@@ -72,7 +73,7 @@ export function normalizePublicOfferSearchFilters(filters: PublicOfferSearchFilt
         platformId: filters.platformId ?? "",
         platformKind: filters.platformKind ?? "",
         device: filters.device ?? "",
-        country: filters.country ?? "",
+        country: normalizeOfferCountryCode(filters.country) ?? "",
         payoutType: filters.payoutType ?? "",
         source,
         isNew: Boolean(filters.isNew),

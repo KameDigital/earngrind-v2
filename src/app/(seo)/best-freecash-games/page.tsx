@@ -227,6 +227,11 @@ export default async function BestFreecashGamesPage() {
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
       <JsonLd data={schemas} />
       <Container className="space-y-6">
+        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
+          <Link href="/" className="hover:text-lime-700">Home</Link>
+          <span aria-hidden="true">/</span>
+          <span className="text-[var(--brand-ink)]">Best Freecash Games</span>
+        </nav>
         <header className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
           <div className="grid gap-6 lg:grid-cols-[1.45fr_0.85fr] lg:items-start">
             <div>

@@ -12,7 +12,7 @@ export default function FAQSection({ items }: { items: FAQItem[] }) {
   return (
     <section className="space-y-3">
       {faqSchema ? <JsonLd data={faqSchema} /> : null}
-      <h2 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">FAQ</h2>
+      <h2 className="text-2xl font-extrabold text-[var(--brand-ink)] tracking-tight">FAQs</h2>
       <div className="space-y-3">
         {items.map((item) => (
           <details key={item.question} className="rounded-none border border-[var(--border-default)] bg-white p-4 shadow-[var(--shadow-card)]">

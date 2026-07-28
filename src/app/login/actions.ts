@@ -17,6 +17,7 @@ export async function login(formData: FormData) {
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword(credentials.value);
     if (error) redirect(loginUrl({ error: "Unable to sign in with those credentials.", next }));
+
     redirect(next);
 }
 
@@ -28,12 +29,15 @@ export async function signup(formData: FormData) {
     const origin = headers().get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
     const emailRedirectTo = new URL("/auth/callback", origin);
     emailRedirectTo.searchParams.set("next", next);
+
     const supabase = createClient();
     const { data, error } = await supabase.auth.signUp({
         ...credentials.value,
         options: { emailRedirectTo: emailRedirectTo.toString() },
     });
     if (error) redirect(`/signup?${new URLSearchParams({ error: "Unable to create your account.", next })}`);
+
+    // When email confirmation is disabled Supabase returns a session immediately.
     if (data.session) redirect(next);
     redirect(loginUrl({ message: "Check your email to confirm your account, then sign in.", next }));
 }

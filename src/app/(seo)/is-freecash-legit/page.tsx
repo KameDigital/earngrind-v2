@@ -3,10 +3,11 @@ import { buildSeoMetadata } from "@/app/(seo)/_lib/seo-data";
 import { fetchPublicOffers } from "@/lib/public-offer-search";
 
 const canonicalPath = "/is-freecash-legit";
+const description = "A quick EarnGrind review page for Freecash legitimacy, payout routes, and current comparable offers.";
 
 export const metadata = buildSeoMetadata({
-  title: "Is Freecash Legit? | EarnGrind",
-  description: "A quick EarnGrind review page for Freecash legitimacy, payout routes, and current comparable offers.",
+  title: "Is Freecash Legit?",
+  description,
   path: canonicalPath,
   canonicalPath,
 });
@@ -21,7 +22,9 @@ export default async function IsFreecashLegitPage() {
   return (
     <PlatformReviewPage
       h1="Is Freecash Legit?"
-      intro="TODO: Add source-backed Freecash review copy covering payout reliability, offer verification, and cashout expectations for new users."
+      pathname={canonicalPath}
+      description={description}
+      intro="Freecash is a real GPT platform, but individual offer outcomes still depend on eligibility, tracking, milestone wording, and payout approval. Use EarnGrind to compare current Freecash-related routes, then verify the exact terms in your account before spending time or money."
       offerRows={toPlatformReviewOfferRows(offers.data)}
       affiliateCta={{ label: "Compare Freecash offers", href: "/offers?q=Freecash" }}
     />

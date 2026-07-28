@@ -14,6 +14,8 @@ import { STATIC_GUIDES } from '@/lib/static-guides';
 import { getPublishedGptSiteGuides } from '@/lib/gpt-site-guides';
 import { PUBLIC_GAIN_WALLS } from '@/lib/gain-gallery';
 import { GEMSLOOT_PUBLIC_PROVIDERS } from '@/lib/gemsloot-providers';
+import { GEMSLOOT_PUBLIC_COUNTRIES } from '@/lib/gemsloot-countries';
+import { getSupportedPublicOfferCountries } from '@/lib/earnlab-countries';
 
 export const SITEMAP_REVALIDATE_SECONDS = 3600;
 
@@ -161,10 +163,15 @@ async function buildGuideShard(): Promise<MetadataRoute.Sitemap> {
         staticPage(baseUrl, '/highest-paying-gpt-games', 'daily', 0.85),
         staticPage(baseUrl, '/best-freecash-games', 'daily', 0.8),
         staticPage(baseUrl, '/best-gain-gg-offers', 'daily', 0.8),
+        ...getSupportedPublicOfferCountries().map((country) => (
+            staticPage(baseUrl, `/offers/${country.slug}`, 'daily', country.code === 'US' ? 0.82 : 0.76)
+        )),
         staticPage(baseUrl, '/offers/gain/us', 'daily', 0.8),
         ...PUBLIC_GAIN_WALLS.map((wall) => staticPage(baseUrl, `/offers/gain/us/${wall}`, 'daily', wall === 'cpx' ? 0.68 : 0.72)),
-        staticPage(baseUrl, '/offers/gemsloot/us', 'daily', 0.8),
-        ...GEMSLOOT_PUBLIC_PROVIDERS.map((provider) => staticPage(baseUrl, `/offers/gemsloot/us/${provider.slug}`, 'daily', 0.72)),
+        ...GEMSLOOT_PUBLIC_COUNTRIES.flatMap((country) => [
+            staticPage(baseUrl, `/offers/gemsloot/${country.slug}`, 'daily', country.code === 'US' ? 0.8 : 0.76),
+            ...GEMSLOOT_PUBLIC_PROVIDERS.map((provider) => staticPage(baseUrl, `/offers/gemsloot/${country.slug}/${provider.slug}`, 'daily', 0.72)),
+        ]),
         staticPage(baseUrl, '/best-money-making-games', 'daily', 0.85),
         staticPage(baseUrl, '/about', 'monthly', 0.5),
         staticPage(baseUrl, '/how-it-works', 'monthly', 0.5),

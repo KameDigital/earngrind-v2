@@ -30,6 +30,7 @@ type SiteOfferImportPayload = {
     title: string;
     payout_usd: number;
     total_payout_usd: number;
+    completion_count: number | null;
     goal_text: string | null;
     image_url: string | null;
     devices: string[];
@@ -195,6 +196,7 @@ async function upsertProviderGalleryOffer(
     const directUrl = safeDirectOfferUrl(offer.trackingUrl) ?? safeDirectOfferUrl(offer.offerUrl);
     const payoutUsd = normalizeMoney(offer.payoutUsd);
     const totalPayoutUsd = normalizeTotalPayout(payoutUsd, normalizeMoney(offer.totalPayoutUsd));
+    const completionCount = normalizeCompletionCount(offer.completionCount);
     const payload: SiteOfferImportPayload = {
         site_id: siteId,
         provider_id: provider.id,
@@ -203,6 +205,7 @@ async function upsertProviderGalleryOffer(
         title: cleanText(offer.advertiserGameName || offer.title),
         payout_usd: payoutUsd,
         total_payout_usd: totalPayoutUsd,
+        completion_count: completionCount,
         goal_text: offer.requirements?.[0] ?? offer.shortDescription ?? null,
         image_url: safeImageUrl(offer.imageUrl),
         devices: normalizeGalleryDevices(offer.devices),
@@ -242,6 +245,7 @@ async function upsertProviderGalleryOffer(
         existing.title !== payload.title ||
         Number(existing.payout_usd ?? 0) !== payload.payout_usd ||
         Number(existing.total_payout_usd ?? 0) !== payload.total_payout_usd ||
+        normalizeCompletionCount(existing.completion_count) !== payload.completion_count ||
         existing.goal_text !== payload.goal_text ||
         (payload.offer_url !== undefined && existing.offer_url !== payload.offer_url) ||
         existing.image_url !== payload.image_url ||
@@ -255,10 +259,11 @@ async function upsertProviderGalleryOffer(
             .update(payload)
             .eq("id", existing.id);
         if (error) throw new Error(error.message);
+        await replaceTasks(db, String(existing.id), offer, now);
+        return "updated";
     }
 
-    await replaceTasks(db, String(existing.id), offer, now);
-    return changed ? "updated" : "skipped";
+    return "skipped";
 }
 
 async function findExistingOffer(
@@ -271,7 +276,7 @@ async function findExistingOffer(
         equivalentExternalIdLike?: string | null;
     },
 ): Promise<Record<string, any> | null> {
-    const select = "id, provider_id, game_id, external_id, title, payout_usd, total_payout_usd, goal_text, offer_url, image_url, devices, countries, status";
+    const select = "id, provider_id, game_id, external_id, title, payout_usd, total_payout_usd, completion_count, goal_text, offer_url, image_url, devices, countries, status";
     const { data: current, error: currentError } = await db
         .from("site_offers")
         .select(select)
@@ -282,6 +287,16 @@ async function findExistingOffer(
 
     if (currentError) throw new Error(currentError.message);
     if (current) return current as Record<string, any>;
+
+    const { data: siteScopedExternalId, error: siteScopedError } = await db
+        .from("site_offers")
+        .select(select)
+        .eq("site_id", options.siteId)
+        .eq("external_id", options.externalId)
+        .maybeSingle();
+
+    if (siteScopedError) throw new Error(siteScopedError.message);
+    if (siteScopedExternalId) return siteScopedExternalId as Record<string, any>;
 
     for (const externalId of options.legacyExternalIds) {
         const { data, error } = await db
@@ -328,6 +343,13 @@ function buildEquivalentExternalIdLike(
 function getGainNativeOfferFamily(sourceOfferId: string): string | null {
     const match = sourceOfferId.match(/^([A-Za-z0-9]+)-[A-Za-z0-9]+$/);
     return match?.[1] ?? null;
+}
+
+function normalizeCompletionCount(value: unknown): number | null {
+    if (value === null || value === undefined || value === "") return null;
+    const count = Number(value);
+    if (!Number.isFinite(count) || count < 0) return null;
+    return Math.trunc(count);
 }
 
 async function replaceTasks(

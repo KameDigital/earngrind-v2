@@ -1,10 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import { canonicalAlternates } from "@/lib/seo-metadata";
+import { buildBreadcrumbList, buildFAQPage, buildWebPage, JsonLd } from "@/lib/seo-schema";
 
 export const metadata: Metadata = {
     title: "How EarnGrind Works — Find & Compare Offerwall Payouts",
     description: "EarnGrind automatically tracks offerwall game tasks across Swagbucks, Freecash, InboxDollars, and more. Here's exactly how we find, compare, and present the data.",
+    alternates: canonicalAlternates("/how-it-works"),
     robots: { index: true, follow: true },
 };
 
@@ -56,13 +59,29 @@ const FAQS = [
 ];
 
 export default function HowItWorksPage() {
+    const faqSchema = buildFAQPage(FAQS.map(({ q, a }) => ({ question: q, answer: a })));
+    const schemas = [
+        buildWebPage({
+            name: "How EarnGrind Works",
+            path: "/how-it-works",
+            description: metadata.description as string,
+            mainEntity: faqSchema,
+        }),
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "How It Works", path: "/how-it-works" },
+        ]),
+        ...(faqSchema ? [faqSchema] : []),
+    ];
+
     return (
         <div className="bg-[var(--surface-muted)] min-h-screen">
+            <JsonLd data={schemas} />
 
             {/* ── Hero ── */}
             <section className="bg-white border-b border-[var(--border-default)] py-16 sm:py-20">
                 <Container>
-                    <nav className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] font-medium mb-8">
+                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] font-medium mb-8">
                         <Link href="/" className="hover:text-lime-700 transition-colors">Home</Link>
                         <span>/</span>
                         <span>How It Works</span>

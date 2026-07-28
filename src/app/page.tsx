@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import EmailCapture from "@/components/EmailCapture";
-import type { FeaturedOfferRailItem } from "@/components/home/FeaturedOfferRail";
+import FeaturedOfferRail, {
+  type FeaturedOfferRailItem,
+} from "@/components/home/FeaturedOfferRail";
 import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
 import TabbedOfferRail, { type OfferRailTab } from "@/components/home/TabbedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
@@ -15,8 +17,8 @@ import {
   getHomepageData,
 } from "@/lib/homepage-data";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
-import { JsonLd, buildWebsiteSearchAction } from "@/lib/seo-schema";
 import { getHomepageFeaturedOffers } from "@/lib/homepage-featured";
+import { JsonLd, buildBreadcrumbList, buildWebsiteSearchAction } from "@/lib/seo-schema";
 
 export const revalidate = 300;
 
@@ -196,13 +198,17 @@ export default async function HomePage() {
     cashInStyleFeaturedOffers,
     earnLabFeaturedOffers,
     gainFeaturedOffers,
+    gemsLootFeaturedOffers,
     guideHrefByGameKey,
     modalRoutesByGameKey,
   } = await getHomepageData();
   const weeklyTopGames = await getHomepageFeaturedOffers();
   const featuredPost: any = null;
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
-  const websiteJsonLd = buildWebsiteSearchAction();
+  const websiteJsonLd = [
+    buildWebsiteSearchAction(),
+    buildBreadcrumbList([{ name: "Home", path: "/" }]),
+  ];
 
   const guideHrefForGame = (
     slug: string | null | undefined,
@@ -265,6 +271,76 @@ export default async function HomePage() {
       },
     }),
   );
+
+  const gemsLootFeaturedOfferRail: FeaturedOfferRailItem[] =
+    gemsLootFeaturedOffers.map((offer) => {
+      const hasTrackedRoute = !offer.id.startsWith("gemsloot-featured-");
+      const offerHref = hasTrackedRoute
+        ? buildGoHref(offer, "homepage_gemsloot_featured_offer")
+        : offer.fallback_href;
+      const payout = formatMoney(offer.total_payout_usd ?? offer.payout_usd);
+      const gameKey = gameKeyFromParts(offer.game_slug, offer.game_name);
+      const importedRoute = modalRoutesByGameKey[gameKey]?.find(
+        (route) => route.offerId === offer.id,
+      );
+      const exactTasks = offer.tasks.length
+        ? offer.tasks
+        : importedRoute?.tasks ?? [];
+      const previewRoute = importedRoute
+        ? {
+            ...importedRoute,
+            href: offerHref,
+            taskCount: exactTasks.length,
+            tasks: exactTasks,
+          }
+        : {
+            offerId: offer.id,
+            href: offerHref,
+            providerName: offer.provider_name,
+            platformName: offer.platform_name,
+            payout,
+            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
+            taskCount: exactTasks.length || (offer.goal_text ? 1 : 0),
+            tasks: exactTasks.length
+              ? exactTasks
+              : offer.goal_text
+              ? [
+                  {
+                    title: offer.goal_text,
+                    rewardDisplay: payout,
+                  },
+                ]
+              : [],
+          };
+
+      return {
+        id: `gemsloot-featured-${offer.requested_offer_name}`,
+        href: offerHref,
+        title: offer.title?.trim() || offer.game_name || "GemsLoot offer",
+        badge: offer.badge,
+        provider: offer.platform_name,
+        platform: offer.provider_name,
+        payout,
+        dataRefreshed: formatDataRefreshedLabel(offer.updated_at, new Date()),
+        secondaryValue: offer.goal_text ? offer.goal_text : null,
+        imageUrl: offer.image_url,
+        preview: {
+          title: offer.title?.trim() || offer.game_name || "GemsLoot offer",
+          description: `Open the GemsLoot offer detail for ${
+            offer.game_name ?? offer.title ?? offer.requested_offer_name
+          } and verify the live requirements before starting.`,
+          imageUrl: offer.image_url,
+          gameHref: offer.game_slug
+            ? `/games/${offer.game_slug}`
+            : "/offers/gemsloot/us",
+          guideHref: guideHrefForGame(
+            offer.game_slug,
+            gameKeyFromParts(offer.game_slug, offer.game_name),
+          ),
+          routes: [previewRoute],
+        },
+      };
+    });
 
   const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map(
     (offer) => {
@@ -508,6 +584,11 @@ export default async function HomePage() {
             eyebrow="Games & Offers"
             title="Featured Games by Site"
             description="Compare featured game picks from each partner site, preview routes, and open a game page before starting."
+          />
+          <FeaturedOfferRail
+            items={gemsLootFeaturedOfferRail}
+            title="Featured Game Offers"
+            description="Curated GemsLoot game offers. Open a preview, then start the exact GemsLoot offer detail modal through the tracked route when available."
           />
           <EmailCapture variant="inline" />
           <TabbedOfferRail tabs={OFFER_RAIL_TABS} />

@@ -66,6 +66,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     description: `Step-by-step ${data.game.name} guide with payout breakdown, provider comparison, and milestone tasks.`,
     path: `/guides/how-to-earn/${data.game.slug}`,
     canonicalPath,
+    type: "article",
     indexable: sitemapDecision.include,
   });
 }
@@ -128,6 +129,15 @@ export default async function GameGuidePage({ params }: { params: { slug: string
     <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
       <JsonLd data={schemas} />
       <Container className="space-y-6">
+        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
+          <Link href="/" className="hover:text-lime-700">Home</Link>
+          <span aria-hidden="true">/</span>
+          <Link href="/guides" className="hover:text-lime-700">Guides</Link>
+          <span aria-hidden="true">/</span>
+          <Link href="/guides/how-to-earn" className="hover:text-lime-700">How to Earn</Link>
+          <span aria-hidden="true">/</span>
+          <span className="text-[var(--brand-ink)]">{data.game.name}</span>
+        </nav>
         <header className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
           <p className="section-label">Guide</p>
           <h1 className="mt-2 text-3xl font-extrabold text-[var(--brand-ink)] tracking-tight">How To Earn With {data.game.name}</h1>

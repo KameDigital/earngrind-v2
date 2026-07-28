@@ -1,17 +1,34 @@
 import { Metadata } from "next";
 import { LEGAL_EMAIL } from "@/lib/constants";
+import { canonicalAlternates } from "@/lib/seo-metadata";
+import { buildBreadcrumbList, buildWebPage, JsonLd } from "@/lib/seo-schema";
 
 export const metadata: Metadata = {
-    title: "Privacy Policy | EarnGrind",
+    title: "Privacy Policy",
     description: "How EarnGrind collects, uses, and protects your data.",
+    alternates: canonicalAlternates("/legal/privacy"),
     robots: { index: true, follow: true },
 };
 
 const LAST_UPDATED = "March 24, 2026";
 
 export default function PrivacyPage() {
+    const schemas = [
+        buildWebPage({
+            name: "Privacy Policy",
+            path: "/legal/privacy",
+            description: metadata.description as string,
+        }),
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Legal", path: "/legal/privacy" },
+            { name: "Privacy Policy", path: "/legal/privacy" },
+        ]),
+    ];
+
     return (
         <>
+            <JsonLd data={schemas} />
             <div className="mb-6 pb-6 border-b border-gray-100">
                 <p className="text-xs font-bold uppercase tracking-widest text-lime-600 mb-2">Legal</p>
                 <h1 className="text-2xl font-extrabold text-gray-900 mb-1">Privacy Policy</h1>

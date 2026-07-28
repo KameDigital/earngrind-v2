@@ -44,10 +44,10 @@ export default function GuideSidebar({
     const tipCount = (guide.tips ?? []).length;
 
     return (
-        <aside className="space-y-4">
-            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-                <div className="bg-gray-900 px-4 py-3">
-                    <div className="mb-0.5 text-[10px] font-extrabold uppercase tracking-widest text-lime-400">Quick Info</div>
+        <aside className="space-y-4 lg:sticky lg:top-20">
+            <div className="overflow-hidden border border-slate-700 bg-white shadow-[var(--shadow-card)]">
+                <div className="bg-[var(--brand-ink)] px-4 py-3">
+                    <div className="mb-0.5 text-[10px] font-extrabold uppercase tracking-widest text-[var(--brand-lime)]">Guide navigator</div>
                     <div className="text-sm font-bold text-white">{gameName}</div>
                 </div>
                 <div className="space-y-2.5 px-4 py-3">
@@ -81,14 +81,14 @@ export default function GuideSidebar({
                 <div className="px-4 pb-4">
                     <Link
                         href={`/games/${gameSlug}`}
-                        className="block w-full rounded-xl bg-gray-900 px-4 py-2.5 text-center text-sm font-extrabold text-lime-400 shadow-sm transition hover:bg-gray-800"
+                        className="block w-full bg-[var(--brand-ink)] px-4 py-2.5 text-center text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition hover:bg-slate-800"
                     >
                         Compare live offers
                     </Link>
                 </div>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+            <div className="border border-gray-200 bg-white p-4 shadow-[var(--shadow-card)]">
                 <div className="mb-3 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">Quick Navigation</div>
                 <nav className="space-y-1 text-sm">
                     {[
@@ -99,7 +99,7 @@ export default function GuideSidebar({
                         <a
                             key={href}
                             href={href}
-                            className="flex items-center gap-2 rounded-lg px-2.5 py-1.5 font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
+                            className="flex items-center gap-2 border-l-2 border-transparent px-2.5 py-1.5 font-medium text-gray-600 transition-colors hover:border-[var(--brand-lime)] hover:bg-lime-50 hover:text-gray-900"
                         >
                             {label}
                         </a>
@@ -108,7 +108,7 @@ export default function GuideSidebar({
             </div>
 
             {guide.show_related_guides && relatedGuides.length > 0 ? (
-                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <div className="border border-gray-200 bg-white p-4 shadow-[var(--shadow-card)]">
                     <div className="mb-3 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">
                         More {gameName} Guides
                     </div>
@@ -117,7 +117,7 @@ export default function GuideSidebar({
                             <Link
                                 key={g.id}
                                 href={`/guides/${g.slug}`}
-                                className="group block rounded-xl border border-gray-100 p-2.5 transition-all hover:border-lime-300 hover:bg-lime-50/50"
+                                className="group block border border-gray-100 p-2.5 transition-all hover:border-lime-300 hover:bg-lime-50/50"
                             >
                                 <div className="line-clamp-2 text-sm font-semibold leading-snug text-gray-900 transition-colors group-hover:text-lime-700">
                                     {g.title}
@@ -137,7 +137,7 @@ export default function GuideSidebar({
             ) : null}
 
             {guide.show_related_offers && relatedOffers.length > 0 ? (
-                <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <div className="border border-gray-200 bg-white p-4 shadow-[var(--shadow-card)]">
                     <div className="mb-3 text-[10px] font-extrabold uppercase tracking-widest text-gray-400">
                         Top Offers
                     </div>
@@ -146,7 +146,7 @@ export default function GuideSidebar({
                             <Link
                                 key={o.id}
                                 href={`/offers/${o.game_slug}`}
-                                className="group flex items-center justify-between rounded-xl border border-gray-100 px-2.5 py-2 transition-all hover:border-lime-300 hover:bg-lime-50/50"
+                                className="group flex items-center justify-between border border-gray-100 px-2.5 py-2 transition-all hover:border-lime-300 hover:bg-lime-50/50"
                             >
                                 <div className="min-w-0">
                                     <div className="truncate text-sm font-semibold text-gray-900 transition-colors group-hover:text-lime-700">

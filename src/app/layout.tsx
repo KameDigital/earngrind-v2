@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   },
   description:
     "EarnGrind helps users discover GPT offer paths, compare payout routes, browse game hubs, read completion guides, and research GPT platform trust.",
-  keywords: ["offerwall", "GPT sites", "earn money online", "mobile game offers", "Swagbucks offers", "Freecash offers", "game guides"],
   icons: {
     icon: [
       { url: "/favicon-earngrind.png?v=2", type: "image/png" },
@@ -61,6 +60,7 @@ export const metadata: Metadata = {
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
+import CommunityChatLauncher from "@/components/community-chat/CommunityChatLauncher";
 
 export default function RootLayout({
   children,
@@ -78,13 +78,17 @@ export default function RootLayout({
         />
       </head>
       <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
-        <div className="min-h-screen flex flex-col">
+        <div id="site-shell" className="min-h-screen flex flex-col transition-[padding] duration-200 motion-reduce:transition-none">
+          <a href="#main-content" className="sr-only fixed left-4 top-4 z-[100] bg-[var(--brand-lime)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] focus:not-sr-only">
+            Skip to main content
+          </a>
           <Header />
           <main id="main-content" className="flex-1 outline-none" tabIndex={-1}>
             {children}
           </main>
           <Footer />
         </div>
+        <CommunityChatLauncher />
         <Analytics />
       </body>
     </html>

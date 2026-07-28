@@ -30,13 +30,20 @@ const PROVIDER_OPTIONS = [
     { value: "TyrAds", label: "TyrAds" },
     { value: "AdscendMedia", label: "AdscendMedia" },
     { value: "HangMyAds", label: "HangMyAds" },
+    { value: "AdToWall", label: "AdToWall" },
+    { value: "AyetStudios", label: "AyeT Studios" },
+    { value: "Lootably", label: "Lootably" },
+    { value: "WaxRewards", label: "WaxRewards" },
+    { value: "PixyLabs", label: "PixyLabs" },
+    { value: "Farly", label: "Farly" },
 ];
 
 export default function GemslootGalleryImportPanel() {
     const [provider, setProvider] = useState("");
     const [country, setCountry] = useState("US");
+    const [allCountries, setAllCountries] = useState(false);
     const [device, setDevice] = useState("");
-    const [limit, setLimit] = useState(120);
+    const [limit, setLimit] = useState(300);
     const [sort, setSort] = useState<"epc" | "completed">("epc");
 
     return (
@@ -50,7 +57,8 @@ export default function GemslootGalleryImportPanel() {
             primaryLabel="Pull Gemsloot"
             buildRequestBody={() => ({
                 provider: provider || undefined,
-                country,
+                country: allCountries ? undefined : country,
+                allCountries,
                 device: device || undefined,
                 limit,
                 sort,
@@ -78,10 +86,23 @@ export default function GemslootGalleryImportPanel() {
                         <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-gray-500">Country</span>
                         <input
                             value={country}
+                            disabled={allCountries}
                             maxLength={2}
                             onChange={(event) => setCountry(event.target.value.toUpperCase().replace(/[^A-Z]/g, "").slice(0, 2))}
                             className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-900 outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
                         />
+                    </label>
+                    <label className="block w-32">
+                        <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-gray-500">Scope</span>
+                        <label className="flex h-[38px] items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 text-sm font-semibold text-gray-900">
+                            <input
+                                type="checkbox"
+                                checked={allCountries}
+                                onChange={(event) => setAllCountries(event.target.checked)}
+                                className="h-4 w-4 rounded border-gray-300"
+                            />
+                            All countries
+                        </label>
                     </label>
                     <label className="block w-28">
                         <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-gray-500">Device</span>

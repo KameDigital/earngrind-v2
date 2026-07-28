@@ -27,7 +27,6 @@ sandbox.exports = sandbox.module.exports;
 vm.runInNewContext(compiled, sandbox, { filename: sourcePath });
 
 const {
-    buildGemslootOfferModalUrl,
     buildCashInStyleOutboundUrl,
     buildOutboundRedirectUrl,
     buildPlatformAffiliateUrl,
@@ -75,22 +74,6 @@ assert.equal(
 
 assert.equal(
     buildPlatformAffiliateUrl({ platform: { name: "Gemsloot", slug: "gemsloot" } }),
-    "https://gemsloot.com/?aff=kamedev",
-);
-
-assert.equal(
-    buildPlatformAffiliateUrl({
-        platform: { name: "Gemsloot", slug: "gemsloot" },
-        destinationUrl: "https://gemsloot.com/transactions?modal=offer_3&name=TyrAds__5553",
-    }),
-    "https://gemsloot.com/?aff=kamedev",
-);
-
-assert.equal(
-    buildGemslootOfferModalUrl({
-        externalId: "gemsloot-tyrads-TyrAds__5553-US",
-        offerUrl: "https://gemsloot.com/transactions?modal=offer_3&name=TyrAds__5553",
-    }),
     "https://gemsloot.com/?aff=kamedev",
 );
 

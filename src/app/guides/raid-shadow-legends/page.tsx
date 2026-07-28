@@ -318,6 +318,13 @@ export default function RaidShadowLegendsOfferGuidePage() {
     return (
         <main className="min-h-screen bg-[#f6f7f2] text-slate-900">
             <JsonLd />
+            <nav aria-label="Breadcrumb" className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-4 text-sm font-bold text-slate-500 sm:px-6 lg:px-8">
+                <Link href="/" className="hover:text-red-700">Home</Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/guides" className="hover:text-red-700">Guides</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-slate-800">Raid: Shadow Legends</span>
+            </nav>
 
             <section className="border-b border-red-200 bg-[#fff4ef]">
                 <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:px-8 lg:py-14">

@@ -114,6 +114,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     canonicalPath: canonicalPathFromUrl(editorialContent?.canonical, gameHubPath(data.game.slug)),
     imagePath: editorialContent?.image,
     indexable,
+    type: editorialContent ? "article" : "website",
   });
 
   if (editorialContent?.seoTitle) {
@@ -177,6 +178,25 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
       answer: "No. Task milestones can differ by provider and platform. Always read the task list before starting.",
     },
   ];
+  const fallbackRelatedGames = [
+    { name: "Highest-paying GPT games", href: "/highest-paying-gpt-games" },
+    { name: "Best money-making games", href: "/best-money-making-games" },
+    { name: "Best Freecash games", href: "/best-freecash-games" },
+  ];
+  const fallbackGuideLinks = [
+    { name: "How-to-earn guide hub", href: "/guides/how-to-earn" },
+    { name: "Game guide library", href: "/guides" },
+    { name: "Best GPT site guides", href: "/guides/best-gpt-sites" },
+  ];
+  const relatedGameLinks =
+    relatedGames.length > 0
+      ? relatedGames.map((game) => ({ id: game.slug, name: game.name, href: `/games/${game.slug}` }))
+      : fallbackRelatedGames.map((game) => ({ id: game.href, name: game.name, href: game.href }));
+  const relatedGuideLinks =
+    data.guides.length > 0
+      ? data.guides.map((guide) => ({ id: guide.id, title: guide.title, href: `/guides/${guide.slug}` }))
+      : fallbackGuideLinks.map((guide) => ({ id: guide.href, title: guide.name, href: guide.href }));
+  const milestoneTasks = rows.flatMap((row) => row.tasks).slice(0, 6);
 
   const intro = `Use this game hub to understand ${data.game.name}, check guide coverage, see the strongest payout snapshot, and move into the full route comparison when you are ready to compare every provider.`;
   const schemas = [
@@ -299,6 +319,65 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
               </div>
             </section>
 
+            <section className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
+              <div className="grid gap-5 md:grid-cols-2">
+                <div>
+                  <p className="section-label">Overview</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">{data.game.name} offer snapshot</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {data.game.description?.trim() || `${data.game.name} currently appears in EarnGrind payout data with ${rows.length} tracked route${rows.length === 1 ? "" : "s"} across ${providerGroups.size} provider${providerGroups.size === 1 ? "" : "s"}.`}
+                  </p>
+                </div>
+                <div>
+                  <p className="section-label">Best payout</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">
+                    {bestOffer ? `${formatMoney(bestOffer.totalPayoutUsd)} total payout` : "Compare live payouts"}
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {bestOffer
+                      ? `${bestOffer.providerName} on ${bestOffer.platformName} is the current top visible route. Always verify the final payout and device rules on the provider page before starting.`
+                      : "No eligible payout route is visible in the current feed, so use the broader offer hub to find active alternatives."}
+                  </p>
+                </div>
+                <div>
+                  <p className="section-label">Milestones</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">Task structure to check first</h2>
+                  <ul className="mt-2 space-y-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {milestoneTasks.length > 0
+                      ? milestoneTasks.map((task) => (
+                          <li key={`${task.id}-${task.sort_order}`}>{task.title} {task.reward_display ? `- ${task.reward_display}` : ""}</li>
+                        ))
+                      : [
+                          "Confirm install or signup tracking before pushing late milestones.",
+                          "Screenshot payout, deadline, country, device, and task wording before starting.",
+                          "Compare the full offer route when multiple providers list the same game.",
+                        ].map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <p className="section-label">Worth it</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">Use a stoplight decision</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    Green-light the route only if the early tasks track, the deadline fits your schedule, and any purchase requirement still leaves a payout margin. Slow down if the best route depends on late milestones or unclear provider wording.
+                  </p>
+                </div>
+                <div>
+                  <p className="section-label">Tracking tips</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">Protect the click path</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    Start from one tracked route, keep the same device, avoid VPN or account switching, and wait for early pending credit before spending meaningful time or money.
+                  </p>
+                </div>
+                <div>
+                  <p className="section-label">Crediting issues</p>
+                  <h2 className="mt-2 text-xl font-extrabold text-[var(--brand-ink)]">Prepare support proof</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    If a milestone does not credit, gather screenshots of the offer terms, device, completion screen, account ID, and provider activity status before opening a support ticket.
+                  </p>
+                </div>
+              </div>
+            </section>
+
             <section id="all-provider-offers" className="space-y-3">
               <OfferTable rows={rows} title={`Compare ${data.game.name} routes`} showTasks compact showBestSummary={false} />
             </section>
@@ -370,7 +449,7 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
         </section>
 
         <section className="rounded-none border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">
-          <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Keep Exploring</h2>
+          <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Related links</h2>
           <p className="mt-2 text-sm text-[var(--text-secondary)]">
             Use these links if you want a better payout route, a guide-first completion path, or more context before you commit to a provider.
           </p>
@@ -378,10 +457,9 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
             <div>
               <h3 className="text-sm font-bold text-[var(--brand-ink)]">Related Games</h3>
               <ul className="mt-2 space-y-1 text-sm">
-                {relatedGames.length === 0 ? <li className="text-[var(--text-tertiary)]">No related games found.</li> : null}
-                {relatedGames.map((game) => (
-                  <li key={game.slug}>
-                    <Link className="text-[var(--text-secondary)] hover:text-lime-700 hover:underline" href={`/games/${game.slug}`}>
+                {relatedGameLinks.map((game) => (
+                  <li key={game.id}>
+                    <Link className="text-[var(--text-secondary)] hover:text-lime-700 hover:underline" href={game.href}>
                       {game.name}
                     </Link>
                   </li>
@@ -399,10 +477,9 @@ export default async function SeoGamePage({ params }: { params: { slug: string }
                     </Link>
                   </li>
                 ) : null}
-                {data.guides.length === 0 && !editorialContent ? <li className="text-[var(--text-tertiary)]">No guides published yet.</li> : null}
-                {data.guides.map((guide) => (
+                {relatedGuideLinks.map((guide) => (
                   <li key={guide.id}>
-                    <Link className="text-[var(--text-secondary)] hover:text-lime-700 hover:underline" href={`/guides/${guide.slug}`}>
+                    <Link className="text-[var(--text-secondary)] hover:text-lime-700 hover:underline" href={guide.href}>
                       {guide.title}
                     </Link>
                   </li>

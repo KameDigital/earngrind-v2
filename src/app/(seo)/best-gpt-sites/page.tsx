@@ -518,32 +518,32 @@ export default async function BestGptSitesPage() {
       <JsonLd data={schemas} />
       <StickyReferralBar platform={heroPlatform} />
       <Container className="space-y-8">
-        <section className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
-          <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
+        <section className="overflow-hidden border border-slate-700 bg-[var(--brand-ink)] p-6 text-white shadow-[var(--shadow-card)]">
+          <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-white/55" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-[var(--brand-lime)]">Home</Link>
             <span>/</span>
-            <span className="text-[var(--brand-ink)]">Best GPT Sites</span>
+            <span className="text-white">Best GPT Sites</span>
           </nav>
           <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
             <div>
-              <p className="section-label">Best GPT Sites</p>
-              <h1 className="mt-2 max-w-4xl text-3xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-4xl">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--brand-lime)]">Platform comparison</p>
+              <h1 className="mt-2 max-w-4xl text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                 Compare the best GPT sites before you join
               </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-[var(--text-secondary)]">
+              <p className="mt-4 max-w-3xl text-base leading-7 text-white/72">
                 EarnGrind compares payout quality, trust signals, live offer inventory, and redemption fit so you can pick a GPT site before committing time to a task.
               </p>
               <ReferralCtaRail platforms={primaryPlatforms} />
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link
                   href="/offers"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
+                  className="inline-flex items-center justify-center gap-2 bg-[var(--brand-lime)] px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:bg-[#9aeb42]"
                 >
                   Find GPT offers <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
                 <Link
                   href="/guides/best-gpt-sites"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
+                  className="inline-flex items-center justify-center gap-2 border border-white/20 bg-white/5 px-4 py-3 text-sm font-extrabold text-white transition-all hover:-translate-y-px hover:border-white/45"
                 >
                   Read site guides
                 </Link>
@@ -551,7 +551,7 @@ export default async function BestGptSitesPage() {
                   <PlatformTrackedLink
                     platform={heroPlatform}
                     location="best_gpt_sites_hero_primary"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-lime-300 bg-lime-50 px-4 py-3 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px"
+                    className="inline-flex items-center justify-center gap-2 border border-[var(--brand-lime)]/35 bg-[var(--brand-lime)]/10 px-4 py-3 text-sm font-extrabold text-[var(--brand-lime)] transition-all hover:-translate-y-px"
                   >
                     Start with {heroPlatform.name}
                   </PlatformTrackedLink>

@@ -6,6 +6,12 @@ export const GEMSLOOT_PUBLIC_PROVIDERS = [
   { slug: "tyrads", label: "TyrAds" },
   { slug: "adscendmedia", label: "AdscendMedia" },
   { slug: "hangmyads", label: "HangMyAds" },
+  { slug: "adtowall", label: "AdToWall" },
+  { slug: "ayetstudios", label: "AyeT Studios" },
+  { slug: "lootably", label: "Lootably" },
+  { slug: "waxrewards", label: "WaxRewards" },
+  { slug: "pixylabs", label: "PixyLabs" },
+  { slug: "farly", label: "Farly" },
 ] as const;
 
 export type GemslootProviderSlug = typeof GEMSLOOT_PUBLIC_PROVIDERS[number]["slug"];

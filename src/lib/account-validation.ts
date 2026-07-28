@@ -1,4 +1,4 @@
-import { isSupportedEarnLabCountry, normalizeEarnLabCountryCode } from "@/lib/earnlab-countries";
+import { getPublicOfferCountryByCode } from "@/lib/earnlab-countries";
 
 export const PREFERRED_DEVICES = ["all", "android", "ios", "desktop"] as const;
 export type PreferredDevice = typeof PREFERRED_DEVICES[number];
@@ -6,25 +6,8 @@ export type PreferredDevice = typeof PREFERRED_DEVICES[number];
 const USERNAME_PATTERN = /^[a-z0-9][a-z0-9_-]{1,28}[a-z0-9]$/;
 
 export function getSafeReturnPath(value: FormDataEntryValue | string | null | undefined): string {
-    let path = typeof value === "string" ? value.trim() : "";
-    // Decode a bounded number of times so encoded protocol-relative or
-    // backslash variants cannot be interpreted differently downstream.
-    for (let attempt = 0; attempt < 2; attempt += 1) {
-        try {
-            const decoded = decodeURIComponent(path);
-            if (decoded === path) break;
-            path = decoded;
-        } catch {
-            return "/account";
-        }
-    }
-    if (!path.startsWith("/") || path.startsWith("//") || path.includes("\\")) return "/account";
-    try {
-        const target = new URL(path, "https://earngrind.invalid");
-        return target.origin === "https://earngrind.invalid" ? `${target.pathname}${target.search}${target.hash}` : "/account";
-    } catch {
-        return "/account";
-    }
+    const path = typeof value === "string" ? value.trim() : "";
+    return path.startsWith("/") && !path.startsWith("//") && !path.includes("\\") ? path : "/account";
 }
 
 export function validateCredentials(formData: FormData) {
@@ -40,7 +23,7 @@ export function validateProfileInput(formData: FormData) {
     const username = rawUsername || null;
     const displayName = String(formData.get("display_name") ?? "").trim() || null;
     const avatarUrl = String(formData.get("avatar_url") ?? "").trim() || null;
-    const countryCode = normalizeEarnLabCountryCode(String(formData.get("country_code") ?? ""));
+    const country = getPublicOfferCountryByCode(String(formData.get("country_code") ?? ""));
     const preferredDevice = String(formData.get("preferred_device") ?? "");
 
     if (username && !USERNAME_PATTERN.test(username)) return { ok: false as const, error: "Username must be 3-30 lowercase letters, numbers, underscores, or hyphens." };
@@ -53,8 +36,8 @@ export function validateProfileInput(formData: FormData) {
             return { ok: false as const, error: "Avatar URL must be a valid HTTPS URL." };
         }
     }
-    if (!countryCode || !isSupportedEarnLabCountry(countryCode)) return { ok: false as const, error: "Choose a supported offer country." };
+    if (!country) return { ok: false as const, error: "Choose a supported offer country." };
     if (!PREFERRED_DEVICES.includes(preferredDevice as PreferredDevice)) return { ok: false as const, error: "Choose a supported device preference." };
 
-    return { ok: true as const, value: { username, display_name: displayName, avatar_url: avatarUrl, country_code: countryCode, preferred_device: preferredDevice as PreferredDevice } };
+    return { ok: true as const, value: { username, display_name: displayName, avatar_url: avatarUrl, country_code: country.code, preferred_device: preferredDevice as PreferredDevice } };
 }

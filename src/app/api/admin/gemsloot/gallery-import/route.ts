@@ -31,8 +31,9 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
-    const country = normalizeGemslootCountryCode(typeof body.country === "string" ? body.country : "US");
-    if (!country) {
+    const allCountries = body.allCountries === true;
+    const country = allCountries ? null : normalizeGemslootCountryCode(typeof body.country === "string" ? body.country : "US");
+    if (!allCountries && !country) {
         return NextResponse.json({ error: "country must be a two-letter country code such as US or GB" }, { status: 400 });
     }
 
@@ -47,6 +48,7 @@ export async function POST(req: NextRequest) {
     try {
         const gallery = await getGemslootGalleryOffers({
             country,
+            allCountries,
             provider,
             device,
             search,
@@ -95,13 +97,14 @@ function toNormalizedGemslootOffer(offer: GemslootGalleryOffer): NormalizedProvi
         category: offer.category,
         payoutUsd: offer.payout,
         totalPayoutUsd: offer.totalPayout,
+        completionCount: offer.completionCount,
         imageUrl: offer.imageUrl,
         description: offer.description,
         shortDescription: offer.shortDescription,
         requirements: offer.requirements,
         tasks: offer.tasks,
         devices: offer.platform,
-        countries: [offer.countryCode],
+        countries: offer.countries,
         trackingUrl: offer.trackingUrl,
         offerUrl: null,
         rawMetadata: offer.rawSourceMetadata,

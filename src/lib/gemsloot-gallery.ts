@@ -6,6 +6,7 @@ const GEMSLOOT_DETAIL_URL = process.env.GEMSLOOT_DETAIL_URL?.trim() || "https://
 const GEMSLOOT_SITE_URL = process.env.GEMSLOOT_SITE_URL?.trim() || "https://gemsloot.com/transactions";
 const DEFAULT_LIMIT = 120;
 const MAX_LIMIT = 300;
+const ALL_PROVIDER_LIST_LIMIT = 1000;
 const PAGE_SIZE = 30;
 const CACHE_SECONDS = 60 * 30;
 
@@ -25,6 +26,7 @@ export type GemslootGalleryOffer = {
     description: string | null;
     shortDescription: string | null;
     countryCode: string;
+    countries: string[];
     reward: number;
     payout: number;
     totalPayout: number;
@@ -162,6 +164,7 @@ export function normalizeGemslootOfferIds(value: unknown): string[] {
 
 export async function getGemslootGalleryOffers(options: {
     country?: string | null;
+    allCountries?: boolean;
     provider?: string | null;
     limit?: number;
     refresh?: boolean;
@@ -170,8 +173,9 @@ export async function getGemslootGalleryOffers(options: {
     offerIds?: string[];
     sort?: "epc" | "completed";
 } = {}): Promise<GemslootGalleryResult> {
-    const countryCode = normalizeGemslootCountryCode(options.country) ?? "US";
-    const limit = normalizeLimit(options.limit);
+    const allCountries = options.allCountries === true;
+    const countryCode = allCountries ? null : normalizeGemslootCountryCode(options.country) ?? "US";
+    const limit = allCountries ? normalizeCatalogLimit(options.limit) : normalizeLimit(options.limit);
     const refresh = options.refresh === true;
     const offerIds = normalizeGemslootOfferIds(options.offerIds);
     const providers = offerIds.length > 0 ? [] : await getGemslootProviders(refresh);
@@ -183,7 +187,16 @@ export async function getGemslootGalleryOffers(options: {
             countryCode,
             refresh,
         })
-        : await loadListOfferDetails({
+        : provider
+            ? await loadListOfferDetails({
+                providerNames,
+                search: options.search,
+                device: options.device,
+                limit,
+                countryCode,
+                refresh,
+            })
+            : await loadAllProviderListOfferDetails({
             providerNames,
             search: options.search,
             device: options.device,
@@ -194,7 +207,7 @@ export async function getGemslootGalleryOffers(options: {
 
     const offers = detailRows
         .filter((offer): offer is GemslootGalleryOffer => Boolean(offer))
-        .filter((offer) => offer.countryCode === countryCode)
+        .filter((offer) => allCountries || offer.countries.includes(countryCode ?? ""))
         .sort((left, right) => {
             if (offerIds.length > 0) {
                 return offerIds.indexOf(left.id) - offerIds.indexOf(right.id);
@@ -207,7 +220,7 @@ export async function getGemslootGalleryOffers(options: {
         .slice(0, limit);
 
     return {
-        countryCode,
+        countryCode: countryCode ?? "ALL",
         provider,
         offers,
         providers,
@@ -225,7 +238,7 @@ async function loadExactOfferDetails({
     refresh,
 }: {
     offerIds: string[];
-    countryCode: string;
+    countryCode: string | null;
     refresh: boolean;
 }) {
     return mapWithConcurrency(offerIds, 5, async (offerId) => {
@@ -255,7 +268,7 @@ async function loadListOfferDetails({
     search?: string | null;
     device?: string | null;
     limit: number;
-    countryCode: string;
+    countryCode: string | null;
     refresh: boolean;
 }) {
     const listRows = await fetchListRows({
@@ -279,6 +292,47 @@ async function loadListOfferDetails({
             completionCount: entry.completionCount,
         });
     });
+}
+
+async function loadAllProviderListOfferDetails({
+    providerNames,
+    search,
+    device,
+    limit,
+    countryCode,
+    refresh,
+}: {
+    providerNames: string[];
+    search?: string | null;
+    device?: string | null;
+    limit: number;
+    countryCode: string | null;
+    refresh: boolean;
+}) {
+    const providerRows = await mapWithConcurrency(providerNames, 3, (providerName) => (
+        loadListOfferDetails({
+            providerNames: [providerName],
+            search,
+            device,
+            limit: ALL_PROVIDER_LIST_LIMIT,
+            countryCode,
+            refresh,
+        })
+    ));
+
+    return dedupeGemslootOffers(providerRows.flat());
+}
+
+function dedupeGemslootOffers(offers: Array<GemslootGalleryOffer | null>) {
+    const byId = new Map<string, GemslootGalleryOffer>();
+    for (const offer of offers) {
+        if (!offer?.id) continue;
+        const existing = byId.get(offer.id);
+        if (!existing || offer.totalPayout > existing.totalPayout) {
+            byId.set(offer.id, offer);
+        }
+    }
+    return Array.from(byId.values());
 }
 
 async function getGemslootProviders(refresh: boolean): Promise<Array<{ name: string; count: number | null; bonus: number | null }>> {
@@ -361,7 +415,7 @@ async function fetchOfferDetail(offerId: string | undefined, refresh: boolean): 
 function normalizeGemslootOffer(
     list: GemslootListNode,
     detail: GemslootDetailPayload | null,
-    context: { countryCode: string; completionCount: number | null },
+    context: { countryCode: string | null; completionCount: number | null },
 ): GemslootGalleryOffer | null {
     const id = cleanText(detail?.id ?? list.id ?? "");
     const title = cleanText(detail?.name ?? list.name ?? "");
@@ -371,7 +425,9 @@ function normalizeGemslootOffer(
     const bestTaskPayout = tasks.reduce((max, task) => Math.max(max, task.rewardAmount), 0);
     const payout = bestTaskPayout > 0 ? bestTaskPayout : totalPayout;
     const countries = normalizeCountries(detail?.loc);
-    const countryCode = countries.includes(context.countryCode) ? context.countryCode : countries[0] ?? context.countryCode;
+    const countryCode = context.countryCode && countries.includes(context.countryCode)
+        ? context.countryCode
+        : countries[0] ?? context.countryCode ?? "XX";
     const description = cleanText(detail?.dsc ?? detail?.to_know ?? "");
 
     if (!id || !title || totalPayout <= 0) return null;
@@ -386,6 +442,7 @@ function normalizeGemslootOffer(
         description: description || null,
         shortDescription: description ? truncate(description, 150) : null,
         countryCode,
+        countries,
         reward: payout,
         payout,
         totalPayout,
@@ -520,6 +577,11 @@ function buildGemslootHeaders(): Record<string, string> {
 function normalizeLimit(value: number | undefined): number {
     if (!Number.isFinite(value)) return DEFAULT_LIMIT;
     return Math.min(MAX_LIMIT, Math.max(1, Math.floor(Number(value))));
+}
+
+function normalizeCatalogLimit(value: number | undefined): number {
+    if (!Number.isFinite(value)) return 5000;
+    return Math.min(5000, Math.max(1, Math.floor(Number(value))));
 }
 
 async function mapWithConcurrency<T, R>(items: T[], concurrency: number, mapper: (item: T) => Promise<R>): Promise<R[]> {

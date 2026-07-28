@@ -70,6 +70,11 @@ export default function BestOffersPageTemplate({
       <RevenuePageView routePath={pathname} routeGroup="seo_best_offers" sourceContext={sourceContext} />
       <JsonLd data={schemas} />
       <Container className="space-y-6">
+        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
+          <Link href="/" className="hover:text-lime-700">Home</Link>
+          <span aria-hidden="true">/</span>
+          <span className="text-[var(--brand-ink)]">{title}</span>
+        </nav>
         <header className="rounded-2xl border border-[var(--border-default)] bg-white p-6 shadow-[var(--shadow-card)]">
           <p className="section-label">{label}</p>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[var(--brand-ink)]">{title}</h1>

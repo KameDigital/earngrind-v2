@@ -1,16 +1,33 @@
 import { Metadata } from "next";
 import { LEGAL_EMAIL } from "@/lib/constants";
+import { canonicalAlternates } from "@/lib/seo-metadata";
+import { buildBreadcrumbList, buildWebPage, JsonLd } from "@/lib/seo-schema";
 
 export const metadata: Metadata = {
-    title: "Terms of Service | EarnGrind",
+    title: "Terms of Service",
     description: "Terms governing your use of the EarnGrind platform.",
+    alternates: canonicalAlternates("/legal/terms"),
 };
 
 const LAST_UPDATED = "March 24, 2026";
 
 export default function TermsPage() {
+    const schemas = [
+        buildWebPage({
+            name: "Terms of Service",
+            path: "/legal/terms",
+            description: metadata.description as string,
+        }),
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Legal", path: "/legal/terms" },
+            { name: "Terms of Service", path: "/legal/terms" },
+        ]),
+    ];
+
     return (
         <>
+            <JsonLd data={schemas} />
             <div className="mb-6 pb-6 border-b border-gray-100">
                 <p className="text-xs font-bold uppercase tracking-widest text-lime-600 mb-2">Legal</p>
                 <h1 className="text-2xl font-extrabold text-gray-900 mb-1">Terms of Service</h1>

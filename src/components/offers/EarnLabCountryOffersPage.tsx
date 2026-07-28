@@ -10,6 +10,7 @@ import {
     getEarnLabCountryName,
 } from "@/lib/earnlab-countries";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
+import { CountrySelector } from "@/components/offers/CountrySelector";
 import { isPublicPayoutEligible, normalizeTotalPayout } from "@/lib/offer-quality";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import { normalizeProviderDisplayName } from "@/lib/provider-normalization";
@@ -488,6 +489,8 @@ export async function EarnLabCountryOffersPage({
                         </Link>
                     ))}
                 </div>
+
+                <CountrySelector activeCountryCode={country} className="mt-4 max-w-2xl" />
 
                 <div className="mt-4 flex flex-wrap items-center gap-2 rounded-2xl border border-[var(--border-default)] bg-white p-3 shadow-[var(--shadow-card)]">
                     <span className="mr-1 text-xs font-extrabold uppercase tracking-wider text-[var(--text-tertiary)]">

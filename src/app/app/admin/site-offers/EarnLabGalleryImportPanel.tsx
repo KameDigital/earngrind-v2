@@ -5,9 +5,25 @@ import { EARNLAB_COUNTRY_NAMES, EARNLAB_GALLERY_COUNTRIES } from "@/lib/earnlab-
 import ProviderGalleryImportPanel, { ProviderGalleryPanelStats } from "./ProviderGalleryImportPanel";
 
 type ImportResult = {
-    countryCode: string;
-    countryName: string;
-    stats: ProviderGalleryPanelStats;
+    mode?: "all-countries";
+    countryCode?: string;
+    countryName?: string;
+    stats?: ProviderGalleryPanelStats;
+    totals?: ProviderGalleryPanelStats;
+    countriesRequested?: number;
+    countriesSucceeded?: number;
+    countriesFailed?: number;
+    results?: Array<{
+        country: string;
+        success: boolean;
+        fetched: number;
+        imported: number;
+        created: number;
+        updated: number;
+        skipped: number;
+        failed: number;
+        error?: string;
+    }>;
 };
 
 export default function EarnLabGalleryImportPanel() {
@@ -22,8 +38,29 @@ export default function EarnLabGalleryImportPanel() {
             description="Fetches the EarnLab gallery API by country and upserts results into site_offers through the shared provider-gallery ingestion path. Direct per-offer links are preserved if they already exist."
             endpoint="/api/admin/earnlab/gallery-import"
             tone="lime"
-            buildRequestBody={() => ({ country, limit, refresh: true })}
-            getStats={(result) => result.stats}
+            primaryLabel="Pull country"
+            secondaryLabel="Pull all countries"
+            buildRequestBody={(batch) => batch
+                ? ({ allCountries: true, limit, refresh: true })
+                : ({ country, limit, refresh: true })}
+            getStats={(result) => result.stats ?? result.totals ?? null}
+            getBatchRows={(result) => (result.results ?? []).map((item) => ({
+                label: item.success ? item.country : `${item.country} failed`,
+                stats: {
+                    fetched: item.fetched,
+                    imported: item.imported,
+                    created: item.created,
+                    updated: item.updated,
+                    skipped: item.skipped,
+                    failed: item.failed,
+                },
+            }))}
+            getQualityMetrics={(result) => result.mode === "all-countries" ? [
+                { label: "Countries requested", value: result.countriesRequested ?? 0 },
+                { label: "Countries succeeded", value: result.countriesSucceeded ?? 0 },
+                { label: "Countries failed", value: result.countriesFailed ?? 0 },
+            ] : []}
+            footerNote="All-countries mode runs supported EarnLab countries sequentially with a short delay between countries. Failed countries are shown in the batch table without exposing raw server details."
             fields={(
                 <>
                     <label className="block w-40">

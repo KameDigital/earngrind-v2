@@ -41,7 +41,7 @@ export function StaticGuideShell({
 
     return (
         <main className="min-h-screen overflow-x-hidden bg-[#f5f5f0] text-slate-950">
-            <style>{`
+            <style dangerouslySetInnerHTML={{ __html: `
                 .static-guide-prose{color:#334155;font-size:1.03rem;line-height:1.76;overflow-wrap:anywhere}
                 .static-guide-prose h2,.static-guide-prose h3{color:#0f172a;font-weight:900;line-height:1.18;letter-spacing:0}
                 .static-guide-prose h2{font-size:clamp(1.65rem,2.25vw,2.1rem);margin:0 0 1rem}
@@ -78,12 +78,12 @@ export function StaticGuideShell({
                     .static-guide-prose tr{display:block;overflow:hidden;border:1px solid #dbe3ea;border-radius:14px;background:#fff}
                     .static-guide-prose td{display:grid;grid-template-columns:minmax(92px,36%) minmax(0,1fr);min-width:0;border-right:0;padding:.72rem .8rem;gap:.7rem}
                     .static-guide-prose td::before{content:attr(data-label);font-size:.68rem;font-weight:900;line-height:1.25;text-transform:uppercase;color:#475569}
-                    .static-guide-prose td[data-label="Exact task"]{order:-1;grid-template-columns:1fr;background:#f8fafc;font-weight:900;color:#0f172a}
-                    .static-guide-prose td[data-label="Exact task"]::before{content:"Task";color:#047857}
+                    .static-guide-prose td[data-label=Exact\\ task]{order:-1;grid-template-columns:1fr;background:#f8fafc;font-weight:900;color:#0f172a}
+                    .static-guide-prose td[data-label=Exact\\ task]::before{content:'Task';color:#047857}
                     .static-guide-prose tr:last-child td{border-bottom:1px solid #dbe3ea}
                     .static-guide-prose tr td:last-child{border-bottom:0}
                 }
-            `}</style>
+            ` }} />
 
             <section className="relative border-b border-slate-200 bg-white">
                 <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#10b981,#22d3ee,#f59e0b)]" />

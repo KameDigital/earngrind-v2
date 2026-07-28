@@ -44,9 +44,7 @@ export async function middleware(request: NextRequest) {
 
     // Explicit admin protection. Keep this in addition to the broader /app guard and robots exclusions.
     if (isAdminRoute && !user) {
-        const loginUrl = new URL('/login', request.url);
-        loginUrl.searchParams.set('next', `${request.nextUrl.pathname}${request.nextUrl.search}`);
-        return NextResponse.redirect(loginUrl);
+        return NextResponse.redirect(new URL('/login', request.url));
     }
 
     // Protect /app/* routes

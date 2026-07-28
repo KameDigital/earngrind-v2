@@ -6,14 +6,13 @@ type PublicPayoutType = "online_cashback" | "gift_card" | "points" | "crypto" | 
 type PublicDevice = "ios" | "android" | "pc" | "web";
 type PublicPlatformKind = "gpt_site" | "offerwall" | "casino" | "sportsbook" | "cashback";
 
-const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev";
-
 export type UnifiedOfferRow = Record<string, unknown> & {
     id?: string | null;
     source?: string | null;
     title?: string | null;
     payout_usd?: number | string | null;
     total_payout_usd?: number | string | null;
+    completion_count?: number | string | null;
     payout_type?: string | null;
     devices?: string[] | null;
     countries?: string[] | null;
@@ -94,16 +93,6 @@ export function getUnifiedOfferRedirectUrl(row: UnifiedOfferRow): string | null 
     return id ? `/go/${id}` : null;
 }
 
-function getPublicOfferUrl(row: UnifiedOfferRow): string | null {
-    const platformSlug = firstNonEmpty(row.platform_slug)?.toLowerCase() ?? "";
-    const platformName = firstNonEmpty(row.platform_name)?.toLowerCase() ?? "";
-    if (platformSlug.includes("gemsloot") || platformName.includes("gemsloot")) {
-        return GEMSLOOT_AFFILIATE_URL;
-    }
-
-    return firstNonEmpty(row.offer_url);
-}
-
 export function shapePublicOffer(row: UnifiedOfferRow) {
     const payoutUsd = toNumber(row.payout_usd);
     const totalPayoutUsd = normalizeTotalPayout(payoutUsd, toNumber(row.total_payout_usd, payoutUsd));
@@ -121,6 +110,7 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
         image_url: getUnifiedOfferImageUrl(row),
         payout_usd: payoutUsd,
         total_payout_usd: totalPayoutUsd,
+        completion_count: row.completion_count == null ? null : toNumber(row.completion_count, 0),
         payout_type: toPublicPayoutType(row.payout_type),
         devices: toPublicDevices(row.devices),
         countries: row.countries ?? [],
@@ -134,7 +124,7 @@ export function shapePublicOffer(row: UnifiedOfferRow) {
         heat_score: row.heat_score ?? 0,
         offer_expires_at: row.offer_expires_at ?? null,
         updated_at: firstNonEmpty(row.updated_at) ?? "",
-        offer_url: getPublicOfferUrl(row),
+        offer_url: firstNonEmpty(row.offer_url),
         goal_text: row.goal_text ?? null,
         provider_id: row.provider_id ?? null,
         provider_name: providerName,

@@ -11,7 +11,12 @@ export default function LoginPage({ searchParams }: { searchParams: { error?: st
     return <AuthCard title="Welcome back" subtitle="Log in to manage your private EarnGrind preferences.">
         {searchParams.error ? <Notice tone="error">{searchParams.error}</Notice> : null}
         {searchParams.message ? <Notice tone="success">{searchParams.message}</Notice> : null}
-        <form action={login} className="space-y-4"><input type="hidden" name="next" value={next} /><Field label="Email" name="email" type="email" autoComplete="email" /><Field label="Password" name="password" type="password" autoComplete="current-password" minLength={8} /><SubmitButton>Log in</SubmitButton></form>
+        <form action={login} className="space-y-4">
+            <input type="hidden" name="next" value={next} />
+            <Field label="Email" name="email" type="email" autoComplete="email" />
+            <Field label="Password" name="password" type="password" autoComplete="current-password" minLength={8} />
+            <SubmitButton>Log in</SubmitButton>
+        </form>
         <p className="mt-5 text-sm text-[var(--text-secondary)]">New to EarnGrind? <Link className="font-bold text-[var(--brand-ink)] underline" href={`/signup?next=${encodeURIComponent(next)}`}>Create an account</Link>.</p>
     </AuthCard>;
 }

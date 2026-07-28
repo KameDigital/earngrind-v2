@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
 import { createClient } from "@/lib/supabase/server";
+import { canonicalAlternates } from "@/lib/seo-metadata";
 import BlogJsonLd from "./BlogJsonLd";
 
 export const revalidate = 120;
@@ -55,14 +56,16 @@ export async function generateMetadata(
 
     if (!post) return { title: "Post Not Found | EarnGrind" };
 
-    const title = post.seo_title ?? post.title;
+    const title = (post.seo_title ?? post.title).replace(/\s*\|\s*EarnGrind\s*$/i, "");
     const description = post.seo_description ?? post.excerpt ?? `Read ${post.title} on EarnGrind`;
 
     return {
-        title: `${title} | EarnGrind`,
+        title,
         description,
+        alternates: canonicalAlternates(`/blog/${params.slug}`),
         openGraph: {
             title, description,
+            url: `https://earngrind.com/blog/${params.slug}`,
             type: "article",
             publishedTime: post.published_at ?? undefined,
         },
@@ -163,6 +166,11 @@ function extractFaqsFromMarkdown(md: string): BlogFaq[] {
         .slice(0, 6);
 }
 
+function stripLeadingDuplicateH1(md: string, title: string): string {
+    const escapedTitle = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return md.replace(new RegExp(`^#\\s+${escapedTitle}\\s*(?:\\r?\\n){2,}`, "i"), "");
+}
+
 // ---------------------------------------------------------------
 // PAGE
 // ---------------------------------------------------------------
@@ -198,7 +206,7 @@ export default async function BlogDetail({ params }: { params: { slug: string } 
         year: "numeric", month: "short", day: "numeric",
     });
 
-    const renderedBody = renderMarkdown(typedPost.body_md ?? "");
+    const renderedBody = renderMarkdown(stripLeadingDuplicateH1(typedPost.body_md ?? "", typedPost.title));
     const faqs = extractFaqsFromMarkdown(typedPost.body_md ?? "");
 
     return (
@@ -221,7 +229,7 @@ export default async function BlogDetail({ params }: { params: { slug: string } 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
 
                     {/* Breadcrumbs */}
-                    <nav className="flex items-center gap-2 text-sm text-gray-400 font-medium mb-4">
+                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-400 font-medium mb-4">
                         <Link href="/" className="hover:text-gray-700 transition-colors">Home</Link>
                         <span>/</span>
                         <Link href="/blog" className="hover:text-gray-700 transition-colors">Blog</Link>

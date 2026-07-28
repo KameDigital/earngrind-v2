@@ -5,6 +5,7 @@ import { getGuideSitemapPriority } from "@/lib/indexing-readiness";
 import { getSiteUrl } from "@/lib/site-url";
 import { PUBLIC_GAIN_WALLS } from "@/lib/gain-gallery";
 import { GEMSLOOT_PUBLIC_PROVIDERS } from "@/lib/gemsloot-providers";
+import { GEMSLOOT_PUBLIC_COUNTRIES } from "@/lib/gemsloot-countries";
 import {
   getDuplicateKeywordGuideIds,
   getEligibleOfferStats,
@@ -140,13 +141,20 @@ export default async function AdminSitemapPage({
       priority: wall === "cpx" ? "0.68" : "0.72",
       frequency: "daily",
     })),
-    { url: `${baseUrl}/offers/gemsloot/us`, label: "Gemsloot US offers", priority: "0.8", frequency: "daily" },
-    ...GEMSLOOT_PUBLIC_PROVIDERS.map((provider) => ({
-      url: `${baseUrl}/offers/gemsloot/us/${provider.slug}`,
-      label: `${provider.label} Gemsloot offers`,
-      priority: "0.72",
-      frequency: "daily",
-    })),
+    ...GEMSLOOT_PUBLIC_COUNTRIES.flatMap((country) => [
+      {
+        url: `${baseUrl}/offers/gemsloot/${country.slug}`,
+        label: `Gemsloot ${country.shortName} offers`,
+        priority: country.code === "US" ? "0.8" : "0.76",
+        frequency: "daily",
+      },
+      ...GEMSLOOT_PUBLIC_PROVIDERS.map((provider) => ({
+        url: `${baseUrl}/offers/gemsloot/${country.slug}/${provider.slug}`,
+        label: `${provider.label} Gemsloot ${country.shortName} offers`,
+        priority: "0.72",
+        frequency: "daily",
+      })),
+    ]),
     { url: `${baseUrl}/best-money-making-games`, label: "Best money making games", priority: "0.85", frequency: "daily" },
     { url: `${baseUrl}/about`, label: "About", priority: "0.5", frequency: "monthly" },
     { url: `${baseUrl}/how-it-works`, label: "How it works", priority: "0.5", frequency: "monthly" },

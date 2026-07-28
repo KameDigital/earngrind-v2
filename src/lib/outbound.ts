@@ -55,6 +55,7 @@ const INBOXDOLLARS_AFFILIATE_URL = "https://www.inboxdollars.com?rb=193664312";
 const MYPOINTS_AFFILIATE_URL = "https://www.mypoints.com?rb=233983902";
 const PRIZEREBEL_AFFILIATE_URL = "https://www.prizerebel.com/index.php?r=16580973";
 const SCRAMBLY_URL = "https://scrambly.io/";
+const GEMSLOOT_OFFER_URL = "https://gemsloot.com/transactions?modal=offer_3";
 const PLATFORM_FALLBACK_URLS: Record<string, string> = {
     cashinstyle: CASHINSTYLE_AFFILIATE_URL,
     earnlab: EARNLAB_AFFILIATE_URL,
@@ -164,7 +165,12 @@ export function buildGemslootOfferModalUrl({
     const offerName =
         extractGemslootOfferName(externalId) ??
         extractGemslootOfferName(offerUrl);
-    return offerName ? GEMSLOOT_AFFILIATE_URL : null;
+    if (!offerName) return null;
+
+    const url = new URL(GEMSLOOT_OFFER_URL);
+    url.searchParams.set("name", offerName);
+    url.searchParams.set("aff", "kamedev");
+    return url.toString();
 }
 
 export function extractCashInStyleOfferId({
@@ -205,8 +211,6 @@ export function buildPlatformAffiliateUrl({
     customParam?: string;
     destinationUrl?: string | null | undefined;
 }): string | null {
-    if (isGemslootTarget(platform)) return GEMSLOOT_AFFILIATE_URL;
-
     const platformDestination = getPlatformOwnedDestination(platform, destinationUrl);
     if (platformDestination) return platformDestination;
 

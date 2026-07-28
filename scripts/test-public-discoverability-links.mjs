@@ -25,6 +25,7 @@ assert(
 );
 for (const href of [
   "/offers/gemsloot/us",
+  "/offers/gemsloot/gb",
   "/offers/gain/us",
   "/guides/how-to-earn",
   "/best-gain-gg-offers",
@@ -61,4 +62,10 @@ for (const href of ["/best-gpt-sites", "/best-gpt-sites#platform-reviews", "/gui
   assert(footerSource.includes(href), `footer should expose evergreen hub ${href}`);
 }
 
+const gemslootCountryRegistrySource = read("src/lib/gemsloot-countries.ts");
+assert(offersPageSource.includes("GEMSLOOT_PUBLIC_COUNTRIES.flatMap"), "offers hub should derive Gemsloot links from the shared country registry");
+for (const country of ["US", "GB"]) {
+  assert(gemslootCountryRegistrySource.includes(`code: "${country}"`), `Gemsloot country registry should include ${country}`);
+}
+assert(offersPageSource.includes("/offers/gemsloot/${country.slug}") && offersPageSource.includes("/offers/gemsloot/${country.slug}/${provider.slug}"), "offers hub should link each registered Gemsloot country and provider route");
 console.log("public discoverability link checks passed");

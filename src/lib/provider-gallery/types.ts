@@ -39,6 +39,7 @@ export type NormalizedProviderGalleryOffer = {
     category?: string | null;
     payoutUsd: number;
     totalPayoutUsd?: number | null;
+    completionCount?: number | null;
     imageUrl?: string | null;
     description?: string | null;
     shortDescription?: string | null;

@@ -3,10 +3,11 @@ import { buildSeoMetadata } from "@/app/(seo)/_lib/seo-data";
 import { fetchPublicOffers } from "@/lib/public-offer-search";
 
 const canonicalPath = "/best-paying-mobile-games-gpt";
+const description = "Compare the best paying mobile game offers visible across current GPT site data on EarnGrind.";
 
 export const metadata = buildSeoMetadata({
-  title: "Best Paying Mobile Games on GPT Sites | EarnGrind",
-  description: "Compare the best paying mobile game offers visible across current GPT site data on EarnGrind.",
+  title: "Best Paying Mobile Games on GPT Sites",
+  description,
   path: canonicalPath,
   canonicalPath,
 });
@@ -21,7 +22,9 @@ export default async function BestPayingMobileGamesGptPage() {
   return (
     <PlatformReviewPage
       h1="Best Paying Mobile Games on GPT Sites"
-      intro="TODO: Replace this placeholder with a researched roundup explaining which mobile game offer types tend to pay best and how users should compare time requirements."
+      pathname={canonicalPath}
+      description={description}
+      intro="Use this page to compare current high-value mobile game routes across GPT platforms, then judge each offer by total payout, milestone clarity, device fit, and whether the time requirement is realistic before you start."
       offerRows={toPlatformReviewOfferRows(offers.data)}
       affiliateCta={{ label: "Compare mobile game offers", href: "/offers?platform_kind=gpt_site" }}
     />

@@ -130,10 +130,19 @@ function JsonLd() {
             },
         })),
     };
+    const breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+            { "@type": "ListItem", position: 2, name: "Guides", item: absoluteUrl("/guides") },
+            { "@type": "ListItem", position: 3, name: TITLE, item: PAGE_URL },
+        ],
+    };
 
     return (
         <>
-            {[article, faq].map((schema, index) => (
+            {[article, faq, breadcrumb].map((schema, index) => (
                 <script
                     key={index}
                     type="application/ld+json"

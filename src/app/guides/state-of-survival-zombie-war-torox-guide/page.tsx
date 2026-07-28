@@ -309,6 +309,13 @@ export default function StateOfSurvivalToroxGuidePage() {
     return (
         <main className="min-h-screen bg-[#f4f6f1] text-slate-900">
             <JsonLd />
+            <nav aria-label="Breadcrumb" className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-4 text-sm font-bold text-slate-500 sm:px-6 lg:px-8">
+                <Link href="/" className="hover:text-emerald-700">Home</Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/guides" className="hover:text-emerald-700">Guides</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-slate-800">State of Survival</span>
+            </nav>
             <section className="relative overflow-hidden bg-slate-950 text-white">
                 <div className="absolute inset-0 opacity-35" aria-hidden="true">
                     <div className="h-full w-full bg-[radial-gradient(circle_at_18%_25%,rgba(16,185,129,0.34),transparent_32%),radial-gradient(circle_at_82%_12%,rgba(250,204,21,0.18),transparent_30%),linear-gradient(135deg,#0f172a,#111827_58%,#064e3b)]" />

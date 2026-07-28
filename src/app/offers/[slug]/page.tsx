@@ -140,14 +140,14 @@ export async function generateMetadata(
         const countryName = getEarnLabCountryName(countryCode);
         const canonical = absoluteUrl(`/offers/${countryCode.toLowerCase()}`);
         return {
-            title: `Best EarnLab Offers in ${countryName} | EarnGrind`,
+            title: `Best EarnLab Offers in ${countryName}`,
             description: `Browse the best EarnLab tasks and game offers available in ${countryName}. Compare rewards, requirements, and start high-paying offers.`,
             alternates: {
                 canonical,
             },
             robots: robotsForIndexability(true),
             openGraph: {
-                title: `Best EarnLab Offers in ${countryName} | EarnGrind`,
+                title: `Best EarnLab Offers in ${countryName}`,
                 description: `Compare EarnLab rewards, task requirements, and available app offers for ${countryName}.`,
                 url: canonical,
             },
@@ -157,7 +157,7 @@ export async function generateMetadata(
     const data = await getGameData(params.slug);
     if (!data) {
         return {
-            title: 'Game Not Found | EarnGrind',
+            title: 'Game Not Found',
             robots: noindexFollowRobots(),
         };
     }
@@ -664,11 +664,11 @@ export default async function GameOffersPage({
                 </nav>
 
                 {/* ── Game Hero ── */}
-                <div className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
+                <div className="overflow-hidden border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
                     <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_22rem]">
                         <div className="flex flex-col gap-5 p-5 sm:flex-row sm:p-6">
                         {/* Thumbnail */}
-                        <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[var(--border-default)] bg-[var(--surface-muted)] sm:h-28 sm:w-28">
+                        <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden border border-[var(--border-default)] bg-[var(--surface-muted)] sm:h-28 sm:w-28">
                             {heroImageUrl ? (
                                 <img
                                     src={heroImageUrl}
@@ -691,7 +691,7 @@ export default async function GameOffersPage({
                                     Compare {game.name} payout routes
                                 </h1>
                                 {game.category && (
-                                    <span className="mt-1 px-2.5 py-0.5 bg-[var(--surface-muted)] text-[var(--text-secondary)] text-xs font-semibold rounded-full border border-[var(--border-default)]">
+                                    <span className="mt-1 border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-0.5 text-xs font-semibold text-[var(--text-secondary)]">
                                         {game.category}
                                     </span>
                                 )}
@@ -713,20 +713,20 @@ export default async function GameOffersPage({
 
                             <div className="mt-4 flex flex-wrap gap-2">
                                 {bestOffer && (
-                                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 px-3 py-1.5 text-xs font-bold text-[color:hsl(84,93%,25%)]">
+                                    <span className="inline-flex items-center gap-1 border border-[var(--brand-lime)]/30 bg-[var(--brand-lime)]/10 px-3 py-1.5 text-xs font-bold text-[color:hsl(84,93%,25%)]">
                                         Best route now: {bestOffer.platform.name} at ${bestOffer.payout_usd.toFixed(2)}
                                     </span>
                                 )}
-                                <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                <span className="inline-flex items-center gap-1 border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
                                     {formatDataRefreshedLabel(bestOffer?.updated_at, new Date())}
                                 </span>
                                 {primaryGuide && (
-                                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                    <span className="inline-flex items-center gap-1 border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
                                         Guide available
                                     </span>
                                 )}
                                 {bestReview && (
-                                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
+                                    <span className="inline-flex items-center gap-1 border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)]">
                                         Reviewed platform
                                     </span>
                                 )}
@@ -745,7 +745,7 @@ export default async function GameOffersPage({
                                         payoutUsd={bestOffer.payout_usd}
                                         location="offer-detail-hero"
                                         sourceContext="offer-detail"
-                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-ink)] px-5 py-3 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95"
+                                        className="inline-flex items-center justify-center gap-2 bg-[var(--brand-ink)] px-5 py-3 text-sm font-extrabold text-[var(--brand-lime)] shadow-sm transition-all hover:-translate-y-px hover:bg-[var(--brand-ink)]/95"
                                     >
                                         Start Best Payout <ArrowRight aria-hidden className="h-4 w-4" />
                                     </TrackedOutboundLink>
@@ -753,14 +753,14 @@ export default async function GameOffersPage({
                                 {primaryGuide && (
                                     <Link
                                         href={`/guides/${primaryGuide.slug}`}
-                                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--brand-lime)]/20 bg-[var(--brand-lime)]/10 px-4 py-3 text-sm font-extrabold text-[color:hsl(84,93%,25%)] transition-colors hover:bg-[var(--brand-lime)]/15"
+                                        className="inline-flex items-center justify-center gap-2 border border-[var(--brand-lime)]/20 bg-[var(--brand-lime)]/10 px-4 py-3 text-sm font-extrabold text-[color:hsl(84,93%,25%)] transition-colors hover:bg-[var(--brand-lime)]/15"
                                     >
                                         <BookOpen aria-hidden className="h-4 w-4" /> Use Guide First
                                     </Link>
                                 )}
                                 <Link
                                     href={gameHubPath(game.slug)}
-                                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
+                                    className="inline-flex items-center justify-center gap-2 border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
                                 >
                                     View Game Page
                                 </Link>

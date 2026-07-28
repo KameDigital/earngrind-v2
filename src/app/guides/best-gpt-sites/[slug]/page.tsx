@@ -626,7 +626,7 @@ export default function GptSiteGuidePage({ params }: { params: { slug: string } 
             <div className="mx-auto w-full max-w-[1280px] space-y-6 px-4 sm:px-6 lg:px-8">
                 <section className="overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)]">
                     <div className="p-5 sm:p-6 lg:p-8">
-                        <nav className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
+                        <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
                             <Link href="/" className="hover:text-[var(--brand-ink)]">Home</Link>
                             <span>/</span>
                             <Link href="/best-gpt-sites" className="hover:text-[var(--brand-ink)]">Best GPT Sites</Link>

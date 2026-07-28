@@ -3,13 +3,28 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Container from "@/components/layout/Container";
 import { canonicalAlternates } from "@/lib/seo-metadata";
+import { buildBreadcrumbList, buildCollectionPage, buildItemList, JsonLd } from "@/lib/seo-schema";
 
 export const revalidate = 120;
 
 export const metadata: Metadata = {
-    title: "Blog — Offerwall Strategies & Earning Tips | EarnGrind",
+    title: "Blog — Offerwall Strategies & Earning Tips",
     description: "Editorial articles on offerwall strategy, earning experiments, roundups, and how to maximize earnings from mobile game offers.",
     alternates: canonicalAlternates("/blog"),
+    openGraph: {
+        title: "Blog - Offerwall Strategies & Earning Tips",
+        description: "Editorial articles on offerwall strategy, earning experiments, roundups, and how to maximize earnings from mobile game offers.",
+        url: "https://earngrind.com/blog",
+        siteName: "EarnGrind",
+        images: [{ url: "/og-earngrind.png", width: 1200, height: 630, alt: "EarnGrind offerwall strategy blog" }],
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Blog - Offerwall Strategies & Earning Tips",
+        description: "Editorial articles on offerwall strategy, earning experiments, roundups, and how to maximize earnings from mobile game offers.",
+        images: ["/og-earngrind.png"],
+    },
 };
 
 const PAGE_SIZE = 12;
@@ -106,12 +121,37 @@ export default async function BlogIndex({
         .not("category", "is", null);
 
     const categories = Array.from(new Set((categoryRows ?? []).map(r => r.category).filter(Boolean))) as string[];
+    const itemList = buildItemList(
+        typedPosts.slice(0, 12).map((post) => ({
+            name: post.title,
+            path: `/blog/${post.slug}`,
+            description: post.excerpt,
+        })),
+    );
+    const schemas = [
+        buildCollectionPage({
+            name: "EarnGrind Blog",
+            path: "/blog",
+            description: metadata.description as string,
+            mainEntity: itemList,
+        }),
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+        ]),
+    ];
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-10">
+            <JsonLd data={schemas} />
             <Container>
                 {/* Header */}
                 <div className="mb-8 max-w-2xl">
+                    <nav aria-label="Breadcrumb" className="mb-4 flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-tertiary)]">
+                        <Link href="/" className="hover:text-lime-700">Home</Link>
+                        <span aria-hidden="true">/</span>
+                        <span className="text-[var(--brand-ink)]">Blog</span>
+                    </nav>
                     <p className="section-label mb-3">Blog</p>
                     <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--brand-ink)] tracking-tight mb-3">
                         Blog

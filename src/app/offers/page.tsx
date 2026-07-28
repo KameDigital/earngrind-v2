@@ -3,22 +3,26 @@ import Link from 'next/link';
 import React, { Suspense } from 'react';
 import GamesIndexClient from '@/app/(seo)/games/GamesIndexClient';
 import OfferSearchEngine from '@/components/offers/OfferSearchEngine';
+import { CountrySelector } from '@/components/offers/CountrySelector';
 import Container from '@/components/layout/Container';
 import { canonicalAlternates } from '@/lib/seo-metadata';
-import { EARNLAB_COUNTRY_NAMES, EARNLAB_GALLERY_COUNTRIES } from '@/lib/earnlab-countries';
+import { buildBreadcrumbList, buildCollectionPage, buildItemList, JsonLd } from '@/lib/seo-schema';
+import { EARNLAB_COUNTRY_NAMES, EARNLAB_GALLERY_COUNTRIES, getSupportedPublicOfferCountries } from '@/lib/earnlab-countries';
 import { getGamesIndexData } from '@/lib/games-index-data';
 import { fetchPublicOffers, publicOfferFiltersFromSearchParams } from '@/lib/public-offer-search';
 import { PUBLIC_GAIN_WALLS, type GainGalleryWall } from '@/lib/gain-gallery';
 import { GEMSLOOT_PUBLIC_PROVIDERS } from '@/lib/gemsloot-providers';
+import { GEMSLOOT_PUBLIC_COUNTRIES } from '@/lib/gemsloot-countries';
+import { resolveRequestOfferCountry } from '@/lib/server-offer-country';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-    title: 'Compare High-Paying Offers and Games | EarnGrind',
+    title: 'Compare High-Paying Offers and Games',
     description: 'Compare current offer payouts, search live GPT opportunities, and browse the highest-paying game offers from one EarnGrind hub.',
     alternates: canonicalAlternates('/offers'),
     openGraph: {
-        title: 'Compare High-Paying Offers and Games | EarnGrind',
+        title: 'Compare High-Paying Offers and Games',
         description: 'Compare current offer payouts, search live GPT opportunities, and browse the highest-paying game offers from one EarnGrind hub.',
         url: 'https://earngrind.com/offers',
         siteName: 'EarnGrind',
@@ -34,7 +38,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Compare High-Paying Offers and Games | EarnGrind',
+        title: 'Compare High-Paying Offers and Games',
         description: 'Compare current offer payouts, search live GPT opportunities, and browse the highest-paying game offers from one EarnGrind hub.',
         images: ['/og-earngrind.png'],
     },
@@ -58,9 +62,9 @@ function pageSearchParamsToUrlSearchParams(searchParams: OffersPageProps["search
     return params;
 }
 
-function initialOfferQueryString(searchParams: URLSearchParams): string {
+function initialOfferQueryString(searchParams: URLSearchParams, countryCode: string): string {
     const params = new URLSearchParams(searchParams);
-    if (!params.has("country")) params.set("country", "US");
+    params.set("country", countryCode);
     if (!params.has("sort")) params.set("sort", "payout_desc");
     if (!params.has("page")) params.set("page", "1");
     if (!params.has("per_page")) params.set("per_page", "4");
@@ -93,13 +97,13 @@ const GAIN_OFFERWALL_LINKS = [
     })),
 ];
 
-const GEMSLOOT_OFFERWALL_LINKS = [
-    { href: "/offers/gemsloot/us", label: "All Gemsloot" },
+const GEMSLOOT_OFFERWALL_LINKS = GEMSLOOT_PUBLIC_COUNTRIES.flatMap((country) => [
+    { href: `/offers/gemsloot/${country.slug}`, label: `${country.shortName} Gemsloot` },
     ...GEMSLOOT_PUBLIC_PROVIDERS.map((provider) => ({
-        href: `/offers/gemsloot/us/${provider.slug}`,
-        label: provider.label,
+        href: `/offers/gemsloot/${country.slug}/${provider.slug}`,
+        label: `${provider.label} ${country.shortName}`,
     })),
-];
+]);
 
 const EARNLAB_COUNTRY_LINKS = EARNLAB_GALLERY_COUNTRIES.slice(0, 8).map((countryCode) => ({
     href: `/offers/${countryCode.toLowerCase()}`,
@@ -115,30 +119,61 @@ const POPULAR_OFFER_ROUTE_LINKS = [
 ];
 
 export default async function OffersPage({ searchParams }: OffersPageProps) {
+    const countryResolution = await resolveRequestOfferCountry();
+    const effectiveCountry = countryResolution.country;
+    const supportedCountries = getSupportedPublicOfferCountries();
     const initialSearchParams = pageSearchParamsToUrlSearchParams(searchParams);
-    const initialQueryString = initialOfferQueryString(initialSearchParams);
+    const initialQueryString = initialOfferQueryString(initialSearchParams, effectiveCountry.code);
     const [initialOffers, gamesIndex] = await Promise.all([
         fetchPublicOffers({
             ...publicOfferFiltersFromSearchParams(new URLSearchParams(initialQueryString)),
-            country: initialSearchParams.get("country") ?? "US",
+            country: effectiveCountry.code,
         }),
         getGamesIndexData(),
     ]);
+    const schemas = [
+        buildCollectionPage({
+            name: "Compare High-Paying Offers and Games",
+            path: "/offers",
+            description: metadata.description as string,
+            mainEntity: buildItemList([
+                { name: "Offer search", path: "/offers#offer-search", description: "Search live GPT offers by payout, site, source, device, and country." },
+                { name: "Games list", path: "/offers#games", description: "Browse game hubs with payout snapshots and guide coverage." },
+                { name: "Gain.gg offers", path: "/offers/gain/us", description: "Browse Gain.gg routes by offerwall." },
+                { name: "Gemsloot providers", path: "/offers/gemsloot/us", description: "Compare Gemsloot routes by country and provider." },
+            ]),
+        }),
+        buildBreadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Offers", path: "/offers" },
+        ]),
+    ];
 
     return (
         <main className="min-h-screen bg-[var(--surface-muted)] pb-24 pt-6 sm:pt-10">
+            <JsonLd data={schemas} />
             <Container>
                 {/* Page Header */}
-                <div className="mb-5">
-                    <p className="section-label mb-2">Offers</p>
-                    <h1 className="text-2xl sm:text-4xl font-extrabold text-[var(--brand-ink)] tracking-tight mb-2">
+                <div className="mb-6 overflow-hidden border border-slate-700 bg-[var(--brand-ink)] px-5 py-6 text-white shadow-[var(--shadow-card)] sm:px-7 sm:py-8">
+                    <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-white/55">
+                        <Link href="/" className="hover:text-[var(--brand-lime)]">Home</Link>
+                        <span aria-hidden="true">/</span>
+                        <span className="text-white">Offers</span>
+                    </nav>
+                    <p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--brand-lime)]">Live offer discovery</p>
+                    <h1 className="mb-2 text-2xl font-extrabold tracking-tight text-white sm:text-4xl">
                         Compare high-paying offers and games faster
                     </h1>
-                    <p className="text-sm sm:text-lg text-[var(--text-secondary)] max-w-3xl leading-relaxed">
+                    <p className="max-w-3xl text-sm leading-relaxed text-white/70 sm:text-lg">
                         Search live GPT offers, scan current payouts, compare platforms, and browse game routes from one consolidated EarnGrind hub.
                     </p>
-                    <p className="mt-3 max-w-3xl rounded-none border border-[var(--border-default)] bg-white px-4 py-2.5 text-xs font-semibold leading-relaxed text-[var(--text-secondary)] shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)]">
-                        EarnGrind is the comparison layer. Partner GPT sites and offerwalls handle eligibility, tracking, approval, and payouts after you click out.
+                    {countryResolution.fellBack && (
+                        <p className="mt-3 max-w-3xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-xs font-semibold leading-relaxed text-amber-900">
+                            Showing {effectiveCountry.name} offers because your country could not be matched to a supported market.
+                        </p>
+                    )}
+                    <p className="mt-4 max-w-3xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-semibold leading-relaxed text-white/70">
+                        Showing {effectiveCountry.name} offers. EarnGrind is the comparison layer; partner GPT sites and offerwalls handle eligibility, tracking, approval, and payouts after you click out.
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                         {[
@@ -148,7 +183,7 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                         ].map((item) => (
                             <span
                                 key={item}
-                                className="inline-flex items-center rounded-none border border-[var(--border-default)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--text-secondary)] shadow-[var(--shadow-card)]"
+                                className="inline-flex items-center border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-white/75"
                             >
                                 {item}
                             </span>
@@ -160,17 +195,20 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                     <div className="mb-3 max-w-4xl">
                         <p className="section-label mb-2">Offer search terminal</p>
                         <h2 id="offer-search-heading" className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-2xl">
-                            Search live offers by payout, site, source, device, and country
+                            Search offers for {effectiveCountry.name} by payout, site, source, and device
                         </h2>
                         <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                            Use this offer search terminal to compare current GPT offer payouts, filter games and tasks by device or country, and find the strongest route before opening a partner site.
+                            Use this offer search terminal to compare current GPT offer payouts for {effectiveCountry.name}, filter games and tasks by device, and find the strongest route before opening a partner site.
                         </p>
                     </div>
+                    <CountrySelector activeCountryCode={effectiveCountry.code} className="mb-4 max-w-2xl" />
                     <Suspense fallback={null}>
                         <OfferSearchEngine
                             initialOffers={initialOffers.data}
                             initialMeta={initialOffers.meta}
                             initialQueryString={initialQueryString}
+                            initialCountry={effectiveCountry.code}
+                            countries={supportedCountries}
                         />
                     </Suspense>
                 </section>
@@ -231,11 +269,11 @@ export default async function OffersPage({ searchParams }: OffersPageProps) {
                                 <div>
                                     <h3 className="font-extrabold text-[var(--brand-ink)]">Gemsloot providers</h3>
                                     <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">
-                                        Compare Gemsloot routes by provider before opening a Gemsloot offer.
+                                        Compare US and UK Gemsloot routes by provider before opening a Gemsloot offer.
                                     </p>
                                 </div>
-                                <Link href="/offers/gemsloot/us" className="shrink-0 text-xs font-extrabold text-lime-700 hover:text-lime-800">
-                                    All Gemsloot
+                                <Link href="/offers/gemsloot/gb" className="shrink-0 text-xs font-extrabold text-lime-700 hover:text-lime-800">
+                                    UK Gemsloot
                                 </Link>
                             </div>
                             <div className="mt-4 flex flex-wrap gap-2">

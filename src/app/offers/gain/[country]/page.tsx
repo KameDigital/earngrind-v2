@@ -14,7 +14,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
     const countryCode = getCountryCode(params.country);
     if (!countryCode) return {};
     return {
-        title: `Best Gain.gg Offers in ${countryCode} | EarnGrind`,
+        title: `Best Gain.gg Offers in ${countryCode}`,
         description: `Browse imported Gain.gg offers available in ${countryCode}. Compare rewards, providers, tasks, and start through Gain.gg.`,
         alternates: {
             canonical: `/offers/gain/${countryCode.toLowerCase()}`,

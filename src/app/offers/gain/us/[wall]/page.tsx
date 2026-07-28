@@ -30,7 +30,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
     if (!wall) return {};
     const label = WALL_LABELS[wall] ?? wall;
     return {
-        title: `${label} Gain.gg Offers in the United States | EarnGrind`,
+        title: `${label} Gain.gg Offers in the United States`,
         description: `Browse imported ${label} offers available through Gain.gg in the United States. Compare rewards, tasks, and start through Gain.gg.`,
         alternates: {
             canonical: `/offers/gain/us/${wall}`,

@@ -10,15 +10,17 @@ function read(path) {
 }
 
 const sitemapSource = read("src/lib/sitemap-builder.ts");
+const appSitemapSource = read("src/app/sitemap.ts");
 const auditSource = read("scripts/audit-sitemap-quality.mjs");
 const adminSitemapSource = read("src/app/app/admin/seo/sitemap/page.tsx");
 const gainGallerySource = read("src/lib/gain-gallery.ts");
 const gemslootProvidersSource = read("src/lib/gemsloot-providers.ts");
+const gemslootCountriesSource = read("src/lib/gemsloot-countries.ts");
 const gemslootCountryPageSource = read("src/components/offers/GemslootCountryOffersPage.tsx");
-const gemslootDynamicPageSource = read("src/app/offers/gemsloot/us/[provider]/page.tsx");
+const gemslootDynamicPageSource = read("src/app/offers/gemsloot/[country]/[provider]/page.tsx");
 const sitemapFiltersSource = read("src/lib/sitemap-filters.ts");
-const sitemapIndexSource = read("src/app/sitemap.xml/route.ts");
 const sitemapShardRouteSource = read("src/app/sitemap/[id]/route.ts");
+const robotsSource = read("src/app/robots.ts");
 const offersPageSource = read("src/app/offers/page.tsx");
 const gainCountryPageSource = read("src/components/offers/GainCountryOffersPage.tsx");
 
@@ -28,6 +30,18 @@ for (const path of ["/games", "/legal/privacy", "/legal/terms", "/legal/disclosu
     `sitemap static pages should include ${path}`,
   );
 }
+assert(
+  /export\s+default\s+async\s+function\s+sitemap/.test(appSitemapSource),
+  "src/app/sitemap.ts should be the active Next.js sitemap entrypoint",
+);
+assert(
+  appSitemapSource.includes("buildSitemapShard") && appSitemapSource.includes("getSitemapShardIds"),
+  "src/app/sitemap.ts should build URLs through the shared sitemap builder",
+);
+for (const path of ["/games", "/offers", "/guides", "/reviews", "/blog", "/best-gpt-sites", "/highest-paying-gpt-games"]) {
+  assert(robotsSource.includes(path), `robots rules should explicitly allow ${path}`);
+}
+assert(robotsSource.includes("sitemap.xml"), "robots rules should point crawlers at /sitemap.xml");
 
 assert(
   gainGallerySource.includes("PUBLIC_GAIN_WALLS"),
@@ -47,7 +61,12 @@ assert(
   gemslootProvidersSource.includes("GEMSLOOT_PUBLIC_PROVIDERS"),
   "gemsloot-providers should export a shared GEMSLOOT_PUBLIC_PROVIDERS list",
 );
-for (const provider of ["gemsloot", "torox", "revu", "bitlabs", "tyrads", "adscendmedia", "hangmyads"]) {
+assert(
+  gemslootCountriesSource.includes("GEMSLOOT_PUBLIC_COUNTRIES") &&
+    gemslootCountriesSource.includes('"GB"'),
+  "gemsloot-countries should export shared public Gemsloot country routes including GB",
+);
+for (const provider of ["gemsloot", "torox", "revu", "bitlabs", "tyrads", "adscendmedia", "hangmyads", "adtowall", "ayetstudios", "lootably", "waxrewards", "pixylabs", "farly"]) {
   assert(
     gemslootProvidersSource.includes(`"${provider}"`),
     `GEMSLOOT_PUBLIC_PROVIDERS should include ${provider}`,
@@ -62,8 +81,9 @@ assert(
   "Gemsloot dynamic route should import providers from the shared Gemsloot provider module",
 );
 assert(
-  sitemapSource.includes("GEMSLOOT_PUBLIC_PROVIDERS.map"),
-  "sitemap should build Gemsloot provider routes from GEMSLOOT_PUBLIC_PROVIDERS",
+  sitemapSource.includes("GEMSLOOT_PUBLIC_COUNTRIES.flatMap") &&
+    sitemapSource.includes("GEMSLOOT_PUBLIC_PROVIDERS.map"),
+  "sitemap should build Gemsloot country/provider routes from shared lists",
 );
 
 assert(
@@ -103,8 +123,9 @@ assert(
   "admin sitemap preview should build Gain wall rows from PUBLIC_GAIN_WALLS",
 );
 assert(
-  adminSitemapSource.includes("GEMSLOOT_PUBLIC_PROVIDERS.map"),
-  "admin sitemap preview should build Gemsloot rows from GEMSLOOT_PUBLIC_PROVIDERS",
+  adminSitemapSource.includes("GEMSLOOT_PUBLIC_COUNTRIES.flatMap") &&
+    adminSitemapSource.includes("GEMSLOOT_PUBLIC_PROVIDERS.map"),
+  "admin sitemap preview should build Gemsloot country/provider rows from shared lists",
 );
 for (const filterName of [
   "shouldIncludeGuideInSitemap",
@@ -123,8 +144,7 @@ assert(
 for (const shardId of ["guides", "offers-0", "offers-1", "games-0", "games-1", "how-to-earn-0", "how-to-earn-1"]) {
   assert(sitemapSource.includes(`"${shardId}"`), `sitemap shards should include ${shardId}`);
 }
-assert(sitemapSource.includes("/sitemap/") && sitemapSource.includes(".xml"), "sitemap shard URL helper should link to shard XML routes");
-assert(sitemapIndexSource.includes("getSitemapShardUrls"), "root sitemap index should use the sitemap shard URL helper");
+assert(appSitemapSource.includes("flat()"), "root sitemap should flatten shard entries into the active sitemap output");
 assert(
   sitemapShardRouteSource.includes("buildSitemapShard") && sitemapShardRouteSource.includes("sitemapEntriesToXml"),
   "sitemap shard route should render shard XML from the shared builder",

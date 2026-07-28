@@ -297,6 +297,13 @@ export default function MuDarkEpochGuidePage() {
     return (
         <main className="min-h-screen bg-[#f6f8f5] text-slate-900">
             <JsonLd />
+            <nav aria-label="Breadcrumb" className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-4 text-sm font-bold text-slate-500 sm:px-6 lg:px-8">
+                <Link href="/" className="hover:text-teal-700">Home</Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/guides" className="hover:text-teal-700">Guides</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-slate-800">MU Dark Epoch</span>
+            </nav>
 
             <section className="border-b border-teal-200 bg-[#e9f7f1]">
                 <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-14">

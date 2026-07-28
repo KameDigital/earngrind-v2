@@ -1,1 +1,0 @@
-alter table public.homepage_featured_offers add column if not exists lock_summary text; comment on column public.homepage_featured_offers.lock_summary is 'Short user-facing payout-hold disclosure shown only on the curated homepage collection.';

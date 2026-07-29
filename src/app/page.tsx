@@ -1,24 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import EmailCapture from "@/components/EmailCapture";
-import FeaturedOfferRail, {
-  type FeaturedOfferRailItem,
-} from "@/components/home/FeaturedOfferRail";
-import HomepageSectionHeader from "@/components/home/HomepageSectionHeader";
-import TabbedOfferRail, { type OfferRailTab } from "@/components/home/TabbedOfferRail";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
 import WeeklyTopGames from "@/components/home/WeeklyTopGames";
 import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
-import { buildGainOfferDeepLink } from "@/lib/gain-deeplinks";
-import {
-  buildGoHref,
-  formatMoney,
-  gameKeyFromParts,
-  getHomepageData,
-} from "@/lib/homepage-data";
-import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import { getHomepageFeaturedOffers } from "@/lib/homepage-featured";
 import { JsonLd, buildBreadcrumbList, buildWebsiteSearchAction } from "@/lib/seo-schema";
+import AccountPartnerSites from "@/components/account/AccountPartnerSites";
 
 export const revalidate = 300;
 
@@ -55,29 +42,6 @@ export const metadata: Metadata = {
     images: ["/og-earngrind.png"],
   },
 };
-
-function buildGainFeaturedGoHref(params: {
-  offerId: string;
-  offerTitle: string;
-  providerName?: string | null;
-  payoutUsd?: number | null;
-  destinationUrl: string;
-  clickLocation: string;
-}) {
-  const searchParams = new URLSearchParams({
-    click_location: params.clickLocation,
-    source_context: "homepage_rail_modal",
-    platform_name: "Gain.gg",
-    offer_title: params.offerTitle,
-    destination_url: params.destinationUrl,
-  });
-
-  if (params.providerName) searchParams.set("provider_name", params.providerName);
-  if (typeof params.payoutUsd === "number") searchParams.set("payout_usd", String(params.payoutUsd));
-  searchParams.set("gain_offer_id", params.offerId);
-
-  return `/go/platform/gain-gg?${searchParams.toString()}`;
-}
 
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   return (
@@ -194,285 +158,12 @@ function formatPostDate(_value: string | null) {
 }
 
 export default async function HomePage() {
-  const {
-    cashInStyleFeaturedOffers,
-    earnLabFeaturedOffers,
-    gainFeaturedOffers,
-    gemsLootFeaturedOffers,
-    guideHrefByGameKey,
-    modalRoutesByGameKey,
-  } = await getHomepageData();
   const weeklyTopGames = await getHomepageFeaturedOffers();
   const featuredPost: any = null;
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
   const websiteJsonLd = [
     buildWebsiteSearchAction(),
     buildBreadcrumbList([{ name: "Home", path: "/" }]),
-  ];
-
-  const guideHrefForGame = (
-    slug: string | null | undefined,
-    fallbackKey?: string,
-  ) => {
-    if (!slug)
-      return fallbackKey ? (guideHrefByGameKey[fallbackKey] ?? null) : null;
-    return (
-      guideHrefByGameKey[slug] ??
-      (modalRoutesByGameKey[slug]?.length
-        ? `/guides/how-to-earn/${slug}`
-        : null)
-    );
-  };
-
-  const earnLabOfferRail: FeaturedOfferRailItem[] = earnLabFeaturedOffers.map(
-    (offer) => ({
-      id: `offer-${offer.id}`,
-      href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-      title: offer.title?.trim() || offer.game_name || "Offer",
-      badge: offer.badge,
-      provider: offer.platform_name,
-      platform: offer.provider_name,
-      payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
-      dataRefreshed: formatDataRefreshedLabel(offer.updated_at, new Date()),
-      secondaryValue: offer.goal_text ? offer.goal_text : null,
-      imageUrl: offer.image_url,
-      preview: {
-        title: offer.title?.trim() || offer.game_name || "Offer",
-        description: `Compare available routes for ${offer.game_name ?? offer.title ?? "this offer"} before choosing where to start.`,
-        imageUrl: offer.image_url,
-        gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-        guideHref: guideHrefForGame(
-          offer.game_slug,
-          gameKeyFromParts(offer.game_slug, offer.game_name),
-        ),
-        routes: modalRoutesByGameKey[
-          gameKeyFromParts(offer.game_slug, offer.game_name)
-        ] ?? [
-          {
-            offerId: offer.id,
-            href: buildGoHref(offer, "homepage_modal_single_route"),
-            providerName: offer.provider_name,
-            platformName: offer.platform_name,
-            payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
-            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
-            taskCount: offer.goal_text ? 1 : 0,
-            tasks: offer.goal_text
-              ? [
-                  {
-                    title: offer.goal_text,
-                    rewardDisplay: formatMoney(
-                      offer.total_payout_usd ?? offer.payout_usd,
-                    ),
-                  },
-                ]
-              : [],
-          },
-        ],
-      },
-    }),
-  );
-
-  const gemsLootFeaturedOfferRail: FeaturedOfferRailItem[] =
-    gemsLootFeaturedOffers.map((offer) => {
-      const hasTrackedRoute = !offer.id.startsWith("gemsloot-featured-");
-      const offerHref = hasTrackedRoute
-        ? buildGoHref(offer, "homepage_gemsloot_featured_offer")
-        : offer.fallback_href;
-      const payout = formatMoney(offer.total_payout_usd ?? offer.payout_usd);
-      const gameKey = gameKeyFromParts(offer.game_slug, offer.game_name);
-      const importedRoute = modalRoutesByGameKey[gameKey]?.find(
-        (route) => route.offerId === offer.id,
-      );
-      const exactTasks = offer.tasks.length
-        ? offer.tasks
-        : importedRoute?.tasks ?? [];
-      const previewRoute = importedRoute
-        ? {
-            ...importedRoute,
-            href: offerHref,
-            taskCount: exactTasks.length,
-            tasks: exactTasks,
-          }
-        : {
-            offerId: offer.id,
-            href: offerHref,
-            providerName: offer.provider_name,
-            platformName: offer.platform_name,
-            payout,
-            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
-            taskCount: exactTasks.length || (offer.goal_text ? 1 : 0),
-            tasks: exactTasks.length
-              ? exactTasks
-              : offer.goal_text
-              ? [
-                  {
-                    title: offer.goal_text,
-                    rewardDisplay: payout,
-                  },
-                ]
-              : [],
-          };
-
-      return {
-        id: `gemsloot-featured-${offer.requested_offer_name}`,
-        href: offerHref,
-        title: offer.title?.trim() || offer.game_name || "GemsLoot offer",
-        badge: offer.badge,
-        provider: offer.platform_name,
-        platform: offer.provider_name,
-        payout,
-        dataRefreshed: formatDataRefreshedLabel(offer.updated_at, new Date()),
-        secondaryValue: offer.goal_text ? offer.goal_text : null,
-        imageUrl: offer.image_url,
-        preview: {
-          title: offer.title?.trim() || offer.game_name || "GemsLoot offer",
-          description: `Open the GemsLoot offer detail for ${
-            offer.game_name ?? offer.title ?? offer.requested_offer_name
-          } and verify the live requirements before starting.`,
-          imageUrl: offer.image_url,
-          gameHref: offer.game_slug
-            ? `/games/${offer.game_slug}`
-            : "/offers/gemsloot/us",
-          guideHref: guideHrefForGame(
-            offer.game_slug,
-            gameKeyFromParts(offer.game_slug, offer.game_name),
-          ),
-          routes: [previewRoute],
-        },
-      };
-    });
-
-  const gainOfferRail: FeaturedOfferRailItem[] = gainFeaturedOffers.map(
-    (offer) => {
-      const gainDestinationUrl =
-        offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) ?? offer.startUrl;
-      const gainCardHref = buildGainFeaturedGoHref({
-        offerId: offer.id,
-        offerTitle: offer.title,
-        providerName: offer.providerName,
-        payoutUsd: offer.totalPayout ?? offer.payout,
-        destinationUrl: gainDestinationUrl,
-        clickLocation: "homepage_gain_featured_offer",
-      });
-      const gainModalHref = buildGainFeaturedGoHref({
-        offerId: offer.id,
-        offerTitle: offer.title,
-        providerName: offer.providerName,
-        payoutUsd: offer.totalPayout ?? offer.payout,
-        destinationUrl: gainDestinationUrl,
-        clickLocation: "homepage_gain_modal_single_route",
-      });
-
-      return {
-        id: `gain-featured-${offer.wall}-${offer.id}`,
-        href: gainCardHref,
-        title: offer.title,
-        badge: "Gain featured",
-        provider: "Gain.gg",
-        platform: offer.providerName,
-        payout: formatMoney(offer.totalPayout ?? offer.payout) ?? null,
-        dataRefreshed: formatDataRefreshedLabel(null, new Date()),
-        secondaryValue:
-          offer.tasks.length > 0
-            ? `${offer.tasks.length} milestones available`
-            : (offer.shortDescription ?? null),
-        imageUrl: offer.imageUrl,
-        preview: {
-          title: offer.title,
-          description:
-            offer.shortDescription ??
-            `Preview the featured Gain.gg route for ${offer.title} before opening the full wall.`,
-          imageUrl: offer.imageUrl,
-          gameHref: "/offers/gain/us/native",
-          guideHref: null,
-          routes: [
-            {
-              offerId: offer.id,
-              href: gainModalHref,
-              providerName: offer.providerName,
-              platformName: "Gain.gg",
-              payout: formatMoney(offer.totalPayout ?? offer.payout),
-              payoutValue: offer.totalPayout ?? offer.payout,
-              taskCount: offer.tasks.length,
-              tasks: offer.tasks.slice(0, 6).map((task) => ({
-                title: task.title,
-                rewardDisplay: task.rewardDisplay,
-              })),
-            },
-          ],
-        },
-      };
-    },
-  );
-
-  const cashInStyleOfferRail: FeaturedOfferRailItem[] =
-    cashInStyleFeaturedOffers.map((offer) => ({
-      id: `cashinstyle-featured-${offer.id}`,
-      href: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-      title: offer.title?.trim() || offer.game_name || "Offer",
-      badge: offer.badge,
-      provider: offer.platform_name,
-      platform: offer.provider_name,
-      payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd) ?? null,
-      dataRefreshed: formatDataRefreshedLabel(offer.updated_at, new Date()),
-      secondaryValue: offer.goal_text ? offer.goal_text : null,
-      imageUrl: offer.image_url,
-      preview: {
-        title: offer.title?.trim() || offer.game_name || "Offer",
-        description: `Preview the CashInStyle route for ${
-          offer.game_name ?? offer.title ?? "this offer"
-        } before starting.`,
-        imageUrl: offer.image_url,
-        gameHref: offer.game_slug ? `/games/${offer.game_slug}` : "/offers",
-        guideHref: guideHrefForGame(
-          offer.game_slug,
-          gameKeyFromParts(offer.game_slug, offer.game_name),
-        ),
-        routes: modalRoutesByGameKey[
-          gameKeyFromParts(offer.game_slug, offer.game_name)
-        ] ?? [
-          {
-            offerId: offer.id,
-            href: buildGoHref(offer, "homepage_cashinstyle_modal_single_route"),
-            providerName: offer.provider_name,
-            platformName: offer.platform_name,
-            payout: formatMoney(offer.total_payout_usd ?? offer.payout_usd),
-            payoutValue: offer.total_payout_usd ?? offer.payout_usd,
-            taskCount: offer.goal_text ? 1 : 0,
-            tasks: offer.goal_text
-              ? [
-                  {
-                    title: offer.goal_text,
-                    rewardDisplay: formatMoney(
-                      offer.total_payout_usd ?? offer.payout_usd,
-                    ),
-                  },
-                ]
-              : [],
-          },
-        ],
-      },
-    }));
-
-  const OFFER_RAIL_TABS: OfferRailTab[] = [
-    {
-      id: "earnlab",
-      label: "EarnLab",
-      description: "EarnLab game picks matched to active EarnGrind routes. Open a preview to compare milestones before clicking out.",
-      items: earnLabOfferRail,
-    },
-    {
-      id: "gain",
-      label: "Gain.gg",
-      description: "Current game offers from Gain.gg's native wall. Review milestones and payout before opening the Gain wall.",
-      items: gainOfferRail,
-    },
-    {
-      id: "cashinstyle",
-      label: "CashInStyle",
-      description: "Current CashInStyle game offers from EarnGrind's imported feed. Start buttons use the tracked CashInStyle deeplink flow.",
-      items: cashInStyleOfferRail,
-    },
   ];
 
   return (
@@ -579,22 +270,10 @@ export default async function HomePage() {
       </section>
 
       <section className="bg-[var(--surface-muted)] px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl space-y-12">
-          <HomepageSectionHeader
-            eyebrow="Games & Offers"
-            title="Featured Games by Site"
-            description="Compare featured game picks from each partner site, preview routes, and open a game page before starting."
-          />
-          <FeaturedOfferRail
-            items={gemsLootFeaturedOfferRail}
-            title="Featured Game Offers"
-            description="Curated GemsLoot game offers. Open a preview, then start the exact GemsLoot offer detail modal through the tracked route when available."
-          />
-          <EmailCapture variant="inline" />
-          <TabbedOfferRail tabs={OFFER_RAIL_TABS} />
+        <div className="mx-auto max-w-7xl">
+          <AccountPartnerSites variant="homepage" />
         </div>
       </section>
-
       <section className="border-y border-[var(--border-default)] bg-white px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-6 max-w-4xl">

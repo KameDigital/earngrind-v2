@@ -36,6 +36,7 @@ type SiteOfferImportPayload = {
     devices: string[];
     countries: string[];
     status: "active";
+    is_historical: boolean;
     ingested_at: string;
     updated_at: string;
     offer_url?: string;
@@ -211,6 +212,7 @@ async function upsertProviderGalleryOffer(
         devices: normalizeGalleryDevices(offer.devices),
         countries: normalizeGalleryCountries(offer),
         status: "active",
+        is_historical: offer.isHistorical === true,
         ingested_at: now,
         updated_at: now,
     };
@@ -251,7 +253,8 @@ async function upsertProviderGalleryOffer(
         existing.image_url !== payload.image_url ||
         JSON.stringify(existing.devices ?? []) !== JSON.stringify(payload.devices) ||
         JSON.stringify(existing.countries ?? []) !== JSON.stringify(payload.countries) ||
-        existing.status !== payload.status;
+        existing.status !== payload.status ||
+        Boolean(existing.is_historical) !== payload.is_historical;
 
     if (changed) {
         const { error } = await db
@@ -276,7 +279,7 @@ async function findExistingOffer(
         equivalentExternalIdLike?: string | null;
     },
 ): Promise<Record<string, any> | null> {
-    const select = "id, provider_id, game_id, external_id, title, payout_usd, total_payout_usd, completion_count, goal_text, offer_url, image_url, devices, countries, status";
+    const select = "id, provider_id, game_id, external_id, title, payout_usd, total_payout_usd, completion_count, goal_text, offer_url, image_url, devices, countries, status, is_historical";
     const { data: current, error: currentError } = await db
         .from("site_offers")
         .select(select)

@@ -948,6 +948,7 @@ export default function OfferSearchEngine({
     }));
     const [offers, setOffers] = React.useState<Offer[]>(() => initialOffers ?? []);
     const [meta, setMeta] = React.useState<OfferMeta | null>(() => initialMeta ?? null);
+    const [platforms, setPlatforms] = React.useState<OfferPlatform[]>([]);
     const [loading, setLoading] = React.useState(initialOffers === undefined);
     const [pinned, setPinned] = React.useState<Offer[]>([]);
     const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
@@ -961,15 +962,40 @@ export default function OfferSearchEngine({
     const hasPlatformFilter = !!filters.platform_id;
     const searchParamsString = searchParams.toString();
     const hydrationSearchParams = React.useMemo(() => new URLSearchParams(searchParamsString), [searchParamsString]);
-    const visiblePlatforms = React.useMemo(() => {
+    const platformOptions = React.useMemo(() => {
         const byId = new Map<string, OfferPlatform>();
+        for (const platform of platforms) {
+            if (platform.id) byId.set(platform.id, platform);
+        }
         for (const offer of offers) {
             if (offer.platform?.id && !byId.has(offer.platform.id)) {
                 byId.set(offer.platform.id, offer.platform);
             }
         }
         return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
-    }, [offers]);
+    }, [offers, platforms]);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        void fetch("/api/platforms")
+            .then(async (response) => {
+                if (!response.ok) throw new Error("Failed to load platforms");
+                return response.json() as Promise<{ data?: OfferPlatform[] }>;
+            })
+            .then((payload) => {
+                if (!cancelled && Array.isArray(payload.data)) {
+                    setPlatforms(payload.data.filter((platform): platform is OfferPlatform => Boolean(platform?.id && platform?.name)));
+                }
+            })
+            .catch((error) => {
+                console.error("[OfferSearchEngine] failed to load platform options", error);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     const fetchOffers = useCallback(async () => {
         if (filters.q !== debouncedQ) return;
@@ -1077,7 +1103,7 @@ export default function OfferSearchEngine({
                     <span className="text-xs font-semibold text-white/60">{selectedCountry} market</span>
                 </div>
                 <SearchBar value={filters.q} onChange={v => dispatch({ type: "SET", key: "q", value: v })} />
-                <div className="mt-3 border-t border-white/10 pt-3"><FilterBar filters={filters} dispatch={dispatch} platforms={visiblePlatforms} countries={countries} selectedPlatformName={reviewPlatformName || undefined} /></div>
+                <div className="mt-3 border-t border-white/10 pt-3"><FilterBar filters={filters} dispatch={dispatch} platforms={platformOptions} countries={countries} selectedPlatformName={reviewPlatformName || undefined} /></div>
             </div>
 
             <div className="flex flex-col gap-3 border-b border-[var(--border-default)] px-1 pb-4 sm:flex-row sm:items-end sm:justify-between">

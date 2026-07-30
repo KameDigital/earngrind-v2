@@ -47,6 +47,7 @@ type CashInStyleOfferTarget = {
 
 const GAIN_AFFILIATE_URL = "https://gain.gg/r/macko";
 const EARNLAB_AFFILIATE_URL = "https://earnlab.com/r/mac";
+const EARNLAB_TASK_ID_PATTERN = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:-[A-Z]{2})?$/i;
 const GEMSLOOT_AFFILIATE_URL = "https://gemsloot.com/?aff=kamedev";
 export const CASHINSTYLE_AFFILIATE_URL = "https://cashinstyle.com/?ref=earngrind";
 const SWAGBUCKS_AFFILIATE_URL = "https://www.swagbucks.com/profile/r_158565078?rp=1";
@@ -70,6 +71,17 @@ const PLATFORM_FALLBACK_URLS: Record<string, string> = {
     prizerebel: PRIZEREBEL_AFFILIATE_URL,
     scrambly: SCRAMBLY_URL,
 };
+
+export function buildEarnLabOfferBacklink(externalId: string | null | undefined): string | null {
+    const taskId = externalId?.trim().match(EARNLAB_TASK_ID_PATTERN)?.[1];
+    if (!taskId) return null;
+
+    const url = new URL("https://earnlab.com/tasks");
+    url.searchParams.set("modal", "task");
+    url.searchParams.set("task-id", taskId);
+    url.searchParams.set("code", "mac");
+    return url.toString();
+}
 
 function getPlatformKeys(platform: PlatformRedirectTarget | null | undefined): string[] {
     if (!platform) return [];

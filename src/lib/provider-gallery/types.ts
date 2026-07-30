@@ -49,6 +49,7 @@ export type NormalizedProviderGalleryOffer = {
     countries?: string[];
     trackingUrl?: string | null;
     offerUrl?: string | null;
+    isHistorical?: boolean;
     rawMetadata?: Record<string, unknown>;
 };
 

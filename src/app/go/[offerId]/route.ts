@@ -58,6 +58,37 @@ function buildRequestAttribution(req: NextRequest): Partial<RedirectAttribution>
     return readRedirectAttributionFromSearchParams(req.nextUrl.searchParams);
 }
 
+
+function gemslootSignupGateUrl(req: NextRequest): string {
+    const returnTo = `${req.nextUrl.pathname}${req.nextUrl.search}`;
+    const url = new URL("/gemsloot/signup", req.nextUrl.origin);
+    url.searchParams.set("returnTo", returnTo);
+    return url.toString();
+}
+
+async function hasConfirmedGemslootSignup({
+    supabase,
+    userId,
+    platformId,
+}: {
+    supabase: ReturnType<typeof createClient>;
+    userId: string | undefined;
+    platformId: string | null | undefined;
+}): Promise<boolean> {
+    if (!userId || !platformId) return false;
+    const { data, error } = await supabase
+        .from("user_gpt_partner_accounts")
+        .select("signup_confirmed_at")
+        .eq("user_id", userId)
+        .eq("platform_id", platformId)
+        .maybeSingle();
+    if (error) {
+        console.error("[go] failed to load GemLoot signup confirmation", { platformId, message: error.message });
+        return false;
+    }
+    return Boolean(data?.signup_confirmed_at);
+}
+
 const GENERIC_PLATFORM_DESTINATIONS: Record<string, { hostnames: string[]; paths: string[] }> = {
     earnlab: {
         hostnames: ["earnlab.com"],
@@ -240,6 +271,9 @@ export async function GET(
     if (offer) {
         const platform = Array.isArray(offer.platform) ? offer.platform[0] ?? null : offer.platform;
         const game = Array.isArray(offer.game) ? offer.game[0] ?? null : offer.game;
+        if (isGemslootTarget(platform) && !await hasConfirmedGemslootSignup({ supabase, userId: user?.id, platformId: platform?.id })) {
+            return NextResponse.redirect(gemslootSignupGateUrl(req), { status: 302 });
+        }
         const cashInStyleOutboundUrl = buildCashInStyleOutboundUrl({
             platform,
             externalId: offer.external_id,
@@ -360,6 +394,9 @@ export async function GET(
     const site = Array.isArray(siteOffer.site) ? siteOffer.site[0] ?? null : siteOffer.site;
     const game = Array.isArray(siteOffer.game) ? siteOffer.game[0] ?? null : siteOffer.game;
     const provider = Array.isArray(siteOffer.provider) ? siteOffer.provider[0] ?? null : siteOffer.provider;
+    if (isGemslootTarget(site) && !await hasConfirmedGemslootSignup({ supabase, userId: user?.id, platformId: site?.id })) {
+        return NextResponse.redirect(gemslootSignupGateUrl(req), { status: 302 });
+    }
     const cashInStyleOutboundUrl = buildCashInStyleOutboundUrl({
         platform: site,
         provider,

@@ -63,6 +63,7 @@ async function main() {
         { getProviderGalleryConfig },
         { importProviderGalleryOffers, getProviderGalleryServiceClient },
         { buildGainOfferDeepLink },
+        { buildEarnLabOfferBacklink },
         { buildProviderGalleryQualityReport },
     ] = await Promise.all([
         import("@/lib/earnlab-gallery"),
@@ -71,6 +72,7 @@ async function main() {
         import("@/lib/provider-gallery/provider-registry"),
         import("@/lib/provider-gallery/upsert"),
         import("@/lib/gain-deeplinks"),
+        import("@/lib/outbound"),
         import("@/lib/provider-gallery/quality"),
     ]);
 
@@ -107,7 +109,7 @@ async function main() {
                 devices: offer.platform,
                 countries: [offer.countryCode],
                 trackingUrl: offer.trackingUrl,
-                offerUrl: null,
+                offerUrl: buildEarnLabOfferBacklink(offer.id),
                 rawMetadata: offer.rawSourceMetadata,
             })),
             loggerPrefix: "scripts/refresh-provider-gallery/earnlab",

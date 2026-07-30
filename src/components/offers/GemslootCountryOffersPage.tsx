@@ -23,6 +23,7 @@ type GemslootOfferRow = {
     countries: string[] | null;
     devices: string[] | null;
     updated_at: string | null;
+    is_historical: boolean | null;
     provider: { name: string | null } | { name: string | null }[] | null;
     game: { name: string | null; slug: string | null; category: string | null } | { name: string | null; slug: string | null; category: string | null }[] | null;
     tasks: { id: string }[] | null;
@@ -95,7 +96,7 @@ async function getImportedGemslootOffers(countryCode: string, provider?: Gemsloo
     let query = supabase
         .from("site_offers")
         .select(`
-            id, external_id, title, payout_usd, total_payout_usd, goal_text, image_url, offer_url, countries, devices, updated_at,
+            id, external_id, title, payout_usd, total_payout_usd, goal_text, image_url, offer_url, countries, devices, updated_at, is_historical,
             provider:providers(name),
             game:games(name, slug, category),
             tasks:site_offer_tasks(id)
@@ -148,9 +149,11 @@ function OfferCard({ offer, countryCode }: { offer: GemslootOfferRow; countryCod
                         <Badge>{providerName}</Badge>
                         <Badge>{countryCode}</Badge>
                         {devices.slice(0, 2).map((device) => <Badge key={device}>{device}</Badge>)}
+                        {offer.is_historical ? <HistoricalBadge /> : null}
                     </div>
                     <h2 className="mt-2 line-clamp-2 text-base font-black leading-snug text-gray-950">{title}</h2>
                     <p className="mt-1 line-clamp-2 text-xs leading-5 text-gray-500">{offer.goal_text ?? game?.category ?? "Compare live terms before starting."}</p>
+                    {offer.is_historical ? <p className="mt-1 text-[11px] font-semibold leading-4 text-amber-700">Historical completion evidence - verify live terms.</p> : null}
                 </div>
             </div>
             <div className="border-t border-gray-100 px-4 py-3">
@@ -197,6 +200,10 @@ function PillLink({ href, active, children }: { href: string; active: boolean; c
 
 function Badge({ children }: { children: ReactNode }) {
     return <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-700">{children}</span>;
+}
+
+function HistoricalBadge() {
+    return <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-amber-700">Historical</span>;
 }
 
 function firstRelated<T>(value: T | T[] | null): T | null {

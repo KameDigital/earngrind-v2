@@ -425,11 +425,11 @@ export async function GET(
         fallbackUrl: null,
     });
     const platformOverrideUrl = getPlatformAffiliateOverride(site);
-    const effectiveDirectSiteOfferUrl = platformOverrideUrl && isGenericPlatformDestination(site, directSiteOfferUrl)
+    const effectiveDirectSiteOfferUrl = platformOverrideUrl && site?.slug !== "earnlab" && isGenericPlatformDestination(site, directSiteOfferUrl)
         ? null
         : directSiteOfferUrl;
-    // EarnLab gallery rows intentionally have no direct per-offer URL today.
-    // When offer_url is missing, keep CTAs working through the platform affiliate fallback.
+    // Use a verified EarnLab task deep link when one is stored; fall back to the
+    // platform affiliate URL only for rows without a per-offer destination.
     const outboundUrl = cashInStyleOutboundUrl ?? currentGainNativeDeepLink ?? gemslootOfferModalUrl ?? effectiveDirectSiteOfferUrl ?? gainNativeDeepLink ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
         affiliateTemplate: site?.affiliate_template,
         destinationUrl: siteOffer.offer_url,

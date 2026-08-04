@@ -5,6 +5,7 @@ import EmailCapture from "@/components/EmailCapture";
 import Container from "@/components/layout/Container";
 import { buildBreadcrumbList, buildItemList, JsonLd } from "@/lib/seo-schema";
 import { isPublicPayoutEligible } from "@/lib/offer-quality";
+import { formatPayoutFreshness } from "@/lib/payout-freshness";
 import { shouldIncludeGeneratedHowToEarnInSitemap } from "@/lib/sitemap-quality";
 import FAQSection from "../../../components/FAQSection";
 import OfferTable from "../../../components/OfferTable";
@@ -153,6 +154,17 @@ export default async function GameGuidePage({ params }: { params: { slug: string
             {formatMoney(data.comparison.summary.best_single_payout_usd || data.summary.max_payout_usd || 0)}, and the best
             total milestone path reaches {formatMoney(data.comparison.summary.best_total_payout_usd || data.summary.max_payout_usd || 0)}.
           </p>
+        <section className="rounded-2xl border border-lime-200 bg-lime-50 p-5 shadow-[var(--shadow-card)]">
+          <h2 className="text-2xl font-extrabold text-[var(--brand-ink)]">Before you start</h2>
+          <p className="mt-3 text-[var(--text-secondary)]">
+            Compare the route, device, and task wording first. The leading route is {topOffer ? `${topOffer.providerName} on ${topOffer.platformName}` : "not currently available"}; {formatPayoutFreshness(topOffer?.updatedAt)}. Payouts and milestones can change, so use the comparison table before clicking through.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2 text-sm font-bold">
+            <Link href="/offer-reality-index" className="rounded-lg border border-lime-300 bg-white px-3 py-2 hover:bg-lime-100">Check listing quality</Link>
+            <Link href="/route-finder" className="rounded-lg border border-lime-300 bg-white px-3 py-2 hover:bg-lime-100">Find a stronger route</Link>
+          </div>
+        </section>
+
         </section>
 
         <section className="rounded-2xl border border-[var(--border-default)] bg-white p-5 shadow-[var(--shadow-card)]">

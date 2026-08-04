@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { getSiteUrl } from "@/lib/site-url";
@@ -60,6 +61,7 @@ export const metadata: Metadata = {
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import GoogleAnalytics from "@/components/layout/GoogleAnalytics";
+import GoogleAnalyticsPageTracker from "@/components/analytics/GoogleAnalyticsPageTracker";
 import CommunityChatLauncher from "@/components/community-chat/CommunityChatLauncher";
 
 export default function RootLayout({
@@ -88,6 +90,9 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
+        <Suspense fallback={null}>
+          <GoogleAnalyticsPageTracker />
+        </Suspense>
         <CommunityChatLauncher />
         <Analytics />
       </body>

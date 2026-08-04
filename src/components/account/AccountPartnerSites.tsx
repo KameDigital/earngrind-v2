@@ -1,4 +1,4 @@
-﻿import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
+import { GPT_AFFILIATE_PLATFORMS, buildTrackedPlatformHref } from "@/lib/gpt-affiliate-platforms";
 
 import PartnerLogo from "@/components/PartnerLogo";
 type PartnerConnection = { slug: string; connectedAt: string; lastSignupClickAt: string };
@@ -60,7 +60,7 @@ export default function AccountPartnerSites({ connections = [], variant = "accou
                         <span className="font-bold text-slate-700">{isHomepage ? "EarnGrind affiliate link" : "Direct affiliate link"}</span><br />
                         {isHomepage ? "Ready when you are." : connection ? `First opened ${dateLabel(connection.connectedAt)}` : "Ready when you are."}
                     </div>
-                    <a href={href} className="mt-auto rounded bg-black px-3 py-3 text-center text-xs font-extrabold text-white transition hover:bg-lime-400 hover:text-black">{connection && !isHomepage ? "Open signup link again" : platform.cta}</a>
+                    <a href={href} target="_blank" rel="noopener noreferrer sponsored nofollow" className="mt-auto rounded bg-black px-3 py-3 text-center text-xs font-extrabold text-white transition hover:bg-lime-400 hover:text-black">{connection && !isHomepage ? "Open signup link again" : platform.cta}</a>
                 </article>;
             })}
         </div>

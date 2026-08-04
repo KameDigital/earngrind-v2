@@ -29,7 +29,7 @@ export default async function GemslootSignupPage({ searchParams }: { searchParam
             <h1 className="mt-3 text-3xl font-black tracking-tight text-slate-950">Finish your GemLoot setup</h1>
             {!connection?.last_signup_click_at ? <>
                 <p className="mt-4 text-sm leading-6 text-slate-600">Create your GemLoot account through EarnGrind first. When you return to this page, you can confirm your signup and unlock GemLoot offer links.</p>
-                <a href="/go/platform/gemsloot?click_location=gemsloot_offer_gate&source_context=gemsloot_offer_gate" className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-slate-950 px-4 py-3 text-sm font-black text-white transition hover:bg-slate-800">Create GemLoot account</a>
+                <a href="/go/platform/gemsloot?click_location=gemsloot_offer_gate&source_context=gemsloot_offer_gate" rel="noopener noreferrer sponsored nofollow" className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-slate-950 px-4 py-3 text-sm font-black text-white transition hover:bg-slate-800">Create GemLoot account</a>
             </> : <>
                 <p className="mt-4 text-sm leading-6 text-slate-600">We recorded your EarnGrind GemLoot signup-link click. Confirm only if you completed the signup directly with GemLoot. This does not verify GemLoot account approval or eligibility.</p>
                 <GemslootSignupConfirmation returnTo={returnTo} />

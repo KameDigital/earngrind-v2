@@ -15,7 +15,8 @@
     "test:community-chat-realtime": "node scripts/test-community-chat-realtime.mjs",
     "test:account-partner-sites": "node scripts/test-account-partner-sites.mjs",
     "test:account-partner-sites-integration": "node scripts/test-account-partner-sites-integration.mjs",
-    "test:homepage-trust-signals": "node scripts/test-homepage-trust-signals.mjs"
+    "test:homepage-trust-signals": "node scripts/test-homepage-trust-signals.mjs",
+    "test:offer-intelligence-scoring": "node scripts/test-offer-intelligence-scoring.mjs"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.8.0",

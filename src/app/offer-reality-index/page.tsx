@@ -8,6 +8,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Offer Reality Index | EarnGrind",
   description: "Check how current, explicit, and usable an offer listing is before starting it.",
+  robots: { index: false, follow: true },
   alternates: canonicalAlternates("/offer-reality-index"),
 };
 

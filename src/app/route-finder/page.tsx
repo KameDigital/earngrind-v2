@@ -5,7 +5,7 @@ import { fetchPublicOffers } from "@/lib/public-offer-search";
 import { getOfferReality, offerRouteScore, type OfferIntelligenceInput } from "@/lib/offer-intelligence";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "Best Offer Routes | EarnGrind", description: "Choose a provider route using payout, freshness, and requirement clarity—not payout alone.", alternates: canonicalAlternates("/route-finder") };
+export const metadata: Metadata = { title: "Best Offer Routes | EarnGrind", description: "Choose a provider route using payout, freshness, and requirement clarity—not payout alone.", robots: { index: false, follow: true }, alternates: canonicalAlternates("/route-finder") };
 
 export default async function RouteFinderPage() {
   const { data } = await fetchPublicOffers({ sort: "payout_desc", perPage: 50 });

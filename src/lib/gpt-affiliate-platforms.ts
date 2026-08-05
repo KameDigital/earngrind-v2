@@ -7,6 +7,8 @@ export type GptAffiliatePlatform = {
     trustNote: string;
     cta: string;
     priority: "primary" | "secondary";
+    payoutMethods?: string[];
+    trustScore?: number;
     disclosure?: string;
 };
 
@@ -20,6 +22,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Check country, age, and payout-account fit before starting.",
         cta: "Join KashKick",
         priority: "primary",
+        payoutMethods: ["PayPal", "Venmo", "Gift cards"],
+        trustScore: 4.1,
     },
     {
         id: "71000000-0000-4000-8000-000000000002",
@@ -30,6 +34,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Good for steady rewards, but compare time-to-payout before each offer.",
         cta: "Join Swagbucks",
         priority: "primary",
+        payoutMethods: ["PayPal", "Gift cards"],
+        trustScore: 4.3,
     },
     {
         id: "71000000-0000-4000-8000-000000000003",
@@ -40,6 +46,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Read trial and processing terms before completing cash offers.",
         cta: "Join InboxDollars",
         priority: "primary",
+        payoutMethods: ["PayPal", "Visa", "Gift cards"],
+        trustScore: 4.0,
     },
     {
         id: "71000000-0000-4000-8000-000000000004",
@@ -50,6 +58,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Better for routine rewards than high-upside game routes.",
         cta: "Join MyPoints",
         priority: "secondary",
+        payoutMethods: ["PayPal", "Gift cards", "Travel miles"],
+        trustScore: 3.9,
     },
     {
         id: "71000000-0000-4000-8000-000000000005",
@@ -60,6 +70,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Survey disqualifications are normal, so protect your time.",
         cta: "Join PrizeRebel",
         priority: "secondary",
+        payoutMethods: ["PayPal", "Bitcoin", "Gift cards"],
+        trustScore: 3.9,
     },
     {
         id: "71000000-0000-4000-8000-000000000006",
@@ -71,6 +83,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         cta: "Join Scrambly",
         priority: "secondary",
         disclosure: "Referral code: 3P5OXUA",
+        payoutMethods: ["PayPal", "Visa", "Gift cards"],
+        trustScore: 3.7,
     },
     {
         id: "71000000-0000-4000-8000-000000000007",
@@ -81,6 +95,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Compare live provider terms and track each milestone.",
         cta: "Join Gain.gg",
         priority: "secondary",
+        payoutMethods: ["Crypto", "Gift cards"],
+        trustScore: 3.8,
     },
     {
         id: "71000000-0000-4000-8000-000000000008",
@@ -91,6 +107,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Verify payout freshness, country fit, and milestone wording.",
         cta: "Join GemLoot",
         priority: "secondary",
+        payoutMethods: ["Crypto", "Gift cards"],
+        trustScore: 3.8,
     },
     {
         id: "71000000-0000-4000-8000-000000000009",
@@ -101,6 +119,8 @@ export const GPT_AFFILIATE_PLATFORMS: GptAffiliatePlatform[] = [
         trustNote: "Verify game rules, wager risk, and withdrawal methods before using original games.",
         cta: "Join EarnLab",
         priority: "secondary",
+        payoutMethods: ["Crypto", "PayPal", "Gift cards"],
+        trustScore: 4.3,
     },
 ];
 

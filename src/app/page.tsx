@@ -4,7 +4,7 @@ import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
 import WeeklyTopGames from "@/components/home/WeeklyTopGames";
 import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
 import { getHomepageFeaturedOffers } from "@/lib/homepage-featured";
-import { JsonLd, buildBreadcrumbList, buildWebsiteSearchAction } from "@/lib/seo-schema";
+import { JsonLd, buildBreadcrumbList, buildWebsiteSearchAction, buildFAQPage } from "@/lib/seo-schema";
 import AccountPartnerSites from "@/components/account/AccountPartnerSites";
 
 export const revalidate = 300;
@@ -105,13 +105,51 @@ const TRACKED_BROKERS = [
 ] as const;
 
 const PARTNER_SITE_ROWS = [
-  { name: "Freecash", rating: "4.9/5", href: "/review/freecash-review" },
-  { name: "Gain.gg", rating: "4.8/5", href: "/review/gain-gg-review" },
-  { name: "ySense", rating: "4.6/5", href: "/best-gpt-sites#platform-reviews" },
-  { name: "Swagbucks", rating: "4.6/5", href: "/review/swagbucks-review" },
-  { name: "Reward XP", rating: "4.5/5", href: "/best-gpt-sites#platform-reviews" },
-  { name: "EarnLab", rating: "4.3/5", href: "/best-gpt-sites#platform-reviews" },
-  { name: "Lootup", rating: "4.2/5", href: "/best-gpt-sites#platform-reviews" },
+  { name: "Freecash", rating: "4.9/5", href: "/review/freecash-review", payoutMethods: ["PayPal", "Visa", "Crypto", "Gift cards"] },
+  { name: "Gain.gg", rating: "4.8/5", href: "/review/gain-gg-review", payoutMethods: ["Crypto", "Gift cards"] },
+  { name: "ySense", rating: "4.6/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["PayPal", "Gift cards"] },
+  { name: "Swagbucks", rating: "4.6/5", href: "/review/swagbucks-review", payoutMethods: ["PayPal", "Gift cards"] },
+  { name: "Reward XP", rating: "4.5/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["PayPal", "Crypto", "Gift cards"] },
+  { name: "EarnLab", rating: "4.3/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["Crypto", "PayPal", "Gift cards"] },
+  { name: "Lootup", rating: "4.2/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["PayPal", "Crypto", "Gift cards"] },
+] as const;
+
+const HOMEPAGE_FAQS = [
+  {
+    question: "How do GPT (Get Paid To) offer sites work?",
+    answer:
+      "GPT sites reward you for completing tasks like playing mobile or desktop games, answering surveys, and trying new apps. EarnGrind tracks and compares live payout routes across platforms so you can choose the highest-paying site before starting an offer.",
+  },
+  {
+    question: "Why are some offers or platforms shown first or marked featured?",
+    answer:
+      "Featured picks are manually selected based on active payout competitiveness, verified availability, and user popularity. EarnGrind uses direct affiliate links for partner signups and offers, which means we may earn a referral commission if you join or complete an offer through our link, at no extra cost to you.",
+  },
+  {
+    question: "How are offers and platforms vetted for trustworthiness?",
+    answer:
+      "We evaluate platforms based on confirmed payout methods (such as PayPal, Visa, or Crypto), active reward tracking stability, platform age, user terms, and historical milestone completion evidence before listing them.",
+  },
+  {
+    question: "Which platform is best for beginners?",
+    answer:
+      "Start with the Best GPT Sites page. It compares beginner-friendly platforms by trust, payout options, and offer quality so you can pick a site before choosing a specific task.",
+  },
+  {
+    question: "How do I actually get paid?",
+    answer:
+      "Choose an offer on EarnGrind, open the partner platform, complete the task under that platform's rules, then cash out through the platform's own payout system after approval.",
+  },
+  {
+    question: "What's the difference between EarnGrind and Swagbucks?",
+    answer:
+      "Swagbucks is a rewards platform where you complete offers and cash out. EarnGrind is a comparison tool that helps you find which platform has the better payout before you start.",
+  },
+  {
+    question: "Is EarnGrind free to use?",
+    answer:
+      "Yes. No account needed to browse EarnGrind. We show comparison data first; partner sites may ask you to create an account only after you click out to complete an offer.",
+  },
 ] as const;
 
 const HOME_LINK_GROUPS = [
@@ -161,9 +199,11 @@ export default async function HomePage() {
   const weeklyTopGames = await getHomepageFeaturedOffers();
   const featuredPost: any = null;
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
+  const faqSchema = buildFAQPage(HOMEPAGE_FAQS.map(({ question, answer }) => ({ question, answer })));
   const websiteJsonLd = [
     buildWebsiteSearchAction(),
     buildBreadcrumbList([{ name: "Home", path: "/" }]),
+    ...(faqSchema ? [faqSchema] : []),
   ];
 
   return (
@@ -323,11 +363,18 @@ export default async function HomePage() {
                   href={site.href}
                   className="flex items-center justify-between gap-4 border border-[var(--border-default)] bg-white p-4 text-sm shadow-sm transition hover:border-lime-300 hover:shadow-[0_14px_30px_rgba(15,23,42,0.08)]"
                 >
-                  <span>
+                  <div>
                     <span className="block font-extrabold text-[var(--brand-ink)]">{site.name}</span>
-                    <span className="mt-0.5 block text-xs font-semibold text-[var(--text-tertiary)]">{site.rating}</span>
-                  </span>
-                  <span className="border border-[var(--border-default)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)]">
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-semibold text-amber-700">EarnGrind Rating {site.rating}</span>
+                      {site.payoutMethods?.length ? (
+                        <span className="text-[11px] text-[var(--text-tertiary)]">
+                          · {site.payoutMethods.slice(0, 3).join(", ")}
+                        </span>
+                      ) : null}
+                    </div>
+                  </div>
+                  <span className="shrink-0 border border-[var(--border-default)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)]">
                     Visit platform
                   </span>
                 </Link>
@@ -380,22 +427,9 @@ export default async function HomePage() {
           </div>
 
           <div className="space-y-3">
-            <FaqItem
-              question="Which platform is best for beginners?"
-              answer="Start with the Best GPT Sites page. It compares beginner-friendly platforms by trust, payout options, and offer quality so you can pick a site before choosing a specific task."
-            />
-            <FaqItem
-              question="How do I actually get paid?"
-              answer="Choose an offer on EarnGrind, open the partner platform, complete the task under that platform's rules, then cash out through the platform's own payout system after approval."
-            />
-            <FaqItem
-              question="What's the difference between EarnGrind and Swagbucks?"
-              answer="Swagbucks is a rewards platform where you complete offers and cash out. EarnGrind is a comparison tool that helps you find which platform has the better payout before you start."
-            />
-            <FaqItem
-              question="Is EarnGrind free to use?"
-              answer="Yes. No account needed to browse EarnGrind. We show comparison data first; partner sites may ask you to create an account only after you click out to complete an offer."
-            />
+            {HOMEPAGE_FAQS.map((faq) => (
+              <FaqItem key={faq.question} question={faq.question} answer={faq.answer} />
+            ))}
           </div>
         </div>
       </section>

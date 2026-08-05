@@ -17,7 +17,10 @@ export default function GoogleAnalytics() {
                     function gtag(){dataLayer.push(arguments);}
                     window.gtag = gtag;
                     gtag('js', new Date());
-                    gtag('config', '${measurementId}');
+                    // App Router navigation is tracked by GoogleAnalyticsPageTracker.
+                    // Disable GA4's initial automatic view so the first route and all
+                    // client-side routes use the same explicit event contract.
+                    gtag('config', '${measurementId}', { send_page_view: false });
                 `,
                 }}
             />

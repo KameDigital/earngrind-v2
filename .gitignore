@@ -54,3 +54,5 @@ previews/
 reports/
 supabase/.temp/
 research/
+.codex/
+desktop.ini

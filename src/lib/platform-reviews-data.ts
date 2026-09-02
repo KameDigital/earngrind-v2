@@ -1,3 +1,10 @@
+export interface PlatformOfferwall {
+    name: string;
+    logoUrl: string;
+    category?: "Gaming" | "Surveys" | "Multi-Task" | "High Yield" | "Direct Partner";
+    description?: string;
+}
+
 export interface PlatformReview {
     // Identity
     slug: string;
@@ -19,8 +26,9 @@ export interface PlatformReview {
     // Overview
     overview: string;
 
-    // Earning methods
+    // Earning methods & Offerwalls
     earningMethods: string[];
+    offerwalls?: PlatformOfferwall[];
 
     // Payout details
     payoutMethods: string[];
@@ -96,6 +104,98 @@ export const PLATFORM_REVIEWS: Record<string, PlatformReview> = {
         overview:
             "EarnLab is a gamified GPT platform combining offerwalls, surveys, races, cases, and arcade mini-games like Mines and Keno with reward-store style cashouts. It is built for active offer grinders looking for high-paying mobile game milestones and fast crypto withdrawals.",
         earningMethods: ["Offerwalls", "Surveys", "Races", "Boxes", "Mines", "Keno", "Reward store"],
+        offerwalls: [
+            {
+                name: "Torox",
+                logoUrl: "/images/offerwalls/torox-light.svg",
+                category: "Gaming",
+                description: "Leading mobile & desktop gaming network featuring tiered high-yield milestone rewards up to $500+.",
+            },
+            {
+                name: "RevU",
+                logoUrl: "/images/offerwalls/revu-light.svg",
+                category: "High Yield",
+                description: "Premium advertiser wall with high-payout gaming trials, banking apps, and 2x/3x multiplier events.",
+            },
+            {
+                name: "Aye-T Studios",
+                logoUrl: "/images/offerwalls/ayet-light.png",
+                category: "Gaming",
+                description: "Mobile gaming specialist offering progressive level achievements with verified milestone tracking.",
+            },
+            {
+                name: "AdGate Media",
+                logoUrl: "/images/offerwalls/adgatemedia-light.svg",
+                category: "Multi-Task",
+                description: "Established multi-task offerwall featuring app installs, surveys, free trials, and fast-clearing tasks.",
+            },
+            {
+                name: "AdGem",
+                logoUrl: "/images/offerwalls/adgem-light.png",
+                category: "Gaming",
+                description: "Mobile-focused gaming wall featuring exclusive Android and iOS game installation campaigns.",
+            },
+            {
+                name: "MyChips",
+                logoUrl: "/images/offerwalls/mychips-light.svg",
+                category: "Gaming",
+                description: "Fast-growing gaming offerwall with competitive per-task payout rates and instant milestone verification.",
+            },
+            {
+                name: "Tyr Rewards",
+                logoUrl: "/images/offerwalls/tyr-light.svg",
+                category: "Gaming",
+                description: "Specialized mobile gaming network offering playtime rewards and tiered stage progression payouts.",
+            },
+            {
+                name: "Monlix",
+                logoUrl: "/images/offerwalls/monlix-light.svg",
+                category: "Multi-Task",
+                description: "Dynamic micro-task and survey wall with fast credit confirmations and global offer coverage.",
+            },
+            {
+                name: "Lootably",
+                logoUrl: "/images/offerwalls/lootably.png",
+                category: "Multi-Task",
+                description: "Multi-format reward provider offering quiz tasks, video streams, and desktop software downloads.",
+            },
+            {
+                name: "PrimeEarn",
+                logoUrl: "/images/offerwalls/primeearn-dark.svg",
+                category: "Direct Partner",
+                description: "Direct partner offerwall integration delivering exclusive high-yield campaigns directly on EarnLab.",
+            },
+            {
+                name: "Besitos",
+                logoUrl: "/images/offerwalls/besitos-light.svg",
+                category: "Gaming",
+                description: "Interactive gaming network with curated mobile game quests and multi-step achievement payouts.",
+            },
+            {
+                name: "MM Wall",
+                logoUrl: "/images/offerwalls/mm-wall.png",
+                category: "Multi-Task",
+                description: "Versatile rewards wall featuring mobile app exploration and multi-reward gaming campaigns.",
+            },
+            {
+                name: "HangMyAds",
+                logoUrl: "/images/offerwalls/hangmyads.png",
+                category: "Gaming",
+                description: "Global mobile performance network connecting directly to premium top-tier gaming advertisers.",
+            },
+            {
+                name: "Adscend Media",
+                logoUrl: "/images/offerwalls/adscendmedia-light.svg",
+                category: "Multi-Task",
+                description: "Veteran rewards network offering market research surveys, app downloads, and media engagement.",
+            },
+            {
+                name: "AdToWall",
+                logoUrl: "/images/offerwalls/adtowall-light.svg",
+                category: "Gaming",
+                description: "Modern offerwall expanding rapidly across casual and mid-core mobile gaming campaigns.",
+            },
+        ],
         payoutMethods: ["Crypto", "PayPal", "Gift cards"],
         holdPeriodNote:
             "Most game offers route through providers like Torox, RevU, and EarnLab direct, with holds up to 30 days depending on the offer. Standard survey and quick task earnings clear within 24–72 hours.",

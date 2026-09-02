@@ -1,6 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
     Star,
@@ -13,6 +14,7 @@ import {
     Sparkles,
     ChevronRight,
     ExternalLink,
+    Layers,
 } from "lucide-react";
 import {
     ReviewFaqAccordion,
@@ -295,6 +297,80 @@ export default async function PlatformReviewPage({
                         ))}
                     </div>
                 </section>
+
+                {/* ── Section 4b: Integrated Offerwalls & Networks ── */}
+                {platform.offerwalls && platform.offerwalls.length > 0 ? (
+                    <section aria-labelledby="offerwalls-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
+                        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <h2 id="offerwalls-heading" className="text-xl font-black tracking-tight text-slate-950 flex items-center gap-2">
+                                    <span>Integrated Offerwalls on {platform.name}</span>
+                                    <span className="rounded-none bg-slate-950 px-2 py-0.5 text-[10px] font-black text-lime-400">
+                                        {platform.offerwalls.length} Offerwalls
+                                    </span>
+                                </h2>
+                                <p className="text-xs text-slate-500 mt-0.5">
+                                    {platform.name} connects to these verified third-party offerwall networks and direct reward channels:
+                                </p>
+                            </div>
+                            <Link
+                                href={`/offers?q=${encodeURIComponent(platform.name)}`}
+                                className="inline-flex items-center gap-1 text-xs font-extrabold text-slate-900 hover:text-lime-700"
+                            >
+                                <span>Browse Live {platform.name} Offers</span>
+                                <ChevronRight className="h-3.5 w-3.5" />
+                            </Link>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 pt-2">
+                            {platform.offerwalls.map((wall) => (
+                                <div
+                                    key={wall.name}
+                                    className="group relative flex flex-col justify-between border border-slate-800 bg-slate-950 p-4 shadow-sm transition hover:border-lime-400 rounded-none"
+                                >
+                                    <div>
+                                        <div className="flex items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+                                            <div className="relative h-8 w-32 shrink-0 flex items-center">
+                                                <Image
+                                                    src={wall.logoUrl}
+                                                    alt={`${wall.name} logo`}
+                                                    fill
+                                                    className="object-contain object-left"
+                                                    unoptimized
+                                                    sizes="128px"
+                                                />
+                                            </div>
+                                            {wall.category ? (
+                                                <span className="rounded-none border border-slate-700 bg-slate-900 px-2 py-0.5 text-[9px] font-extrabold uppercase text-lime-400">
+                                                    {wall.category}
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                        <h3 className="mt-3 text-xs font-extrabold text-white group-hover:text-lime-400 transition">
+                                            {wall.name}
+                                        </h3>
+                                        {wall.description ? (
+                                            <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
+                                                {wall.description}
+                                            </p>
+                                        ) : null}
+                                    </div>
+
+                                    <div className="mt-3 pt-2 border-t border-slate-900 flex items-center justify-between text-[10px] font-bold">
+                                        <span className="text-slate-500">Available on {platform.name}</span>
+                                        <Link
+                                            href={`/offers?q=${encodeURIComponent(wall.name)}`}
+                                            className="text-lime-400 hover:underline flex items-center gap-0.5"
+                                        >
+                                            <span>Search {wall.name}</span>
+                                            <ChevronRight className="h-3 w-3" />
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                ) : null}
 
                 {/* ── Section 5: Offer Preview Component ── */}
                 <section className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm">

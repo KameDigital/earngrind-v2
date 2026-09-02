@@ -84,15 +84,53 @@ export async function GET(
             }))
             : [];
 
-        const isDummyTaskSet = (taskList: Array<{ title?: string; rewardAmount?: number }>) => {
+        const extractCleanSingleGoal = (
+            title: string,
+            goalText?: string | null,
+            rawTasks?: Array<{ notes?: string | null; title?: string | null; reward_amount?: number | null }>,
+            _payout = 0
+        ): string => {
+            for (const t of rawTasks || []) {
+                const note = (t.notes || "").trim();
+                if (/To complete this offer/i.test(note)) {
+                    const match = note.match(/To complete this offer,?\s*(?:simply\s+)?(.*?)(?:\s+and receive a|\s*\.\s*|$)/i);
+                    if (match && match[1]) {
+                        const res = match[1].trim();
+                        return res.charAt(0).toUpperCase() + res.slice(1);
+                    }
+                }
+            }
+
+            for (const t of rawTasks || []) {
+                const note = (t.notes || "").trim();
+                const m = note.match(/(?:earn|reach|deposit|wager|register|open an? account|make your first)\s+[^.]+?(?:reward|\$|\.|$)/i);
+                if (m) {
+                    let clean = m[0].replace(/\s+and receive a\s+\$?\d+.*$/i, "").trim();
+                    clean = clean.charAt(0).toUpperCase() + clean.slice(1);
+                    if (clean.length > 10 && clean.length < 90 && !/€\/\$/i.test(clean)) return clean;
+                }
+            }
+
+            if (goalText && goalText.length < 120 && !/^(?:combines a|the platform features)/i.test(goalText)) {
+                return goalText;
+            }
+
+            return `Complete verified requirements on ${title || "partner site"}`;
+        }
+
+        const isDummyTaskSet = (taskList: Array<{ title?: string; rewardAmount?: number; notes?: string }>) => {
             if (!taskList || taskList.length === 0) return true;
-            const dummyCount = taskList.filter(t => 
-                /Complete the (?:listed|required)|Earn (?:additional )?rewards along the way|Grab your free|Complete all steps/i.test(t.title || "")
+            const payingTasks = taskList.filter((t) => Number(t.rewardAmount ?? 0) > 0);
+            if (payingTasks.length <= 1) return true;
+
+            const zeroCount = taskList.filter((t) => Number(t.rewardAmount ?? 0) === 0).length;
+            if (zeroCount >= taskList.length / 2) return true;
+
+            const dummyCount = taskList.filter((t) =>
+                /Complete the (?:listed|required)|Earn (?:additional )?rewards along the way|Grab your free|Complete all steps|Important:|The platform features|combines a|wagered on|^s_\d+|^Default$/i.test(t.title || "")
             ).length;
-            const zeroCount = taskList.filter(t => Number(t.rewardAmount ?? 0) === 0).length;
-            if (dummyCount >= taskList.length / 2) return true;
-            if (zeroCount >= taskList.length - 1 && taskList.length <= 4) return true;
-            if (taskList.length <= 2 && (dummyCount > 0 || zeroCount > 0)) return true;
+            if (dummyCount > 0) return true;
+
             return false;
         };
 
@@ -250,14 +288,38 @@ export async function GET(
             }
         }
 
-        // If still no multi-tier breakdown exists, generate realistic structured progression tiers
+        // If still no multi-tier breakdown exists, generate realistic structured progression tiers or single goal
         if (isDummyTaskSet(tasks)) {
             const totalPayout = shapedOffer.total_payout_usd > 0 ? shapedOffer.total_payout_usd : shapedOffer.payout_usd;
-            tasks = generateStructuredTiers(
-                shapedOffer.title || shapedOffer.game.name || "Game",
-                totalPayout,
-                shapedOffer.goal_text
-            );
+            const text = `${shapedOffer.title} ${shapedOffer.goal_text || ""} ${shapedOffer.category || ""}`.toLowerCase();
+            const isNonGame = /\b(casino|sportsbook|betting|bet|crypto|bank|finance|broker|invest|deposit|survey|poll|opinion|sign up|signup|trial|subscription)\b/i.test(text);
+
+            if (isNonGame) {
+                const cleanGoal = extractCleanSingleGoal(
+                    shapedOffer.title,
+                    shapedOffer.goal_text,
+                    tasksData as Array<{ notes?: string | null; title?: string | null; reward_amount?: number | null }>,
+                    totalPayout
+                );
+                tasks = [
+                    {
+                        id: "target-goal",
+                        sortOrder: 1,
+                        title: cleanGoal,
+                        rewardAmount: totalPayout,
+                        rewardDisplay: `$${totalPayout.toFixed(2)}`,
+                        taskType: "milestone",
+                        timeLimitText: null,
+                        notes: "Complete all listed requirements through the tracked partner route.",
+                    },
+                ];
+            } else {
+                tasks = generateStructuredTiers(
+                    shapedOffer.title || shapedOffer.game.name || "Game",
+                    totalPayout,
+                    shapedOffer.goal_text
+                );
+            }
         }
 
         return NextResponse.json(

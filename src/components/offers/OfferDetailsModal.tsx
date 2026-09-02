@@ -71,7 +71,22 @@ export default function OfferDetailsModal({
     // Render all verified milestone tiers
     const cleanedTasks = useMemo(() => {
         if (!tasks || tasks.length === 0) return [];
-        return tasks;
+
+        // Filter out zero-reward disclaimer rows that were dumped as tasks
+        const valid = tasks.filter((t) => {
+            const title = (t.title || "").trim();
+            const isDisclaimerOrJunk = /^(?:Important:|The platform features|combines a|wagered on|^s_\d+|^Default$)/i.test(title);
+            if (isDisclaimerOrJunk && Number(t.rewardAmount ?? 0) === 0) return false;
+            return true;
+        });
+
+        const paying = valid.filter((t) => Number(t.rewardAmount ?? 0) > 0);
+        // If only 1 paying task exists and there were junk/zero-dollar tasks, return that 1 task
+        if (paying.length === 1 && valid.length > 1) {
+            return paying;
+        }
+
+        return valid.length > 0 ? valid : tasks;
     }, [tasks]);
 
     if (!offer) return null;
@@ -273,7 +288,9 @@ export default function OfferDetailsModal({
                                     </div>
                                     <div>
                                         <div className="text-xs font-bold text-slate-900">
-                                            {cleanedTasks[0]?.title || description || `Complete ${gameName}`}
+                                            {cleanedTasks[0]?.title && !/^(?:Important:|The platform features|combines a|Complete the (?:listed|required))/i.test(cleanedTasks[0].title)
+                                                ? cleanedTasks[0].title
+                                                : description || `Complete ${gameName}`}
                                         </div>
                                         <div className="text-[11px] text-slate-500">
                                             Complete all requirements through the tracked route

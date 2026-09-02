@@ -113,38 +113,38 @@ export default async function BestGptSitesPage() {
                     <Container>
                         <div className="mx-auto max-w-4xl text-center">
                             {/* Live Badge */}
-                            <div className="inline-flex items-center gap-2 border border-lime-400/40 bg-lime-400/10 px-3 py-1 font-mono text-xs font-black uppercase tracking-wider text-lime-400 shadow-[0_0_15px_rgba(132,204,22,0.2)]">
+                            <div className="inline-flex items-center gap-2 border border-lime-400/40 bg-lime-400/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-lime-400 shadow-[0_0_15px_rgba(132,204,22,0.2)]">
                                 <span className="h-2 w-2 animate-pulse bg-lime-400" />
                                 <span>● VERIFIED GPT PLATFORM MATRIX</span>
                             </div>
 
                             {/* Headline */}
-                            <h1 className="mt-5 font-mono text-3xl font-black uppercase tracking-tight text-white sm:text-5xl lg:text-6xl">
+                            <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
                                 Compare Top GPT Sites & Rewards
                             </h1>
 
                             {/* Subtitle */}
-                            <p className="mt-4 text-sm leading-relaxed text-slate-400 sm:text-base font-mono">
+                            <p className="mt-4 text-base leading-relaxed text-slate-300 sm:text-lg max-w-2xl mx-auto">
                                 Live payout metrics, cashout minimums, withdrawal speeds, and indexed offerwall inventory across the most reliable reward platforms.
                             </p>
 
                             {/* Quick Stats Ticker */}
-                            <div className="mt-8 grid grid-cols-2 gap-3 border border-slate-800 bg-slate-900/80 p-4 font-mono sm:grid-cols-4 sm:p-5">
+                            <div className="mt-8 grid grid-cols-2 gap-3 border border-slate-800 bg-slate-900/80 p-4 sm:grid-cols-4 sm:p-5">
                                 <div className="text-center">
-                                    <span className="block text-[10px] uppercase tracking-wider text-slate-400">Verified Sites</span>
-                                    <strong className="mt-0.5 block text-xl font-black text-lime-400 sm:text-2xl">{platforms.length} Platforms</strong>
+                                    <span className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Verified Sites</span>
+                                    <strong className="mt-0.5 block text-xl font-extrabold text-lime-400 sm:text-2xl">{platforms.length} Platforms</strong>
                                 </div>
                                 <div className="text-center border-l border-slate-800">
-                                    <span className="block text-[10px] uppercase tracking-wider text-slate-400">Indexed Offers</span>
-                                    <strong className="mt-0.5 block text-xl font-black text-white sm:text-2xl">{catalogOfferTotal.toLocaleString()}+</strong>
+                                    <span className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Indexed Offers</span>
+                                    <strong className="mt-0.5 block text-xl font-extrabold text-white sm:text-2xl">{catalogOfferTotal.toLocaleString()}+</strong>
                                 </div>
                                 <div className="text-center border-t border-slate-800 pt-3 sm:border-l sm:border-t-0 sm:pt-0">
-                                    <span className="block text-[10px] uppercase tracking-wider text-slate-400">Fastest Payout</span>
-                                    <strong className="mt-0.5 block text-xl font-black text-emerald-400 sm:text-2xl">Instant (Mins)</strong>
+                                    <span className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Fastest Payout</span>
+                                    <strong className="mt-0.5 block text-xl font-extrabold text-emerald-400 sm:text-2xl">Instant (Mins)</strong>
                                 </div>
                                 <div className="text-center border-t border-l border-slate-800 pt-3 sm:border-t-0 sm:pt-0">
-                                    <span className="block text-[10px] uppercase tracking-wider text-slate-400">Lowest Cashout</span>
-                                    <strong className="mt-0.5 block text-xl font-black text-lime-400 sm:text-2xl">$0.50 Min</strong>
+                                    <span className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Lowest Cashout</span>
+                                    <strong className="mt-0.5 block text-xl font-extrabold text-lime-400 sm:text-2xl">$0.50 Min</strong>
                                 </div>
                             </div>
                         </div>
@@ -156,14 +156,14 @@ export default async function BestGptSitesPage() {
                     <Container>
                         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                             <div>
-                                <span className="font-mono text-xs font-black uppercase text-lime-700">● LIVE INTELLIGENCE MATRIX</span>
-                                <h2 className="font-mono text-2xl font-black uppercase tracking-tight text-slate-950 sm:text-3xl">
+                                <span className="text-xs font-extrabold uppercase text-lime-700">● LIVE INTELLIGENCE MATRIX</span>
+                                <h2 className="text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">
                                     Ranked Platform Directory
                                 </h2>
                             </div>
                             <Link
                                 href="/offers"
-                                className="inline-flex items-center gap-1.5 font-mono text-xs font-black uppercase text-slate-950 hover:text-lime-700"
+                                className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase text-slate-950 hover:text-lime-700"
                             >
                                 <span>Search All 25,000+ Live Offers</span>
                                 <ArrowRight size={13} />
@@ -181,11 +181,11 @@ export default async function BestGptSitesPage() {
                         <div className="mx-auto max-w-4xl space-y-12">
                             {/* Section Header */}
                             <div className="text-center">
-                                <span className="font-mono text-xs font-bold uppercase text-lime-400">● VERIFICATION PROTOCOL</span>
-                                <h2 className="mt-2 font-mono text-2xl font-black uppercase tracking-tight text-white sm:text-3xl">
+                                <span className="text-xs font-bold uppercase text-lime-400">● VERIFICATION PROTOCOL</span>
+                                <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
                                     How EarnGrind Rates GPT Sites
                                 </h2>
-                                <p className="mt-2 text-sm text-slate-400 font-mono">
+                                <p className="mt-2 text-sm text-slate-400 max-w-xl mx-auto">
                                     Our rankings are grounded in continuous real-world withdrawal testing, live provider API indexing, and strict anti-fraud policy audits.
                                 </p>
                             </div>
@@ -197,9 +197,9 @@ export default async function BestGptSitesPage() {
                                         <div className="bg-lime-400 p-2 text-slate-950">
                                             <Zap size={18} />
                                         </div>
-                                        <h3 className="font-mono text-base font-black uppercase text-white">1. Payout Speed & Minimums</h3>
+                                        <h3 className="text-base font-extrabold text-white">1. Payout Speed & Minimums</h3>
                                     </div>
-                                    <p className="mt-3 text-xs leading-relaxed text-slate-400 font-mono">
+                                    <p className="mt-3 text-xs leading-relaxed text-slate-400">
                                         We favor platforms offering instant automated crypto (Litecoin, Bitcoin) and sub-$1 withdrawal minimums so you can cash out your earnings immediately without artificial holds.
                                     </p>
                                 </div>
@@ -209,9 +209,9 @@ export default async function BestGptSitesPage() {
                                         <div className="bg-lime-400 p-2 text-slate-950">
                                             <ShieldCheck size={18} />
                                         </div>
-                                        <h3 className="font-mono text-base font-black uppercase text-white">2. KYC Transparency</h3>
+                                        <h3 className="text-base font-extrabold text-white">2. KYC Transparency</h3>
                                     </div>
-                                    <p className="mt-3 text-xs leading-relaxed text-slate-400 font-mono">
+                                    <p className="mt-3 text-xs leading-relaxed text-slate-400">
                                         We clearly document whether a platform requires identity verification (ID/Phone) before cashout. Platforms with routine unverified crypto withdrawals are highlighted for global privacy.
                                     </p>
                                 </div>
@@ -221,9 +221,9 @@ export default async function BestGptSitesPage() {
                                         <div className="bg-lime-400 p-2 text-slate-950">
                                             <Layers size={18} />
                                         </div>
-                                        <h3 className="font-mono text-base font-black uppercase text-white">3. Offerwall Redundancy</h3>
+                                        <h3 className="text-base font-extrabold text-white">3. Offerwall Redundancy</h3>
                                     </div>
-                                    <p className="mt-3 text-xs leading-relaxed text-slate-400 font-mono">
+                                    <p className="mt-3 text-xs leading-relaxed text-slate-400">
                                         Having access to top offerwalls (Torox, RevU, AdGate, AyeT, BitLabs) ensures you never run out of high-paying gaming offers, surveys, and app trials.
                                     </p>
                                 </div>
@@ -233,9 +233,9 @@ export default async function BestGptSitesPage() {
                                         <div className="bg-lime-400 p-2 text-slate-950">
                                             <Award size={18} />
                                         </div>
-                                        <h3 className="font-mono text-base font-black uppercase text-white">4. Multi-Account Safety</h3>
+                                        <h3 className="text-base font-extrabold text-white">4. Multi-Account Safety</h3>
                                     </div>
-                                    <p className="mt-3 text-xs leading-relaxed text-slate-400 font-mono">
+                                    <p className="mt-3 text-xs leading-relaxed text-slate-400">
                                         We test game offer tracking across devices to ensure you receive credit on your chosen platform without milestone drop-offs or support ticket friction.
                                     </p>
                                 </div>
@@ -243,12 +243,12 @@ export default async function BestGptSitesPage() {
 
                             {/* FAQ Accordion */}
                             <div className="border-t border-slate-900 pt-10">
-                                <h3 className="font-mono text-xl font-black uppercase tracking-tight text-white mb-6">
+                                <h3 className="text-xl font-extrabold tracking-tight text-white mb-6">
                                     Frequently Asked Questions
                                 </h3>
                                 <div className="divide-y divide-slate-800 border-y border-slate-800">
                                     {SHARED_REVIEW_FAQS.map((faq, index) => (
-                                        <div key={index} className="py-4 font-mono">
+                                        <div key={index} className="py-4">
                                             <h4 className="text-sm font-bold text-lime-400 flex items-center gap-2">
                                                 <HelpCircle size={15} />
                                                 <span>{faq.question}</span>

@@ -40,7 +40,7 @@ export function ReviewFaqAccordion({
     };
 
     return (
-        <div className="divide-y divide-slate-200 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div className="divide-y divide-slate-200 overflow-hidden rounded-none border border-slate-200 bg-white shadow-sm">
             {items.map((item, idx) => {
                 const isOpen = openIndex === idx;
                 return (
@@ -88,7 +88,7 @@ export function ReviewCountryEligibility({ countries }: { countries: string[] })
                     return (
                         <span
                             key={code}
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-800 shadow-xs"
+                            className="inline-flex items-center gap-1.5 rounded-none border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-800 shadow-xs"
                         >
                             <span className="text-base leading-none">{flag}</span>
                             <span>{name}</span>
@@ -130,7 +130,7 @@ export function ReviewPromoCodeBox({
     };
 
     return (
-        <div className="inline-flex items-center gap-3 rounded-xl border border-dashed border-lime-500 bg-lime-50/70 p-3">
+        <div className="inline-flex items-center gap-3 rounded-none border border-dashed border-lime-500 bg-lime-50/70 p-3">
             <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider text-lime-900">{label}</p>
                 <p className="font-mono text-sm font-black text-slate-950">{code}</p>
@@ -138,7 +138,7 @@ export function ReviewPromoCodeBox({
             <button
                 type="button"
                 onClick={handleCopy}
-                className="inline-flex items-center gap-1 rounded-md bg-slate-950 px-3 py-1.5 text-xs font-extrabold text-white transition hover:bg-slate-800"
+                className="inline-flex items-center gap-1 rounded-none bg-slate-950 px-3 py-1.5 text-xs font-extrabold text-white transition hover:bg-slate-800"
             >
                 {copied ? (
                     <>
@@ -181,7 +181,7 @@ export function ReviewStickyMobileCta({
                     name={platformName}
                     slug={slug}
                     logoUrl={logoUrl}
-                    className="h-9 w-9 shrink-0 rounded-lg border border-slate-200 bg-slate-50 p-1 shadow-2xs"
+                    className="h-9 w-9 shrink-0 rounded-none border border-slate-200 bg-slate-50 p-1 shadow-2xs"
                 />
                 <div className="min-w-0">
                     <p className="truncate text-xs font-black text-slate-900">{platformName}</p>
@@ -196,7 +196,7 @@ export function ReviewStickyMobileCta({
                 href={affiliateUrl}
                 target="_blank"
                 rel="noopener noreferrer sponsored nofollow"
-                className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-slate-950 px-4 py-2 text-xs font-black text-white shadow-sm transition active:scale-95"
+                className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-none bg-slate-950 px-4 py-2 text-xs font-black text-white shadow-sm transition active:scale-95"
             >
                 Join {platformName} →
             </a>

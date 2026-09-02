@@ -154,7 +154,7 @@ export default function SiteOfferPreview({
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={`Search ${platformName} games or offers…`}
-                    className="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-9 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:border-slate-400 focus:outline-none shadow-sm"
+                    className="w-full rounded-none border border-slate-200 bg-white py-1.5 pl-9 pr-3 text-xs text-slate-800 placeholder-slate-400 focus:border-slate-400 focus:outline-none shadow-sm"
                 />
             </div>
 
@@ -163,13 +163,13 @@ export default function SiteOfferPreview({
                     {[1, 2, 3, 4, 5, 6].map((idx) => (
                         <div
                             key={idx}
-                            className="flex h-24 animate-pulse items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3"
+                            className="flex h-24 animate-pulse items-center gap-3 rounded-none border border-slate-200 bg-slate-50 p-3"
                         >
-                            <div className="h-16 w-16 shrink-0 rounded-lg bg-slate-200" />
+                            <div className="h-16 w-16 shrink-0 rounded-none bg-slate-200" />
                             <div className="flex-1 space-y-2">
-                                <div className="h-3.5 w-3/4 rounded bg-slate-200" />
-                                <div className="h-2.5 w-1/2 rounded bg-slate-200" />
-                                <div className="h-4 w-1/3 rounded bg-slate-200" />
+                                <div className="h-3.5 w-3/4 rounded-none bg-slate-200" />
+                                <div className="h-2.5 w-1/2 rounded-none bg-slate-200" />
+                                <div className="h-4 w-1/3 rounded-none bg-slate-200" />
                             </div>
                         </div>
                     ))}
@@ -185,10 +185,10 @@ export default function SiteOfferPreview({
                         return (
                             <div
                                 key={offer.id}
-                                className="group relative flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition hover:border-slate-300 hover:shadow-md"
+                                className="group relative flex items-center justify-between gap-3 rounded-none border border-slate-200 bg-white p-3 shadow-sm transition hover:border-slate-300 hover:shadow-md"
                             >
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-slate-100">
+                                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-none border border-slate-100 bg-slate-100">
                                         {offer.imageUrl ? (
                                             <Image
                                                 src={offer.imageUrl}
@@ -234,7 +234,7 @@ export default function SiteOfferPreview({
 
                                 <Link
                                     href={offerDestination}
-                                    className="shrink-0 rounded bg-slate-100 p-1.5 text-slate-600 transition group-hover:bg-slate-900 group-hover:text-white"
+                                    className="shrink-0 rounded-none bg-slate-100 p-1.5 text-slate-600 transition group-hover:bg-slate-900 group-hover:text-white"
                                     aria-label={`View ${offer.title} offer details`}
                                 >
                                     <ChevronRight className="h-4 w-4" />
@@ -244,12 +244,12 @@ export default function SiteOfferPreview({
                     })}
                 </div>
             ) : (
-                <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 text-center">
+                <div className="rounded-none border border-slate-200 bg-slate-50 p-6 text-center">
                     <p className="text-sm font-bold text-slate-700">No matching offers found for &ldquo;{searchQuery}&rdquo;</p>
                     <p className="mt-1 text-xs text-slate-500">Browse all live rewards available on {platformName}.</p>
                     <Link
                         href={seeAllHref}
-                        className="mt-3 inline-flex items-center rounded-lg bg-slate-900 px-4 py-2 text-xs font-extrabold text-white transition hover:bg-slate-800"
+                        className="mt-3 inline-flex items-center rounded-none bg-slate-900 px-4 py-2 text-xs font-extrabold text-white transition hover:bg-slate-800"
                     >
                         Browse all {platformName} offers →
                     </Link>

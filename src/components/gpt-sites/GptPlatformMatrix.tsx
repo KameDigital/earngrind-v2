@@ -136,7 +136,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
     return (
         <div className="space-y-8">
             {/* Quick Filter Navigation Bar */}
-            <div className="border border-slate-900 bg-slate-950 p-4 text-white shadow-2xl">
+            <div className="border border-slate-900 bg-slate-950 p-4 text-white shadow-2xl rounded-none">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     {/* Filter Tabs */}
                     <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 text-xs">
@@ -155,7 +155,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id as FilterTab)}
-                                    className={`flex items-center gap-1.5 px-3 py-2 font-mono font-bold tracking-tight uppercase transition ${
+                                    className={`flex items-center gap-1.5 px-3 py-2 font-bold tracking-tight uppercase transition rounded-none ${
                                         isActive
                                             ? "bg-lime-400 text-slate-950 ring-1 ring-lime-300"
                                             : "bg-slate-900/90 text-slate-300 hover:bg-slate-800 hover:text-white"
@@ -163,7 +163,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                 >
                                     <Icon size={13} className={isActive ? "text-slate-950" : "text-lime-400"} />
                                     <span>{tab.label}</span>
-                                    <span className={`ml-1 px-1 py-0.2 text-[10px] ${isActive ? "bg-slate-950 text-lime-400 font-extrabold" : "bg-slate-800 text-slate-400"}`}>
+                                    <span className={`ml-1 px-1.5 py-0.5 text-[10px] rounded-none ${isActive ? "bg-slate-950 text-lime-400 font-extrabold" : "bg-slate-800 text-slate-400 font-bold"}`}>
                                         {tab.count}
                                     </span>
                                 </button>
@@ -181,7 +181,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search site or reward..."
-                                className="w-full bg-slate-900 border border-slate-800 py-1.5 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:border-lime-400 focus:outline-none"
+                                className="w-full bg-slate-900 border border-slate-800 py-1.5 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:border-lime-400 focus:outline-none rounded-none"
                             />
                             {searchQuery ? (
                                 <button onClick={() => setSearchQuery("")} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
@@ -194,7 +194,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value as SortOption)}
-                            className="border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-xs font-mono font-bold text-slate-200 focus:border-lime-400 focus:outline-none"
+                            className="border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-xs font-bold text-slate-200 focus:border-lime-400 focus:outline-none rounded-none"
                         >
                             <option value="rating_desc">Sort: Highest Rated</option>
                             <option value="min_asc">Sort: Lowest Min ($)</option>
@@ -203,17 +203,17 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                         </select>
 
                         {/* Layout Toggle */}
-                        <div className="flex items-center border border-slate-800 bg-slate-900 p-0.5">
+                        <div className="flex items-center border border-slate-800 bg-slate-900 p-0.5 rounded-none">
                             <button
                                 onClick={() => setViewMode("grid")}
-                                className={`p-1.5 ${viewMode === "grid" ? "bg-lime-400 text-slate-950 font-bold" : "text-slate-400 hover:text-white"}`}
+                                className={`p-1.5 rounded-none ${viewMode === "grid" ? "bg-lime-400 text-slate-950 font-bold" : "text-slate-400 hover:text-white"}`}
                                 aria-label="Grid View"
                             >
                                 <Grid2X2 size={15} />
                             </button>
                             <button
                                 onClick={() => setViewMode("table")}
-                                className={`p-1.5 ${viewMode === "table" ? "bg-lime-400 text-slate-950 font-bold" : "text-slate-400 hover:text-white"}`}
+                                className={`p-1.5 rounded-none ${viewMode === "table" ? "bg-lime-400 text-slate-950 font-bold" : "text-slate-400 hover:text-white"}`}
                                 aria-label="Table View"
                             >
                                 <List size={15} />
@@ -223,16 +223,16 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                 </div>
 
                 {/* Sub-bar stats */}
-                <div className="mt-3 flex flex-wrap items-center justify-between border-t border-slate-900 pt-3 text-[11px] text-slate-400 font-mono">
+                <div className="mt-3 flex flex-wrap items-center justify-between border-t border-slate-900 pt-3 text-xs text-slate-400">
                     <div className="flex items-center gap-3">
-                        <span className="text-lime-400">● Showing {sortedPlatforms.length} of {platforms.length} Platforms</span>
+                        <span className="text-lime-400 font-bold">● Showing {sortedPlatforms.length} of {platforms.length} Platforms</span>
                         <span className="hidden sm:inline text-slate-600">|</span>
                         <span className="hidden sm:inline">Total Live Offers Indexed: <strong className="text-white">{catalogOfferTotal.toLocaleString()}+</strong></span>
                     </div>
                     {comparedSlugs.length > 0 ? (
                         <button
                             onClick={() => setIsCompareOpen(true)}
-                            className="flex items-center gap-1.5 border border-lime-400 bg-lime-400/10 px-2 py-0.5 font-bold text-lime-300 hover:bg-lime-400 hover:text-slate-950"
+                            className="flex items-center gap-1.5 border border-lime-400 bg-lime-400/10 px-2.5 py-1 text-xs font-bold text-lime-300 hover:bg-lime-400 hover:text-slate-950 rounded-none"
                         >
                             <span>Compare ({comparedSlugs.length}/3)</span>
                             <ArrowRight size={12} />
@@ -249,7 +249,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                         return (
                             <article
                                 key={platform.slug}
-                                className={`group relative flex flex-col justify-between border bg-white shadow-xl transition hover:-translate-y-1 ${
+                                className={`group relative flex flex-col justify-between border bg-white shadow-xl transition hover:-translate-y-1 rounded-none ${
                                     platform.isPrimary
                                         ? "border-slate-950 ring-1 ring-slate-950/10"
                                         : "border-slate-300 hover:border-slate-950"
@@ -263,11 +263,11 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="flex items-center gap-3 min-w-0">
                                             {/* Rank badge */}
-                                            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center bg-slate-950 font-mono text-xs font-black text-lime-400">
+                                            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center bg-slate-950 text-xs font-black text-lime-400 rounded-none">
                                                 #{index + 1}
                                             </div>
                                             {/* Logo */}
-                                            <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden border border-slate-200 bg-slate-50 p-1">
+                                            <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden border border-slate-200 bg-slate-50 p-1 rounded-none">
                                                 <Image
                                                     src={platform.logoUrl}
                                                     alt={`${platform.name} logo`}
@@ -280,17 +280,17 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                             {/* Name & Tagline */}
                                             <div className="min-w-0">
                                                 <div className="flex items-center gap-1.5">
-                                                    <h3 className="truncate text-base font-black tracking-tight text-slate-950">
+                                                    <h3 className="truncate text-base font-extrabold tracking-tight text-slate-950">
                                                         {platform.name}
                                                     </h3>
                                                     {platform.isPrimary ? (
-                                                        <span className="flex items-center gap-0.5 rounded-none bg-lime-100 border border-lime-300 px-1 py-0.2 text-[9px] font-mono font-extrabold uppercase text-lime-800">
+                                                        <span className="flex items-center gap-0.5 rounded-none bg-lime-100 border border-lime-300 px-1 py-0.2 text-[9px] font-extrabold uppercase text-lime-800">
                                                             <CheckCircle2 size={10} className="text-lime-600" />
                                                             Verified
                                                         </span>
                                                     ) : null}
                                                 </div>
-                                                <p className="truncate text-[11px] font-medium text-slate-500 font-mono">
+                                                <p className="truncate text-xs font-medium text-slate-500">
                                                     {platform.bestFor}
                                                 </p>
                                             </div>
@@ -298,23 +298,23 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
 
                                         {/* Rating Pill */}
                                         <div className="flex flex-col items-end">
-                                            <div className="flex items-center gap-1 bg-slate-950 px-2 py-0.5 text-xs font-black text-lime-400 font-mono">
+                                            <div className="flex items-center gap-1 bg-slate-950 px-2 py-0.5 text-xs font-extrabold text-lime-400 rounded-none">
                                                 <Star size={11} className="fill-lime-400 text-lime-400" />
                                                 <span>{platform.rating.toFixed(1)}</span>
                                             </div>
-                                            <span className="text-[9px] font-mono text-slate-400">Trust Score</span>
+                                            <span className="text-[10px] font-bold text-slate-400 mt-0.5">Score</span>
                                         </div>
                                     </div>
 
                                     {/* Key Specs Matrix Box */}
-                                    <div className="mt-4 grid grid-cols-2 gap-2 border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
+                                    <div className="mt-4 grid grid-cols-2 gap-2 border border-slate-200 bg-slate-50 p-3 text-xs rounded-none">
                                         <div>
                                             <span className="block text-[10px] uppercase font-bold text-slate-400">Min Cashout</span>
-                                            <strong className="block text-slate-900 text-[13px] font-extrabold">{platform.minCashout}</strong>
+                                            <strong className="block text-slate-900 text-sm font-extrabold">{platform.minCashout}</strong>
                                         </div>
                                         <div>
                                             <span className="block text-[10px] uppercase font-bold text-slate-400">Payout Speed</span>
-                                            <strong className="block text-emerald-700 text-[13px] font-extrabold">{platform.payoutSpeed}</strong>
+                                            <strong className="block text-emerald-700 text-sm font-extrabold">{platform.payoutSpeed}</strong>
                                         </div>
                                         <div className="mt-1 border-t border-slate-200/60 pt-1">
                                             <span className="block text-[10px] uppercase font-bold text-slate-400">KYC Policy</span>
@@ -330,12 +330,12 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
 
                                     {/* Payout Methods Pills */}
                                     <div className="mt-3">
-                                        <span className="text-[10px] font-mono uppercase font-bold text-slate-400 block mb-1">Payment Rails</span>
+                                        <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Payment Rails</span>
                                         <div className="flex flex-wrap gap-1">
                                             {platform.payoutMethods.map((method) => (
                                                 <span
                                                     key={method}
-                                                    className="border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-mono font-bold text-slate-700"
+                                                    className="border border-slate-200 bg-white px-2 py-0.5 text-xs font-semibold text-slate-700 rounded-none"
                                                 >
                                                     {method}
                                                 </span>
@@ -345,9 +345,9 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
 
                                     {/* Sign up Bonus / Perk */}
                                     {platform.signupBonus ? (
-                                        <div className="mt-3 flex items-center gap-1.5 border border-lime-200 bg-lime-50/70 px-2.5 py-1.5 text-xs text-lime-900">
+                                        <div className="mt-3 flex items-center gap-1.5 border border-lime-200 bg-lime-50/70 px-2.5 py-1.5 text-xs text-lime-900 rounded-none">
                                             <Gift size={13} className="text-lime-700 flex-shrink-0" />
-                                            <span className="font-mono text-[11px] font-bold truncate">
+                                            <span className="text-xs font-bold truncate">
                                                 Bonus: <strong>{platform.signupBonus}</strong>
                                             </span>
                                         </div>
@@ -355,7 +355,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                 </div>
 
                                 {/* Bottom Action Footer */}
-                                <div className="border-t border-slate-200 bg-slate-50/80 p-4 space-y-2">
+                                <div className="border-t border-slate-200 bg-slate-50/80 p-4 space-y-2 rounded-none">
                                     {/* Primary CTA Outbound */}
                                     <TrackedOutboundLink
                                         href={`/go/platform/${platform.slug}?click_location=best_gpt_matrix_card&source_context=best_gpt_sites&platform_name=${encodeURIComponent(platform.name)}`}
@@ -363,14 +363,14 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                         platformName={platform.name}
                                         location="best_gpt_matrix_card"
                                         sourceContext="best_gpt_sites"
-                                        className="flex w-full items-center justify-center gap-2 bg-slate-950 px-4 py-3 font-mono text-xs font-black uppercase tracking-wider text-lime-400 transition hover:bg-slate-900 hover:text-white group-hover:ring-1 group-hover:ring-slate-950"
+                                        className="flex w-full items-center justify-center gap-2 bg-slate-950 px-4 py-3 text-xs font-extrabold uppercase tracking-wider text-lime-400 transition hover:bg-slate-900 hover:text-white rounded-none"
                                     >
                                         <span>{platform.cta || `Join ${platform.name}`}</span>
                                         <ExternalLink size={13} />
                                     </TrackedOutboundLink>
 
                                     {/* Secondary Links: Review + Live Offers + Compare */}
-                                    <div className="flex items-center justify-between text-[11px] font-mono font-bold pt-1">
+                                    <div className="flex items-center justify-between text-xs font-bold pt-1">
                                         <Link
                                             href={`/best-gpt-sites/${platform.slug}`}
                                             className="text-slate-600 hover:text-slate-950 flex items-center gap-1"
@@ -389,7 +389,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
 
                                         <button
                                             onClick={() => toggleCompare(platform.slug)}
-                                            className={`text-[10px] px-1.5 py-0.5 border transition ${
+                                            className={`text-[11px] px-2 py-0.5 border rounded-none transition font-bold ${
                                                 isCompared
                                                     ? "bg-slate-950 text-lime-400 border-slate-950"
                                                     : "bg-white text-slate-500 border-slate-300 hover:border-slate-800 hover:text-slate-950"
@@ -405,8 +405,8 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                 </div>
             ) : (
                 /* Matrix Table View */
-                <div className="overflow-x-auto border border-slate-950 bg-white shadow-2xl">
-                    <table className="w-full min-w-[960px] border-collapse text-left font-mono text-xs">
+                <div className="overflow-x-auto border border-slate-950 bg-white shadow-2xl rounded-none">
+                    <table className="w-full min-w-[960px] border-collapse text-left text-xs">
                         <thead className="border-b border-slate-900 bg-slate-950 text-slate-300 font-bold uppercase tracking-wider">
                             <tr>
                                 <th className="p-3.5 text-center w-12">Rank</th>
@@ -432,7 +432,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                         {/* Platform */}
                                         <td className="p-3.5">
                                             <div className="flex items-center gap-2.5">
-                                                <div className="relative h-7 w-7 flex-shrink-0 border border-slate-200 bg-slate-50 p-0.5">
+                                                <div className="relative h-7 w-7 flex-shrink-0 border border-slate-200 bg-slate-50 p-0.5 rounded-none">
                                                     <Image
                                                         src={platform.logoUrl}
                                                         alt={platform.name}
@@ -443,14 +443,14 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                                     />
                                                 </div>
                                                 <div>
-                                                    <strong className="block font-black text-slate-950 text-[13px]">{platform.name}</strong>
-                                                    <span className="block text-[10px] text-slate-500">{platform.bestFor}</span>
+                                                    <strong className="block font-black text-slate-950 text-sm">{platform.name}</strong>
+                                                    <span className="block text-xs text-slate-500">{platform.bestFor}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         {/* Score */}
                                         <td className="p-3.5 text-center">
-                                            <span className="inline-flex items-center gap-1 bg-slate-950 px-2 py-0.5 font-bold text-lime-400">
+                                            <span className="inline-flex items-center gap-1 bg-slate-950 px-2 py-0.5 font-bold text-lime-400 rounded-none">
                                                 <Star size={10} className="fill-lime-400" />
                                                 {platform.rating.toFixed(1)}
                                             </span>
@@ -471,7 +471,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                         <td className="p-3.5">
                                             <div className="flex flex-wrap gap-1 max-w-[180px]">
                                                 {platform.payoutMethods.slice(0, 3).map((m) => (
-                                                    <span key={m} className="border border-slate-200 bg-slate-50 px-1.5 py-0.2 text-[9px] text-slate-700">
+                                                    <span key={m} className="border border-slate-200 bg-slate-50 px-1.5 py-0.2 text-[10px] text-slate-700 rounded-none">
                                                         {m}
                                                     </span>
                                                 ))}
@@ -489,7 +489,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                                 platformName={platform.name}
                                                 location="best_gpt_matrix_table"
                                                 sourceContext="best_gpt_sites"
-                                                className="inline-flex items-center gap-1 bg-slate-950 px-3 py-1.5 font-bold text-lime-400 hover:bg-slate-900"
+                                                className="inline-flex items-center gap-1 bg-slate-950 px-3 py-1.5 font-bold text-lime-400 hover:bg-slate-900 rounded-none"
                                             >
                                                 <span>Join</span>
                                                 <ExternalLink size={11} />
@@ -506,31 +506,31 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
             {/* Side-by-Side Compare Modal / Drawer */}
             {isCompareOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="relative w-full max-w-5xl border-2 border-slate-900 bg-slate-950 p-6 text-white shadow-2xl">
+                    <div className="relative w-full max-w-5xl border-2 border-slate-900 bg-slate-950 p-6 text-white shadow-2xl rounded-none">
                         <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                             <div>
-                                <span className="font-mono text-xs font-extrabold uppercase text-lime-400">● LIVE SPEC MATRIX</span>
-                                <h3 className="text-xl font-black tracking-tight">Side-by-Side Platform Comparison</h3>
+                                <span className="text-xs font-extrabold uppercase text-lime-400">● LIVE SPEC MATRIX</span>
+                                <h3 className="text-xl font-extrabold tracking-tight">Side-by-Side Platform Comparison</h3>
                             </div>
                             <button
                                 onClick={() => setIsCompareOpen(false)}
-                                className="border border-slate-700 bg-slate-900 p-2 text-slate-400 hover:text-white"
+                                className="border border-slate-700 bg-slate-900 p-2 text-slate-400 hover:text-white rounded-none"
                             >
                                 <X size={18} />
                             </button>
                         </div>
 
                         {comparedPlatforms.length === 0 ? (
-                            <div className="py-12 text-center font-mono text-sm text-slate-400">
+                            <div className="py-12 text-center text-sm text-slate-400">
                                 No platforms selected. Click <strong>+ Compare</strong> on up to 3 platforms to compare them.
                             </div>
                         ) : (
-                            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 font-mono text-xs">
+                            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 text-xs">
                                 {comparedPlatforms.map((p) => (
-                                    <div key={p.slug} className="border border-slate-800 bg-slate-900 p-4 space-y-3">
+                                    <div key={p.slug} className="border border-slate-800 bg-slate-900 p-4 space-y-3 rounded-none">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <div className="relative h-8 w-8 border border-slate-700 bg-slate-800 p-1">
+                                                <div className="relative h-8 w-8 border border-slate-700 bg-slate-800 p-1 rounded-none">
                                                     <Image src={p.logoUrl} alt={p.name} fill sizes="32px" className="object-contain" unoptimized />
                                                 </div>
                                                 <strong className="text-base text-white">{p.name}</strong>
@@ -542,27 +542,27 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
 
                                         <div className="space-y-2 border-t border-slate-800 pt-3">
                                             <div>
-                                                <span className="text-slate-400 text-[10px] block uppercase">Trust Score</span>
+                                                <span className="text-slate-400 text-[10px] block uppercase font-bold">Trust Score</span>
                                                 <strong className="text-lime-400 text-sm">{p.rating.toFixed(1)} / 5.0 ★</strong>
                                             </div>
                                             <div>
-                                                <span className="text-slate-400 text-[10px] block uppercase">Min Cashout</span>
+                                                <span className="text-slate-400 text-[10px] block uppercase font-bold">Min Cashout</span>
                                                 <strong className="text-white">{p.minCashout}</strong>
                                             </div>
                                             <div>
-                                                <span className="text-slate-400 text-[10px] block uppercase">Payout Speed</span>
+                                                <span className="text-slate-400 text-[10px] block uppercase font-bold">Payout Speed</span>
                                                 <strong className="text-emerald-400">{p.payoutSpeed}</strong>
                                             </div>
                                             <div>
-                                                <span className="text-slate-400 text-[10px] block uppercase">KYC Policy</span>
+                                                <span className="text-slate-400 text-[10px] block uppercase font-bold">KYC Policy</span>
                                                 <span className="text-slate-300">{p.kycRequired}</span>
                                             </div>
                                             <div>
-                                                <span className="text-slate-400 text-[10px] block uppercase">Worldwide Access</span>
+                                                <span className="text-slate-400 text-[10px] block uppercase font-bold">Worldwide Access</span>
                                                 <span className="text-slate-300">{p.worldwide}</span>
                                             </div>
                                             <div>
-                                                <span className="text-slate-400 text-[10px] block uppercase">Signup Bonus</span>
+                                                <span className="text-slate-400 text-[10px] block uppercase font-bold">Signup Bonus</span>
                                                 <span className="text-lime-300">{p.signupBonus || "Standard Tier"}</span>
                                             </div>
                                         </div>
@@ -573,7 +573,7 @@ export default function GptPlatformMatrix({ platforms, catalogOfferTotal }: GptP
                                             platformName={p.name}
                                             location="best_gpt_compare_modal"
                                             sourceContext="best_gpt_sites"
-                                            className="mt-4 flex w-full items-center justify-center gap-1.5 bg-lime-400 py-2.5 font-bold uppercase text-slate-950 hover:bg-lime-300"
+                                            className="mt-4 flex w-full items-center justify-center gap-1.5 bg-lime-400 py-2.5 font-extrabold uppercase text-slate-950 hover:bg-lime-300 rounded-none"
                                         >
                                             <span>Join {p.name}</span>
                                             <ExternalLink size={12} />

@@ -155,10 +155,10 @@ export default async function PlatformReviewPage({
 
             <main className="mx-auto max-w-5xl space-y-8 px-4 py-8 sm:px-6 sm:py-10">
                 {/* ── Section 1: Header ── */}
-                <header className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-white to-slate-50 p-6 shadow-sm sm:p-8">
+                <header className="relative overflow-hidden rounded-none border border-slate-200/80 bg-gradient-to-br from-white via-white to-slate-50 p-6 shadow-sm sm:p-8">
                     <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                         <div className="flex items-start gap-4 sm:gap-5">
-                            <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-sm sm:h-24 sm:w-24">
+                            <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-none border border-slate-200 bg-white p-2 shadow-sm sm:h-24 sm:w-24">
                                 <PartnerLogo
                                     name={platform.name}
                                     slug={platform.slug}
@@ -171,7 +171,7 @@ export default async function PlatformReviewPage({
                                     <h1 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                                         {platform.name} Review
                                     </h1>
-                                    <span className="inline-flex items-center rounded-full border border-lime-300 bg-lime-50 px-2.5 py-0.5 text-xs font-extrabold text-lime-900">
+                                    <span className="inline-flex items-center rounded-none border border-lime-300 bg-lime-50 px-2.5 py-0.5 text-xs font-extrabold text-lime-900">
                                         {platform.category}
                                     </span>
                                 </div>
@@ -205,13 +205,13 @@ export default async function PlatformReviewPage({
                                 href={affiliateUrl}
                                 target="_blank"
                                 rel="nofollow noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-black text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.98]"
+                                className="inline-flex items-center justify-center gap-2 rounded-none bg-slate-950 px-6 py-3.5 text-sm font-black text-white shadow-sm transition hover:bg-slate-800 active:scale-[0.98]"
                             >
                                 <span>Join {platform.name}</span>
                                 <ExternalLink className="h-4 w-4" />
                             </a>
                             {platform.bonus?.signupBonus ? (
-                                <div className="flex items-center justify-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-1.5 text-center text-xs font-bold text-emerald-800 border border-emerald-200">
+                                <div className="flex items-center justify-center gap-1.5 rounded-none bg-emerald-50 px-3 py-1.5 text-center text-xs font-bold text-emerald-800 border border-emerald-200">
                                     <Sparkles className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
                                     <span>{platform.bonus.signupBonus}</span>
                                 </div>
@@ -222,7 +222,7 @@ export default async function PlatformReviewPage({
 
                 {/* ── Section 2: Key Stats Bar ── */}
                 <section aria-label="Key Platform Stats" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
+                    <div className="rounded-none border border-slate-200 bg-white p-4 shadow-xs">
                         <div className="flex items-center gap-2 text-slate-500">
                             <DollarSign className="h-4 w-4 text-emerald-600" />
                             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Min Cashout</span>
@@ -233,7 +233,7 @@ export default async function PlatformReviewPage({
                         <p className="mt-0.5 text-[11px] text-slate-500">Fast baseline withdrawal</p>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
+                    <div className="rounded-none border border-slate-200 bg-white p-4 shadow-xs">
                         <div className="flex items-center gap-2 text-slate-500">
                             <Clock className="h-4 w-4 text-blue-600" />
                             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Payout Speed</span>
@@ -244,7 +244,7 @@ export default async function PlatformReviewPage({
                         <p className="mt-0.5 text-[11px] text-slate-500">Average processing time</p>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
+                    <div className="rounded-none border border-slate-200 bg-white p-4 shadow-xs">
                         <div className="flex items-center gap-2 text-slate-500">
                             <ShieldCheck className="h-4 w-4 text-amber-600" />
                             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">KYC Required</span>
@@ -255,7 +255,7 @@ export default async function PlatformReviewPage({
                         <p className="mt-0.5 text-[11px] text-slate-500">{platform.stats.kycRequired === "Yes" ? "Identity required" : platform.stats.kycRequired === "Sometimes" ? "Risk-based check" : "No ID required"}</p>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
+                    <div className="rounded-none border border-slate-200 bg-white p-4 shadow-xs">
                         <div className="flex items-center gap-2 text-slate-500">
                             <Globe2 className="h-4 w-4 text-purple-600" />
                             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Countries</span>
@@ -268,7 +268,7 @@ export default async function PlatformReviewPage({
                 </section>
 
                 {/* ── Section 3: Overview ── */}
-                <section aria-labelledby="overview-heading" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-3">
+                <section aria-labelledby="overview-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-3">
                     <h2 id="overview-heading" className="text-xl font-black tracking-tight text-slate-950">
                         What is {platform.name}?
                     </h2>
@@ -278,7 +278,7 @@ export default async function PlatformReviewPage({
                 </section>
 
                 {/* ── Section 4: Earning Methods ── */}
-                <section aria-labelledby="earning-methods-heading" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-3">
+                <section aria-labelledby="earning-methods-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-3">
                     <h2 id="earning-methods-heading" className="text-xl font-black tracking-tight text-slate-950">
                         Earning methods on {platform.name}
                     </h2>
@@ -287,7 +287,7 @@ export default async function PlatformReviewPage({
                         {platform.earningMethods.map((method) => (
                             <span
                                 key={method}
-                                className="inline-flex items-center rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-xs font-bold text-slate-800 shadow-xs"
+                                className="inline-flex items-center rounded-none border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-xs font-bold text-slate-800 shadow-xs"
                             >
                                 <Coins className="mr-1.5 h-3.5 w-3.5 text-slate-400" />
                                 {method}
@@ -297,17 +297,17 @@ export default async function PlatformReviewPage({
                 </section>
 
                 {/* ── Section 5: Offer Preview Component ── */}
-                <section className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm">
+                <section className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm">
                     <SiteOfferPreview platformName={platform.name} platformSlug={platform.slug} initialOffers={initialOffers} />
                 </section>
 
                 {/* ── Section 6: Payout Details / Hold & Proof / KYC ── */}
-                <section aria-labelledby="payout-details-heading" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
+                <section aria-labelledby="payout-details-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
                     <h2 id="payout-details-heading" className="text-xl font-black tracking-tight text-slate-950">
                         Payout details · Proof & Hold · Verification
                     </h2>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-1.5">
+                        <div className="rounded-none border border-slate-200 bg-slate-50/70 p-4 space-y-1.5">
                             <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Payout Methods</p>
                             <p className="text-sm font-black text-slate-950">
                                 {platform.payoutMethods.join(", ")}
@@ -317,14 +317,14 @@ export default async function PlatformReviewPage({
                             </p>
                         </div>
 
-                        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-1.5">
+                        <div className="rounded-none border border-slate-200 bg-slate-50/70 p-4 space-y-1.5">
                             <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Hold & Fraud Policy</p>
                             <p className="text-xs leading-relaxed text-slate-700">
                                 {platform.holdPeriodNote}
                             </p>
                         </div>
 
-                        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-1.5">
+                        <div className="rounded-none border border-slate-200 bg-slate-50/70 p-4 space-y-1.5">
                             <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">KYC & ID Verification</p>
                             <p className="text-xs leading-relaxed text-slate-700">
                                 {platform.kycNote}
@@ -335,7 +335,7 @@ export default async function PlatformReviewPage({
 
                 {/* ── Section 7: Bonus & Referral Terms ── */}
                 {platform.bonus ? (
-                    <section aria-labelledby="bonus-heading" className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50/60 to-white p-6 sm:p-7 shadow-sm space-y-4">
+                    <section aria-labelledby="bonus-heading" className="rounded-none border border-emerald-200 bg-gradient-to-br from-emerald-50/60 to-white p-6 sm:p-7 shadow-sm space-y-4">
                         <div className="flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-emerald-600" />
                             <h2 id="bonus-heading" className="text-xl font-black tracking-tight text-slate-950">
@@ -361,7 +361,7 @@ export default async function PlatformReviewPage({
                 ) : null}
 
                 {/* ── Section 8: Country Eligibility ── */}
-                <section aria-labelledby="countries-heading" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-3">
+                <section aria-labelledby="countries-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-3">
                     <h2 id="countries-heading" className="text-xl font-black tracking-tight text-slate-950">
                         Country eligibility & coverage
                     </h2>
@@ -372,12 +372,12 @@ export default async function PlatformReviewPage({
                 </section>
 
                 {/* ── Section 9: Pros & Cons ── */}
-                <section aria-labelledby="pros-cons-heading" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
+                <section aria-labelledby="pros-cons-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
                     <h2 id="pros-cons-heading" className="text-xl font-black tracking-tight text-slate-950">
                         Pros & cons of {platform.name}
                     </h2>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        <div className="rounded-xl border border-emerald-200 bg-emerald-50/40 p-5 space-y-3">
+                        <div className="rounded-none border border-emerald-200 bg-emerald-50/40 p-5 space-y-3">
                             <p className="text-xs font-black uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
                                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                                 What we like
@@ -392,9 +392,9 @@ export default async function PlatformReviewPage({
                             </ul>
                         </div>
 
-                        <div className="rounded-xl border border-rose-200 bg-rose-50/40 p-5 space-y-3">
+                        <div className="rounded-none border border-rose-200 bg-rose-50/40 p-5 space-y-3">
                             <p className="text-xs font-black uppercase tracking-wider text-rose-900 flex items-center gap-1.5">
-                                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-rose-200 text-[10px] font-black text-rose-800">✕</span>
+                                <span className="flex h-4 w-4 items-center justify-center rounded-none bg-rose-200 text-[10px] font-black text-rose-800">✕</span>
                                 Drawbacks & watchouts
                             </p>
                             <ul className="space-y-2 text-xs text-slate-700">
@@ -410,7 +410,7 @@ export default async function PlatformReviewPage({
                 </section>
 
                 {/* ── Section 10: 4-Step Signup Guide ── */}
-                <section aria-labelledby="signup-guide-heading" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
+                <section aria-labelledby="signup-guide-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
                     <h2 id="signup-guide-heading" className="text-xl font-black tracking-tight text-slate-950">
                         How to get started on {platform.name} in 4 steps
                     </h2>
@@ -418,10 +418,10 @@ export default async function PlatformReviewPage({
                         {platform.signupSteps.map((step, idx) => (
                             <div
                                 key={idx}
-                                className="relative rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-2"
+                                className="relative rounded-none border border-slate-200 bg-slate-50/60 p-4 space-y-2"
                             >
                                 <div className="flex items-center gap-2">
-                                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-950 text-xs font-black text-white">
+                                    <span className="flex h-6 w-6 items-center justify-center rounded-none bg-slate-950 text-xs font-black text-white">
                                         {idx + 1}
                                     </span>
                                     <h3 className="text-xs font-extrabold text-slate-950">{step.title}</h3>
@@ -435,7 +435,7 @@ export default async function PlatformReviewPage({
                 </section>
 
                 {/* ── Section 11: FAQ Accordion ── */}
-                <section aria-labelledby="faq-heading" className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
+                <section aria-labelledby="faq-heading" className="rounded-none border border-slate-200 bg-white p-6 sm:p-7 shadow-sm space-y-4">
                     <h2 id="faq-heading" className="text-xl font-black tracking-tight text-slate-950">
                         Frequently asked questions about {platform.name}
                     </h2>
@@ -443,7 +443,7 @@ export default async function PlatformReviewPage({
                 </section>
 
                 {/* ── Section 12: Final CTA Banner ── */}
-                <section className="relative overflow-hidden rounded-3xl border border-slate-950 bg-slate-950 p-8 text-center text-white shadow-xl sm:p-10">
+                <section className="relative overflow-hidden rounded-none border border-slate-950 bg-slate-950 p-8 text-center text-white shadow-xl sm:p-10">
                     <div className="relative z-10 mx-auto max-w-xl space-y-4">
                         <h2 className="text-2xl font-black tracking-tight sm:text-3xl">
                             Ready to start earning on {platform.name}?
@@ -456,7 +456,7 @@ export default async function PlatformReviewPage({
                                 href={affiliateUrl}
                                 target="_blank"
                                 rel="nofollow noopener noreferrer"
-                                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-lime,#a3e635)] px-8 py-3.5 text-sm font-black text-slate-950 shadow-md transition hover:bg-lime-400 active:scale-95"
+                                className="inline-flex items-center gap-2 rounded-none bg-[var(--brand-lime,#a3e635)] px-8 py-3.5 text-sm font-black text-slate-950 shadow-md transition hover:bg-lime-400 active:scale-95"
                             >
                                 <span>Join {platform.name} Now</span>
                                 <ExternalLink className="h-4 w-4" />

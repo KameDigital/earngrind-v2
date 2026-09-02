@@ -21,6 +21,7 @@ import {
     ReviewCountryEligibility,
     ReviewPromoCodeBox,
     ReviewStickyMobileCta,
+    ReviewOfferwallsAccordion,
 } from "@/components/review/ReviewComponents";
 import {
     getPlatformReview,
@@ -310,7 +311,7 @@ export default async function PlatformReviewPage({
                                     </span>
                                 </h2>
                                 <p className="text-xs text-slate-500 mt-0.5">
-                                    {platform.name} connects to these verified third-party offerwall networks and direct reward channels:
+                                    {platform.name} connects to these verified third-party offerwalls and direct reward networks:
                                 </p>
                             </div>
                             <Link
@@ -322,53 +323,10 @@ export default async function PlatformReviewPage({
                             </Link>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 pt-2">
-                            {platform.offerwalls.map((wall) => (
-                                <div
-                                    key={wall.name}
-                                    className="group relative flex flex-col justify-between border border-slate-800 bg-slate-950 p-4 shadow-sm transition hover:border-lime-400 rounded-none"
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
-                                            <div className="relative h-8 w-32 shrink-0 flex items-center">
-                                                <Image
-                                                    src={wall.logoUrl}
-                                                    alt={`${wall.name} logo`}
-                                                    fill
-                                                    className="object-contain object-left"
-                                                    unoptimized
-                                                    sizes="128px"
-                                                />
-                                            </div>
-                                            {wall.category ? (
-                                                <span className="rounded-none border border-slate-700 bg-slate-900 px-2 py-0.5 text-[9px] font-extrabold uppercase text-lime-400">
-                                                    {wall.category}
-                                                </span>
-                                            ) : null}
-                                        </div>
-                                        <h3 className="mt-3 text-xs font-extrabold text-white group-hover:text-lime-400 transition">
-                                            {wall.name}
-                                        </h3>
-                                        {wall.description ? (
-                                            <p className="mt-1 text-[11px] leading-relaxed text-slate-400">
-                                                {wall.description}
-                                            </p>
-                                        ) : null}
-                                    </div>
-
-                                    <div className="mt-3 pt-2 border-t border-slate-900 flex items-center justify-between text-[10px] font-bold">
-                                        <span className="text-slate-500">Available on {platform.name}</span>
-                                        <Link
-                                            href={`/offers?q=${encodeURIComponent(wall.name)}`}
-                                            className="text-lime-400 hover:underline flex items-center gap-0.5"
-                                        >
-                                            <span>Search {wall.name}</span>
-                                            <ChevronRight className="h-3 w-3" />
-                                        </Link>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <ReviewOfferwallsAccordion
+                            offerwalls={platform.offerwalls}
+                            platformName={platform.name}
+                        />
                     </section>
                 ) : null}
 

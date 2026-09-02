@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, Check, Copy, ExternalLink, Star } from "lucide-react";
+import { ChevronDown, ChevronRight, Check, Copy, ExternalLink, Star } from "lucide-react";
 import { EARNLAB_COUNTRY_NAMES } from "@/lib/earnlab-countries";
 
 export function countryCodeToFlag(code: string): string {
@@ -200,6 +200,103 @@ export function ReviewStickyMobileCta({
             >
                 Join {platformName} →
             </a>
+        </div>
+    );
+}
+
+// ---------------------------------------------------------------------------
+// 5. Offerwalls Accordion / Dropdown Grid
+// ---------------------------------------------------------------------------
+export interface OfferwallItem {
+    name: string;
+    logoUrl: string;
+    category?: "Gaming" | "Surveys" | "Multi-Task" | "High Yield" | "Direct Partner";
+    description?: string;
+}
+
+export function ReviewOfferwallsAccordion({
+    offerwalls,
+    platformName,
+}: {
+    offerwalls: OfferwallItem[];
+    platformName: string;
+}) {
+    const [expandedNames, setExpandedNames] = useState<string[]>([]);
+
+    const toggle = (name: string) => {
+        setExpandedNames((prev) =>
+            prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]
+        );
+    };
+
+    return (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {offerwalls.map((wall) => {
+                const isExpanded = expandedNames.includes(wall.name);
+                return (
+                    <div
+                        key={wall.name}
+                        className="rounded-none border border-slate-200 bg-white transition hover:border-slate-300 shadow-xs flex flex-col justify-between"
+                    >
+                        <button
+                            type="button"
+                            onClick={() => toggle(wall.name)}
+                            aria-expanded={isExpanded}
+                            className="flex w-full items-center justify-between gap-3 p-3.5 text-left transition hover:bg-slate-50 focus:outline-none"
+                        >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                                <div className="relative h-8 w-24 shrink-0 flex items-center justify-center bg-slate-950 border border-slate-800 p-1 rounded-none">
+                                    <Image
+                                        src={wall.logoUrl}
+                                        alt={`${wall.name} logo`}
+                                        fill
+                                        className="object-contain p-1"
+                                        unoptimized
+                                        sizes="96px"
+                                    />
+                                </div>
+                                <div className="min-w-0">
+                                    <h3 className="text-xs font-extrabold text-slate-950 truncate">
+                                        {wall.name}
+                                    </h3>
+                                    {wall.category ? (
+                                        <span className="text-[10px] font-bold text-lime-700">
+                                            {wall.category}
+                                        </span>
+                                    ) : null}
+                                </div>
+                            </div>
+
+                            <ChevronDown
+                                className={`h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 ${
+                                    isExpanded ? "rotate-180 text-slate-900" : ""
+                                }`}
+                            />
+                        </button>
+
+                        {isExpanded && (
+                            <div className="border-t border-slate-100 bg-slate-50/70 px-3.5 py-3 space-y-2.5 text-xs text-slate-600 animate-in fade-in duration-150">
+                                {wall.description ? (
+                                    <p className="text-[11px] leading-relaxed text-slate-600">
+                                        {wall.description}
+                                    </p>
+                                ) : null}
+
+                                <div className="flex items-center justify-between pt-1 border-t border-slate-200/60 text-[10px] font-bold">
+                                    <span className="text-slate-400">Available on {platformName}</span>
+                                    <Link
+                                        href={`/offers?q=${encodeURIComponent(wall.name)}`}
+                                        className="text-slate-900 font-extrabold hover:text-lime-700 hover:underline flex items-center gap-0.5"
+                                    >
+                                        <span>Search {wall.name} offers</span>
+                                        <ChevronRight className="h-3 w-3" />
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                );
+            })}
         </div>
     );
 }

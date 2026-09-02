@@ -93,21 +93,21 @@ export default function OfferDetailsModal({
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-150">
-            {/* Modal Container: EarnGrind Terminal Aesthetic */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-150">
+            {/* Modal Container: Clean Light Aesthetic */}
             <div
-                className="relative flex flex-col w-full max-w-2xl max-h-[90vh] overflow-hidden border border-slate-700 bg-slate-950 text-white shadow-2xl rounded-none my-auto"
+                className="relative flex flex-col w-full max-w-2xl max-h-[90vh] overflow-hidden border border-slate-200 bg-white text-slate-900 shadow-2xl rounded-none my-auto"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Top Status Header */}
-                <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900 px-4 py-2.5">
+                <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2.5">
                     <div className="flex items-center gap-2">
-                        <span className="flex h-2 w-2 rounded-full bg-[var(--brand-lime)] animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.16em] text-[var(--brand-lime)]">
+                        <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-900">
                             Live Offer Intelligence
                         </span>
-                        <span className="text-slate-600 font-bold">/</span>
-                        <span className="text-xs font-bold text-slate-300">{platformName}</span>
+                        <span className="text-slate-300 font-bold">/</span>
+                        <span className="text-xs font-bold text-slate-600">{platformName}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -115,16 +115,16 @@ export default function OfferDetailsModal({
                             type="button"
                             onClick={copyLink}
                             title="Copy link to offer"
-                            className="flex items-center gap-1 border border-slate-700 bg-slate-800 px-2 py-1 text-[11px] font-bold text-slate-300 hover:border-slate-500 hover:text-white"
+                            className="flex items-center gap-1 border border-slate-200 bg-white px-2 py-1 text-[11px] font-bold text-slate-700 hover:bg-slate-100 hover:text-black transition-colors"
                         >
-                            {copied ? <Check className="h-3.5 w-3.5 text-[var(--brand-lime)]" /> : <Copy className="h-3.5 w-3.5" />}
+                            {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5 text-slate-500" />}
                             <span>{copied ? "Copied" : "Share"}</span>
                         </button>
 
                         <button
                             type="button"
                             onClick={onClose}
-                            className="flex h-7 w-7 items-center justify-center border border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-500 hover:text-white transition-colors"
+                            className="flex h-7 w-7 items-center justify-center border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 hover:text-black transition-colors"
                             aria-label="Close modal"
                         >
                             <X className="h-4 w-4" />
@@ -135,11 +135,11 @@ export default function OfferDetailsModal({
                 {/* Modal Body */}
                 <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
                     {/* Hero Information Card */}
-                    <div className="border border-slate-800 bg-slate-900/90 p-4 sm:p-5">
+                    <div className="border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             {/* Left: Thumbnail & Title */}
                             <div className="flex items-center gap-3.5 min-w-0">
-                                <div className="relative h-16 w-16 sm:h-18 sm:w-18 flex-shrink-0 overflow-hidden border border-slate-700 bg-slate-950">
+                                <div className="relative h-16 w-16 sm:h-18 sm:w-18 flex-shrink-0 overflow-hidden border border-slate-200 bg-white">
                                     {thumbnailUrl ? (
                                         // eslint-disable-next-line @next/next/no-img-element
                                         <img
@@ -149,29 +149,29 @@ export default function OfferDetailsModal({
                                             referrerPolicy="no-referrer"
                                         />
                                     ) : (
-                                        <div className="flex h-full w-full items-center justify-center font-black text-[var(--brand-lime)] text-xl">
+                                        <div className="flex h-full w-full items-center justify-center font-black text-slate-400 text-xl">
                                             {gameName.slice(0, 2)}
                                         </div>
                                     )}
                                 </div>
 
                                 <div className="min-w-0 flex-1">
-                                    <h2 className="text-lg sm:text-xl font-black text-white truncate" title={gameName}>
+                                    <h2 className="text-lg sm:text-xl font-black text-slate-950 truncate" title={gameName}>
                                         {gameName}
                                     </h2>
 
-                                    <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs text-slate-400">
-                                        <span className="border border-slate-700 bg-slate-950 px-2 py-0.5 font-bold text-[var(--brand-lime)]">
+                                    <div className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs text-slate-600">
+                                        <span className="border border-slate-200 bg-white px-2 py-0.5 font-extrabold text-slate-900 shadow-2xs">
                                             {platformName}
                                         </span>
                                         {providerName && providerName !== platformName ? (
-                                            <span className="border border-slate-800 bg-slate-900 px-2 py-0.5 font-semibold text-slate-300">
+                                            <span className="border border-slate-200 bg-slate-100 px-2 py-0.5 font-semibold text-slate-700">
                                                 {providerName}
                                             </span>
                                         ) : null}
-                                        <span className="flex items-center gap-1 bg-slate-950 px-1.5 py-0.5 border border-slate-800">
+                                        <span className="flex items-center gap-1 bg-white px-1.5 py-0.5 border border-slate-200 shadow-2xs">
                                             {offer.devices.map((d) => (
-                                                <span key={d} className="font-bold text-[11px] text-slate-300 uppercase">
+                                                <span key={d} className="font-bold text-[11px] text-slate-700 uppercase">
                                                     {d === "ios" ? "🍎 iOS" : d === "android" ? "🤖 Android" : "💻 PC"}
                                                 </span>
                                             ))}
@@ -181,16 +181,16 @@ export default function OfferDetailsModal({
                             </div>
 
                             {/* Right: Total Payout Block */}
-                            <div className="border border-slate-800 bg-slate-950 p-3.5 sm:text-right flex-shrink-0">
-                                <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                            <div className="border border-slate-200 bg-white p-3.5 sm:text-right flex-shrink-0 shadow-2xs">
+                                <div className="text-[10px] font-black uppercase tracking-wider text-slate-500">
                                     Total Payout
                                 </div>
-                                <div className="text-2xl sm:text-3xl font-black leading-none text-[var(--brand-lime)] mt-1">
+                                <div className="text-2xl sm:text-3xl font-black leading-none text-emerald-600 mt-1">
                                     ${totalPayout.toFixed(2)}
                                 </div>
                                 {offer.completion_count && offer.completion_count > 0 ? (
-                                    <div className="mt-1.5 flex items-center gap-1 text-[11px] font-black text-orange-400 sm:justify-end">
-                                        <Flame className="h-3 w-3 fill-current" />
+                                    <div className="mt-1.5 flex items-center gap-1 text-[11px] font-bold text-amber-700 sm:justify-end">
+                                        <Flame className="h-3 w-3 fill-current text-amber-500" />
                                         <span>{offer.completion_count.toLocaleString()} completed</span>
                                     </div>
                                 ) : null}
@@ -199,19 +199,19 @@ export default function OfferDetailsModal({
                     </div>
 
                     {/* About & Target Goal Description */}
-                    <div className="border border-slate-800 bg-slate-900/50 p-4 space-y-1.5">
-                        <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                            <Sparkles className="h-3.5 w-3.5 text-[var(--brand-lime)]" />
+                    <div className="border border-slate-200 bg-slate-50/60 p-4 space-y-1.5">
+                        <h3 className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                            <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                             Offer Goal & Summary
                         </h3>
-                        <p className={`text-xs text-slate-300 leading-relaxed ${aboutExpanded ? "" : "line-clamp-3"}`}>
+                        <p className={`text-xs text-slate-600 leading-relaxed ${aboutExpanded ? "" : "line-clamp-3"}`}>
                             {description}
                         </p>
                         {description.length > 160 ? (
                             <button
                                 type="button"
                                 onClick={() => setAboutExpanded(!aboutExpanded)}
-                                className="text-[var(--brand-lime)] hover:underline font-bold text-xs pt-0.5"
+                                className="text-slate-900 hover:text-black font-extrabold text-xs pt-0.5 underline underline-offset-2"
                             >
                                 {aboutExpanded ? "Show Less ▲" : "Read Full Description ▼"}
                             </button>
@@ -219,46 +219,46 @@ export default function OfferDetailsModal({
                     </div>
 
                     {/* Milestone Tasks Section */}
-                    <div className="border border-slate-800 bg-slate-900/70 p-4 space-y-3">
-                        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                            <h3 className="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
-                                <CheckCircle className="h-3.5 w-3.5 text-[var(--brand-lime)]" />
+                    <div className="border border-slate-200 bg-slate-50/80 p-4 space-y-3">
+                        <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                            <h3 className="text-xs font-black uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                                <CheckCircle className="h-3.5 w-3.5 text-emerald-600" />
                                 Required Milestones & Payout Steps
                             </h3>
-                            <span className="text-[11px] font-bold text-slate-400">
+                            <span className="text-[11px] font-bold text-slate-500">
                                 {cleanedTasks.length > 1 ? `${cleanedTasks.length} Milestones` : "1 Target Goal"}
                             </span>
                         </div>
 
                         {loadingTasks ? (
                             <div className="space-y-2 py-2">
-                                <div className="h-10 bg-slate-900 border border-slate-800 animate-pulse" />
-                                <div className="h-10 bg-slate-900 border border-slate-800 animate-pulse" />
+                                <div className="h-10 bg-slate-100 border border-slate-200 animate-pulse" />
+                                <div className="h-10 bg-slate-100 border border-slate-200 animate-pulse" />
                             </div>
                         ) : cleanedTasks.length > 1 ? (
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 {cleanedTasks.map((task, idx) => (
                                     <div
                                         key={task.id || idx}
-                                        className="flex items-center justify-between gap-2.5 border border-slate-800 bg-slate-950 p-3"
+                                        className="flex items-center justify-between gap-2.5 border border-slate-200 bg-white p-3 shadow-2xs hover:border-slate-300 transition"
                                     >
                                         <div className="flex items-center gap-2.5 min-w-0">
-                                            <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center border border-slate-700 bg-slate-900 text-[10px] font-black text-slate-300">
+                                            <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center border border-slate-200 bg-slate-100 text-[10px] font-black text-slate-700">
                                                 {idx + 1}
                                             </div>
                                             <div className="min-w-0 flex-1">
-                                                <div className="text-xs font-bold text-white truncate" title={task.title}>
+                                                <div className="text-xs font-bold text-slate-900 truncate" title={task.title}>
                                                     {task.title}
                                                 </div>
                                                 {task.notes && task.notes !== task.title ? (
-                                                    <div className="text-[10px] text-slate-400 truncate" title={task.notes}>
+                                                    <div className="text-[10px] text-slate-500 truncate" title={task.notes}>
                                                         {task.notes}
                                                     </div>
                                                 ) : null}
                                             </div>
                                         </div>
 
-                                        <span className="flex-shrink-0 font-black text-[var(--brand-lime)] text-xs">
+                                        <span className="flex-shrink-0 font-black text-emerald-600 text-xs">
                                             {task.rewardAmount > 0 ? task.rewardDisplay || `$${task.rewardAmount.toFixed(2)}` : "Step"}
                                         </span>
                                     </div>
@@ -266,21 +266,21 @@ export default function OfferDetailsModal({
                             </div>
                         ) : (
                             /* Single Objective Goal Card */
-                            <div className="flex items-center justify-between border border-slate-800 bg-slate-950 p-3.5">
+                            <div className="flex items-center justify-between border border-slate-200 bg-white p-3.5 shadow-2xs">
                                 <div className="flex items-center gap-3">
-                                    <div className="flex h-6 w-6 items-center justify-center border border-lime-400/40 bg-[var(--brand-lime)]/10 text-xs font-black text-[var(--brand-lime)]">
+                                    <div className="flex h-6 w-6 items-center justify-center border border-emerald-300 bg-emerald-50 text-xs font-black text-emerald-700">
                                         ✓
                                     </div>
                                     <div>
-                                        <div className="text-xs font-black text-white">
+                                        <div className="text-xs font-bold text-slate-900">
                                             {cleanedTasks[0]?.title || description || `Complete ${gameName}`}
                                         </div>
-                                        <div className="text-[11px] text-slate-400">
+                                        <div className="text-[11px] text-slate-500">
                                             Complete all requirements through the tracked route
                                         </div>
                                     </div>
                                 </div>
-                                <span className="font-black text-[var(--brand-lime)] text-sm">
+                                <span className="font-black text-emerald-600 text-sm">
                                     ${totalPayout.toFixed(2)}
                                 </span>
                             </div>
@@ -288,12 +288,12 @@ export default function OfferDetailsModal({
                     </div>
 
                     {/* Terms & Verification Rules */}
-                    <div className="border border-slate-800 bg-slate-900/40 p-3.5 text-xs text-slate-400 space-y-2">
-                        <div className="font-bold text-slate-300 flex items-center gap-1.5">
-                            <ShieldCheck className="h-4 w-4 text-[var(--brand-lime)]" />
+                    <div className="border border-slate-200 bg-slate-50 p-3.5 text-xs text-slate-600 space-y-2">
+                        <div className="font-bold text-slate-900 flex items-center gap-1.5">
+                            <ShieldCheck className="h-4 w-4 text-emerald-600" />
                             Tracking & Eligibility Requirements
                         </div>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] text-slate-400 list-disc list-inside">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] text-slate-600 list-disc list-inside">
                             <li>New users only on first install</li>
                             <li>Complete within 30-day window</li>
                             <li>Disable VPNs and Adblockers</li>
@@ -310,8 +310,8 @@ export default function OfferDetailsModal({
                                     onClick={() => onPin(offer)}
                                     className={`flex h-12 w-12 flex-shrink-0 items-center justify-center border text-sm font-black transition-colors ${
                                         isPinned
-                                            ? "border-lime-400 bg-[var(--brand-lime)] text-slate-950"
-                                            : "border-slate-700 bg-slate-900 text-slate-300 hover:border-slate-500 hover:text-white"
+                                            ? "border-slate-950 bg-slate-950 text-lime-400"
+                                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-400 hover:text-black"
                                     }`}
                                     title={isPinned ? "Remove from comparison" : "Add to comparison"}
                                 >
@@ -331,26 +331,26 @@ export default function OfferDetailsModal({
                                     payoutUsd={offer.payout_usd}
                                     location="offer-details-modal"
                                     sourceContext="offer-modal-cta"
-                                    className="flex h-12 flex-1 items-center justify-center gap-2 border border-lime-400 bg-[var(--brand-lime)] px-5 text-sm font-black uppercase tracking-wider text-slate-950 shadow-md transition-all hover:bg-lime-400 hover:scale-[1.01]"
+                                    className="flex h-12 flex-1 items-center justify-center gap-2 border border-slate-950 bg-slate-950 px-5 text-sm font-black uppercase tracking-wider text-white shadow-md transition-all hover:bg-slate-800 active:scale-[0.99]"
                                 >
                                     <span>Start Offer on {platformName}</span>
-                                    <ArrowRight className="h-4 w-4" />
+                                    <ArrowRight className="h-4 w-4 text-lime-400" />
                                 </TrackedOutboundLink>
                             ) : (
-                                <span className="flex h-12 flex-1 items-center justify-center border border-slate-800 bg-slate-900 text-xs font-bold text-slate-500">
+                                <span className="flex h-12 flex-1 items-center justify-center border border-slate-200 bg-slate-100 text-xs font-bold text-slate-500">
                                     Direct Link via {platformName}
                                 </span>
                             )}
                         </div>
 
                         {/* Regions Dropdown */}
-                        <div className="flex items-center justify-between text-[11px] text-slate-400 px-1">
+                        <div className="flex items-center justify-between text-[11px] text-slate-500 px-1">
                             <button
                                 type="button"
                                 onClick={() => setShowRegions(!showRegions)}
-                                className="flex items-center gap-1 hover:text-white transition-colors"
+                                className="flex items-center gap-1 hover:text-slate-900 font-semibold transition-colors"
                             >
-                                <Globe className="h-3.5 w-3.5" />
+                                <Globe className="h-3.5 w-3.5 text-slate-400" />
                                 <span>Supported Regions {showRegions ? "▲" : "▼"}</span>
                             </button>
 
@@ -358,16 +358,16 @@ export default function OfferDetailsModal({
                         </div>
 
                         {showRegions ? (
-                            <div className="border border-slate-800 bg-slate-950 p-2.5 text-xs">
+                            <div className="border border-slate-200 bg-slate-50 p-2.5 text-xs">
                                 <div className="flex flex-wrap gap-1">
                                     {offer.countries && offer.countries.length > 0 ? (
                                         offer.countries.map((c) => (
-                                            <span key={c} className="border border-slate-800 bg-slate-900 px-2 py-0.5 text-[11px] font-black text-[var(--brand-lime)]">
+                                            <span key={c} className="border border-slate-200 bg-white px-2 py-0.5 text-[11px] font-bold text-slate-800 shadow-2xs">
                                                 {c}
                                             </span>
                                         ))
                                     ) : (
-                                        <span className="text-slate-400">All supported countries</span>
+                                        <span className="text-slate-500">All supported countries</span>
                                     )}
                                 </div>
                             </div>

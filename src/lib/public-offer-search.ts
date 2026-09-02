@@ -11,6 +11,7 @@ export interface PublicOfferSearchFilters {
     gameSlug?: string;
     platformId?: string;
     platformKind?: string;
+    category?: string;
     device?: string;
     country?: string;
     payoutType?: string;
@@ -61,7 +62,7 @@ export function dedupePublicOffers<T extends ReturnType<typeof shapePublicOffer>
     return deduped;
 }
 
-export function normalizePublicOfferSearchFilters(filters: PublicOfferSearchFilters): Required<Pick<PublicOfferSearchFilters, "q" | "gameSlug" | "platformId" | "platformKind" | "device" | "country" | "payoutType" | "source" | "isNew" | "isHot" | "isAth" | "isBoosted" | "minPayout" | "sort" | "page" | "perPage">> {
+export function normalizePublicOfferSearchFilters(filters: PublicOfferSearchFilters): Required<Pick<PublicOfferSearchFilters, "q" | "gameSlug" | "platformId" | "platformKind" | "category" | "device" | "country" | "payoutType" | "source" | "isNew" | "isHot" | "isAth" | "isBoosted" | "minPayout" | "sort" | "page" | "perPage">> {
     const sort = filters.sort === "payout_asc" || filters.sort === "heat_desc" || filters.sort === "newest" || filters.sort === "completed_desc"
         ? filters.sort
         : "payout_desc";
@@ -72,6 +73,7 @@ export function normalizePublicOfferSearchFilters(filters: PublicOfferSearchFilt
         gameSlug: filters.gameSlug ?? "",
         platformId: filters.platformId ?? "",
         platformKind: filters.platformKind ?? "",
+        category: (filters.category ?? "").trim().toLowerCase().slice(0, 50),
         device: filters.device ?? "",
         country: normalizeOfferCountryCode(filters.country) ?? "",
         payoutType: filters.payoutType ?? "",
@@ -93,6 +95,7 @@ export function publicOfferFiltersFromSearchParams(searchParams: URLSearchParams
         gameSlug: searchParams.get("game_slug") ?? "",
         platformId: searchParams.get("platform_id") ?? "",
         platformKind: searchParams.get("platform_kind") ?? "",
+        category: searchParams.get("category") ?? "",
         device: searchParams.get("device") ?? "",
         country: searchParams.get("country") ?? "",
         payoutType: searchParams.get("payout_type") ?? "",
@@ -112,7 +115,7 @@ export async function fetchPublicOffers(filters: PublicOfferSearchFilters): Prom
     const normalized = normalizePublicOfferSearchFilters(filters);
     const minPayout = Math.max(normalized.minPayout, getPublicOfferMinPayout());
 
-    if (normalized.sort === "completed_desc") {
+    if (normalized.sort === "completed_desc" || normalized.category) {
         return fetchPublicOffersCompatibility(normalized, minPayout);
     }
 
@@ -214,6 +217,38 @@ async function fetchPublicOffersCompatibility(
     if (normalized.isHot) query = query.eq("is_hot", true);
     if (normalized.isAth) query = query.eq("is_ath", true);
     if (normalized.isBoosted) query = query.eq("is_boosted", true);
+
+    if (normalized.category) {
+        switch (normalized.category) {
+            case "casino":
+                query = query.or("title.ilike.%casino%,title.ilike.%slots%,title.ilike.%slot%,title.ilike.%poker%,title.ilike.%bingo%,title.ilike.%jackpot%,title.ilike.%roulette%,title.ilike.%spin%,title.ilike.%bet%,category.ilike.%casino%");
+                break;
+            case "finance":
+                query = query.or("title.ilike.%crypto%,title.ilike.%bank%,title.ilike.%invest%,title.ilike.%finance%,title.ilike.%deposit%,title.ilike.%trade%,title.ilike.%wallet%,title.ilike.%credit%,title.ilike.%loan%,category.ilike.%finance%");
+                break;
+            case "survey":
+                query = query.or("title.ilike.%survey%,title.ilike.%opinion%,title.ilike.%poll%,title.ilike.%questionnaire%,category.ilike.%survey%");
+                break;
+            case "signup":
+                query = query.or("title.ilike.%sign up%,title.ilike.%signup%,title.ilike.%register%,title.ilike.%trial%,title.ilike.%subscription%,goal_text.ilike.%register%,goal_text.ilike.%sign up%,category.ilike.%signup%");
+                break;
+            case "apps":
+                query = query.or("title.ilike.%app%,goal_text.ilike.%install%,goal_text.ilike.%open the app%,goal_text.ilike.%download%,category.ilike.%app%");
+                break;
+            case "games":
+                query = query
+                    .not("title", "ilike", "%casino%")
+                    .not("title", "ilike", "%slots%")
+                    .not("title", "ilike", "%poker%")
+                    .not("title", "ilike", "%bingo%")
+                    .not("title", "ilike", "%crypto%")
+                    .not("title", "ilike", "%bank%")
+                    .not("title", "ilike", "%survey%");
+                break;
+            default:
+                query = query.or(`category.ilike.%${normalized.category}%,title.ilike.%${normalized.category}%`);
+        }
+    }
 
     switch (normalized.sort) {
         case "completed_desc":

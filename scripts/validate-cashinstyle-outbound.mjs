@@ -43,6 +43,23 @@ assert.equal(
 
 assert.equal(
     buildCashInStyleOutboundUrl({
+        platform: { name: "CashInStyle", slug: "cashinstyle" },
+        externalId: "cashinstyle-cashinstyle-41370958-US",
+        offerUrl: "https://cashinstyle.com/walls/offers/41370958?ref=earngrind",
+    }),
+    "https://cashinstyle.com/walls/offers/41370958?ref=earngrind",
+);
+
+assert.equal(
+    buildCashInStyleOutboundUrl({
+        platform: { name: "CashInStyle", slug: "cashinstyle" },
+        externalId: "cashinstyle-cashinstyle-41370958-US",
+    }),
+    "https://cashinstyle.com/walls/offers/41370958?ref=earngrind",
+);
+
+assert.equal(
+    buildCashInStyleOutboundUrl({
         platform: { name: "cash in style", slug: "cash-in-style" },
         externalId: "cashinstyle-OFFER_ID",
     }),

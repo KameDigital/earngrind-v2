@@ -1,0 +1,162 @@
+{
+  "result": "PASS",
+  "guide": "Thrillz",
+  "slug": "thrillz-seo-offer-guide-2",
+  "checks": [
+    {
+      "id": "word_count",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "h1_keyword",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "meta_description",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "payout_safety",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "deadline_safety",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "claim_support",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "do_not_claim",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "task_guidance",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "task_archetype_coverage",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "risk_band_economics",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "purchase_economics",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "evidence_log_plan",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "support_state_model",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "mechanic_dossiers",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "milestone_matrix",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "random_reward_model",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "terminology_map",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "noise_removed",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "guided_task_depth",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "progression_route_depth",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "strategy_guide_depth",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "game_systems",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "original_value_block",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "section_navigation",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "readable_structure",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "content_preservation",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "offerwall_focus",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "faq_usefulness",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "links_cta",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "prohibited_phrases",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    },
+    {
+      "id": "voice",
+      "result": "PASS",
+      "notes": "Generated artifact preserves live task source and required guide model."
+    }
+  ]
+}

@@ -1,0 +1,287 @@
+{
+  "game": "Game of Vampires",
+  "search_name": "Game of Vampires offer guide",
+  "slug": "game-of-vampires-seo-offer-guide",
+  "offerwall_provider": "BitLabs",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install - 0.45 USD\nCreate A Role - 0.06 USD\nReach Dominance 50k - 0.12 USD\nReach Dominance 200k - 0.24 USD\n*Bonus Reward: Reach Dominance 300k. Complete within 1 day - 1.8 USD - within 1 day\nReach Dominance 400k - 0 USD\n*Bonus Reward: Reach Dominance 1.2M. Complete within 3 days - 4.5 USD - within 3 days\nReach Dominance 2M - 4.2 USD\nReach Dominance 3.5M - 13 USD\nReach VIP 4 - 25 USD\nReach Dominance 7M - 18 USD\nReach Dominance 10M. Complete within 7 days - 19.8 USD - within 7 days\nReach Dominance 12.5M - 40 USD\nReach VIP 6 - 300 USD\nReach Dominance 15M - 65 USD\nReach Dominance 25M - 90 USD\nReach VIP 7 - 500 USD\nBonus: Purchase. Complete within 10 days - 3 USD - within 10 days",
+  "eligibility": {
+    "provider": "BitLabs",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/game-of-vampires",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": null,
+      "usd": 0.45,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "03540a2b-988b-4c5c-9092-ad551ed193ab"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Create A Role",
+      "points": null,
+      "usd": 0.06,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "23d66c86-e1ab-482a-8d25-5623b6faf99c"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach Dominance 50k",
+      "points": null,
+      "usd": 0.12,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b790df27-3886-40c6-8ea9-00695af42539"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach Dominance 200k",
+      "points": null,
+      "usd": 0.24,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e10e0e00-7d5a-435f-862d-162ead9f6d1d"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "*Bonus Reward: Reach Dominance 300k. Complete within 1 day",
+      "points": null,
+      "usd": 1.8,
+      "deadline_text": "within 1 day",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b950652c-0933-4e17-a00e-f0496a692e09"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Reach Dominance 400k",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b1a8b99f-6fd6-4005-86a3-d43ba5050b77"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "*Bonus Reward: Reach Dominance 1.2M. Complete within 3 days",
+      "points": null,
+      "usd": 4.5,
+      "deadline_text": "within 3 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "187b78a8-5dce-464a-af89-e06b21162abb"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Dominance 2M",
+      "points": null,
+      "usd": 4.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "804ae6b5-87f5-405c-b909-5f3d640f74d4"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach Dominance 3.5M",
+      "points": null,
+      "usd": 13,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "1e3b8bee-f394-409d-bce2-f5fab78f6544"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach VIP 4",
+      "points": null,
+      "usd": 25,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "7af8df18-bfa3-40e3-9c56-eb144d84e587"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Dominance 7M",
+      "points": null,
+      "usd": 18,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "87978ccd-a1ab-480e-ab3f-25c7b7a893aa"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Dominance 10M. Complete within 7 days",
+      "points": null,
+      "usd": 19.8,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "88b37183-e9a3-4765-910b-8c3ad4911d1d"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Dominance 12.5M",
+      "points": null,
+      "usd": 40,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "92d3c674-4eda-46e4-800f-edb4e71343f5"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach VIP 6",
+      "points": null,
+      "usd": 300,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f2b562a7-770a-4597-8514-2da22e34c91f"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach Dominance 15M",
+      "points": null,
+      "usd": 65,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ebb7f224-fefe-4871-8b9f-513c4040e1bf"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Reach Dominance 25M",
+      "points": null,
+      "usd": 90,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f938a720-4598-4dcc-8be5-1704e498a470"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Reach VIP 7",
+      "points": null,
+      "usd": 500,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a00e4889-a3ee-443e-b877-ac8a1f06df47"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Bonus: Purchase. Complete within 10 days",
+      "points": null,
+      "usd": 3,
+      "deadline_text": "within 10 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "7dd76e2e-94bc-4ce6-a1aa-6dfe07961d6d"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "support_proof",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

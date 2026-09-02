@@ -1,0 +1,56 @@
+{
+  "game": "Rise of Kingdoms: Lost Crusade",
+  "slug": "rise-of-kingdoms",
+  "primary_keyword": "Rise of Kingdoms offer guide",
+  "secondary_keywords": [
+    "Rise of Kingdoms City Hall 20 offer",
+    "Rise of Kingdoms TyrAds guide",
+    "Rise of Kingdoms T4 troops offer",
+    "Rise of Kingdoms T5 troops offer",
+    "Rise of Kingdoms 2 million power",
+    "Rise of Kingdoms purchase offer worth it"
+  ],
+  "entity_terms": ["Rise of Kingdoms: Lost Crusade", "LilithGames", "TyrAds", "EarnLab", "Android", "US", "City Hall", "Academy", "Daily Objectives", "Growth Fund", "30-Day Gem Supply"],
+  "game_mechanics": ["City Hall prerequisite chain", "Academy military research", "troop tiers", "power", "Daily Objectives activity points", "alliance help", "construction and research timers", "resource gathering"],
+  "offerwall_terms": ["new player", "Android eligibility", "TyrAds tracking", "first open", "task card", "deadline", "missing reward", "proof screenshot", "Player ID", "receipt"],
+  "user_problem_terms": ["Rise of Kingdoms offer not credited", "Rise of Kingdoms T5 in 35 days", "Rise of Kingdoms City Hall 20 requirements", "TyrAds missing reward", "Rise of Kingdoms purchase offer worth it"],
+  "task_terms": ["Reach City Hall Level 8", "Reach City Hall Level 20", "Reach Power 2 Million", "Unlock any Level IV Troops", "Unlock any Level V Troops", "get 100 active points in DAILY OBJECTIVES"],
+  "game_system_terms": ["City Hall", "Academy", "military research", "economic research", "alliance help", "Daily Objectives", "activity points", "construction queue", "research queue"],
+  "section_keyword_map": [
+    {"section":"Payout table","keywords":["Rise of Kingdoms TyrAds guide","Rise of Kingdoms offer guide"],"intent":"exact task and payout context"},
+    {"section":"Risk bands","keywords":["Rise of Kingdoms T5 troops offer","Rise of Kingdoms purchase offer worth it"],"intent":"start, continue, spend, or stop decision"},
+    {"section":"Before you install","keywords":["TyrAds tracking","new player","Android eligibility"],"intent":"safe setup and proof"},
+    {"section":"City Hall and Academy","keywords":["Rise of Kingdoms City Hall 20 offer","Rise of Kingdoms T4 troops offer"],"intent":"progression route"},
+    {"section":"Power tasks","keywords":["Rise of Kingdoms 2 million power"],"intent":"milestone proof and resource priority"},
+    {"section":"Purchase economics","keywords":["Rise of Kingdoms Growth Fund offer","Rise of Kingdoms purchase offer worth it"],"intent":"cost, reward, receipt, and stop rule"},
+    {"section":"Proof and TyrAds support","keywords":["Rise of Kingdoms offer not credited","TyrAds missing reward"],"intent":"missing-credit evidence packet"}
+  ],
+  "faq_keyword_map": [
+    {"question":"Is the Rise of Kingdoms T5 task worth chasing in 35 days?","keywords":["Rise of Kingdoms T5 troops offer","Rise of Kingdoms T5 in 35 days"],"answer_angle":"T5 requires a much larger City Hall 25/Academy 25 and research path in the captured sources, so treat it as high risk rather than guaranteed."},
+    {"question":"What counts as unlocking Level IV troops in Rise of Kingdoms?","keywords":["Rise of Kingdoms T4 troops offer","Academy military research"],"answer_angle":"Academy access is not completion; capture the finished eligible research node and troop screen."},
+    {"question":"Should I buy the Growth Fund for this TyrAds offer?","keywords":["Rise of Kingdoms Growth Fund offer","Rise of Kingdoms purchase offer worth it"],"answer_angle":"The task lists $14.87 for an exact $14.99 first-time purchase, before tax; buy only after exact item and tracking verification."},
+    {"question":"What proof should I keep if a Rise of Kingdoms offer does not credit?","keywords":["Rise of Kingdoms offer not credited","TyrAds missing reward"],"answer_angle":"Keep the task card, current milestone, Player ID, timestamp, device context, and receipt for a purchase task."}
+  ],
+  "cta_keyword_map": [
+    {"placement":"after verdict","target":"[INTERNAL: /offers]","anchor_text":"Compare current game offers before committing to a high-risk milestone."},
+    {"placement":"after FAQ","target":"[INTERNAL: /best-gpt-sites]","anchor_text":"Compare reward platforms and active task availability."}
+  ],
+  "archetype_keyword_map": [
+    {"archetype":"install_open_tracking","keywords":["TyrAds tracking","new player","Android eligibility"],"sections":["Before you install","Proof and TyrAds support"]},
+    {"archetype":"base_castle_hq_level","keywords":["Rise of Kingdoms City Hall 20 offer","City Hall prerequisite chain"],"sections":["City Hall and Academy","Milestone matrix"]},
+    {"archetype":"power_might_rating","keywords":["Rise of Kingdoms 2 million power","power checkpoints"],"sections":["Power tasks","Milestone matrix"]},
+    {"archetype":"research","keywords":["Rise of Kingdoms T4 troops offer","Rise of Kingdoms T5 troops offer","Academy military research"],"sections":["City Hall and Academy","Troop tasks"]},
+    {"archetype":"purchase_recharge_subscription","keywords":["Rise of Kingdoms Growth Fund offer","Rise of Kingdoms purchase offer worth it"],"sections":["Purchase economics","Purchase tasks"]},
+    {"archetype":"account_player_level","keywords":["Daily Objectives activity points"],"sections":["Daily Objectives","Task route"]}
+  ],
+  "search_intent": "mixed",
+  "difficulty": "high",
+  "serp_opportunities": [
+    "Pair the exact TyrAds task table with City Hall and Academy mechanics instead of publishing a generic progression reference.",
+    "Separate task deadlines from any gameplay timing assumptions.",
+    "Make T5 feasibility and cumulative-purchase economics explicit rather than presenting the headline reward as expected value.",
+    "Provide a task-level evidence packet for missing credit."
+  ],
+  "meta_description_draft": "Rise of Kingdoms offer guide for TyrAds: map City Hall, power, troop, and purchase tasks with exact deadlines, proof steps, and clear stop rules for Android.",
+  "h1_draft": "Rise of Kingdoms Offer Guide: TyrAds City Hall, Power, Troops, and Purchase Tasks"
+}

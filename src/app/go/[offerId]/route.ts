@@ -6,12 +6,16 @@ import {
     type RedirectAttribution,
 } from "@/lib/outbound-attribution";
 import { createClient } from "@/lib/supabase/server";
+import { isBotUserAgent } from "@/lib/bot-detection";
 import {
+    attachAffiliateParams,
     buildCashInStyleOutboundUrl,
+    buildEarnLabOfferBacklink,
     buildGemslootOfferModalUrl,
     buildOutboundRedirectUrl,
     getPlatformAffiliateOverride,
     getPlatformFallbackUrl,
+    isEarnLabTarget,
     isGemslootTarget,
 } from "@/lib/outbound";
 import { buildGainOfferDeepLink, buildGainOfferDeepLinkFromSiteOffer } from "@/lib/gain-deeplinks";
@@ -128,7 +132,11 @@ function isGenericPlatformDestination(platform: { slug?: string | null; name?: s
 
         return getPlatformDestinationKeys(platform).some((key) => {
             const generic = GENERIC_PLATFORM_DESTINATIONS[key];
-            return Boolean(generic?.hostnames.includes(hostname) && generic.paths.includes(pathname));
+            if (!generic?.hostnames.includes(hostname)) return false;
+            if (key === "earnlab" && pathname === "/tasks") {
+                return !url.searchParams.has("task-id");
+            }
+            return generic.paths.includes(pathname);
         });
     } catch {
         return false;
@@ -192,6 +200,11 @@ async function logOfferClick(params: {
     attribution: Partial<RedirectAttribution>;
 }): Promise<string | null> {
     const { supabase, table, column, offerId, platformId, req, userId, attribution } = params;
+    const userAgent = req.headers.get("user-agent");
+    if (isBotUserAgent(userAgent)) {
+        console.info(`[go] skipping ${table} log for bot user agent`, { offerId, userAgent });
+        return null;
+    }
     const normalized = normalizeRedirectAttribution(attribution);
     const clickId = randomUUID();
 
@@ -212,7 +225,7 @@ async function logOfferClick(params: {
         ip_hash: getIpHash(req),
         referrer: req.headers.get("referer"),
         country: req.headers.get("x-vercel-ip-country"),
-        user_agent: req.headers.get("user-agent"),
+        user_agent: userAgent,
         client_hints: getClientHints(req),
         user_id: userId,
     };
@@ -279,12 +292,25 @@ export async function GET(
             externalId: offer.external_id,
             customParam: offer.custom_param,
         });
+        const earnLabOfferModalUrl = isEarnLabTarget(platform)
+            ? buildEarnLabOfferBacklink(offer.external_id)
+            : null;
         const platformOverrideUrl = getPlatformAffiliateOverride(platform);
-        const outboundUrl = cashInStyleOutboundUrl ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
-            affiliateTemplate: platform?.affiliate_template,
-            destinationUrl: offer.custom_param,
-            fallbackUrl: getPlatformFallbackUrl(platform),
-        });
+        const directOfferUrl = offer.custom_param
+            ? attachAffiliateParams(offer.custom_param, platform)
+            : null;
+        const effectiveDirectOfferUrl = platformOverrideUrl && isGenericPlatformDestination(platform, directOfferUrl)
+            ? null
+            : directOfferUrl;
+        const outboundUrl = cashInStyleOutboundUrl
+            ?? earnLabOfferModalUrl
+            ?? effectiveDirectOfferUrl
+            ?? platformOverrideUrl
+            ?? buildOutboundRedirectUrl({
+                affiliateTemplate: platform?.affiliate_template,
+                destinationUrl: offer.custom_param,
+                fallbackUrl: getPlatformFallbackUrl(platform),
+            });
 
         if (!outboundUrl) {
             return NextResponse.json({ error: "missing_destination" }, { status: 404 });
@@ -321,29 +347,31 @@ export async function GET(
             userId: user?.id ?? null,
             attribution,
         });
-        await recordRevenueEvent(supabase, {
-            event_name: "outbound_click",
-            route_path: req.nextUrl.pathname,
-            route_group: "offer_go",
-            entity_type: "offer",
-            entity_id: offer.id,
-            offer_id: offer.id,
-            platform_id: platform?.id ?? null,
-            provider_name: attribution.provider_name,
-            cta_location: attribution.click_location,
-            source_context: attribution.source_context,
-            target_url: outboundUrl,
-            referrer_path: req.headers.get("referer"),
-            outbound_click_table: "offer_clicks",
-            outbound_click_id: outboundClickId,
-            user_id: user?.id ?? null,
-            metadata: {
-                offer_title: attribution.offer_title ?? "",
-                game_title: attribution.game_title ?? "",
-                platform_name: attribution.platform_name ?? "",
-                affiliate_mode: attribution.affiliate_mode ?? "",
-            },
-        });
+        if (!isBotUserAgent(req.headers.get("user-agent"))) {
+            await recordRevenueEvent(supabase, {
+                event_name: "outbound_click",
+                route_path: req.nextUrl.pathname,
+                route_group: "offer_go",
+                entity_type: "offer",
+                entity_id: offer.id,
+                offer_id: offer.id,
+                platform_id: platform?.id ?? null,
+                provider_name: attribution.provider_name,
+                cta_location: attribution.click_location,
+                source_context: attribution.source_context,
+                target_url: outboundUrl,
+                referrer_path: req.headers.get("referer"),
+                outbound_click_table: "offer_clicks",
+                outbound_click_id: outboundClickId,
+                user_id: user?.id ?? null,
+                metadata: {
+                    offer_title: attribution.offer_title ?? "",
+                    game_title: attribution.game_title ?? "",
+                    platform_name: attribution.platform_name ?? "",
+                    affiliate_mode: attribution.affiliate_mode ?? "",
+                },
+            });
+        }
 
         logRedirectAttribution({
             entityType: "offer",
@@ -413,28 +441,43 @@ export async function GET(
         site,
         provider,
     });
+    const earnLabOfferModalUrl = isEarnLabTarget(site)
+        ? buildEarnLabOfferBacklink(siteOffer.external_id)
+        : null;
     const gemslootOfferModalUrl = isGemslootTarget(site)
         ? buildGemslootOfferModalUrl({
             externalId: siteOffer.external_id,
             offerUrl: siteOffer.offer_url,
         })
         : null;
-    const directSiteOfferUrl = buildOutboundRedirectUrl({
+
+    const rawDirectUrl = buildOutboundRedirectUrl({
         affiliateTemplate: null,
         destinationUrl: siteOffer.offer_url,
         fallbackUrl: null,
     });
+    const directSiteOfferUrl = rawDirectUrl
+        ? attachAffiliateParams(rawDirectUrl, site)
+        : null;
+
     const platformOverrideUrl = getPlatformAffiliateOverride(site);
-    const effectiveDirectSiteOfferUrl = platformOverrideUrl && site?.slug !== "earnlab" && isGenericPlatformDestination(site, directSiteOfferUrl)
+
+    const effectiveDirectSiteOfferUrl = platformOverrideUrl && isGenericPlatformDestination(site, directSiteOfferUrl)
         ? null
         : directSiteOfferUrl;
-    // Use a verified EarnLab task deep link when one is stored; fall back to the
-    // platform affiliate URL only for rows without a per-offer destination.
-    const outboundUrl = cashInStyleOutboundUrl ?? currentGainNativeDeepLink ?? gemslootOfferModalUrl ?? effectiveDirectSiteOfferUrl ?? gainNativeDeepLink ?? platformOverrideUrl ?? buildOutboundRedirectUrl({
-        affiliateTemplate: site?.affiliate_template,
-        destinationUrl: siteOffer.offer_url,
-        fallbackUrl: getPlatformFallbackUrl(site),
-    });
+
+    const outboundUrl = cashInStyleOutboundUrl
+        ?? currentGainNativeDeepLink
+        ?? earnLabOfferModalUrl
+        ?? gemslootOfferModalUrl
+        ?? effectiveDirectSiteOfferUrl
+        ?? gainNativeDeepLink
+        ?? platformOverrideUrl
+        ?? buildOutboundRedirectUrl({
+            affiliateTemplate: site?.affiliate_template,
+            destinationUrl: siteOffer.offer_url,
+            fallbackUrl: getPlatformFallbackUrl(site),
+        });
 
     if (!outboundUrl) {
         console.error("[go] missing outbound destination", {
@@ -485,29 +528,31 @@ export async function GET(
         userId: user?.id ?? null,
         attribution,
     });
-    await recordRevenueEvent(supabase, {
-        event_name: "outbound_click",
-        route_path: req.nextUrl.pathname,
-        route_group: "offer_go",
-        entity_type: "offer",
-        entity_id: siteOffer.id,
-        offer_id: siteOffer.id,
-        platform_id: site?.id ?? null,
-        provider_name: attribution.provider_name,
-        cta_location: attribution.click_location,
-        source_context: attribution.source_context,
-        target_url: outboundUrl,
-        referrer_path: req.headers.get("referer"),
-        outbound_click_table: "site_offer_clicks",
-        outbound_click_id: outboundClickId,
-        user_id: user?.id ?? null,
-        metadata: {
-            offer_title: attribution.offer_title ?? "",
-            game_title: attribution.game_title ?? "",
-            platform_name: attribution.platform_name ?? "",
-            affiliate_mode: attribution.affiliate_mode ?? "",
-        },
-    });
+    if (!isBotUserAgent(req.headers.get("user-agent"))) {
+        await recordRevenueEvent(supabase, {
+            event_name: "outbound_click",
+            route_path: req.nextUrl.pathname,
+            route_group: "offer_go",
+            entity_type: "offer",
+            entity_id: siteOffer.id,
+            offer_id: siteOffer.id,
+            platform_id: site?.id ?? null,
+            provider_name: attribution.provider_name,
+            cta_location: attribution.click_location,
+            source_context: attribution.source_context,
+            target_url: outboundUrl,
+            referrer_path: req.headers.get("referer"),
+            outbound_click_table: "site_offer_clicks",
+            outbound_click_id: outboundClickId,
+            user_id: user?.id ?? null,
+            metadata: {
+                offer_title: attribution.offer_title ?? "",
+                game_title: attribution.game_title ?? "",
+                platform_name: attribution.platform_name ?? "",
+                affiliate_mode: attribution.affiliate_mode ?? "",
+            },
+        });
+    }
 
     logRedirectAttribution({
         entityType: "site_offer",

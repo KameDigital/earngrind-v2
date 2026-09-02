@@ -1,0 +1,159 @@
+{
+  "game": "Feezer Frenzy (Android)",
+  "search_name": "Feezer Frenzy (Android) offer guide",
+  "slug": "feezer-frenzy-android-seo-offer-guide",
+  "offerwall_provider": "ASMWall",
+  "country": "US",
+  "device": "web",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US web user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "ff_player_reached_150_reachlevel - 0.07 USD\nff_player_reached_400_reachlevel - 0.36 USD\nff_player_reached_500_reachlevel - 0.54 USD\nff_player_reached_600_reachlevel - 1.05 USD\nff_player_reached_700_reachlevel - 2.1 USD\nff_player_reached_900_reachlevel - 10.5 USD\nff_player_reached_1000_reachlevel - 33 USD\nff_player_reached_3000_reachlevel - 135 USD\nff_player_reached_5000_reachlevel - 330 USD",
+  "eligibility": {
+    "provider": "ASMWall",
+    "country": "US",
+    "device": "web",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/feezer-frenzy-android",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "ff_player_reached_150_reachlevel",
+      "points": null,
+      "usd": 0.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "86c84693-bd40-4d63-99de-b6e39913c8a9"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "ff_player_reached_400_reachlevel",
+      "points": null,
+      "usd": 0.36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "852b65a0-e141-4b0e-92b8-18efb41afd58"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "ff_player_reached_500_reachlevel",
+      "points": null,
+      "usd": 0.54,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "082be3a4-d0c7-43c4-ac01-02c036ebece0"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "ff_player_reached_600_reachlevel",
+      "points": null,
+      "usd": 1.05,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4e904985-8312-4735-95f7-45130d7310a0"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "ff_player_reached_700_reachlevel",
+      "points": null,
+      "usd": 2.1,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "bec59806-f188-454f-9087-b260817218dd"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "ff_player_reached_900_reachlevel",
+      "points": null,
+      "usd": 10.5,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ff33513f-2d9d-4465-8932-e2bdb1027b5c"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "ff_player_reached_1000_reachlevel",
+      "points": null,
+      "usd": 33,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2ec77f3c-dcea-43ba-b7e9-4c8c01e2831c"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "ff_player_reached_3000_reachlevel",
+      "points": null,
+      "usd": 135,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f0e31d1b-734f-4bba-a4b5-7d1e9210397d"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "ff_player_reached_5000_reachlevel",
+      "points": null,
+      "usd": 330,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "93094669-6864-42b4-b652-cd6e78cca32a"
+    }
+  ],
+  "task_entities": [
+    "account_player_level"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "game": "Thrillz",
+  "slug": "thrillz-seo-offer-guide",
+  "primary_keyword": "Thrillz offer guide",
+  "secondary_keywords": [
+    "Thrillz payout",
+    "Thrillz task list",
+    "Thrillz EarnGrind",
+    "Thrillz offerwall guide"
+  ],
+  "entity_terms": [
+    "Thrillz",
+    "GemLoot",
+    "Gemsloot",
+    "EarnGrind"
+  ],
+  "game_mechanics": [
+    "install_open_tracking",
+    "account_player_level"
+  ],
+  "offerwall_terms": [
+    "offerwall",
+    "payout",
+    "tracked link",
+    "pending credit",
+    "support ticket"
+  ],
+  "user_problem_terms": [
+    "is it worth it",
+    "not crediting",
+    "which tasks to do first",
+    "when to stop"
+  ],
+  "task_terms": [
+    "Install",
+    "Bonus: Reach Level 25. Complete within 5 days",
+    "Bonus: Reach level 42. Complete within 10 days"
+  ],
+  "game_system_terms": [
+    "install_open_tracking",
+    "support_proof",
+    "account_player_level"
+  ],
+  "section_keyword_map": [
+    {
+      "section": "Payout Table",
+      "keyword": "Thrillz offer guide",
+      "anchor": "payout-table"
+    },
+    {
+      "section": "Risk Bands",
+      "keyword": "Thrillz offer guide",
+      "anchor": "risk-bands"
+    },
+    {
+      "section": "Setup Tracking",
+      "keyword": "Thrillz offer guide",
+      "anchor": "setup-tracking"
+    },
+    {
+      "section": "Evidence Log",
+      "keyword": "Thrillz offer guide",
+      "anchor": "evidence-log"
+    },
+    {
+      "section": "Game Overview",
+      "keyword": "Thrillz offer guide",
+      "anchor": "game-overview"
+    },
+    {
+      "section": "Game Systems",
+      "keyword": "Thrillz offer guide",
+      "anchor": "game-systems"
+    },
+    {
+      "section": "Milestone Matrix",
+      "keyword": "Thrillz offer guide",
+      "anchor": "milestone-matrix"
+    },
+    {
+      "section": "Task Route",
+      "keyword": "Thrillz offer guide",
+      "anchor": "task-route"
+    },
+    {
+      "section": "Proof Support",
+      "keyword": "Thrillz offer guide",
+      "anchor": "proof-support"
+    },
+    {
+      "section": "FAQ",
+      "keyword": "Thrillz offer guide",
+      "anchor": "faq"
+    },
+    {
+      "section": "Start Offer",
+      "keyword": "Thrillz offer guide",
+      "anchor": "start-offer"
+    }
+  ],
+  "faq_keyword_map": [
+    "Is Thrillz worth it?",
+    "How do Thrillz offer tasks credit?",
+    "What proof should I save for Thrillz?"
+  ],
+  "cta_keyword_map": [
+    {
+      "cta": "Compare live offers",
+      "target": "[INTERNAL: /offers]"
+    }
+  ],
+  "archetype_keyword_map": [
+    {
+      "archetype": "install_open_tracking",
+      "keyword": "Thrillz install open tracking"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Thrillz account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Thrillz account player level"
+    }
+  ],
+  "search_intent": "mixed",
+  "difficulty": "medium",
+  "serp_opportunities": [
+    "Most pages do not preserve exact live task rows.",
+    "Most pages skip proof and support packet planning.",
+    "Most pages do not separate safe, grind, paid, and high-risk task bands."
+  ],
+  "meta_description_draft": "Thrillz offer guide covering 3 live tasks, payout checks, proof steps, risk bands, and stop rules before you start. Use it to compare the route safely.",
+  "h1_draft": "Thrillz Offer Guide"
+}

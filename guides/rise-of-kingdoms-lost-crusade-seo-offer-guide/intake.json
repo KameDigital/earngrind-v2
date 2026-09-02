@@ -1,0 +1,274 @@
+{
+  "game": "Rise of Kingdoms: Lost Crusade",
+  "search_name": "Rise of Kingdoms: Lost Crusade offer guide",
+  "slug": "rise-of-kingdoms-lost-crusade-seo-offer-guide",
+  "offerwall_provider": "Torox",
+  "country": "US",
+  "device": "android",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US android user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Complete game tutorial - 0.15 USD\nGet 100 active points in daily objectives within 30 days - 0.29 USD - within 30 days\nReach city hall level 8 within 25 days - 0.35 USD - within 25 days\nUnlock any level ii troops within 25 days - 0.58 USD - within 25 days\nSingle purchase of USD 4.99 or more within 60 days - 0.95 USD - within 60 days\nReach city hall level 12 within 25 days - 1.74 USD - within 25 days\nReach city hall level 14 within 25 days - 2.61 USD - within 25 days\nUnlock any level iii troops within 25 days - 4.35 USD - within 25 days\nPurchase 30-day gem supply in 2 days within 2 days - 4.35 USD - within 2 days\nReach power 1 million within 25 days - 5.8 USD - within 25 days\nBuy the growthfund for the first time USD 14.99 - 7.25 USD\nReach power 1.5 million within 25 days - 8.7 USD - within 25 days\nCumulative purchase over USD 100 in total within 60 days - 12.43 USD - within 60 days\nReach city hall level 20 within 25 days - 17.41 USD - within 25 days\nReach power 2 million within 25 days - 26.11 USD - within 25 days\nUnlock any level iv troops within 25 days - 52.22 USD - within 25 days\nUnlock any level v troops within 30 days - 828.8 USD - within 30 days",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "US",
+    "device": "android",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/rise-of-kingdoms-lost-crusade",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Complete game tutorial",
+      "points": null,
+      "usd": 0.15,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b284e662-5847-40aa-9838-1b45414dc524"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Get 100 active points in daily objectives within 30 days",
+      "points": null,
+      "usd": 0.29,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "8d5cdd1c-6086-452d-aa32-67d93b23805a"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach city hall level 8 within 25 days",
+      "points": null,
+      "usd": 0.35,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "04010ae1-d102-476d-be04-298e90b014f6"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Unlock any level ii troops within 25 days",
+      "points": null,
+      "usd": 0.58,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f97b512c-5d0e-46e8-800e-e7e811a43f50"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Single purchase of USD 4.99 or more within 60 days",
+      "points": null,
+      "usd": 0.95,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "10ef9dac-bb80-4027-a64a-5eba66b82593"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Reach city hall level 12 within 25 days",
+      "points": null,
+      "usd": 1.74,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a78f3553-d7b6-41a3-88d3-38f75324ea0f"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach city hall level 14 within 25 days",
+      "points": null,
+      "usd": 2.61,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2daf2fe9-1ed8-4d9a-83c1-e89d661c0831"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Unlock any level iii troops within 25 days",
+      "points": null,
+      "usd": 4.35,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "88bdaf93-cc9e-470c-b6ff-e15970dd075c"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Purchase 30-day gem supply in 2 days within 2 days",
+      "points": null,
+      "usd": 4.35,
+      "deadline_text": "within 2 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "5a7af8a0-bbb6-45c0-93d7-ccb27e014379"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach power 1 million within 25 days",
+      "points": null,
+      "usd": 5.8,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0102352a-e6dd-493e-bc89-0a9832f6cbdf"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Buy the growthfund for the first time USD 14.99",
+      "points": null,
+      "usd": 7.25,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "966680f7-9072-4b7a-bece-c3feeb58f3c2"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach power 1.5 million within 25 days",
+      "points": null,
+      "usd": 8.7,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "47ca530a-6d58-45d9-9237-e35a0d5063ba"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Cumulative purchase over USD 100 in total within 60 days",
+      "points": null,
+      "usd": 12.43,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "787d5e92-3656-4ae5-8fc7-09d772e3de83"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach city hall level 20 within 25 days",
+      "points": null,
+      "usd": 17.41,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "1248f277-d7ce-4157-8467-5edc8ec1afb5"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach power 2 million within 25 days",
+      "points": null,
+      "usd": 26.11,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9c29301c-c503-4563-9358-a0bb6549dec6"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Unlock any level iv troops within 25 days",
+      "points": null,
+      "usd": 52.22,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "be342776-654e-4dfa-a30f-b2a9df974643"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Unlock any level v troops within 30 days",
+      "points": null,
+      "usd": 828.8,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f060431d-1479-45ed-a5e7-30f0394aefad"
+    }
+  ],
+  "task_entities": [
+    "support_proof",
+    "account_player_level",
+    "purchase_recharge_subscription",
+    "power_might_rating"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

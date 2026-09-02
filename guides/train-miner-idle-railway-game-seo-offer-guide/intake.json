@@ -1,0 +1,358 @@
+{
+  "game": "Train Miner: Idle Railway Game",
+  "search_name": "Train Miner: Idle Railway Game offer guide",
+  "slug": "train-miner-idle-railway-game-seo-offer-guide",
+  "offerwall_provider": "Torox",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Open and play the game - 0.07 USD\nDestroy 1st Box on The Meadow Island in 24 Hours - 0.04 USD\nDestroy 2rd Box On The Meadow Island in 24 Hours - 0.06 USD\nMake an in-app purchase- Can be repeated daily! - 0.89 USD\nComplete Any Level Daily (Available From Day 14)! - 0.37 USD\nDestroy 3rd Box on The Meadow Island in 24 Hours - 0.08 USD\nDestroy 4rd box on The Meadow Island in 24 Hours - 0.11 USD\nComplete level 2 (Desert island) in 24 Hours - 0.22 USD\nComplete Level 4 (Beach island) in 2 Days - 0.35 USD\nComplete level 5 (Magic Forest island) in 2 Days - 0.52 USD\nComplete level 7-Volcanic Plateau island in 3 Days - 0.89 USD\nComplete Level 10 (Canyon island) in 3 Days - 1.33 USD\nComplete level 13 (Tundra island) in 3 Days - 1.85 USD\nComplete level 15 (Swamp island) in 5 Days - 2.81 USD\nComplete level 19 in 5 Days - 4.29 USD\nComplete level 22 in 7 Days - 6.14 USD\nComplete level 26 in 7 Days - 8.88 USD\nComplete level 32 in 10 Days - 13.32 USD\nComplete level 38 in 12 Days - 17.76 USD\nComplete level 45 in 14 Days - 25.9 USD\nComplete level 65 in 18 Days - 44.4 USD\nComplete level 80 in 21 Days - 74 USD\nComplete level 95 in 30 Days - 296 USD",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/train-miner-idle-railway-game",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Open and play the game",
+      "points": null,
+      "usd": 0.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "effb5157-dcb3-43e1-9a9b-98249f91ba67"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Destroy 1st Box on The Meadow Island in 24 Hours",
+      "points": null,
+      "usd": 0.04,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "b1a33b6d-8842-4425-9690-274d52724d23"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Destroy 2rd Box On The Meadow Island in 24 Hours",
+      "points": null,
+      "usd": 0.06,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "e64c837b-5d48-4000-978f-03e80d55c255"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Make an in-app purchase- Can be repeated daily!",
+      "points": null,
+      "usd": 0.89,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "492949af-03df-4c1d-ab2b-52a76bb6ef34"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Complete Any Level Daily (Available From Day 14)!",
+      "points": null,
+      "usd": 0.37,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9df8d7a1-e7da-4f03-b709-78193bc7976f"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Destroy 3rd Box on The Meadow Island in 24 Hours",
+      "points": null,
+      "usd": 0.08,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "1f001384-f74e-485b-8b9d-56c0e1dc7934"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Destroy 4rd box on The Meadow Island in 24 Hours",
+      "points": null,
+      "usd": 0.11,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "c4fb57fd-d1cd-4939-bd97-fe950c89e2b9"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Complete level 2 (Desert island) in 24 Hours",
+      "points": null,
+      "usd": 0.22,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0b836ab7-80c4-49bf-a84e-31a274c61788"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Complete Level 4 (Beach island) in 2 Days",
+      "points": null,
+      "usd": 0.35,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "39d240be-8d55-4fea-ae1f-2e70fa8da220"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Complete level 5 (Magic Forest island) in 2 Days",
+      "points": null,
+      "usd": 0.52,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "cc5466f1-7a61-41f8-bc43-b0f2901659e6"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Complete level 7-Volcanic Plateau island in 3 Days",
+      "points": null,
+      "usd": 0.89,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "62b3c4e5-585a-4953-90a3-f812852afb29"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Complete Level 10 (Canyon island) in 3 Days",
+      "points": null,
+      "usd": 1.33,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "abf23b93-ea80-494e-9735-5826b73b8882"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Complete level 13 (Tundra island) in 3 Days",
+      "points": null,
+      "usd": 1.85,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4f5398ef-28d9-4e9c-a979-17d8de76dddf"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Complete level 15 (Swamp island) in 5 Days",
+      "points": null,
+      "usd": 2.81,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "1958a287-a236-4280-9fec-04bb872cbf65"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Complete level 19 in 5 Days",
+      "points": null,
+      "usd": 4.29,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4e13b589-17dc-4658-bcd4-18240b9db4a3"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Complete level 22 in 7 Days",
+      "points": null,
+      "usd": 6.14,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "1b78a711-6618-494a-94c3-d50a9bcfb5e7"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Complete level 26 in 7 Days",
+      "points": null,
+      "usd": 8.88,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e9d91493-64f4-4f3c-8026-1c57af2159b2"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Complete level 32 in 10 Days",
+      "points": null,
+      "usd": 13.32,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4ace7c73-b5e2-487a-8051-1fe5f88d7be7"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Complete level 38 in 12 Days",
+      "points": null,
+      "usd": 17.76,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "bc1c4ca1-f77f-48ea-8061-922505742a5c"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Complete level 45 in 14 Days",
+      "points": null,
+      "usd": 25.9,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "5347accd-b2f6-43ef-903f-6a5f74541465"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Complete level 65 in 18 Days",
+      "points": null,
+      "usd": 44.4,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "49e5634b-cd01-4595-b086-b800b7dced1d"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Complete level 80 in 21 Days",
+      "points": null,
+      "usd": 74,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f5ef252a-a2ee-4b74-b9f5-6f71197c9a28"
+    },
+    {
+      "task_id": "task_023",
+      "task_text": "Complete level 95 in 30 Days",
+      "points": null,
+      "usd": 296,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "6b0e3dee-5eef-4895-b1d1-ed2bac61ca99"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "random_reward_gacha",
+    "purchase_recharge_subscription",
+    "account_player_level"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

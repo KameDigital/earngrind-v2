@@ -1,0 +1,272 @@
+{
+  "game": "Solitaire Stash: Win Real Cash",
+  "search_name": "Solitaire Stash: Win Real Cash offer guide",
+  "slug": "solitaire-stash-win-real-cash-seo-offer-guide-2",
+  "offerwall_provider": "BitLabs",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "install - 0 USD\nMake a Deposit and Win 1st Place in 5 cash games within 30 days after install. Complete within 30 days - 1.8 USD - within 30 days\nMake a Deposit and Win 1st Place in 10 cash games within 30 days after install. Complete within 30 days - 2.16 USD - within 30 days\nMake a Deposit and Win 1st Place in 15 cash games within 5 days after install. Complete within 5 days - 13.5 USD - within 5 days\nMake a Deposit and Win 1st Place in 20 cash games within 30 days after install. Complete within 30 days - 2.7 USD - within 30 days\nMake a Deposit and Win 1st Place in 30 cash games within 30 days after install. Complete within 30 days - 3.6 USD - within 30 days\nMake a Deposit and Win 1st Place in 45 cash games within 30 days after install. Complete within 30 days - 4.5 USD - within 30 days\nMake a Deposit and Win 1st Place in 60 cash games within 30 days after install. Complete within 30 days - 5.4 USD - within 30 days\nMake a Deposit and Win 1st Place in 70 cash games within 30 days after install. Complete within 30 days - 6.3 USD - within 30 days\nMake a Deposit and Win 1st Place in 90 cash games within 30 days after install. Complete within 30 days - 7.2 USD - within 30 days\nMake a Deposit and Win 1st Place in 110 cash games within 30 days after install. Complete within 30 days - 8.1 USD - within 30 days\nMake a Deposit and Win 1st Place in 150 cash games within 14 days after install. Complete within 14 days - 36 USD - within 14 days\nMake a Deposit and Win 1st Place in 200 cash games within 30 days after install. Complete within 30 days - 9 USD - within 30 days\nMake a Deposit and Win 1st Place in 300 cash games within 21 days after install. Complete within 21 days - 72 USD - within 21 days\nMake a Deposit and Win 1st Place in 400 cash games within 30 days after install. Complete within 30 days - 18 USD - within 30 days\nMake your first deposit. Complete within 30 days - 3.6 USD - within 30 days",
+  "eligibility": {
+    "provider": "BitLabs",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/solitaire-stash-win-real-cash",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "install",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "590fc855-90b8-4e0a-90cb-31ed64df1ae7"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Make a Deposit and Win 1st Place in 5 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 1.8,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "5157a335-f6fc-4561-8344-164ba1899f41"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Make a Deposit and Win 1st Place in 10 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 2.16,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "59f76cdf-576e-4cac-a1db-73bdd24e661a"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Make a Deposit and Win 1st Place in 15 cash games within 5 days after install. Complete within 5 days",
+      "points": null,
+      "usd": 13.5,
+      "deadline_text": "within 5 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "b21b1bcb-70f4-454b-accc-4707c81fa9d6"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Make a Deposit and Win 1st Place in 20 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 2.7,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "bf111503-3f4d-4781-a8dc-9babb05ee403"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Make a Deposit and Win 1st Place in 30 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 3.6,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "2ea06809-7a1c-46e1-92ea-946875b56071"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Make a Deposit and Win 1st Place in 45 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 4.5,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "37551ca3-9f46-4dea-9614-f543a0f0f784"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Make a Deposit and Win 1st Place in 60 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 5.4,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "168ac64a-9d95-4fc6-807d-0271e7c03f7a"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Make a Deposit and Win 1st Place in 70 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 6.3,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "62cb1293-3fc4-4270-ae93-ec2b3bdc8b16"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Make a Deposit and Win 1st Place in 90 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 7.2,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "68a8bbcc-34ae-490b-924c-98e120ce8325"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Make a Deposit and Win 1st Place in 110 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 8.1,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "9750610c-72d9-42bc-a6a5-f0be393bf173"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Make a Deposit and Win 1st Place in 150 cash games within 14 days after install. Complete within 14 days",
+      "points": null,
+      "usd": 36,
+      "deadline_text": "within 14 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "b0acb7ea-e9c2-48a9-9e5d-debf9c36449f"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Make a Deposit and Win 1st Place in 200 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 9,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "edf35e34-ca9c-4f18-b364-9980ed052b45"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Make a Deposit and Win 1st Place in 300 cash games within 21 days after install. Complete within 21 days",
+      "points": null,
+      "usd": 72,
+      "deadline_text": "within 21 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "866de287-fdce-4a1f-83c6-56d46b36bc87"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Make a Deposit and Win 1st Place in 400 cash games within 30 days after install. Complete within 30 days",
+      "points": null,
+      "usd": 18,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "c4696fb1-2a04-4e2d-85fc-696767a437b0"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Make your first deposit. Complete within 30 days",
+      "points": null,
+      "usd": 3.6,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "9b39c26c-83b4-44c6-a412-6c95ef98482d"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

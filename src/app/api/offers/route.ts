@@ -80,7 +80,7 @@ export async function GET(req: NextRequest) {
     });
     const filters = {
         ...requestedFilters,
-        country: countryResolution.country.code,
+        country: requestedFilters.country,
     };
 
     let result;
@@ -94,7 +94,7 @@ export async function GET(req: NextRequest) {
         );
     }
 
-    const hasExplicitCountryParam = Boolean(req.nextUrl.searchParams.get("country"));
+    const hasExplicitCountryParam = Boolean(requestedFilters.country);
     const responseHeaders: Record<string, string> = hasExplicitCountryParam
         ? {
             "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",

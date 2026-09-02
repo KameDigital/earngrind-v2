@@ -1,0 +1,50 @@
+{
+  "game": "Rise of Kingdoms: Lost Crusade",
+  "search_name": "Rise of Kingdoms",
+  "slug": "rise-of-kingdoms",
+  "offerwall_provider": "TyrAds",
+  "country": "US",
+  "device": "Android",
+  "payout_source": "task_list",
+  "deadline_source": "task_list",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "New US Android Rise of Kingdoms players considering the linked TyrAds offer.",
+  "original_task_list": "Reach City Hall Level 8 (Complete within 25 days) — $0.71\nReach City Hall Level 12 (Complete within 25 days) — $4.76\nReach City Hall Level 14 (Complete within 25 days) — $5.95\nReach Power 1 Million (Complete within 25 days) — $11.90\nReach Power 1.5 Million (Complete within 25 days) — $17.85\nReach City Hall Level 20 (Complete within 25 days) — $35.70\nReach Power 2 Million (Complete within 25 days) — $53.55\nComplete Game Tutorial (Complete within 7 days) — $0.29\nUnlock any Level II Troops (Complete within 25 days) — $1.19\nUnlock any Level III Troops (Complete within 25 days) — $8.92\nUnlock any Level IV Troops (Complete within 25 days) — $107.10\nUnlock any Level V Troops (Complete within 35 days) — $1,700.00\nBuy the growthfund for the first time $14.99 (Complete within 30 days) — $14.87\nPurchase 30-Day Gem Supply in 2 days (Complete within 2 days) — $8.92\nCumulative Purchase over $100 in total (Complete within 60 days) — $25.50\nget 100 active points in DAILY OBJECTIVES (Complete within 30 days) — $0.59\nSingle Purchase of $4.99 or more (Complete within 60 days) — $1.94",
+  "eligibility": {
+    "provider": "TyrAds",
+    "country": "US",
+    "device": "Android",
+    "status": "complete",
+    "notes": [
+      "The linked public EarnLab task page was localized to US when captured.",
+      "Android was supplied by the user.",
+      "The task description says you must be a new player to be rewarded; confirm the same country and device eligibility on the task card before installing."
+    ]
+  },
+  "tasks": [
+    { "task_id": "task_001", "task_text": "Reach City Hall Level 8 (Complete within 25 days)", "points": null, "usd": 0.71, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["base_castle_hq_level"] },
+    { "task_id": "task_002", "task_text": "Reach City Hall Level 12 (Complete within 25 days)", "points": null, "usd": 4.76, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["base_castle_hq_level"] },
+    { "task_id": "task_003", "task_text": "Reach City Hall Level 14 (Complete within 25 days)", "points": null, "usd": 5.95, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["base_castle_hq_level"] },
+    { "task_id": "task_004", "task_text": "Reach Power 1 Million (Complete within 25 days)", "points": null, "usd": 11.90, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["power_might_rating"] },
+    { "task_id": "task_005", "task_text": "Reach Power 1.5 Million (Complete within 25 days)", "points": null, "usd": 17.85, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["power_might_rating"] },
+    { "task_id": "task_006", "task_text": "Reach City Hall Level 20 (Complete within 25 days)", "points": null, "usd": 35.70, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["base_castle_hq_level"] },
+    { "task_id": "task_007", "task_text": "Reach Power 2 Million (Complete within 25 days)", "points": null, "usd": 53.55, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["power_might_rating"] },
+    { "task_id": "task_008", "task_text": "Complete Game Tutorial (Complete within 7 days)", "points": null, "usd": 0.29, "deadline_text": "within 7 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["install_open_tracking"] },
+    { "task_id": "task_009", "task_text": "Unlock any Level II Troops (Complete within 25 days)", "points": null, "usd": 1.19, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["research_heroes"] },
+    { "task_id": "task_010", "task_text": "Unlock any Level III Troops (Complete within 25 days)", "points": null, "usd": 8.92, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["research_heroes"] },
+    { "task_id": "task_011", "task_text": "Unlock any Level IV Troops (Complete within 25 days)", "points": null, "usd": 107.10, "deadline_text": "within 25 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["research_heroes"] },
+    { "task_id": "task_012", "task_text": "Unlock any Level V Troops (Complete within 35 days)", "points": null, "usd": 1700.00, "deadline_text": "within 35 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["research_heroes", "high_risk"] },
+    { "task_id": "task_013", "task_text": "Buy the growthfund for the first time $14.99 (Complete within 30 days)", "points": null, "usd": 14.87, "deadline_text": "within 30 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["purchase_recharge_subscription"] },
+    { "task_id": "task_014", "task_text": "Purchase 30-Day Gem Supply in 2 days (Complete within 2 days)", "points": null, "usd": 8.92, "deadline_text": "within 2 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["purchase_recharge_subscription"] },
+    { "task_id": "task_015", "task_text": "Cumulative Purchase over $100 in total (Complete within 60 days)", "points": null, "usd": 25.50, "deadline_text": "within 60 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["purchase_recharge_subscription"] },
+    { "task_id": "task_016", "task_text": "get 100 active points in DAILY OBJECTIVES (Complete within 30 days)", "points": null, "usd": 0.59, "deadline_text": "within 30 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["account_player_level"] },
+    { "task_id": "task_017", "task_text": "Single Purchase of $4.99 or more (Complete within 60 days)", "points": null, "usd": 1.94, "deadline_text": "within 60 days", "payout_source": "task_list", "deadline_source": "task_list", "suspected_archetypes": ["purchase_recharge_subscription"] }
+  ],
+  "task_entities": ["City Hall", "Power", "Game Tutorial", "Level II Troops", "Level III Troops", "Level IV Troops", "Level V Troops", "Growth Fund", "30-Day Gem Supply", "Daily Objectives", "active points"],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Task text, listed USD values, and per-task deadlines were transcribed from the public EarnLab TyrAds task modal for task ID 5b461c86-f971-428a-a81a-ecb8852ef353 on 2026-08-26.",
+    "The modal displays USD values rather than raw points; points are therefore null rather than inferred.",
+    "The modal header displays a total of $1,999.77. The original task list is the source of truth for individual rewards and deadlines."
+  ]
+}

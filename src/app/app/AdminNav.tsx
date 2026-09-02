@@ -38,7 +38,7 @@ type AdminSection = {
 
 const BASE_LINKS: AdminLink[] = [
     { href: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/app/account", label: "Account", icon: Home },
+    { href: "/account", label: "Account", icon: Home },
 ];
 
 const ADMIN_SECTIONS: AdminSection[] = [

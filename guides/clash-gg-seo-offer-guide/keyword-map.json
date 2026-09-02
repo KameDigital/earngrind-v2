@@ -1,0 +1,167 @@
+{
+  "game": "Clash.GG",
+  "slug": "clash-gg-seo-offer-guide",
+  "primary_keyword": "Clash.GG offer guide",
+  "secondary_keywords": [
+    "Clash.GG payout",
+    "Clash.GG task list",
+    "Clash.GG EarnGrind",
+    "Clash.GG offerwall guide"
+  ],
+  "entity_terms": [
+    "Clash.GG",
+    "GemLoot",
+    "Lootably",
+    "EarnGrind"
+  ],
+  "game_mechanics": [
+    "install_open_tracking",
+    "purchase_recharge_subscription",
+    "account_player_level"
+  ],
+  "offerwall_terms": [
+    "offerwall",
+    "payout",
+    "tracked link",
+    "pending credit",
+    "support ticket"
+  ],
+  "user_problem_terms": [
+    "is it worth it",
+    "not crediting",
+    "which tasks to do first",
+    "when to stop"
+  ],
+  "task_terms": [
+    "Register.",
+    "Make a deposit (Min. USD 5).",
+    "Complete Level 5.",
+    "Complete Level 10.",
+    "Complete Level 20.",
+    "Complete Level 30.",
+    "Complete Level 40.",
+    "Complete Level 50.",
+    "Complete Level 60."
+  ],
+  "game_system_terms": [
+    "install_open_tracking",
+    "support_proof",
+    "purchase_recharge_subscription",
+    "account_player_level"
+  ],
+  "section_keyword_map": [
+    {
+      "section": "Payout Table",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "payout-table"
+    },
+    {
+      "section": "Risk Bands",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "risk-bands"
+    },
+    {
+      "section": "Setup Tracking",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "setup-tracking"
+    },
+    {
+      "section": "Evidence Log",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "evidence-log"
+    },
+    {
+      "section": "Game Overview",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "game-overview"
+    },
+    {
+      "section": "Game Systems",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "game-systems"
+    },
+    {
+      "section": "Milestone Matrix",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "milestone-matrix"
+    },
+    {
+      "section": "Task Route",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "task-route"
+    },
+    {
+      "section": "Proof Support",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "proof-support"
+    },
+    {
+      "section": "FAQ",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "faq"
+    },
+    {
+      "section": "Start Offer",
+      "keyword": "Clash.GG offer guide",
+      "anchor": "start-offer"
+    }
+  ],
+  "faq_keyword_map": [
+    "Is Clash.GG worth it?",
+    "How do Clash.GG offer tasks credit?",
+    "What proof should I save for Clash.GG?"
+  ],
+  "cta_keyword_map": [
+    {
+      "cta": "Compare live offers",
+      "target": "[INTERNAL: /offers]"
+    }
+  ],
+  "archetype_keyword_map": [
+    {
+      "archetype": "install_open_tracking",
+      "keyword": "Clash.GG install open tracking"
+    },
+    {
+      "archetype": "purchase_recharge_subscription",
+      "keyword": "Clash.GG purchase recharge subscription"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Clash.GG account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Clash.GG account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Clash.GG account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Clash.GG account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Clash.GG account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Clash.GG account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Clash.GG account player level"
+    }
+  ],
+  "search_intent": "mixed",
+  "difficulty": "medium",
+  "serp_opportunities": [
+    "Most pages do not preserve exact live task rows.",
+    "Most pages skip proof and support packet planning.",
+    "Most pages do not separate safe, grind, paid, and high-risk task bands."
+  ],
+  "meta_description_draft": "Clash.GG offer guide covering 9 live tasks, payout checks, proof steps, risk bands, and stop rules before you start. Use it to compare the route safely.",
+  "h1_draft": "Clash.GG Offer Guide"
+}

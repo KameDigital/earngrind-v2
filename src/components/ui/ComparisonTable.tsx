@@ -50,7 +50,7 @@ export default function ComparisonTable() {
                             <td className="py-5 px-6 text-gray-600 font-medium">{p.payout}</td>
                             <td className="py-5 px-6 text-gray-600">{p.bestFor}</td>
                             <td className="py-5 px-6 text-right">
-                                <Button variant="secondary" href={`/review/${p.slug}`} className="px-4 py-2 text-sm">
+                                <Button variant="secondary" href={`/best-gpt-sites/${p.slug}`} className="px-4 py-2 text-sm">
                                     Read Review
                                 </Button>
                             </td>

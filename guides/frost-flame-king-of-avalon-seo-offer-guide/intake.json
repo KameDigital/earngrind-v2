@@ -1,0 +1,231 @@
+{
+  "game": "Frost & Flame: King of Avalon",
+  "search_name": "Frost & Flame: King of Avalon offer guide",
+  "slug": "frost-flame-king-of-avalon-seo-offer-guide",
+  "offerwall_provider": "Torox",
+  "country": "NL",
+  "device": "android",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "NL android user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Open the game - 0.01 USD\nReach Stronghold Level 5 - 0.25 USD\nPurchase Any USD 9.99 package for the first time within 3 days - 9.95 USD - within 3 days\nPurchase Any USD 19.99 package for the first time within 3 days - 21.55 USD - within 3 days\nPurchase Any USD 49.99 package within 3 days - 45.58 USD - within 3 days\nPurchase USD 9.99 pack, repeatable once every 3 days - 7 USD\nPurchase USD 19.99 pack for the second time (eligible only if purchased after 15 days or more) - 11.85 USD\nReach Stronghold Level 10 - 1.24 USD\nReach Stronghold Level 14 - 2.07 USD\nReach Stronghold Level 21 - 7.04 USD\nReach Stronghold Level 25 - 12.43 USD\nReach Stronghold Level 30 - 22.38 USD\nReach Stronghold Level 34 - 91.17 USD\nReach Stronghold Level 45 - 414.4 USD",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "NL",
+    "device": "android",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/frost-flame-king-of-avalon",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Open the game",
+      "points": null,
+      "usd": 0.01,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "e29fde9e-5d35-4588-bd53-d7701b8aecb9"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach Stronghold Level 5",
+      "points": null,
+      "usd": 0.25,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "808f4d08-42f5-43fe-b135-b441a92348ad"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Purchase Any USD 9.99 package for the first time within 3 days",
+      "points": null,
+      "usd": 9.95,
+      "deadline_text": "within 3 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "b7d05201-0c07-49a8-95e0-29ecda919dab"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Purchase Any USD 19.99 package for the first time within 3 days",
+      "points": null,
+      "usd": 21.55,
+      "deadline_text": "within 3 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "8d1c76b8-87e1-497c-9606-171ef2d20e68"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Purchase Any USD 49.99 package within 3 days",
+      "points": null,
+      "usd": 45.58,
+      "deadline_text": "within 3 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "f9c00251-690f-496a-a71c-2f660a9537c6"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Purchase USD 9.99 pack, repeatable once every 3 days",
+      "points": null,
+      "usd": 7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "e3b1e5e2-f745-4eb0-8245-719450cdab66"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Purchase USD 19.99 pack for the second time (eligible only if purchased after 15 days or more)",
+      "points": null,
+      "usd": 11.85,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "49e335af-196d-4992-ac9c-6d2f9a19c941"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Stronghold Level 10",
+      "points": null,
+      "usd": 1.24,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "eb2859fa-5d1d-4ce3-ad1b-82da444276c2"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach Stronghold Level 14",
+      "points": null,
+      "usd": 2.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c0f31c7d-70bb-4c30-906f-4074c8b62721"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach Stronghold Level 21",
+      "points": null,
+      "usd": 7.04,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c7397294-022b-48ad-a48d-76efa196c950"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Stronghold Level 25",
+      "points": null,
+      "usd": 12.43,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a79acde2-e1db-45b4-aeed-f32709404cca"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Stronghold Level 30",
+      "points": null,
+      "usd": 22.38,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "da312101-2714-487d-8d1e-7d56961dd78b"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Stronghold Level 34",
+      "points": null,
+      "usd": 91.17,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "cb260900-636d-4de0-8da1-b61024ad7d43"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach Stronghold Level 45",
+      "points": null,
+      "usd": 414.4,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "6630cf7f-ff5f-4932-8152-349d2cc33102"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

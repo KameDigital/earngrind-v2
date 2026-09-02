@@ -1,0 +1,245 @@
+{
+  "game": "Solitaire Stash",
+  "search_name": "Solitaire Stash offer guide",
+  "slug": "solitaire-stash-seo-offer-guide",
+  "offerwall_provider": "PixyLabs",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install Solitaire Stash - 0.33 USD\nWin 3 Cash Tournaments - 0.66 USD\nWin 5 Cash Tournaments - 0.99 USD\nWin 15 Cash Tournaments - 1.32 USD\nWin 25 Cash Tournaments - 2.64 USD\nWin 45 Cash Tournaments - 3.3 USD\nWin 70 Cash Tournaments - 6.6 USD\nWin 150 Cash Tournaments - 19.8 USD\nWin 300 Cash Tournaments - 29.7 USD\nWin 400 Cash Tournaments - 36.3 USD\nWin 500 Cash Tournaments - 82.5 USD\nWin 700 Cash Tournaments - 165 USD\nWin 1000 Cash Tournaments - 231 USD\nMake an in-app purchase - 0.58 USD\nWin 20 Cash Tournaments - 1.98 USD",
+  "eligibility": {
+    "provider": "PixyLabs",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/solitaire-stash",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install Solitaire Stash",
+      "points": null,
+      "usd": 0.33,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "4af829c1-7da2-4f41-9da0-df19e4781c69"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Win 3 Cash Tournaments",
+      "points": null,
+      "usd": 0.66,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "b1f0510f-3790-4423-af13-db605ddb16c1"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Win 5 Cash Tournaments",
+      "points": null,
+      "usd": 0.99,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "d659f47a-3c52-423b-80c1-ab50a3b77ba9"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Win 15 Cash Tournaments",
+      "points": null,
+      "usd": 1.32,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "6f770f52-66c4-40dc-b901-78a9d5e0435c"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Win 25 Cash Tournaments",
+      "points": null,
+      "usd": 2.64,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "d8be44fe-443f-4b2b-91de-e4237cd50280"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Win 45 Cash Tournaments",
+      "points": null,
+      "usd": 3.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "75646bd6-1f59-476b-b15c-23b0988f8a43"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Win 70 Cash Tournaments",
+      "points": null,
+      "usd": 6.6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "6528085a-5766-4e46-a119-81104a533c14"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Win 150 Cash Tournaments",
+      "points": null,
+      "usd": 19.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "4b7a040e-8e48-4719-a5c3-c311320f9396"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Win 300 Cash Tournaments",
+      "points": null,
+      "usd": 29.7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "609ac52f-b6e8-44ef-a2f4-578d950d3e4b"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Win 400 Cash Tournaments",
+      "points": null,
+      "usd": 36.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "4fceda7f-aad0-4b7c-ad97-73c7e1602fbd"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Win 500 Cash Tournaments",
+      "points": null,
+      "usd": 82.5,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "bd632007-9588-4578-b8c2-c25b799fe41c"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Win 700 Cash Tournaments",
+      "points": null,
+      "usd": 165,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "5d4fea35-0362-4b5f-b54f-b034f07351b9"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Win 1000 Cash Tournaments",
+      "points": null,
+      "usd": 231,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "4de0b0cf-6202-4586-b1f6-29fd641cf5e3"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Make an in-app purchase",
+      "points": null,
+      "usd": 0.58,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "d39d4435-5cc5-4a39-b6ec-801841e78ed8"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Win 20 Cash Tournaments",
+      "points": null,
+      "usd": 1.98,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "a1f47e95-46f0-4a95-95b5-f0ec689ec3c4"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "support_proof",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

@@ -72,7 +72,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <GoogleAnalytics />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5653008366366331"
@@ -80,6 +79,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${jakarta.className} antialiased text-gray-900 selection:bg-blue-100 selection:text-blue-900`}>
+        <GoogleAnalytics />
         <div id="site-shell" className="min-h-screen flex flex-col transition-[padding] duration-200 motion-reduce:transition-none">
           <a href="#main-content" className="sr-only fixed left-4 top-4 z-[100] bg-[var(--brand-lime)] px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] focus:not-sr-only">
             Skip to main content

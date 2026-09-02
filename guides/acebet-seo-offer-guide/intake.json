@@ -1,0 +1,360 @@
+{
+  "game": "Acebet",
+  "search_name": "Acebet offer guide",
+  "slug": "acebet-seo-offer-guide",
+  "offerwall_provider": "Lootably",
+  "country": "US",
+  "device": "ios, android, pc",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios, android, pc user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Register (Claim your Welcome Bonus). - 0.01 USD\nMake a deposit (Min. USD 5.00). - 3.36 USD\nClaim the rain. - 0.1 USD\nClaim your Daily Rakeback. - 0.04 USD\nPlay 100 spins on Slots. - 1.05 USD\nPlay 250 spins on Slots. - 1.68 USD\nPlay 500 spins on Slots. - 2.31 USD\nPlay 1,000 spins on Slots. - 4.2 USD\nJoin a Slot Battle. - 0.42 USD\nPlay 10 games of Roulette. - 0.21 USD\nPlay 20 hands of Blackjack. - 0.42 USD\nPlay 20 games of Keep Digging. - 0.42 USD\nWager USD 250.00. - 1.26 USD\nWager USD 1,000.00. - 2.52 USD\nWager USD 2,500.00. - 5.04 USD\nReach Bronze II Rank. - 16.8 USD\nReach Bronze III Rank. - 25.2 USD\nReach Bronze IV Rank. - 33.6 USD\nReach Bronze V Rank. - 42 USD\nReach Silver II Rank. - 105 USD\nReach Silver IV Rank. - 168 USD\nReach Gold I Rank. - 357 USD\nReach Gold III Rank. - 840 USD",
+  "eligibility": {
+    "provider": "Lootably",
+    "country": "US",
+    "device": "ios, android, pc",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/acebet",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Register (Claim your Welcome Bonus).",
+      "points": null,
+      "usd": 0.01,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "signup",
+      "live_task_id": "1bf2bf3d-c4f4-4b3a-b5c2-37cc425f73d0"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Make a deposit (Min. USD 5.00).",
+      "points": null,
+      "usd": 3.36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "5d62ccf1-cf32-4c2d-8c86-b60f523498a8"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Claim the rain.",
+      "points": null,
+      "usd": 0.1,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "f77ec929-ab56-4676-b03a-5efb7f6bc52c"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Claim your Daily Rakeback.",
+      "points": null,
+      "usd": 0.04,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "ef834b68-7ed4-4449-a22c-be853e40ff42"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Play 100 spins on Slots.",
+      "points": null,
+      "usd": 1.05,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "ad24e5e8-a014-4fa6-b10e-34c7dcabe2e5"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Play 250 spins on Slots.",
+      "points": null,
+      "usd": 1.68,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "e86d2336-3d23-4ef3-948b-ccae828d76ba"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Play 500 spins on Slots.",
+      "points": null,
+      "usd": 2.31,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "ad2877f6-7cb5-42b0-90ed-cf9208c28224"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Play 1,000 spins on Slots.",
+      "points": null,
+      "usd": 4.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "random_reward_gacha"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "42a1100a-da93-40ff-8ca2-c818f40ed110"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Join a Slot Battle.",
+      "points": null,
+      "usd": 0.42,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "chapter_stage_campaign"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "9e6b1dc1-d48a-4130-a82c-5fffca667825"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Play 10 games of Roulette.",
+      "points": null,
+      "usd": 0.21,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "28e7717f-ce0c-4160-a37a-c98f110cb362"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Play 20 hands of Blackjack.",
+      "points": null,
+      "usd": 0.42,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "60284970-870b-462c-9ef6-2427b54f9f35"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Play 20 games of Keep Digging.",
+      "points": null,
+      "usd": 0.42,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "a844843d-8902-4bec-b008-aa0a4a722ed4"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Wager USD 250.00.",
+      "points": null,
+      "usd": 1.26,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "d123ca40-5d0a-4e38-a3aa-7b28dbd4c1f9"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Wager USD 1,000.00.",
+      "points": null,
+      "usd": 2.52,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "791898ef-1db3-415b-ab15-a3e70be5b911"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Wager USD 2,500.00.",
+      "points": null,
+      "usd": 5.04,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "85c48121-b4e8-47a6-b308-b0ff40706885"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Reach Bronze II Rank.",
+      "points": null,
+      "usd": 16.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "18f80ac7-f151-42e4-8cc8-9e8d4f5d7b30"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Reach Bronze III Rank.",
+      "points": null,
+      "usd": 25.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "66355296-ef9f-4345-bf20-b89315d4b2bb"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Reach Bronze IV Rank.",
+      "points": null,
+      "usd": 33.6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "00b5c61c-d00a-4458-a5c9-f7948a1e58da"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Reach Bronze V Rank.",
+      "points": null,
+      "usd": 42,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "8ee612d1-e20a-4788-969b-8d1e3aa3a562"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Reach Silver II Rank.",
+      "points": null,
+      "usd": 105,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4f3b8dfd-ce6e-4988-b4b7-1e2a8ebc1271"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Reach Silver IV Rank.",
+      "points": null,
+      "usd": 168,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0eb75bf6-0cdd-452c-9908-d94a206e2e9d"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Reach Gold I Rank.",
+      "points": null,
+      "usd": 357,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ef6576dc-3da9-41a6-b7c2-28b943c741ad"
+    },
+    {
+      "task_id": "task_023",
+      "task_text": "Reach Gold III Rank.",
+      "points": null,
+      "usd": 840,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "bf20512e-37ad-4bbc-9c09-b8bf67427ce5"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "purchase_recharge_subscription",
+    "support_proof",
+    "random_reward_gacha",
+    "chapter_stage_campaign",
+    "character_hero_rank"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

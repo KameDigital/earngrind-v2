@@ -1,0 +1,175 @@
+{
+  "game": "Gamehag",
+  "slug": "gamehag-seo-offer-guide-2",
+  "primary_keyword": "Gamehag offer guide",
+  "secondary_keywords": [
+    "Gamehag payout",
+    "Gamehag task list",
+    "Gamehag EarnGrind",
+    "Gamehag offerwall guide"
+  ],
+  "entity_terms": [
+    "Gamehag",
+    "Gain.gg",
+    "Lootably",
+    "EarnGrind"
+  ],
+  "game_mechanics": [
+    "support_proof",
+    "character_hero_rank"
+  ],
+  "offerwall_terms": [
+    "offerwall",
+    "payout",
+    "tracked link",
+    "pending credit",
+    "support ticket"
+  ],
+  "user_problem_terms": [
+    "is it worth it",
+    "not crediting",
+    "which tasks to do first",
+    "when to stop"
+  ],
+  "task_terms": [
+    "Complete your first cashout.",
+    "Complete the Apprentice Rank.",
+    "Complete the Adept Rank.",
+    "Complete the Scholar Rank.",
+    "Complete the Mage Rank.",
+    "Complete the Enchanter Rank.",
+    "Complete the Sorcerer Rank.",
+    "Complete the Warlock Rank.",
+    "Complete the Grandmaster Rank.",
+    "Complete the Archmage Rank.",
+    "Complete the Elder Mage Rank."
+  ],
+  "game_system_terms": [
+    "support_proof",
+    "tracking_proof",
+    "character_hero_rank"
+  ],
+  "section_keyword_map": [
+    {
+      "section": "Payout Table",
+      "keyword": "Gamehag offer guide",
+      "anchor": "payout-table"
+    },
+    {
+      "section": "Risk Bands",
+      "keyword": "Gamehag offer guide",
+      "anchor": "risk-bands"
+    },
+    {
+      "section": "Setup Tracking",
+      "keyword": "Gamehag offer guide",
+      "anchor": "setup-tracking"
+    },
+    {
+      "section": "Evidence Log",
+      "keyword": "Gamehag offer guide",
+      "anchor": "evidence-log"
+    },
+    {
+      "section": "Game Overview",
+      "keyword": "Gamehag offer guide",
+      "anchor": "game-overview"
+    },
+    {
+      "section": "Game Systems",
+      "keyword": "Gamehag offer guide",
+      "anchor": "game-systems"
+    },
+    {
+      "section": "Milestone Matrix",
+      "keyword": "Gamehag offer guide",
+      "anchor": "milestone-matrix"
+    },
+    {
+      "section": "Task Route",
+      "keyword": "Gamehag offer guide",
+      "anchor": "task-route"
+    },
+    {
+      "section": "Proof Support",
+      "keyword": "Gamehag offer guide",
+      "anchor": "proof-support"
+    },
+    {
+      "section": "FAQ",
+      "keyword": "Gamehag offer guide",
+      "anchor": "faq"
+    },
+    {
+      "section": "Start Offer",
+      "keyword": "Gamehag offer guide",
+      "anchor": "start-offer"
+    }
+  ],
+  "faq_keyword_map": [
+    "Is Gamehag worth it?",
+    "How do Gamehag offer tasks credit?",
+    "What proof should I save for Gamehag?"
+  ],
+  "cta_keyword_map": [
+    {
+      "cta": "Compare live offers",
+      "target": "[INTERNAL: /offers]"
+    }
+  ],
+  "archetype_keyword_map": [
+    {
+      "archetype": "support_proof",
+      "keyword": "Gamehag support proof"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Gamehag character hero rank"
+    }
+  ],
+  "search_intent": "mixed",
+  "difficulty": "high",
+  "serp_opportunities": [
+    "Most pages do not preserve exact live task rows.",
+    "Most pages skip proof and support packet planning.",
+    "Most pages do not separate safe, grind, paid, and high-risk task bands."
+  ],
+  "meta_description_draft": "Gamehag offer guide covering 11 live tasks, payout checks, proof steps, risk bands, and stop rules before you start. Use it to compare the route safely.",
+  "h1_draft": "Gamehag Offer Guide"
+}

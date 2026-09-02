@@ -1,0 +1,289 @@
+{
+  "game": "Rise of Kingdoms",
+  "search_name": "Rise of Kingdoms offer guide",
+  "slug": "rise-of-kingdoms-seo-offer-guide",
+  "offerwall_provider": "RevU",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install the app. Once the app is installed, return to this screen to confirm that this task is checked off before proceeding with the other tasks. - 0.07 USD\nGet 100 Active Points in DAILY OBJECTIVES - 0.3 USD\nReach City Hall Level 8 - 0.36 USD\nUnlock any Level II Troops - 0.74 USD\nReach City Hall Level 12 - 2.22 USD\nUnlock any Level III Troops - 5.55 USD\nReach Power 1 Million - 7.82 USD\nReach Power 1.5 Million - 11.58 USD\nReach City Hall Level 20 - 15.44 USD\nReach Power 2 Million - 28.31 USD\nUnlock any Level IV Troops - 72 USD\nUnlock any Level V Troops - 108 USD\nPurchase 30-Day Gem Supply (you can use 50% off coupon in your pack! only USD 4.99 for the first time!) - 3.85 USD\nPurchase VIP 7 Special Bundle - 6.43 USD\nBuy the Growthfund for the First Time USD 14.99 - 6.43 USD\nSingle Purchase of USD 1.9 or more - 0.82 USD\nSingle Purchase of USD 4.9 or more - 1.93 USD\nComplete Game Tutorial : No max time - 0.15 USD",
+  "eligibility": {
+    "provider": "RevU",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/rise-of-kingdoms",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install the app. Once the app is installed, return to this screen to confirm that this task is checked off before proceeding with the other tasks.",
+      "points": null,
+      "usd": 0.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "6b319353-177a-4f2a-bd42-366d3d43ae69"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Get 100 Active Points in DAILY OBJECTIVES",
+      "points": null,
+      "usd": 0.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "1f5f1cc2-12c3-48c6-85f0-676b2d280564"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach City Hall Level 8",
+      "points": null,
+      "usd": 0.36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "fe652c2d-e491-4d19-9a00-32038c5443a6"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Unlock any Level II Troops",
+      "points": null,
+      "usd": 0.74,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f02c5253-016a-436b-996c-1f5ca971fa81"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Reach City Hall Level 12",
+      "points": null,
+      "usd": 2.22,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "32ab367c-d4ac-4b2a-9dd5-7bf952522c63"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Unlock any Level III Troops",
+      "points": null,
+      "usd": 5.55,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e4dccf8a-82b0-4d37-889f-1fcc868fcd54"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach Power 1 Million",
+      "points": null,
+      "usd": 7.82,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "91b83563-8e2c-4acb-8c9a-c38f3db01578"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Power 1.5 Million",
+      "points": null,
+      "usd": 11.58,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c795913b-9238-48ac-9ff4-990bf916f2c8"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach City Hall Level 20",
+      "points": null,
+      "usd": 15.44,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "bc5a3dce-59c8-433e-857c-7194e2d64550"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach Power 2 Million",
+      "points": null,
+      "usd": 28.31,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "fa57d267-a057-49f0-a394-5e1caba4e120"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Unlock any Level IV Troops",
+      "points": null,
+      "usd": 72,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a308d17e-0492-42f3-bdc5-ac43911cbd23"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Unlock any Level V Troops",
+      "points": null,
+      "usd": 108,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4b219086-51a9-4be9-bfd9-2ce6727d8c1e"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Purchase 30-Day Gem Supply (you can use 50% off coupon in your pack! only USD 4.99 for the first time!)",
+      "points": null,
+      "usd": 3.85,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "8df487af-83d2-46a8-afe5-12bf4bad0693"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Purchase VIP 7 Special Bundle",
+      "points": null,
+      "usd": 6.43,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "4608ab2e-dbca-4482-9685-477ca262e05c"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Buy the Growthfund for the First Time USD 14.99",
+      "points": null,
+      "usd": 6.43,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "7769e686-9930-4526-b48b-0ba8e57931dc"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Single Purchase of USD 1.9 or more",
+      "points": null,
+      "usd": 0.82,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "058b36c4-89fa-4343-a928-86f5c3a940ec"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Single Purchase of USD 4.9 or more",
+      "points": null,
+      "usd": 1.93,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "84a094ff-1c7a-481d-a464-65eb7e97effb"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Complete Game Tutorial : No max time",
+      "points": null,
+      "usd": 0.15,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "32f81d89-4663-49b0-80f2-4f4504b28f90"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "support_proof",
+    "account_player_level",
+    "power_might_rating",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

@@ -25,6 +25,14 @@ const imageHostnames = Array.from(new Set([
     "gain.gg",
     "cashinstyle.com",
     "www.appbrain.com",
+    "www.google.com",
+    "cdn.besitos.ai",
+    "cdn.bitlabs.io",
+    "static.bitlabs.io",
+    "cdn.torox.io",
+    "cdn.adscendmedia.com",
+    "cdn.revu.com",
+    "images.revu.com",
     ...configuredImageHostnames,
 ]));
 
@@ -84,18 +92,20 @@ const nextConfig = {
         const localRealtimeCsp = localSupabaseUrl ? ` ${localSupabaseUrl} ${localRealtimeUrl}` : "";
         const ContentSecurityPolicy = [
             "default-src 'self'",
-            // Next.js inline scripts + Supabase JS
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co https://www.googletagmanager.com https://pagead2.googlesyndication.com https://va.vercel-scripts.com",
+            // Next.js inline scripts + Supabase JS + Google Analytics + Google Ads + Vercel
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://va.vercel-scripts.com https://www.google.com https://*.google.com https://*.adtrafficquality.google https://*.googleadservices.com",
             // Styles — Next.js injects inline
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             // Fonts
-            "font-src 'self' https://fonts.gstatic.com",
+            "font-src 'self' https://fonts.gstatic.com data:",
             // Images — allow any HTTPS (game thumbnails from varied CDNs)
             "img-src 'self' data: blob: https:",
             // Video previews for curated casino game rails
             "media-src 'self' https://animatedtrailer.casino.fanduel.com",
-            // API/auth calls
-            "connect-src 'self' https://*.supabase.co wss://*.supabase.co" + localRealtimeCsp + " https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://vitals.vercel-insights.com",
+            // API/auth calls + Analytics beacons + Web vitals
+            "connect-src 'self' https://*.supabase.co wss://*.supabase.co" + localRealtimeCsp + " https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://*.google.com https://*.adtrafficquality.google https://*.googleadservices.com https://stats.g.doubleclick.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://vitals.vercel-insights.com",
+            // Frame embeds (e.g. Google Ads / DoubleClick)
+            "frame-src 'self' https://googleads.g.doubleclick.net https://*.doubleclick.net https://*.google.com https://*.googlesyndication.com https://*.adtrafficquality.google",
             // No plugins ever
             "object-src 'none'",
             // Frames — disallow embedding this site

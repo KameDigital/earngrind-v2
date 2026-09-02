@@ -1,0 +1,76 @@
+{
+  "game": "Thrillz",
+  "search_name": "Thrillz offer guide",
+  "slug": "thrillz-seo-offer-guide-2",
+  "offerwall_provider": "Gemsloot",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install - 0 USD\nBonus: Reach Level 25. Complete within 5 days - 17.15 USD - within 5 days\nBonus: Reach level 42. Complete within 10 days - 34.3 USD - within 10 days",
+  "eligibility": {
+    "provider": "Gemsloot",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/thrillz",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "c61572b5-251a-437d-a529-6ca0e5a55940"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Bonus: Reach Level 25. Complete within 5 days",
+      "points": null,
+      "usd": 17.15,
+      "deadline_text": "within 5 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "93bebfde-76c1-4189-bf34-49e3d152e0db"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Bonus: Reach level 42. Complete within 10 days",
+      "points": null,
+      "usd": 34.3,
+      "deadline_text": "within 10 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "6262d7c9-5cbb-497d-ba21-5ca22a769708"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

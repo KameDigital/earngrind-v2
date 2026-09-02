@@ -12,6 +12,7 @@ import {
     normalizeGalleryTasks,
     normalizeMoney,
     safeDirectOfferUrl,
+    safeImageUrl,
     slugifyGalleryValue,
 } from "./normalize";
 import type {
@@ -83,31 +84,44 @@ export async function importProviderGalleryOffers({
     };
     const site = await ensurePlatform(db, config);
     const offerResults: ProviderGalleryImportResult["offerResults"] = [];
-
-    for (const offer of offers) {
-        const externalId = buildProviderGalleryExternalId(config, offer);
-        try {
-            const result = await upsertProviderGalleryOffer(db, config, site.id, offer, externalId);
-            stats.imported += 1;
-            stats[result] += 1;
-            offerResults.push({ sourceOfferId: offer.sourceOfferId, externalId, result });
-        } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
-            stats.failed += 1;
-            offerResults.push({ sourceOfferId: offer.sourceOfferId, externalId, result: "failed", error: message });
-            console.error(`[${loggerPrefix}] offer failed`, {
-                platform: config.platformSlug,
-                sourceOfferId: offer.sourceOfferId,
-                title: offer.title,
-                message,
-            });
-        }
+    const chunkSize = 8;
+    for (let i = 0; i < offers.length; i += chunkSize) {
+        const chunk = offers.slice(i, i + chunkSize);
+        await Promise.all(
+            chunk.map(async (offer) => {
+                const externalId = buildProviderGalleryExternalId(config, offer);
+                try {
+                    const result = await upsertProviderGalleryOffer(db, config, site.id, offer, externalId);
+                    stats.imported += 1;
+                    stats[result] += 1;
+                    offerResults.push({ sourceOfferId: offer.sourceOfferId, externalId, result });
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    stats.failed += 1;
+                    offerResults.push({ sourceOfferId: offer.sourceOfferId, externalId, result: "failed", error: message });
+                    console.error(`[${loggerPrefix}] offer failed`, {
+                        platform: config.platformSlug,
+                        sourceOfferId: offer.sourceOfferId,
+                        title: offer.title,
+                        message,
+                    });
+                }
+            })
+        );
     }
 
     return { stats, offerResults };
 }
 
+const platformCache = new Map<string, string>();
+const providerCache = new Map<string, string>();
+const gameCache = new Map<string, string>();
+
 async function ensurePlatform(db: ProviderGalleryDbClient, config: ProviderGalleryConfig): Promise<{ id: string }> {
+    if (platformCache.has(config.platformSlug)) {
+        return { id: platformCache.get(config.platformSlug)! };
+    }
+
     const { data: existing, error: existingError } = await db
         .from("platforms")
         .select("id")
@@ -115,7 +129,10 @@ async function ensurePlatform(db: ProviderGalleryDbClient, config: ProviderGalle
         .maybeSingle();
 
     if (existingError) throw new Error(existingError.message);
-    if (existing?.id) return { id: String(existing.id) };
+    if (existing?.id) {
+        platformCache.set(config.platformSlug, String(existing.id));
+        return { id: String(existing.id) };
+    }
 
     const { data, error } = await db
         .from("platforms")
@@ -130,19 +147,27 @@ async function ensurePlatform(db: ProviderGalleryDbClient, config: ProviderGalle
         .single();
 
     if (error || !data) throw new Error(error?.message ?? `Failed to create ${config.platformName} platform`);
-    return { id: String(data.id) };
+    const id = String(data.id);
+    platformCache.set(config.platformSlug, id);
+    return { id };
 }
 
 async function ensureProvider(db: ProviderGalleryDbClient, name: string, slugSeed?: string): Promise<{ id: string }> {
     const slug = slugifyGalleryValue(slugSeed || name, "provider");
-    const { data: existing, error: existingError } = await db
+    if (providerCache.has(slug)) {
+        return { id: providerCache.get(slug)! };
+    }
+
+    const { data: existing } = await db
         .from("providers")
         .select("id")
         .eq("slug", slug)
         .maybeSingle();
 
-    if (existingError) throw new Error(existingError.message);
-    if (existing?.id) return { id: String(existing.id) };
+    if (existing?.id) {
+        providerCache.set(slug, String(existing.id));
+        return { id: String(existing.id) };
+    }
 
     const { data, error } = await db
         .from("providers")
@@ -150,21 +175,37 @@ async function ensureProvider(db: ProviderGalleryDbClient, name: string, slugSee
         .select("id")
         .single();
 
-    if (error || !data) throw new Error(error?.message ?? `Failed to create provider ${name}`);
-    return { id: String(data.id) };
+    if (error) {
+        const { data: retry } = await db.from("providers").select("id").eq("slug", slug).maybeSingle();
+        if (retry?.id) {
+            providerCache.set(slug, String(retry.id));
+            return { id: String(retry.id) };
+        }
+        throw new Error(error.message ?? `Failed to create provider ${name}`);
+    }
+
+    const id = String(data.id);
+    providerCache.set(slug, id);
+    return { id };
 }
 
 async function ensureGame(db: ProviderGalleryDbClient, offer: NormalizedProviderGalleryOffer): Promise<{ id: string }> {
     const title = cleanText(offer.advertiserGameName || offer.title);
     const slug = slugifyGalleryValue(offer.slug || title, "game");
-    const { data: existing, error: existingError } = await db
+    if (gameCache.has(slug)) {
+        return { id: gameCache.get(slug)! };
+    }
+
+    const { data: existing } = await db
         .from("games")
         .select("id")
         .eq("slug", slug)
         .maybeSingle();
 
-    if (existingError) throw new Error(existingError.message);
-    if (existing?.id) return { id: String(existing.id) };
+    if (existing?.id) {
+        gameCache.set(slug, String(existing.id));
+        return { id: String(existing.id) };
+    }
 
     const { data, error } = await db
         .from("games")
@@ -180,8 +221,18 @@ async function ensureGame(db: ProviderGalleryDbClient, offer: NormalizedProvider
         .select("id")
         .single();
 
-    if (error || !data) throw new Error(error?.message ?? `Failed to create game ${title}`);
-    return { id: String(data.id) };
+    if (error) {
+        const { data: retry } = await db.from("games").select("id").eq("slug", slug).maybeSingle();
+        if (retry?.id) {
+            gameCache.set(slug, String(retry.id));
+            return { id: String(retry.id) };
+        }
+        throw new Error(error.message ?? `Failed to create game ${title}`);
+    }
+
+    const id = String(data.id);
+    gameCache.set(slug, id);
+    return { id };
 }
 
 async function upsertProviderGalleryOffer(
@@ -377,16 +428,7 @@ async function replaceTasks(
         })),
     });
 
-    if (error) throw new Error(error.message);
-}
-
-function safeImageUrl(value: string | null | undefined): string | null {
-    const trimmed = value?.trim() ?? "";
-    if (!trimmed) return null;
-    try {
-        const url = new URL(trimmed);
-        return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : null;
-    } catch {
-        return null;
+    if (error) {
+        throw new Error(`Failed to replace tasks for offer ${siteOfferId}: ${error.message}`);
     }
 }

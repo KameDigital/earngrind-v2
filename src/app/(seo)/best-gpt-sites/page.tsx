@@ -312,7 +312,7 @@ function RecommendedPlatformCard({
 function GptGuideCard({ guide }: { guide: GptGuide }) {
   return (
     <Link
-      href={`/guides/best-gpt-sites/${guide.slug}`}
+      href={`/best-gpt-sites/${guide.slug}`}
       className="group overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300"
     >
       <div className="relative aspect-[16/10] bg-[var(--surface-muted)]">
@@ -395,7 +395,7 @@ function PlatformReviewCard({ review }: { review: ReviewSummary }) {
       </div>
 
       <div className="flex flex-wrap items-center gap-3 text-sm">
-        <Link href={`/review/${review.slug}`} className="font-bold text-lime-600 hover:text-lime-700">
+        <Link href={`/best-gpt-sites/${review.slug}`} className="font-bold text-lime-600 hover:text-lime-700">
           Read full review
         </Link>
         {platform ? (
@@ -505,7 +505,7 @@ export default async function BestGptSitesPage() {
         const guide = getPublishedPlatformGuide(platform, publishedGuides);
         return {
           name: platform.name,
-          path: guide ? `/guides/best-gpt-sites/${guide.slug}` : `${config.pathname}#best-sites`,
+          path: guide ? `/best-gpt-sites/${guide.slug}` : `${config.pathname}#best-sites`,
           description: `${platform.bestFor}. ${platform.rewardNote}`,
         };
       }),

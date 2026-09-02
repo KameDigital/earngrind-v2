@@ -1,0 +1,301 @@
+{
+  "game": "Rock N' Cash Vegas Slot Casino",
+  "search_name": "Rock N' Cash Vegas Slot Casino offer guide",
+  "slug": "rock-n-cash-vegas-slot-casino-seo-offer-guide",
+  "offerwall_provider": "BitLabs",
+  "country": "US",
+  "device": "android",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US android user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install - 0 USD\nReach Level 30. Complete within 60 days - 0.29 USD - within 60 days\nReach Level 40. Complete within 60 days - 0.49 USD - within 60 days\nReach Level 60. Complete within 60 days - 0.84 USD - within 60 days\nReach Level 80. Complete within 60 days - 1.95 USD - within 60 days\nReach Level 100. Complete within 60 days - 2.92 USD - within 60 days\nReach Level 150. Complete within 60 days - 3.9 USD - within 60 days\nReach Level 200. Complete within 60 days - 9.75 USD - within 60 days\nReach Level 300. Complete within 60 days - 29.25 USD - within 60 days\nReach Level 500. Complete within 60 days - 39 USD - within 60 days\nReach Level 850. Complete within 60 days - 146.25 USD - within 60 days\nReach Level 1000. Complete within 60 days - 292.5 USD - within 60 days\n[Option] Cumulative purchases over USD 50. Complete within 60 days - 4.87 USD - within 60 days\n[Option] Make 5 Purchases! Complete within 60 days - 0.78 USD - within 60 days\n[Option] Cumulative purchases over USD 100. Complete within 60 days - 7.35 USD - within 60 days\nSingle purchase of USD 9.99 or more. Complete within 60 days - 0.3 USD - within 60 days\nSingle purchase of USD 19.99 or more. Complete within 60 days - 0.6 USD - within 60 days\nPurchase more than USD 200. Complete within 60 days - 6 USD - within 60 days\nPurchase more than USD 300. Complete within 60 days - 9 USD - within 60 days",
+  "eligibility": {
+    "provider": "BitLabs",
+    "country": "US",
+    "device": "android",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/rock-n-cash-vegas-slot-casino",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "8cad69d7-6253-41e8-b0ab-9c80d93b4cf6"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach Level 30. Complete within 60 days",
+      "points": null,
+      "usd": 0.29,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9e07746d-cda3-4365-bbac-4cab3042f67a"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach Level 40. Complete within 60 days",
+      "points": null,
+      "usd": 0.49,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "21d27325-577b-405d-abb1-8bc193ae1d35"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach Level 60. Complete within 60 days",
+      "points": null,
+      "usd": 0.84,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "123ee9e8-cb45-4db8-a863-4af25af88c21"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Reach Level 80. Complete within 60 days",
+      "points": null,
+      "usd": 1.95,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "cfdf38c2-6431-48b0-9c51-b70ddbe41814"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Reach Level 100. Complete within 60 days",
+      "points": null,
+      "usd": 2.92,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "7dfdc1d6-9548-467d-bf12-9c43fc814926"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach Level 150. Complete within 60 days",
+      "points": null,
+      "usd": 3.9,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a761a06e-9daa-40d3-870a-85af46c30935"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Level 200. Complete within 60 days",
+      "points": null,
+      "usd": 9.75,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "5d44cc57-272c-4f35-b314-2f9635d7b369"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach Level 300. Complete within 60 days",
+      "points": null,
+      "usd": 29.25,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b06087cd-ba20-47e9-92e9-de692dbc1388"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach Level 500. Complete within 60 days",
+      "points": null,
+      "usd": 39,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "5eaeffbd-1321-480e-aad6-6ac45f7cc1f6"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Level 850. Complete within 60 days",
+      "points": null,
+      "usd": 146.25,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "68712298-a25d-44b4-b825-56c0271fc253"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Level 1000. Complete within 60 days",
+      "points": null,
+      "usd": 292.5,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "fc107dc5-1f87-4e65-85d4-f6adc15378de"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "[Option] Cumulative purchases over USD 50. Complete within 60 days",
+      "points": null,
+      "usd": 4.87,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "7b401ac7-ae12-4b49-83b3-d7f14df9cedb"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "[Option] Make 5 Purchases! Complete within 60 days",
+      "points": null,
+      "usd": 0.78,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "30c647e3-e4bb-4f2f-b6d3-43795253df7e"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "[Option] Cumulative purchases over USD 100. Complete within 60 days",
+      "points": null,
+      "usd": 7.35,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "25746424-9639-4ddd-9f55-8b4b9d438861"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Single purchase of USD 9.99 or more. Complete within 60 days",
+      "points": null,
+      "usd": 0.3,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "ad673486-744b-491b-b9f1-dc679729d02b"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Single purchase of USD 19.99 or more. Complete within 60 days",
+      "points": null,
+      "usd": 0.6,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "678f906a-ec3e-40a5-99fb-e404ed3fc044"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Purchase more than USD 200. Complete within 60 days",
+      "points": null,
+      "usd": 6,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "989b22f0-b895-4e46-ba90-9193395827c9"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Purchase more than USD 300. Complete within 60 days",
+      "points": null,
+      "usd": 9,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "58384f18-6b42-4e4e-9701-3a19082bda14"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

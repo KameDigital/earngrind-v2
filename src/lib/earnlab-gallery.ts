@@ -112,6 +112,8 @@ export async function getEarnLabGalleryTasksByCountry(
         limit?: number;
         refresh?: boolean;
         sort?: string;
+        allPages?: boolean;
+        maxPages?: number;
     } = {},
 ): Promise<EarnLabGalleryResult> {
     const country = normalizeEarnLabCountryCode(countryCode);
@@ -119,9 +121,64 @@ export async function getEarnLabGalleryTasksByCountry(
         throw new EarnLabGalleryValidationError("Invalid country code. Use a two-letter ISO-style value such as US, GB, CA, or AU.");
     }
 
-    const page = normalizePage(options.page);
-    const limit = normalizeLimit(options.limit);
     const sort = options.sort?.trim() || DEFAULT_SORT;
+    const limit = normalizeLimit(options.limit);
+    const initialPage = normalizePage(options.page);
+
+    if (options.allPages) {
+        const maxPages = options.maxPages ?? 4;
+        const allOffers: EarnLabGalleryTask[] = [];
+        let totalItems = 0;
+        let totalPages = 1;
+
+        for (let currentPage = 1; currentPage <= maxPages; currentPage += 1) {
+            const url = new URL(EARNLAB_TASKS_API_URL);
+            url.searchParams.set("country", country);
+            url.searchParams.set("sort", sort);
+            url.searchParams.set("page", String(currentPage));
+            url.searchParams.set("limit", String(limit));
+
+            const response = await fetch(url.toString(), {
+                method: "GET",
+                headers: buildEarnLabGalleryHeaders(country),
+                cache: options.refresh ? "no-store" : "force-cache",
+            });
+
+            if (!response.ok) {
+                if (currentPage === 1) {
+                    throw new EarnLabGalleryFetchError(`EarnLab gallery request failed with status ${response.status}`, response.status);
+                }
+                break;
+            }
+
+            const payload = await response.json() as EarnLabTasksApiResponse;
+            const items = Array.isArray(payload.data?.items) ? payload.data.items : [];
+            const offers = items
+                .map((item) => normalizeEarnLabGalleryTask(item, country))
+                .filter((item): item is EarnLabGalleryTask => Boolean(item));
+
+            allOffers.push(...offers);
+            totalItems = Number(payload.data?.totalItems ?? allOffers.length);
+            totalPages = Number(payload.data?.totalPages ?? currentPage);
+
+            if (items.length < limit || currentPage >= totalPages) break;
+        }
+
+        return {
+            countryCode: country,
+            countryName: getEarnLabCountryName(country),
+            offers: allOffers,
+            meta: {
+                page: 1,
+                limit: allOffers.length,
+                totalItems: Math.max(totalItems, allOffers.length),
+                totalPages,
+                cacheSeconds: options.refresh ? 0 : CACHE_SECONDS,
+            },
+        };
+    }
+
+    const page = initialPage;
     const url = new URL(EARNLAB_TASKS_API_URL);
     url.searchParams.set("country", country);
     url.searchParams.set("sort", sort);
@@ -132,10 +189,6 @@ export async function getEarnLabGalleryTasksByCountry(
         method: "GET",
         headers: buildEarnLabGalleryHeaders(country),
         cache: options.refresh ? "no-store" : "force-cache",
-        next: options.refresh ? undefined : {
-            revalidate: CACHE_SECONDS,
-            tags: [`earnlab-gallery-${country}`],
-        },
     });
 
     if (!response.ok) {
@@ -344,21 +397,47 @@ export function buildEarnLabGalleryTaskSteps(
     payout: number,
     description: string | null,
 ): EarnLabGalleryTaskStep[] {
-    const fragments = splitEarnLabDescription(description);
-    const timeLimitText = extractEstimatedTime(description);
+    const value = normalizeWhitespace(description ?? "");
+    if (!value) {
+        return [{
+            title: `Complete ${title}`,
+            rewardAmount: payout,
+            rewardDisplay: formatUsd(payout),
+            taskType: "other",
+            timeLimitText: null,
+            notes: null,
+            sortOrder: 1,
+        }];
+    }
 
-    return fragments.map((fragment, index) => {
-        const isFinalStep = index === fragments.length - 1;
-        return {
-            title: inferStepTitle(fragment, title),
-            rewardAmount: isFinalStep ? payout : 0,
-            rewardDisplay: isFinalStep ? formatUsd(payout) : "$0.00",
-            taskType: inferTaskType(fragment),
-            timeLimitText: extractEstimatedTime(fragment) ?? timeLimitText,
-            notes: fragment,
-            sortOrder: index + 1,
-        };
-    });
+    const numberedMatches = Array.from(value.matchAll(/(?:^|\s)(\d{1,2})[.)]\s+(.+?)(?=\s+\d{1,2}[.)]\s+|$)/g))
+        .map((match) => normalizeWhitespace(match[2] ?? ""))
+        .filter(Boolean);
+
+    if (numberedMatches.length > 1) {
+        return numberedMatches.map((fragment, index) => {
+            const isFinalStep = index === numberedMatches.length - 1;
+            return {
+                title: inferStepTitle(fragment, title),
+                rewardAmount: isFinalStep ? payout : 0,
+                rewardDisplay: isFinalStep ? formatUsd(payout) : "Milestone Step",
+                taskType: inferTaskType(fragment),
+                timeLimitText: extractEstimatedTime(fragment),
+                notes: fragment,
+                sortOrder: index + 1,
+            };
+        });
+    }
+
+    return [{
+        title: inferStepTitle(value, title) || `Complete ${title}`,
+        rewardAmount: payout,
+        rewardDisplay: formatUsd(payout),
+        taskType: inferTaskType(value),
+        timeLimitText: extractEstimatedTime(value),
+        notes: value,
+        sortOrder: 1,
+    }];
 }
 
 export function extractEarnLabRequirements(description: string | null): string[] {

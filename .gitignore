@@ -38,6 +38,7 @@ error.log
 
 # typescript build cache
 *.tsbuildinfo
+scratch/
 next-env.d.ts
 
 # worker env

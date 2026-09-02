@@ -1,0 +1,243 @@
+{
+  "game": "Acebet",
+  "slug": "acebet-seo-offer-guide",
+  "primary_keyword": "Acebet offer guide",
+  "secondary_keywords": [
+    "Acebet payout",
+    "Acebet task list",
+    "Acebet EarnGrind",
+    "Acebet offerwall guide"
+  ],
+  "entity_terms": [
+    "Acebet",
+    "Gain.gg",
+    "Lootably",
+    "EarnGrind"
+  ],
+  "game_mechanics": [
+    "install_open_tracking",
+    "purchase_recharge_subscription",
+    "support_proof",
+    "random_reward_gacha",
+    "chapter_stage_campaign",
+    "character_hero_rank"
+  ],
+  "offerwall_terms": [
+    "offerwall",
+    "payout",
+    "tracked link",
+    "pending credit",
+    "support ticket"
+  ],
+  "user_problem_terms": [
+    "is it worth it",
+    "not crediting",
+    "which tasks to do first",
+    "when to stop"
+  ],
+  "task_terms": [
+    "Register (Claim your Welcome Bonus).",
+    "Make a deposit (Min. USD 5.00).",
+    "Claim the rain.",
+    "Claim your Daily Rakeback.",
+    "Play 100 spins on Slots.",
+    "Play 250 spins on Slots.",
+    "Play 500 spins on Slots.",
+    "Play 1,000 spins on Slots.",
+    "Join a Slot Battle.",
+    "Play 10 games of Roulette.",
+    "Play 20 hands of Blackjack.",
+    "Play 20 games of Keep Digging.",
+    "Wager USD 250.00.",
+    "Wager USD 1,000.00.",
+    "Wager USD 2,500.00.",
+    "Reach Bronze II Rank.",
+    "Reach Bronze III Rank.",
+    "Reach Bronze IV Rank.",
+    "Reach Bronze V Rank.",
+    "Reach Silver II Rank.",
+    "Reach Silver IV Rank.",
+    "Reach Gold I Rank.",
+    "Reach Gold III Rank."
+  ],
+  "game_system_terms": [
+    "install_open_tracking",
+    "support_proof",
+    "purchase_recharge_subscription",
+    "tracking_proof",
+    "random_reward_gacha",
+    "chapter_stage_campaign",
+    "character_hero_rank"
+  ],
+  "section_keyword_map": [
+    {
+      "section": "Payout Table",
+      "keyword": "Acebet offer guide",
+      "anchor": "payout-table"
+    },
+    {
+      "section": "Risk Bands",
+      "keyword": "Acebet offer guide",
+      "anchor": "risk-bands"
+    },
+    {
+      "section": "Setup Tracking",
+      "keyword": "Acebet offer guide",
+      "anchor": "setup-tracking"
+    },
+    {
+      "section": "Evidence Log",
+      "keyword": "Acebet offer guide",
+      "anchor": "evidence-log"
+    },
+    {
+      "section": "Game Overview",
+      "keyword": "Acebet offer guide",
+      "anchor": "game-overview"
+    },
+    {
+      "section": "Game Systems",
+      "keyword": "Acebet offer guide",
+      "anchor": "game-systems"
+    },
+    {
+      "section": "Milestone Matrix",
+      "keyword": "Acebet offer guide",
+      "anchor": "milestone-matrix"
+    },
+    {
+      "section": "Task Route",
+      "keyword": "Acebet offer guide",
+      "anchor": "task-route"
+    },
+    {
+      "section": "Proof Support",
+      "keyword": "Acebet offer guide",
+      "anchor": "proof-support"
+    },
+    {
+      "section": "FAQ",
+      "keyword": "Acebet offer guide",
+      "anchor": "faq"
+    },
+    {
+      "section": "Start Offer",
+      "keyword": "Acebet offer guide",
+      "anchor": "start-offer"
+    }
+  ],
+  "faq_keyword_map": [
+    "Is Acebet worth it?",
+    "How do Acebet offer tasks credit?",
+    "What proof should I save for Acebet?"
+  ],
+  "cta_keyword_map": [
+    {
+      "cta": "Compare live offers",
+      "target": "[INTERNAL: /offers]"
+    }
+  ],
+  "archetype_keyword_map": [
+    {
+      "archetype": "install_open_tracking",
+      "keyword": "Acebet install open tracking"
+    },
+    {
+      "archetype": "purchase_recharge_subscription",
+      "keyword": "Acebet purchase recharge subscription"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "random_reward_gacha",
+      "keyword": "Acebet random reward gacha"
+    },
+    {
+      "archetype": "random_reward_gacha",
+      "keyword": "Acebet random reward gacha"
+    },
+    {
+      "archetype": "random_reward_gacha",
+      "keyword": "Acebet random reward gacha"
+    },
+    {
+      "archetype": "random_reward_gacha",
+      "keyword": "Acebet random reward gacha"
+    },
+    {
+      "archetype": "chapter_stage_campaign",
+      "keyword": "Acebet chapter stage campaign"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "support_proof",
+      "keyword": "Acebet support proof"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    },
+    {
+      "archetype": "character_hero_rank",
+      "keyword": "Acebet character hero rank"
+    }
+  ],
+  "search_intent": "mixed",
+  "difficulty": "high",
+  "serp_opportunities": [
+    "Most pages do not preserve exact live task rows.",
+    "Most pages skip proof and support packet planning.",
+    "Most pages do not separate safe, grind, paid, and high-risk task bands."
+  ],
+  "meta_description_draft": "Acebet offer guide covering 23 live tasks, payout checks, proof steps, risk bands, and stop rules before you start. Use it to compare the route safely.",
+  "h1_draft": "Acebet Offer Guide"
+}

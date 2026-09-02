@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useReducer, useEffect, useRef, useCallback } from "react";
+import React, { useReducer, useEffect, useRef, useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Grid2X2, List, Search, X } from "lucide-react";
+import { Grid2X2, List, Search, X, Flame, DollarSign, Sparkles, Smartphone, Laptop, CheckCircle2, ChevronDown, SlidersHorizontal, ArrowUpDown, Tag } from "lucide-react";
 import TrackedOutboundLink from "@/components/offers/TrackedOutboundLink";
 import ProviderLogo from "@/components/providers/ProviderLogo";
+import OfferDetailsModal from "@/components/offers/OfferDetailsModal";
 import { formatDataRefreshedLabel } from "@/lib/payout-freshness";
 import type { PublicOfferCountry } from "@/lib/earnlab-countries";
 
 // ---------------------------------------------------------------
-// TYPES — mirrors /api/offers response exactly
+// TYPES — mirrors /api/offers response
 // ---------------------------------------------------------------
 export interface OfferGame {
     id: string;
@@ -29,7 +30,7 @@ export interface OfferPlatform {
 
 export interface Offer {
     id: string;
-    source: "ingested" | "manual";   // ← NEW
+    source: "ingested" | "manual";
     title: string;
     image_url: string | null;
     payout_usd: number;
@@ -46,11 +47,12 @@ export interface Offer {
     heat_score: number;
     offer_expires_at: string | null;
     updated_at: string;
-    goal_text: string | null;         // ← NEW (manual offers)
-    provider_name: string | null;     // ← NEW (manual offers)
+    goal_text: string | null;
+    category?: string | null;
+    provider_name: string | null;
     game: OfferGame;
     platform: OfferPlatform;
-    redirect_url: string | null;      // /go/:id for ingested, direct URL for manual
+    redirect_url: string | null;
 }
 
 export interface OfferMeta {
@@ -66,6 +68,14 @@ const isImageUrl = (url?: string | null) =>
     typeof url === "string" &&
     /\.(jpg|jpeg|png|webp|gif|avif|svg)(?:$|[?#])/i.test(url);
 
+function formatCompletions(count: number | null | undefined): string | null {
+    if (!count || count <= 0) return null;
+    if (count >= 1000) {
+        return `${(count / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+    }
+    return count.toLocaleString();
+}
+
 function OfferThumbnail({
     src,
     alt,
@@ -80,7 +90,11 @@ function OfferThumbnail({
     const [failed, setFailed] = React.useState(false);
 
     if (!src || failed) {
-        return <div className="text-[var(--text-tertiary)] text-xs font-bold uppercase">{fallbackText}</div>;
+        return (
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 text-xs font-black uppercase text-[var(--brand-lime)]">
+                {fallbackText.slice(0, 3)}
+            </div>
+        );
     }
 
     return (
@@ -106,7 +120,7 @@ function PlatformLogoImage({
     const [failed, setFailed] = React.useState(false);
 
     if (!src || failed) {
-        return <span>{name}</span>;
+        return <span className="text-xs font-black text-white">{name}</span>;
     }
 
     return (
@@ -115,7 +129,7 @@ function PlatformLogoImage({
             <img
                 src={src}
                 alt=""
-                className="max-h-5 w-auto max-w-[4.5rem] object-contain"
+                className="max-h-4 w-auto max-w-[4rem] object-contain"
                 loading="lazy"
                 referrerPolicy="no-referrer"
                 onError={() => setFailed(true)}
@@ -126,13 +140,16 @@ function PlatformLogoImage({
 }
 
 // ---------------------------------------------------------------
-// FILTER STATE — maps 1:1 to /api/offers query params
+// FILTER STATE
 // ---------------------------------------------------------------
+export type SortOption = "payout_desc" | "completed_desc" | "newest" | "payout_asc" | "heat_desc";
+
 interface FilterState {
     q: string;
     source: "" | "ingested" | "manual";
-    platform_id: string; // ← NEW
+    platform_id: string;
     platform_kind: string;
+    category: string;
     device: string;
     country: string;
     payout_type: string;
@@ -141,8 +158,9 @@ interface FilterState {
     is_ath: boolean;
     is_boosted: boolean;
     min_payout: number;
-    sort: "payout_desc" | "payout_asc" | "heat_desc" | "newest";
+    sort: SortOption;
     page: number;
+    per_page: number;
 }
 
 function defaultFilterState(country = "US"): FilterState {
@@ -151,6 +169,7 @@ function defaultFilterState(country = "US"): FilterState {
         source: "",
         platform_id: "",
         platform_kind: "",
+        category: "",
         device: "",
         country,
         payout_type: "",
@@ -161,15 +180,14 @@ function defaultFilterState(country = "US"): FilterState {
         min_payout: 0,
         sort: "payout_desc",
         page: 1,
+        per_page: 24,
     };
 }
-
-const defaultFilters: FilterState = defaultFilterState();
 
 type FilterAction =
     | { type: "SET"; key: keyof FilterState; value: FilterState[keyof FilterState] }
     | { type: "HYDRATE"; filters: FilterState }
-    | { type: "RESET" }
+    | { type: "RESET"; country?: string }
     | { type: "SET_PAGE"; page: number };
 
 function filterReducer(state: FilterState, action: FilterAction): FilterState {
@@ -181,15 +199,12 @@ function filterReducer(state: FilterState, action: FilterAction): FilterState {
         case "HYDRATE":
             return action.filters;
         case "RESET":
-            return { ...defaultFilters };
+            return defaultFilterState(action.country ?? state.country);
         default:
             return state;
     }
 }
 
-// ---------------------------------------------------------------
-// HOOKS
-// ---------------------------------------------------------------
 function useDebounce<T>(value: T, delay: number): T {
     const [debouncedValue, setDebouncedValue] = React.useState(value);
     useEffect(() => {
@@ -205,24 +220,31 @@ type SearchParamsLike = {
 
 function buildFiltersFromSearchParams(searchParams: SearchParamsLike): FilterState {
     const page = parseInt(searchParams.get("page") ?? "1", 10);
-    const sort = searchParams.get("sort");
+    const perPage = parseInt(searchParams.get("per_page") ?? "24", 10);
+    const rawSort = searchParams.get("sort");
+    const sort: SortOption =
+        rawSort === "completed_desc" || rawSort === "payout_asc" || rawSort === "heat_desc" || rawSort === "newest"
+            ? rawSort
+            : "payout_desc";
     const source = searchParams.get("source");
 
     return {
-        q: searchParams.get("q") ?? "",
+        q: searchParams.get("q") ?? (searchParams.get("platform_id") ? "" : searchParams.get("platform_name") ?? ""),
         source: source === "ingested" || source === "manual" ? source : "",
         platform_id: searchParams.get("platform_id") ?? "",
         platform_kind: searchParams.get("platform_kind") ?? "",
+        category: searchParams.get("category") ?? "",
         device: searchParams.get("device") ?? "",
-        country: searchParams.get("country") ?? "US",
+        country: searchParams.get("country") || "US",
         payout_type: searchParams.get("payout_type") ?? "",
         is_new: searchParams.get("is_new") === "true",
         is_hot: searchParams.get("is_hot") === "true",
         is_ath: searchParams.get("is_ath") === "true",
         is_boosted: searchParams.get("is_boosted") === "true",
         min_payout: parseFloat(searchParams.get("min_payout") ?? "0") || 0,
-        sort: sort === "payout_asc" || sort === "heat_desc" || sort === "newest" ? sort : "payout_desc",
+        sort,
         page: Number.isFinite(page) && page > 0 ? page : 1,
+        per_page: Number.isFinite(perPage) && perPage > 0 ? perPage : 24,
     };
 }
 
@@ -243,16 +265,19 @@ function buildShareableSearchParams(
         if (context?.fromReview) params.set("from_review", "1");
     }
     if (filters.platform_kind) params.set("platform_kind", filters.platform_kind);
+    if (filters.category) params.set("category", filters.category);
     if (filters.device) params.set("device", filters.device);
-    if (filters.country && filters.country !== defaultFilters.country) params.set("country", filters.country);
+    // Always preserve explicit country in shareable search params so switching to US or any other region always works!
+    if (filters.country) params.set("country", filters.country);
     if (filters.payout_type) params.set("payout_type", filters.payout_type);
     if (filters.is_new) params.set("is_new", "true");
     if (filters.is_hot) params.set("is_hot", "true");
     if (filters.is_ath) params.set("is_ath", "true");
     if (filters.is_boosted) params.set("is_boosted", "true");
     if (filters.min_payout > 0) params.set("min_payout", String(filters.min_payout));
-    if (filters.sort !== defaultFilters.sort) params.set("sort", filters.sort);
+    if (filters.sort !== "payout_desc") params.set("sort", filters.sort);
     if (filters.page > 1) params.set("page", String(filters.page));
+    if (filters.per_page !== 24) params.set("per_page", String(filters.per_page));
     return params;
 }
 
@@ -262,6 +287,7 @@ function buildQueryString(filters: FilterState, debouncedQ: string): string {
     if (filters.source) params.set("source", filters.source);
     if (filters.platform_id) params.set("platform_id", filters.platform_id);
     if (filters.platform_kind) params.set("platform_kind", filters.platform_kind);
+    if (filters.category) params.set("category", filters.category);
     if (filters.device) params.set("device", filters.device);
     if (filters.country) params.set("country", filters.country);
     if (filters.payout_type) params.set("payout_type", filters.payout_type);
@@ -272,7 +298,7 @@ function buildQueryString(filters: FilterState, debouncedQ: string): string {
     if (filters.min_payout > 0) params.set("min_payout", String(filters.min_payout));
     params.set("sort", filters.sort);
     params.set("page", String(filters.page));
-    params.set("per_page", "4");
+    params.set("per_page", String(filters.per_page || 24));
     return params.toString();
 }
 
@@ -281,12 +307,13 @@ function buildQueryString(filters: FilterState, debouncedQ: string): string {
 // ---------------------------------------------------------------
 interface BadgeProps {
     label: string;
-    variant: "ath" | "new" | "hot" | "boosted" | "featured" | "best";
+    variant: "ath" | "new" | "hot" | "boosted" | "featured" | "best" | "completed";
 }
 
 const badgeStyles: Record<BadgeProps["variant"], string> = {
-    ath: "bg-[var(--brand-lime)] text-[var(--brand-ink)]",
-    best: "bg-[var(--brand-ink)] text-[var(--brand-lime)]",
+    ath: "bg-[var(--brand-lime)] text-[var(--brand-ink)] font-black",
+    best: "bg-[var(--brand-ink)] text-[var(--brand-lime)] font-black border border-slate-700",
+    completed: "bg-amber-500/15 text-amber-900 border border-amber-500/30 font-extrabold",
     new: "bg-blue-50 text-blue-700 border border-blue-200",
     hot: "bg-orange-100 text-orange-700 border border-orange-200",
     boosted: "bg-purple-50 text-purple-700 border border-purple-200",
@@ -295,7 +322,7 @@ const badgeStyles: Record<BadgeProps["variant"], string> = {
 
 function Badge({ label, variant }: BadgeProps) {
     return (
-        <span className={`inline-flex items-center px-2 py-0.5 rounded-none text-[10px] font-extrabold uppercase tracking-wider leading-none ${badgeStyles[variant]}`}>
+        <span className={`inline-flex items-center px-2 py-0.5 text-[10px] uppercase tracking-wider leading-none ${badgeStyles[variant]}`}>
             {label}
         </span>
     );
@@ -308,356 +335,539 @@ const DeviceIcon = ({ device }: { device: string }) => {
     const icons: Record<string, string> = {
         ios: "🍎", android: "🤖", pc: "💻", web: "🌐",
     };
-    return <span title={device} className="text-sm">{icons[device] ?? "📱"}</span>;
+    return <span title={device} className="text-xs">{icons[device] ?? "📱"}</span>;
 };
 
 // ---------------------------------------------------------------
-// OFFER ROW
+// OFFER CARD (GRID VIEW)
 // ---------------------------------------------------------------
-interface OfferRowProps {
-    offer: Offer;
-    onPin: (offer: Offer) => void;
-    isPinned: boolean;
-    isBestPayout: boolean;
-    ctaLocation: string;
-    ctaSourceContext: string;
-    extraRoutesCount?: number;
-    extraSitesLabel?: string;
-    onToggleExtraRoutes?: () => void;
-    extraRoutesOpen?: boolean;
-    compactVariant?: boolean;
-}
-
-function OfferRow({
+function OfferGridCard({
     offer,
     onPin,
+    onOpenModal,
     isPinned,
-    isBestPayout,
-    ctaLocation,
-    ctaSourceContext,
-    extraRoutesCount = 0,
-    extraSitesLabel,
-    onToggleExtraRoutes,
-    extraRoutesOpen = false,
-    compactVariant = false,
-}: OfferRowProps) {
+}: {
+    offer: Offer;
+    onPin: (offer: Offer) => void;
+    onOpenModal: (offer: Offer) => void;
+    isPinned: boolean;
+}) {
     const gameName = offer.game?.name ?? offer.title ?? "Offer";
-    const gameSlug = offer.game?.slug ?? null;
-    const gameHref = gameSlug ? `/offers/${gameSlug}` : null;
-    const platformName = offer.platform?.name ?? "Unknown platform";
+    const platformName = offer.platform?.name ?? "Partner Site";
     const providerName = offer.provider_name ?? platformName;
-    const thumbnailUrl =
-        offer.image_url ??
-        (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ??
-        offer.game?.thumbnail_url ??
-        null;
-    const routeSummary =
-        offer.goal_text ||
-        (gameHref
-            ? `Open the offer route to compare payouts and details for ${gameName}.`
-            : `Go directly to ${platformName} for this offer.`);
+    const thumbnailUrl = offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game?.thumbnail_url ?? null;
+    const completionLabel = formatCompletions(offer.completion_count);
+
+    return (
+        <article
+            onClick={() => onOpenModal(offer)}
+            className="group flex flex-col overflow-hidden border border-slate-200/90 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.06)] transition-all duration-200 hover:-translate-y-1 hover:border-slate-800 hover:shadow-[0_16px_32px_rgba(15,23,42,0.12)] cursor-pointer"
+        >
+            {/* Card Header & Thumbnail */}
+            <div className="relative flex h-40 w-full items-center justify-center overflow-hidden border-b border-slate-100 bg-slate-900">
+                <OfferThumbnail
+                    src={thumbnailUrl}
+                    alt={gameName}
+                    fallbackText={gameName.slice(0, 3)}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+
+                {/* Badges Overlay */}
+                <div className="absolute left-2.5 top-2.5 flex flex-wrap gap-1">
+                    {completionLabel ? (
+                        <span className="inline-flex items-center gap-1 border border-orange-400/40 bg-slate-950/90 px-2 py-0.5 text-[10px] font-black text-orange-400 shadow-sm backdrop-blur-md">
+                            <Flame className="h-3 w-3 fill-orange-400" />
+                            {completionLabel} completed
+                        </span>
+                    ) : offer.is_hot || offer.heat_score >= 50 ? (
+                        <span className="inline-flex items-center gap-1 border border-orange-400/40 bg-slate-950/90 px-2 py-0.5 text-[10px] font-black text-orange-400 shadow-sm backdrop-blur-md">
+                            <Flame className="h-3 w-3 fill-orange-400" />
+                            Popular Pick
+                        </span>
+                    ) : null}
+                    {offer.is_ath ? <Badge label="ATH PAYOUT" variant="ath" /> : null}
+                    {offer.is_new ? <Badge label="NEW" variant="new" /> : null}
+                    {offer.is_boosted ? <Badge label="BOOSTED" variant="boosted" /> : null}
+                </div>
+
+                {/* Payout Badge */}
+                <div className="absolute bottom-2.5 right-2.5 border border-slate-700 bg-slate-950/95 px-3 py-1 text-right shadow-md backdrop-blur-md">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Total Prize</div>
+                    <div className="text-xl font-black leading-none text-[var(--brand-lime)]">
+                        ${offer.payout_usd.toFixed(2)}
+                    </div>
+                </div>
+            </div>
+
+            {/* Card Body */}
+            <div className="flex flex-1 flex-col p-4">
+                {/* Title & Goal */}
+                <div className="mb-2">
+                    <h3 className="line-clamp-1 text-base font-black text-slate-900 transition-colors group-hover:text-slate-800" title={gameName}>
+                        {gameName}
+                    </h3>
+                    <p className="line-clamp-1 text-xs text-slate-500" title={offer.goal_text ?? offer.title}>
+                        {offer.goal_text || offer.title}
+                    </p>
+                </div>
+
+                {/* Platform & Provider Row */}
+                <div className="mt-auto space-y-2 border-t border-slate-100 pt-3">
+                    <div className="flex items-center justify-between gap-2 text-xs">
+                        <div className="flex items-center gap-1.5 overflow-hidden">
+                            <span className="flex h-6 items-center gap-1 border border-slate-700 bg-slate-900 px-2 font-bold text-[var(--brand-lime)] shadow-xs">
+                                <PlatformLogoImage src={offer.platform?.logo_url} name={platformName} />
+                            </span>
+                            {providerName && providerName !== platformName ? (
+                                <ProviderLogo name={providerName} compact className="h-6 max-w-[4.5rem]" />
+                            ) : null}
+                        </div>
+
+                        <div className="flex items-center gap-1 text-slate-400">
+                            {offer.devices.map((device) => (
+                                <DeviceIcon key={device} device={device} />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Action Row */}
+                    <div className="flex items-center gap-2 pt-1" onClick={(e) => e.stopPropagation()}>
+                        <button
+                            type="button"
+                            onClick={() => onPin(offer)}
+                            title={isPinned ? "Remove from comparison" : "Add to comparison"}
+                            aria-label={isPinned ? "Remove from comparison" : "Add to comparison"}
+                            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center border text-sm font-black transition-colors ${
+                                isPinned
+                                    ? "border-lime-500 bg-[var(--brand-lime)] text-slate-950"
+                                    : "border-slate-300 bg-white text-slate-500 hover:border-slate-800 hover:text-slate-900"
+                            }`}
+                        >
+                            {isPinned ? "✓" : "+"}
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={() => onOpenModal(offer)}
+                            className="flex h-9 flex-1 items-center justify-center border border-slate-900 bg-slate-900 px-3 text-xs font-black uppercase tracking-wider text-[var(--brand-lime)] shadow-xs transition-all hover:bg-slate-800 hover:text-white"
+                        >
+                            View Details →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </article>
+    );
+}
+
+// ---------------------------------------------------------------
+// OFFER ROW (LIST VIEW)
+// ---------------------------------------------------------------
+function OfferRowItem({
+    offer,
+    onPin,
+    onOpenModal,
+    isPinned,
+}: {
+    offer: Offer;
+    onPin: (offer: Offer) => void;
+    onOpenModal: (offer: Offer) => void;
+    isPinned: boolean;
+}) {
+    const gameName = offer.game?.name ?? offer.title ?? "Offer";
+    const platformName = offer.platform?.name ?? "Partner Site";
+    const providerName = offer.provider_name ?? platformName;
+    const thumbnailUrl = offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game?.thumbnail_url ?? null;
+    const completionLabel = formatCompletions(offer.completion_count);
 
     return (
         <div
-            className={`px-3 py-3 sm:px-4 border-b border-[var(--border-default)] last:border-0 transition-all group cursor-pointer hover:shadow-[inset_0_0_0_1px_rgba(132,204,22,0.35)] ${
-                isBestPayout
-                    ? "bg-[var(--brand-lime)]/5 border-l-[3px] !border-l-[var(--brand-lime)]"
-                    : "hover:bg-[var(--surface-muted)]"
-            } ${compactVariant ? "bg-[var(--surface-muted)]/45" : ""}`}
-            role="button"
-            tabIndex={0}
+            onClick={() => onOpenModal(offer)}
+            className="flex flex-col gap-3 border-b border-slate-200/90 bg-white p-3.5 transition-colors hover:bg-slate-50/80 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-4 cursor-pointer"
         >
-            <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-none overflow-hidden bg-[var(--surface-muted)] border border-[var(--border-default)] flex items-center justify-center group-hover:border-lime-300 transition-colors">
+            {/* Left: Thumbnail & Info */}
+            <div className="flex items-center gap-3.5 min-w-0 flex-1">
+                <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden border border-slate-200 bg-slate-900 sm:h-14 sm:w-14">
                     <OfferThumbnail
                         src={thumbnailUrl}
                         alt={gameName}
-                        fallbackText={gameName.substring(0, 2)}
-                        className="w-full h-full object-cover"
+                        fallbackText={gameName.slice(0, 3)}
+                        className="h-full w-full object-cover"
                     />
                 </div>
 
-                <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 flex-wrap mb-1">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">
-                            {offer.source === "manual" ? "Curated route" : "Live offer"}
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
-                        <span className="font-bold text-[var(--brand-ink)] group-hover:text-lime-700 transition-colors truncate text-sm">
+                <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="truncate text-sm font-black text-slate-900 sm:text-base" title={gameName}>
                             {gameName}
-                        </span>
-                        {isBestPayout && <Badge label="TOP PAYOUT" variant="best" />}
-                        {offer.source === "manual" && (
-                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-none text-[10px] font-extrabold uppercase tracking-wider leading-none bg-indigo-50 text-indigo-700 border border-indigo-200">
-                                Curated
+                        </h3>
+                        {completionLabel ? (
+                            <span className="inline-flex items-center gap-1 border border-orange-300 bg-orange-50 px-1.5 py-0.5 text-[10px] font-extrabold text-orange-700">
+                                <Flame className="h-3 w-3 fill-orange-500 text-orange-500" />
+                                {completionLabel}
                             </span>
-                        )}
-                        {offer.is_ath && <Badge label="ATH" variant="ath" />}
-                        {offer.is_new && <Badge label="NEW" variant="new" />}
-                        {offer.is_hot && <Badge label="HOT" variant="hot" />}
-                        {offer.is_boosted && <Badge label="BOOSTED" variant="boosted" />}
+                        ) : null}
+                        {offer.is_ath ? <Badge label="ATH" variant="ath" /> : null}
+                        {offer.is_new ? <Badge label="NEW" variant="new" /> : null}
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs text-[var(--text-tertiary)] flex-wrap">
-                        <span className="flex h-7 items-center gap-1 rounded-none border border-slate-700 bg-[var(--brand-ink)] px-2 font-semibold text-[var(--brand-lime)] shadow-sm">
-                            <PlatformLogoImage src={offer.platform.logo_url} name={platformName} />
-                        </span>
-                        <ProviderLogo name={providerName} compact className="h-7 max-w-[5rem]" />
-                        <span className="text-[var(--border-strong)]">/</span>
-                        <span className="flex items-center gap-0.5">
-                            {offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}
-                        </span>
-                        {offer.heat_score > 50 && <span className="text-orange-500 font-semibold">Hot</span>}
-                    </div>
-                    <p className="mt-1 hidden text-xs text-[var(--text-secondary)] sm:block sm:line-clamp-1">{routeSummary}</p>
-                </div>
 
-                <div className="flex-shrink-0 text-right ml-auto pl-2">
-                    <div className="text-[10px] text-[var(--text-tertiary)] uppercase tracking-widest mb-0.5 font-semibold">
-                        {isBestPayout ? "Best now" : "Up to"}
+                    <div className="mt-1 flex items-center gap-2 text-xs text-slate-500 flex-wrap">
+                        <span className="flex h-5 items-center gap-1 border border-slate-700 bg-slate-900 px-1.5 text-[11px] font-bold text-[var(--brand-lime)]">
+                            <PlatformLogoImage src={offer.platform?.logo_url} name={platformName} />
+                        </span>
+                        {providerName && providerName !== platformName ? (
+                            <span className="border border-slate-200 bg-slate-100 px-1.5 py-0.5 text-[11px] font-semibold text-slate-700">
+                                {providerName}
+                            </span>
+                        ) : null}
+                        <span className="flex items-center gap-0.5">
+                            {offer.devices.map((device) => (
+                                <DeviceIcon key={device} device={device} />
+                            ))}
+                        </span>
+                        <span className="hidden text-slate-400 sm:inline">·</span>
+                        <span className="hidden text-[11px] text-slate-400 sm:inline">
+                            {formatDataRefreshedLabel(offer.updated_at)}
+                        </span>
                     </div>
-                    <div className={`text-xl sm:text-2xl font-extrabold leading-none ${isBestPayout ? 'text-[color:hsl(84,93%,25%)]' : 'text-[color:hsl(84,93%,30%)]'}`}>
+                </div>
+            </div>
+
+            {/* Right: Payout & Actions */}
+            <div className="flex items-center justify-between sm:justify-end gap-3 flex-shrink-0 pt-2 border-t border-slate-100 sm:border-0 sm:pt-0" onClick={(e) => e.stopPropagation()}>
+                <div className="text-left sm:text-right pr-2">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Prize</div>
+                    <div className="text-lg font-black text-slate-900 sm:text-xl">
                         ${offer.payout_usd.toFixed(2)}
                     </div>
-                    <div className="mt-1 text-[11px] font-medium text-[var(--text-tertiary)]">
-                        {formatDataRefreshedLabel(offer.updated_at)}
-                    </div>
                 </div>
-            </div>
 
-            <div className="flex flex-wrap items-center gap-2 mt-2" onClick={(e) => e.stopPropagation()}>
-                <button
-                    onClick={(e) => { e.stopPropagation(); onPin(offer); }}
-                    title={isPinned ? "Remove from comparison" : "Add to comparison"}
-                    aria-label={isPinned ? "Remove from comparison" : "Add to comparison"}
-                    className={`flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-none border text-sm font-bold transition-colors ${isPinned
-                        ? "bg-[var(--brand-lime)] border-lime-300 text-[var(--brand-ink)]"
-                        : "bg-white border-[var(--border-default)] text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700 hover:bg-[var(--brand-lime)]/10"
-                    }`}
-                >
-                    {isPinned ? "-" : "+"}
-                </button>
-
-                {gameHref ? (
-                    <Link
-                        href={gameHref}
-                        onClick={(e) => e.stopPropagation()}
-                        className="min-w-[7rem] flex-1 sm:flex-none text-center px-3 py-2 bg-white border border-[var(--border-default)] hover:-translate-y-0.5 hover:border-lime-300 hover:bg-[var(--brand-lime)]/10 hover:shadow-[0_10px_24px_rgba(15,23,42,0.08)] text-[var(--brand-ink)] text-sm font-bold rounded-none transition-all whitespace-nowrap"
-                    >
-                        View Route
-                    </Link>
-                ) : (
-                    <span className="flex-1 sm:flex-none text-center px-3 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-none whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
-                        No Details
-                    </span>
-                )}
-
-                {offer.redirect_url ? (
-                    <TrackedOutboundLink
-                        href={offer.redirect_url}
-                        onClick={(e) => e.stopPropagation()}
-                        eventLabel={offer.source === "manual" ? "manual-offer-cta" : "offer-search-cta"}
-                        offerId={offer.id}
-                        offerTitle={gameName}
-                        gameTitle={gameName}
-                        platformName={platformName}
-                        providerName={offer.provider_name}
-                        payoutUsd={offer.payout_usd}
-                        location={ctaLocation}
-                        sourceContext={ctaSourceContext}
-                        className="min-w-[9rem] flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--brand-ink)] hover:-translate-y-0.5 hover:bg-[var(--brand-ink)]/90 hover:shadow-[0_12px_28px_rgba(15,23,42,0.16)] text-[var(--brand-lime)] text-sm font-extrabold rounded-none transition-all whitespace-nowrap shadow-sm"
-                    >
-                        {offer.source === "manual" ? "Open Payout Site" : isBestPayout ? "Start Best Payout" : "Start Offer"}
-                    </TrackedOutboundLink>
-                ) : (
-                    <span className="flex-1 sm:flex-none text-center px-4 py-2 bg-[var(--surface-muted)] text-[var(--text-tertiary)] text-sm font-semibold rounded-none whitespace-nowrap border border-[var(--border-default)] cursor-not-allowed">
-                        No Link
-                    </span>
-                )}
-            </div>
-            <div className="mt-2 hidden text-[11px] text-[var(--text-tertiary)] sm:block">
-                {gameHref
-                    ? "Check route details first. Start buttons go through EarnGrind tracking, and some links may be affiliate links."
-                    : "Start buttons go through EarnGrind tracking, and some links may be affiliate links."}
-            </div>
-            {extraRoutesCount > 0 && onToggleExtraRoutes ? (
-                <div className="mt-3 flex items-center justify-between gap-3 rounded-none border border-[var(--border-default)] bg-white px-3 py-2 transition-all hover:border-lime-300 hover:shadow-[0_10px_24px_rgba(15,23,42,0.08)]">
-                    <div className="min-w-0 text-xs text-[var(--text-secondary)]">
-                        <span className="font-bold text-[var(--brand-ink)]">{extraRoutesCount} more site{extraRoutesCount !== 1 ? "s" : ""}</span>
-                        {extraSitesLabel ? ` available: ${extraSitesLabel}` : "."}
-                    </div>
+                <div className="flex items-center gap-2">
                     <button
                         type="button"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onToggleExtraRoutes();
-                        }}
-                        className="flex-shrink-0 rounded-none border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)] hover:border-lime-400"
+                        onClick={() => onPin(offer)}
+                        className={`flex h-9 w-9 items-center justify-center border text-sm font-black transition-colors ${
+                            isPinned
+                                ? "border-lime-500 bg-[var(--brand-lime)] text-slate-950"
+                                : "border-slate-300 bg-white text-slate-500 hover:border-slate-800 hover:text-slate-900"
+                        }`}
+                        title={isPinned ? "Remove from comparison" : "Compare"}
                     >
-                        {extraRoutesOpen ? "Hide sites" : "Show sites"}
+                        {isPinned ? "✓" : "+"}
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => onOpenModal(offer)}
+                        className="flex h-9 items-center justify-center border border-slate-900 bg-slate-900 px-4 text-xs font-black uppercase tracking-wider text-[var(--brand-lime)] shadow-xs transition-all hover:bg-slate-800 hover:text-white"
+                    >
+                        View Details →
                     </button>
                 </div>
-            ) : null}
+            </div>
         </div>
     );
 }
 
 // ---------------------------------------------------------------
-// SEARCH BAR
+// SEARCH & FILTER CONTROLS
 // ---------------------------------------------------------------
-interface SearchBarProps {
-    value: string;
-    onChange: (v: string) => void;
-}
-
-function SearchBar({ value, onChange }: SearchBarProps) {
-    return (
-        <div className="relative group">
-            <Search aria-hidden className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)] transition-colors group-focus-within:text-lime-600" />
-            <input
-                type="search"
-                aria-label="Search offers"
-                placeholder="Search games, platforms, categories..."
-                value={value}
-                onChange={e => onChange(e.target.value)}
-                className="h-12 w-full border border-[var(--border-default)] bg-[var(--surface-muted)] py-2.5 pl-10 pr-10 text-sm text-[var(--brand-ink)] placeholder:text-[var(--text-tertiary)] shadow-[var(--shadow-card)] transition-all focus:border-lime-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[var(--brand-lime)]/20"
-            />
-            {value ? <button type="button" onClick={() => onChange("")} aria-label="Clear offer search" className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[var(--text-tertiary)] hover:text-[var(--brand-ink)]"><X className="h-4 w-4" /></button> : null}
-        </div>
-    );
-}
-
-// ---------------------------------------------------------------
-// FILTER BAR
-// ---------------------------------------------------------------
-interface FilterBarProps {
+interface FilterControlsProps {
     filters: FilterState;
     dispatch: React.Dispatch<FilterAction>;
     platforms: OfferPlatform[];
     countries: PublicOfferCountry[];
-    selectedPlatformName?: string;
+    totalResults?: number;
+    loading: boolean;
 }
 
-function FilterBar({ filters, dispatch, platforms, countries, selectedPlatformName }: FilterBarProps) {
+function FilterControls({
+    filters,
+    dispatch,
+    platforms,
+    countries,
+}: FilterControlsProps) {
     const set = (key: keyof FilterState, value: FilterState[keyof FilterState]) =>
         dispatch({ type: "SET", key, value });
+
+    const handleCountryChange = (countryCode: string) => {
+        set("country", countryCode);
+        if (typeof document !== "undefined") {
+            document.cookie = `earngrind_offer_country=${encodeURIComponent(countryCode)}; path=/; max-age=31536000; SameSite=Lax`;
+        }
+    };
+
     const countryOptions = countries.length > 0
         ? countries
         : [{ code: "US", slug: "us", name: "United States", supported: true } as PublicOfferCountry];
 
-    const badgeFilters: { key: "is_new" | "is_hot" | "is_ath" | "is_boosted"; label: string; variant: BadgeProps["variant"] }[] = [
-        { key: "is_new", label: "NEW", variant: "new" },
-        { key: "is_hot", label: "HOT", variant: "hot" },
-        { key: "is_ath", label: "ATH", variant: "ath" },
-        { key: "is_boosted", label: "BOOSTED", variant: "boosted" },
-    ];
-
-    const selectClass = "h-10 w-full appearance-none border border-[var(--border-default)] bg-white px-3 pr-8 text-xs font-semibold text-[var(--brand-ink)] shadow-[var(--shadow-card)] transition-colors hover:border-[var(--border-strong)] focus:border-lime-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30";
+    const selectStyle =
+        "h-10 w-full appearance-none border border-slate-700 bg-slate-900 px-3 pr-8 text-xs font-bold text-white shadow-xs transition-colors hover:border-slate-500 focus:border-[var(--brand-lime)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-lime)]";
 
     return (
-        <div className="flex flex-col gap-2.5">
-            {/* Filter controls remain visible instead of relying on horizontal scrolling. */}
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-                <div className="relative flex-shrink-0">
-                    <select aria-label="Sort offers" value={filters.sort} onChange={e => set("sort", e.target.value as FilterState["sort"])} className={selectClass}>
-                        <option value="payout_desc">Highest Payout</option>
-                        <option value="payout_asc">Lowest Payout</option>
-                        <option value="heat_desc">Most Active</option>
-                        <option value="newest">Newest Offers</option>
-                    </select>
-                    <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </div>
-
-                <div className="relative flex-shrink-0">
-                    <select aria-label="Filter by source" value={filters.source} onChange={e => set("source", e.target.value as FilterState["source"])} className={selectClass}>
-                        <option value="">All Sources</option>
-                        <option value="ingested">Automated</option>
-                        <option value="manual">Curated</option>
-                    </select>
-                    <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </div>
-
-                <div className="relative flex-shrink-0">
-                    <select
-                        value={filters.platform_id}
-                        aria-label="Filter by site"
-                        onChange={e => {
-                            set("platform_id", e.target.value);
-                            if (e.target.value) {
-                                set("platform_kind", "");
-                            }
-                        }}
-                        className={selectClass}
+        <div className="border border-slate-800 bg-slate-950 p-4 shadow-md sm:p-5">
+            {/* Search Bar */}
+            <div className="relative mb-4">
+                <Search className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                <input
+                    type="search"
+                    aria-label="Search offers by name, site, or provider"
+                    placeholder="Search by game name (e.g. Monopoly Go, Raid), partner site, or provider..."
+                    value={filters.q}
+                    onChange={(e) => set("q", e.target.value)}
+                    className="h-12 w-full border border-slate-700 bg-slate-900 pl-11 pr-10 text-sm font-medium text-white placeholder:text-slate-400 focus:border-[var(--brand-lime)] focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30"
+                />
+                {filters.q ? (
+                    <button
+                        type="button"
+                        onClick={() => set("q", "")}
+                        aria-label="Clear search"
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-white"
                     >
-                        <option value="">All Sites</option>
-                        {selectedPlatformName && !platforms.find((platform) => platform.id === filters.platform_id) && filters.platform_id ? (
-                            <option value={filters.platform_id}>{selectedPlatformName}</option>
-                        ) : null}
-                        {platforms.map((platform) => (
-                            <option key={platform.id} value={platform.id}>
-                                {platform.name}
-                            </option>
-                        ))}
-                    </select>
-                    <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </div>
+                        <X className="h-4 w-4" />
+                    </button>
+                ) : null}
+            </div>
 
-                <div className="relative flex-shrink-0">
-                    <select aria-label="Filter by device" value={filters.device} onChange={e => set("device", e.target.value)} className={selectClass}>
-                        <option value="">All Devices</option>
-                        <option value="ios">🍏 iOS</option>
-                        <option value="android">🤖 Android</option>
-                        <option value="pc">💻 PC</option>
-                    </select>
-                    <svg className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </div>
+            {/* Quick Filter Presets Row */}
+            <div className="mb-4 flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+                <span className="mr-1 text-[11px] font-black uppercase tracking-wider text-slate-400">Presets:</span>
 
-                <div className="relative flex-shrink-0">
-                    <select
-                        value={filters.country}
-                        onChange={e => set("country", e.target.value)}
-                        className={selectClass}
-                        aria-label="Filter offers by country"
-                    >
-                        {countryOptions.map((country) => (
-                            <option key={country.code} value={country.code}>
-                                {country.name}
-                            </option>
-                        ))}
-                    </select>
-                    <svg className="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                </div>
-
+                {/* Most Completed Preset */}
                 <button
-                    onClick={() => dispatch({ type: "HYDRATE", filters: defaultFilterState(filters.country) })}
-                    className="flex-shrink-0 px-3 py-1.5 text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] border border-[var(--border-default)] rounded-none bg-white hover:border-[var(--border-strong)] transition-colors shadow-[var(--shadow-card)]"
+                    type="button"
+                    onClick={() => set("sort", filters.sort === "completed_desc" ? "payout_desc" : "completed_desc")}
+                    className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
+                        filters.sort === "completed_desc"
+                            ? "border-orange-500 bg-orange-500 text-slate-950 shadow-sm"
+                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                    }`}
                 >
-                    Clear
+                    <Flame className="h-3.5 w-3.5 fill-current" />
+                    Most Completed
+                </button>
+
+                {/* $100+ High Pay Preset */}
+                <button
+                    type="button"
+                    onClick={() => set("min_payout", filters.min_payout === 100 ? 0 : 100)}
+                    className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
+                        filters.min_payout === 100
+                            ? "border-lime-400 bg-[var(--brand-lime)] text-slate-950 shadow-sm"
+                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                    }`}
+                >
+                    <DollarSign className="h-3.5 w-3.5" />
+                    $100+ Payouts
+                </button>
+
+                {/* $25+ Quick Wins */}
+                <button
+                    type="button"
+                    onClick={() => set("min_payout", filters.min_payout === 25 ? 0 : 25)}
+                    className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
+                        filters.min_payout === 25
+                            ? "border-lime-400 bg-[var(--brand-lime)] text-slate-950 shadow-sm"
+                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                    }`}
+                >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    $25+ Payouts
+                </button>
+
+                {/* iOS */}
+                <button
+                    type="button"
+                    onClick={() => set("device", filters.device === "ios" ? "" : "ios")}
+                    className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
+                        filters.device === "ios"
+                            ? "border-white bg-white text-slate-950 shadow-sm"
+                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                    }`}
+                >
+                    🍎 iOS
+                </button>
+
+                {/* Android */}
+                <button
+                    type="button"
+                    onClick={() => set("device", filters.device === "android" ? "" : "android")}
+                    className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
+                        filters.device === "android"
+                            ? "border-green-400 bg-green-400 text-slate-950 shadow-sm"
+                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                    }`}
+                >
+                    🤖 Android
+                </button>
+
+                {/* PC */}
+                <button
+                    type="button"
+                    onClick={() => set("device", filters.device === "pc" ? "" : "pc")}
+                    className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
+                        filters.device === "pc"
+                            ? "border-blue-400 bg-blue-400 text-slate-950 shadow-sm"
+                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                    }`}
+                >
+                    💻 PC
                 </button>
             </div>
 
-            {/* Row 2: badge filter pills */}
-            <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar -mx-1 px-1">
-                <span className="flex-shrink-0 text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] flex items-center">Filter by:</span>
-                {badgeFilters.map(({ key, label, variant }) => (
+            {/* Structured Select Dropdowns Grid */}
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6 border-t border-slate-800/80 pt-4">
+                {/* 1. Sort By */}
+                <div className="relative">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                        Sort By
+                    </label>
+                    <div className="relative">
+                        <select
+                            aria-label="Sort offers"
+                            value={filters.sort}
+                            onChange={(e) => set("sort", e.target.value as SortOption)}
+                            className={selectStyle}
+                        >
+                            <option value="payout_desc">💰 Highest Payout</option>
+                            <option value="completed_desc">🔥 Most Completed</option>
+                            <option value="newest">⚡ Newest Added</option>
+                            <option value="payout_asc">Lowest Payout</option>
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+                    </div>
+                </div>
+
+                {/* 2. Country */}
+                <div className="relative">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                        Country
+                    </label>
+                    <div className="relative">
+                        <select
+                            aria-label="Filter by country"
+                            value={filters.country}
+                            onChange={(e) => handleCountryChange(e.target.value)}
+                            className={selectStyle}
+                        >
+                            {countryOptions.map((country) => (
+                                <option key={country.code} value={country.code}>
+                                    {country.name} ({country.code})
+                                </option>
+                            ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+                    </div>
+                </div>
+
+                {/* 3. Partner Site */}
+                <div className="relative">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                        Partner Site
+                    </label>
+                    <div className="relative">
+                        <select
+                            aria-label="Filter by partner site"
+                            value={filters.platform_id}
+                            onChange={(e) => set("platform_id", e.target.value)}
+                            className={selectStyle}
+                        >
+                            <option value="">All Sites</option>
+                            {platforms.map((platform) => (
+                                <option key={platform.id} value={platform.id}>
+                                    {platform.name}
+                                </option>
+                            ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+                    </div>
+                </div>
+
+                {/* 4. Category Filter */}
+                <div className="relative">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                        Category
+                    </label>
+                    <div className="relative">
+                        <select
+                            aria-label="Filter by category"
+                            value={filters.category}
+                            onChange={(e) => set("category", e.target.value)}
+                            className={selectStyle}
+                        >
+                            <option value="">All Categories</option>
+                            <option value="games">🎮 Games & RPG</option>
+                            <option value="casino">🎰 Casino & Slots</option>
+                            <option value="signup">✍️ Sign Up / Trial</option>
+                            <option value="finance">💰 Finance & Crypto</option>
+                            <option value="apps">📱 Mobile Apps</option>
+                            <option value="survey">📋 Surveys</option>
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+                    </div>
+                </div>
+
+                {/* 5. Device */}
+                <div className="relative">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                        Device
+                    </label>
+                    <div className="relative">
+                        <select
+                            aria-label="Filter by device"
+                            value={filters.device}
+                            onChange={(e) => set("device", e.target.value)}
+                            className={selectStyle}
+                        >
+                            <option value="">All Devices</option>
+                            <option value="ios">🍏 iOS</option>
+                            <option value="android">🤖 Android</option>
+                            <option value="pc">💻 PC</option>
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+                    </div>
+                </div>
+
+                {/* 6. Minimum Payout / Reset */}
+                <div className="relative flex items-end gap-1.5">
+                    <div className="flex-1">
+                        <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                            Min Payout
+                        </label>
+                        <div className="relative">
+                            <select
+                                aria-label="Filter by minimum payout"
+                                value={String(filters.min_payout)}
+                                onChange={(e) => set("min_payout", parseFloat(e.target.value) || 0)}
+                                className={selectStyle}
+                            >
+                                <option value="0">Any Payout</option>
+                                <option value="5">$5.00+</option>
+                                <option value="25">$25.00+</option>
+                                <option value="50">$50.00+</option>
+                                <option value="100">$100.00+</option>
+                                <option value="250">$250.00+</option>
+                            </select>
+                            <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
+                        </div>
+                    </div>
+
                     <button
-                        key={key}
-                        onClick={() => set(key, !filters[key])}
-                        className={`flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-none border text-[11px] font-extrabold uppercase tracking-wide transition-all ${filters[key]
-                            ? `${badgeStyles[variant]} border-transparent shadow-sm scale-[1.02]`
-                            : "bg-white border-[var(--border-default)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--brand-ink)]"
-                        }`}
+                        type="button"
+                        onClick={() => dispatch({ type: "RESET", country: filters.country })}
+                        title="Reset all filters"
+                        className="flex h-10 items-center justify-center border border-slate-700 bg-slate-900 px-3 text-xs font-bold text-slate-300 hover:border-slate-500 hover:text-white shadow-xs"
                     >
-                        {label}
+                        Reset
                     </button>
-                ))}
+                </div>
             </div>
         </div>
     );
 }
 
 // ---------------------------------------------------------------
-// COMPARE DRAWER
+// COMPARISON DRAWER
 // ---------------------------------------------------------------
 interface CompareDrawerProps {
     pinned: Offer[];
@@ -668,45 +878,62 @@ interface CompareDrawerProps {
 function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
     if (pinned.length === 0) return null;
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-[var(--border-default)] shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.12)] p-4">
-            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-4">
-                <div className="text-sm font-extrabold text-[var(--brand-ink)] whitespace-nowrap flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-none bg-[var(--brand-lime)] text-[var(--brand-ink)] flex items-center justify-center text-xs font-extrabold">
+        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-800 bg-slate-950/95 p-3.5 shadow-2xl backdrop-blur-md">
+            <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 sm:flex-row sm:justify-between">
+                <div className="flex items-center gap-2 text-xs font-black text-white">
+                    <span className="flex h-6 w-6 items-center justify-center bg-[var(--brand-lime)] text-xs font-black text-slate-950">
                         {pinned.length}
-                    </div>
-                    Comparing
+                    </span>
+                    <span>Comparing Offers ({pinned.length}/3)</span>
                 </div>
-                <div className="flex-1 flex gap-2 overflow-x-auto w-full pb-2 sm:pb-0 hide-scrollbar">
-                    {pinned.map(offer => (
-                        <div key={offer.id} className="flex-shrink-0 flex items-center gap-3 bg-[var(--surface-muted)] rounded-none px-3 py-2 border border-[var(--border-default)] min-w-[200px] relative">
-                            <div className="w-8 h-8 flex-shrink-0 overflow-hidden rounded-none border border-[var(--border-default)] flex items-center justify-center bg-white">
+
+                <div className="flex w-full flex-1 gap-2 overflow-x-auto pb-1 sm:w-auto sm:pb-0 hide-scrollbar">
+                    {pinned.map((offer) => (
+                        <div
+                            key={offer.id}
+                            className="relative flex min-w-[200px] items-center gap-2.5 border border-slate-700 bg-slate-900 px-3 py-1.5"
+                        >
+                            <div className="h-8 w-8 flex-shrink-0 overflow-hidden bg-slate-800">
                                 <OfferThumbnail
-                                    src={offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game.thumbnail_url}
+                                    src={offer.image_url ?? offer.game?.thumbnail_url}
                                     alt={offer.game?.name ?? offer.title}
-                                    fallbackText={(offer.game?.name ?? offer.title).substring(0, 2)}
-                                    className="w-full h-full object-cover"
+                                    fallbackText={(offer.game?.name ?? offer.title).slice(0, 2)}
+                                    className="h-full w-full object-cover"
                                 />
                             </div>
-                            <div className="flex-1 min-w-0 pr-6">
-                                <div className="text-xs font-bold text-[var(--brand-ink)] truncate">{offer.game?.name ?? offer.title}</div>
-                                <div className="text-[11px] text-[var(--text-secondary)] font-medium truncate">{offer.platform?.name ?? "Unknown platform"} · <span className="text-[color:hsl(84,93%,30%)] font-extrabold">${offer.payout_usd.toFixed(2)}</span></div>
+                            <div className="min-w-0 flex-1 pr-4">
+                                <div className="truncate text-xs font-bold text-white">
+                                    {offer.game?.name ?? offer.title}
+                                </div>
+                                <div className="text-[11px] font-black text-[var(--brand-lime)]">
+                                    ${offer.payout_usd.toFixed(2)}
+                                </div>
                             </div>
-                            <button onClick={() => onRemove(offer.id)} className="absolute right-2 text-[var(--text-tertiary)] hover:text-red-500 text-lg leading-none p-1 transition-colors">×</button>
+                            <button
+                                type="button"
+                                onClick={() => onRemove(offer.id)}
+                                className="absolute right-1.5 top-1.5 p-1 text-slate-400 hover:text-white"
+                                aria-label="Remove offer"
+                            >
+                                <X className="h-3.5 w-3.5" />
+                            </button>
                         </div>
                     ))}
-                    {pinned.length < 3 && (
-                        <div className="flex-shrink-0 flex items-center justify-center bg-[var(--surface-muted)] border border-[var(--border-default)] border-dashed rounded-none px-4 py-2 min-w-[180px] text-xs font-semibold text-[var(--text-tertiary)]">
-                            + {3 - pinned.length} more
-                        </div>
-                    )}
                 </div>
+
                 <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto justify-end">
-                    <button onClick={onClear} className="px-3.5 py-2 text-sm font-semibold text-[var(--text-secondary)] hover:text-[var(--brand-ink)] transition-colors">Clear</button>
-                    <a
-                        href={`/tools/compare?offers=${pinned.map(o => o.id).join(",")}`}
-                        className="px-5 py-2.5 bg-[var(--brand-ink)] hover:bg-[var(--brand-ink)]/90 text-[var(--brand-lime)] text-sm font-extrabold rounded-none transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                    <button
+                        type="button"
+                        onClick={onClear}
+                        className="px-3 py-1.5 text-xs font-bold text-slate-400 hover:text-white"
                     >
-                        Compare Now →
+                        Clear All
+                    </button>
+                    <a
+                        href={`/tools/compare?offers=${pinned.map((o) => o.id).join(",")}`}
+                        className="flex items-center gap-1.5 border border-lime-400 bg-[var(--brand-lime)] px-4 py-2 text-xs font-black uppercase tracking-wider text-slate-950 transition-all hover:bg-lime-400"
+                    >
+                        Compare Payouts →
                     </a>
                 </div>
             </div>
@@ -715,215 +942,10 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
 }
 
 // ---------------------------------------------------------------
-// OFFER TABLE (list + pagination)
-// ---------------------------------------------------------------
-function OfferGridCard({
-    offer,
-    onPin,
-    isPinned,
-}: {
-    offer: Offer;
-    onPin: (offer: Offer) => void;
-    isPinned: boolean;
-}) {
-    const gameName = offer.game?.name ?? offer.title ?? "Offer";
-    const gameHref = offer.game?.slug ? `/offers/${offer.game.slug}` : null;
-    const platformName = offer.platform?.name ?? "Unknown platform";
-    const providerName = offer.provider_name ?? platformName;
-    const thumbnailUrl = offer.image_url ?? (isImageUrl(offer.redirect_url) ? offer.redirect_url : null) ?? offer.game?.thumbnail_url ?? null;
-
-    return (
-        <article className="group flex min-h-[22rem] flex-col overflow-hidden border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[var(--shadow-hover)]">
-            <div className="relative flex h-36 items-center justify-center overflow-hidden border-b border-[var(--border-default)] bg-[var(--surface-muted)]">
-                <OfferThumbnail src={thumbnailUrl} alt={gameName} fallbackText={gameName.slice(0, 2)} className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
-                <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-                    {offer.is_new ? <Badge label="NEW" variant="new" /> : null}
-                    {offer.is_hot ? <Badge label="HOT" variant="hot" /> : null}
-                    {offer.is_boosted ? <Badge label="BOOSTED" variant="boosted" /> : null}
-                    {offer.is_ath ? <Badge label="ATH" variant="ath" /> : null}
-                </div>
-                <div className="absolute bottom-3 right-3 border border-white/20 bg-[var(--brand-ink)] px-2.5 py-1 text-right shadow-sm">
-                    <div className="text-[9px] font-bold uppercase tracking-widest text-white/60">Best payout</div>
-                    <div className="text-xl font-black leading-none text-[var(--brand-lime)]">${offer.payout_usd.toFixed(2)}</div>
-                </div>
-            </div>
-            <div className="flex flex-1 flex-col p-4">
-                <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                        <div className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--text-tertiary)]">{offer.source === "manual" ? "Curated route" : "Live offer"}</div>
-                        <h3 className="mt-1 line-clamp-2 text-base font-extrabold leading-tight text-[var(--brand-ink)]">{gameName}</h3>
-                    </div>
-                    <button type="button" onClick={() => onPin(offer)} aria-label={isPinned ? "Remove from comparison" : "Add to comparison"} className={`flex h-8 w-8 shrink-0 items-center justify-center border text-sm font-extrabold ${isPinned ? "border-lime-300 bg-[var(--brand-lime)] text-[var(--brand-ink)]" : "border-[var(--border-default)] bg-white text-[var(--text-tertiary)] hover:border-lime-300 hover:text-lime-700"}`}>
-                        {isPinned ? "−" : "+"}
-                    </button>
-                </div>
-                <div className="mt-3 flex flex-wrap items-center gap-2">
-                    <span className="inline-flex h-7 items-center gap-1 border border-slate-700 bg-[var(--brand-ink)] px-2 text-xs font-semibold text-[var(--brand-lime)]"><PlatformLogoImage src={offer.platform?.logo_url ?? null} name={platformName} /></span>
-                    <ProviderLogo name={providerName} compact className="h-7 max-w-[5rem]" />
-                </div>
-                <div className="mt-3 flex items-center justify-between gap-3 text-xs text-[var(--text-tertiary)]">
-                    <span className="flex items-center gap-1">{offer.devices.map((device) => <DeviceIcon key={device} device={device} />)}</span>
-                    <span>{formatDataRefreshedLabel(offer.updated_at)}</span>
-                </div>
-                <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">{offer.goal_text ?? `Compare this ${platformName} route before starting.`}</p>
-                <div className="mt-auto grid grid-cols-2 gap-2 pt-4">
-                    {gameHref ? <Link href={gameHref} className="inline-flex items-center justify-center border border-[var(--border-default)] px-3 py-2 text-xs font-extrabold text-[var(--brand-ink)] transition hover:border-lime-300 hover:bg-lime-50">Compare</Link> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No details</span>}
-                    {offer.redirect_url ? <TrackedOutboundLink href={offer.redirect_url} eventLabel={offer.source === "manual" ? "manual-offer-grid-cta" : "offer-search-grid-cta"} offerId={offer.id} offerTitle={gameName} gameTitle={gameName} platformName={platformName} providerName={offer.provider_name} payoutUsd={offer.payout_usd} location="offers-search-grid" sourceContext="offers-search" className="inline-flex items-center justify-center bg-[var(--brand-ink)] px-3 py-2 text-xs font-extrabold text-[var(--brand-lime)] transition hover:bg-slate-800">Start offer</TrackedOutboundLink> : <span className="inline-flex items-center justify-center border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold text-[var(--text-tertiary)]">No link</span>}
-                </div>
-            </div>
-        </article>
-    );
-}
-
-interface OfferTableProps {
-    offers: Offer[];
-    meta: OfferMeta | null;
-    loading: boolean;
-    page: number;
-    onPageChange: (page: number) => void;
-    onPin: (offer: Offer) => void;
-    pinned: Offer[];
-    viewMode: "grid" | "list";
-}
-
-function OfferTable({ offers, meta, loading, page, onPageChange, onPin, pinned, viewMode }: OfferTableProps) {
-    const ctaLocation = meta ? "offers-search-list" : "game-offers-list";
-    const ctaSourceContext = meta ? "offers-search" : "game-offers";
-    const [openGroups, setOpenGroups] = React.useState<Record<string, boolean>>({});
-    const groupedOffers = React.useMemo(() => {
-        const groups = new Map<string, Offer[]>();
-        for (const offer of offers) {
-            const key = offer.game?.id ?? offer.game?.slug ?? offer.title;
-            const current = groups.get(key) ?? [];
-            current.push(offer);
-            groups.set(key, current);
-        }
-        return Array.from(groups.entries()).map(([key, rows]) => ({
-            key,
-            primary: rows[0],
-            alternatives: rows.slice(1),
-        }));
-    }, [offers]);
-    if (loading) {
-        return (
-            <div className="bg-white rounded-none border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
-                {Array.from({ length: 5 }).map((_, i) => (
-                    <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-4 px-5 py-5 border-b border-[var(--border-default)] last:border-0 animate-pulse">
-                        <div className="flex items-center gap-4 flex-1">
-                            <div className="w-12 h-12 bg-[var(--surface-muted)] rounded-none" />
-                            <div className="flex-1 space-y-2">
-                                <div className="h-4 bg-[var(--surface-muted)] rounded w-1/3" />
-                                <div className="h-3 bg-[var(--surface-muted)] rounded w-1/5" />
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-auto w-full pt-3 sm:pt-0">
-                            <div className="w-20 h-8 bg-[var(--surface-muted)] rounded" />
-                            <div className="w-28 h-10 bg-[var(--surface-muted)] rounded-none" />
-                        </div>
-                    </div>
-                ))}
-            </div>
-        );
-    }
-
-    if (offers.length === 0) {
-        return (
-            <div className="bg-white rounded-none border border-[var(--border-default)] p-16 text-center shadow-[var(--shadow-card)]">
-                <div className="w-16 h-16 bg-[var(--surface-muted)] rounded-none flex items-center justify-center text-2xl mb-4 mx-auto">
-                    🔍
-                </div>
-                <h3 className="text-lg font-bold text-[var(--brand-ink)] mb-2">No offers found</h3>
-                <p className="text-[var(--text-secondary)] max-w-sm mx-auto text-sm leading-relaxed">Try adjusting your filters, clearing them, or using a different search term to find what you&apos;re looking for.</p>
-            </div>
-        );
-    }
-
-    return (
-        <div>
-            {viewMode === "grid" ? (
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    {offers.map((offer) => <OfferGridCard key={offer.id} offer={offer} onPin={onPin} isPinned={pinned.some((p) => p.id === offer.id)} />)}
-                </div>
-            ) : (
-            <div className="bg-white rounded-none border border-[var(--border-default)] overflow-hidden shadow-[var(--shadow-card)]">
-                {groupedOffers.map(({ key, primary, alternatives }) => {
-                    const extraSitesLabel = Array.from(
-                        new Set(alternatives.map((offer) => offer.platform?.name).filter(Boolean)),
-                    ).slice(0, 3).join(", ");
-                    const isOpen = !!openGroups[key];
-                    return (
-                        <div key={key} className="border-b border-[var(--border-default)] last:border-0">
-                            <OfferRow
-                                offer={primary}
-                                onPin={onPin}
-                                isPinned={pinned.some(p => p.id === primary.id)}
-                                isBestPayout={true}
-                                ctaLocation={ctaLocation}
-                                ctaSourceContext={ctaSourceContext}
-                                extraRoutesCount={alternatives.length}
-                                extraSitesLabel={extraSitesLabel}
-                                extraRoutesOpen={isOpen}
-                                onToggleExtraRoutes={() =>
-                                    setOpenGroups((current) => ({ ...current, [key]: !current[key] }))
-                                }
-                            />
-                            {isOpen && alternatives.length > 0 ? (
-                                <div className="border-t border-[var(--border-default)] bg-[var(--surface-muted)]/35">
-                                    {alternatives.map((offer) => (
-                                        <OfferRow
-                                            key={offer.id}
-                                            offer={offer}
-                                            onPin={onPin}
-                                            isPinned={pinned.some(p => p.id === offer.id)}
-                                            isBestPayout={false}
-                                            ctaLocation={ctaLocation}
-                                            ctaSourceContext={ctaSourceContext}
-                                            compactVariant
-                                        />
-                                    ))}
-                                </div>
-                            ) : null}
-                        </div>
-                    );
-                })}
-            </div>
-            )}
-
-            {/* Pagination */}
-            {meta && meta.total_pages > 1 && (
-                <div className="flex flex-col sm:flex-row items-center justify-between mt-8 gap-4 px-1">
-                    <div className="text-sm font-semibold text-[var(--text-secondary)] bg-white px-3.5 py-1.5 rounded-none border border-[var(--border-default)] shadow-[var(--shadow-card)]">
-                        <span className="text-[var(--brand-ink)]">{((page - 1) * meta.per_page) + 1}–{Math.min(page * meta.per_page, meta.total)}</span>{" "}
-                        of <span className="text-[var(--brand-ink)]">{meta.total.toLocaleString()}</span> offers
-                    </div>
-                    <div className="flex gap-1 bg-white rounded-none shadow-[var(--shadow-card)] border border-[var(--border-default)] p-1">
-                        <button
-                            onClick={() => onPageChange(page - 1)}
-                            disabled={page === 1}
-                            className="px-4 py-1.5 rounded-none text-sm font-bold disabled:text-[var(--text-tertiary)] text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
-                        >
-                            ← Previous
-                        </button>
-                        <div className="w-px bg-[var(--border-default)] my-1" />
-                        <button
-                            onClick={() => onPageChange(page + 1)}
-                            disabled={page >= meta.total_pages}
-                            className="px-4 py-1.5 rounded-none text-sm font-bold disabled:text-[var(--text-tertiary)] text-[var(--brand-ink)] hover:bg-[var(--surface-muted)] transition-colors"
-                        >
-                            Next →
-                        </button>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
-
-// ---------------------------------------------------------------
-// PAGE-LEVEL WIRING: OfferSearchEngine
+// MAIN SEARCH TERMINAL COMPONENT
 // ---------------------------------------------------------------
 interface OfferSearchEngineProps {
-    initialGameSlug?: string; // for /offers/[game-slug] pages
+    initialGameSlug?: string;
     initialOffers?: Offer[];
     initialMeta?: OfferMeta | null;
     initialQueryString?: string;
@@ -942,42 +964,30 @@ export default function OfferSearchEngine({
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
+
     const [filters, dispatch] = useReducer(filterReducer, searchParams, (params) => ({
         ...buildFiltersFromSearchParams(params),
-        country: params.get("country") ?? initialCountry,
+        country: params.get("country") || initialCountry || "US",
     }));
+
     const [offers, setOffers] = React.useState<Offer[]>(() => initialOffers ?? []);
     const [meta, setMeta] = React.useState<OfferMeta | null>(() => initialMeta ?? null);
     const [platforms, setPlatforms] = React.useState<OfferPlatform[]>([]);
     const [loading, setLoading] = React.useState(initialOffers === undefined);
     const [pinned, setPinned] = React.useState<Offer[]>([]);
     const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
+    const [selectedOfferModal, setSelectedOfferModal] = useState<Offer | null>(null);
+
     const abortRef = useRef<AbortController | null>(null);
     const hasRenderedInitialOffers = useRef(initialOffers !== undefined && !initialGameSlug);
     const filtersRef = useRef(filters);
 
-    const debouncedQ = useDebounce(filters.q, 300);
-    const reviewPlatformName = searchParams.get("platform_name") ?? "";
-    const isReviewScoped = searchParams.get("from_review") === "1" && !!filters.platform_id;
-    const hasPlatformFilter = !!filters.platform_id;
+    const debouncedQ = useDebounce(filters.q, 250);
     const searchParamsString = searchParams.toString();
-    const hydrationSearchParams = React.useMemo(() => new URLSearchParams(searchParamsString), [searchParamsString]);
-    const platformOptions = React.useMemo(() => {
-        const byId = new Map<string, OfferPlatform>();
-        for (const platform of platforms) {
-            if (platform.id) byId.set(platform.id, platform);
-        }
-        for (const offer of offers) {
-            if (offer.platform?.id && !byId.has(offer.platform.id)) {
-                byId.set(offer.platform.id, offer.platform);
-            }
-        }
-        return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
-    }, [offers, platforms]);
+    const hydrationSearchParams = useMemo(() => new URLSearchParams(searchParamsString), [searchParamsString]);
 
     useEffect(() => {
         let cancelled = false;
-
         void fetch("/api/platforms")
             .then(async (response) => {
                 if (!response.ok) throw new Error("Failed to load platforms");
@@ -989,7 +999,7 @@ export default function OfferSearchEngine({
                 }
             })
             .catch((error) => {
-                console.error("[OfferSearchEngine] failed to load platform options", error);
+                console.error("[OfferSearchEngine] failed to load platforms", error);
             });
 
         return () => {
@@ -1010,8 +1020,7 @@ export default function OfferSearchEngine({
         abortRef.current?.abort();
         abortRef.current = new AbortController();
         setLoading(true);
-        setOffers([]);
-        setMeta(null);
+
         try {
             const endpoint = initialGameSlug
                 ? `/api/offers/game/${initialGameSlug}?${qs}`
@@ -1023,13 +1032,17 @@ export default function OfferSearchEngine({
             setOffers(Array.isArray(nextOffers) ? nextOffers.filter((offer) => offer && typeof offer.id === "string") : []);
             setMeta(initialGameSlug ? null : json.meta);
         } catch (err: unknown) {
-            if ((err as Error).name !== "AbortError") console.error(err);
+            if ((err as Error).name !== "AbortError") {
+                console.error("[OfferSearchEngine] error fetching offers", err);
+            }
         } finally {
             setLoading(false);
         }
     }, [filters, debouncedQ, initialGameSlug, initialQueryString]);
 
-    useEffect(() => { fetchOffers(); }, [fetchOffers]);
+    useEffect(() => {
+        fetchOffers();
+    }, [fetchOffers]);
 
     useEffect(() => {
         filtersRef.current = filters;
@@ -1037,7 +1050,7 @@ export default function OfferSearchEngine({
 
     useEffect(() => {
         const nextFilters = buildFiltersFromSearchParams(hydrationSearchParams);
-        nextFilters.country = hydrationSearchParams.get("country") ?? initialCountry;
+        nextFilters.country = hydrationSearchParams.get("country") || initialCountry || "US";
         if (serializeFilterState(nextFilters) !== serializeFilterState(filtersRef.current)) {
             dispatch({ type: "HYDRATE", filters: nextFilters });
         }
@@ -1045,110 +1058,194 @@ export default function OfferSearchEngine({
 
     useEffect(() => {
         if (initialGameSlug) return;
-
         if (filters.q !== debouncedQ) return;
 
-        const nextParams = buildShareableSearchParams({ ...filters, q: debouncedQ }, {
-            platformName: filters.platform_id ? reviewPlatformName : undefined,
-            fromReview: filters.platform_id ? isReviewScoped : false,
-        });
+        const nextParams = buildShareableSearchParams({ ...filters, q: debouncedQ });
         const nextQuery = nextParams.toString();
         const currentQuery = searchParams.toString();
 
         if (nextQuery !== currentQuery) {
             router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
         }
-    }, [filters, debouncedQ, pathname, router, reviewPlatformName, isReviewScoped, initialGameSlug, searchParams, searchParamsString]);
+    }, [filters, debouncedQ, pathname, router, initialGameSlug, searchParams, searchParamsString]);
 
     const handlePin = (offer: Offer) => {
-        setPinned(prev => {
-            const exists = prev.find(p => p.id === offer.id);
-            if (exists) return prev.filter(p => p.id !== offer.id);
-            if (prev.length >= 3) return prev; // max 3
+        setPinned((prev) => {
+            const exists = prev.find((p) => p.id === offer.id);
+            if (exists) return prev.filter((p) => p.id !== offer.id);
+            if (prev.length >= 3) return prev;
             return [...prev, offer];
         });
     };
+
     const selectedCountry = countries.find((country) => country.code === filters.country)?.name ?? filters.country;
-    const activeFilterCount = [filters.q, filters.source, filters.platform_id, filters.device, filters.payout_type]
-        .filter(Boolean).length + [filters.is_new, filters.is_hot, filters.is_ath, filters.is_boosted].filter(Boolean).length;
 
     return (
         <div className="space-y-4">
-            {hasPlatformFilter && !initialGameSlug && (
-                <div className="rounded-none border border-lime-200 bg-[var(--brand-lime)]/10 p-4 text-sm shadow-[var(--shadow-card)]">
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div>
-                            <div className="font-extrabold text-[var(--brand-ink)]">
-                                {reviewPlatformName ? `Showing offers for ${reviewPlatformName}` : "Showing platform-specific offers"}
-                            </div>
-                            <p className="mt-1 text-[var(--text-secondary)]">
-                                {isReviewScoped
-                                    ? "You came from a platform review, so this list is filtered to offers available on that platform."
-                                    : "This list is filtered to one platform so you can compare a more relevant set of offers."}
-                            </p>
-                        </div>
-                        <Link
-                            href="/offers"
-                            className="inline-flex rounded-none border border-[var(--border-default)] bg-white px-4 py-2 text-sm font-extrabold text-[var(--brand-ink)] transition-all hover:-translate-y-px hover:border-lime-400"
+            {/* Filter Control Terminal */}
+            <FilterControls
+                filters={filters}
+                dispatch={dispatch}
+                platforms={platforms}
+                countries={countries}
+                totalResults={meta?.total}
+                loading={loading}
+            />
+
+            {/* Results Header Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-white px-4 py-3 shadow-xs">
+                <div className="flex items-center gap-2">
+                    <span className="text-sm font-black text-slate-900">
+                        {loading ? "Searching..." : meta ? `${meta.total.toLocaleString()} Offers Available` : "Offers"}
+                    </span>
+                    <span className="border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-700">
+                        {selectedCountry}
+                    </span>
+                    {filters.sort === "completed_desc" ? (
+                        <span className="inline-flex items-center gap-1 border border-orange-300 bg-orange-50 px-2 py-0.5 text-xs font-black text-orange-800">
+                            <Flame className="h-3 w-3 fill-orange-500 text-orange-500" />
+                            Sorted by Most Completed
+                        </span>
+                    ) : null}
+                </div>
+
+                <div className="flex items-center gap-2">
+                    {/* View Switcher */}
+                    <div className="flex border border-slate-300 bg-slate-100 p-0.5">
+                        <button
+                            type="button"
+                            onClick={() => setViewMode("grid")}
+                            aria-label="Grid view"
+                            className={`flex h-7 w-7 items-center justify-center transition-colors ${
+                                viewMode === "grid"
+                                    ? "bg-slate-900 text-[var(--brand-lime)] shadow-xs"
+                                    : "text-slate-500 hover:text-slate-900"
+                            }`}
                         >
-                            Clear Platform Filter
-                        </Link>
+                            <Grid2X2 className="h-4 w-4" />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setViewMode("list")}
+                            aria-label="List view"
+                            className={`flex h-7 w-7 items-center justify-center transition-colors ${
+                                viewMode === "list"
+                                    ? "bg-slate-900 text-[var(--brand-lime)] shadow-xs"
+                                    : "text-slate-500 hover:text-slate-900"
+                            }`}
+                        >
+                            <List className="h-4 w-4" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Offer Results View */}
+            {loading ? (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <div key={i} className="flex h-72 flex-col border border-slate-200 bg-white p-4 shadow-xs animate-pulse">
+                            <div className="mb-3 h-32 w-full bg-slate-200" />
+                            <div className="mb-2 h-4 w-3/4 bg-slate-200" />
+                            <div className="mb-4 h-3 w-1/2 bg-slate-200" />
+                            <div className="mt-auto h-8 w-full bg-slate-200" />
+                        </div>
+                    ))}
+                </div>
+            ) : offers.length === 0 ? (
+                <div className="border border-slate-200 bg-white p-12 text-center shadow-xs">
+                    <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center border border-slate-200 bg-slate-100 text-2xl">
+                        🔍
+                    </div>
+                    <h3 className="text-base font-black text-slate-900">No matching offers found</h3>
+                    <p className="mx-auto mt-1 max-w-sm text-xs text-slate-500">
+                        Try clearing some filters, searching for a different game, or selecting another country.
+                    </p>
+                    <button
+                        type="button"
+                        onClick={() => dispatch({ type: "RESET", country: filters.country })}
+                        className="mt-4 border border-slate-900 bg-slate-900 px-4 py-2 text-xs font-black uppercase tracking-wider text-[var(--brand-lime)] hover:bg-slate-800"
+                    >
+                        Reset All Filters
+                    </button>
+                </div>
+            ) : viewMode === "grid" ? (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {offers.map((offer) => (
+                        <OfferGridCard
+                            key={offer.id}
+                            offer={offer}
+                            onPin={handlePin}
+                            onOpenModal={(off) => setSelectedOfferModal(off)}
+                            isPinned={pinned.some((p) => p.id === offer.id)}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className="border border-slate-200 bg-white shadow-xs">
+                    {offers.map((offer) => (
+                        <OfferRowItem
+                            key={offer.id}
+                            offer={offer}
+                            onPin={handlePin}
+                            onOpenModal={(off) => setSelectedOfferModal(off)}
+                            isPinned={pinned.some((p) => p.id === offer.id)}
+                        />
+                    ))}
+                </div>
+            )}
+
+            {/* Pagination Bar */}
+            {meta && meta.total_pages > 1 && (
+                <div className="flex flex-col items-center justify-between gap-3 border border-slate-200 bg-white p-4 shadow-xs sm:flex-row">
+                    <div className="text-xs font-bold text-slate-600">
+                        Showing{" "}
+                        <span className="font-black text-slate-900">
+                            {(filters.page - 1) * meta.per_page + 1}–{Math.min(filters.page * meta.per_page, meta.total)}
+                        </span>{" "}
+                        of <span className="font-black text-slate-900">{meta.total.toLocaleString()}</span> offers
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                        <button
+                            type="button"
+                            onClick={() => dispatch({ type: "SET_PAGE", page: filters.page - 1 })}
+                            disabled={filters.page <= 1}
+                            className="border border-slate-300 bg-white px-3 py-1.5 text-xs font-black text-slate-900 disabled:cursor-not-allowed disabled:text-slate-300 hover:border-slate-800 hover:bg-slate-50"
+                        >
+                            ← Prev
+                        </button>
+
+                        <span className="border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-black text-slate-900">
+                            Page {filters.page} of {meta.total_pages}
+                        </span>
+
+                        <button
+                            type="button"
+                            onClick={() => dispatch({ type: "SET_PAGE", page: filters.page + 1 })}
+                            disabled={filters.page >= meta.total_pages}
+                            className="border border-slate-300 bg-white px-3 py-1.5 text-xs font-black text-slate-900 disabled:cursor-not-allowed disabled:text-slate-300 hover:border-slate-800 hover:bg-slate-50"
+                        >
+                            Next →
+                        </button>
                     </div>
                 </div>
             )}
 
-            <div className="border border-slate-700 bg-[var(--brand-ink)] p-3 shadow-[var(--shadow-card)] sm:p-4">
-                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[var(--brand-lime)]">Search terminal</p>
-                    <span className="text-xs font-semibold text-white/60">{selectedCountry} market</span>
-                </div>
-                <SearchBar value={filters.q} onChange={v => dispatch({ type: "SET", key: "q", value: v })} />
-                <div className="mt-3 border-t border-white/10 pt-3"><FilterBar filters={filters} dispatch={dispatch} platforms={platformOptions} countries={countries} selectedPlatformName={reviewPlatformName || undefined} /></div>
-            </div>
-
-            <div className="flex flex-col gap-3 border-b border-[var(--border-default)] px-1 pb-4 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                    <h2 className="text-xl font-extrabold text-[var(--brand-ink)] tracking-tight">
-                        {initialGameSlug
-                            ? "Available Offers"
-                            : hasPlatformFilter && reviewPlatformName
-                                ? `${reviewPlatformName} Offers`
-                                : "All Offers"}
-                    </h2>
-                    <p className="mt-1 text-xs text-[var(--text-tertiary)]">
-                        {hasPlatformFilter && reviewPlatformName
-                            ? `These are offers currently filtered to ${reviewPlatformName}. Compare routes here after using the review to decide the platform is worth your time.`
-                            : "Offers are sorted to help you identify stronger payout opportunities quickly. Open a route for detail, or start the offer directly."}
-                    </p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                    {meta && !loading ? <span className="border border-[var(--border-default)] bg-white px-3 py-2 text-sm font-extrabold text-[var(--brand-ink)]">{meta.total.toLocaleString()} results</span> : null}
-                    <span className="border border-[var(--border-default)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-bold text-[var(--text-secondary)]">{selectedCountry}</span>
-                    {activeFilterCount > 0 ? <span className="border border-lime-300 bg-lime-50 px-3 py-2 text-xs font-bold text-lime-800">{activeFilterCount} active filter{activeFilterCount === 1 ? "" : "s"}</span> : null}
-                    <div className="flex border border-[var(--border-default)] bg-white p-1" aria-label="Offer view mode">
-                        <button type="button" onClick={() => setViewMode("grid")} aria-label="Show offer cards" aria-pressed={viewMode === "grid"} className={`flex h-8 w-8 items-center justify-center ${viewMode === "grid" ? "bg-[var(--brand-ink)] text-[var(--brand-lime)]" : "text-[var(--text-tertiary)] hover:bg-[var(--surface-muted)]"}`}><Grid2X2 className="h-4 w-4" /></button>
-                        <button type="button" onClick={() => setViewMode("list")} aria-label="Show offer list" aria-pressed={viewMode === "list"} className={`flex h-8 w-8 items-center justify-center ${viewMode === "list" ? "bg-[var(--brand-ink)] text-[var(--brand-lime)]" : "text-[var(--text-tertiary)] hover:bg-[var(--surface-muted)]"}`}><List className="h-4 w-4" /></button>
-                    </div>
-                </div>
-            </div>
-
-            <OfferTable
-                offers={offers}
-                meta={meta}
-                loading={loading}
-                page={filters.page}
-                onPageChange={page => dispatch({ type: "SET_PAGE", page })}
+            {/* Details Modal Popup in EarnGrind Aesthetic */}
+            <OfferDetailsModal
+                offer={selectedOfferModal}
+                onClose={() => setSelectedOfferModal(null)}
                 onPin={handlePin}
-                pinned={pinned}
-                viewMode={viewMode}
+                isPinned={Boolean(selectedOfferModal && pinned.some(p => p.id === selectedOfferModal.id))}
             />
 
+            {/* Compare Drawer */}
             <CompareDrawer
                 pinned={pinned}
-                onRemove={id => setPinned(p => p.filter(o => o.id !== id))}
+                onRemove={(id) => setPinned((prev) => prev.filter((o) => o.id !== id))}
                 onClear={() => setPinned([])}
             />
         </div>
     );
 }
-

@@ -1,0 +1,415 @@
+{
+  "game": "Woodoku Blast",
+  "search_name": "Woodoku Blast offer guide",
+  "slug": "woodoku-blast-seo-offer-guide",
+  "offerwall_provider": "Torox",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Open and play the game - 0 USD\nClear Level 1 in Journey mode in 12 hours - 0.01 USD\nOpen The App And Start A Session Daily - 0.06 USD\nMake a Purchase Of At Least USD 4.99 - 6 USD\nClear Level 3 in Journey mode in 12 hours - 0.02 USD\nClear Level 5 in Journey mode in 12 hours - 0.04 USD\nClear Level 7 in Journey mode in 12 hours - 0.06 USD\nClear Level 15 in Journey mode in 24 hours - 0.12 USD\nClear Level 20 in Journey mode in 24 Hours - 0.17 USD\nClear Level 25 in Journey mode in 24 Hours - 0.22 USD\nClear Level 40 in Journey mode in 2 days - 0.3 USD\nClear Level 50 in Journey mode in 2 Days - 0.42 USD\nClear Level 70 in Journey mode in 2 Days - 0.6 USD\nClear Level 100 in Journey mode in 3 Days - 0.78 USD\nClear Level 150 in Journey mode after 3 Days - 1.08 USD\nClear Level 200 in Journey mode in 4 Days - 1.5 USD\nClear Level 225 in Journey mode in 4 Days - 2.4 USD\nClear Level 275 in Journey mode in 5 Days - 3.59 USD\nClear Level 325 in Journey mode in 5 Days - 4.8 USD\nClear Level 400 in Journey mode after 7 Days - 6 USD\nClear Level 700 in Journey mode in 9 Days - 7.8 USD\nClear Level 900 in Journey mode in 12 Days - 10.8 USD\nClear Level 1200 in Journey mode after 14 Days - 15 USD\nClear Level 1600 in Journey mode in 18 Days - 36 USD\nClear Level 2000 in Journey mode in 21 Days - 90 USD\nClear Level 3750 in Journey mode in 25 Days - 210 USD\nClear Level 5000 in Journey mode in 30 Days - 420 USD",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/woodoku-blast",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Open and play the game",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "fce15e0e-19c3-4700-90d2-119306b05838"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Clear Level 1 in Journey mode in 12 hours",
+      "points": null,
+      "usd": 0.01,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "aa91a8a1-0b15-40be-9db2-100bb4415b96"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Open The App And Start A Session Daily",
+      "points": null,
+      "usd": 0.06,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "character_hero_rank"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "ff270cf9-3890-4ec0-9478-f5c74d69365d"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Make a Purchase Of At Least USD 4.99",
+      "points": null,
+      "usd": 6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "d70ba569-5f20-4bfa-a803-2fd3dfb3828f"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Clear Level 3 in Journey mode in 12 hours",
+      "points": null,
+      "usd": 0.02,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "1e77e71a-b465-47aa-98e3-077cb0e281f5"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Clear Level 5 in Journey mode in 12 hours",
+      "points": null,
+      "usd": 0.04,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b2d93013-5512-4603-92c5-5b7bedd19d76"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Clear Level 7 in Journey mode in 12 hours",
+      "points": null,
+      "usd": 0.06,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2ddac6a7-ff6c-42c1-a1c9-597f3cc356fe"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Clear Level 15 in Journey mode in 24 hours",
+      "points": null,
+      "usd": 0.12,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "cb662883-2e2e-446c-9472-b707bd38f01b"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Clear Level 20 in Journey mode in 24 Hours",
+      "points": null,
+      "usd": 0.17,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "04a9b6d6-be7b-49fa-acbc-bb0057d9f9aa"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Clear Level 25 in Journey mode in 24 Hours",
+      "points": null,
+      "usd": 0.22,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9c4f2c73-2df5-4fe6-8721-e2a7132237de"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Clear Level 40 in Journey mode in 2 days",
+      "points": null,
+      "usd": 0.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "3ad013cc-a64f-4df8-a8d3-b6ac29f8e2fe"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Clear Level 50 in Journey mode in 2 Days",
+      "points": null,
+      "usd": 0.42,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "de06d3ae-3d66-4c64-b0f2-90c9dfb83138"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Clear Level 70 in Journey mode in 2 Days",
+      "points": null,
+      "usd": 0.6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "512f0543-32ad-49e0-9fad-460b748a408b"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Clear Level 100 in Journey mode in 3 Days",
+      "points": null,
+      "usd": 0.78,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "dc671678-34ea-4afb-bf20-7e659689e544"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Clear Level 150 in Journey mode after 3 Days",
+      "points": null,
+      "usd": 1.08,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "527ec092-e074-4e85-b497-e5291bf927b4"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Clear Level 200 in Journey mode in 4 Days",
+      "points": null,
+      "usd": 1.5,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0e279277-eeb5-4958-9842-7d24b78b1629"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Clear Level 225 in Journey mode in 4 Days",
+      "points": null,
+      "usd": 2.4,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "92905538-14a3-4b5f-b43e-217343c0772d"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Clear Level 275 in Journey mode in 5 Days",
+      "points": null,
+      "usd": 3.59,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "42456c5a-ab4c-48b3-87f6-599a3a9fa3c9"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Clear Level 325 in Journey mode in 5 Days",
+      "points": null,
+      "usd": 4.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "854f23b3-ea7c-450a-85f0-07e9c901ae43"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Clear Level 400 in Journey mode after 7 Days",
+      "points": null,
+      "usd": 6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "035b97a3-8ac6-493d-ab6d-d2f284bbceb3"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Clear Level 700 in Journey mode in 9 Days",
+      "points": null,
+      "usd": 7.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9955a3a3-490b-4cea-8c7c-23765437799f"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Clear Level 900 in Journey mode in 12 Days",
+      "points": null,
+      "usd": 10.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "98ef1b3b-44fc-4d31-8aab-ecb43df55ee7"
+    },
+    {
+      "task_id": "task_023",
+      "task_text": "Clear Level 1200 in Journey mode after 14 Days",
+      "points": null,
+      "usd": 15,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "56c83ba8-d81e-4fca-981f-203257397224"
+    },
+    {
+      "task_id": "task_024",
+      "task_text": "Clear Level 1600 in Journey mode in 18 Days",
+      "points": null,
+      "usd": 36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "760b2d0b-f882-43c4-9147-381e48a90bc5"
+    },
+    {
+      "task_id": "task_025",
+      "task_text": "Clear Level 2000 in Journey mode in 21 Days",
+      "points": null,
+      "usd": 90,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "545e8d88-88bb-4f2c-b849-968bd49bb99a"
+    },
+    {
+      "task_id": "task_026",
+      "task_text": "Clear Level 3750 in Journey mode in 25 Days",
+      "points": null,
+      "usd": 210,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2eb25c6c-e1bb-4c19-92ca-665e60e8ec87"
+    },
+    {
+      "task_id": "task_027",
+      "task_text": "Clear Level 5000 in Journey mode in 30 Days",
+      "points": null,
+      "usd": 420,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2878912f-fcc5-4121-b757-8e4554619af7"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level",
+    "character_hero_rank",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

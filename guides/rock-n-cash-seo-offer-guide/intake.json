@@ -1,0 +1,329 @@
+{
+  "game": "Rock N' Cash",
+  "search_name": "Rock N' Cash offer guide",
+  "slug": "rock-n-cash-seo-offer-guide",
+  "offerwall_provider": "BitLabs",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install - 0 USD\nReach Level 10. Complete within 15 days - 0.09 USD - within 15 days\nReach Level 30. Complete within 15 days - 0.18 USD - within 15 days\nReach Level 40. Complete within 15 days - 0.15 USD - within 15 days\nMake 3 Purchases! Complete within 2 days - 4.8 USD - within 2 days\nReach Level 50. Complete within 30 days - 0.3 USD - within 30 days\nReach Level 60. Complete within 30 days - 0.6 USD - within 30 days\nReach Level 80. Complete within 30 days - 0.9 USD - within 30 days\nReach Level 100. Complete within 1 day - 3 USD - within 1 day\nCumulative Purchases Over USD 20. Complete within 15 days - 6 USD - within 15 days\nReach Level 150. Complete within 30 days - 6 USD - within 30 days\nReach Level 200 - 12 USD\nReach Level 300 - 24 USD\nReach Level 400 - 36 USD\nReach Level 500 - 48 USD\nReach Level 700 - 60 USD\nReach Level 850 - 270 USD\nMake Any Purchase - 1.2 USD\nMake 5 Purchases! Complete within 7 days - 7.2 USD - within 7 days\nCumulative Purchases Over USD 50. Complete within 30 days - 15 USD - within 30 days\nCumulative Purchases Over USD 100 - 45 USD",
+  "eligibility": {
+    "provider": "BitLabs",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/rock-n-cash",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "cc4c7b4a-362b-4946-816a-86b6770d072e"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach Level 10. Complete within 15 days",
+      "points": null,
+      "usd": 0.09,
+      "deadline_text": "within 15 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c06cb880-64cf-495c-a9f5-7415d922619d"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach Level 30. Complete within 15 days",
+      "points": null,
+      "usd": 0.18,
+      "deadline_text": "within 15 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f3ee4b3d-50a5-4c89-ac80-0e3357a24f87"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach Level 40. Complete within 15 days",
+      "points": null,
+      "usd": 0.15,
+      "deadline_text": "within 15 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "7449ad1e-0527-42ad-a809-ee42cd6989a6"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Make 3 Purchases! Complete within 2 days",
+      "points": null,
+      "usd": 4.8,
+      "deadline_text": "within 2 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "3ecdb1e3-71be-47a0-9d84-7f1647c505f4"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Reach Level 50. Complete within 30 days",
+      "points": null,
+      "usd": 0.3,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4bce8129-498a-4bf8-95a3-8a96dece5b05"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach Level 60. Complete within 30 days",
+      "points": null,
+      "usd": 0.6,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f516588c-7937-4da9-a2e3-63c5a9885654"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Level 80. Complete within 30 days",
+      "points": null,
+      "usd": 0.9,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "8ce31669-b4c0-4106-a1ec-f4cbdba5a1a4"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach Level 100. Complete within 1 day",
+      "points": null,
+      "usd": 3,
+      "deadline_text": "within 1 day",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f36f0c5e-09d2-481b-a050-dfa3101cd7e3"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Cumulative Purchases Over USD 20. Complete within 15 days",
+      "points": null,
+      "usd": 6,
+      "deadline_text": "within 15 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "9863d8ad-0e60-4e55-9ace-7ad080584348"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Level 150. Complete within 30 days",
+      "points": null,
+      "usd": 6,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "79536814-5cbf-46c7-b1bc-83c2cded6b2d"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Level 200",
+      "points": null,
+      "usd": 12,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "45e3253b-c8ec-4265-a2af-20bde6f5cf27"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Level 300",
+      "points": null,
+      "usd": 24,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c068d8ff-c7b4-46e8-8696-7172db0c284d"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach Level 400",
+      "points": null,
+      "usd": 36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "cdb03977-fb13-4179-a592-397602dbe88f"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach Level 500",
+      "points": null,
+      "usd": 48,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e78aaec6-e8a5-445d-b8ec-7953e02ed704"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Reach Level 700",
+      "points": null,
+      "usd": 60,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2e37b4b3-3016-4c87-9ee2-9fabbd4ccf8c"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Reach Level 850",
+      "points": null,
+      "usd": 270,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9fe63f81-66de-448a-9369-1e8ac10a6143"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Make Any Purchase",
+      "points": null,
+      "usd": 1.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "8db12d0a-2bc3-4e77-a42f-09f366ea4c1e"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Make 5 Purchases! Complete within 7 days",
+      "points": null,
+      "usd": 7.2,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "aad4c467-0a50-4b35-b83e-ab73131fb91f"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Cumulative Purchases Over USD 50. Complete within 30 days",
+      "points": null,
+      "usd": 15,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "50236915-e1cd-4435-87bb-40d40b267810"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Cumulative Purchases Over USD 100",
+      "points": null,
+      "usd": 45,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "2d1ade02-c9e5-42e9-b16a-79e4537e4a8b"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

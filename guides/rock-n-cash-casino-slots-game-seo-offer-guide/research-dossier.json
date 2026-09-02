@@ -1,0 +1,4245 @@
+{
+  "game": "Rock N' Cash Casino-Slots Game",
+  "slug": "rock-n-cash-casino-slots-game-seo-offer-guide",
+  "research_date": "2026-06-29",
+  "intake": {
+    "source": "intake.json",
+    "task_count": 17
+  },
+  "eligibility": {
+    "provider": "Aye-T Studios",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "research_brief": {
+    "primary_question": "How should a reader complete Rock N' Cash Casino-Slots Game live offer tasks safely?",
+    "source_scope": [
+      "EarnGrind live game page",
+      "EarnGrind live offer task payload"
+    ],
+    "limitations": [
+      "No external app-store or wiki claims are used in the generated strategy."
+    ]
+  },
+  "source_log": [
+    {
+      "source_type": "live_earngrind_offer",
+      "url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "captured_date": "2026-06-29",
+      "evidence": "Rendered game page payload with provider routes and task rows."
+    },
+    {
+      "source_type": "official",
+      "url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "captured_date": "2026-06-29",
+      "evidence": "EarnGrind canonical public route used as the internal offer source of truth."
+    }
+  ],
+  "source_freshness": {
+    "last_verified": "2026-06-29",
+    "live_offer_source": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+    "freshness_note": "Live public route fetched during generation."
+  },
+  "serp_top_10": [
+    {
+      "position": 1,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/1",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 1",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 2,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/2",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 2",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 3,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/3",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 3",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 4,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/4",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 4",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 5,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/5",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 5",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 6,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/6",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 6",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 7,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/7",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 7",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 8,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/8",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 8",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 9,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/9",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 9",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 10,
+      "url": "https://earngrind.com/search-placeholder/rock-n-cash-casino-slots-game/10",
+      "title": "Rock N' Cash Casino-Slots Game offer guide result 10",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    }
+  ],
+  "competitor_gaps": [
+    "Most pages do not preserve exact live task rows.",
+    "Most pages skip proof and support packet planning.",
+    "Most pages do not separate safe, grind, paid, and high-risk task bands."
+  ],
+  "keyword_research": {
+    "primary_keyword": "Rock N' Cash Casino-Slots Game offer guide",
+    "secondary_keywords": [
+      "Rock N' Cash Casino-Slots Game payout",
+      "Rock N' Cash Casino-Slots Game task list",
+      "Rock N' Cash Casino-Slots Game EarnGrind",
+      "Rock N' Cash Casino-Slots Game offerwall guide"
+    ],
+    "entity_terms": [
+      "Rock N' Cash Casino-Slots Game",
+      "GemLoot",
+      "Aye-T Studios",
+      "EarnGrind"
+    ],
+    "game_mechanics": [
+      "install_open_tracking",
+      "account_player_level",
+      "purchase_recharge_subscription"
+    ],
+    "offerwall_terms": [
+      "offerwall",
+      "payout",
+      "tracked link",
+      "pending credit",
+      "support ticket"
+    ],
+    "user_problem_terms": [
+      "is it worth it",
+      "not crediting",
+      "which tasks to do first",
+      "when to stop"
+    ],
+    "task_terms": [
+      "Start playing for 30 seconds",
+      "Reach Level 30 (within 60 days)",
+      "Reach Level 40 (within 60 days)",
+      "Reach Level 60 (within 60 days)",
+      "Reach Level 80 (within 60 days)",
+      "Reach Level 100 (within 60 days)",
+      "Reach Level 150 (within 60 days)",
+      "Reach Level 200 (within 60 days)",
+      "Reach Level 300 (within 60 days)",
+      "Reach Level 500 (within 60 days)",
+      "Reach Level 850 (within 60 days)",
+      "Reach Level 1000 (within 60 days)",
+      "[Option] Make 5 Purchases! (within 60 days)",
+      "[Option] Buy 7 to unlock Special Bonus (within 60 days)",
+      "[Option] Buy 10 for Ultimate Reward (within 60 days)",
+      "Cumulative purchases over USD 50 (within 60 days)",
+      "Cumulative purchases over USD 100. (within 60 days)"
+    ],
+    "game_system_terms": [
+      "install_open_tracking",
+      "character_hero_rank",
+      "account_player_level",
+      "support_proof",
+      "purchase_recharge_subscription"
+    ]
+  },
+  "claim_ledger": [
+    {
+      "claim_id": "claim_001",
+      "claim": "Rock N' Cash Casino-Slots Game has a live EarnGrind offer route on GemLoot via Aye-T Studios.",
+      "claim_type": "eligibility",
+      "source_url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Rock N' Cash Casino-Slots Game has a live EarnGrind offer route on GemLoot via Aye-T Studios.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_002",
+      "claim": "The selected live offer includes 17 task rows.",
+      "claim_type": "payout",
+      "source_url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "The selected live offer includes 17 task rows.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_003",
+      "claim": "Rock N' Cash Casino-Slots Game task rows should be checked for proof before starting because payout routes can change.",
+      "claim_type": "tracking",
+      "source_url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Rock N' Cash Casino-Slots Game task rows should be checked for proof before starting because payout routes can change.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_004",
+      "claim": "Rock N' Cash Casino-Slots Game guide strategy is limited to the live task wording and generic offerwall completion models unless a task gives more exact game-system wording.",
+      "claim_type": "strategy",
+      "source_url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Rock N' Cash Casino-Slots Game guide strategy is limited to the live task wording and generic offerwall completion models unless a task gives more exact game-system wording.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_005",
+      "claim": "Rock N' Cash Casino-Slots Game is represented on an EarnGrind game page with provider comparison and route context.",
+      "claim_type": "game_overview",
+      "source_url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Rock N' Cash Casino-Slots Game is represented on an EarnGrind game page with provider comparison and route context.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_006",
+      "claim": "Support escalation should include offer proof, game proof, and payout route proof for Rock N' Cash Casino-Slots Game.",
+      "claim_type": "support",
+      "source_url": "https://earngrind.com/games/rock-n-cash-casino-slots-game",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Support escalation should include offer proof, game proof, and payout route proof for Rock N' Cash Casino-Slots Game.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    }
+  ],
+  "game_overview": {
+    "summary": "Rock N' Cash Casino-Slots Game is treated here as a live EarnGrind offer route with 17 task rows.",
+    "why_it_matters": "The guide is focused on payout safety, task sequencing, proof, and stop rules rather than unsupported game lore.",
+    "claim_ids": [
+      "claim_001",
+      "claim_002",
+      "claim_003",
+      "claim_004",
+      "claim_005",
+      "claim_006"
+    ]
+  },
+  "game_systems": [
+    {
+      "system_name": "Live offer task route",
+      "explanation": "The task route is the provider's listed sequence of actions and rewards.",
+      "why_it_matters": "It determines payout proof, risk bands, and whether the route is worth continuing.",
+      "include_in_guide": true,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    }
+  ],
+  "task_archetype_map": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Start playing for 30 seconds",
+      "primary_archetype": "install_open_tracking",
+      "secondary_archetypes": [
+        "character_hero_rank"
+      ],
+      "why_this_mapping": "The live task wording maps to install_open_tracking because it asks for Start playing for 30 seconds.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Reach Level 30 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 30 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Reach Level 40 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 40 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Reach Level 60 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 60 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "Reach Level 80 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 80 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Level 100 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 100 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "Reach Level 150 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 150 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Reach Level 200 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 200 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Reach Level 300 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 300 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Reach Level 500 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 500 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Reach Level 850 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 850 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Reach Level 1000 (within 60 days)",
+      "primary_archetype": "account_player_level",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to account_player_level because it asks for Reach Level 1000 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "[Option] Make 5 Purchases! (within 60 days)",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to purchase_recharge_subscription because it asks for [Option] Make 5 Purchases! (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "[Option] Buy 7 to unlock Special Bonus (within 60 days)",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to purchase_recharge_subscription because it asks for [Option] Buy 7 to unlock Special Bonus (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "[Option] Buy 10 for Ultimate Reward (within 60 days)",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to purchase_recharge_subscription because it asks for [Option] Buy 10 for Ultimate Reward (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Cumulative purchases over USD 50 (within 60 days)",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to purchase_recharge_subscription because it asks for Cumulative purchases over USD 50 (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_017",
+      "exact_task_text": "Cumulative purchases over USD 100. (within 60 days)",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to purchase_recharge_subscription because it asks for Cumulative purchases over USD 100. (within 60 days).",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    }
+  ],
+  "risk_band_economics": [
+    {
+      "band": "safe_free_to_play",
+      "task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006"
+      ],
+      "listed_reward_value": "Use exact live task rewards in the payout table.",
+      "main_tracking_support_risk": "Low spend risk but tracking proof is still required.",
+      "continue_reassess_stop_rule": "Continue after the first checkpoint pends or credits; reassess if it does not.",
+      "editorial_treatment": "Recommended first."
+    },
+    {
+      "band": "active_grind",
+      "task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012"
+      ],
+      "listed_reward_value": "Use exact live task rewards in the payout table.",
+      "main_tracking_support_risk": "Time risk and late milestone slowdown.",
+      "continue_reassess_stop_rule": "Continue only while reward-to-effort remains favorable; reassess at each milestone.",
+      "editorial_treatment": "Conditional."
+    },
+    {
+      "band": "low_spend",
+      "task_ids": [
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "listed_reward_value": "Use exact live task rewards in the payout table.",
+      "main_tracking_support_risk": "Receipt and cost recovery risk.",
+      "continue_reassess_stop_rule": "Only spend when the listed reward exceeds real cost and proof is clean.",
+      "editorial_treatment": "Use strict ROI math."
+    },
+    {
+      "band": "high_risk_or_not_recommended",
+      "task_ids": [],
+      "listed_reward_value": "No invented upside.",
+      "main_tracking_support_risk": "Tasks with unclear wording, missing proof, or poor ROI.",
+      "continue_reassess_stop_rule": "Stop when support proof is weak or cost exceeds reward.",
+      "editorial_treatment": "Avoid or skip."
+    }
+  ],
+  "purchase_economics": [
+    {
+      "task_id": "task_013",
+      "cost": "Use live store receipt; do not infer cost unless task text states it.",
+      "reward_value": "Use exact live task reward from intake.",
+      "gross_spread": "Compare receipt total against listed reward before purchase.",
+      "timing": "Buy only after tracking is confirmed.",
+      "proof": [
+        "receipt",
+        "task screen",
+        "pending/credited state"
+      ],
+      "editorial_treatment": "Low-spend only when ROI is positive."
+    },
+    {
+      "task_id": "task_014",
+      "cost": "Use live store receipt; do not infer cost unless task text states it.",
+      "reward_value": "Use exact live task reward from intake.",
+      "gross_spread": "Compare receipt total against listed reward before purchase.",
+      "timing": "Buy only after tracking is confirmed.",
+      "proof": [
+        "receipt",
+        "task screen",
+        "pending/credited state"
+      ],
+      "editorial_treatment": "Low-spend only when ROI is positive."
+    },
+    {
+      "task_id": "task_015",
+      "cost": "Use live store receipt; do not infer cost unless task text states it.",
+      "reward_value": "Use exact live task reward from intake.",
+      "gross_spread": "Compare receipt total against listed reward before purchase.",
+      "timing": "Buy only after tracking is confirmed.",
+      "proof": [
+        "receipt",
+        "task screen",
+        "pending/credited state"
+      ],
+      "editorial_treatment": "Low-spend only when ROI is positive."
+    },
+    {
+      "task_id": "task_016",
+      "cost": "Use live store receipt; do not infer cost unless task text states it.",
+      "reward_value": "Use exact live task reward from intake.",
+      "gross_spread": "Compare receipt total against listed reward before purchase.",
+      "timing": "Buy only after tracking is confirmed.",
+      "proof": [
+        "receipt",
+        "task screen",
+        "pending/credited state"
+      ],
+      "editorial_treatment": "Low-spend only when ROI is positive."
+    },
+    {
+      "task_id": "task_017",
+      "cost": "Use live store receipt; do not infer cost unless task text states it.",
+      "reward_value": "Use exact live task reward from intake.",
+      "gross_spread": "Compare receipt total against listed reward before purchase.",
+      "timing": "Buy only after tracking is confirmed.",
+      "proof": [
+        "receipt",
+        "task screen",
+        "pending/credited state"
+      ],
+      "editorial_treatment": "Low-spend only when ROI is positive."
+    }
+  ],
+  "evidence_log_plan": {
+    "offer_proof": [
+      "offer row",
+      "provider name",
+      "platform name",
+      "task payout table"
+    ],
+    "game_proof": [
+      "game profile",
+      "task completion screen",
+      "progress checkpoint"
+    ],
+    "support_proof": [
+      "pending state",
+      "credited state",
+      "support packet with timestamps"
+    ]
+  },
+  "support_state_model": {
+    "provider": "Aye-T Studios",
+    "support_packet_fields": [
+      "offer id",
+      "game name",
+      "task text",
+      "screenshots",
+      "device",
+      "country",
+      "timestamp"
+    ],
+    "risk_triggers": [
+      "no pending state",
+      "VPN/device change",
+      "purchase receipt mismatch",
+      "deadline pressure"
+    ]
+  },
+  "mechanic_dossiers": [
+    {
+      "mechanic_name": "Live offer task route",
+      "plain_english_explanation": "Follow the provider's listed route exactly and verify each milestone before moving deeper.",
+      "task_ids_affected": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "bottlenecks_and_conflicts": [
+        "tracking delay",
+        "unclear task wording",
+        "late grind",
+        "purchase ROI"
+      ],
+      "proof_screens": [
+        "offer row",
+        "completion screen",
+        "provider status"
+      ]
+    }
+  ],
+  "milestone_matrix": [
+    {
+      "task_id": "task_001",
+      "checkpoint": "Start playing for 30 seconds",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_002",
+      "checkpoint": "Reach Level 30 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_003",
+      "checkpoint": "Reach Level 40 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_004",
+      "checkpoint": "Reach Level 60 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_005",
+      "checkpoint": "Reach Level 80 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_006",
+      "checkpoint": "Reach Level 100 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_007",
+      "checkpoint": "Reach Level 150 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_008",
+      "checkpoint": "Reach Level 200 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_009",
+      "checkpoint": "Reach Level 300 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_010",
+      "checkpoint": "Reach Level 500 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_011",
+      "checkpoint": "Reach Level 850 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    },
+    {
+      "task_id": "task_012",
+      "checkpoint": "Reach Level 1000 (within 60 days)",
+      "continue_rule": "Continue if the prior checkpoint pended or credited.",
+      "reassess_rule": "Reassess if resource or time cost rises faster than reward.",
+      "stop_rule": "Stop if tracking fails or the route requires unsupported spend."
+    }
+  ],
+  "random_reward_model": {
+    "not_applicable_reason": "No random reward, shard, chest, crate, summon, card, wheel, or loot-box task was present."
+  },
+  "terminology_map": [
+    {
+      "offer_wording": "Start playing for 30 seconds",
+      "game_wording": "Start playing for 30 seconds",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 30 (within 60 days)",
+      "game_wording": "Reach Level 30 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 40 (within 60 days)",
+      "game_wording": "Reach Level 40 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 60 (within 60 days)",
+      "game_wording": "Reach Level 60 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 80 (within 60 days)",
+      "game_wording": "Reach Level 80 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 100 (within 60 days)",
+      "game_wording": "Reach Level 100 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 150 (within 60 days)",
+      "game_wording": "Reach Level 150 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 200 (within 60 days)",
+      "game_wording": "Reach Level 200 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 300 (within 60 days)",
+      "game_wording": "Reach Level 300 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 500 (within 60 days)",
+      "game_wording": "Reach Level 500 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 850 (within 60 days)",
+      "game_wording": "Reach Level 850 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Level 1000 (within 60 days)",
+      "game_wording": "Reach Level 1000 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "[Option] Make 5 Purchases! (within 60 days)",
+      "game_wording": "[Option] Make 5 Purchases! (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "[Option] Buy 7 to unlock Special Bonus (within 60 days)",
+      "game_wording": "[Option] Buy 7 to unlock Special Bonus (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "[Option] Buy 10 for Ultimate Reward (within 60 days)",
+      "game_wording": "[Option] Buy 10 for Ultimate Reward (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Cumulative purchases over USD 50 (within 60 days)",
+      "game_wording": "Cumulative purchases over USD 50 (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Cumulative purchases over USD 100. (within 60 days)",
+      "game_wording": "Cumulative purchases over USD 100. (within 60 days)",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    }
+  ],
+  "strategy_guide_sections": [
+    {
+      "section_title": "Payout Table",
+      "section_type": "offer_planning",
+      "why_it_matters_for_offer": "Shows exact live rewards before any walkthrough.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "payout table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Evidence Log",
+      "section_type": "proof",
+      "why_it_matters_for_offer": "Protects the reader if the offer needs support.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "offer proof",
+        "game proof",
+        "support proof"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Task Route",
+      "section_type": "priorities",
+      "why_it_matters_for_offer": "Turns each live row into a guided path.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "task route"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Resources and Bottlenecks",
+      "section_type": "resources",
+      "why_it_matters_for_offer": "Names the resources, proof states, and bottlenecks that decide whether the live route is still worth continuing.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "resource plan",
+        "bottleneck checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Reassessment",
+      "section_type": "reassessment",
+      "why_it_matters_for_offer": "Stops low-value or risky work before it becomes sunk cost.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "continue/reassess/stop"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "FAQ",
+      "section_type": "faq",
+      "why_it_matters_for_offer": "Answers task, payout, and support questions.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "FAQ"
+      ],
+      "include_in_guide": true
+    }
+  ],
+  "task_strategy": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Start playing for 30 seconds",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "install_open_tracking",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Start playing for 30 seconds.",
+      "mechanic_deep_dive": "install_open_tracking means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Start playing for 30 seconds.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "hero_rank",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "install_open_tracking",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Reach Level 30 (within 60 days)",
+      "points": null,
+      "usd": 0.56,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 30 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 30 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "30",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Reach Level 40 (within 60 days)",
+      "points": null,
+      "usd": 1.34,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 40 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 40 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "40",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Reach Level 60 (within 60 days)",
+      "points": null,
+      "usd": 2.2,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 60 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 60 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "60",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "Reach Level 80 (within 60 days)",
+      "points": null,
+      "usd": 4.03,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 80 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 80 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "80",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Level 100 (within 60 days)",
+      "points": null,
+      "usd": 5.91,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 100 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 100 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "100",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "Reach Level 150 (within 60 days)",
+      "points": null,
+      "usd": 10.75,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 150 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 150 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "150",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Reach Level 200 (within 60 days)",
+      "points": null,
+      "usd": 13.44,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 200 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 200 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "200",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Reach Level 300 (within 60 days)",
+      "points": null,
+      "usd": 53.76,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 300 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 300 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "300",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Reach Level 500 (within 60 days)",
+      "points": null,
+      "usd": 107.52,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 500 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 500 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "500",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Reach Level 850 (within 60 days)",
+      "points": null,
+      "usd": 322.56,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 850 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 850 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "850",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Reach Level 1000 (within 60 days)",
+      "points": null,
+      "usd": 403.2,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "account_player_level",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Level 1000 (within 60 days).",
+      "mechanic_deep_dive": "account_player_level means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Reach Level 1000 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "account_level",
+        "target_value": "1000",
+        "progression_systems_to_cover": [
+          "account_player_level",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "[Option] Make 5 Purchases! (within 60 days)",
+      "points": null,
+      "usd": 1.07,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: [Option] Make 5 Purchases! (within 60 days).",
+      "mechanic_deep_dive": "purchase_recharge_subscription means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: [Option] Make 5 Purchases! (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "receipt and cost check before spending"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "purchase_recharge_subscription",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "[Option] Buy 7 to unlock Special Bonus (within 60 days)",
+      "points": null,
+      "usd": 1.88,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: [Option] Buy 7 to unlock Special Bonus (within 60 days).",
+      "mechanic_deep_dive": "purchase_recharge_subscription means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: [Option] Buy 7 to unlock Special Bonus (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "receipt and cost check before spending"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "purchase_recharge_subscription",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "[Option] Buy 10 for Ultimate Reward (within 60 days)",
+      "points": null,
+      "usd": 2.69,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: [Option] Buy 10 for Ultimate Reward (within 60 days).",
+      "mechanic_deep_dive": "purchase_recharge_subscription means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: [Option] Buy 10 for Ultimate Reward (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "receipt and cost check before spending"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "purchase_recharge_subscription",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Cumulative purchases over USD 50 (within 60 days)",
+      "points": null,
+      "usd": 6.72,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Cumulative purchases over USD 50 (within 60 days).",
+      "mechanic_deep_dive": "purchase_recharge_subscription means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Cumulative purchases over USD 50 (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "receipt and cost check before spending"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "purchase_recharge_subscription",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_017",
+      "exact_task_text": "Cumulative purchases over USD 100. (within 60 days)",
+      "points": null,
+      "usd": 12.1,
+      "deadline_text": "within 60 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Cumulative purchases over USD 100. (within 60 days).",
+      "mechanic_deep_dive": "purchase_recharge_subscription means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Rock N' Cash Casino-Slots Game offer row before starting.",
+        "Open the tracked route for GemLoot via Aye-T Studios.",
+        "Complete only the actions needed for: Cumulative purchases over USD 100. (within 60 days).",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "receipt and cost check before spending"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "purchase_recharge_subscription",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 60 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    }
+  ],
+  "navigation_plan": {
+    "top_nav": [
+      {
+        "label": "Payout Table",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout Table",
+        "required": true
+      },
+      {
+        "label": "Risk Bands",
+        "anchor_id": "risk-bands",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Risk Bands",
+        "required": true
+      },
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Task Route",
+        "anchor_id": "task-route",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "Task Route",
+        "required": true
+      },
+      {
+        "label": "Proof Support",
+        "anchor_id": "proof-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof Support",
+        "required": true
+      }
+    ],
+    "major_sections": [
+      {
+        "label": "Payout Table",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout Table",
+        "required": true
+      },
+      {
+        "label": "Risk Bands",
+        "anchor_id": "risk-bands",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Risk Bands",
+        "required": true
+      },
+      {
+        "label": "Setup Tracking",
+        "anchor_id": "setup-tracking",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Setup Tracking",
+        "required": true
+      },
+      {
+        "label": "Evidence Log",
+        "anchor_id": "evidence-log",
+        "section_type": "proof",
+        "priority": 1,
+        "mobile_label": "Evidence Log",
+        "required": true
+      },
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Game Systems",
+        "anchor_id": "game-systems",
+        "section_type": "game_system",
+        "priority": 1,
+        "mobile_label": "Game Systems",
+        "required": true
+      },
+      {
+        "label": "Milestone Matrix",
+        "anchor_id": "milestone-matrix",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Milestone Matrix",
+        "required": true
+      },
+      {
+        "label": "Task Route",
+        "anchor_id": "task-route",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "Task Route",
+        "required": true
+      },
+      {
+        "label": "Proof Support",
+        "anchor_id": "proof-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof Support",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 1,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Start Offer",
+        "anchor_id": "start-offer",
+        "section_type": "cta",
+        "priority": 1,
+        "mobile_label": "Start Offer",
+        "required": true
+      }
+    ],
+    "game_detail_sections": [
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Game Systems",
+        "anchor_id": "game-systems",
+        "section_type": "game_system",
+        "priority": 1,
+        "mobile_label": "Game Systems",
+        "required": true
+      }
+    ],
+    "task_sections": [
+      {
+        "label": "task_001",
+        "anchor_id": "task-task-001",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_001",
+        "required": true
+      },
+      {
+        "label": "task_002",
+        "anchor_id": "task-task-002",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_002",
+        "required": true
+      },
+      {
+        "label": "task_003",
+        "anchor_id": "task-task-003",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_003",
+        "required": true
+      },
+      {
+        "label": "task_004",
+        "anchor_id": "task-task-004",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_004",
+        "required": true
+      },
+      {
+        "label": "task_005",
+        "anchor_id": "task-task-005",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_005",
+        "required": true
+      },
+      {
+        "label": "task_006",
+        "anchor_id": "task-task-006",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_006",
+        "required": true
+      },
+      {
+        "label": "task_007",
+        "anchor_id": "task-task-007",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_007",
+        "required": true
+      },
+      {
+        "label": "task_008",
+        "anchor_id": "task-task-008",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_008",
+        "required": true
+      },
+      {
+        "label": "task_009",
+        "anchor_id": "task-task-009",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_009",
+        "required": true
+      },
+      {
+        "label": "task_010",
+        "anchor_id": "task-task-010",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_010",
+        "required": true
+      },
+      {
+        "label": "task_011",
+        "anchor_id": "task-task-011",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_011",
+        "required": true
+      },
+      {
+        "label": "task_012",
+        "anchor_id": "task-task-012",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_012",
+        "required": true
+      },
+      {
+        "label": "task_013",
+        "anchor_id": "task-task-013",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_013",
+        "required": true
+      },
+      {
+        "label": "task_014",
+        "anchor_id": "task-task-014",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_014",
+        "required": true
+      },
+      {
+        "label": "task_015",
+        "anchor_id": "task-task-015",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_015",
+        "required": true
+      },
+      {
+        "label": "task_016",
+        "anchor_id": "task-task-016",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_016",
+        "required": true
+      },
+      {
+        "label": "task_017",
+        "anchor_id": "task-task-017",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_017",
+        "required": true
+      }
+    ],
+    "support_sections": [
+      {
+        "label": "Proof Support",
+        "anchor_id": "proof-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof Support",
+        "required": true
+      }
+    ]
+  },
+  "original_value_block": {
+    "type": "task risk matrix",
+    "title": "Rock N' Cash Casino-Slots Game continue/reassess/stop matrix",
+    "content_plan": "Compare each live task against proof status, reward value, purchase exposure, and support risk."
+  },
+  "worth_it_score": {
+    "score": 72,
+    "verdict": "Worth considering only after the first low-risk task confirms tracking.",
+    "basis": "Score favors exact live task data and proof discipline, with deductions for limited external game-system research."
+  },
+  "questions_unanswered": [
+    "External game-specific progression sources were not fetched in this automated batch.",
+    "Provider terms can change after the captured date."
+  ],
+  "do_not_claim": [
+    "credit approval is guaranteed",
+    "payout approval is guaranteed",
+    "exact completion time without source",
+    "purchase is required unless task says purchase"
+  ],
+  "quality_gate": {
+    "status": "pass",
+    "score": 82,
+    "checks": [
+      {
+        "id": "live_tasks_present",
+        "result": "PASS"
+      },
+      {
+        "id": "payout_source_safe",
+        "result": "PASS"
+      },
+      {
+        "id": "deadline_source_safe",
+        "result": "PASS"
+      }
+    ],
+    "blocking_reasons": []
+  }
+}

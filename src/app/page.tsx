@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import EarnLabActivityRail from "@/components/offers/EarnLabActivityRail";
-import WeeklyTopGames from "@/components/home/WeeklyTopGames";
 import { RevenuePageView } from "@/components/analytics/RevenueEventTracker";
-import { getHomepageFeaturedOffers } from "@/lib/homepage-featured";
 import { JsonLd, buildBreadcrumbList, buildWebsiteSearchAction, buildFAQPage } from "@/lib/seo-schema";
 import AccountPartnerSites from "@/components/account/AccountPartnerSites";
 
@@ -61,58 +59,9 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   );
 }
 
-const START_HERE_ITEMS = [
-  {
-    name: "Compare Offers",
-    href: "/offers",
-    badge: "Canonical search",
-    desc: "Search, filter, sort, and compare live payout routes when you already know you want the full offer database.",
-  },
-  {
-    name: "Browse Games",
-    href: "/offers#games",
-    badge: "Game discovery",
-    desc: "Start with game hubs when you want payout snapshots, guide coverage, provider count, and related games.",
-  },
-  {
-    name: "Best GPT Sites",
-    href: "/best-gpt-sites",
-    badge: "Platform intel",
-    desc: "See which GPT sites are trusted, competitive on payout, and worth joining before you commit your time.",
-  },
-  {
-    name: "Game Guides",
-    href: "/guides",
-    badge: "Completion help",
-    desc: "Use proven walkthroughs to finish milestones faster, avoid mistakes, and reach payout checkpoints sooner.",
-  },
-  {
-    name: "Platform Reviews",
-    href: "/best-gpt-sites#platform-reviews",
-    badge: "Trust checks",
-    desc: "Research individual GPT sites before you join, then move into offers with clearer expectations.",
-  },
-] as const;
-
 const HERO_SITE_TAGS = ["Freecash", "Gemsloot", "Gain.gg", "EarnLab", "KashKick", "Swagbucks"] as const;
 
-const TRACKED_BROKERS = [
-  { name: "Torox", status: "Active tracking", desc: "High-volume mobile and CPA offer paths." },
-  { name: "AdGate Media", status: "Active tracking", desc: "Survey, app install, and rewarded action offers." },
-  { name: "EarnLab", status: "Imported routes", desc: "Regional game and mobile app payout routes." },
-  { name: "RevU", status: "Platform routes", desc: "Survey and app routes inside partner platforms." },
-  { name: "Lootably", status: "Platform routes", desc: "Offerwall inventory used across rewards platforms." },
-] as const;
 
-const PARTNER_SITE_ROWS = [
-  { name: "Freecash", rating: "4.9/5", href: "/review/freecash-review", payoutMethods: ["PayPal", "Visa", "Crypto", "Gift cards"] },
-  { name: "Gain.gg", rating: "4.8/5", href: "/review/gain-gg-review", payoutMethods: ["Crypto", "Gift cards"] },
-  { name: "ySense", rating: "4.6/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["PayPal", "Gift cards"] },
-  { name: "Swagbucks", rating: "4.6/5", href: "/review/swagbucks-review", payoutMethods: ["PayPal", "Gift cards"] },
-  { name: "Reward XP", rating: "4.5/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["PayPal", "Crypto", "Gift cards"] },
-  { name: "EarnLab", rating: "4.3/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["Crypto", "PayPal", "Gift cards"] },
-  { name: "Lootup", rating: "4.2/5", href: "/best-gpt-sites#platform-reviews", payoutMethods: ["PayPal", "Crypto", "Gift cards"] },
-] as const;
 
 const HOMEPAGE_FAQS = [
   {
@@ -186,7 +135,7 @@ const HOME_LINK_GROUPS = [
       { href: "/guides/how-to-earn", label: "How-to-earn guides" },
       { href: "/guides/woodoku-blast", label: "Woodoku Blast guide" },
       { href: "/best-gpt-sites", label: "Best GPT sites" },
-      { href: "/review/swagbucks-review", label: "Swagbucks review" },
+      { href: "/best-gpt-sites/swagbucks", label: "Swagbucks review" },
     ],
   },
 ] as const;
@@ -196,7 +145,6 @@ function formatPostDate(_value: string | null) {
 }
 
 export default async function HomePage() {
-  const weeklyTopGames = await getHomepageFeaturedOffers();
   const featuredPost: any = null;
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || null;
   const faqSchema = buildFAQPage(HOMEPAGE_FAQS.map(({ question, answer }) => ({ question, answer })));
@@ -274,115 +222,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="border-b border-[var(--border-default)] bg-white px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-8 text-center">
-            <p className="section-label mb-3">Choose your path</p>
-            <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
-              Choose the hub that matches your next step
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-              EarnGrind keeps discovery, comparison, walkthroughs, and platform
-              research separate so each page has a clear job.
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {START_HERE_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="group border border-[var(--border-default)] bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-lime-300 hover:shadow-[0_14px_30px_rgba(15,23,42,0.08)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime-400"
-              >
-                <span className="text-[9px] font-extrabold uppercase tracking-[0.16em] text-[var(--text-tertiary)]">
-                  {item.badge}
-                </span>
-                <h3 className="mt-3 text-sm font-extrabold text-[var(--brand-ink)]">
-                  {item.name}
-                </h3>
-                <p className="mt-1.5 text-[11px] leading-relaxed text-[var(--text-secondary)]">
-                  {item.desc}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="bg-[var(--surface-muted)] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <AccountPartnerSites variant="homepage" />
         </div>
       </section>
-      <section className="border-y border-[var(--border-default)] bg-white px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-6 max-w-4xl">
-            <p className="section-label mb-2">Editor&apos;s picks</p>
-            <h2 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
-              Weekly Top Paying Games
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-              Discover this week&apos;s highest-paying GPT offers, hand-picked from supported reward sites. Compare payouts instantly and find the best place to complete each game before you start.
-            </p>
-          </div>
-          <WeeklyTopGames initialOffers={weeklyTopGames.data} />
-        </div>
-      </section>
 
-      <section className="bg-[var(--surface-muted)] px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2">
-          <div>
-            <p className="section-label mb-2">Tracked offerwall brokers</p>
-            <h2 className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)]">
-              The offer walls EarnGrind watches for payout changes
-            </h2>
-            <div className="mt-5 space-y-3">
-              {TRACKED_BROKERS.map((broker) => (
-                <div key={broker.name} className="border border-[var(--border-default)] bg-white p-4 shadow-sm">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h3 className="text-sm font-extrabold text-[var(--brand-ink)]">{broker.name}</h3>
-                    <span className="bg-lime-50 px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-lime-700">
-                      {broker.status}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">{broker.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          <div>
-            <p className="section-label mb-2">Best paying GPT partner sites</p>
-            <h2 className="text-xl font-extrabold tracking-tight text-[var(--brand-ink)]">
-              Sites to compare before you start an offer
-            </h2>
-            <div className="mt-5 space-y-3">
-              {PARTNER_SITE_ROWS.map((site) => (
-                <Link
-                  key={site.name}
-                  href={site.href}
-                  className="flex items-center justify-between gap-4 border border-[var(--border-default)] bg-white p-4 text-sm shadow-sm transition hover:border-lime-300 hover:shadow-[0_14px_30px_rgba(15,23,42,0.08)]"
-                >
-                  <div>
-                    <span className="block font-extrabold text-[var(--brand-ink)]">{site.name}</span>
-                    <div className="mt-1 flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-semibold text-amber-700">EarnGrind Rating {site.rating}</span>
-                      {site.payoutMethods?.length ? (
-                        <span className="text-[11px] text-[var(--text-tertiary)]">
-                          · {site.payoutMethods.slice(0, 3).join(", ")}
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
-                  <span className="shrink-0 border border-[var(--border-default)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-ink)]">
-                    Visit platform
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {featuredPost ? (
         <section className="bg-[var(--surface-muted)] px-4 py-12 sm:px-6 lg:px-8">

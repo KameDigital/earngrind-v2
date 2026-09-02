@@ -1,0 +1,200 @@
+{
+  "batch": "live-seo-batch-2026-06-29",
+  "date": "2026-06-29",
+  "count": 32,
+  "source": "https://earngrind.com/api/offers?per_page=120&sort=payout_desc&min_payout_usd=1",
+  "created": [
+    {
+      "game": "Goblin Miner: Idle Merger",
+      "slug": "goblin-miner-idle-merger-seo-offer-guide",
+      "tasks": 22,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\goblin-miner-idle-merger-seo-offer-guide"
+    },
+    {
+      "game": "Cases.GG",
+      "slug": "cases-gg-seo-offer-guide",
+      "tasks": 9,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\cases-gg-seo-offer-guide"
+    },
+    {
+      "game": "Acebet",
+      "slug": "acebet-seo-offer-guide",
+      "tasks": 23,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\acebet-seo-offer-guide"
+    },
+    {
+      "game": "Call of Dragons",
+      "slug": "call-of-dragons-seo-offer-guide",
+      "tasks": 18,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\call-of-dragons-seo-offer-guide"
+    },
+    {
+      "game": "RustClash",
+      "slug": "rustclash-seo-offer-guide",
+      "tasks": 12,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rustclash-seo-offer-guide"
+    },
+    {
+      "game": "Clash.GG",
+      "slug": "clash-gg-seo-offer-guide",
+      "tasks": 9,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\clash-gg-seo-offer-guide"
+    },
+    {
+      "game": "Rock N' Cash Vegas Slot Casino",
+      "slug": "rock-n-cash-vegas-slot-casino-seo-offer-guide",
+      "tasks": 18,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rock-n-cash-vegas-slot-casino-seo-offer-guide"
+    },
+    {
+      "game": "Rock N' Cash Casino-Slots Game",
+      "slug": "rock-n-cash-casino-slots-game-seo-offer-guide",
+      "tasks": 17,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rock-n-cash-casino-slots-game-seo-offer-guide"
+    },
+    {
+      "game": "Solitaire Stash",
+      "slug": "solitaire-stash-seo-offer-guide",
+      "tasks": 15,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\solitaire-stash-seo-offer-guide"
+    },
+    {
+      "game": "Goblins Wood",
+      "slug": "goblins-wood-seo-offer-guide",
+      "tasks": 22,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\goblins-wood-seo-offer-guide"
+    },
+    {
+      "game": "Rise of Kingdoms",
+      "slug": "rise-of-kingdoms-seo-offer-guide",
+      "tasks": 18,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rise-of-kingdoms-seo-offer-guide"
+    },
+    {
+      "game": "Gamehag",
+      "slug": "gamehag-seo-offer-guide",
+      "tasks": 11,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\gamehag-seo-offer-guide"
+    },
+    {
+      "game": "Magnet Miner Winter - Android - US - CPE",
+      "slug": "magnet-miner-winter-android-us-cpe-seo-offer-guide",
+      "tasks": 1,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\magnet-miner-winter-android-us-cpe-seo-offer-guide"
+    },
+    {
+      "game": "Woodoku Blast",
+      "slug": "woodoku-blast-seo-offer-guide",
+      "tasks": 27,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\woodoku-blast-seo-offer-guide"
+    },
+    {
+      "game": "Feezer Frenzy - Android - US - CPE",
+      "slug": "feezer-frenzy-android-us-cpe-seo-offer-guide",
+      "tasks": 1,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\feezer-frenzy-android-us-cpe-seo-offer-guide"
+    },
+    {
+      "game": "Thrillz",
+      "slug": "thrillz-seo-offer-guide",
+      "tasks": 3,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\thrillz-seo-offer-guide"
+    },
+    {
+      "game": "Solitaire Stash: Win Real Cash",
+      "slug": "solitaire-stash-win-real-cash-seo-offer-guide",
+      "tasks": 16,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\solitaire-stash-win-real-cash-seo-offer-guide"
+    },
+    {
+      "game": "Rock N' Cash Vegas Slot",
+      "slug": "rock-n-cash-vegas-slot-seo-offer-guide",
+      "tasks": 16,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rock-n-cash-vegas-slot-seo-offer-guide"
+    },
+    {
+      "game": "Magnet Miner Winter (Android)",
+      "slug": "magnet-miner-winter-android-seo-offer-guide-2",
+      "tasks": 8,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\magnet-miner-winter-android-seo-offer-guide-2"
+    },
+    {
+      "game": "Palmon: Survival",
+      "slug": "palmon-survival-seo-offer-guide-2",
+      "tasks": 23,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\palmon-survival-seo-offer-guide-2"
+    },
+    {
+      "game": "Game of Vampires",
+      "slug": "game-of-vampires-seo-offer-guide-2",
+      "tasks": 18,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\game-of-vampires-seo-offer-guide-2"
+    },
+    {
+      "game": "Rise of Kingdoms: Lost Crusade",
+      "slug": "rise-of-kingdoms-lost-crusade-seo-offer-guide-2",
+      "tasks": 18,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rise-of-kingdoms-lost-crusade-seo-offer-guide-2"
+    },
+    {
+      "game": "Feezer Frenzy (Android)",
+      "slug": "feezer-frenzy-android-seo-offer-guide-2",
+      "tasks": 9,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\feezer-frenzy-android-seo-offer-guide-2"
+    },
+    {
+      "game": "RustClash.com",
+      "slug": "rustclash-com-seo-offer-guide-2",
+      "tasks": 11,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rustclash-com-seo-offer-guide-2"
+    },
+    {
+      "game": "Rock N' Cash",
+      "slug": "rock-n-cash-seo-offer-guide",
+      "tasks": 21,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\rock-n-cash-seo-offer-guide"
+    },
+    {
+      "game": "DesignVille: Merge & Design",
+      "slug": "designville-merge-design-seo-offer-guide-2",
+      "tasks": 27,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\designville-merge-design-seo-offer-guide-2"
+    },
+    {
+      "game": "Merge Paradise : Match Puzzle",
+      "slug": "merge-paradise-match-puzzle-seo-offer-guide",
+      "tasks": 21,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\merge-paradise-match-puzzle-seo-offer-guide"
+    },
+    {
+      "game": "Highroller Vegas",
+      "slug": "highroller-vegas-seo-offer-guide",
+      "tasks": 19,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\highroller-vegas-seo-offer-guide"
+    },
+    {
+      "game": "MU: Dark Epoch",
+      "slug": "mu-dark-epoch-seo-offer-guide",
+      "tasks": 22,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\mu-dark-epoch-seo-offer-guide"
+    },
+    {
+      "game": "Fish of Fortune",
+      "slug": "fish-of-fortune-seo-offer-guide",
+      "tasks": 28,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\fish-of-fortune-seo-offer-guide"
+    },
+    {
+      "game": "Box Away",
+      "slug": "box-away-seo-offer-guide",
+      "tasks": 12,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\box-away-seo-offer-guide"
+    },
+    {
+      "game": "Train Miner: Idle Railway Game",
+      "slug": "train-miner-idle-railway-game-seo-offer-guide",
+      "tasks": 23,
+      "dir": "C:\\Users\\kamed\\Dev\\earn-terminal-v2\\earngrind-v2\\guides\\train-miner-idle-railway-game-seo-offer-guide"
+    }
+  ]
+}

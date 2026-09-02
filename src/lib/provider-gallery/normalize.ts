@@ -130,3 +130,16 @@ export function normalizeMoney(value: unknown): number {
 export function formatUsd(value: number): string {
     return `$${normalizeMoney(value).toFixed(2)}`;
 }
+
+export function safeImageUrl(value: string | null | undefined): string | null {
+    const trimmed = value?.trim() ?? "";
+    if (!trimmed) return null;
+    if (/\bCLICKID\b|\{clickid\}|\[clickid\]/i.test(trimmed)) return null;
+    try {
+        const url = new URL(trimmed);
+        if (url.protocol !== "https:" && url.protocol !== "http:") return null;
+        return url.toString();
+    } catch {
+        return null;
+    }
+}

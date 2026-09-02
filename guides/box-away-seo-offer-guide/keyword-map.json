@@ -1,0 +1,182 @@
+{
+  "game": "Box Away",
+  "slug": "box-away-seo-offer-guide",
+  "primary_keyword": "Box Away offer guide",
+  "secondary_keywords": [
+    "Box Away payout",
+    "Box Away task list",
+    "Box Away EarnGrind",
+    "Box Away offerwall guide"
+  ],
+  "entity_terms": [
+    "Box Away",
+    "GemLoot",
+    "BitLabs",
+    "EarnGrind"
+  ],
+  "game_mechanics": [
+    "install_open_tracking",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "offerwall_terms": [
+    "offerwall",
+    "payout",
+    "tracked link",
+    "pending credit",
+    "support ticket"
+  ],
+  "user_problem_terms": [
+    "is it worth it",
+    "not crediting",
+    "which tasks to do first",
+    "when to stop"
+  ],
+  "task_terms": [
+    "Install",
+    "Reach Level 25",
+    "Reach Level 50",
+    "Reach Level 100",
+    "Reach Level 250",
+    "Reach Level 500",
+    "Reach Level 1000",
+    "Reach Level 2500",
+    "Reach Level 5000",
+    "Reach Level 10000",
+    "Reach Level 25000",
+    "Make Any Purchase"
+  ],
+  "game_system_terms": [
+    "install_open_tracking",
+    "support_proof",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "section_keyword_map": [
+    {
+      "section": "Payout Table",
+      "keyword": "Box Away offer guide",
+      "anchor": "payout-table"
+    },
+    {
+      "section": "Risk Bands",
+      "keyword": "Box Away offer guide",
+      "anchor": "risk-bands"
+    },
+    {
+      "section": "Setup Tracking",
+      "keyword": "Box Away offer guide",
+      "anchor": "setup-tracking"
+    },
+    {
+      "section": "Evidence Log",
+      "keyword": "Box Away offer guide",
+      "anchor": "evidence-log"
+    },
+    {
+      "section": "Game Overview",
+      "keyword": "Box Away offer guide",
+      "anchor": "game-overview"
+    },
+    {
+      "section": "Game Systems",
+      "keyword": "Box Away offer guide",
+      "anchor": "game-systems"
+    },
+    {
+      "section": "Milestone Matrix",
+      "keyword": "Box Away offer guide",
+      "anchor": "milestone-matrix"
+    },
+    {
+      "section": "Task Route",
+      "keyword": "Box Away offer guide",
+      "anchor": "task-route"
+    },
+    {
+      "section": "Proof Support",
+      "keyword": "Box Away offer guide",
+      "anchor": "proof-support"
+    },
+    {
+      "section": "FAQ",
+      "keyword": "Box Away offer guide",
+      "anchor": "faq"
+    },
+    {
+      "section": "Start Offer",
+      "keyword": "Box Away offer guide",
+      "anchor": "start-offer"
+    }
+  ],
+  "faq_keyword_map": [
+    "Is Box Away worth it?",
+    "How do Box Away offer tasks credit?",
+    "What proof should I save for Box Away?"
+  ],
+  "cta_keyword_map": [
+    {
+      "cta": "Compare live offers",
+      "target": "[INTERNAL: /offers]"
+    }
+  ],
+  "archetype_keyword_map": [
+    {
+      "archetype": "install_open_tracking",
+      "keyword": "Box Away install open tracking"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "account_player_level",
+      "keyword": "Box Away account player level"
+    },
+    {
+      "archetype": "purchase_recharge_subscription",
+      "keyword": "Box Away purchase recharge subscription"
+    }
+  ],
+  "search_intent": "mixed",
+  "difficulty": "high",
+  "serp_opportunities": [
+    "Most pages do not preserve exact live task rows.",
+    "Most pages skip proof and support packet planning.",
+    "Most pages do not separate safe, grind, paid, and high-risk task bands."
+  ],
+  "meta_description_draft": "Box Away offer guide covering 12 live tasks, payout checks, proof steps, risk bands, and stop rules before you start. Use it to compare the route safely.",
+  "h1_draft": "Box Away Offer Guide"
+}

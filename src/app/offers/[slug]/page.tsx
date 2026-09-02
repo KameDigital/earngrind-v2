@@ -766,7 +766,7 @@ export default async function GameOffersPage({
                                 </Link>
                                 {bestReview && (
                                     <Link
-                                        href={`/review/${bestReview.slug}`}
+                                        href={`/best-gpt-sites/${bestReview.slug}`}
                                         className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-default)] bg-white px-4 py-3 text-sm font-bold text-[var(--brand-ink)] transition-colors hover:border-lime-300 hover:bg-[var(--brand-lime)]/10"
                                     >
                                         Read Platform Review

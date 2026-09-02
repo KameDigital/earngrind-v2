@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import Module from "node:module";
 import { resolve } from "node:path";
+import { EARNLAB_GALLERY_COUNTRIES } from "@/lib/earnlab-countries";
 
 type ImportStats = {
     fetched: number;
@@ -39,16 +40,39 @@ loadEnvFile("workers/.env");
 loadEnvFile(".env.local");
 loadEnvFile(".env.production");
 
+const TIER1_COUNTRIES = ["US", "GB", "CA", "AU", "DE", "FR", "NL", "SE", "NO", "ES", "IT"] as const;
+const ALL_16_COUNTRIES = [...EARNLAB_GALLERY_COUNTRIES];
+
 const args = parseArgs(process.argv.slice(2));
 const refresh = args.refresh !== "false";
+
+// Country resolution
+let resolvedCountries: string[] = ["US", "GB"];
+if (args["all-countries"] === "true") {
+    resolvedCountries = [...ALL_16_COUNTRIES];
+} else if (args["tier1-only"] === "true") {
+    resolvedCountries = [...TIER1_COUNTRIES];
+} else if (args.countries) {
+    resolvedCountries = parseCsv(args.countries);
+}
+
+// Platform selection
+const platformFilter = args.platforms ? parseCsv(args.platforms.toLowerCase()) : null;
+const shouldRunPlatform = (name: string) => !platformFilter || platformFilter.includes(name.toLowerCase());
+
 const gemslootAllCountries = args["gemsloot-all-countries"] === "true";
-const gemslootCountries = parseCsv(args["gemsloot-countries"] ?? args.countries ?? "US,GB");
-const gainCountries = parseCsv(args["gain-countries"] ?? args.countries ?? "US");
-const earnlabCountries = parseCsv(args["earnlab-countries"] ?? "US,GB,CA,AU");
-const gemslootLimit = parseLimit(args["gemsloot-limit"], 300, 300);
-const gainLimit = parseLimit(args["gain-limit"], 300, 300);
-const earnlabLimit = parseLimit(args["earnlab-limit"], 75, 75);
+const gemslootCountries = gemslootAllCountries ? [null] : (args["gemsloot-countries"] ? parseCsv(args["gemsloot-countries"]) : resolvedCountries);
+const gainCountries = args["gain-countries"] ? parseCsv(args["gain-countries"]) : resolvedCountries;
+const earnlabCountries = args["earnlab-countries"] ? parseCsv(args["earnlab-countries"]) : resolvedCountries;
+
+const gemslootLimit = parseLimit(args["gemsloot-limit"] ?? args.limit, 300, 1000);
+const gainLimit = parseLimit(args["gain-limit"] ?? args.limit, 300, 1000);
+const earnlabLimit = parseLimit(args["earnlab-limit"] ?? args.limit, 75, 75);
+const earnlabAllPages = args["all-pages"] !== "false";
 const gainWalls = parseCsv(args["gain-walls"] ?? "native,revu,adtowall,asmwall,lootably,cpx");
+const delayMs = Number(args.delay ?? 250);
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 main().catch((error) => {
     console.error(error instanceof Error ? error.message : String(error));
@@ -56,6 +80,10 @@ main().catch((error) => {
 });
 
 async function main() {
+    console.log(`[multi-country-sync] Starting ingestion pipeline...`);
+    console.log(`[multi-country-sync] Target Countries: ${resolvedCountries.join(", ")}`);
+    console.log(`[multi-country-sync] Platforms: ${platformFilter ? platformFilter.join(", ") : "All (EarnLab, Gemsloot, Gain.gg)"}\n`);
+
     const [
         { getEarnLabGalleryTasksByCountry },
         { getGemslootGalleryOffers },
@@ -79,103 +107,75 @@ async function main() {
     const db = getProviderGalleryServiceClient();
     const results: ProviderRunResult[] = [];
 
-    for (const country of earnlabCountries) {
-        const config = getProviderGalleryConfig("earnlab");
-        const gallery = await getEarnLabGalleryTasksByCountry(country, {
-            limit: earnlabLimit,
-            refresh,
-            sort: config.defaultSort,
-        });
-        const result = await importProviderGalleryOffers({
-            db,
-            config,
-            offers: gallery.offers.map((offer: any) => ({
-                sourceProviderSlug: "earnlab",
-                sourcePlatformSlug: "earnlab",
-                providerDisplayName: offer.providerName,
-                sourceOfferId: offer.id,
-                countryCode: offer.countryCode,
-                title: offer.title,
-                advertiserGameName: offer.advertiserName ?? offer.title,
-                slug: offer.slug,
-                category: offer.category,
-                payoutUsd: offer.payout,
-                totalPayoutUsd: offer.payout,
-                imageUrl: offer.imageUrl,
-                description: offer.description,
-                shortDescription: offer.shortDescription,
-                requirements: offer.requirements,
-                tasks: offer.tasks,
-                devices: offer.platform,
-                countries: [offer.countryCode],
-                trackingUrl: offer.trackingUrl,
-                offerUrl: buildEarnLabOfferBacklink(offer.id),
-                rawMetadata: offer.rawSourceMetadata,
-            })),
-            loggerPrefix: "scripts/refresh-provider-gallery/earnlab",
-        });
-        results.push({ provider: "EarnLab", scope: country, stats: result.stats });
+    // ── 1. EarnLab Ingestion ──────────────────────────────────────────────
+    if (shouldRunPlatform("earnlab")) {
+        console.log(`▶ [EarnLab] Syncing across ${earnlabCountries.length} countries...`);
+        for (const country of earnlabCountries) {
+            try {
+                const config = getProviderGalleryConfig("earnlab");
+                const gallery = await getEarnLabGalleryTasksByCountry(country, {
+                    limit: earnlabLimit,
+                    allPages: earnlabAllPages,
+                    refresh,
+                    sort: config.defaultSort,
+                });
+                const result = await importProviderGalleryOffers({
+                    db,
+                    config,
+                    offers: gallery.offers.map((offer: any) => ({
+                        sourceProviderSlug: "earnlab",
+                        sourcePlatformSlug: "earnlab",
+                        providerDisplayName: offer.providerName,
+                        sourceOfferId: offer.id,
+                        countryCode: offer.countryCode,
+                        title: offer.title,
+                        advertiserGameName: offer.advertiserName ?? offer.title,
+                        slug: offer.slug,
+                        category: offer.category,
+                        payoutUsd: offer.payout,
+                        totalPayoutUsd: offer.payout,
+                        imageUrl: offer.imageUrl,
+                        description: offer.description,
+                        shortDescription: offer.shortDescription,
+                        requirements: offer.requirements,
+                        tasks: offer.tasks,
+                        devices: offer.platform,
+                        countries: [offer.countryCode],
+                        trackingUrl: offer.trackingUrl,
+                        offerUrl: buildEarnLabOfferBacklink(offer.id),
+                        rawMetadata: offer.rawSourceMetadata,
+                    })),
+                    loggerPrefix: `earnlab/${country}`,
+                });
+                results.push({ provider: "EarnLab", scope: country, stats: result.stats });
+                console.log(`  ✓ EarnLab (${country}): ${result.stats.fetched} fetched, ${result.stats.created} new, ${result.stats.updated} updated, ${result.stats.skipped} unchanged`);
+                if (delayMs > 0) await sleep(delayMs);
+            } catch (err) {
+                console.error(`  ✕ EarnLab (${country}) failed:`, err instanceof Error ? err.message : String(err));
+            }
+        }
     }
 
-    const gemslootScopes = gemslootAllCountries ? [null] : gemslootCountries;
-    for (const country of gemslootScopes) {
-        const config = getProviderGalleryConfig("gemsloot");
-        const gallery = await getGemslootGalleryOffers({
-            country,
-            allCountries: gemslootAllCountries,
-            limit: gemslootAllCountries ? 5000 : gemslootLimit,
-            refresh,
-            sort: "epc",
-        });
-        const result = await importProviderGalleryOffers({
-            db,
-            config,
-            offers: gallery.offers.map((offer: any) => ({
-                sourceProviderSlug: offer.providerName,
-                sourcePlatformSlug: "gemsloot",
-                providerDisplayName: offer.providerName,
-                sourceOfferId: offer.id,
-                countryCode: offer.countryCode,
-                title: offer.title,
-                advertiserGameName: offer.advertiserName ?? offer.title,
-                slug: offer.slug,
-                category: offer.category,
-                payoutUsd: offer.payout,
-                totalPayoutUsd: offer.totalPayout,
-                completionCount: offer.completionCount,
-                imageUrl: offer.imageUrl,
-                description: offer.description,
-                shortDescription: offer.shortDescription,
-                requirements: offer.requirements,
-                tasks: offer.tasks,
-                devices: offer.platform,
-                countries: offer.countries,
-                trackingUrl: offer.trackingUrl,
-                offerUrl: null,
-                rawMetadata: offer.rawSourceMetadata,
-            })),
-            loggerPrefix: "scripts/refresh-provider-gallery/gemsloot",
-        });
-        results.push({ provider: "Gemsloot", scope: country ?? "all-countries", stats: result.stats });
-    }
-
-    for (const country of gainCountries) {
-        const config = getProviderGalleryConfig("gain-gg");
-        for (const wall of gainWalls) {
-            const wallLimit = wall === "cpx" ? Math.min(50, gainLimit) : gainLimit;
-            const gallery = await getGainGalleryOffers(wall as any, {
-                country,
-                limit: wallLimit,
-                refresh,
-            });
-            const result = await importProviderGalleryOffers({
-                db,
-                config,
-                offers: gallery.offers.map((offer: any) => {
-                    const directOfferUrl = offer.wall === "native" ? offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) : null;
-                    return {
+    // ── 2. Gemsloot Ingestion ─────────────────────────────────────────────
+    if (shouldRunPlatform("gemsloot")) {
+        console.log(`\n▶ [Gemsloot] Syncing across ${gemslootCountries.length} scopes...`);
+        for (const country of gemslootCountries) {
+            const scopeLabel = country ?? "all-countries";
+            try {
+                const config = getProviderGalleryConfig("gemsloot");
+                const gallery = await getGemslootGalleryOffers({
+                    country,
+                    allCountries: gemslootAllCountries,
+                    limit: gemslootAllCountries ? 5000 : gemslootLimit,
+                    refresh,
+                    sort: "epc",
+                });
+                const result = await importProviderGalleryOffers({
+                    db,
+                    config,
+                    offers: gallery.offers.map((offer: any) => ({
                         sourceProviderSlug: offer.providerName,
-                        sourcePlatformSlug: "gain-gg",
+                        sourcePlatformSlug: "gemsloot",
                         providerDisplayName: offer.providerName,
                         sourceOfferId: offer.id,
                         countryCode: offer.countryCode,
@@ -185,21 +185,80 @@ async function main() {
                         category: offer.category,
                         payoutUsd: offer.payout,
                         totalPayoutUsd: offer.totalPayout,
+                        completionCount: offer.completionCount,
                         imageUrl: offer.imageUrl,
                         description: offer.description,
                         shortDescription: offer.shortDescription,
                         requirements: offer.requirements,
                         tasks: offer.tasks,
                         devices: offer.platform,
-                        countries: [offer.countryCode],
-                        trackingUrl: directOfferUrl ? null : offer.trackingUrl,
-                        offerUrl: directOfferUrl,
+                        countries: offer.countries?.length ? offer.countries : [offer.countryCode],
+                        trackingUrl: offer.trackingUrl,
+                        offerUrl: null,
                         rawMetadata: offer.rawSourceMetadata,
-                    };
-                }),
-                loggerPrefix: `scripts/refresh-provider-gallery/gain/${wall}`,
-            });
-            results.push({ provider: "Gain.gg", scope: `${country}/${wall}`, stats: result.stats });
+                    })),
+                    loggerPrefix: `gemsloot/${scopeLabel}`,
+                });
+                results.push({ provider: "Gemsloot", scope: scopeLabel, stats: result.stats });
+                console.log(`  ✓ Gemsloot (${scopeLabel}): ${result.stats.fetched} fetched, ${result.stats.created} new, ${result.stats.updated} updated, ${result.stats.skipped} unchanged`);
+                if (delayMs > 0) await sleep(delayMs);
+            } catch (err) {
+                console.error(`  ✕ Gemsloot (${scopeLabel}) failed:`, err instanceof Error ? err.message : String(err));
+            }
+        }
+    }
+
+    // ── 3. Gain.gg Ingestion ──────────────────────────────────────────────
+    if (shouldRunPlatform("gain-gg")) {
+        console.log(`\n▶ [Gain.gg] Syncing across ${gainCountries.length} countries and ${gainWalls.length} offerwalls...`);
+        for (const country of gainCountries) {
+            const config = getProviderGalleryConfig("gain-gg");
+            for (const wall of gainWalls) {
+                const wallLimit = wall === "cpx" ? Math.min(50, gainLimit) : gainLimit;
+                try {
+                    const gallery = await getGainGalleryOffers(wall as any, {
+                        country,
+                        limit: wallLimit,
+                        refresh,
+                    });
+                    const result = await importProviderGalleryOffers({
+                        db,
+                        config,
+                        offers: gallery.offers.map((offer: any) => {
+                            const directOfferUrl = offer.wall === "native" ? offer.trackingUrl ?? buildGainOfferDeepLink(offer.id) : null;
+                            return {
+                                sourceProviderSlug: offer.providerName,
+                                sourcePlatformSlug: "gain-gg",
+                                providerDisplayName: offer.providerName,
+                                sourceOfferId: offer.id,
+                                countryCode: offer.countryCode,
+                                title: offer.title,
+                                advertiserGameName: offer.advertiserName ?? offer.title,
+                                slug: offer.slug,
+                                category: offer.category,
+                                payoutUsd: offer.payout,
+                                totalPayoutUsd: offer.totalPayout,
+                                imageUrl: offer.imageUrl,
+                                description: offer.description,
+                                shortDescription: offer.shortDescription,
+                                requirements: offer.requirements,
+                                tasks: offer.tasks,
+                                devices: offer.platform,
+                                countries: [offer.countryCode],
+                                trackingUrl: directOfferUrl ? null : offer.trackingUrl,
+                                offerUrl: directOfferUrl,
+                                rawMetadata: offer.rawSourceMetadata,
+                            };
+                        }),
+                        loggerPrefix: `gain/${country}/${wall}`,
+                    });
+                    results.push({ provider: "Gain.gg", scope: `${country}/${wall}`, stats: result.stats });
+                } catch (err) {
+                    console.error(`  ✕ Gain.gg (${country}/${wall}) failed:`, err instanceof Error ? err.message : String(err));
+                }
+            }
+            console.log(`  ✓ Gain.gg (${country}): completed ${gainWalls.length} walls`);
+            if (delayMs > 0) await sleep(delayMs);
         }
     }
 
@@ -225,7 +284,15 @@ async function main() {
         failed: 0,
     });
 
-    console.log(JSON.stringify({ refresh, results, totals, quality }, null, 2));
+    console.log(`\n======================================================`);
+    console.log(`✅ SYNC COMPLETE`);
+    console.log(`Total Fetched:  ${totals.fetched}`);
+    console.log(`Total Imported: ${totals.imported}`);
+    console.log(`New Offers:     ${totals.created}`);
+    console.log(`Updated Offers: ${totals.updated}`);
+    console.log(`Unchanged:      ${totals.skipped}`);
+    console.log(`Failed:         ${totals.failed}`);
+    console.log(`======================================================\n`);
 }
 
 function loadEnvFile(path: string) {

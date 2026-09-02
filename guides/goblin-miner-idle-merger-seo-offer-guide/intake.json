@@ -1,0 +1,345 @@
+{
+  "game": "Goblin Miner: Idle Merger",
+  "search_name": "Goblin Miner: Idle Merger offer guide",
+  "slug": "goblin-miner-idle-merger-seo-offer-guide",
+  "offerwall_provider": "BitLabs",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install - 0 USD\nReach Level 10. Complete within 30 days - 0.19 USD - within 30 days\nReach Level 15. Complete within 30 days - 0.36 USD - within 30 days\nReach Level 20. Complete within 30 days - 0.91 USD - within 30 days\nReach Level 25. Complete within 30 days - 1.21 USD - within 30 days\nReach Level 30. Complete within 30 days - 1.93 USD - within 30 days\nReach Level 35. Complete within 30 days - 3.2 USD - within 30 days\nReach Level 40. Complete within 30 days - 6.41 USD - within 30 days\nReach Level 45. Complete within 30 days - 12.39 USD - within 30 days\nReach Level 50. Complete within 45 days - 46.46 USD - within 45 days\nReach Level 55. Complete within 45 days - 52.66 USD - within 45 days\nReach Level 60. Complete within 45 days - 29.26 USD - within 45 days\nReach Level 65. Complete within 45 days - 175.53 USD - within 45 days\nReach Level 70. Complete within 45 days - 292.54 USD - within 45 days\nReach Level 75. Complete within 60 days - 702.1 USD - within 60 days\nReach Level 80 - 1111.67 USD\nReach Level 90 - 2508.98 USD\nPurchase Bowl of Rubies - USD 1.99. Complete within 5 days - 0.6 USD - within 5 days\nPurchase Sack of Rubies - USD 4.99. Complete within 5 days - 1.2 USD - within 5 days\nPurchase Ruby Supply - USD 19.99. Complete within 10 days - 1.8 USD - within 10 days\nPurchase Chest of Rubies - USD 49.99. Complete within 10 days - 3 USD - within 10 days\nPurchase - 0 USD",
+  "eligibility": {
+    "provider": "BitLabs",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/goblin-miner-idle-merger",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "d1fe89ec-aa18-4bb6-8948-b1f7fd790723"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach Level 10. Complete within 30 days",
+      "points": null,
+      "usd": 0.19,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "40a4db2b-ee0c-4c0a-96ed-94efd538bca7"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach Level 15. Complete within 30 days",
+      "points": null,
+      "usd": 0.36,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "5d531be4-c0f1-432b-9ea7-39292c44a1bb"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach Level 20. Complete within 30 days",
+      "points": null,
+      "usd": 0.91,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d153fb97-77f4-459f-b2a1-fc22a84144d2"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Reach Level 25. Complete within 30 days",
+      "points": null,
+      "usd": 1.21,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "019d39ac-2d8a-42b8-95d8-4915808232eb"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Reach Level 30. Complete within 30 days",
+      "points": null,
+      "usd": 1.93,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0967eac8-db67-41dd-859a-fd92363a03bc"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach Level 35. Complete within 30 days",
+      "points": null,
+      "usd": 3.2,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "67c72724-b417-4052-8bc2-81d8674f5582"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Level 40. Complete within 30 days",
+      "points": null,
+      "usd": 6.41,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "16d3cab5-5652-4fef-ae0a-5e70d48ef901"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach Level 45. Complete within 30 days",
+      "points": null,
+      "usd": 12.39,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4670ba2b-6452-4bbc-a6a3-8eaec6d50ff8"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach Level 50. Complete within 45 days",
+      "points": null,
+      "usd": 46.46,
+      "deadline_text": "within 45 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "1317e7d3-741c-4d8f-b87f-133ea5c5b9c7"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Level 55. Complete within 45 days",
+      "points": null,
+      "usd": 52.66,
+      "deadline_text": "within 45 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d4d54af1-1516-41cf-9d00-96a6e2d215b3"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Level 60. Complete within 45 days",
+      "points": null,
+      "usd": 29.26,
+      "deadline_text": "within 45 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9ae40d07-e774-45a0-8793-ca5e8344790a"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Level 65. Complete within 45 days",
+      "points": null,
+      "usd": 175.53,
+      "deadline_text": "within 45 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0d6e00d3-8668-4b7f-87a0-e108641f8d6d"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach Level 70. Complete within 45 days",
+      "points": null,
+      "usd": 292.54,
+      "deadline_text": "within 45 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f39d9528-9671-43d4-85fe-9c0c878a388b"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach Level 75. Complete within 60 days",
+      "points": null,
+      "usd": 702.1,
+      "deadline_text": "within 60 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "569243a3-3369-48a9-84e0-2c495eb30574"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Reach Level 80",
+      "points": null,
+      "usd": 1111.67,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "061b0ff2-76f3-44ac-bbfa-1ab14d868a82"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Reach Level 90",
+      "points": null,
+      "usd": 2508.98,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "31001dc3-8d0f-48fd-b213-f62d0b327a4a"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Purchase Bowl of Rubies - USD 1.99. Complete within 5 days",
+      "points": null,
+      "usd": 0.6,
+      "deadline_text": "within 5 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "3ad88272-dc75-4528-88d7-517e0d5e503f"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Purchase Sack of Rubies - USD 4.99. Complete within 5 days",
+      "points": null,
+      "usd": 1.2,
+      "deadline_text": "within 5 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "71c56f02-ddcf-4e81-90ab-9c6c64c5f6c3"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Purchase Ruby Supply - USD 19.99. Complete within 10 days",
+      "points": null,
+      "usd": 1.8,
+      "deadline_text": "within 10 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "5f4a1c40-98eb-43aa-8d26-fe66159f8ccf"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Purchase Chest of Rubies - USD 49.99. Complete within 10 days",
+      "points": null,
+      "usd": 3,
+      "deadline_text": "within 10 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription",
+        "random_reward_gacha"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "5e0031b9-35d1-42f5-9418-bdcfa0abaa29"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Purchase",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "81fa0628-0e63-4289-8494-44e925637b85"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level",
+    "purchase_recharge_subscription",
+    "random_reward_gacha"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

@@ -272,7 +272,7 @@ export default async function AdminSitemapPage({
               )) : null}
               {type === "reviews" ? (reviews ?? []).map((review) => (
                 <tr key={review.id}>
-                  <td className="px-4 py-3 font-bold text-gray-900">{baseUrl}/review/{review.slug}</td>
+                  <td className="px-4 py-3 font-bold text-gray-900">{baseUrl}/best-gpt-sites/{review.slug}</td>
                   <td className="px-4 py-3 text-gray-600">{review.updated_at ? new Date(review.updated_at).toLocaleString() : "n/a"}</td>
                   <td className="px-4 py-3 text-center">n/a</td>
                   <td className="px-4 py-3 text-center font-bold text-lime-700">0.7</td>

@@ -5,6 +5,7 @@ import {
     readRedirectAttributionFromSearchParams,
     type RedirectAttribution,
 } from "@/lib/outbound-attribution";
+import { isBotUserAgent } from "@/lib/bot-detection";
 import {
     buildPlatformAffiliateUrl,
     getPlatformAffiliateOverride,
@@ -52,6 +53,11 @@ async function logPlatformClick(params: {
     attribution: Partial<RedirectAttribution>;
 }): Promise<string | null> {
     const { supabase, platformId, req, userId, attribution } = params;
+    const userAgent = req.headers.get("user-agent");
+    if (isBotUserAgent(userAgent)) {
+        console.info("[go/platform] skipping platform_clicks log for bot user agent", { platformId, userAgent });
+        return null;
+    }
     const normalized = normalizeRedirectAttribution(attribution);
 
     const payload = {
@@ -69,7 +75,7 @@ async function logPlatformClick(params: {
         ip_hash: getIpHash(req),
         referrer: req.headers.get("referer"),
         country: req.headers.get("x-vercel-ip-country"),
-        user_agent: req.headers.get("user-agent"),
+        user_agent: userAgent,
         client_hints: getClientHints(req),
         user_id: userId,
     };
@@ -184,33 +190,35 @@ export async function GET(
         userId: user?.id ?? null,
         attribution,
     });
-    if (["kashkick", "swagbucks", "inboxdollars", "mypoints", "prizerebel", "scrambly", "gain-gg", "gemsloot", "earnlab"].includes(platform.slug)) {
-        await recordPartnerSignupClick({ supabase, platformId: platform.id, userId: user?.id ?? null });
+    if (!isBotUserAgent(req.headers.get("user-agent"))) {
+        if (["kashkick", "swagbucks", "inboxdollars", "mypoints", "prizerebel", "scrambly", "gain-gg", "gemsloot", "earnlab"].includes(platform.slug)) {
+            await recordPartnerSignupClick({ supabase, platformId: platform.id, userId: user?.id ?? null });
+        }
+        await recordRevenueEvent(supabase, {
+            event_name: "outbound_click",
+            route_path: req.nextUrl.pathname,
+            route_group: "platform_go",
+            entity_type: "platform",
+            entity_id: platform.id,
+            entity_slug: platform.slug,
+            platform_id: platform.id,
+            platform_slug: platform.slug,
+            provider_name: attribution.provider_name,
+            cta_location: attribution.click_location,
+            source_context: attribution.source_context,
+            target_url: outboundUrl,
+            referrer_path: req.headers.get("referer"),
+            outbound_click_table: "platform_clicks",
+            outbound_click_id: outboundClickId,
+            user_id: user?.id ?? null,
+            metadata: {
+                offer_title: attribution.offer_title ?? "",
+                game_title: attribution.game_title ?? "",
+                platform_name: attribution.platform_name ?? "",
+                affiliate_mode: attribution.affiliate_mode ?? "",
+            },
+        });
     }
-    await recordRevenueEvent(supabase, {
-        event_name: "outbound_click",
-        route_path: req.nextUrl.pathname,
-        route_group: "platform_go",
-        entity_type: "platform",
-        entity_id: platform.id,
-        entity_slug: platform.slug,
-        platform_id: platform.id,
-        platform_slug: platform.slug,
-        provider_name: attribution.provider_name,
-        cta_location: attribution.click_location,
-        source_context: attribution.source_context,
-        target_url: outboundUrl,
-        referrer_path: req.headers.get("referer"),
-        outbound_click_table: "platform_clicks",
-        outbound_click_id: outboundClickId,
-        user_id: user?.id ?? null,
-        metadata: {
-            offer_title: attribution.offer_title ?? "",
-            game_title: attribution.game_title ?? "",
-            platform_name: attribution.platform_name ?? "",
-            affiliate_mode: attribution.affiliate_mode ?? "",
-        },
-    });
 
     logPlatformRedirect({
         platformId: platform.id,

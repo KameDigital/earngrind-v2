@@ -1,0 +1,259 @@
+{
+  "game": "Slot Mate Vegas Slot",
+  "search_name": "Slot Mate Vegas Slot offer guide",
+  "slug": "slot-mate-vegas-slot-seo-offer-guide-2",
+  "offerwall_provider": "Torox",
+  "country": "AU",
+  "device": "android",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "AU android user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Complete level 15 - 0.1 USD\nComplete level 30 - 0.2 USD\nComplete level 50 - 0.7 USD\n[option] make 3 purchases - 0.9 USD\n[option] complete level 60 within 1 day - 1.2 USD - within 1 day\nComplete level 70 - 1.7 USD\nComplete level 80 - 1.9 USD\n[option] purchase any USD 19.99 item - 2 USD\nComplete level 90 - 2.9 USD\nComplete level 120 - 4.9 USD\nComplete level 140 - 7 USD\n[option] spend over USD 50 - 8 USD\nComplete level 160 - 10 USD\ntest - 34 USD\nComplete level 300 - 56 USD\ntest - 78 USD",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "AU",
+    "device": "android",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/slot-mate-vegas-slot",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Complete level 15",
+      "points": null,
+      "usd": 0.1,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "8c92d723-f536-4a33-a746-a18eccdff94d"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Complete level 30",
+      "points": null,
+      "usd": 0.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "10d45beb-7c90-4818-a138-78d4ac24749f"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Complete level 50",
+      "points": null,
+      "usd": 0.7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "418e80bd-2940-441d-b171-0836ab5b70a4"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "[option] make 3 purchases",
+      "points": null,
+      "usd": 0.9,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "3b7094ba-4219-4845-bd07-bf598a752e13"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "[option] complete level 60 within 1 day",
+      "points": null,
+      "usd": 1.2,
+      "deadline_text": "within 1 day",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "fa453a2c-1212-40f9-a19b-8755e1c991d6"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Complete level 70",
+      "points": null,
+      "usd": 1.7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a68a4b32-d3ef-4d80-b981-642e0046f202"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Complete level 80",
+      "points": null,
+      "usd": 1.9,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "13d69903-972d-404d-bed0-f6ea9de5467e"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "[option] purchase any USD 19.99 item",
+      "points": null,
+      "usd": 2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "b773fecf-081d-4342-bbea-9436e8c5e6af"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Complete level 90",
+      "points": null,
+      "usd": 2.9,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "63b459be-943c-44e2-9948-238822719681"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Complete level 120",
+      "points": null,
+      "usd": 4.9,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "81200ba7-0be3-40f7-8375-c43c783fe985"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Complete level 140",
+      "points": null,
+      "usd": 7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "da869cdc-ccd3-4ed8-aa54-fdee74e2558a"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "[option] spend over USD 50",
+      "points": null,
+      "usd": 8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "1f84a86a-99fd-4e45-b307-5d772e56c004"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Complete level 160",
+      "points": null,
+      "usd": 10,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "68f00f27-e3dd-4ab3-bda2-d78958d63a2f"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "test",
+      "points": null,
+      "usd": 34,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "31913511-e416-4c85-988d-bccf708bfc64"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Complete level 300",
+      "points": null,
+      "usd": 56,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d602cf7d-c305-4559-81b1-a4eb40001820"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "test",
+      "points": null,
+      "usd": 78,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "72a9c33f-4bc1-4393-9869-59b1bdc4bea8"
+    }
+  ],
+  "task_entities": [
+    "account_player_level",
+    "purchase_recharge_subscription",
+    "support_proof"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

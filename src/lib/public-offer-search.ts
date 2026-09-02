@@ -3,7 +3,7 @@ import { isPublicOfferRowEligible, shapePublicOffer } from "@/lib/public-offers"
 import { getPublicOfferMinPayout } from "@/lib/offer-quality";
 import { normalizeOfferCountryCode } from "@/lib/offer-country";
 
-export type PublicOfferSort = "payout_desc" | "payout_asc" | "heat_desc" | "newest";
+export type PublicOfferSort = "payout_desc" | "payout_asc" | "heat_desc" | "newest" | "completed_desc";
 export type PublicOfferSource = "" | "ingested" | "manual";
 
 export interface PublicOfferSearchFilters {
@@ -62,7 +62,7 @@ export function dedupePublicOffers<T extends ReturnType<typeof shapePublicOffer>
 }
 
 export function normalizePublicOfferSearchFilters(filters: PublicOfferSearchFilters): Required<Pick<PublicOfferSearchFilters, "q" | "gameSlug" | "platformId" | "platformKind" | "device" | "country" | "payoutType" | "source" | "isNew" | "isHot" | "isAth" | "isBoosted" | "minPayout" | "sort" | "page" | "perPage">> {
-    const sort = filters.sort === "payout_asc" || filters.sort === "heat_desc" || filters.sort === "newest"
+    const sort = filters.sort === "payout_asc" || filters.sort === "heat_desc" || filters.sort === "newest" || filters.sort === "completed_desc"
         ? filters.sort
         : "payout_desc";
     const source = filters.source === "ingested" || filters.source === "manual" ? filters.source : "";
@@ -82,8 +82,8 @@ export function normalizePublicOfferSearchFilters(filters: PublicOfferSearchFilt
         isBoosted: Boolean(filters.isBoosted),
         minPayout: Number.isFinite(filters.minPayout) ? filters.minPayout ?? 0 : 0,
         sort,
-        page: Math.min(50, Math.max(1, Math.trunc(filters.page ?? 1))),
-        perPage: Math.min(50, Math.max(1, Math.trunc(filters.perPage ?? 20))),
+        page: Math.min(100, Math.max(1, Math.trunc(filters.page ?? 1))),
+        perPage: Math.min(100, Math.max(1, Math.trunc(filters.perPage ?? 24))),
     };
 }
 
@@ -112,51 +112,56 @@ export async function fetchPublicOffers(filters: PublicOfferSearchFilters): Prom
     const normalized = normalizePublicOfferSearchFilters(filters);
     const minPayout = Math.max(normalized.minPayout, getPublicOfferMinPayout());
 
-    const { data, error } = await supabase.rpc("search_public_offers", {
-        p_q: normalized.q,
-        p_game_slug: normalized.gameSlug,
-        p_platform_id: normalized.platformId,
-        p_platform_kind: normalized.platformKind,
-        p_device: normalized.device,
-        p_country: normalized.country,
-        p_payout_type: normalized.payoutType,
-        p_source: normalized.source,
-        p_is_new: normalized.isNew,
-        p_is_hot: normalized.isHot,
-        p_is_ath: normalized.isAth,
-        p_is_boosted: normalized.isBoosted,
-        p_min_payout: minPayout,
-        p_sort: normalized.sort,
-        p_page: normalized.page,
-        p_per_page: normalized.perPage,
-    });
-
-    if (error && isMissingSearchRpcError(error)) {
-        console.warn("[fetchPublicOffers] search_public_offers RPC is missing; using compatibility query until migrations are applied.");
+    if (normalized.sort === "completed_desc") {
         return fetchPublicOffersCompatibility(normalized, minPayout);
     }
 
-    if (error) {
-        throw error;
+    try {
+        const { data, error } = await supabase.rpc("search_public_offers", {
+            p_q: normalized.q,
+            p_game_slug: normalized.gameSlug,
+            p_platform_id: normalized.platformId,
+            p_platform_kind: normalized.platformKind,
+            p_device: normalized.device,
+            p_country: normalized.country,
+            p_payout_type: normalized.payoutType,
+            p_source: normalized.source,
+            p_is_new: normalized.isNew,
+            p_is_hot: normalized.isHot,
+            p_is_ath: normalized.isAth,
+            p_is_boosted: normalized.isBoosted,
+            p_min_payout: minPayout,
+            p_sort: normalized.sort,
+            p_page: normalized.page,
+            p_per_page: normalized.perPage,
+        });
+
+        if (error) {
+            console.warn("[fetchPublicOffers] search_public_offers RPC encountered an error, falling back to compatibility query:", error.message || error);
+            return fetchPublicOffersCompatibility(normalized, minPayout);
+        }
+
+        const rows = (data ?? []) as Array<Record<string, unknown> & { total_count?: number | string | null }>;
+        const shaped = dedupePublicOffers(
+            rows
+                .filter((row) => isPublicOfferRowEligible(row))
+                .map((row) => shapePublicOffer(row)),
+        );
+        const total = Number(rows[0]?.total_count ?? 0);
+
+        return {
+            data: shaped,
+            meta: {
+                total,
+                page: normalized.page,
+                per_page: normalized.perPage,
+                total_pages: Math.ceil(total / normalized.perPage),
+            },
+        };
+    } catch (err) {
+        console.warn("[fetchPublicOffers] search RPC failed unexpectedly, using compatibility query fallback:", err);
+        return fetchPublicOffersCompatibility(normalized, minPayout);
     }
-
-    const rows = (data ?? []) as Array<Record<string, unknown> & { total_count?: number | string | null }>;
-    const shaped = dedupePublicOffers(
-        rows
-            .filter((row) => isPublicOfferRowEligible(row))
-            .map((row) => shapePublicOffer(row)),
-    );
-    const total = Number(rows[0]?.total_count ?? 0);
-
-    return {
-        data: shaped,
-        meta: {
-            total,
-            page: normalized.page,
-            per_page: normalized.perPage,
-            total_pages: Math.ceil(total / normalized.perPage),
-        },
-    };
 }
 
 function isMissingSearchRpcError(error: unknown): boolean {
@@ -211,6 +216,9 @@ async function fetchPublicOffersCompatibility(
     if (normalized.isBoosted) query = query.eq("is_boosted", true);
 
     switch (normalized.sort) {
+        case "completed_desc":
+            query = query.order("completion_count", { ascending: false, nullsFirst: false });
+            break;
         case "payout_asc":
             query = query.order("payout_usd", { ascending: true });
             break;
@@ -224,23 +232,37 @@ async function fetchPublicOffersCompatibility(
             query = query.order("payout_usd", { ascending: false });
     }
 
-    const { data, error, count } = await query.range(from, to);
-    if (error) throw error;
+    try {
+        const { data, error, count } = await query.range(from, to);
+        if (error) {
+            console.error("[fetchPublicOffersCompatibility] query error:", error.message || error);
+            return {
+                data: [],
+                meta: { total: 0, page: normalized.page, per_page: normalized.perPage, total_pages: 1 },
+            };
+        }
 
-    const shaped = dedupePublicOffers(
-        (data ?? [])
-            .filter((row) => isPublicOfferRowEligible(row))
-            .map((row) => shapePublicOffer(row)),
-    ).slice(0, normalized.perPage);
-    const total = count ?? 0;
+        const shaped = dedupePublicOffers(
+            (data ?? [])
+                .filter((row) => isPublicOfferRowEligible(row))
+                .map((row) => shapePublicOffer(row)),
+        ).slice(0, normalized.perPage);
+        const total = count ?? shaped.length;
 
-    return {
-        data: shaped,
-        meta: {
-            total,
-            page: normalized.page,
-            per_page: normalized.perPage,
-            total_pages: Math.ceil(total / normalized.perPage),
-        },
-    };
+        return {
+            data: shaped,
+            meta: {
+                total,
+                page: normalized.page,
+                per_page: normalized.perPage,
+                total_pages: Math.max(1, Math.ceil(total / normalized.perPage)),
+            },
+        };
+    } catch (err) {
+        console.error("[fetchPublicOffersCompatibility] unexpected error:", err);
+        return {
+            data: [],
+            meta: { total: 0, page: normalized.page, per_page: normalized.perPage, total_pages: 1 },
+        };
+    }
 }

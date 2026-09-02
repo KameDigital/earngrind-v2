@@ -1,0 +1,188 @@
+{
+  "game": "Gamehag",
+  "search_name": "Gamehag offer guide",
+  "slug": "gamehag-seo-offer-guide-2",
+  "offerwall_provider": "Lootably",
+  "country": "US",
+  "device": "ios, android, pc",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios, android, pc user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Complete your first cashout. - 1.89 USD\nComplete the Apprentice Rank. - 1.35 USD\nComplete the Adept Rank. - 2.7 USD\nComplete the Scholar Rank. - 7.83 USD\nComplete the Mage Rank. - 13.5 USD\nComplete the Enchanter Rank. - 27 USD\nComplete the Sorcerer Rank. - 54 USD\nComplete the Warlock Rank. - 81 USD\nComplete the Grandmaster Rank. - 121.5 USD\nComplete the Archmage Rank. - 189 USD\nComplete the Elder Mage Rank. - 405 USD",
+  "eligibility": {
+    "provider": "Lootably",
+    "country": "US",
+    "device": "ios, android, pc",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/gamehag",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Complete your first cashout.",
+      "points": null,
+      "usd": 1.89,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "3dc909fc-a117-4705-8689-2c8b59201170"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Complete the Apprentice Rank.",
+      "points": null,
+      "usd": 1.35,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "47b15db4-9434-4686-8aac-5408f4beb45d"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Complete the Adept Rank.",
+      "points": null,
+      "usd": 2.7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "7f580399-dfc9-4262-85e8-4fc0460e4c07"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Complete the Scholar Rank.",
+      "points": null,
+      "usd": 7.83,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "fa4bfdac-d284-4a8e-a95e-31612538210b"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Complete the Mage Rank.",
+      "points": null,
+      "usd": 13.5,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "01857d96-41d1-467b-b5b7-e4e02c73c7fe"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Complete the Enchanter Rank.",
+      "points": null,
+      "usd": 27,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d99f0830-c723-44aa-9b99-9895a4ca6691"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Complete the Sorcerer Rank.",
+      "points": null,
+      "usd": 54,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9d2e095b-90d1-4eb3-ab5b-7393ec765d8b"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Complete the Warlock Rank.",
+      "points": null,
+      "usd": 81,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "45ca59ab-5a54-4a92-9f82-f21df3b10b56"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Complete the Grandmaster Rank.",
+      "points": null,
+      "usd": 121.5,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f23f710d-9a60-441b-8fc9-9d5ba0ba669d"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Complete the Archmage Rank.",
+      "points": null,
+      "usd": 189,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "abde3a9b-dba2-4fd9-91da-66532b0454ea"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Complete the Elder Mage Rank.",
+      "points": null,
+      "usd": 405,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "character_hero_rank"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d1f95d22-a5d9-46fe-bf5e-5a24ae10acc0"
+    }
+  ],
+  "task_entities": [
+    "support_proof",
+    "character_hero_rank"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

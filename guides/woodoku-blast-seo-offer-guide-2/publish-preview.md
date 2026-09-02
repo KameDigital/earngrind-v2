@@ -1,0 +1,44 @@
+# Publish Preview
+
+Title: Woodoku Blast Offer Guide
+Meta: Woodoku Blast offer guide covering 28 live tasks, payout checks, proof steps, risk bands, and stop rules before you start. Use it to compare the route safely.
+Content QA: PASS
+
+Preview:
+Woodoku Blast guide using 28 live task row(s), exact payout source live_earngrind_offer, and deadline source none_provided_by_offer.
+
+Task preview:
+- task_001: Open and play the game (0.06 USD; none_provided_by_offer)
+- task_002: Clear Level 1 in Journey mode in 12 hours (0.01 USD; none_provided_by_offer)
+- task_003: Make a Purchase Of At Least USD 4.99 (4.2 USD; none_provided_by_offer)
+- task_004: Clear Level 3 in Journey mode in 12 hours (0.02 USD; none_provided_by_offer)
+- task_005: Clear Level 5 in Journey mode in 12 hours (0.03 USD; none_provided_by_offer)
+- task_006: Clear Level 7 in Journey mode in 12 hours (0.06 USD; none_provided_by_offer)
+- task_007: Clear Level 10 in Journey mode in 12 hours (0.08 USD; none_provided_by_offer)
+- task_008: Clear Level 12 in Journey mode in 24 hours (0.1 USD; none_provided_by_offer)
+- task_009: Clear Level 15 in Journey mode in 24 hours (0.1 USD; none_provided_by_offer)
+- task_010: Clear Level 20 in Journey mode in 24 Hours (0.2 USD; none_provided_by_offer)
+- task_011: Clear Level 25 in Journey mode in 24 Hours (0.2 USD; none_provided_by_offer)
+- task_012: Clear Level 32 in Journey mode in 2 days (0.2 USD; none_provided_by_offer)
+- task_013: Clear Level 40 in Journey mode in 2 days (0.3 USD; none_provided_by_offer)
+- task_014: Clear Level 50 in Journey mode in 2 days (0.4 USD; none_provided_by_offer)
+- task_015: Clear Level 70 in Journey mode in 2 days (0.7 USD; none_provided_by_offer)
+- task_016: Clear Level 100 in Journey mode in 3 Days (1.1 USD; none_provided_by_offer)
+- task_017: Clear Level 150 in Journey mode in 3 days (1.5 USD; none_provided_by_offer)
+- task_018: Clear Level 200 in Journey mode in 4 Days (1.9 USD; none_provided_by_offer)
+- task_019: Clear Level 225 in Journey mode in 4 Days (2.4 USD; none_provided_by_offer)
+- task_020: Clear Level 275 in Journey mode in 5 Days (3.3 USD; none_provided_by_offer)
+- task_021: Clear Level 325 in Journey mode in 3 Days (4.2 USD; none_provided_by_offer)
+- task_022: Clear Level 400 in Journey mode in 5 days (5.4 USD; none_provided_by_offer)
+- task_023: Clear Level 500 in Journey mode in 7 Days (8 USD; none_provided_by_offer)
+- task_024: Clear Level 700 in Journey mode in 7 Days (12 USD; none_provided_by_offer)
+- task_025: Clear Level 900 in Journey mode in 12 Days (36 USD; none_provided_by_offer)
+- task_026: Clear Level 1200 in Journey mode in 15 Days (75 USD; none_provided_by_offer)
+- task_027: Clear Level 1600 in Journey mode in 20 Days (150 USD; none_provided_by_offer)
+- task_028: Clear Level 2000 in Journey mode in 30 Days (396 USD; none_provided_by_offer)
+
+Risk band preview: safe free, active grind, low spend, high risk, reassess, stop.
+Evidence/support preview: offer proof, game proof, support proof, support packet, risk triggers.
+Guided task excerpt: Start with tracking proof, complete the exact task text, save completion evidence, then check pending or credited state before continuing.
+
+Publish QA: BLOCKED until this artifact is imported into a rendered route.

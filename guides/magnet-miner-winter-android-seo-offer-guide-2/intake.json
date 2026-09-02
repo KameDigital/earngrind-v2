@@ -1,0 +1,145 @@
+{
+  "game": "Magnet Miner Winter (Android)",
+  "search_name": "Magnet Miner Winter (Android) offer guide",
+  "slug": "magnet-miner-winter-android-seo-offer-guide-2",
+  "offerwall_provider": "ASMWall",
+  "country": "US",
+  "device": "web",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US web user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "depth_reached100 - 0.1 USD\ndepth_reached300 - 0.36 USD\ndepth_reached600 - 3.3 USD\ndepth_reached900 - 7.2 USD\ndepth_reached1200 - 25.5 USD\ndepth_reached2000 - 78 USD\ndepth_reached4000 - 180 USD\ndepth_reached5000 - 270 USD",
+  "eligibility": {
+    "provider": "ASMWall",
+    "country": "US",
+    "device": "web",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/magnet-miner-winter-android",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "depth_reached100",
+      "points": null,
+      "usd": 0.1,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "ca72f029-056b-431c-b627-9e3c552bff0d"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "depth_reached300",
+      "points": null,
+      "usd": 0.36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "65efcfeb-24f3-41f6-82a8-50822fc89ac0"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "depth_reached600",
+      "points": null,
+      "usd": 3.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "44f387de-c8f3-4255-b19e-b1fda562eb01"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "depth_reached900",
+      "points": null,
+      "usd": 7.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "b3bc4e3c-c98d-4762-8537-2aab35ebba56"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "depth_reached1200",
+      "points": null,
+      "usd": 25.5,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "0a337b85-3a31-44ea-84e2-68b7ce3e6377"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "depth_reached2000",
+      "points": null,
+      "usd": 78,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "cf23eb07-ad48-46ab-a2df-43a6c0f7337e"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "depth_reached4000",
+      "points": null,
+      "usd": 180,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "85912e2c-c901-4c1d-86c6-3b32debd57f4"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "depth_reached5000",
+      "points": null,
+      "usd": 270,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "806a2e90-5380-4385-a740-0d9a68d2e3f3"
+    }
+  ],
+  "task_entities": [
+    "support_proof"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

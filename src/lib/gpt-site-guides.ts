@@ -617,17 +617,17 @@ export const GPT_SITE_GUIDES: GptSiteGuide[] = [
     {
         slug: "gemsloot",
         platformSlug: "gemsloot",
-        name: "GemLoot",
-        title: "GemLoot Guide: Gaming Offerwalls, Rewards, Milestones, and Payout Checks",
+        name: "Gemsloot",
+        title: "Gemsloot Guide: Gaming Offerwalls, Rewards, Milestones, and Payout Checks",
         description:
-            "A GemLoot guide for gaming-focused GPT users who want to compare offers, track milestones, avoid duplicate installs, and choose realistic payout routes.",
+            "A Gemsloot guide for gaming-focused GPT users who want to compare offers, track milestones, avoid duplicate installs, and choose realistic payout routes.",
         bestFor: "Gaming offerwall backup routes",
         verdict:
-            "GemLoot is best treated as a gaming offerwall comparison site. Use it when you want another quote for mobile games and app offers, but verify every provider term before installing because gaming routes can change quickly.",
+            "Gemsloot is best treated as a gaming offerwall comparison site. Use it when you want another quote for mobile games and app offers, but verify every provider term before installing because gaming routes can change quickly.",
         screenshot: "/images/guides/gpt-sites/gemsloot.png",
         accent: "violet",
         updatedAt: UPDATED_AT,
-        payoutStyle: "GemLoot reward balance",
+        payoutStyle: "Gemsloot reward balance",
         minimumCashout: "Verify the live threshold in account before starting any long offer",
         rewardOptions: "Gaming, cash, and gift-card style rewards vary by live account and offer availability",
         accountFit: "Users who compare gaming offers across multiple walls before picking one install path",

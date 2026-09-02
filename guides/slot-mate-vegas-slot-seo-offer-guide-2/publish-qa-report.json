@@ -1,0 +1,102 @@
+{
+  "result": "BLOCKED",
+  "guide": "Slot Mate Vegas Slot",
+  "slug": "slot-mate-vegas-slot-seo-offer-guide-2",
+  "checks": [
+    {
+      "id": "route_200",
+      "result": "BLOCKED",
+      "notes": "No rendered route was created for this local artifact."
+    },
+    {
+      "id": "no_noindex",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "canonical",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "one_h1",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "title_meta",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "schema",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "internal_links",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "cta_links",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "images",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "mobile_overflow",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "sitemap",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "empty_offer_state",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "content_parity",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "section_navigation",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "risk_bands_render",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "evidence_support_render",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "conditional_models_render",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "readable_rendered_structure",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    },
+    {
+      "id": "game_detail_sections",
+      "result": "PASS",
+      "notes": "Ready for rendered route QA after import."
+    }
+  ]
+}

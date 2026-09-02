@@ -1,0 +1,161 @@
+{
+  "game": "Clash.GG",
+  "search_name": "Clash.GG offer guide",
+  "slug": "clash-gg-seo-offer-guide",
+  "offerwall_provider": "Lootably",
+  "country": "MX",
+  "device": "ios, android, pc",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "MX ios, android, pc user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Register. - 0.01 USD\nMake a deposit (Min. USD 5). - 3.36 USD\nComplete Level 5. - 0.86 USD\nComplete Level 10. - 4.31 USD\nComplete Level 20. - 31.64 USD\nComplete Level 30. - 71.92 USD\nComplete Level 40. - 129.45 USD\nComplete Level 50. - 345.2 USD\nComplete Level 60. - 661.64 USD",
+  "eligibility": {
+    "provider": "Lootably",
+    "country": "MX",
+    "device": "ios, android, pc",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/clash-gg",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Register.",
+      "points": null,
+      "usd": 0.01,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "signup",
+      "live_task_id": "c35a15e4-c44a-46ec-83fc-47dbba0496f1"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Make a deposit (Min. USD 5).",
+      "points": null,
+      "usd": 3.36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "83414abb-c305-48db-95af-1231e68f2ba8"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Complete Level 5.",
+      "points": null,
+      "usd": 0.86,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "3b4b98d8-0920-424d-8dc9-7ecc9f413c7a"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Complete Level 10.",
+      "points": null,
+      "usd": 4.31,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9275fb92-14d9-4b73-80e3-2f1f3228afd8"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Complete Level 20.",
+      "points": null,
+      "usd": 31.64,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9f7fec0f-8f01-4dcb-943f-47a8016d9f76"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Complete Level 30.",
+      "points": null,
+      "usd": 71.92,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "62913ccb-6bbb-4bbf-b8ab-f00318bbf565"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Complete Level 40.",
+      "points": null,
+      "usd": 129.45,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c7b29359-170b-4848-b59e-c07240269987"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Complete Level 50.",
+      "points": null,
+      "usd": 345.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "13441c43-5016-4cd8-a218-f61105c4cf7a"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Complete Level 60.",
+      "points": null,
+      "usd": 661.64,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "03a95d3c-9015-446f-a6e6-7f50152d1b76"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "purchase_recharge_subscription",
+    "account_player_level"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

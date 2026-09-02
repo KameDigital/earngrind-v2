@@ -8,6 +8,7 @@ export const metadata = { title: "Outbound Analytics | Admin" };
 
 const RECENT_RECORD_LIMIT = 100;
 const GROUP_LIMIT = 5;
+const PAGE_RANKING_LIMIT = 20;
 
 type MetricCardProps = {
     label: string;
@@ -29,6 +30,8 @@ type MissingAttributionSummary = {
     offerOrGameTitle: number;
     destinationUrl: number;
 };
+
+type PageOutboundRow = { page: string; outboundClicks: number; topGame: string; topGameClicks: number; latestClickAt?: string; };
 
 export default async function AdminOutboundPage() {
     const supabase = createClient();
@@ -62,6 +65,7 @@ export default async function AdminOutboundPage() {
     const oldestLoaded = sortedTimes[0];
     const newestLoaded = sortedTimes[sortedTimes.length - 1];
     const warningItems = buildMissingWarnings(missing);
+    const pageOutboundRanking = rankOutboundPages(records, PAGE_RANKING_LIMIT);
 
     return (
         <div className="space-y-6">
@@ -131,6 +135,11 @@ export default async function AdminOutboundPage() {
                 <GroupCard title="Top source contexts" rows={groupRecords(records, (record) => record.source_context, GROUP_LIMIT)} />
                 <GroupCard title="Top click locations" rows={groupRecords(records, (record) => record.click_location, GROUP_LIMIT)} />
                 <GroupCard title="Affiliate mode split" rows={groupRecords(records, (record) => record.affiliate_mode, GROUP_LIMIT)} />
+            </section>
+
+            <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+                <div><p className="text-xs font-bold uppercase tracking-[0.22em] text-gray-400">Content performance</p><h2 className="mt-2 text-lg font-bold text-gray-900">Outbound clicks by source page</h2><p className="mt-1 text-sm text-gray-500">Ranked by recorded outbound clicks. The top game identifies which game received the most outbound clicks from each page.</p></div>
+                <div className="mt-5 overflow-x-auto"><table className="min-w-full text-sm"><thead className="border-b border-gray-200 bg-gray-50 text-[11px] font-bold uppercase tracking-wider text-gray-500"><tr><th className="px-4 py-3 text-left">Rank</th><th className="px-4 py-3 text-left">Source page</th><th className="px-4 py-3 text-right">Outbound clicks</th><th className="px-4 py-3 text-left">Top game</th><th className="px-4 py-3 text-right">Game clicks</th><th className="px-4 py-3 text-left">Latest click (ET)</th></tr></thead><tbody className="divide-y divide-gray-100">{pageOutboundRanking.map((row, index) => <tr key={row.page}><td className="px-4 py-3 font-bold text-gray-500">{index + 1}</td><td className="px-4 py-3 font-semibold text-gray-900">{row.page}</td><td className="px-4 py-3 text-right font-extrabold text-gray-900">{row.outboundClicks}</td><td className="px-4 py-3 text-gray-700">{row.topGame}</td><td className="px-4 py-3 text-right font-semibold text-gray-700">{row.topGameClicks}</td><td className="px-4 py-3 text-xs text-gray-500">{formatDateTime(row.latestClickAt)}</td></tr>)}</tbody></table>{pageOutboundRanking.length === 0 ? <div className="px-4 py-10 text-center text-sm font-semibold text-gray-500">No source-page attribution is available yet.</div> : null}</div>
             </section>
 
             <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
@@ -378,6 +387,23 @@ function offerOrGameLabel(record: CanonicalOutboundRecord) {
         return `${record.game_title} / ${record.offer_title}`;
     }
     return record.game_title ?? record.offer_title ?? fallbackTitleForType(record.outbound_type);
+}
+
+function rankOutboundPages(records: CanonicalOutboundRecord[], limit: number): PageOutboundRow[] {
+    const pages = new Map<string, { outboundClicks: number; latestClickAt?: string; games: Map<string, number> }>();
+    for (const record of records) {
+        const page = normalizeGroupLabel(record.source_context);
+        const game = offerOrGameLabel(record);
+        const current = pages.get(page) ?? { outboundClicks: 0, games: new Map<string, number>() };
+        current.outboundClicks += 1;
+        current.games.set(game, (current.games.get(game) ?? 0) + 1);
+        if (!current.latestClickAt || Date.parse(record.created_at ?? "") > Date.parse(current.latestClickAt)) current.latestClickAt = record.created_at;
+        pages.set(page, current);
+    }
+    return Array.from(pages.entries()).map(([page, stats]) => {
+        const [topGame, topGameClicks] = Array.from(stats.games.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0] ?? ["No game", 0];
+        return { page, outboundClicks: stats.outboundClicks, topGame, topGameClicks, latestClickAt: stats.latestClickAt };
+    }).sort((a, b) => b.outboundClicks - a.outboundClicks || b.topGameClicks - a.topGameClicks || a.page.localeCompare(b.page)).slice(0, limit);
 }
 
 function summarizeMissingAttribution(records: CanonicalOutboundRecord[]): MissingAttributionSummary {

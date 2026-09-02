@@ -1,0 +1,415 @@
+{
+  "game": "DesignVille: Merge & Design",
+  "search_name": "DesignVille: Merge & Design offer guide",
+  "slug": "designville-merge-design-seo-offer-guide",
+  "offerwall_provider": "Torox",
+  "country": "FR",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "FR ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Open and play the game - 0.07 USD\nReach Office Studio in 12 hours - 0.07 USD\nComplete any Level Daily - 0.11 USD\nWatch an Ad Video - Can be repeated daily! - 0.11 USD\nMake an in-app purchase- Can be repeated daily! - 0.74 USD\nComplete Level 5 in 24 Hours - 0.11 USD\nReach Richlady Garden in 24 Hours - 0.22 USD\nPurchase Couple of gems (USD 1.99) Once in a Day! - 1.85 USD\nPurchase Designers kit (USD 1.99)- Once in a Day! - 2.22 USD\n*Available for the first 7 days only* - 5.18 USD\n*Available for the first 7 days only* - 9.62 USD\nReach Office Chillout in 2 days - 0.44 USD\nReach Level 10 in 2 Days - 0.07 USD\nReach Richlady Bathroom in 2 days - 0.59 USD\nReach Artist Garden in 3 days - 0.89 USD\nReach Level 15 in 4 Days - 0.22 USD\nReach Level 20 in 4 Days - 0.44 USD\nReach Richlady Kitchen in 7 days - 1.26 USD\nReach Level 25 in 7 Days - 0.74 USD\nReach Sheikh Room in 10 days - 1.85 USD\nReach Level 30 in 10 Days - 1.11 USD\nReach Tree House in 12 days - 3.7 USD\nReach Mandy Cafe in 14 days - 5.92 USD\nReach Chalet Inside in 18 days - 8.88 USD\nReach Castle Green house in 21 days - 14.8 USD\nReach Mandy Studio in 30 days - 74 USD\nReach William Cafe in 45 days - 333 USD",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "FR",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/designville-merge-design",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Open and play the game",
+      "points": null,
+      "usd": 0.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "85c564ca-c32c-4d7c-b76c-8201272fb099"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach Office Studio in 12 hours",
+      "points": null,
+      "usd": 0.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "18799f3b-9f57-4ec6-88e4-c247531264ce"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Complete any Level Daily",
+      "points": null,
+      "usd": 0.11,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "898dca48-9a5a-4e86-aa05-537c4f8e3d57"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Watch an Ad Video - Can be repeated daily!",
+      "points": null,
+      "usd": 0.11,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "e804361b-2d3b-4e15-87f9-a8afffdebd13"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Make an in-app purchase- Can be repeated daily!",
+      "points": null,
+      "usd": 0.74,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "9ba28a9f-e1ee-4425-b9b0-1c47d48fdc19"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Complete Level 5 in 24 Hours",
+      "points": null,
+      "usd": 0.11,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a2d731cf-2c1d-455c-8bb2-9934f78b6961"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach Richlady Garden in 24 Hours",
+      "points": null,
+      "usd": 0.22,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "6c7cb808-bddd-42b9-b756-419ce0a43836"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Purchase Couple of gems (USD 1.99) Once in a Day!",
+      "points": null,
+      "usd": 1.85,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "2b7aaea8-fd00-4738-8082-9382410c680f"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Purchase Designers kit (USD 1.99)- Once in a Day!",
+      "points": null,
+      "usd": 2.22,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "0248e665-8cc8-4102-8cb7-d886a6d98ee0"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "*Available for the first 7 days only*",
+      "points": null,
+      "usd": 5.18,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "a55557ff-962d-4194-bcd3-921d8ac6a63d"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "*Available for the first 7 days only*",
+      "points": null,
+      "usd": 9.62,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "6f318a57-9d7b-498d-8430-ce89c5c25eb9"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Office Chillout in 2 days",
+      "points": null,
+      "usd": 0.44,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "12684246-989d-467c-a0e3-32d72bc03f8b"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Level 10 in 2 Days",
+      "points": null,
+      "usd": 0.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "5d6057ac-7e78-49bf-a3d1-99a501289120"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach Richlady Bathroom in 2 days",
+      "points": null,
+      "usd": 0.59,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "dbece75f-af02-42b3-93ad-f9b873eeec5d"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach Artist Garden in 3 days",
+      "points": null,
+      "usd": 0.89,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d00896e4-e68c-462e-90ce-231316e780e6"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Reach Level 15 in 4 Days",
+      "points": null,
+      "usd": 0.22,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "758c78d1-687c-42c2-b7bf-d9ab1c7f23e8"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Reach Level 20 in 4 Days",
+      "points": null,
+      "usd": 0.44,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c4c9c34e-fc22-4464-a769-f76fc9db8300"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Reach Richlady Kitchen in 7 days",
+      "points": null,
+      "usd": 1.26,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "8ee31841-777e-4a9c-a00f-4f458ac5f29e"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Reach Level 25 in 7 Days",
+      "points": null,
+      "usd": 0.74,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "bfa462de-6bcd-45d5-b6f7-9c17d84b625d"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Reach Sheikh Room in 10 days",
+      "points": null,
+      "usd": 1.85,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "83c24726-2727-4d30-b4e2-fe421fc89de1"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Reach Level 30 in 10 Days",
+      "points": null,
+      "usd": 1.11,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0ad07cfe-e339-4055-97a1-b45c76af527b"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Reach Tree House in 12 days",
+      "points": null,
+      "usd": 3.7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "dc9affa1-27ab-490a-8bf9-efb2d5ce497b"
+    },
+    {
+      "task_id": "task_023",
+      "task_text": "Reach Mandy Cafe in 14 days",
+      "points": null,
+      "usd": 5.92,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0797af85-0f3f-45fd-9f11-11856b6f9c18"
+    },
+    {
+      "task_id": "task_024",
+      "task_text": "Reach Chalet Inside in 18 days",
+      "points": null,
+      "usd": 8.88,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "192fa1ab-d1bf-4555-99d6-00a6a70904eb"
+    },
+    {
+      "task_id": "task_025",
+      "task_text": "Reach Castle Green house in 21 days",
+      "points": null,
+      "usd": 14.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "base_castle_hq_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "80ebcfb2-f286-4901-9fc8-58964f7ef37f"
+    },
+    {
+      "task_id": "task_026",
+      "task_text": "Reach Mandy Studio in 30 days",
+      "points": null,
+      "usd": 74,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "cb050522-6b36-444d-a3c6-8fc6926f5cdc"
+    },
+    {
+      "task_id": "task_027",
+      "task_text": "Reach William Cafe in 45 days",
+      "points": null,
+      "usd": 333,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "300964cc-1842-4679-9d78-70217bee3ec1"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "support_proof",
+    "account_player_level",
+    "purchase_recharge_subscription",
+    "base_castle_hq_level"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "game": "Merge Paradise : Match Puzzle",
+  "search_name": "Merge Paradise : Match Puzzle offer guide",
+  "slug": "merge-paradise-match-puzzle-seo-offer-guide",
+  "offerwall_provider": "Torox",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Open and play the game - 0.06 USD\nClear Level 4 within 24 hours - 0.09 USD\nMake an in-app purchase- Can be repeated daily! - 0.3 USD\nPurchase Plus Package (USD 1,99) Once in a Day! - 1.2 USD\nClear Level 7 within 24 hours - 0.2 USD\nPurchase Gold Pass (USD 9,90) Can be repeated daily! - 5.4 USD\nPurchase Lucky Package (USD 9.00) Once in a Day! - 4.8 USD\nClear Level 10 within 2 days - 0.2 USD - within 2 days\nClear Level 13 within 5 days - 0.4 USD - within 5 days\nClear Level 17 within 7 days - 0.5 USD - within 7 days\nPurchase Energy Piggy Bank Lv. 1 (USD 1,99) - 2.4 USD\nPurchase Energy Piggy Bank Lv. 2 (USD 3,99) - 3.6 USD\nPurchase Step Up Package Lv.3 (USD 5,97) - 6 USD\nClear Level 19 within 7 days - 0.7 USD - within 7 days\nClear Level 25 within 12 days - 1.2 USD - within 12 days\nClear Level 29 within 15 days - 2.4 USD - within 15 days\nClear Level 34 within 18 days - 4.8 USD - within 18 days\nClear Level 40 within 20 days - 18 USD - within 20 days\nClear Level 51 within 23 days - 48 USD - within 23 days\nClear Level 59 within 25 days - 150 USD - within 25 days\nClear Level 63 within 30 days - 360 USD - within 30 days",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/merge-paradise-match-puzzle",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Open and play the game",
+      "points": null,
+      "usd": 0.06,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "b13de6c8-8626-4782-88ac-ff9f765fa8ba"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Clear Level 4 within 24 hours",
+      "points": null,
+      "usd": 0.09,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "8b5cc60c-0d6c-46c3-8894-d0657576a253"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Make an in-app purchase- Can be repeated daily!",
+      "points": null,
+      "usd": 0.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "43044f22-36f2-420e-824d-258fec51e868"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Purchase Plus Package (USD 1,99) Once in a Day!",
+      "points": null,
+      "usd": 1.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "dc28cb1e-1d3f-47a2-8653-8264e95a4692"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Clear Level 7 within 24 hours",
+      "points": null,
+      "usd": 0.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0ab012c8-0e26-4a08-8b35-548590a8172b"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Purchase Gold Pass (USD 9,90) Can be repeated daily!",
+      "points": null,
+      "usd": 5.4,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "ed90154b-9a7e-4e6f-bfc9-6d3b5c8592bf"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Purchase Lucky Package (USD 9.00) Once in a Day!",
+      "points": null,
+      "usd": 4.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "1b344d40-2598-4237-ad03-6039f35989dd"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Clear Level 10 within 2 days",
+      "points": null,
+      "usd": 0.2,
+      "deadline_text": "within 2 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d114a339-009c-483e-8f85-6e26907e1415"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Clear Level 13 within 5 days",
+      "points": null,
+      "usd": 0.4,
+      "deadline_text": "within 5 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "90900305-48ef-4bcb-a093-8933c8be0c18"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Clear Level 17 within 7 days",
+      "points": null,
+      "usd": 0.5,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0fba9a9d-00dd-4462-8cc7-5586bb77afc1"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Purchase Energy Piggy Bank Lv. 1 (USD 1,99)",
+      "points": null,
+      "usd": 2.4,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "b1815144-c201-4652-aa3e-2494959ed002"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Purchase Energy Piggy Bank Lv. 2 (USD 3,99)",
+      "points": null,
+      "usd": 3.6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "f8c4443e-be1b-4553-88ad-2d385775bd2a"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Purchase Step Up Package Lv.3 (USD 5,97)",
+      "points": null,
+      "usd": 6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "efad6d69-c48b-48ce-838b-bdac0ae80ee3"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Clear Level 19 within 7 days",
+      "points": null,
+      "usd": 0.7,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2a8adea7-e6c3-4012-8c97-5fe99580ca92"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Clear Level 25 within 12 days",
+      "points": null,
+      "usd": 1.2,
+      "deadline_text": "within 12 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ed65b372-a09a-4eaa-9049-a83c38794431"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Clear Level 29 within 15 days",
+      "points": null,
+      "usd": 2.4,
+      "deadline_text": "within 15 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ddd944a5-2860-4664-b08d-3159625117bb"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Clear Level 34 within 18 days",
+      "points": null,
+      "usd": 4.8,
+      "deadline_text": "within 18 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "acb9d9f3-2fa7-4a89-ac13-57e8820c673e"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Clear Level 40 within 20 days",
+      "points": null,
+      "usd": 18,
+      "deadline_text": "within 20 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "3e1208d0-a1f9-450d-86dd-940eee720518"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Clear Level 51 within 23 days",
+      "points": null,
+      "usd": 48,
+      "deadline_text": "within 23 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "d1fceb51-664f-4597-a179-810683d49bfb"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Clear Level 59 within 25 days",
+      "points": null,
+      "usd": 150,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "1642a54a-9549-45d4-93d5-52f0a0540a08"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Clear Level 63 within 30 days",
+      "points": null,
+      "usd": 360,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b9f7f9ab-f6a8-46b4-a34c-8f6646165e5b"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

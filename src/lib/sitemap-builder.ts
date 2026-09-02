@@ -196,7 +196,7 @@ async function buildGuideShard(): Promise<MetadataRoute.Sitemap> {
             priority:        0.84,
         },
         ...publishedGptSiteGuides.map(guide => ({
-            url:             `${baseUrl}/guides/best-gpt-sites/${guide.slug}`,
+            url:             `${baseUrl}/best-gpt-sites/${guide.slug}`,
             lastModified:    new Date(guide.updatedAt),
             changeFrequency: 'weekly' as const,
             priority:        0.78,
@@ -224,7 +224,7 @@ async function buildGuideShard(): Promise<MetadataRoute.Sitemap> {
     }));
 
     const reviewUrls: MetadataRoute.Sitemap = (reviews ?? []).map(r => ({
-        url:             `${baseUrl}/review/${r.slug}`,
+        url:             `${baseUrl}/best-gpt-sites/${r.slug}`,
         lastModified:    new Date(r.updated_at),
         changeFrequency: 'monthly' as const,
         priority:        0.7,

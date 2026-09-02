@@ -1,0 +1,357 @@
+{
+  "game": "Palmon: Survival",
+  "search_name": "Palmon: Survival offer guide",
+  "slug": "palmon-survival-seo-offer-guide",
+  "offerwall_provider": "TyrAds",
+  "country": "US",
+  "device": "android",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US android user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install - 0 USD\nReach Camp Level 6 - 0.68 USD\nReach Camp Level 10 - 1.13 USD\nReach Camp Level 13 - 2.7 USD\nReach Camp Level 16 - 6.3 USD\nReach Camp Level 18 - 8.7 USD\nReach Camp Level 20 - 12 USD\nReach Camp Level 22 - 24 USD\nReach Camp Level 24 - 36 USD\nReach Camp Level 26 - 60 USD\nReach Camp Level 30 in 40 days - 120 USD\nReach Camp Level 21 in 4 days and get tons of rewards! - 126 USD\nReach Camp Level 23 in 7 days and get tons of rewards! - 210 USD\nReach Camp Level 25 in 14 days and get tons of rewards! - 288 USD\nBuy First Purchase Lucidina (USD 4.99) - 2.4 USD\nBuy Lifetime Privileges - 18 USD\nBuy Third Build Queue Bundle - 7.2 USD\nComplete daily quests (Activity level must reach 200) - 0.3 USD\nMake a purchase of USD 9.99 or more - 3 USD\nCumulative Purchase over USD 100 in total - 18 USD\nOpen the game 7 days in a row - 0.6 USD\nOpen the game 14 days in a row - 1.8 USD\nMake a purchase of USD 1.99 or more - 0.9 USD",
+  "eligibility": {
+    "provider": "TyrAds",
+    "country": "US",
+    "device": "android",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/palmon-survival",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "4aa5ba3a-0e75-45ac-b756-3c346dc8684c"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Reach Camp Level 6",
+      "points": null,
+      "usd": 0.68,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "70cc7b8f-b493-4fea-9721-dbfadae6d7ea"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach Camp Level 10",
+      "points": null,
+      "usd": 1.13,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "7400c716-c958-4dc5-a2bd-2453f35f785e"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach Camp Level 13",
+      "points": null,
+      "usd": 2.7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "8a0a120a-4bbe-475a-918a-b51ff79306b5"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Reach Camp Level 16",
+      "points": null,
+      "usd": 6.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0e921069-7d46-4005-806b-b9fcc622c2bd"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Reach Camp Level 18",
+      "points": null,
+      "usd": 8.7,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "8301ad1b-c11c-4fc7-be80-5e90d88c1775"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach Camp Level 20",
+      "points": null,
+      "usd": 12,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a914a53b-cbe9-4ae3-9892-1f361abfc07b"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Camp Level 22",
+      "points": null,
+      "usd": 24,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a0bdba1a-6f77-44e8-aed9-b9872e471c30"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach Camp Level 24",
+      "points": null,
+      "usd": 36,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a46e7f89-de4b-4e9d-9425-971252de7355"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Reach Camp Level 26",
+      "points": null,
+      "usd": 60,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2ea6afc9-3613-436e-bcaf-6a50111afd7c"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Camp Level 30 in 40 days",
+      "points": null,
+      "usd": 120,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "43cf551e-50b0-4a67-a67c-980b2cf77e55"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Camp Level 21 in 4 days and get tons of rewards!",
+      "points": null,
+      "usd": 126,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e951b235-6703-4fd6-b65c-9d36a7c51236"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Camp Level 23 in 7 days and get tons of rewards!",
+      "points": null,
+      "usd": 210,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "c9d300fc-e5d4-4f1c-9735-549b0c2fcc2b"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach Camp Level 25 in 14 days and get tons of rewards!",
+      "points": null,
+      "usd": 288,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "168d3c58-0b86-46b4-8066-4d54f5a4833e"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Buy First Purchase Lucidina (USD 4.99)",
+      "points": null,
+      "usd": 2.4,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "5c41ec3b-56d1-46a0-996a-2df8086bd862"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Buy Lifetime Privileges",
+      "points": null,
+      "usd": 18,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "17fccdf4-eee6-4842-a140-c608c8152262"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Buy Third Build Queue Bundle",
+      "points": null,
+      "usd": 7.2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "367ebba5-415a-484b-a4dc-f3943d0972d7"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Complete daily quests (Activity level must reach 200)",
+      "points": null,
+      "usd": 0.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e1b35399-922b-4ab2-b75c-c2c53b2fbb6b"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Make a purchase of USD 9.99 or more",
+      "points": null,
+      "usd": 3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "8c4efe63-f3eb-4e90-b0c0-1168e145cb80"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Cumulative Purchase over USD 100 in total",
+      "points": null,
+      "usd": 18,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "b74b6607-cfc9-4846-b0ad-f245b3a52889"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Open the game 7 days in a row",
+      "points": null,
+      "usd": 0.6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "3cfdb688-57c8-4640-84ab-3f7de07b69ff"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Open the game 14 days in a row",
+      "points": null,
+      "usd": 1.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "a9f2bb1e-7a6a-4c4b-9f22-30f14ba35443"
+    },
+    {
+      "task_id": "task_023",
+      "task_text": "Make a purchase of USD 1.99 or more",
+      "points": null,
+      "usd": 0.9,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "59a2c155-dec5-401a-82c3-62f1501bedec"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

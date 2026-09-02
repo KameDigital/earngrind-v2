@@ -1,0 +1,429 @@
+{
+  "game": "Fish of Fortune",
+  "search_name": "Fish of Fortune offer guide",
+  "slug": "fish-of-fortune-seo-offer-guide",
+  "offerwall_provider": "Aye-T Studios",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Start playing for 30 seconds - 0.01 USD\nComplete Level 2 - 0.02 USD\nComplete Level 5 - 0.02 USD\nComplete Level 10 - 0.12 USD\nComplete Level 20 - 0.23 USD\nComplete Level 30 - 0.34 USD\nComplete Level 40 - 0.46 USD\nComplete Level 50 within 3 days - 6.91 USD - within 3 days\nComplete Level 60 - 0.64 USD\nComplete Level 70 - 1.1 USD\nTURBO: Complete Level 80 within 7 days - 14.98 USD - within 7 days\nComplete Level 90 - 1.15 USD\nComplete Level 100 - 1.61 USD\nComplete Level 110 - 2.07 USD\nTURBO: Complete Level 120 within 11 days - 14.98 USD - within 11 days\nComplete Level 130 - 2.76 USD\nComplete Level 140 - 4.61 USD\nComplete Level 150 - 5.53 USD\nComplete Level 160 - 6.91 USD\nTURBO: Complete Level 170 within 18 days - 20.74 USD - within 18 days\nComplete Level 180 - 11.52 USD\nComplete Level 200 - 16.13 USD\nComplete Level 220 - 17.28 USD\nComplete Level 250 - 23.04 USD\nMake a purchase! You can complete this step up to 10 times! - 0.41 USD\nMake a total of 20 purchases within 25 days - 2.76 USD - within 25 days\nMake a total of 30 purchases within 40 days - 4.15 USD - within 40 days\nComplete the album sticker! (You have to reach Level 20 to unlock the Album) - 1.84 USD",
+  "eligibility": {
+    "provider": "Aye-T Studios",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/fish-of-fortune",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Start playing for 30 seconds",
+      "points": null,
+      "usd": 0.01,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking",
+        "character_hero_rank"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "262e3e56-81a5-4036-880b-1726f90931ad"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Complete Level 2",
+      "points": null,
+      "usd": 0.02,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "dee1b71c-3b2a-4e64-9297-521a07bf65d8"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Complete Level 5",
+      "points": null,
+      "usd": 0.02,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "60802c10-0dff-41ff-a25d-e0a47ecc0be9"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Complete Level 10",
+      "points": null,
+      "usd": 0.12,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "fe0845e9-61d5-4c52-8d38-f2583e55d98b"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Complete Level 20",
+      "points": null,
+      "usd": 0.23,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a9e448d0-85c7-4312-b29d-bf356e66f582"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Complete Level 30",
+      "points": null,
+      "usd": 0.34,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "22050384-0edf-4f18-9bbf-5fe14a5e279a"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Complete Level 40",
+      "points": null,
+      "usd": 0.46,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "7655560c-59e2-4bea-be20-bf9071d84412"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Complete Level 50 within 3 days",
+      "points": null,
+      "usd": 6.91,
+      "deadline_text": "within 3 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4d2e3ba3-29c2-46de-96ee-514f2a82d41a"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Complete Level 60",
+      "points": null,
+      "usd": 0.64,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ecb95c45-965f-496b-b88e-efde20c17804"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Complete Level 70",
+      "points": null,
+      "usd": 1.1,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9b5b34b1-7df2-4095-89cb-ba4f032ae1c6"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "TURBO: Complete Level 80 within 7 days",
+      "points": null,
+      "usd": 14.98,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "52578ba2-ea2f-46be-bc48-d5c65cb56cfe"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Complete Level 90",
+      "points": null,
+      "usd": 1.15,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ba40ccf4-ab68-42f3-86e4-6fba0caff4d8"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Complete Level 100",
+      "points": null,
+      "usd": 1.61,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b852364d-98cf-4b24-8088-f1a43d6148a6"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Complete Level 110",
+      "points": null,
+      "usd": 2.07,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2c28adab-d9b6-44c9-a7d2-722c4b86b7d8"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "TURBO: Complete Level 120 within 11 days",
+      "points": null,
+      "usd": 14.98,
+      "deadline_text": "within 11 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e6e8452a-8293-4efa-971d-45c15f4fabfd"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Complete Level 130",
+      "points": null,
+      "usd": 2.76,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "169a6a81-5827-49f6-afce-a8a3821a81f0"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Complete Level 140",
+      "points": null,
+      "usd": 4.61,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "6bd4794a-8c73-4adb-9131-9bf24e877967"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Complete Level 150",
+      "points": null,
+      "usd": 5.53,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4a5a67be-d88e-4c0c-b722-194ec2a7f646"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Complete Level 160",
+      "points": null,
+      "usd": 6.91,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "79f3bb41-4550-45dd-a205-e1d10a241fb8"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "TURBO: Complete Level 170 within 18 days",
+      "points": null,
+      "usd": 20.74,
+      "deadline_text": "within 18 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ec7e8a22-0997-49f5-bcd5-84f4aa497423"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Complete Level 180",
+      "points": null,
+      "usd": 11.52,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "466670fe-1623-42af-9110-ec29c5217b1e"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Complete Level 200",
+      "points": null,
+      "usd": 16.13,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "839716da-47dc-4d5c-bf97-c34047e15485"
+    },
+    {
+      "task_id": "task_023",
+      "task_text": "Complete Level 220",
+      "points": null,
+      "usd": 17.28,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "08f77f76-6c27-4e75-987b-824ae5d87925"
+    },
+    {
+      "task_id": "task_024",
+      "task_text": "Complete Level 250",
+      "points": null,
+      "usd": 23.04,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2a2e58aa-93c3-4fc8-b8c2-51d030eff523"
+    },
+    {
+      "task_id": "task_025",
+      "task_text": "Make a purchase! You can complete this step up to 10 times!",
+      "points": null,
+      "usd": 0.41,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "5db592a4-af70-42f5-9e34-b881201b4fb1"
+    },
+    {
+      "task_id": "task_026",
+      "task_text": "Make a total of 20 purchases within 25 days",
+      "points": null,
+      "usd": 2.76,
+      "deadline_text": "within 25 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "f35e31fe-6232-4c10-868c-fc5f1b5bedba"
+    },
+    {
+      "task_id": "task_027",
+      "task_text": "Make a total of 30 purchases within 40 days",
+      "points": null,
+      "usd": 4.15,
+      "deadline_text": "within 40 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "7aa8bfeb-6929-4f67-aaf4-7ccab8e3e88b"
+    },
+    {
+      "task_id": "task_028",
+      "task_text": "Complete the album sticker! (You have to reach Level 20 to unlock the Album)",
+      "points": null,
+      "usd": 1.84,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "e8f53f24-dd44-4e27-a49b-4332f8e76439"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "character_hero_rank",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

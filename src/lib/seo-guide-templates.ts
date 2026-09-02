@@ -177,7 +177,7 @@ function buildInternalLinks(gameName: string, platformName: string): InternalLin
     { label: "Game Guides", href: "/guides", reason: "Find related completion walkthroughs." },
   ];
   if (gameName.trim()) links.unshift({ label: `${gameName} game page`, href: `/games/${slugify(gameName)}`, reason: "Connect this guide to the game hub." });
-  if (platformName.trim()) links.push({ label: `${platformName} review`, href: `/review/${slugify(platformName)}`, reason: "Let readers verify platform trust before clicking offers." });
+  if (platformName.trim()) links.push({ label: `${platformName} review`, href: `/best-gpt-sites/${slugify(platformName)}`, reason: "Let readers verify platform trust before clicking offers." });
   return links;
 }
 
@@ -228,7 +228,7 @@ function buildTaskGuideBody({
     `<p>Before starting, compare this route with other high-paying options on our <a href="/offers">highest paying offers</a> page.</p>`,
     `<p>You can also browse more <a href="/guides">game offer guides</a> to find easier tasks with better reward-to-effort ratios.</p>`,
     gameSlug ? `<p>Check the <a href="/games/${gameSlug}">${escapeHtml(gameName)} game page</a> for related offers and guide updates.</p>` : "",
-    platformSlug ? `<p>Review the <a href="/review/${platformSlug}">${escapeHtml(platformName)} review</a> before starting if you are comparing payout trust.</p>` : "",
+    platformSlug ? `<p>Review the <a href="/best-gpt-sites/${platformSlug}">${escapeHtml(platformName)} review</a> before starting if you are comparing payout trust.</p>` : "",
   ].filter(Boolean).join("");
   const quickOverview = [
     "<h2>Quick Overview</h2>",

@@ -133,6 +133,18 @@ async function fetchEarnLabGallery(countryCode, options) {
     };
 }
 
+function buildEarnLabOfferBacklink(externalId) {
+    if (!externalId) return null;
+    const taskId = String(externalId).trim().match(/^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:-[A-Z]{2})?$/i)?.[1];
+    if (!taskId) return null;
+
+    const url = new URL("https://earnlab.com/tasks");
+    url.searchParams.set("modal", "task");
+    url.searchParams.set("task-id", taskId);
+    url.searchParams.set("code", "mac");
+    return url.toString();
+}
+
 function normalizeEarnLabGalleryTask(task, countryCode) {
     const id = String(task.id || "").trim();
     const title = normalizeWhitespace(task.name || "");
@@ -145,6 +157,7 @@ function normalizeEarnLabGalleryTask(task, countryCode) {
     const platforms = normalizePlatforms(task);
     const category = normalizeCategory(task.category, task.customCategory);
     const startUrl = buildStartUrl({ title, countryCode, payout, providerName });
+    const trackingUrl = buildEarnLabOfferBacklink(id);
 
     return {
         id,
@@ -156,7 +169,7 @@ function normalizeEarnLabGalleryTask(task, countryCode) {
         reward: Number(task.reward ?? 0),
         payout,
         imageUrl: isHttpUrl(task.thumbnail) ? String(task.thumbnail).trim() : null,
-        trackingUrl: null,
+        trackingUrl,
         startUrl,
         advertiserName: title,
         providerName,
@@ -259,6 +272,7 @@ async function upsertGalleryOffer(siteId, offer) {
     const externalId = `${offer.id}-${offer.countryCode}`;
     const legacyExternalId = offer.id;
     const now = new Date().toISOString();
+    const offerUrl = offer.trackingUrl || buildEarnLabOfferBacklink(offer.id) || buildEarnLabOfferBacklink(externalId);
     const payload = {
         site_id: siteId,
         provider_id: provider.id,
@@ -276,9 +290,8 @@ async function upsertGalleryOffer(siteId, offer) {
         updated_at: now,
     };
 
-    // EarnLab does not currently return direct per-offer links; keep future/manual URLs intact.
-    if (offer.trackingUrl) {
-        payload.offer_url = offer.trackingUrl;
+    if (offerUrl) {
+        payload.offer_url = offerUrl;
     }
 
     const { data: existingScoped, error: scopedError } = await db

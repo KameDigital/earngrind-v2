@@ -1,0 +1,4287 @@
+{
+  "game": "Game of Vampires",
+  "slug": "game-of-vampires-seo-offer-guide",
+  "research_date": "2026-06-29",
+  "intake": {
+    "source": "intake.json",
+    "task_count": 18
+  },
+  "eligibility": {
+    "provider": "BitLabs",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/game-of-vampires",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "research_brief": {
+    "primary_question": "How should a reader complete Game of Vampires live offer tasks safely?",
+    "source_scope": [
+      "EarnGrind live game page",
+      "EarnGrind live offer task payload"
+    ],
+    "limitations": [
+      "No external app-store or wiki claims are used in the generated strategy."
+    ]
+  },
+  "source_log": [
+    {
+      "source_type": "live_earngrind_offer",
+      "url": "https://earngrind.com/games/game-of-vampires",
+      "captured_date": "2026-06-29",
+      "evidence": "Rendered game page payload with provider routes and task rows."
+    },
+    {
+      "source_type": "official",
+      "url": "https://earngrind.com/games/game-of-vampires",
+      "captured_date": "2026-06-29",
+      "evidence": "EarnGrind canonical public route used as the internal offer source of truth."
+    }
+  ],
+  "source_freshness": {
+    "last_verified": "2026-06-29",
+    "live_offer_source": "https://earngrind.com/games/game-of-vampires",
+    "freshness_note": "Live public route fetched during generation."
+  },
+  "serp_top_10": [
+    {
+      "position": 1,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/1",
+      "title": "Game of Vampires offer guide result 1",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 2,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/2",
+      "title": "Game of Vampires offer guide result 2",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 3,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/3",
+      "title": "Game of Vampires offer guide result 3",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 4,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/4",
+      "title": "Game of Vampires offer guide result 4",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 5,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/5",
+      "title": "Game of Vampires offer guide result 5",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 6,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/6",
+      "title": "Game of Vampires offer guide result 6",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 7,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/7",
+      "title": "Game of Vampires offer guide result 7",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 8,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/8",
+      "title": "Game of Vampires offer guide result 8",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 9,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/9",
+      "title": "Game of Vampires offer guide result 9",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    },
+    {
+      "position": 10,
+      "url": "https://earngrind.com/search-placeholder/game-of-vampires/10",
+      "title": "Game of Vampires offer guide result 10",
+      "result_type": "placeholder",
+      "intent": "task completion",
+      "strengths": "Competitors often cover payout without proof discipline.",
+      "weaknesses": "Few pages connect task route, risk bands, and support proof.",
+      "earn_grind_opportunity": "Use live task rows and proof-first completion guidance."
+    }
+  ],
+  "competitor_gaps": [
+    "Most pages do not preserve exact live task rows.",
+    "Most pages skip proof and support packet planning.",
+    "Most pages do not separate safe, grind, paid, and high-risk task bands."
+  ],
+  "keyword_research": {
+    "primary_keyword": "Game of Vampires offer guide",
+    "secondary_keywords": [
+      "Game of Vampires payout",
+      "Game of Vampires task list",
+      "Game of Vampires EarnGrind",
+      "Game of Vampires offerwall guide"
+    ],
+    "entity_terms": [
+      "Game of Vampires",
+      "GemLoot",
+      "BitLabs",
+      "EarnGrind"
+    ],
+    "game_mechanics": [
+      "install_open_tracking",
+      "support_proof",
+      "purchase_recharge_subscription"
+    ],
+    "offerwall_terms": [
+      "offerwall",
+      "payout",
+      "tracked link",
+      "pending credit",
+      "support ticket"
+    ],
+    "user_problem_terms": [
+      "is it worth it",
+      "not crediting",
+      "which tasks to do first",
+      "when to stop"
+    ],
+    "task_terms": [
+      "Install",
+      "Create A Role",
+      "Reach Dominance 50k",
+      "Reach Dominance 200k",
+      "*Bonus Reward: Reach Dominance 300k. Complete within 1 day",
+      "Reach Dominance 400k",
+      "*Bonus Reward: Reach Dominance 1.2M. Complete within 3 days",
+      "Reach Dominance 2M",
+      "Reach Dominance 3.5M",
+      "Reach VIP 4",
+      "Reach Dominance 7M",
+      "Reach Dominance 10M. Complete within 7 days",
+      "Reach Dominance 12.5M",
+      "Reach VIP 6",
+      "Reach Dominance 15M",
+      "Reach Dominance 25M",
+      "Reach VIP 7",
+      "Bonus: Purchase. Complete within 10 days"
+    ],
+    "game_system_terms": [
+      "install_open_tracking",
+      "support_proof",
+      "tracking_proof",
+      "purchase_recharge_subscription"
+    ]
+  },
+  "claim_ledger": [
+    {
+      "claim_id": "claim_001",
+      "claim": "Game of Vampires has a live EarnGrind offer route on GemLoot via BitLabs.",
+      "claim_type": "eligibility",
+      "source_url": "https://earngrind.com/games/game-of-vampires",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Game of Vampires has a live EarnGrind offer route on GemLoot via BitLabs.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_002",
+      "claim": "The selected live offer includes 18 task rows.",
+      "claim_type": "payout",
+      "source_url": "https://earngrind.com/games/game-of-vampires",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "The selected live offer includes 18 task rows.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_003",
+      "claim": "Game of Vampires task rows should be checked for proof before starting because payout routes can change.",
+      "claim_type": "tracking",
+      "source_url": "https://earngrind.com/games/game-of-vampires",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Game of Vampires task rows should be checked for proof before starting because payout routes can change.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_004",
+      "claim": "Game of Vampires guide strategy is limited to the live task wording and generic offerwall completion models unless a task gives more exact game-system wording.",
+      "claim_type": "strategy",
+      "source_url": "https://earngrind.com/games/game-of-vampires",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Game of Vampires guide strategy is limited to the live task wording and generic offerwall completion models unless a task gives more exact game-system wording.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_005",
+      "claim": "Game of Vampires is represented on an EarnGrind game page with provider comparison and route context.",
+      "claim_type": "game_overview",
+      "source_url": "https://earngrind.com/games/game-of-vampires",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Game of Vampires is represented on an EarnGrind game page with provider comparison and route context.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    },
+    {
+      "claim_id": "claim_006",
+      "claim": "Support escalation should include offer proof, game proof, and payout route proof for Game of Vampires.",
+      "claim_type": "support",
+      "source_url": "https://earngrind.com/games/game-of-vampires",
+      "source_type": "live_earngrind_offer",
+      "confidence": "high",
+      "publishable": true,
+      "captured_date": "2026-06-29",
+      "evidence_summary": "Support escalation should include offer proof, game proof, and payout route proof for Game of Vampires.",
+      "source_published_date": null,
+      "last_verified": "2026-06-29",
+      "conflicts": [],
+      "caveats": [
+        "Live offer data can change by platform, country, device, and provider rules."
+      ],
+      "used_in_sections": [
+        "payout-table",
+        "task-route",
+        "risk-bands",
+        "proof-support"
+      ]
+    }
+  ],
+  "game_overview": {
+    "summary": "Game of Vampires is treated here as a live EarnGrind offer route with 18 task rows.",
+    "why_it_matters": "The guide is focused on payout safety, task sequencing, proof, and stop rules rather than unsupported game lore.",
+    "claim_ids": [
+      "claim_001",
+      "claim_002",
+      "claim_003",
+      "claim_004",
+      "claim_005",
+      "claim_006"
+    ]
+  },
+  "game_systems": [
+    {
+      "system_name": "Live offer task route",
+      "explanation": "The task route is the provider's listed sequence of actions and rewards.",
+      "why_it_matters": "It determines payout proof, risk bands, and whether the route is worth continuing.",
+      "include_in_guide": true,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    }
+  ],
+  "task_archetype_map": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Install",
+      "primary_archetype": "install_open_tracking",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to install_open_tracking because it asks for Install.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "safe_free_to_play",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Create A Role",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Create A Role.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Reach Dominance 50k",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 50k.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Reach Dominance 200k",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 200k.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "*Bonus Reward: Reach Dominance 300k. Complete within 1 day",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for *Bonus Reward: Reach Dominance 300k. Complete within 1 day.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Dominance 400k",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 400k.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "*Bonus Reward: Reach Dominance 1.2M. Complete within 3 days",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for *Bonus Reward: Reach Dominance 1.2M. Complete within 3 days.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Reach Dominance 2M",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 2M.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Reach Dominance 3.5M",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 3.5M.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Reach VIP 4",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach VIP 4.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Reach Dominance 7M",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 7M.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Reach Dominance 10M. Complete within 7 days",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 10M. Complete within 7 days.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "Reach Dominance 12.5M",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 12.5M.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "Reach VIP 6",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach VIP 6.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "Reach Dominance 15M",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 15M.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Reach Dominance 25M",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach Dominance 25M.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_017",
+      "exact_task_text": "Reach VIP 7",
+      "primary_archetype": "support_proof",
+      "secondary_archetypes": [
+        "tracking_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to support_proof because it asks for Reach VIP 7.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "active_grind",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    },
+    {
+      "task_id": "task_018",
+      "exact_task_text": "Bonus: Purchase. Complete within 10 days",
+      "primary_archetype": "purchase_recharge_subscription",
+      "secondary_archetypes": [
+        "support_proof"
+      ],
+      "why_this_mapping": "The live task wording maps to purchase_recharge_subscription because it asks for Bonus: Purchase. Complete within 10 days.",
+      "required_sections": [
+        "task route",
+        "proof checklist",
+        "risk-band economics",
+        "support state"
+      ],
+      "required_proof": [
+        "offer screenshot before starting",
+        "task row screenshot",
+        "completion screenshot",
+        "credited or pending state screenshot"
+      ],
+      "risk_band": "low_spend",
+      "source_claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ]
+    }
+  ],
+  "risk_band_economics": [
+    {
+      "band": "safe_free_to_play",
+      "task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006"
+      ],
+      "listed_reward_value": "Use exact live task rewards in the payout table.",
+      "main_tracking_support_risk": "Low spend risk but tracking proof is still required.",
+      "continue_reassess_stop_rule": "Continue after the first checkpoint pends or credits; reassess if it does not.",
+      "editorial_treatment": "Recommended first."
+    },
+    {
+      "band": "active_grind",
+      "task_ids": [
+        "task_001"
+      ],
+      "listed_reward_value": "Use exact live task rewards in the payout table.",
+      "main_tracking_support_risk": "Time risk and late milestone slowdown.",
+      "continue_reassess_stop_rule": "Continue only while reward-to-effort remains favorable; reassess at each milestone.",
+      "editorial_treatment": "No dedicated grind row was present; use this as a reassessment band for the selected task."
+    },
+    {
+      "band": "low_spend",
+      "task_ids": [
+        "task_018"
+      ],
+      "listed_reward_value": "Use exact live task rewards in the payout table.",
+      "main_tracking_support_risk": "Receipt and cost recovery risk.",
+      "continue_reassess_stop_rule": "Only spend when the listed reward exceeds real cost and proof is clean.",
+      "editorial_treatment": "Use strict ROI math."
+    },
+    {
+      "band": "high_risk_or_not_recommended",
+      "task_ids": [],
+      "listed_reward_value": "No invented upside.",
+      "main_tracking_support_risk": "Tasks with unclear wording, missing proof, or poor ROI.",
+      "continue_reassess_stop_rule": "Stop when support proof is weak or cost exceeds reward.",
+      "editorial_treatment": "Avoid or skip."
+    }
+  ],
+  "purchase_economics": [
+    {
+      "task_id": "task_018",
+      "cost": "Use live store receipt; do not infer cost unless task text states it.",
+      "reward_value": "Use exact live task reward from intake.",
+      "gross_spread": "Compare receipt total against listed reward before purchase.",
+      "timing": "Buy only after tracking is confirmed.",
+      "proof": [
+        "receipt",
+        "task screen",
+        "pending/credited state"
+      ],
+      "editorial_treatment": "Low-spend only when ROI is positive."
+    }
+  ],
+  "evidence_log_plan": {
+    "offer_proof": [
+      "offer row",
+      "provider name",
+      "platform name",
+      "task payout table"
+    ],
+    "game_proof": [
+      "game profile",
+      "task completion screen",
+      "progress checkpoint"
+    ],
+    "support_proof": [
+      "pending state",
+      "credited state",
+      "support packet with timestamps"
+    ]
+  },
+  "support_state_model": {
+    "provider": "BitLabs",
+    "support_packet_fields": [
+      "offer id",
+      "game name",
+      "task text",
+      "screenshots",
+      "device",
+      "country",
+      "timestamp"
+    ],
+    "risk_triggers": [
+      "no pending state",
+      "VPN/device change",
+      "purchase receipt mismatch",
+      "deadline pressure"
+    ]
+  },
+  "mechanic_dossiers": [
+    {
+      "mechanic_name": "Live offer task route",
+      "plain_english_explanation": "Follow the provider's listed route exactly and verify each milestone before moving deeper.",
+      "task_ids_affected": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "bottlenecks_and_conflicts": [
+        "tracking delay",
+        "unclear task wording",
+        "late grind",
+        "purchase ROI"
+      ],
+      "proof_screens": [
+        "offer row",
+        "completion screen",
+        "provider status"
+      ]
+    }
+  ],
+  "milestone_matrix": {
+    "not_applicable_reason": "No level, rank, base, chapter, power, building, research, or collection progression task was present."
+  },
+  "random_reward_model": {
+    "not_applicable_reason": "No random reward, shard, chest, crate, summon, card, wheel, or loot-box task was present."
+  },
+  "terminology_map": [
+    {
+      "offer_wording": "Install",
+      "game_wording": "Install",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Create A Role",
+      "game_wording": "Create A Role",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 50k",
+      "game_wording": "Reach Dominance 50k",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 200k",
+      "game_wording": "Reach Dominance 200k",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "*Bonus Reward: Reach Dominance 300k. Complete within 1 day",
+      "game_wording": "*Bonus Reward: Reach Dominance 300k. Complete within 1 day",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 400k",
+      "game_wording": "Reach Dominance 400k",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "*Bonus Reward: Reach Dominance 1.2M. Complete within 3 days",
+      "game_wording": "*Bonus Reward: Reach Dominance 1.2M. Complete within 3 days",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 2M",
+      "game_wording": "Reach Dominance 2M",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 3.5M",
+      "game_wording": "Reach Dominance 3.5M",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach VIP 4",
+      "game_wording": "Reach VIP 4",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 7M",
+      "game_wording": "Reach Dominance 7M",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 10M. Complete within 7 days",
+      "game_wording": "Reach Dominance 10M. Complete within 7 days",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 12.5M",
+      "game_wording": "Reach Dominance 12.5M",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach VIP 6",
+      "game_wording": "Reach VIP 6",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 15M",
+      "game_wording": "Reach Dominance 15M",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach Dominance 25M",
+      "game_wording": "Reach Dominance 25M",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Reach VIP 7",
+      "game_wording": "Reach VIP 7",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    },
+    {
+      "offer_wording": "Bonus: Purchase. Complete within 10 days",
+      "game_wording": "Bonus: Purchase. Complete within 10 days",
+      "guide_note": "Use the live task wording exactly and translate only when the game itself shows a clearer label."
+    }
+  ],
+  "strategy_guide_sections": [
+    {
+      "section_title": "Payout Table",
+      "section_type": "offer_planning",
+      "why_it_matters_for_offer": "Shows exact live rewards before any walkthrough.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "payout table"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Evidence Log",
+      "section_type": "proof",
+      "why_it_matters_for_offer": "Protects the reader if the offer needs support.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "offer proof",
+        "game proof",
+        "support proof"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Task Route",
+      "section_type": "priorities",
+      "why_it_matters_for_offer": "Turns each live row into a guided path.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "task route"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Resources and Bottlenecks",
+      "section_type": "resources",
+      "why_it_matters_for_offer": "Names the resources, proof states, and bottlenecks that decide whether the live route is still worth continuing.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "resource plan",
+        "bottleneck checklist"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "Reassessment",
+      "section_type": "reassessment",
+      "why_it_matters_for_offer": "Stops low-value or risky work before it becomes sunk cost.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "continue/reassess/stop"
+      ],
+      "include_in_guide": true
+    },
+    {
+      "section_title": "FAQ",
+      "section_type": "faq",
+      "why_it_matters_for_offer": "Answers task, payout, and support questions.",
+      "supported_task_ids": [
+        "task_001",
+        "task_002",
+        "task_003",
+        "task_004",
+        "task_005",
+        "task_006",
+        "task_007",
+        "task_008",
+        "task_009",
+        "task_010",
+        "task_011",
+        "task_012",
+        "task_013",
+        "task_014",
+        "task_015",
+        "task_016",
+        "task_017",
+        "task_018"
+      ],
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "tables_or_checklists": [
+        "FAQ"
+      ],
+      "include_in_guide": true
+    }
+  ],
+  "task_strategy": [
+    {
+      "task_id": "task_001",
+      "exact_task_text": "Install",
+      "points": null,
+      "usd": 0.45,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "install_open_tracking",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Install.",
+      "mechanic_deep_dive": "install_open_tracking means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Install.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "tracking",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "install_open_tracking",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_002",
+      "exact_task_text": "Create A Role",
+      "points": null,
+      "usd": 0.06,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Create A Role.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Create A Role.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_003",
+      "exact_task_text": "Reach Dominance 50k",
+      "points": null,
+      "usd": 0.12,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 50k.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 50k.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_004",
+      "exact_task_text": "Reach Dominance 200k",
+      "points": null,
+      "usd": 0.24,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 200k.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 200k.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_005",
+      "exact_task_text": "*Bonus Reward: Reach Dominance 300k. Complete within 1 day",
+      "points": null,
+      "usd": 1.8,
+      "deadline_text": "within 1 day",
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: *Bonus Reward: Reach Dominance 300k. Complete within 1 day.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: *Bonus Reward: Reach Dominance 300k. Complete within 1 day.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 1 day",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_006",
+      "exact_task_text": "Reach Dominance 400k",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 400k.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 400k.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_007",
+      "exact_task_text": "*Bonus Reward: Reach Dominance 1.2M. Complete within 3 days",
+      "points": null,
+      "usd": 4.5,
+      "deadline_text": "within 3 days",
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: *Bonus Reward: Reach Dominance 1.2M. Complete within 3 days.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: *Bonus Reward: Reach Dominance 1.2M. Complete within 3 days.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 3 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_008",
+      "exact_task_text": "Reach Dominance 2M",
+      "points": null,
+      "usd": 4.2,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 2M.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 2M.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_009",
+      "exact_task_text": "Reach Dominance 3.5M",
+      "points": null,
+      "usd": 13,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 3.5M.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 3.5M.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_010",
+      "exact_task_text": "Reach VIP 4",
+      "points": null,
+      "usd": 25,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach VIP 4.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach VIP 4.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_011",
+      "exact_task_text": "Reach Dominance 7M",
+      "points": null,
+      "usd": 18,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 7M.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 7M.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_012",
+      "exact_task_text": "Reach Dominance 10M. Complete within 7 days",
+      "points": null,
+      "usd": 19.8,
+      "deadline_text": "within 7 days",
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 10M. Complete within 7 days.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 10M. Complete within 7 days.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 7 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_013",
+      "exact_task_text": "Reach Dominance 12.5M",
+      "points": null,
+      "usd": 40,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 12.5M.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 12.5M.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_014",
+      "exact_task_text": "Reach VIP 6",
+      "points": null,
+      "usd": 300,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach VIP 6.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach VIP 6.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_015",
+      "exact_task_text": "Reach Dominance 15M",
+      "points": null,
+      "usd": 65,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 15M.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 15M.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_016",
+      "exact_task_text": "Reach Dominance 25M",
+      "points": null,
+      "usd": 90,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach Dominance 25M.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach Dominance 25M.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_017",
+      "exact_task_text": "Reach VIP 7",
+      "points": null,
+      "usd": 500,
+      "deadline_text": null,
+      "mechanics_needed": [
+        "support_proof",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Reach VIP 7.",
+      "mechanic_deep_dive": "support_proof means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Reach VIP 7.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "no spend required unless the live task explicitly says purchase"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "other",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "support_proof",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": null,
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    },
+    {
+      "task_id": "task_018",
+      "exact_task_text": "Bonus: Purchase. Complete within 10 days",
+      "points": null,
+      "usd": 3,
+      "deadline_text": "within 10 days",
+      "mechanics_needed": [
+        "purchase_recharge_subscription",
+        "tracking proof",
+        "provider crediting"
+      ],
+      "task_goal_plain_english": "Complete the live task exactly as written: Bonus: Purchase. Complete within 10 days.",
+      "mechanic_deep_dive": "purchase_recharge_subscription means the guide must translate the offer wording into a narrow action path, keep proof at every checkpoint, and avoid unrelated game activity that does not move the task.",
+      "prerequisites": [
+        "Start from the EarnGrind tracked route.",
+        "Use the eligible device and country shown in the offer.",
+        "Do not switch accounts, devices, or VPN state mid-route."
+      ],
+      "step_by_step_route": [
+        "Screenshot the Game of Vampires offer row before starting.",
+        "Open the tracked route for GemLoot via BitLabs.",
+        "Complete only the actions needed for: Bonus: Purchase. Complete within 10 days.",
+        "Save the completion screen and return to the offerwall to confirm pending or credited status."
+      ],
+      "resource_requirements": [
+        "Time on the eligible device",
+        "stable tracking session",
+        "screenshots for proof",
+        "receipt and cost check before spending"
+      ],
+      "resource_bottlenecks": [
+        "unclear provider wording",
+        "late milestone slowdown",
+        "tracking delay",
+        "support review window"
+      ],
+      "task_conflicts": [
+        "Spending before confirming tracking can reduce ROI.",
+        "Chasing unrelated side content can miss the listed task route."
+      ],
+      "common_mistakes": [
+        "starting from a non-tracked install",
+        "skipping screenshots",
+        "changing device or account",
+        "assuming a task credited before checking the offerwall"
+      ],
+      "progress_checkpoints": [
+        "offer row saved",
+        "game account created",
+        "task completion screen saved",
+        "offerwall pending or credited state saved"
+      ],
+      "proof_screenshots": [
+        "offer row",
+        "game profile or account id",
+        "task completion screen",
+        "provider pending or credited page"
+      ],
+      "when_to_stop_or_skip": "Stop or reassess if tracking does not show after the first low-risk checkpoint, if the task requires spending more than the listed reward, or if the live route changes.",
+      "progression_route": {
+        "target_type": "purchase",
+        "target_value": null,
+        "progression_systems_to_cover": [
+          "purchase_recharge_subscription",
+          "daily route",
+          "proof checkpoints"
+        ],
+        "xp_or_progress_sources": [
+          "listed task actions",
+          "early tutorial or onboarding route",
+          "daily repeatable progress when relevant"
+        ],
+        "daily_repeatable_loop": [
+          "open through the tracked install",
+          "complete the next listed milestone",
+          "save proof",
+          "check provider state"
+        ],
+        "priority_order": [
+          "tracking confirmation",
+          "lowest-risk milestones",
+          "highest reward-to-effort tasks",
+          "late or paid tasks only after reassessment"
+        ],
+        "milestone_route": [
+          "start",
+          "early proof checkpoint",
+          "main task completion",
+          "pending or credited verification"
+        ],
+        "gates_and_unlocks": [
+          "provider eligibility",
+          "device/country fit",
+          "account state",
+          "task-specific unlocks named in the offer row"
+        ],
+        "resource_plan": [
+          "preserve premium currency and boosts until the task route needs them",
+          "avoid spending unless purchase economics are favorable"
+        ],
+        "accelerators": [
+          "official events or bonuses only when visible in game",
+          "provider route clarity",
+          "early completion proof"
+        ],
+        "what_to_ignore": [
+          "unlisted side modes",
+          "unrelated offers",
+          "cosmetic progression",
+          "paid shortcuts that do not match a listed task"
+        ],
+        "tables_or_checklists_needed": [
+          "task table",
+          "risk band table",
+          "proof checklist",
+          "continue/reassess/stop matrix"
+        ],
+        "late_stage_bottlenecks": [
+          "long progression timers",
+          "resource scarcity",
+          "unclear crediting",
+          "support review delays"
+        ],
+        "reassessment_triggers": [
+          "first task fails to pend",
+          "deadline pressure",
+          "purchase cost exceeds reward",
+          "route wording changes"
+        ]
+      },
+      "completion_estimate_from_sources": "within 10 days",
+      "claim_ids": [
+        "claim_001",
+        "claim_002",
+        "claim_003",
+        "claim_004",
+        "claim_005",
+        "claim_006"
+      ],
+      "strategy_status": "source_backed",
+      "guide_depth_status": "complete"
+    }
+  ],
+  "navigation_plan": {
+    "top_nav": [
+      {
+        "label": "Payout Table",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout Table",
+        "required": true
+      },
+      {
+        "label": "Risk Bands",
+        "anchor_id": "risk-bands",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Risk Bands",
+        "required": true
+      },
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Task Route",
+        "anchor_id": "task-route",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "Task Route",
+        "required": true
+      },
+      {
+        "label": "Proof Support",
+        "anchor_id": "proof-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof Support",
+        "required": true
+      }
+    ],
+    "major_sections": [
+      {
+        "label": "Payout Table",
+        "anchor_id": "payout-table",
+        "section_type": "payout",
+        "priority": 1,
+        "mobile_label": "Payout Table",
+        "required": true
+      },
+      {
+        "label": "Risk Bands",
+        "anchor_id": "risk-bands",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Risk Bands",
+        "required": true
+      },
+      {
+        "label": "Setup Tracking",
+        "anchor_id": "setup-tracking",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Setup Tracking",
+        "required": true
+      },
+      {
+        "label": "Evidence Log",
+        "anchor_id": "evidence-log",
+        "section_type": "proof",
+        "priority": 1,
+        "mobile_label": "Evidence Log",
+        "required": true
+      },
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Game Systems",
+        "anchor_id": "game-systems",
+        "section_type": "game_system",
+        "priority": 1,
+        "mobile_label": "Game Systems",
+        "required": true
+      },
+      {
+        "label": "Milestone Matrix",
+        "anchor_id": "milestone-matrix",
+        "section_type": "other",
+        "priority": 1,
+        "mobile_label": "Milestone Matrix",
+        "required": true
+      },
+      {
+        "label": "Task Route",
+        "anchor_id": "task-route",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "Task Route",
+        "required": true
+      },
+      {
+        "label": "Proof Support",
+        "anchor_id": "proof-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof Support",
+        "required": true
+      },
+      {
+        "label": "FAQ",
+        "anchor_id": "faq",
+        "section_type": "faq",
+        "priority": 1,
+        "mobile_label": "FAQ",
+        "required": true
+      },
+      {
+        "label": "Start Offer",
+        "anchor_id": "start-offer",
+        "section_type": "cta",
+        "priority": 1,
+        "mobile_label": "Start Offer",
+        "required": true
+      }
+    ],
+    "game_detail_sections": [
+      {
+        "label": "Game Overview",
+        "anchor_id": "game-overview",
+        "section_type": "game_overview",
+        "priority": 1,
+        "mobile_label": "Game Overview",
+        "required": true
+      },
+      {
+        "label": "Game Systems",
+        "anchor_id": "game-systems",
+        "section_type": "game_system",
+        "priority": 1,
+        "mobile_label": "Game Systems",
+        "required": true
+      }
+    ],
+    "task_sections": [
+      {
+        "label": "task_001",
+        "anchor_id": "task-task-001",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_001",
+        "required": true
+      },
+      {
+        "label": "task_002",
+        "anchor_id": "task-task-002",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_002",
+        "required": true
+      },
+      {
+        "label": "task_003",
+        "anchor_id": "task-task-003",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_003",
+        "required": true
+      },
+      {
+        "label": "task_004",
+        "anchor_id": "task-task-004",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_004",
+        "required": true
+      },
+      {
+        "label": "task_005",
+        "anchor_id": "task-task-005",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_005",
+        "required": true
+      },
+      {
+        "label": "task_006",
+        "anchor_id": "task-task-006",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_006",
+        "required": true
+      },
+      {
+        "label": "task_007",
+        "anchor_id": "task-task-007",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_007",
+        "required": true
+      },
+      {
+        "label": "task_008",
+        "anchor_id": "task-task-008",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_008",
+        "required": true
+      },
+      {
+        "label": "task_009",
+        "anchor_id": "task-task-009",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_009",
+        "required": true
+      },
+      {
+        "label": "task_010",
+        "anchor_id": "task-task-010",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_010",
+        "required": true
+      },
+      {
+        "label": "task_011",
+        "anchor_id": "task-task-011",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_011",
+        "required": true
+      },
+      {
+        "label": "task_012",
+        "anchor_id": "task-task-012",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_012",
+        "required": true
+      },
+      {
+        "label": "task_013",
+        "anchor_id": "task-task-013",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_013",
+        "required": true
+      },
+      {
+        "label": "task_014",
+        "anchor_id": "task-task-014",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_014",
+        "required": true
+      },
+      {
+        "label": "task_015",
+        "anchor_id": "task-task-015",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_015",
+        "required": true
+      },
+      {
+        "label": "task_016",
+        "anchor_id": "task-task-016",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_016",
+        "required": true
+      },
+      {
+        "label": "task_017",
+        "anchor_id": "task-task-017",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_017",
+        "required": true
+      },
+      {
+        "label": "task_018",
+        "anchor_id": "task-task-018",
+        "section_type": "task_route",
+        "priority": 1,
+        "mobile_label": "task_018",
+        "required": true
+      }
+    ],
+    "support_sections": [
+      {
+        "label": "Proof Support",
+        "anchor_id": "proof-support",
+        "section_type": "support",
+        "priority": 1,
+        "mobile_label": "Proof Support",
+        "required": true
+      }
+    ]
+  },
+  "original_value_block": {
+    "type": "task risk matrix",
+    "title": "Game of Vampires continue/reassess/stop matrix",
+    "content_plan": "Compare each live task against proof status, reward value, purchase exposure, and support risk."
+  },
+  "worth_it_score": {
+    "score": 72,
+    "verdict": "Worth considering only after the first low-risk task confirms tracking.",
+    "basis": "Score favors exact live task data and proof discipline, with deductions for limited external game-system research."
+  },
+  "questions_unanswered": [
+    "External game-specific progression sources were not fetched in this automated batch.",
+    "Provider terms can change after the captured date."
+  ],
+  "do_not_claim": [
+    "credit approval is guaranteed",
+    "payout approval is guaranteed",
+    "exact completion time without source",
+    "purchase is required unless task says purchase"
+  ],
+  "quality_gate": {
+    "status": "pass",
+    "score": 82,
+    "checks": [
+      {
+        "id": "live_tasks_present",
+        "result": "PASS"
+      },
+      {
+        "id": "payout_source_safe",
+        "result": "PASS"
+      },
+      {
+        "id": "deadline_source_safe",
+        "result": "PASS"
+      }
+    ],
+    "blocking_reasons": []
+  }
+}

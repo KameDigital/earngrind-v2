@@ -1,0 +1,344 @@
+{
+  "game": "MU: Dark Epoch",
+  "search_name": "MU: Dark Epoch offer guide",
+  "slug": "mu-dark-epoch-seo-offer-guide",
+  "offerwall_provider": "Torox",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Open the game - 0.17 USD\nLogin the game - 0.04 USD\nReach Character level 5 - 0.06 USD\nBuy Diamonds 60 (eligible only if purchased within 3 days) - 1.66 USD - within 3 days\nPurchase the ultra special daily package - The reward can be repeated daily! - 0.99 USD\nPurchase Diamonds 3280 (USD 49.99) within 7 days - 62.16 USD - within 7 days\nReach Character level 15 - 0.17 USD\nReach Character level 30 - 0.21 USD\nReach Character level 60 - 0.63 USD\nPurchase Month Card (USD 4.99) - eligible only if purchased within 7 days - 4.97 USD - within 7 days\nBuy Diamonds 980 (eligible only if purchased after 3 days or more) - 16.58 USD\nReach Character level 112 - 1.39 USD\nReach Character level 129 - 1.67 USD\nReach Character level 167 - 4.18 USD\nPurchase Month Card Plus (USD 12.99) - eligible only if purchased after 7 days or more - 16.58 USD\nBuy Diamonds 1980 (eligible only if purchased after 7 days or more) - 37.3 USD\nReach Character level 213 - 9.19 USD\nReach Character level 248 - 19.15 USD\nReach Character level 270 - 37.59 USD\nReach Character level 318 - 62.66 USD\nReach Character level 366 - 143.22 USD\nReach Character level 440 - 268.53 USD",
+  "eligibility": {
+    "provider": "Torox",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/mu-dark-epoch",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Open the game",
+      "points": null,
+      "usd": 0.17,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "5e6ae409-4ed6-469f-9d14-aa5fce767b3a"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Login the game",
+      "points": null,
+      "usd": 0.04,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "other",
+      "live_task_id": "64d07254-2607-4eee-b6bf-b36f413ff0a2"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Reach Character level 5",
+      "points": null,
+      "usd": 0.06,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "78b4a0e3-0012-4420-99cc-70d49586b3a1"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Buy Diamonds 60 (eligible only if purchased within 3 days)",
+      "points": null,
+      "usd": 1.66,
+      "deadline_text": "within 3 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "d9ab6a10-b98c-4c56-8870-171e503928cb"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Purchase the ultra special daily package - The reward can be repeated daily!",
+      "points": null,
+      "usd": 0.99,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "73089502-ff33-4977-aecb-1989a64594ca"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Purchase Diamonds 3280 (USD 49.99) within 7 days",
+      "points": null,
+      "usd": 62.16,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "31269815-a25c-4e1a-b04b-c32c62800609"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Reach Character level 15",
+      "points": null,
+      "usd": 0.17,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "4d47e7f0-95f5-46d2-926a-9f4066e667e0"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Character level 30",
+      "points": null,
+      "usd": 0.21,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "47928c35-2889-4b98-a2cd-ad58fa706f69"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "Reach Character level 60",
+      "points": null,
+      "usd": 0.63,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2f9a606b-9fd8-4af3-aacf-e0c797144a91"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Purchase Month Card (USD 4.99) - eligible only if purchased within 7 days",
+      "points": null,
+      "usd": 4.97,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "defdc6d1-fe0e-4018-af20-3b5a903fc0fe"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Buy Diamonds 980 (eligible only if purchased after 3 days or more)",
+      "points": null,
+      "usd": 16.58,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "f454ad47-fc85-4af2-9ed6-6b8397a9594f"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Character level 112",
+      "points": null,
+      "usd": 1.39,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "0c05cb6f-9600-4a0d-90b2-1455a476e4d7"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Reach Character level 129",
+      "points": null,
+      "usd": 1.67,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "24ed5d1f-fda2-4392-aef7-7b1ce876a83d"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Reach Character level 167",
+      "points": null,
+      "usd": 4.18,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "be5473ea-a679-4a1c-bcc9-25d710a7baf1"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Purchase Month Card Plus (USD 12.99) - eligible only if purchased after 7 days or more",
+      "points": null,
+      "usd": 16.58,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "8df393f6-a2a6-4504-ae6c-d54602cbaa5b"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Buy Diamonds 1980 (eligible only if purchased after 7 days or more)",
+      "points": null,
+      "usd": 37.3,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "0b26e28e-4452-4898-a581-0b4d36fb9775"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Reach Character level 213",
+      "points": null,
+      "usd": 9.19,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "6ae6ab03-feb5-4f0a-8408-ced6e5b78f7d"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Reach Character level 248",
+      "points": null,
+      "usd": 19.15,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "12817ee7-c2cc-447e-96e2-80be3d3966fe"
+    },
+    {
+      "task_id": "task_019",
+      "task_text": "Reach Character level 270",
+      "points": null,
+      "usd": 37.59,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "20dca791-0936-4373-a63a-6252be06c7f0"
+    },
+    {
+      "task_id": "task_020",
+      "task_text": "Reach Character level 318",
+      "points": null,
+      "usd": 62.66,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "00080996-d9ee-4f1b-b329-326cf5ceb1bd"
+    },
+    {
+      "task_id": "task_021",
+      "task_text": "Reach Character level 366",
+      "points": null,
+      "usd": 143.22,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "5c2db827-0972-4184-bea8-03f86b4c5a25"
+    },
+    {
+      "task_id": "task_022",
+      "task_text": "Reach Character level 440",
+      "points": null,
+      "usd": 268.53,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ae76f55a-8199-494e-9b27-c6a77e4223a1"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "support_proof",
+    "account_player_level",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

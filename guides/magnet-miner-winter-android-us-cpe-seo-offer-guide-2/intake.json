@@ -1,0 +1,47 @@
+{
+  "game": "Magnet Miner Winter - Android - US - CPE",
+  "search_name": "Magnet Miner Winter - Android - US - CPE offer guide",
+  "slug": "magnet-miner-winter-android-us-cpe-seo-offer-guide-2",
+  "offerwall_provider": "AdscendMedia",
+  "country": "US",
+  "device": "android",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "none_provided_by_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US android user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Magnet Miner Winter - Android - US - CPE - 1094.26 USD",
+  "eligibility": {
+    "provider": "AdscendMedia",
+    "country": "US",
+    "device": "android",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/magnet-miner-winter-android-us-cpe",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Magnet Miner Winter - Android - US - CPE",
+      "points": null,
+      "usd": 1094.26,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "260071c1-f63f-4861-ad4b-862c4d41817c"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

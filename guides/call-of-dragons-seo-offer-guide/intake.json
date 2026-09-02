@@ -1,0 +1,289 @@
+{
+  "game": "Call of Dragons",
+  "search_name": "Call of Dragons offer guide",
+  "slug": "call-of-dragons-seo-offer-guide",
+  "offerwall_provider": "BitLabs",
+  "country": "US",
+  "device": "ios",
+  "payout_source": "live_earngrind_offer",
+  "deadline_source": "live_earngrind_offer",
+  "primary_seo_intent": "Guide the reader through each offerwall task safely, explain the important game systems and elements they will interact with, compare the realistic value of early, grind, paid, random, and high-risk task bands, and help them decide whether the offer is worth starting, continuing, spending on, or stopping.",
+  "target_user": "US ios user comparing live EarnGrind payout routes before starting.",
+  "original_task_list": "Install - 0 USD\nComplete Tutorial - 0 USD\nUpgrade your city to level 8 - 0.8 USD\nReach Power 300k - 1.8 USD\nReach Power 500k - 2 USD\nPurchase Efficiency in Market’s Worker Support. Complete within 5 days - 3.6 USD - within 5 days\nBonus: Reach Power 1M. Complete within 3 days - 6 USD - within 3 days\nReach Power 1.5M - 6 USD\n*Bonus Reward: Purchase Growth Fund. Complete within 10 days - 6 USD - within 10 days\nBonus: Reach Power 2M. Complete within 7 days - 0 USD - within 7 days\nReach Power 3M - 28 USD\nReach Power 5M - 0 USD\nPurchase - 1.8 USD\nPurchase Honor Exclusive after Reaching VIP 7 - 21 USD\nReach Power 10M - 300 USD\nReach Power 20M. Complete within 30 days - 540 USD - within 30 days\nReach Level 3 Troops. Complete within 30 days - 7.2 USD - within 30 days\nReach Level 4 Troops. Complete within 30 days - 60 USD - within 30 days",
+  "eligibility": {
+    "provider": "BitLabs",
+    "country": "US",
+    "device": "ios",
+    "status": "complete",
+    "notes": [
+      "Live source: https://earngrind.com/games/call-of-dragons",
+      "Task rows were extracted from the rendered EarnGrind game page payload on 2026-06-21."
+    ]
+  },
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "task_text": "Install",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "install_open_tracking"
+      ],
+      "live_task_type": "install",
+      "live_task_id": "07a6d6cf-8cde-4599-9d3e-dfa59cf5836b"
+    },
+    {
+      "task_id": "task_002",
+      "task_text": "Complete Tutorial",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "support_proof"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "90127323-0fde-4e57-8534-c12a00a81c32"
+    },
+    {
+      "task_id": "task_003",
+      "task_text": "Upgrade your city to level 8",
+      "points": null,
+      "usd": 0.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "46682eab-f85e-4e9e-83a4-1f8dcf326737"
+    },
+    {
+      "task_id": "task_004",
+      "task_text": "Reach Power 300k",
+      "points": null,
+      "usd": 1.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2a8c5b87-6a36-4efb-8ff5-14fed38f81a1"
+    },
+    {
+      "task_id": "task_005",
+      "task_text": "Reach Power 500k",
+      "points": null,
+      "usd": 2,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "a2a203d3-74ec-46cf-ba1c-f52dc54ddc9c"
+    },
+    {
+      "task_id": "task_006",
+      "task_text": "Purchase Efficiency in Market’s Worker Support. Complete within 5 days",
+      "points": null,
+      "usd": 3.6,
+      "deadline_text": "within 5 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "4ceb40f5-7e44-4f54-9f8c-84eadd0cb01a"
+    },
+    {
+      "task_id": "task_007",
+      "task_text": "Bonus: Reach Power 1M. Complete within 3 days",
+      "points": null,
+      "usd": 6,
+      "deadline_text": "within 3 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "cd4a31c6-a035-4f15-b7c1-463a1014fa3b"
+    },
+    {
+      "task_id": "task_008",
+      "task_text": "Reach Power 1.5M",
+      "points": null,
+      "usd": 6,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "b3e046ee-7a7b-4c44-87f4-461575bd4210"
+    },
+    {
+      "task_id": "task_009",
+      "task_text": "*Bonus Reward: Purchase Growth Fund. Complete within 10 days",
+      "points": null,
+      "usd": 6,
+      "deadline_text": "within 10 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "c56e040f-5ae3-4600-a20d-3fae99b33652"
+    },
+    {
+      "task_id": "task_010",
+      "task_text": "Bonus: Reach Power 2M. Complete within 7 days",
+      "points": null,
+      "usd": 0,
+      "deadline_text": "within 7 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "9cab30e5-e706-4c49-aedc-fd67902ebb64"
+    },
+    {
+      "task_id": "task_011",
+      "task_text": "Reach Power 3M",
+      "points": null,
+      "usd": 28,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "277dcbbe-9b60-455d-8d46-84bbcd84fdfe"
+    },
+    {
+      "task_id": "task_012",
+      "task_text": "Reach Power 5M",
+      "points": null,
+      "usd": 0,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f2e28f94-5354-4a4c-a144-4f45dc8b0965"
+    },
+    {
+      "task_id": "task_013",
+      "task_text": "Purchase",
+      "points": null,
+      "usd": 1.8,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "3e70a9d3-a702-466f-8d3c-76bd23bf4833"
+    },
+    {
+      "task_id": "task_014",
+      "task_text": "Purchase Honor Exclusive after Reaching VIP 7",
+      "points": null,
+      "usd": 21,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "purchase_recharge_subscription"
+      ],
+      "live_task_type": "purchase",
+      "live_task_id": "a20a7864-abed-402d-b353-a5caed5de0b1"
+    },
+    {
+      "task_id": "task_015",
+      "task_text": "Reach Power 10M",
+      "points": null,
+      "usd": 300,
+      "deadline_text": null,
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "none_provided_by_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "f392fd54-6773-4da8-b3a7-b03d6a54cba5"
+    },
+    {
+      "task_id": "task_016",
+      "task_text": "Reach Power 20M. Complete within 30 days",
+      "points": null,
+      "usd": 540,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "power_might_rating"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "2618a25c-e882-498c-97ff-432ab548fbc1"
+    },
+    {
+      "task_id": "task_017",
+      "task_text": "Reach Level 3 Troops. Complete within 30 days",
+      "points": null,
+      "usd": 7.2,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "32662595-4b9e-4691-9857-7895f9d003d8"
+    },
+    {
+      "task_id": "task_018",
+      "task_text": "Reach Level 4 Troops. Complete within 30 days",
+      "points": null,
+      "usd": 60,
+      "deadline_text": "within 30 days",
+      "payout_source": "live_earngrind_offer",
+      "deadline_source": "live_earngrind_offer",
+      "suspected_archetypes": [
+        "account_player_level"
+      ],
+      "live_task_type": "milestone",
+      "live_task_id": "ceffc49f-d31e-468d-abb2-f80ebad8303a"
+    }
+  ],
+  "task_entities": [
+    "install_open_tracking",
+    "support_proof",
+    "account_player_level",
+    "power_might_rating",
+    "purchase_recharge_subscription"
+  ],
+  "clarifications_needed": [],
+  "intake_notes": [
+    "Payouts use live EarnGrind USD task values, so points are intentionally null.",
+    "No payout, deadline, country, device, or provider value was invented."
+  ]
+}

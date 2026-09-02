@@ -34,7 +34,7 @@ function JsonLd() {
             "@type": "ListItem",
             position: index + 1,
             name: guide.name,
-            url: absoluteUrl(`/guides/best-gpt-sites/${guide.slug}`),
+            url: absoluteUrl(`/best-gpt-sites/${guide.slug}`),
         })),
     };
 
@@ -102,7 +102,7 @@ export default function BestGptSiteGuidesHubPage() {
                     {guides.map((guide) => (
                         <Link
                             key={guide.slug}
-                            href={`/guides/best-gpt-sites/${guide.slug}`}
+                            href={`/best-gpt-sites/${guide.slug}`}
                             className="group overflow-hidden rounded-2xl border border-[var(--border-default)] bg-white shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-lime-300"
                         >
                             <div className="relative aspect-[16/10] bg-[var(--surface-muted)]">

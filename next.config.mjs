@@ -70,6 +70,11 @@ const nextConfig = {
                 permanent: false,
             },
             {
+                source: "/find-offers",
+                destination: "/offers",
+                permanent: true,
+            },
+            {
                 source: "/reviews",
                 destination: "/best-gpt-sites",
                 permanent: true,

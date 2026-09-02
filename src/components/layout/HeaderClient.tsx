@@ -9,7 +9,6 @@ import DiscordIcon from "@/components/icons/DiscordIcon";
 
 const NAV_LINKS = [
     { href: "/offers", label: "Offers & Games", activePrefixes: ["/games"] },
-    { href: "/find-offers", label: "Find Offers" },
     { href: "/guides", label: "Guides", excludePrefixes: ["/guides/best-gpt-sites", "/guides/fanduel-casino-review-bonus"] },
     { href: "/best-gpt-sites", label: "Best GPT Sites", activePrefixes: ["/guides/best-gpt-sites", "/review", "/reviews", "/platforms", "/guides/fanduel-casino-review-bonus"] },
     { href: "/blog", label: "Blog" },

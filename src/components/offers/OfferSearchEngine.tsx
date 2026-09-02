@@ -602,10 +602,10 @@ function FilterControls({
         : [{ code: "US", slug: "us", name: "United States", supported: true } as PublicOfferCountry];
 
     const selectStyle =
-        "h-10 w-full appearance-none border border-slate-700 bg-slate-900 px-3 pr-8 text-xs font-bold text-white shadow-xs transition-colors hover:border-slate-500 focus:border-[var(--brand-lime)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-lime)]";
+        "h-10 w-full appearance-none border border-slate-200 bg-white px-3 pr-8 text-xs font-bold text-slate-800 shadow-2xs transition-colors hover:border-slate-400 focus:border-slate-950 focus:outline-none focus:ring-1 focus:ring-slate-950";
 
     return (
-        <div className="border border-slate-800 bg-slate-950 p-4 shadow-md sm:p-5">
+        <div className="border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             {/* Search Bar */}
             <div className="relative mb-4">
                 <Search className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
@@ -615,14 +615,14 @@ function FilterControls({
                     placeholder="Search by game name (e.g. Monopoly Go, Raid), partner site, or provider..."
                     value={filters.q}
                     onChange={(e) => set("q", e.target.value)}
-                    className="h-12 w-full border border-slate-700 bg-slate-900 pl-11 pr-10 text-sm font-medium text-white placeholder:text-slate-400 focus:border-[var(--brand-lime)] focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-[var(--brand-lime)]/30"
+                    className="h-12 w-full border border-slate-200 bg-slate-50/50 pl-11 pr-10 text-sm font-medium text-slate-900 placeholder:text-slate-400 shadow-inner/5 transition-colors focus:border-slate-950 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-950"
                 />
                 {filters.q ? (
                     <button
                         type="button"
                         onClick={() => set("q", "")}
                         aria-label="Clear search"
-                        className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-white"
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-900"
                     >
                         <X className="h-4 w-4" />
                     </button>
@@ -631,7 +631,7 @@ function FilterControls({
 
             {/* Quick Filter Presets Row */}
             <div className="mb-4 flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-                <span className="mr-1 text-[11px] font-black uppercase tracking-wider text-slate-400">Presets:</span>
+                <span className="mr-1 text-[11px] font-black uppercase tracking-wider text-slate-500">Presets:</span>
 
                 {/* Most Completed Preset */}
                 <button
@@ -639,8 +639,8 @@ function FilterControls({
                     onClick={() => set("sort", filters.sort === "completed_desc" ? "payout_desc" : "completed_desc")}
                     className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
                         filters.sort === "completed_desc"
-                            ? "border-orange-500 bg-orange-500 text-slate-950 shadow-sm"
-                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                            ? "border-orange-500 bg-orange-500 text-white shadow-xs"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-950 shadow-2xs"
                     }`}
                 >
                     <Flame className="h-3.5 w-3.5 fill-current" />
@@ -653,8 +653,8 @@ function FilterControls({
                     onClick={() => set("min_payout", filters.min_payout === 100 ? 0 : 100)}
                     className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
                         filters.min_payout === 100
-                            ? "border-lime-400 bg-[var(--brand-lime)] text-slate-950 shadow-sm"
-                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                            ? "border-slate-950 bg-slate-950 text-lime-400 shadow-xs"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-950 shadow-2xs"
                     }`}
                 >
                     <DollarSign className="h-3.5 w-3.5" />
@@ -667,8 +667,8 @@ function FilterControls({
                     onClick={() => set("min_payout", filters.min_payout === 25 ? 0 : 25)}
                     className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
                         filters.min_payout === 25
-                            ? "border-lime-400 bg-[var(--brand-lime)] text-slate-950 shadow-sm"
-                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                            ? "border-slate-950 bg-slate-950 text-lime-400 shadow-xs"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-950 shadow-2xs"
                     }`}
                 >
                     <Sparkles className="h-3.5 w-3.5" />
@@ -681,8 +681,8 @@ function FilterControls({
                     onClick={() => set("device", filters.device === "ios" ? "" : "ios")}
                     className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
                         filters.device === "ios"
-                            ? "border-white bg-white text-slate-950 shadow-sm"
-                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                            ? "border-slate-950 bg-slate-950 text-white shadow-xs"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-950 shadow-2xs"
                     }`}
                 >
                     🍎 iOS
@@ -694,8 +694,8 @@ function FilterControls({
                     onClick={() => set("device", filters.device === "android" ? "" : "android")}
                     className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
                         filters.device === "android"
-                            ? "border-green-400 bg-green-400 text-slate-950 shadow-sm"
-                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                            ? "border-slate-950 bg-slate-950 text-white shadow-xs"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-950 shadow-2xs"
                     }`}
                 >
                     🤖 Android
@@ -707,8 +707,8 @@ function FilterControls({
                     onClick={() => set("device", filters.device === "pc" ? "" : "pc")}
                     className={`inline-flex items-center gap-1 border px-2.5 py-1 text-xs font-black transition-all ${
                         filters.device === "pc"
-                            ? "border-blue-400 bg-blue-400 text-slate-950 shadow-sm"
-                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600 hover:text-white"
+                            ? "border-slate-950 bg-slate-950 text-white shadow-xs"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:text-slate-950 shadow-2xs"
                     }`}
                 >
                     💻 PC
@@ -716,10 +716,10 @@ function FilterControls({
             </div>
 
             {/* Structured Select Dropdowns Grid */}
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6 border-t border-slate-800/80 pt-4">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6 border-t border-slate-100 pt-4">
                 {/* 1. Sort By */}
                 <div className="relative">
-                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-500">
                         Sort By
                     </label>
                     <div className="relative">
@@ -740,7 +740,7 @@ function FilterControls({
 
                 {/* 2. Country */}
                 <div className="relative">
-                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-500">
                         Country
                     </label>
                     <div className="relative">
@@ -762,7 +762,7 @@ function FilterControls({
 
                 {/* 3. Partner Site */}
                 <div className="relative">
-                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-500">
                         Partner Site
                     </label>
                     <div className="relative">
@@ -785,7 +785,7 @@ function FilterControls({
 
                 {/* 4. Category Filter */}
                 <div className="relative">
-                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-500">
                         Category
                     </label>
                     <div className="relative">
@@ -809,7 +809,7 @@ function FilterControls({
 
                 {/* 5. Device */}
                 <div className="relative">
-                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-500">
                         Device
                     </label>
                     <div className="relative">
@@ -831,7 +831,7 @@ function FilterControls({
                 {/* 6. Minimum Payout / Reset */}
                 <div className="relative flex items-end gap-1.5">
                     <div className="flex-1">
-                        <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-400">
+                        <label className="mb-1 block text-[10px] font-black uppercase tracking-wider text-slate-500">
                             Min Payout
                         </label>
                         <div className="relative">
@@ -856,7 +856,7 @@ function FilterControls({
                         type="button"
                         onClick={() => dispatch({ type: "RESET", country: filters.country })}
                         title="Reset all filters"
-                        className="flex h-10 items-center justify-center border border-slate-700 bg-slate-900 px-3 text-xs font-bold text-slate-300 hover:border-slate-500 hover:text-white shadow-xs"
+                        className="flex h-10 items-center justify-center border border-slate-200 bg-white px-3 text-xs font-bold text-slate-600 hover:border-slate-400 hover:text-slate-950 shadow-2xs transition-colors"
                     >
                         Reset
                     </button>
@@ -878,10 +878,10 @@ interface CompareDrawerProps {
 function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
     if (pinned.length === 0) return null;
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-800 bg-slate-950/95 p-3.5 shadow-2xl backdrop-blur-md">
+        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/95 p-3.5 shadow-2xl backdrop-blur-md">
             <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 sm:flex-row sm:justify-between">
-                <div className="flex items-center gap-2 text-xs font-black text-white">
-                    <span className="flex h-6 w-6 items-center justify-center bg-[var(--brand-lime)] text-xs font-black text-slate-950">
+                <div className="flex items-center gap-2 text-xs font-black text-slate-900">
+                    <span className="flex h-6 w-6 items-center justify-center bg-slate-950 text-xs font-black text-lime-400">
                         {pinned.length}
                     </span>
                     <span>Comparing Offers ({pinned.length}/3)</span>
@@ -891,9 +891,9 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
                     {pinned.map((offer) => (
                         <div
                             key={offer.id}
-                            className="relative flex min-w-[200px] items-center gap-2.5 border border-slate-700 bg-slate-900 px-3 py-1.5"
+                            className="relative flex min-w-[200px] items-center gap-2.5 border border-slate-200 bg-slate-50 px-3 py-1.5 shadow-2xs"
                         >
-                            <div className="h-8 w-8 flex-shrink-0 overflow-hidden bg-slate-800">
+                            <div className="h-8 w-8 flex-shrink-0 overflow-hidden bg-white border border-slate-200">
                                 <OfferThumbnail
                                     src={offer.image_url ?? offer.game?.thumbnail_url}
                                     alt={offer.game?.name ?? offer.title}
@@ -902,17 +902,17 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
                                 />
                             </div>
                             <div className="min-w-0 flex-1 pr-4">
-                                <div className="truncate text-xs font-bold text-white">
+                                <div className="truncate text-xs font-bold text-slate-900">
                                     {offer.game?.name ?? offer.title}
                                 </div>
-                                <div className="text-[11px] font-black text-[var(--brand-lime)]">
+                                <div className="text-[11px] font-black text-emerald-600">
                                     ${offer.payout_usd.toFixed(2)}
                                 </div>
                             </div>
                             <button
                                 type="button"
                                 onClick={() => onRemove(offer.id)}
-                                className="absolute right-1.5 top-1.5 p-1 text-slate-400 hover:text-white"
+                                className="absolute right-1.5 top-1.5 p-1 text-slate-400 hover:text-slate-900"
                                 aria-label="Remove offer"
                             >
                                 <X className="h-3.5 w-3.5" />
@@ -925,13 +925,13 @@ function CompareDrawer({ pinned, onRemove, onClear }: CompareDrawerProps) {
                     <button
                         type="button"
                         onClick={onClear}
-                        className="px-3 py-1.5 text-xs font-bold text-slate-400 hover:text-white"
+                        className="px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-900"
                     >
                         Clear All
                     </button>
                     <a
                         href={`/tools/compare?offers=${pinned.map((o) => o.id).join(",")}`}
-                        className="flex items-center gap-1.5 border border-lime-400 bg-[var(--brand-lime)] px-4 py-2 text-xs font-black uppercase tracking-wider text-slate-950 transition-all hover:bg-lime-400"
+                        className="flex items-center gap-1.5 border border-slate-950 bg-slate-950 px-4 py-2 text-xs font-black uppercase tracking-wider text-white transition-all hover:bg-slate-800"
                     >
                         Compare Payouts →
                     </a>

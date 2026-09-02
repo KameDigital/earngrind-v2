@@ -3,15 +3,17 @@ import { getGaMeasurementId } from "@/lib/google-analytics";
 
 export default function GoogleAnalytics() {
     const measurementId = getGaMeasurementId();
+    if (!measurementId) return null;
 
     return (
         <>
             <Script
+                id="gtm-script"
                 strategy="afterInteractive"
                 src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
             />
             <Script
-                id="google-analytics"
+                id="google-analytics-init"
                 strategy="afterInteractive"
                 dangerouslySetInnerHTML={{
                     __html: `
@@ -19,9 +21,6 @@ export default function GoogleAnalytics() {
                     function gtag(){dataLayer.push(arguments);}
                     window.gtag = gtag;
                     gtag('js', new Date());
-                    // App Router navigation is tracked by GoogleAnalyticsPageTracker.
-                    // Disable GA4's initial automatic view so the first route and all
-                    // client-side routes use the same explicit event contract.
                     gtag('config', '${measurementId}', { send_page_view: false });
                 `,
                 }}

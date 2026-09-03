@@ -101,6 +101,8 @@ export async function GET(
                 status: row.status,
                 goal_text: row.goal_text,
                 updated_at: row.updated_at,
+                devices: row.devices,
+                countries: row.countries,
                 tasks,
             };
         })

@@ -13,8 +13,10 @@ import {
     buildEarnLabOfferBacklink,
     buildGemslootOfferModalUrl,
     buildOutboundRedirectUrl,
+    EARNLAB_AFFILIATE_URL,
     getPlatformAffiliateOverride,
     getPlatformFallbackUrl,
+    isCountrySupportedByOffer,
     isEarnLabTarget,
     isGemslootTarget,
 } from "@/lib/outbound";
@@ -26,6 +28,14 @@ export const dynamic = "force-dynamic";
 
 function isUuid(value: string): boolean {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
+
+function getUserCountry(req: NextRequest): string | null {
+    const raw = req.headers.get("x-vercel-ip-country")
+        || req.headers.get("cf-ipcountry")
+        || req.headers.get("x-country-code")
+        || null;
+    return raw ? raw.trim().toUpperCase() : null;
 }
 
 function getIpHash(req: NextRequest): string | null {
@@ -263,6 +273,8 @@ export async function GET(
             custom_param,
             payout_usd,
             status,
+            countries,
+            devices,
             game:games(
                 name
             ),
@@ -292,8 +304,14 @@ export async function GET(
             externalId: offer.external_id,
             customParam: offer.custom_param,
         });
-        const earnLabOfferModalUrl = isEarnLabTarget(platform)
+        const userCountry = getUserCountry(req);
+        const isEarnLab = isEarnLabTarget(platform);
+        const isEarnLabCountryEligible = !isEarnLab || isCountrySupportedByOffer(userCountry, offer.countries);
+        const earnLabOfferModalUrl = isEarnLab && isEarnLabCountryEligible
             ? buildEarnLabOfferBacklink(offer.external_id)
+            : null;
+        const earnLabGeoFallbackUrl = isEarnLab && !isEarnLabCountryEligible
+            ? EARNLAB_AFFILIATE_URL
             : null;
         const platformOverrideUrl = getPlatformAffiliateOverride(platform);
         const directOfferUrl = offer.custom_param
@@ -304,6 +322,7 @@ export async function GET(
             : directOfferUrl;
         const outboundUrl = cashInStyleOutboundUrl
             ?? earnLabOfferModalUrl
+            ?? earnLabGeoFallbackUrl
             ?? effectiveDirectOfferUrl
             ?? platformOverrideUrl
             ?? buildOutboundRedirectUrl({
@@ -326,7 +345,9 @@ export async function GET(
             click_location: requestAttribution.click_location,
             source_context: requestAttribution.source_context,
             destination_url: outboundUrl,
-            affiliate_mode: cashInStyleOutboundUrl
+            affiliate_mode: earnLabGeoFallbackUrl
+                ? "earnlab-geo-fallback"
+                : cashInStyleOutboundUrl
                 ? "cashinstyle-deeplink"
                 : platformOverrideUrl
                 ? "platform-override"
@@ -394,6 +415,8 @@ export async function GET(
             total_payout_usd,
             goal_text,
             status,
+            countries,
+            devices,
             game:games(
                 name
             ),
@@ -441,8 +464,14 @@ export async function GET(
         site,
         provider,
     });
-    const earnLabOfferModalUrl = isEarnLabTarget(site)
+    const userCountry = getUserCountry(req);
+    const isEarnLab = isEarnLabTarget(site);
+    const isEarnLabCountryEligible = !isEarnLab || isCountrySupportedByOffer(userCountry, siteOffer.countries);
+    const earnLabOfferModalUrl = isEarnLab && isEarnLabCountryEligible
         ? buildEarnLabOfferBacklink(siteOffer.external_id)
+        : null;
+    const earnLabGeoFallbackUrl = isEarnLab && !isEarnLabCountryEligible
+        ? EARNLAB_AFFILIATE_URL
         : null;
     const gemslootOfferModalUrl = isGemslootTarget(site)
         ? buildGemslootOfferModalUrl({
@@ -469,6 +498,7 @@ export async function GET(
     const outboundUrl = cashInStyleOutboundUrl
         ?? currentGainNativeDeepLink
         ?? earnLabOfferModalUrl
+        ?? earnLabGeoFallbackUrl
         ?? gemslootOfferModalUrl
         ?? effectiveDirectSiteOfferUrl
         ?? gainNativeDeepLink
@@ -499,7 +529,9 @@ export async function GET(
         click_location: requestAttribution.click_location,
         source_context: requestAttribution.source_context,
         destination_url: outboundUrl,
-        affiliate_mode: cashInStyleOutboundUrl
+        affiliate_mode: earnLabGeoFallbackUrl
+            ? "earnlab-geo-fallback"
+            : cashInStyleOutboundUrl
             ? "cashinstyle-deeplink"
             : currentGainNativeDeepLink
             ? "gain-current-deeplink"

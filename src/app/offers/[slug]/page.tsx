@@ -77,6 +77,8 @@ interface ComparisonOfferRow {
     status: string;
     goal_text: string | null;
     updated_at: string | null;
+    devices?: string[] | null;
+    countries?: string[] | null;
     tasks: ComparisonTask[];
 }
 
@@ -496,10 +498,18 @@ function ComparisonRow({ offer, isBest, rank }: { offer: Offer; isBest: boolean;
                     <div className="flex items-center gap-2 flex-wrap text-xs text-[var(--text-tertiary)]">
                         <ProviderLogo name={providerLabel} compact className="h-8" />
                         <span className="font-semibold">{providerLabel}</span>
-                        <span>?</span>
+                        <span>•</span>
                         {offer.devices.map((device) => (
                             <span key={device} title={device}>{DEVICE_LABELS[device]?.split(' ')[0] ?? '??'}</span>
                         ))}
+                        {offer.countries && offer.countries.length > 0 && !offer.countries.includes("ALL") && !offer.countries.includes("GLOBAL") && (
+                            <>
+                                <span>•</span>
+                                <span className="rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
+                                    {offer.countries.length <= 2 ? `${offer.countries.join(', ')} only` : `${offer.countries.length} countries`}
+                                </span>
+                            </>
+                        )}
                     </div>
                     <p className="mt-1 text-xs text-[var(--text-secondary)] line-clamp-2">
                         {routeSummary}
@@ -596,6 +606,8 @@ export default async function GameOffersPage({
         updated_at: row.updated_at,
         site: row.platform_name ? { name: row.platform_name } : null,
         provider: row.provider_name ? { name: row.provider_name } : null,
+        devices: row.devices,
+        countries: row.countries,
         tasks: row.tasks,
     }));
 

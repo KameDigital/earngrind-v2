@@ -53,8 +53,30 @@ function getEnvVar(key: string, defaultValue: string): string {
 }
 
 const GAIN_AFFILIATE_URL = getEnvVar("NEXT_PUBLIC_GAIN_AFFILIATE_URL", "https://gain.gg/r/macko");
-const EARNLAB_AFFILIATE_URL = getEnvVar("NEXT_PUBLIC_EARNLAB_AFFILIATE_URL", "https://earnlab.com/r/mac");
+export const EARNLAB_AFFILIATE_URL = getEnvVar("NEXT_PUBLIC_EARNLAB_AFFILIATE_URL", "https://earnlab.com/r/mac");
 const EARNLAB_TASK_ID_PATTERN = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:-[A-Z]{2})?$/i;
+
+export function isCountrySupportedByOffer(
+    userCountry: string | null | undefined,
+    offerCountries: string[] | null | undefined,
+): boolean {
+    if (!offerCountries || offerCountries.length === 0) return true;
+    const normalizedOfferCountries = offerCountries
+        .map((c) => c?.trim().toUpperCase())
+        .filter((c): c is string => Boolean(c));
+    if (
+        normalizedOfferCountries.length === 0 ||
+        normalizedOfferCountries.includes("ALL") ||
+        normalizedOfferCountries.includes("GLOBAL")
+    ) {
+        return true;
+    }
+    const normalizedUserCountry = userCountry?.trim().toUpperCase();
+    if (!normalizedUserCountry) {
+        return true;
+    }
+    return normalizedOfferCountries.includes(normalizedUserCountry);
+}
 const GEMSLOOT_AFFILIATE_URL = getEnvVar("NEXT_PUBLIC_GEMSLOOT_AFFILIATE_URL", "https://gemsloot.com/?aff=kamedev");
 export const CASHINSTYLE_AFFILIATE_URL = getEnvVar("NEXT_PUBLIC_CASHINSTYLE_AFFILIATE_URL", "https://cashinstyle.com/?ref=earngrind");
 const SWAGBUCKS_AFFILIATE_URL = getEnvVar("NEXT_PUBLIC_SWAGBUCKS_AFFILIATE_URL", "https://www.swagbucks.com/profile/r_158565078?rp=1");

@@ -28,6 +28,8 @@ export interface SiteOffer {
   site: { name: string } | null;
   provider: { name: string } | null;
   tasks: SiteOfferTask[];
+  devices?: string[] | null;
+  countries?: string[] | null;
 }
 
 type SortOption = "highest-payout" | "fastest-completion" | "most-popular";
@@ -189,6 +191,16 @@ function OfferCard({
         <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1">
           {milestoneCount <= 3 ? "Shorter route" : "More steps, bigger payout"}
         </span>
+        {row.countries && row.countries.length > 0 && !row.countries.includes("ALL") && !row.countries.includes("GLOBAL") && (
+          <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 font-semibold text-blue-700">
+            {row.countries.length <= 2 ? `${row.countries.join(", ")} only` : `${row.countries.length} countries`}
+          </span>
+        )}
+        {row.devices && row.devices.length > 0 && (
+          <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-muted)] px-2.5 py-1 font-semibold text-[var(--text-secondary)]">
+            {row.devices.map((d) => d.toUpperCase()).join(" · ")}
+          </span>
+        )}
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">

@@ -10,7 +10,7 @@ function read(path) {
 }
 
 const sitemapSource = read("src/lib/sitemap-builder.ts");
-const appSitemapSource = read("src/app/sitemap.ts");
+const sitemapIndexRouteSource = read("src/app/sitemap.xml/route.ts");
 const auditSource = read("scripts/audit-sitemap-quality.mjs");
 const adminSitemapSource = read("src/app/app/admin/seo/sitemap/page.tsx");
 const gainGallerySource = read("src/lib/gain-gallery.ts");
@@ -31,12 +31,12 @@ for (const path of ["/games", "/legal/privacy", "/legal/terms", "/legal/disclosu
   );
 }
 assert(
-  /export\s+default\s+async\s+function\s+sitemap/.test(appSitemapSource),
-  "src/app/sitemap.ts should be the active Next.js sitemap entrypoint",
+  sitemapIndexRouteSource.includes("sitemapIndexToXml") && sitemapIndexRouteSource.includes("getSitemapShardUrls"),
+  "src/app/sitemap.xml/route.ts should render the root sitemap index through the shared builder",
 );
 assert(
-  appSitemapSource.includes("buildSitemapShard") && appSitemapSource.includes("getSitemapShardIds"),
-  "src/app/sitemap.ts should build URLs through the shared sitemap builder",
+  sitemapIndexRouteSource.includes("new URL(request.url).origin"),
+  "root sitemap index should generate shard URLs for the requesting origin",
 );
 for (const path of ["/games", "/offers", "/guides", "/reviews", "/blog", "/best-gpt-sites", "/highest-paying-gpt-games"]) {
   assert(robotsSource.includes(path), `robots rules should explicitly allow ${path}`);
@@ -144,7 +144,7 @@ assert(
 for (const shardId of ["guides", "offers-0", "offers-1", "games-0", "games-1", "how-to-earn-0", "how-to-earn-1"]) {
   assert(sitemapSource.includes(`"${shardId}"`), `sitemap shards should include ${shardId}`);
 }
-assert(appSitemapSource.includes("flat()"), "root sitemap should flatten shard entries into the active sitemap output");
+assert(!sitemapIndexRouteSource.includes("buildSitemapShard"), "root sitemap index should not build or merge every shard");
 assert(
   sitemapShardRouteSource.includes("buildSitemapShard") && sitemapShardRouteSource.includes("sitemapEntriesToXml"),
   "sitemap shard route should render shard XML from the shared builder",

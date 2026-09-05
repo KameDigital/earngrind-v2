@@ -51,10 +51,24 @@ printExamples("canonical mismatch", sitemapCanonicalMismatch);
 printExamples("indexable not in sitemap", indexableNotInSitemap);
 
 async function fetchSitemapUrls() {
-  const response = await fetch(`${siteUrl}/sitemap.xml`);
-  if (!response.ok) throw new Error(`Failed to fetch sitemap.xml: ${response.status}`);
-  const xml = await response.text();
-  return [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]).filter(Boolean);
+  const visited = new Set();
+  const urls = [];
+  await visit(`${siteUrl}/sitemap.xml`);
+  return urls;
+
+  async function visit(url) {
+    if (visited.has(url)) return;
+    visited.add(url);
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Failed to fetch sitemap URL ${url}: ${response.status}`);
+    const xml = await response.text();
+    const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]).filter(Boolean);
+    if (/<sitemapindex\b/i.test(xml)) {
+      await Promise.all(locs.map((loc) => visit(loc)));
+      return;
+    }
+    urls.push(...locs);
+  }
 }
 
 async function buildCandidateUrls(currentSitemapUrls) {
